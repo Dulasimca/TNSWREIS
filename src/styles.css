@@ -7,7 +7,7 @@ body,html {
     margin: 0 !important;
     overflow-x: hidden !important;
     color: #474747 !important;
-    background-color: whitesmoke !important;
+    background-color: #fdf8ef !important;
     line-height: 1.6em !important;
 }
 
@@ -31,6 +31,9 @@ body,html {
     padding-left: 0 !important;
 }
 
+.txt-end {
+    text-align: end !important;
+}
 .txt-center {
     text-align: center !important;
 }
@@ -53,6 +56,24 @@ body,html {
 .sub-header {
     font-size: 19px;
 }
+.welfare-icon {
+    margin-left: -5%;
+}
+
+@media only screen and (max-width: 600px) {
+    .header-text {
+        font-size: 15px !important;
+    }
+    .sub-header {
+        font-size: 12px !important;
+    }
+    .welfare-icon {
+        margin-left: -2% !important;
+    }
+    .footer-text {
+        font-size: 15px !important;
+    }
+  }
 
 /* footer */
 .footer {
@@ -61,10 +82,14 @@ body,html {
     bottom: 0;
     width: 100%;
     text-align: center;
-    font-size: 18px;
+    padding: 1px 0 1px 0 !important;
+    height: 32px !important;
     background-color: #08747B !important;
     border-color: rgba(255,255,255,.2) !important;
     color: whitesmoke !important;
+}
+.footer-text {
+    font-size: 18px;
 }
 
 /* primeng styles */
