@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TNHostel": {
+    "TNSWREIS": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,18 +13,23 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/TNHostel",
+            "outputPath": "dist/TNSWREIS",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "./node_modules/primeflex/primeflex.css",
+              "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": []
           },
@@ -63,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "TNHostel:build"
+            "browserTarget": "TNSWREIS:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "TNHostel:build:production"
+              "browserTarget": "TNSWREIS:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "TNHostel:build"
+            "browserTarget": "TNSWREIS:build"
           }
         },
         "test": {
@@ -89,7 +94,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "./node_modules/primeflex/primeflex.css",
+              "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": []
           }
@@ -111,15 +121,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "TNHostel:serve"
+            "devServerTarget": "TNSWREIS:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "TNHostel:serve:production"
+              "devServerTarget": "TNSWREIS:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "TNHostel"
+  "defaultProject": "TNSWREIS"
 }

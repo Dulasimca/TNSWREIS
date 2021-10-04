@@ -1,1 +1,88 @@
-/* You can add global styles to this file, and also import other style files */
+/* common styles */
+body,html {
+    width: 100% !important;
+    height: 100% !important;
+    font-family: Verdana, Geneva, sans-serif !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+    color: #474747 !important;
+    background-color: whitesmoke !important;
+    line-height: 1.6em !important;
+}
+
+.card {
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%) !important;
+    border-radius: 3px !important;
+  }
+.no-padding {
+    padding: 0 !important;
+}
+.no-pad-btm {
+    padding-bottom: 0 !important;
+}
+.no-pad-top {
+    padding-top: 0 !important;
+}
+.no-pad-rt {
+    padding-right: 0 !important;
+}
+.no-pad-lt {
+    padding-left: 0 !important;
+}
+
+.txt-center {
+    text-align: center !important;
+}
+
+.align-center {
+    align-self: center !important;
+}
+
+/* header */
+.header {
+    background-color: #08747B !important;
+    border-color: rgba(255,255,255,.2) !important;
+    color: whitesmoke !important;
+    top: 0;
+    width: 100%;
+}
+.header-text {
+    font-size: 21px;
+}
+.sub-header {
+    font-size: 19px;
+}
+
+/* footer */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    background-color: #08747B !important;
+    border-color: rgba(255,255,255,.2) !important;
+    color: whitesmoke !important;
+}
+
+/* primeng styles */
+
+.p-button {
+    color: #fff;
+    background: #31b5c3 !important;
+    border: 1px solid #1eb6c7 !important;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    transition: background-color .2s,color .2s,border-color .2s,box-shadow .2s;
+    border-radius: 3px;
+}
+.p-button:enabled:hover {
+    background: #31b5c3 !important;
+    color: #fff;
+    border-color: #728385 !important;
+}
+.p-inputtext:enabled:hover {
+    border-color: #1eb6c7 !important;
+}
