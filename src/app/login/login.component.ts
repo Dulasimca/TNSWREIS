@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     this.locationStrategy.onPopState(() => {
       history.pushState(null, null, location.href);
     })
+    console.log('hrf', this.locationStrategy);
   }
 
 }
