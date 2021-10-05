@@ -159,8 +159,8 @@ body,html {
 
 .p-button {
     color: #fff;
-    background: #ec9d0b !important;
-    border: 1px solid #fcb83a !important;
+    background: #105c61 !important;
+    border: 1px solid #208991 !important;
     padding: .5rem 1rem;
     font-size: 1rem;
     transition: background-color .2s,color .2s,border-color .2s,box-shadow .2s;
