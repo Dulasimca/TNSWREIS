@@ -62,7 +62,12 @@ body,html {
 .align-center {
     align-self: center !important;
 }
-
+.input-spacing {
+    margin-right: -3.2rem;
+}
+.input-spacing-with-icon {
+    margin-right: -0.8rem;
+}
 .btn-bg {
     background: #eba611 !important;
     border: 1px solid #f7bd42 !important;
@@ -154,8 +159,8 @@ body,html {
 
 .p-button {
     color: #fff;
-    background: #105c61 !important;
-    border: 1px solid #208991 !important;
+    background: #ec9d0b !important;
+    border: 1px solid #fcb83a !important;
     padding: .5rem 1rem;
     font-size: 1rem;
     transition: background-color .2s,color .2s,border-color .2s,box-shadow .2s;

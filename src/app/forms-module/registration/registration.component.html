@@ -9,19 +9,19 @@
                             <p-tabView>
                                 <p-tabPanel header="Student Info">
                                     <div class="p-grid">
-                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div class="p-col-12 p-md-6 p-lg-2 input-spacing">
                                             <label>Student Name<span class="form-mandatory-field">*</span></label>
                                             <input type="text" name="_studentname" pInputText [(ngModel)]="studentName"
                                                 required />
                                         </div>
-                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div class="p-col-12 p-md-6 p-lg-2 input-spacing-with-icon">
                                             <label for="_dob">D.O.B<span class="form-mandatory-field">*</span></label>
                                             <p-calendar [(ngModel)]="dob" name="_dob" [monthNavigator]="true"
                                                 [yearNavigator]="true" yearRange="{{yearRange}}" inputId="dateofbirth"
                                                 [showIcon]="true" required>
                                             </p-calendar>
                                         </div>
-                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div class="p-col-12 p-md-6 p-lg-2 input-spacing">
                                             <label for="_gender">Gender<span
                                                     class="form-mandatory-field">*</span></label>
                                             <p-dropdown name="_gender" class="p-col-12 p-md-12 p-lg-12" [options]="genderOptions"
