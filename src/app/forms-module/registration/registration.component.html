@@ -1,1 +1,46 @@
-<p>registration works!</p>
+<div class="p-col-12 p-md-12 p-lg-12 content">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="Registration">
+                <p-card>
+                    <form #f="ngForm" name="registrationForm">
+                        <div class="p-col-12 p-md-12 p-lg-12">
+                            <p-tabView>
+                                <p-tabPanel header="Student Info">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <label>Student Name<span class="form-mandatory-field">*</span></label>
+                                            <input type="text" name="_studentname" pInputText [(ngModel)]="studentName"
+                                                required />
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <label for="_dob">D.O.B<span class="form-mandatory-field">*</span></label>
+                                            <p-calendar [(ngModel)]="dob" name="_dob" [monthNavigator]="true"
+                                                [yearNavigator]="true" yearRange="{{yearRange}}" inputId="dateofbirth"
+                                                [showIcon]="true" required>
+                                            </p-calendar>
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <label for="_gender">Gender<span
+                                                    class="form-mandatory-field">*</span></label>
+                                            <p-dropdown name="_gender" class="p-col-12 p-md-12 p-lg-12" [options]="genderOptions"
+                                                (onClick)="onSelect('G')" [(ngModel)]="gender" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 txt-center">
+                                            <button pButton type="button" label="Submit" icon="pi pi-sign-in" class="btn-bg" ></button>
+                                        </div>
+                                    </div>
+                                </p-tabPanel>
+                                <p-tabPanel header="Parents Info">
+                                </p-tabPanel>
+                            </p-tabView>
+                        </div>
+                    </form>
+                </p-card>
+            </p-panel>
+        </div>
+        <div class="p-col-1"></div>
+    </div>
+</div>
