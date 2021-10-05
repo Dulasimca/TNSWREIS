@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { RegistrationComponent } from './forms-module/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,8 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,9 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     ButtonModule,
     InputTextModule,
-    CardModule
+    CardModule,
+    SidebarModule,
+    PanelMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
