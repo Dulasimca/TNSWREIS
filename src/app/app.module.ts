@@ -21,6 +21,8 @@ import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
 import { DropdownModule } from 'primeng/dropdown';
 import {WebcamModule} from 'ngx-webcam';
+import { WardenDetailsComponent } from './forms-module/registration/warden-details/warden-details.component';
+ 
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import {WebcamModule} from 'ngx-webcam';
     HostelmasterComponent,
    
     RegistrationComponent,
-    FoodmasterComponent
+    FoodmasterComponent,
+    WardenDetailsComponent
   ],
   imports: [
     BrowserModule,
