@@ -25,8 +25,7 @@ import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.compon
 import { CameraComponent } from './Feature-module/camera/camera.component';
 
 import { MasterService } from './services/master-data.service';
-import { RestAPIService } from 'src/Services/restAPI.service';
-
+import { RestAPIService } from './services/restAPI.service';
 
 @NgModule({
   declarations: [

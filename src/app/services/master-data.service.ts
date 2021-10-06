@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { PathConstants } from '../Common-Modules/PathConstants';
+import { RestAPIService } from './restAPI.service';
 
 @Injectable({
     providedIn: 'root'
@@ -6,10 +8,34 @@ import { Injectable } from '@angular/core';
 
 export class MasterService {
     masterData?: any = [];
+    days?: any = [];
+    data?: any = [];
+
+    constructor(private restApiService: RestAPIService) { }
+
+    initializeMaster() {
+        this.restApiService.get(PathConstants.DaysMaster_Get).subscribe(res => {
+            this.days = res;
+        });
+        this.restApiService.get(PathConstants.MasterAll_Get).subscribe(master => {
+            this.data = master;
+        })
+
+    }
 
     getMaster(type): any {
         this.masterData = [];
         switch (type) {
+            case 'D':
+                this.data.Table.forEach(d => {
+                    this.masterData.push({ name: d.DistrcitName, value: d.Districtcode });
+                })
+                break;
+            case 'T':
+                this.data.Table1.forEach(t => {
+                    this.masterData.push({ name: t.Talukname, code: t.Talukid });
+                })
+                break;
             case 'G':
                 this.masterData = [
                     { label: '-select-', value: null },
@@ -38,6 +64,11 @@ export class MasterService {
                     { label: 'English', value: 'English' },
                     { label: 'Others', value: "Others" },
                 ];
+                break;
+            case 'F':
+                this.days.forEach(d => {
+                    this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.slno });
+                })
                 break;
         }
     }
