@@ -4,9 +4,9 @@ import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { RestAPIService } from 'src/Services/restAPI.service';
-import { MasterService } from 'src/Services/master-data.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { RestAPIService } from 'src/app/services/restAPI.service';
+import { MasterService } from 'src/app/services/master-data.service';
 
 
 
@@ -51,6 +51,7 @@ export class HostelmasterComponent implements OnInit {
    private trigger: Subject<void> = new Subject<void>();
  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+  masterData: any;
 
   
 
@@ -65,7 +66,7 @@ export class HostelmasterComponent implements OnInit {
     .then((mediaDevices: MediaDeviceInfo[]) => {
       this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
     });
-    this.hostel = this.masterService.getMaster('Hostel');
+
    
   }
   public handleImage(webcamImage: WebcamImage): void {
@@ -94,14 +95,20 @@ export class HostelmasterComponent implements OnInit {
     // string => move to device with given deviceId
     this.nextWebcam.next(directionOrDeviceId);
   }
-  onSelect() {
-    let HosteltypeOptions = [];
-    
-    this.hostel.forEach(c => {
-      HosteltypeOptions.push({  label : c.name, value: c.code })
-    });
-    this.daysOptions = HosteltypeOptions;
-    this.daysOptions.unshift({ label: '-select', value: null });
+  onSelect(type) {
+    this.masterData = [];
+    switch (type) {
+    case 'T':
+      this.data.Table1.forEach(t => {
+          this.masterData.push({ name: t.Talukname, code: t.Talukid });
+      })
+      break;
+      case 'D':
+                this.data.Table.forEach(d => {
+                    this.masterData.push({ name: d.DistrcitName, value: d.Districtcode });
+                })
+                break;
+    }
   }
   onSubmit(){
 
@@ -110,7 +117,7 @@ export class HostelmasterComponent implements OnInit {
     const params = { 
      
     }
-   this.restApiService.getByParameters(PathConstants.MasterData_Get, params).subscribe(res => {
+   this.restApiService.getByParameters(PathConstants.MasterAll_Get, params).subscribe(res => {
     if(res !== null && res !== undefined && res.length !==0) {
       console.log(res);
       this.data = res;
