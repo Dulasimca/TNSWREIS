@@ -1,8 +1,17 @@
 <div #main *ngIf="!hideHeader">
-<app-header></app-header>
-<router-outlet></router-outlet>
+<app-header [showMenuIcon]="isLoggedIn"></app-header>
+<!-- (open)="onOpenSideMenu()" -->
+<!-- <p-sidebar #sidebar [(visible)]="showNavBar" [baseZIndex]="10000">
+  <p-panelMenu [model]="items"></p-panelMenu>
+</p-sidebar> -->
+<!-- <router-outlet></router-outlet> -->
+<app-registration></app-registration>
 <app-footer></app-footer>
 </div>
 <div #login *ngIf="hideHeader">
   <router-outlet></router-outlet>
+</div>
+<!-- <app-camera (pictureTaken)="handleImage($event)"></app-camera>  -->
+<div class="snapshot" *ngIf="webcamImage">
+	<img [src]="webcamImage.imageAsDataUrl" />
 </div>

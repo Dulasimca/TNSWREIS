@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import {WebcamImage} from 'ngx-webcam';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,12 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent {
   title = 'TNMenu';
   hideHeader: boolean = false;
+  isLoggedIn: boolean;
+  // showNavBar: boolean;
+  // items: any[];
 
   constructor(private _router: Router) {
+    this.isLoggedIn = false;
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login') {
@@ -21,4 +26,14 @@ export class AppComponent {
       }
     });
   }
+  public webcamImage: WebcamImage = null;
+
+  handleImage(webcamImage: WebcamImage) {
+    this.webcamImage = webcamImage;
+  }
+
+  // onOpenSideMenu() {
+  //   console.log('insi');
+  //   this.showNavBar = true;
+  // }
 }
