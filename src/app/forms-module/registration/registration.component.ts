@@ -21,6 +21,18 @@ export class RegistrationComponent implements OnInit {
   motherTongueOptions: SelectItem[];
   motherTongue: string;
   languages?: any;
+  religion: string;
+  religionOptions: SelectItem[];
+  religions?: any;
+  caste: string;
+  casteOptions: SelectItem[];
+  castes?: any;
+  schoolOptions: SelectItem[];
+  school: string;
+  schools?: any;
+  courseOptions: SelectItem[];
+  course: string;
+  courses?: any;
 
   constructor(private _masterService: MasterService) { }
 
@@ -30,6 +42,7 @@ export class RegistrationComponent implements OnInit {
     this.yearRange = start_year_range + ':' + current_year;
     this.bloodgroups = this._masterService.getMaster('B');
     this.genders = this._masterService.getMaster('G');
+    console.log('master', this.genders, this.bloodgroups);
   }
 
   onSelect(type) {

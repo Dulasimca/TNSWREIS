@@ -24,6 +24,7 @@ export class MasterService {
     }
 
     getMaster(type): any {
+        console.log('inside master')
         this.masterData = [];
         switch (type) {
             case 'D':
@@ -37,11 +38,31 @@ export class MasterService {
                 })
                 break;
             case 'G':
+                console.log('inside gender')
+
                 this.masterData = [
                     { label: '-select-', value: null },
                     { label: 'Female', value: 'Female' },
                     { label: 'Male', value: 'Male' },
                     { label: 'Transgender', value: 'Transgender' },
+                ];
+                break;
+            case 'RL':
+                this.masterData = [
+                    { label: '-select-', value: null },
+                    { label: 'Christian', value: 'Christian' },
+                    { label: 'Hindu', value: 'Hindu' },
+                    { label: 'Muslim', value: 'Muslim' },
+                    { label: 'Others', value: 'Others' },
+                ];
+                break;
+            case 'CS':
+                this.masterData = [
+                    { label: '-select-', value: null },
+                    { label: 'MBC', value: 'MBC' },
+                    { label: 'BC', value: 'BC' },
+                    { label: 'OC', value: 'OC' },
+                    { label: 'SC/ST', value: 'SC' },
                 ];
                 break;
             case 'B':
@@ -71,5 +92,6 @@ export class MasterService {
                 })
                 break;
         }
+        return this.masterData;
     }
 }

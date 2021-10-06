@@ -243,6 +243,14 @@ body,html {
     height: 35px;
     width: -webkit-fill-available !important;
 }
+.p-dropdown .p-dropdown-panel {
+    z-index: 999 !important;
+}
+.p-button.p-button-icon-only {
+    width: 2.357rem;
+    padding: 0 !important;
+    margin-left: -15% !important;
+}
 .p-calendar {
     width: -webkit-fill-available !important;
 }
