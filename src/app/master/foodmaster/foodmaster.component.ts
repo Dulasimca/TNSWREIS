@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
-import { HttpClient } from '@angular/common/http';
-import { RestAPIService } from 'src/Services/restAPI.service';
- import { MasterService } from 'src/Services/master-data.service';
-import { FormsModule } from '@angular/forms';
+import { MasterService } from 'src/app/services/master-data.service';
+import { RestAPIService } from 'src/app/services/restAPI.service';
 
 
 @Component({
@@ -25,7 +23,7 @@ export class FoodmasterComponent implements OnInit {
   daysOptions: SelectItem[];
 
 
-  constructor( private http: HttpClient, private restApiService: RestAPIService, 
+  constructor(private restApiService: RestAPIService, 
     private masterService: MasterService
    ) { }
 
