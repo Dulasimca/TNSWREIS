@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { PanelModule } from 'primeng/panel';
@@ -18,8 +19,11 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './forms-module/registration/registration.component';
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
+import { RestAPIService } from 'src/Services/restAPI.service';
+import { HttpClientModule } from '@angular/common/http';
+
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
-import { DropdownModule } from 'primeng/dropdown';
+
 import {WebcamModule} from 'ngx-webcam';
 import { CameraComponent } from './Feature-module/camera/camera.component';
 
@@ -46,6 +50,7 @@ import { CameraComponent } from './Feature-module/camera/camera.component';
     InputTextModule,
     CardModule,
     DropdownModule,
+    HttpClientModule,
     WebcamModule,
     SidebarModule,
     PanelMenuModule,
@@ -54,7 +59,7 @@ import { CameraComponent } from './Feature-module/camera/camera.component';
     CalendarModule,
 
   ],
-  providers: [],
+  providers: [RestAPIService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
