@@ -96,7 +96,7 @@
                         minlength="10" maxlength="10" [(ngModel)]="mobileNo"
                         appInputFormat="digitOnly" required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-3 ">
                             <div><label for="_attach">Image Upload:</label></div>
                             <webcam [height]="250" [width]="250" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
 		 [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"
