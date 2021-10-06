@@ -1,0 +1,126 @@
+<div class="p-col-12 p-md-12 p-lg-12 content">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="Warden">
+                <form #f="ngForm" name="wardenDetails">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top" style="margin-left: -8px;">
+                            <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_wardenname">Warden Name<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" name="_wardenname" class="p-col-12" pInputText
+                                            [(ngModel)]="wardenName" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
+                                        <p-dropdown name="_gender" class="p-col-10" [options]="genderOptions"
+                                            (onClick)="onSelect('G')" [(ngModel)]="gender" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_dob">Date of Birth<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-calendar [(ngModel)]="dob" name="_dob" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
+                                            inputId="dateofbirth" dateFormat="yy-mm-dd" required></p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_qualification">Qualification<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" class="p-col-12" name="_qualification" pInputText
+                                            [(ngModel)]="qualification" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_doj">Service Joined Date<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-calendar [(ngModel)]="servicedoj" name="_doj" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
+                                            inputId="dateofjoin" dateFormat="yy-mm-dd" required></p-calendar>
+                                    </div>
+
+                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_doj">Hostel Joining Date<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <p-calendar [(ngModel)]="doj" name="_doj" [showIcon]="true"
+                                                    [monthNavigator]="true" [yearNavigator]="true"
+                                                    yearRange="{{yearRange}}" inputId="dateofjoin" dateFormat="yy-mm-dd"
+                                                    required></p-calendar>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_designation">Designation<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="text" class="p-col-12" name="_designation" pInputText
+                                                    [(ngModel)]="designation" required />
+                                            </div>
+
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_email">Email Id<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="email" class="p-col-12" name="_email" pInputText
+                                                    [(ngModel)]="email" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_mobno">Mobile Number<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="text" class="p-col-12" name="_mobno" pInputText
+                                                    [(ngModel)]="mobNo" maxlength="10" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_altmobno">Alternate Mobile No.<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="text" class="p-col-12" name="_altmobno" pInputText
+                                                    [(ngModel)]="altMobNo" maxlength="10" required />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_address1">Address Line 1<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input class="p-col-12" name="_address1" pInputText
+                                                    [(ngModel)]="addressOne" placeholder="Door No./street name"
+                                                    required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_address2">Address Line 2<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input class="p-col-12" name="_address2" pInputText
+                                                    [(ngModel)]="addressTwo" placeholder="Area/Village/City" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                <label for="_taluk">Native Taluk<span
+                                                        class="form-mandatory-field">*</span> </label>
+                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk" name="_taluk">
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                <label for="_district">Native District<span
+                                                        class="form-mandatory-field">*</span> </label>
+                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district"
+                                                    name="_district"></p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_pincode">Pincode</label><span
+                                                        class="form-mandatory-field"></span></div>
+                                                <input type="text" class="p-col-12" name="_pincode" pInputText
+                                                    [(ngModel)]="pincode" maxlength="6" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-card>
+                </form>
+            </p-panel>
+        </div>
+    </div>
+
+</div>

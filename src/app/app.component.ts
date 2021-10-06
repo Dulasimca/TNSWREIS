@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { MasterService } from './services/master-data.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class AppComponent {
   // showNavBar: boolean;
   // items: any[];
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router, private masterService: MasterService) {
     this.isLoggedIn = false;
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -25,6 +26,10 @@ export class AppComponent {
         }
       }
     });
+    this.masterService.initializeMaster();
   }
-
+  // onOpenSideMenu() {
+  //   console.log('insi');
+  //   this.showNavBar = true;
+  // }
 }

@@ -9,32 +9,114 @@
                             <p-tabView>
                                 <p-tabPanel header="Student Info">
                                     <div class="p-grid">
-                                        <div class="p-col-12 p-md-6 p-lg-2 input-spacing">
-                                            <label>Student Name<span class="form-mandatory-field">*</span></label>
-                                            <input type="text" name="_studentname" pInputText [(ngModel)]="studentName"
-                                                required />
-                                        </div>
-                                        <div class="p-col-12 p-md-6 p-lg-2 input-spacing-with-icon">
-                                            <label for="_dob">D.O.B<span class="form-mandatory-field">*</span></label>
-                                            <p-calendar [(ngModel)]="dob" name="_dob" [monthNavigator]="true"
-                                                [yearNavigator]="true" yearRange="{{yearRange}}" inputId="dateofbirth"
-                                                [showIcon]="true" required>
-                                            </p-calendar>
-                                        </div>
-                                        <div class="p-col-12 p-md-6 p-lg-2 input-spacing">
-                                            <label for="_gender">Gender<span
-                                                    class="form-mandatory-field">*</span></label>
-                                            <p-dropdown name="_gender" class="p-col-12 p-md-12 p-lg-12" [options]="genderOptions"
-                                                (onClick)="onSelect('G')" [(ngModel)]="gender" required>
-                                            </p-dropdown>
-                                        </div>
-                                        <div class="p-col-12 txt-center">
-                                            <button pButton type="button" label="Submit" icon="pi pi-sign-in" class="btn-bg" ></button>
+                                        <div class="p-col-1"></div>
+                                        <div #main class="p-col-12 p-md-12 p-lg-10 card" style="padding: 20px;">
+                                            <div #row1 class="p-col-12">
+                                                <div #grid1 class="p-grid">
+                                                    <div #field1 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_studentname" id="sname" pInputText
+                                                                [(ngModel)]="studentName" required>
+                                                            <label for="_studentname">Student Name</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field2 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-calendar [(ngModel)]="dob" name="_dob"
+                                                                [monthNavigator]="true" [yearNavigator]="true"
+                                                                yearRange="{{yearRange}}" inputId="dateofbirth"
+                                                                [showIcon]="true" (onChange)="calculateAge()" required>
+                                                            </p-calendar>
+                                                            <label for="_dob">D.O.B </label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field3 class="p-field p-col-12 p-md-6 p-lg-1">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_age" id="sname" pInputText
+                                                                [(ngModel)]="age" required>
+                                                            <label for="_age">Age</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_bloodgroup" [options]="bloodGroupOptions"
+                                                                (onClick)="onSelect('B')" [(ngModel)]="bloodGroup"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_bloodgroup">Blood Group</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field5 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_gender" [options]="genderOptions"
+                                                                (onClick)="onSelect('G')" [(ngModel)]="gender" required>
+                                                            </p-dropdown>
+                                                            <label for="_gender">Gender</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                                <div #grid2 class="p-grid">
+                                                    <div #field6 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_school" [options]="schoolOptions"
+                                                                (onClick)="onSelect('G')" [(ngModel)]="school" required>
+                                                            </p-dropdown>
+                                                            <label for="_school">School/College</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field7 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_course" [options]="courseOptions"
+                                                                (onClick)="onSelect('CR')" [(ngModel)]="course"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_course">Course Studying</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field8 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_mothertongue"
+                                                                [options]="motherTongueOptions"
+                                                                (onClick)="onSelect('MT')" [(ngModel)]="motherTongue"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_mothertongue">Mother Tongue</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field9 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_caste" [options]="casteOptions"
+                                                                (onClick)="onSelect('CT')" [(ngModel)]="caste" required>
+                                                            </p-dropdown>
+                                                            <label for="_caste">Caste</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                                <div #grid2 class="p-grid">
+                                                    <div #field10 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_religion" [options]="religionOptions"
+                                                                (onClick)="onSelect('RL')" [(ngModel)]="religion"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_religion">Religion</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </p-tabPanel>
                                 <p-tabPanel header="Parents Info">
                                 </p-tabPanel>
+                                <div class="p-col-12 txt-center">
+                                    <button pButton type="button" label="Submit" icon="pi pi-sign-in"
+                                        class="btn-bg"></button>
+                                </div>
                             </p-tabView>
                         </div>
                     </form>

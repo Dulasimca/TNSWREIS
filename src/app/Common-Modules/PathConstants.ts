@@ -1,5 +1,5 @@
 export class PathConstants {
 public static readonly DaysMaster_Get = 'DaysMaster';
-public static readonly MasterData_Get = 'MasterData';
+public static readonly MasterAll_Get = 'MasterData';
 
 }
