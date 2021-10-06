@@ -1,1 +1,50 @@
-<p>foodmaster works!</p>
+<div #foodmaster class="p-col-12 p-md-12 p-lg-12" style="margin-top: 10%;">
+    <div class="txt-center card-sketcky">
+        <form #f="ngForm" name="foodmaster">
+            <p-card>
+                <div class="p-grid">
+
+                    <!-- <div class="p-col-1"></div> -->
+                    <!-- <div class="p-col-10" style="text-align: justify;"> -->
+                        <div class="p-col-12 p-md-4 p-lg-3">
+                            <div><label>Weeek Days:</label></div>
+                            <p-dropdown name="selectedday" [options]="daysOptions" [(ngModel)]="selectedday"
+                                optionLabel="label" (onClick)="onSelect()" required>
+                            </p-dropdown>
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-3">
+                            <div><label>BreakFast:காலை உணவு</label></div>
+                            <input type="text" pInputText [(ngModel)]="BreakFast" name="BreakFast" required />
+                        </div>
+
+
+                        <div class="p-col-12 p-md-4 p-lg-3">
+                            <div><label>Lunch:மதிய உணவு</label></div>
+                            <input type="text" pInputText [(ngModel)]="Lunch" name="Lunch" required />
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-3">
+                            <div><label>Snacks:சிற்றுண்டி</label></div>
+                            <input type="text" pInputText [(ngModel)]="Snacks" name="Snacks" required />
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-3">
+                            <div><label>Dinner:இரவு உணவு</label></div>
+                            <input type="text" pInputText [(ngModel)]="Dinner" name="Dinner" required />
+                        </div>
+                    <!-- </div> -->
+                </div>
+            </p-card>
+        </form>
+       
+        <div class="p-col-12 p-md-6 p-lg12" style="margin-left:25%;">
+            <button pButton name="_save" type="button" label="Submit" (click)="onSubmit()"></button>
+
+            <button pButton type="button" label="View" style="margin-left:5%;" (click)="onview()"></button>
+             <button pButton type="button" label="clear" style="margin-left:5%;" (click)="onClear()"></button>
+        </div>
+        
+    </div>
+
+</div>

@@ -8,6 +8,7 @@ import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
 
 
+
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -15,7 +16,9 @@ const routes: Routes = [
   { path: 'foodmster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent},
   { path: 'registration', component: RegistrationComponent},
-  { path: 'warden-detailsform', component: WardenDetailsComponent}
+  { path: 'warden-detailsform', component: WardenDetailsComponent},
+  { path: 'registration', component: RegistrationComponent}
+
 ];
 
 @NgModule({

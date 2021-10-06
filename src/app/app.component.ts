@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import {WebcamImage} from 'ngx-webcam';
+
 
 @Component({
   selector: 'app-root',
@@ -26,5 +26,8 @@ export class AppComponent {
       }
     });
   }
- 
+  // onOpenSideMenu() {
+  //   console.log('insi');
+  //   this.showNavBar = true;
+  // }
 }
