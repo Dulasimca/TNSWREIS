@@ -8,87 +8,87 @@
                 <div class="p-col-12 p-md-12 p-lg-12 ">
                     <div class="p-grid">
                         <div class="p-col-12 p-md-6 p-lg-2 ">
-                            <div><label for="_HTypeId">Hostel Type</label></div>
-                            <p-dropdown name="_HTypeId" [options]="HTypeIdOptions" 
-                                [(ngModel)]="HTypeId" optionLabel="label" required>
+                            <div><label for="_Hosteltype">Hostel Type</label></div>
+                            <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions" 
+                                [(ngModel)]="Hosteltype" (onClick)="onSelect()" optionLabel="label" required>
                             </p-dropdown>
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <label for="_Districtcode">Districtcode</label>
                             <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
                                 class="p-col-10" [(ngModel)]="Districtcode" optionLabel="label" required>
                             </p-dropdown>
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <label for="_TalukId">TalukId</label>
                             <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions" class="p-col-10"
                                 [(ngModel)]="TalukId" optionLabel="label" required>
                             </p-dropdown>
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Hostelname">Hostelname<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Hostelname" class="p-col-10" pInputText [(ngModel)]="Hostelname"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Hostelname">HostelnameTamil<span
                                         class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Hostelname" class="p-col-10" pInputText [(ngModel)]="Hostelname"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Buildingno">Buildingno<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Buildingno" class="p-col-10" pInputText [(ngModel)]="Buildingno"
                                 required />
                         </div>
 
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Street">Street<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Street" class="p-col-10" pInputText [(ngModel)]="Street"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Landmark">Nearest Landmark<span
                                         class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Landmark" class="p-col-10" pInputText [(ngModel)]="Landmark"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_pincode">Postal Code<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input class="p-col-12" name="_pincode" type="text" pInputText minlength="6" maxlength="6"
                                 [(ngModel)]="pincode" appInputFormat="digitOnly" required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Longitude">Longitude<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Longitude" class="p-col-10" pInputText [(ngModel)]="Longitude"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Latitude">Latitude<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Latitude" class="p-col-10" pInputText [(ngModel)]="Latitude"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Radius">Radius<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Radius" class="p-col-10" pInputText [(ngModel)]="Radius"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_Totalstudent">Total Student<span class="form-mandatory-field">*</span></label>
                             </div>
                             <input type="text" name="_Totalstudent" class="p-col-10" pInputText [(ngModel)]="Totalstudent"
                                 required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_mobno">Mobile Number<span
                                 class="form-mandatory-field">*</span></label>
                     </div>
@@ -96,26 +96,26 @@
                         minlength="10" maxlength="10" [(ngModel)]="mobileNo"
                         appInputFormat="digitOnly" required />
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-3 ">
                             <div><label for="_attach">Image Upload:</label></div>
                             <webcam [height]="250" [width]="250" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
 		 [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"
 		 (initError)="handleInitError($event)"></webcam>
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-3">
-                                <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture">📸</div>
-                                <div class="actionBtn" (click)="showNextWebcam(true);" title="Switch Camera">🔁</div>
-                            </div>
+          <!-- <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture">📸</div>
+                                <div class="actionBtn" (click)="showNextWebcam(true);" title="Switch Camera">🔁</div> -->
+                                <button pButton type="button" label="Capture" class="actionBtn" (click)="triggerSnapshot();" style="margin-left: 5%;"></button>
+                                <!-- <button pButton type="button" label="View" class="actionBtn" (click)="showNextWebcam(true);"></button> -->
+                            </div>                                                                                    
                         <div class="p-col-12 p-md-12 p-lg-12">
-                            <button pButton type="button" label="Submit" icon="pi pi-sign-in" class="btn-bg" ></button>
-                            <button pButton type="button" label="View" (click)="onView()" style="margin-left: 5%;"></button>
-                            <button pButton type="button" label="Clear" (click)="clear()" style="margin-left: 5%;"></button>
+                            <button pButton type="button" label="Submit" (click)="onSubmit()" icon="pi pi-sign-in" class="btn-bg" ></button>
+                            <!-- <button pButton type="button" label="View" (click)="onView()" style="margin-left: 5%;"></button>
+                            <button pButton type="button" label="Clear" (click)="clear()" style="margin-left: 5%;"></button> -->
                           </div>
                     </div>
                 </div>
                     </form>
             </p-card>
-            </p-panel>
+             </p-panel>
         </div>
     </div>
         

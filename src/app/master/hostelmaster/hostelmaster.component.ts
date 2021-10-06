@@ -3,6 +3,10 @@ import { SelectItem } from 'primeng/api';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { RestAPIService } from 'src/Services/restAPI.service';
+import { MasterService } from 'src/Services/master-data.service';
+import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 
 
 
@@ -13,9 +17,10 @@ import {Observable} from 'rxjs';
 })
 export class HostelmasterComponent implements OnInit {
   @Output()
+  public pictureTaken = new EventEmitter<WebcamImage>();
   Hostelname: string;
-  HTypeId: any;
-  HTypeIdOptions: SelectItem[];
+  Hosteltype: string;
+  HosteltypeOptions: SelectItem[];
   DistrictcodeOptions: SelectItem[];
   Districtcode: any;
   TalukId: any;
@@ -29,33 +34,39 @@ export class HostelmasterComponent implements OnInit {
   Radius: any;
   Totalstudent: any;
   mobileNo: any;
+  data:any;
+  hostel?: any;
+  daysOptions: SelectItem[];
+  // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
-  public pictureTaken = new EventEmitter<WebcamImage>();
   public deviceId: string;
-  public errors: WebcamInitError[] = [];
-  private trigger: Subject<void> = new Subject<void>();
   public videoOptions: MediaTrackConstraints = {
     // width: {ideal: 1024},
     // height: {ideal: 576}
   };
-  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+  public errors: WebcamInitError[] = [];
+   // webcam snapshot trigger
+   private trigger: Subject<void> = new Subject<void>();
+ // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+ private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+
   
 
 
-  constructor() { }
+  constructor( private http: HttpClient, private restApiService: RestAPIService, 
+    private masterService: MasterService
+   ) { }
 
   ngOnInit(): void {
+    
     WebcamUtil.getAvailableVideoInputs()
     .then((mediaDevices: MediaDeviceInfo[]) => {
       this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
     });
-    this.HTypeIdOptions =[
-      { label: '-select-', value: null },
-      { label: '1', value: 'Home Work'},
-      { label: '2', value: 'Class Work'},
-    ];
+    this.hostel = this.masterService.getMaster('Hostel');
+   
   }
   public handleImage(webcamImage: WebcamImage): void {
     console.info('received webcam image', webcamImage);
@@ -83,11 +94,29 @@ export class HostelmasterComponent implements OnInit {
     // string => move to device with given deviceId
     this.nextWebcam.next(directionOrDeviceId);
   }
+  onSelect() {
+    let HosteltypeOptions = [];
+    
+    this.hostel.forEach(c => {
+      HosteltypeOptions.push({  label : c.name, value: c.code })
+    });
+    this.daysOptions = HosteltypeOptions;
+    this.daysOptions.unshift({ label: '-select', value: null });
+  }
   onSubmit(){
 
   }
   onView() {
-
+    const params = { 
+     
+    }
+   this.restApiService.getByParameters(PathConstants.MasterData_Get, params).subscribe(res => {
+    if(res !== null && res !== undefined && res.length !==0) {
+      console.log(res);
+      this.data = res;
+    }
+    
+  })
   }
   clear() {
 

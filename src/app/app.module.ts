@@ -28,6 +28,7 @@ import { CameraComponent } from './Feature-module/camera/camera.component';
 
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { RestAPIService } from './services/restAPI.service';
     CalendarModule,
 
   ],
-  providers: [RestAPIService, MasterService],
+  providers: [RestAPIService, MasterService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
