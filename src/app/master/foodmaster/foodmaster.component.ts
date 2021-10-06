@@ -91,7 +91,7 @@ export class FoodmasterComponent implements OnInit {
     //     );
     // }  
   
-    onsubmit() {  
+    onSubmit() {  
       //this.blockUI.start();
       const params = {
         'Slno': this.Slno,
@@ -156,6 +156,7 @@ export class FoodmasterComponent implements OnInit {
     }
     
   });
+
 //   onRowSelect(event, selectedRow) {
 //     // this.Slno = selectedRow.RowId;
 

@@ -1,4 +1,4 @@
-<block-ui>
+
 <div #foodmaster class="p-col-12 p-md-12 p-lg-12" style="margin-top: 10%;">
     <p-panel header="FoodMaster">
     <div class="txt-center card-sketcky">
@@ -43,11 +43,11 @@
         <div class="p-col-12 p-md-6 p-lg12" style="margin-left:25%;">
             <button pButton name="save" type="button" label="Submit" (click)="onSubmit()"></button>
 
-            <button pButton type="button" label="View" style="margin-left:5%;" (click)="onview()"></button>
-             <button pButton type="button" label="clear" style="margin-left:5%;" (click)="onClear()"></button>
+            <!-- <button pButton type="button" label="View" style="margin-left:5%;" (click)="onview()"></button>
+             <button pButton type="button" label="clear" style="margin-left:5%;" (click)="onClear()"></button> -->
         </div>
 
-        <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
+        <!-- <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
   totalRecords="totalRecords" pageLinks="3">
   <ng-template pTemplate="header" let-columns >
     <tr>
@@ -61,7 +61,7 @@
  
       
   <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-    <!-- <tr [pSelectableRow]="rowData"  class="cursor-pointer" > -->
+    
      <td>{{rowIndex+1}}</td>
       <td *ngFor="let col of columns">
         {{rowData[col.field]}}
@@ -70,8 +70,7 @@
       
   
   </ng-template>
-</p-table>  
+</p-table>   -->
     </div>
     </p-panel>
 </div>
-</block-ui>
