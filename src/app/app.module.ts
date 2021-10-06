@@ -20,7 +20,8 @@ import { RegistrationComponent } from './forms-module/registration/registration.
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
 import { DropdownModule } from 'primeng/dropdown';
-import {WebcamModule} from 'ngx-webcam';
+import { WebcamModule } from 'ngx-webcam';
+import { MasterService } from './services/master-data.service';
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import {WebcamModule} from 'ngx-webcam';
     CalendarModule,
 
   ],
-  providers: [],
+  providers: [MasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -26,17 +26,9 @@ export class AppComponent {
       }
     });
   }
-<<<<<<< HEAD
-  public webcamImage: WebcamImage = null;
-
-  handleImage(webcamImage: WebcamImage) {
-    this.webcamImage = webcamImage;
-  }
-=======
 
   // onOpenSideMenu() {
   //   console.log('insi');
   //   this.showNavBar = true;
   // }
->>>>>>> 417fc4d724b446174811586bc4494cefec5f7120
 }
