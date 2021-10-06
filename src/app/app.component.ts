@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import {WebcamImage} from 'ngx-webcam';
+import { MasterService } from './services/master-data.service';
+
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   // showNavBar: boolean;
   // items: any[];
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router, private masterService: MasterService) {
     this.isLoggedIn = false;
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -25,13 +26,8 @@ export class AppComponent {
         }
       }
     });
+    this.masterService.initializeMaster();
   }
-  public webcamImage: WebcamImage = null;
-
-  handleImage(webcamImage: WebcamImage) {
-    this.webcamImage = webcamImage;
-  }
-
   // onOpenSideMenu() {
   //   console.log('insi');
   //   this.showNavBar = true;

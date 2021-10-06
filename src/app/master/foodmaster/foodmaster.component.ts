@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { HttpClient } from '@angular/common/http';
-import { RestAPIService } from 'src/Services/restAPI.service';
- import { MasterService } from 'src/Services/master-data.service';
 import { FormsModule } from '@angular/forms';
 //import { ResponseMessage } from 'src/app/Common-Module/Message';
 //import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { MasterService } from 'src/app/services/master-data.service';
+import { RestAPIService } from 'src/app/services/restAPI.service';
 
 
 @Component({

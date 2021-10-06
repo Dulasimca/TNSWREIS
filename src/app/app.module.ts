@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,8 +11,9 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { PanelModule } from 'primeng/panel';
 import { TabViewModule } from 'primeng/tabview';
 import { CalendarModule } from 'primeng/calendar';
+import { HttpClientModule } from '@angular/common/http';
+import { WebcamModule } from 'ngx-webcam';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -19,13 +21,14 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './forms-module/registration/registration.component';
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
-import { RestAPIService } from 'src/Services/restAPI.service';
-import { HttpClientModule } from '@angular/common/http';
-
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
+import { WardenDetailsComponent } from './forms-module/registration/warden-details/warden-details.component';
+ 
+import { CameraComponent } from './Feature-module/camera/camera.component';
 
-import {WebcamModule} from 'ngx-webcam';
-
+import { MasterService } from './services/master-data.service';
+import { RestAPIService } from './services/restAPI.service';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import {WebcamModule} from 'ngx-webcam';
     HostelmasterComponent,
    
     RegistrationComponent,
-    FoodmasterComponent
+    FoodmasterComponent,
+    WardenDetailsComponent,
+    CameraComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +62,7 @@ import {WebcamModule} from 'ngx-webcam';
     CalendarModule,
 
   ],
-  providers: [RestAPIService],
+  providers: [RestAPIService, MasterService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
