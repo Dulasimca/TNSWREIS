@@ -28,7 +28,6 @@ export class AppComponent {
     });
     this.masterService.initializeMaster();
   }
-
   // onOpenSideMenu() {
   //   console.log('insi');
   //   this.showNavBar = true;

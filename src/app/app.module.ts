@@ -22,6 +22,8 @@ import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './forms-module/registration/registration.component';
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
+import { WardenDetailsComponent } from './forms-module/registration/warden-details/warden-details.component';
+ 
 import { CameraComponent } from './Feature-module/camera/camera.component';
 
 import { MasterService } from './services/master-data.service';
@@ -39,6 +41,7 @@ import { RestAPIService } from './services/restAPI.service';
    
     RegistrationComponent,
     FoodmasterComponent,
+    WardenDetailsComponent,
     CameraComponent
   ],
   imports: [
