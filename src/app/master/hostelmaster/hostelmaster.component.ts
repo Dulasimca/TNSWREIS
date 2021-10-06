@@ -4,9 +4,10 @@ import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { RestAPIService } from 'src/Services/restAPI.service';
-import { MasterService } from 'src/Services/master-data.service';
+
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { RestAPIService } from 'src/app/services/restAPI.service';
+import { MasterService } from 'src/app/services/master-data.service';
 
 
 
