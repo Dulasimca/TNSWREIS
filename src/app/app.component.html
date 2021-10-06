@@ -6,3 +6,7 @@
 <div #login *ngIf="hideHeader">
   <router-outlet></router-outlet>
 </div>
+<!-- <app-camera (pictureTaken)="handleImage($event)"></app-camera>  -->
+<div class="snapshot" *ngIf="webcamImage">
+	<img [src]="webcamImage.imageAsDataUrl" />
+</div>

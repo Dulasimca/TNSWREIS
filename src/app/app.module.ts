@@ -12,6 +12,10 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
+import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
+import { DropdownModule } from 'primeng/dropdown';
+import {WebcamModule} from 'ngx-webcam';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    FoodmasterComponent
+    FoodmasterComponent,
+    HostelmasterComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -28,7 +34,9 @@ import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
     FormsModule,
     ButtonModule,
     InputTextModule,
-    CardModule
+    CardModule,
+    DropdownModule,
+    WebcamModule
   ],
   providers: [],
   bootstrap: [AppComponent]
