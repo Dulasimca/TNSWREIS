@@ -10,8 +10,12 @@ import {WebcamImage} from 'ngx-webcam';
 export class AppComponent {
   title = 'TNMenu';
   hideHeader: boolean = false;
+  isLoggedIn: boolean;
+  // showNavBar: boolean;
+  // items: any[];
 
   constructor(private _router: Router) {
+    this.isLoggedIn = false;
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login') {
@@ -22,9 +26,17 @@ export class AppComponent {
       }
     });
   }
+<<<<<<< HEAD
   public webcamImage: WebcamImage = null;
 
   handleImage(webcamImage: WebcamImage) {
     this.webcamImage = webcamImage;
   }
+=======
+
+  // onOpenSideMenu() {
+  //   console.log('insi');
+  //   this.showNavBar = true;
+  // }
+>>>>>>> 417fc4d724b446174811586bc4494cefec5f7120
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 headerText: string;
 subHeader: string;
+@Input() showMenuIcon = false;
+// @Output() open = new EventEmitter<boolean>();
+showNavBar: boolean;
+items: any[];
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -20,4 +24,9 @@ subHeader: string;
     console.log('sign in');
     this.router.navigate(['/login']);
   }
+
+  // onEmit() {
+  //   console.log('emit');
+  //   this.open.emit(true);
+  // }
 }
