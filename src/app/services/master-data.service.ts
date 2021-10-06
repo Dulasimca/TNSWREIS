@@ -27,19 +27,22 @@ export class MasterService {
         console.log('inside master')
         this.masterData = [];
         switch (type) {
-            case 'D':
+            case 'DT':
                 this.data.Table.forEach(d => {
                     this.masterData.push({ name: d.DistrcitName, value: d.Districtcode });
                 })
                 break;
-            case 'T':
+            case 'TK':
                 this.data.Table1.forEach(t => {
                     this.masterData.push({ name: t.Talukname, code: t.Talukid });
                 })
                 break;
-            case 'G':
-                console.log('inside gender')
-
+            case 'HT': 
+                this.data.Table2.forEach(h => {
+                    this.masterData.push({ name: h.Name, code: h.HTypeId });
+                })
+                break;
+            case 'GD':
                 this.masterData = [
                     { label: '-select-', value: null },
                     { label: 'Female', value: 'Female' },
@@ -65,7 +68,7 @@ export class MasterService {
                     { label: 'SC/ST', value: 'SC' },
                 ];
                 break;
-            case 'B':
+            case 'BG':
                 this.masterData = [
                     { label: '-select-', value: null },
                     { label: 'A+', value: 'A+' },
@@ -86,7 +89,7 @@ export class MasterService {
                     { label: 'Others', value: "Others" },
                 ];
                 break;
-            case 'F':
+            case 'FD':
                 this.days.forEach(d => {
                     this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.slno });
                 })

@@ -33,6 +33,15 @@ export class RegistrationComponent implements OnInit {
   courseOptions: SelectItem[];
   course: string;
   courses?: any;
+  districtOptions: SelectItem[];
+  district: string;
+  districts?: any;
+  villageName: string;
+  talukOptions: SelectItem[];
+  taluk: string;
+  taluks?: any;
+  mobileNo: string;
+  alternateMobNo: string;
 
   constructor(private _masterService: MasterService) { }
 
@@ -40,8 +49,8 @@ export class RegistrationComponent implements OnInit {
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 30;
     this.yearRange = start_year_range + ':' + current_year;
-    this.bloodgroups = this._masterService.getMaster('B');
-    this.genders = this._masterService.getMaster('G');
+    this.bloodgroups = this._masterService.getMaster('BG');
+    this.genders = this._masterService.getMaster('GD');
     console.log('master', this.genders, this.bloodgroups);
   }
 
