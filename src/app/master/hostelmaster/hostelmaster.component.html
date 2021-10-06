@@ -1,23 +1,26 @@
-<div class="p-col-12 p-md-12 p-lg-12" style="padding-top:100px; height: 520px;">
-    <div class="p-col-12 p-md-12 p-lg-12 ">
-        <form #f="ngForm" name="HostelForm">
-            <p-card>
+<div class="p-col-12 p-md-12 p-lg-12 content">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="HostelMaster">
+                <p-card>
+                    <form #f="ngForm" name="hostelmasterForm">
                 <div class="p-col-12 p-md-12 p-lg-12 ">
                     <div class="p-grid">
-                        <div class="p-col-12 p-md-4 p-lg-3">
+                        <div class="p-col-12 p-md-6 p-lg-2 ">
                             <div><label for="_HTypeId">Hostel Type</label></div>
                             <p-dropdown name="_HTypeId" [options]="HTypeIdOptions" 
                                 [(ngModel)]="HTypeId" optionLabel="label" required>
                             </p-dropdown>
                         </div>
-                        <div class="p-col-12 p-md-4 p-lg-2">
-                            <div><label for="_Districtcode">Districtcode</label></div>
+                        <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="_Districtcode">Districtcode</label>
                             <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
                                 class="p-col-10" [(ngModel)]="Districtcode" optionLabel="label" required>
                             </p-dropdown>
                         </div>
-                        <div class="p-col-12 p-md-4 p-lg-2">
-                            <div><label for="_TalukId">TalukId</label></div>
+                        <div class="p-col-12 p-md-6 p-lg-3">
+                            <label for="_TalukId">TalukId</label>
                             <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions" class="p-col-10"
                                 [(ngModel)]="TalukId" optionLabel="label" required>
                             </p-dropdown>
@@ -100,20 +103,20 @@
 		 (initError)="handleInitError($event)"></webcam>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-3">
-                                <div class="actionBtn" (click)="triggerSnapshot();" label= "Capture" title="Take Picture"></div>
-                                <div class="actionBtn" (click)="showNextWebcam(true);" title="Switch Camera"></div>
+                                <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture">📸</div>
+                                <div class="actionBtn" (click)="showNextWebcam(true);" title="Switch Camera">🔁</div>
                             </div>
                         <div class="p-col-12 p-md-12 p-lg-12">
-                            <button pButton name="save" type="button" label="Submit" (click)="onSubmit()" [disabled]="(!f.valid)"
-                              style="margin-left: 30%;"></button>
+                            <button pButton type="button" label="Submit" icon="pi pi-sign-in" class="btn-bg" ></button>
                             <button pButton type="button" label="View" (click)="onView()" style="margin-left: 5%;"></button>
                             <button pButton type="button" label="Clear" (click)="clear()" style="margin-left: 5%;"></button>
                           </div>
                     </div>
                 </div>
- 
+                    </form>
             </p-card>
-        </form>
+            </p-panel>
+        </div>
     </div>
-
-</div>
+        
+    </div>

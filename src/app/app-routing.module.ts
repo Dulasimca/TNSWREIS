@@ -7,13 +7,15 @@ import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
 
 
+
 const routes: Routes = [
-  { path: '',   redirectTo: '/home', pathMatch: 'full' },
+   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'foodmster',component:FoodmasterComponent},
+ { path: 'foodmster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent},
-  { path: 'registration', component: RegistrationComponent}
+   { path: 'registration', component: RegistrationComponent}
+
 ];
 
 @NgModule({
