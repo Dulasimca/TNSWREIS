@@ -92,7 +92,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    this._router.navigate(['/']);
+    console.log('navigate');
+    this._router.navigate(['/warden-detailsform']);
   }
 
 }

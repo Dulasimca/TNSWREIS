@@ -14,9 +14,9 @@
                                         <input type="text" name="_wardenname" class="p-col-12" pInputText
                                             [(ngModel)]="wardenName" required />
                                     </div>
-                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                         <label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
-                                        <p-dropdown name="_gender" class="p-col-10" [options]="genderOptions"
+                                        <p-dropdown name="_gender" [options]="genderOptions"
                                             (onClick)="onSelect('G')" [(ngModel)]="gender" required>
                                         </p-dropdown>
                                     </div>
@@ -40,30 +40,38 @@
                                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
                                             inputId="dateofjoin" dateFormat="yy-mm-dd" required></p-calendar>
                                     </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_designation">Designation<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" class="p-col-12" name="_designation" pInputText
+                                            [(ngModel)]="designation" required />
+                                    </div>
 
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
+                                                <label for="_hostelname">Hostel Name<span class="form-mandatory-field">*</span></label>
+                                                <p-dropdown name="_hostelname" [options]="hostelOptions"
+                                                     [(ngModel)]="hostelName" required>
+                                                </p-dropdown>
+                                            </div>
+                                                <div class="p-col-12 p-md-6 p-lg-2">
+                                                    <div><label for="_hstljoindate">Hostel Joining Date<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-calendar [(ngModel)]="hosteljoin" name="_hstljoindate" [showIcon]="true"
+                                                        [monthNavigator]="true" [yearNavigator]="true"
+                                                        yearRange="{{yearRange}}" inputId="hosteljoindate" dateFormat="yy-mm-dd"
+                                                        required></p-calendar>
+                                                </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_doj">Hostel Joining Date<span
+                                                <div><label for="_hstlleavedate">Hostel Leaving Date<span
                                                             class="form-mandatory-field">*</span></label></div>
-                                                <p-calendar [(ngModel)]="doj" name="_doj" [showIcon]="true"
+                                                <p-calendar [(ngModel)]="hstlLeaveDate" name="_hstlleavedate" [showIcon]="true"
                                                     [monthNavigator]="true" [yearNavigator]="true"
-                                                    yearRange="{{yearRange}}" inputId="dateofjoin" dateFormat="yy-mm-dd"
+                                                    yearRange="{{yearRange}}" inputId="hostelleavedate" dateFormat="yy-mm-dd"
                                                     required></p-calendar>
                                             </div>
-                                            <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_designation">Designation<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <input type="text" class="p-col-12" name="_designation" pInputText
-                                                    [(ngModel)]="designation" required />
-                                            </div>
-
-                                            <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_email">Email Id<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <input type="email" class="p-col-12" name="_email" pInputText
-                                                    [(ngModel)]="email" required />
-                                            </div>
+                                            
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_mobno">Mobile Number<span
                                                             class="form-mandatory-field">*</span></label></div>
@@ -71,8 +79,7 @@
                                                     [(ngModel)]="mobNo" maxlength="10" required />
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_altmobno">Alternate Mobile No.<span
-                                                            class="form-mandatory-field">*</span></label></div>
+                                                <div><label for="_altmobno">Alternate Mobile No.</label></div>
                                                 <input type="text" class="p-col-12" name="_altmobno" pInputText
                                                     [(ngModel)]="altMobNo" maxlength="10" required />
                                             </div>
@@ -81,6 +88,12 @@
 
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_email">Email Id<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="email" class="p-col-12" name="_email" pInputText
+                                                    [(ngModel)]="email" required />
+                                            </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_address1">Address Line 1<span
                                                             class="form-mandatory-field">*</span></label></div>
@@ -108,10 +121,29 @@
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_pincode">Pincode</label><span
-                                                        class="form-mandatory-field"></span></div>
+                                                        class="form-mandatory-field">*</span></div>
                                                 <input type="text" class="p-col-12" name="_pincode" pInputText
                                                     [(ngModel)]="pincode" maxlength="6" required />
                                             </div>
+                                            <div #row3 class="p-col-12 p-md-12 p-lg-12"> 
+                                                <div class="p-grid"> 
+                                            <div class="p-col-12 p-md-6 p-lg-4">
+                                                <div><img [src]="wardenImage"
+                                                    style="width: 110px; height: 110px;" />
+                                                <input style="display: none" name="_studentimage" type="file" (change)="onFileUpload($event)"
+                                                    #userFile>
+                                                <button class="b-size"
+                                                     icon="pi pi-plus edit-size" pButton type="file" #file
+                                                    (click)="userFile.click()">
+                                                </button>
+                                                <label>Upload Warden Image</label>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            <div class="p-col-12 p-md-12 p-lg-12" style="text-align: center;"> 
+                                            <button pButton type="button" label="Submit" (click)="onSave()"></button>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
