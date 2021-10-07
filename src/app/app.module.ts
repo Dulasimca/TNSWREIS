@@ -35,6 +35,9 @@ import { RestAPIService } from './services/restAPI.service';
 import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { MessageService } from 'primeng/api';
+import { UsermasterComponent } from './master/usermaster/usermaster.component';
+ //import { DataTableModule } from 'primeng/primeng';
+// import { PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,7 @@ import { MessageService } from 'primeng/api';
     FoodmasterComponent,
     WardenDetailsComponent,
     CameraComponent,
+    UsermasterComponent,
     CommodityMasterComponent,
     OpeningBalanceComponent
   ],
@@ -67,6 +71,9 @@ import { MessageService } from 'primeng/api';
     PanelModule,
     TabViewModule,
     CalendarModule,
+    // DataTableModule,
+    // PaginatorModule
+
     RadioButtonModule,
     TableModule,
     ToastModule
