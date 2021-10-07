@@ -40,7 +40,6 @@ import { TableModule } from 'primeng/table';
     FooterComponent,
     FoodmasterComponent,
     HostelmasterComponent,
-   
     RegistrationComponent,
     FoodmasterComponent,
     WardenDetailsComponent,

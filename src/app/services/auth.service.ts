@@ -14,7 +14,7 @@ export class AuthService {
   /// The BehaviorSubject keeps the latest value cached (in our case when the service is created the initial value is going to be false). 
   /// So when an Observer subscribes to the isLoggedIn(), the cached valued is going to be emitted right away.
 
-  constructor(private router: Router) { 
+  constructor(private _router: Router) { 
     localStorage.removeItem('UserInfo');
   }
 
@@ -26,7 +26,7 @@ export class AuthService {
     if (user.username !== '' && user.password !== '' ) { 
       localStorage.setItem('UserInfo', JSON.stringify(user));
       this.loggedIn.next(true);
-      this.router.navigate(['/registration']);
+      this._router.navigate(['/registration']);
     }
   }
 
@@ -45,7 +45,7 @@ export class AuthService {
   public logout() {
     localStorage.removeItem('UserInfo');
     this.loggedIn.next(false);
-    this.router.navigate(['/home']);
+    this._router.navigate(['/home']);
   }
   
 }
