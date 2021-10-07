@@ -1,0 +1,78 @@
+<div class="p-col-12 p-md-12 p-lg-12 content">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="Opening Balance Entry">
+                <form #f="ngForm" name="openingBalance">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top">
+                            <div class="p-grid">
+                                <div class="p-col-2"></div>
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                            <label for="_taluk">Taluk<span class="form-mandatory-field">*</span>
+                                            </label>
+                                            <input type="text" class="p-col-12" name="_taluk" pInputText
+                                                [(ngModel)]="taluk" required />
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                            <label for="_district">District<span class="form-mandatory-field">*</span>
+                                            </label>
+                                            <input type="text" class="p-col-12" name="_district" pInputText
+                                                [(ngModel)]="district" required />
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
+                                            <label for="_hostelname">Hostel Name<span
+                                                    class="form-mandatory-field">*</span></label>
+                                            <input type="text" class="p-col-12" name="_hostelname" pInputText
+                                                [(ngModel)]="hostelName" required />
+                                        </div>
+                                        <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_year">Accounting Year<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_year" [options]="yearOptions" optionLabel="label"
+                                                        (onClick)="onSelect('Y')" [(ngModel)]="year" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                    <label for="_commodityName">Commodity Name<span
+                                                            class="form-mandatory-field">*</span></label>
+                                                    <p-dropdown name="_commodityName" [options]="commodityOptions"
+                                                        [(ngModel)]="commodityName" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_unit">Unit<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_unit" [options]="unitOptions" optionLabel="label"
+                                                        (onClick)="onSelect('U')" [(ngModel)]="unit" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_quantity">Quantity<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text" class="p-col-12" name="_quantity" pInputText
+                                                        [(ngModel)]="quantity" required />
+                                                </div>
+                                                <div class="p-col-12"></div>
+                                                <div class="p-col-12 p-md-6 p-lg-4" style="text-align: right;">
+                                                    <button pButton type="button" label="Submit"></button>
+                                                </div>
+                                                <div class="p-col-12 p-md-6 p-lg-6">
+                                                    <button pButton type="button" label="View"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-card>
+                </form>
+            </p-panel>
+        </div>
+    </div>
+</div>

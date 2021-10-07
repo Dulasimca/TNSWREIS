@@ -17,8 +17,10 @@ const routes: Routes = [
   { path: 'foodmster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
-  { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]},
-  //{ path: 'registration', component: RegistrationComponent}
+  { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
+  { path: 'opening-balance', component: OpeningBalanceComponent},
+  { path: 'commodity-master', component: CommodityMasterComponent},
+
 
 ];
 
