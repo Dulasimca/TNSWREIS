@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { MasterService } from 'src/app/services/master-data.service';
+import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 
 @Component({
   selector: 'app-hostelmaster',
@@ -39,7 +40,7 @@ export class HostelmasterComponent implements OnInit {
   data?: any = [];
   Table2?: any;
   Slno: any;
-  
+  public errors: WebcamInitError[] = [];
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService) { }
 
@@ -54,7 +55,9 @@ export class HostelmasterComponent implements OnInit {
     this.Slno = 0;
   }
   
-
+  public handleInitError(error: WebcamInitError): void {
+    this.errors.push(error);
+  }
 
   onSelect(type) {
     let hostelSelection = [];
