@@ -29,6 +29,9 @@ import { CameraComponent } from './Feature-module/camera/camera.component';
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
 import { MessageService } from 'primeng/api';
+import { UsermasterComponent } from './master/usermaster/usermaster.component';
+ //import { DataTableModule } from 'primeng/primeng';
+// import { PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import { MessageService } from 'primeng/api';
     RegistrationComponent,
     FoodmasterComponent,
     WardenDetailsComponent,
-    CameraComponent
+    CameraComponent,
+    UsermasterComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,8 @@ import { MessageService } from 'primeng/api';
     PanelModule,
     TabViewModule,
     CalendarModule,
+    // DataTableModule,
+    // PaginatorModule
 
   ],
   providers: [RestAPIService, MasterService, MessageService],
