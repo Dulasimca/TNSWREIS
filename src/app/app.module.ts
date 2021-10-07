@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
+import {ToastModule} from 'primeng/toast';
 
 
 import { AppComponent } from './app.component';
@@ -68,6 +69,7 @@ import { MessageService } from 'primeng/api';
     CalendarModule,
     RadioButtonModule,
     TableModule,
+    ToastModule
   ],
   providers: [RestAPIService, MasterService, MessageService],
   bootstrap: [AppComponent]

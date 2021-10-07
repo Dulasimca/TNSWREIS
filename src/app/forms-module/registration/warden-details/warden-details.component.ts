@@ -30,7 +30,7 @@ export class WardenDetailsComponent implements OnInit {
   hostelName: string;
   email: any;
   yearRange: string;
-  taluk: any;
+  taluk: number;
   district: any;
   mobNo: number;
   altMobNo: number
@@ -38,6 +38,8 @@ export class WardenDetailsComponent implements OnInit {
   addressTwo: any;
   pincode: any;
   wardenImage: string;
+  // data: any = [];
+
 
   genders?: any;
   districts?: any;
@@ -50,9 +52,9 @@ export class WardenDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.genders = this.masterService.getMaster('G');
-    this.districts = this.masterService.getMaster('D');
-    this.taluks = this.masterService.getMaster('T');
+    this.genders = this.masterService.getMaster('GD');
+    this.districts = this.masterService.getMaster('DT');
+    this.taluks = this.masterService.getMaster('TK');
 
   }
 
@@ -61,9 +63,8 @@ export class WardenDetailsComponent implements OnInit {
     let districtSelection = [];
     let talukSelection = [];
 
-
     switch (type) {
-      case 'G':
+      case 'GD':
         this.genders.forEach(g => {
           genderSelection.push({ label: g.name, value: g.code });
         })
@@ -92,8 +93,10 @@ export class WardenDetailsComponent implements OnInit {
   onSave() {
     const params =  {
       'Name' : this.wardenName,
+     'GenderId': this.gender,
       'DOB' : this.dob,
       'Qualification' : this.qualification,
+      'HostelId': 1,
       'HostelJoinedDate' : this.hosteljoin,
       'ServiceJoinedDate': this.servicedoj,
       'Designation': this.designation,
@@ -102,8 +105,11 @@ export class WardenDetailsComponent implements OnInit {
       'AlternateNo': this.altMobNo,
       'Address1': this.addressOne,
       'Address2': this.addressTwo,
+      'Districtcode': this.district.value,
+      'Talukid': this.taluk,
       'Pincode': this.pincode,
-      'Flag' : true
+      'Flag': 1,
+      'WardenId': 0
 
     };
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
@@ -132,6 +138,27 @@ export class WardenDetailsComponent implements OnInit {
       }
     })
   }
+  onView() {
+  }
+
+  // onView() {
+  //   const params = {
+  //   'WardenId': 0
+  //   }
+  //   this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
+  //     if(res !== null && res !== undefined && res.length !== 0) {
+  //       if(res) {
+  //     console.log('res', res);
+  //     this.data = res;
+  //     }
+  //   }
+  //   });
+
+  // }
+  // onEdit(rowData) {
+
+  // }
+
   clearform() {
     this._wardenDetails.reset();
   }
