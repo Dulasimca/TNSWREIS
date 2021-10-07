@@ -8,19 +8,19 @@
                         <div class="p-col-12 p-md-12 p-lg-12">
                             <p-tabView>
                                 <p-tabPanel header="Student Info">
-                                    <div class="p-grid">
+                                    <div #main1 class="p-grid">
                                         <div class="p-col-1"></div>
-                                        <div #main class="p-col-12 p-md-12 p-lg-10 card"  style="padding: 20px;">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main">
                                             <div #row1 class="p-col-12">
                                                 <div #grid1 class="p-grid">
-                                                    <div #field1 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                    <div #field1 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_studentname" id="sname" pInputText
                                                                 [(ngModel)]="studentName" required>
                                                             <label for="_studentname">Student Name</label>
                                                         </span>
                                                     </div>
-                                                    <div #field2 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                    <div #field2 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-calendar [(ngModel)]="dob" name="_dob"
                                                                 [monthNavigator]="true" [yearNavigator]="true"
@@ -30,7 +30,7 @@
                                                             <label for="_dob">D.O.B </label>
                                                         </span>
                                                     </div>
-                                                    <div #field3 class="p-field p-col-12 p-md-6 p-lg-2">
+                                                    <div #field3 class="p-field p-col-12 p-md-6 p-lg-1">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_age" id="sname" pInputText
                                                                 [(ngModel)]="age" required>
@@ -40,16 +40,13 @@
                                                     <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_bloodgroup" [options]="bloodGroupOptions"
-                                                                (onClick)="onSelect('B')" [(ngModel)]="bloodGroup" required>
+                                                                (onClick)="onSelect('B')" [(ngModel)]="bloodGroup"
+                                                                required>
                                                             </p-dropdown>
                                                             <label for="_bloodgroup">Blood Group</label>
                                                         </span>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div #row2 class="p-col-12 p-md-12 p-lg-12">
-                                                <div #grid2 class="p-grid">
-                                                    <div #field5 class="p-field p-col-12 p-md-6 p-lg-3">
+                                                    <div #field5 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_gender" [options]="genderOptions"
                                                                 (onClick)="onSelect('G')" [(ngModel)]="gender" required>
@@ -57,14 +54,111 @@
                                                             <label for="_gender">Gender</label>
                                                         </span>
                                                     </div>
-                                                    <div #field6 class="p-field p-col-12 p-md-6 p-lg-3">
+                                                </div>
+                                            </div>
+                                            <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                                <div #grid2 class="p-grid">
+                                                    <div #field6 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label p-input-icon-right">
-                                                            <p-dropdown name="_mothertongue" [options]="motherTongueOptions"
-                                                                (onClick)="onSelect('MT')" [(ngModel)]="motherTongue" required>
+                                                            <p-dropdown name="_district" [options]="districtOptions"
+                                                                (onClick)="onSelect('DT')" [(ngModel)]="district" required>
+                                                            </p-dropdown>
+                                                            <label for="_district">District</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field7 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_village" pInputText
+                                                                [(ngModel)]="villageName" required>
+                                                            <label for="_village">Village</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field8 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_taluk" [options]="talukOptions"
+                                                                (onClick)="onSelect('TK')" [(ngModel)]="taluk" required>
+                                                            </p-dropdown>
+                                                            <label for="_taluk">Taluk</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field9 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_mothertongue"
+                                                                [options]="motherTongueOptions"
+                                                                (onClick)="onSelect('MT')" [(ngModel)]="motherTongue"
+                                                                required>
                                                             </p-dropdown>
                                                             <label for="_mothertongue">Mother Tongue</label>
                                                         </span>
                                                     </div>
+                                                </div>
+                                                </div>
+                                            <div #row3 class="p-col-12 p-md-12 p-lg-12">
+                                                <div #grid3 class="p-grid">
+                                                    <!-- <div #field6 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_school" [options]="schoolOptions"
+                                                                (onClick)="onSelect('G')" [(ngModel)]="school" required>
+                                                            </p-dropdown>
+                                                            <label for="_school">School/College</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field7 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_course" [options]="courseOptions"
+                                                                (onClick)="onSelect('CR')" [(ngModel)]="course"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_course">Course Studying</label>
+                                                        </span>
+                                                    </div> -->
+                                                    <div #field10 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_caste" [options]="casteOptions"
+                                                                (onClick)="onSelect('CT')" [(ngModel)]="caste" required>
+                                                            </p-dropdown>
+                                                            <label for="_caste">Caste</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field11 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_religion" [options]="religionOptions"
+                                                                (onClick)="onSelect('RL')" [(ngModel)]="religion"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_religion">Religion</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field12 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_mobno" pInputText
+                                                                [(ngModel)]="mobileNo" required>
+                                                            <label for="_mobno">Mobile No</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field13 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_altmobno" pInputText
+                                                                [(ngModel)]="alternateMobNo" required>
+                                                            <label for="_altmobno">Alternate Mobile No</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div #row4 class="p-col-12 p-md-12 p-lg-12">
+                                                <div #grid4 class="p-grid">
+                                                   
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div #main2 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main">
+                                            <div class="div-header">Institution Details</div>
+                                            <div #row1 class="p-col-12 no-pad-top" style="border: 0.5px solid aliceblue;">
+                                                <div #grid1 class="p-grid">
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +168,7 @@
                                 </p-tabPanel>
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" icon="pi pi-sign-in"
-                                        class="btn-bg"></button>
+                                      (click)="onRoute()"  class="btn-bg"></button>
                                 </div>
                             </p-tabView>
                         </div>

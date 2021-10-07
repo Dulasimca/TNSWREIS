@@ -8,6 +8,7 @@ import { CommodityMasterComponent } from './master/commodity-master/commodity-ma
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
+import { AuthGuard } from './services/auth.guard';
 
 
 
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'foodmster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent},
-  { path: 'registration', component: RegistrationComponent},
+  { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-detailsform', component: WardenDetailsComponent},
   { path: 'registration', component: RegistrationComponent},
   { path: 'commodity-master', component: CommodityMasterComponent},

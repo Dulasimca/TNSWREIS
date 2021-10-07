@@ -14,6 +14,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import { TableModule } from 'primeng/table';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -31,6 +33,7 @@ import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
 import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -64,10 +67,10 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
     PanelModule,
     TabViewModule,
     CalendarModule,
-    RadioButtonModule
-
+    RadioButtonModule,
+    TableModule,
   ],
-  providers: [RestAPIService, MasterService],
+  providers: [RestAPIService, MasterService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
