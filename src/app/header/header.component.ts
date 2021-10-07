@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ subHeader: string;
 // @Output() open = new EventEmitter<boolean>();
 showNavBar: boolean;
 items: any[];
-  constructor(private router: Router) { }
+  constructor(private _router: Router, private _authService: AuthService) { }
 
   ngOnInit(): void {
     this.headerText = 'Government Of Tamilnadu';
@@ -22,7 +23,11 @@ items: any[];
 
   onSignIn() { 
     console.log('sign in');
-    this.router.navigate(['/login']);
+    this._router.navigate(['/login']);
+  }
+
+  onSignOut() {
+    this._authService.logout();
   }
 
   // onEmit() {

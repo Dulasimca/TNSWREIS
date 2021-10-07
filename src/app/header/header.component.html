@@ -27,7 +27,8 @@
             </div>
         </div>
         <div class="p-col-12 p-md-8 p-lg-1 txt-end align-center no-pad-btm">
-         <button pButton type="button" label="Login" class="btn-bg" icon="pi pi-sign-in" (click)="onSignIn()" ></button>
+            <button *ngIf="!showMenuIcon" pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()" ></button>
+            <button *ngIf="showMenuIcon" pButton type="button" label="Logout" icon="pi pi-sign-out" (click)="onSignOut()" ></button>
         </div>
     </div>
 </div>
