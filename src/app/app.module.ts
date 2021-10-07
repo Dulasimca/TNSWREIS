@@ -44,7 +44,6 @@ import { MessageService } from 'primeng/api';
     FooterComponent,
     FoodmasterComponent,
     HostelmasterComponent,
-   
     RegistrationComponent,
     FoodmasterComponent,
     WardenDetailsComponent,

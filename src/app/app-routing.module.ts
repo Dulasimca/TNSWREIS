@@ -17,12 +17,12 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'foodmster',component:FoodmasterComponent},
-  { path: 'hostelmaster',component:HostelmasterComponent},
+  { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
-  { path: 'warden-detailsform', component: WardenDetailsComponent},
-  { path: 'registration', component: RegistrationComponent},
-  { path: 'commodity-master', component: CommodityMasterComponent},
+  { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent},
+  { path: 'commodity-master', component: CommodityMasterComponent},
+
 
 ];
 
