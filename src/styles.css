@@ -138,6 +138,16 @@ body,html {
     }
   }
 
+  /* registration */
+  .div-main {
+    padding: 20px;
+    border: 0.5px solid aliceblue;
+  }
+  .div-header {
+    padding: 5px;
+    background: aliceblue;
+    color: #105c61;
+  }
 /* footer */
 .footer {
     position: fixed;

@@ -4,9 +4,9 @@ import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { RestAPIService } from 'src/Services/restAPI.service';
-import { MasterService } from 'src/Services/master-data.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { RestAPIService } from 'src/app/services/restAPI.service';
+import { MasterService } from 'src/app/services/master-data.service';
 
 
 
@@ -52,10 +52,7 @@ export class HostelmasterComponent implements OnInit {
  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
-  
-
-
-  constructor( private http: HttpClient, private restApiService: RestAPIService, 
+  constructor(private restApiService: RestAPIService, 
     private masterService: MasterService
    ) { }
 
@@ -110,7 +107,7 @@ export class HostelmasterComponent implements OnInit {
     const params = { 
      
     }
-   this.restApiService.getByParameters(PathConstants.MasterData_Get, params).subscribe(res => {
+   this.restApiService.getByParameters(PathConstants.MasterAll_Get, params).subscribe(res => {
     if(res !== null && res !== undefined && res.length !==0) {
       console.log(res);
       this.data = res;
