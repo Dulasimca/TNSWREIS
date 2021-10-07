@@ -13,6 +13,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { CalendarModule } from 'primeng/calendar';
 import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -28,6 +29,8 @@ import { CameraComponent } from './Feature-module/camera/camera.component';
 
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
+import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
+import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,9 @@ import { RestAPIService } from './services/restAPI.service';
     RegistrationComponent,
     FoodmasterComponent,
     WardenDetailsComponent,
-    CameraComponent
+    CameraComponent,
+    CommodityMasterComponent,
+    OpeningBalanceComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +64,7 @@ import { RestAPIService } from './services/restAPI.service';
     PanelModule,
     TabViewModule,
     CalendarModule,
+    RadioButtonModule
 
   ],
   providers: [RestAPIService, MasterService],
