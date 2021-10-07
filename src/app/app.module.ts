@@ -13,6 +13,9 @@ import { TabViewModule } from 'primeng/tabview';
 import { CalendarModule } from 'primeng/calendar';
 import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import { TableModule } from 'primeng/table';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -28,6 +31,8 @@ import { CameraComponent } from './Feature-module/camera/camera.component';
 
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
+import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
+import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { MessageService } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
  //import { DataTableModule } from 'primeng/primeng';
@@ -42,12 +47,13 @@ import { UsermasterComponent } from './master/usermaster/usermaster.component';
     FooterComponent,
     FoodmasterComponent,
     HostelmasterComponent,
-   
     RegistrationComponent,
     FoodmasterComponent,
     WardenDetailsComponent,
     CameraComponent,
-    UsermasterComponent
+    UsermasterComponent,
+    CommodityMasterComponent,
+    OpeningBalanceComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +73,8 @@ import { UsermasterComponent } from './master/usermaster/usermaster.component';
     // DataTableModule,
     // PaginatorModule
 
+    RadioButtonModule,
+    TableModule,
   ],
   providers: [RestAPIService, MasterService, MessageService],
   bootstrap: [AppComponent]

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { MasterService } from './services/master-data.service';
-
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +10,15 @@ import { MasterService } from './services/master-data.service';
 export class AppComponent {
   title = 'TNMenu';
   hideHeader: boolean = false;
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
   // showNavBar: boolean;
   // items: any[];
 
-  constructor(private _router: Router, private masterService: MasterService) {
-    this.isLoggedIn = false;
+  constructor(private _router: Router, private _authService: AuthService) {
+    this._authService.isLoggedIn.subscribe(value => {
+      this.isLoggedIn = value;
+      console.log('log', this.isLoggedIn);
+    });
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login') {
@@ -26,7 +28,6 @@ export class AppComponent {
         }
       }
     });
-    this.masterService.initializeMaster();
   }
   // onOpenSideMenu() {
   //   console.log('insi');

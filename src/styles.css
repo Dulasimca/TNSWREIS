@@ -138,6 +138,16 @@ body,html {
     }
   }
 
+  /* registration */
+  .div-main {
+    padding: 20px;
+    border: 0.5px solid aliceblue;
+  }
+  .div-header {
+    padding: 5px;
+    background: aliceblue;
+    color: #105c61;
+  }
 /* footer */
 .footer {
     position: fixed;
@@ -263,4 +273,16 @@ body,html {
 .p-input-icon-left, .p-input-icon-right {
     position: relative;
     display: block !important;
+}
+.edit-size {
+    font-size: 0.9rem !important;
+    position: absolute; 
+    right: 0;
+    left: 0;
+}
+.b-size { 
+border: 0.5px !important ;
+width: 25px!important;
+height: 25px !important;
+
 }

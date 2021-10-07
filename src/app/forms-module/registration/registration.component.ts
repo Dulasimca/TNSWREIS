@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { MasterService } from 'src/app/services/master-data.service';
 
@@ -33,22 +34,38 @@ export class RegistrationComponent implements OnInit {
   courseOptions: SelectItem[];
   course: string;
   courses?: any;
+  districtOptions: SelectItem[];
+  district: string;
+  districts?: any;
+  villageName: string;
+  talukOptions: SelectItem[];
+  taluk: string;
+  taluks?: any;
+  mobileNo: string;
+  alternateMobNo: string;
 
-  constructor(private _masterService: MasterService) { }
+  constructor(private _masterService: MasterService, private _router: Router) { }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 30;
     this.yearRange = start_year_range + ':' + current_year;
-    this.bloodgroups = this._masterService.getMaster('B');
-    this.genders = this._masterService.getMaster('G');
-    console.log('master', this.genders, this.bloodgroups);
+    this.bloodgroups = this._masterService.getMaster('BG');
+    this.genders = this._masterService.getMaster('GD');
+    this.districts = this._masterService.getMaster('DT');
+    console.log('master', this.genders, this.bloodgroups, this.districts);
   }
 
   onSelect(type) {
+    let districtSelection = [];
+    let genderSelection = [];
     switch (type) {
       case 'G':
-        this.genderOptions = this.genders;
+        this.genders.forEach(g => {
+          genderSelection.push({ label: g.name, value: g.code });
+        })
+        this.genderOptions = genderSelection;
+        this.genderOptions.unshift({ label: '-select-', value: null });
         break;
       case 'B':
         this.bloodGroupOptions = this.bloodgroups;
@@ -56,6 +73,14 @@ export class RegistrationComponent implements OnInit {
       case 'MT':
         this.motherTongueOptions = this.languages;
         break;
+      case 'DT':
+        this.districts.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
+        })
+        this.districtOptions = districtSelection;
+        this.districtOptions.unshift({ label: '-select-', value: null });
+        break;
+
     }
   }
 
@@ -64,6 +89,11 @@ export class RegistrationComponent implements OnInit {
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
     console.log(age);
     this.age = age;
+  }
+
+  onRoute() {
+    console.log('navigate');
+    this._router.navigate(['/warden-detailsform']);
   }
 
 }
