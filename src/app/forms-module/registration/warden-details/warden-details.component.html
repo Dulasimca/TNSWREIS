@@ -110,13 +110,13 @@
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_taluk">Native Taluk<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk" name="_taluk">
+                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk"  (onClick)="onSelect('T')" name="_taluk">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_district">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district"
+                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district"  (onClick)="onSelect('D')"
                                                     name="_district"></p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -136,7 +136,6 @@
                                                      icon="pi pi-plus edit-size" pButton type="file" #file
                                                     (click)="userFile.click()">
                                                 </button>
-                                                <label>Upload Warden Image</label>
                                             </div>
                                             </div>
                                         </div>
