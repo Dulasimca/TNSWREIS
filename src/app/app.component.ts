@@ -10,13 +10,14 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'TNMenu';
   hideHeader: boolean = false;
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
   // showNavBar: boolean;
   // items: any[];
 
   constructor(private _router: Router, private _authService: AuthService) {
     this._authService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
+      console.log('log', this.isLoggedIn);
     });
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
