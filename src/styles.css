@@ -10,6 +10,9 @@ body,html {
     background-color: #fdf8ef !important;
     line-height: 1.6em !important;
 }
+.form-mandatory-field {
+    color: #ff0131;
+}
 
 .content {
     /* padding-bottom: 45px !important;
