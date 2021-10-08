@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { MasterService } from 'src/app/services/master-data.service';
@@ -50,7 +52,34 @@ export class RegistrationComponent implements OnInit {
   classes?: any;
   distanceFromHostel: any;
   distanceFromHome: any;
-  constructor(private _masterService: MasterService, private _router: Router) { }
+  isDisability: boolean = false;
+  disabilityType: string;
+  addressLine1: string;
+  addressLine2: string;
+  landmark: string;
+  pincode: string;
+  ifscCode: string;
+  bankName: string;
+  bankAccNo: string;
+  branchName: string;
+  lastInstitutionName: string;
+  lastAddress: string;
+  rationCardNo: string;
+  emisNo: string;
+  aadharNo: string;
+  fatherName: string;
+  fatherQulaification: string;
+  fatherOccupation: string;
+  fatherMobileNo: string;
+  motherName: string;
+  motherQulaification: string;
+  motherOccupation: string;
+  motherMobileNo: string;
+  studentImage: any = '';
+  @ViewChild('f', { static: false }) _registrationForm: NgForm;
+
+  constructor(private _masterService: MasterService, private _router: Router, 
+    private _d: DomSanitizer) { }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
@@ -93,6 +122,13 @@ export class RegistrationComponent implements OnInit {
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
     console.log(age);
     this.age = age;
+  }
+
+  onFileUpload($event) {
+    const selectedFile = $event.target.files[0];
+    const url = window.URL.createObjectURL(selectedFile);
+    this.studentImage = this._d.bypassSecurityTrustUrl(url);
+
   }
 
   onRoute() {

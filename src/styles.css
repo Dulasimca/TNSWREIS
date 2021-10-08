@@ -12,8 +12,14 @@ body,html {
 }
 
 .content {
-    padding-bottom: 45px !important;
-    padding-top: 7.5rem !important;
+    /* padding-bottom: 45px !important;
+    padding-top: 7.5rem !important; */
+    position: absolute;
+    top: 90px !important;
+    bottom: 25px !important;
+    left: 0;
+    right: 0;
+    overflow: auto !important;
 }
 
 .cursor {
@@ -86,11 +92,14 @@ body,html {
     padding-top: 15px;
 }
 .top-bar {
-    position: fixed;
+    position: absolute !important;
+    overflow: hidden !important;
     background-color: #08747B !important;
     border-color: rgba(255,255,255,.2) !important;
     color: whitesmoke !important;
-    top: 0;
+    top: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
     width: 100%;
 }
 .header-text {
@@ -134,29 +143,31 @@ body,html {
         width: 55px !important;
     }
     .content {
-        padding-top: 9rem !important;
+        top: 100px !important;
     }
   }
 
   /* registration */
   .div-main {
-    padding: 20px;
-    border: 0.5px solid aliceblue;
+    padding: 20px 10px 0 10px;
   }
   .div-header {
     padding: 5px;
     background: aliceblue;
     color: #105c61;
   }
+  .border-blue {
+    border: 0.5px solid aliceblue;
+  }
 /* footer */
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    position: absolute;
+    overflow: hidden !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     width: 100%;
     text-align: center;
-   /* padding: 1px 0 1px 0 !important;
-     height: 32px !important; */
     background-color: #08747B !important;
     border-color: rgba(255,255,255,.2) !important;
     color: whitesmoke !important;
@@ -182,7 +193,7 @@ body,html {
     border-color: #728385 !important;
 }
 .p-inputtext:enabled:hover {
-    border-color: #116d74 !important;
+    border-color: #50dee9 !important;
 }
 .p-panel .p-panel-header {
     border: 1px solid #dee2e6;

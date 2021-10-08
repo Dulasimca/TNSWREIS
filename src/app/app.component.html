@@ -1,13 +1,13 @@
-<div #main *ngIf="!hideHeader">
-  <app-header [showMenuIcon]="isLoggedIn"></app-header>
+<div #main >
+  <app-header *ngIf="!hideHeader" [showMenuIcon]="isLoggedIn"></app-header>
   <!-- (open)="onOpenSideMenu()" -->
   <!-- <p-sidebar #sidebar [(visible)]="showNavBar" [baseZIndex]="10000">
   <p-panelMenu [model]="items"></p-panelMenu>
 </p-sidebar> -->
-
-  <app-footer></app-footer>
-</div>
 <router-outlet></router-outlet>
+
+  <app-footer *ngIf="!hideHeader"></app-footer>
+</div>
 
 <!-- <div #login *ngIf="hideHeader">
   <router-outlet></router-outlet>
