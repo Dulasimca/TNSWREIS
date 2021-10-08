@@ -281,7 +281,7 @@ height: 25px !important;
 .p-button.p-button-icon-only {
     width: 2.357rem;
     padding: 0 !important;
-    margin-left: -20% !important;
+    /* margin-left: -20% !important; */
 }
 .p-calendar {
     width: -webkit-fill-available !important;
