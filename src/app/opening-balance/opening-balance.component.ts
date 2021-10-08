@@ -23,6 +23,8 @@ export class OpeningBalanceComponent implements OnInit {
   districtOptions: SelectItem[];
   quantity: any;
   entryDate: any;
+  blncdata: any = [];
+  showTable: boolean;
   
   units?: any;
   
@@ -47,5 +49,11 @@ export class OpeningBalanceComponent implements OnInit {
         break;
 
 }
+  }
+  onEdit(rowData) {
+
+  }
+  onView() {
+    this.showTable = true;
   }
 }

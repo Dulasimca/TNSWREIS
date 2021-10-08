@@ -9,5 +9,7 @@ public static readonly Hostel_Get = 'Hostel';
 public static readonly Warden_post = 'Warden/Post'; 
 public static readonly Warden_Get = 'Warden/Get'; 
 
+public static readonly  CommodityMaster_Post = ' CommodityMaster/Post'; 
+public static readonly  CommodityMaster_Get = ' CommodityMaster/Get'; 
 
 }
