@@ -29,8 +29,6 @@ export class MasterService {
     }
 
     getMaster(type): any {
-        console.log('inside master')
-        console.log('master', this.data);
         this.masterData = [];
         switch (type) {
             case 'DT':
@@ -43,7 +41,7 @@ export class MasterService {
                     this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
                 })
                 break;
-            case 'HT': 
+            case 'HT':
                 this.data.Table2.forEach(h => {
                     this.masterData.push({ name: h.Name, code: h.HTypeId });
                 })
@@ -52,7 +50,7 @@ export class MasterService {
                 this.data.Table3.forEach(g => {
                     this.masterData.push({ name: g.Name, code: g.Id });
                 })
-                break; 
+                break;
             case 'QT':
                 this.data.Table4.forEach(q => {
                     this.masterData.push({ name: q.Name, code: q.Id });
@@ -63,11 +61,11 @@ export class MasterService {
                     this.masterData.push({ name: a.ShortYear, code: a.Id });
                 })
                 break;
-                case 'CM':
-                    this.data.Table6.forEach(c => {
-                        this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
-                    })
-                    break;
+            case 'CM':
+                this.data.Table6.forEach(c => {
+                    this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
+                })
+                break;
             case 'RL':
                 this.masterData = [
                     { label: '-select-', value: null },

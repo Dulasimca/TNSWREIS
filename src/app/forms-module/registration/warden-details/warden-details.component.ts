@@ -114,7 +114,6 @@ export class WardenDetailsComponent implements OnInit {
     };
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
       if (res) {
-        console.log('s',res);
         this.clearform();
         this.messageService.clear();
         this.messageService.add({

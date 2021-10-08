@@ -19,7 +19,6 @@ export class AppComponent {
   constructor(private _router: Router, private _authService: AuthService, private _masterService: MasterService) {
     this._authService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
-      console.log('log', this.isLoggedIn);
     });
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -35,11 +34,7 @@ export class AppComponent {
   ngOnInit() {
     let master = new Observable<any[]>();
     master = this._masterService.initializeMaster();
-    master.subscribe(response => {
-      if(response) {
-        console.log('res', response);
-      }
-    });
+    master.subscribe(response => {});
   }
   // onOpenSideMenu() {
   //   console.log('insi');
