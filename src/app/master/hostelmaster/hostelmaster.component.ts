@@ -11,6 +11,7 @@ import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+import { Observable, Subject } from 'rxjs';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class HostelmasterComponent implements OnInit {
  
   Hostelname: string;
   Hosteltamilname: string;
-  Hosteltype: string;
+  Hosteltype: any;
   Hosteltypes?: any;
   HosteltypeOptions: SelectItem[];
   DistrictcodeOptions: SelectItem[];
@@ -47,7 +48,10 @@ export class HostelmasterComponent implements OnInit {
   data?: any = [];
   Table2?: any;
   Slno: any;
+  openCamera: boolean;
   public errors: WebcamInitError[] = [];
+  private trigger: Subject<void> = new Subject<void>();
+
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService) { }
 
@@ -58,9 +62,25 @@ export class HostelmasterComponent implements OnInit {
     this.Hosteltypes = this.masterService.getMaster('HT');
     console.log('hostel', this.Hosteltypes);
 
-    this.TalukIds = this.masterService.getMaster('T');
+    this.TalukIds = this.masterService.getMaster('TK');
     this.Slno = 0;
   }
+  public webcamImage: WebcamImage = null;
+
+  handleImage(webcamImage: WebcamImage) {
+    this.webcamImage = webcamImage;
+    this.openCamera= false;
+    console.log('handle', this.webcamImage);
+  }
+  public triggerSnapshot(): void {
+    this.trigger.next();
+  }
+
+  public get triggerObservable(): Observable<void> {
+    console.log('trigger', this.trigger);
+    return this.trigger.asObservable();
+  }
+
   
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
@@ -71,7 +91,7 @@ export class HostelmasterComponent implements OnInit {
     let districtSelection = [];
     let talukSelection = [];
     this.masterData = [];
-    switch (type) {
+    switch (type) {   
       case 'HT':
         this.Hosteltypes.forEach(h => {
           hostelSelection.push({ label: h.name, code: h.code });
@@ -80,26 +100,17 @@ export class HostelmasterComponent implements OnInit {
         break;
       case 'D':
         this.Districtcodes.forEach(d => {
-          this.masterData.push({ label: d.name, value: d.code });
-        })
+          districtSelection.push({ label: d.name, value: d.code });
+        });
+        this.DistrictcodeOptions = districtSelection;
         break;
-      case 'T':
+      case 'TK':
         this.TalukIds.forEach(t => {
-          this.masterData.push({ label: t.name, code: t.code });
-        })
+          talukSelection.push({ label: t.name, code: t.code });
+        });
+        this.TalukIdOptions = talukSelection;
         break;
-        let classSelection = [];
-        let sectionSelection = [];
-
-      // switch (type) {
-      //   case 'C':
-      //     this.classes.forEach(c => {
-      //       classSelection.push({ label: c.name, value: c.code })
-      //     });
-      //     this.classOptions = classSelection;
-      //     this.classOptions.unshift({ label: '-select', value: null });
-      //     break;
-
+        
     }
   }
   onSubmit() {
@@ -107,9 +118,9 @@ export class HostelmasterComponent implements OnInit {
       'Slno': this.Slno,
       'HostelName': this.Hostelname,
       'HostelNameTamil': this.Hosteltamilname,
-      'HTypeId': this.Hosteltype,
-      'Districtcode': this.Districtcode,
-      'Talukid': this.TalukId,
+      'HTypeId': this.Hosteltype.value,
+      'Districtcode': this.Districtcode.value,
+      'Talukid': this.TalukId.value,
       'BuildingNo': this.Buildingno,
       'Street': this.Street,
       'Landmark': this.Landmark,
@@ -119,7 +130,7 @@ export class HostelmasterComponent implements OnInit {
       'Radius': this.Radius,
       'TotalStudent': this.Totalstudent,
       'Phone': this.mobileNo,
-      'HostelImage': this.upload
+      'HostelImage': 12
     };
     this.restApiService.post(PathConstants.Hostel_Post, params).subscribe(res => {
       if (res !== undefined && res !== null) {
@@ -170,6 +181,18 @@ export class HostelmasterComponent implements OnInit {
       }
 
     })
+  }
+  camera() {
+    
+       this.openCamera = true;
+
+  }
+  capture() {
+   this.captureImage();
+  }
+  captureImage() {
+    console.log('Entered');   
+    this.trigger.next(); 
   }
   clear() {
 
