@@ -37,6 +37,7 @@ import { RestAPIService } from './services/restAPI.service';
 import { MessageService } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { DatePipe } from '@angular/common';
+import { BlockUIModule } from 'ng-block-ui';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -77,6 +78,7 @@ import { DatePipe } from '@angular/common';
 
     RadioButtonModule,
     TableModule,
+    BlockUIModule,
     CheckboxModule,
     ToastModule
   ],

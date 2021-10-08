@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent},
-  { path: 'commodity-master', component: CommodityMasterComponent},
+  { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'usermaster', component:UsermasterComponent},
 
 
