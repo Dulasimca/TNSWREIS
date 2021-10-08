@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { MasterService } from 'src/app/services/master-data.service';
@@ -50,7 +52,48 @@ export class RegistrationComponent implements OnInit {
   classes?: any;
   distanceFromHostel: any;
   distanceFromHome: any;
-  constructor(private _masterService: MasterService, private _router: Router) { }
+  isDisability: boolean = false;
+  disabilityType: string;
+  addressLine1: string;
+  addressLine2: string;
+  landmark: string;
+  pincode: string;
+  ifscCode: string;
+  bankName: string;
+  bankAccNo: string;
+  branchName: string;
+  lastInstitutionName: string;
+  lastAddress: string;
+  rationCardNo: string;
+  emisNo: string;
+  aadharNo: string;
+  fatherName: string;
+  fatherQulaification: string;
+  fatherOccupation: string;
+  fatherMobileNo: string;
+  fatherYIncome: any;
+  motherName: string;
+  motherQulaification: string;
+  motherOccupation: string;
+  motherMobileNo: string;
+  motherYIncome: any;
+  guardianName: string;
+  guardianOccupation: string;
+  guardianQulaification: string;
+  guardianMobileNo: string;
+  guardianYIncome: any;
+  studentImage: any = '';
+  disableTaluk: boolean = true;
+  medium: string;
+  courseTitle: string;
+  @ViewChild('f', { static: false }) _registrationForm: NgForm;
+  @ViewChild('bankPassBook', { static: false }) _bankPassBook: ElementRef;
+  @ViewChild('transferCertificate', { static: false }) _transferCertificate: ElementRef;
+  @ViewChild('incomeCertificate', { static: false }) _incomeCertificate: ElementRef;
+  @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
+
+  constructor(private _masterService: MasterService, private _router: Router,
+    private _d: DomSanitizer) { }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
@@ -59,11 +102,15 @@ export class RegistrationComponent implements OnInit {
     this.bloodgroups = this._masterService.getMaster('BG');
     this.genders = this._masterService.getMaster('GD');
     this.districts = this._masterService.getMaster('DT');
+    this.languages = this._masterService.getMaster('MT');
+    this.castes = this._masterService.getMaster('CS');
+    this.religions = this._masterService.getMaster('RL');
   }
 
   onSelect(type) {
     let districtSelection = [];
     let genderSelection = [];
+    let talukSelection = [];
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
@@ -84,6 +131,28 @@ export class RegistrationComponent implements OnInit {
         })
         this.districtOptions = districtSelection;
         this.districtOptions.unshift({ label: '-select-', value: null });
+        if (this.district !== null && this.district !== undefined) {
+          this.disableTaluk = false;
+        } else {
+          this.disableTaluk = true;
+        }
+        break;
+      case 'TK':
+        if (this.district !== undefined && this.district !== null) {
+          this.taluks.forEach(t => {
+            if (t.dcode === this.district) {
+              talukSelection.push({ label: t.name, value: t.code });
+            }
+          })
+          this.talukOptions = talukSelection;
+          this.talukOptions.unshift({ label: '-select-', value: null });
+        }
+        break;
+      case 'CT':
+        this.casteOptions = this.castes;
+        break;
+      case 'RL':
+        this.religionOptions = this.religions;
         break;
     }
   }
@@ -93,6 +162,38 @@ export class RegistrationComponent implements OnInit {
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
     console.log(age);
     this.age = age;
+  }
+
+  onFileUpload($event, id) {
+    const selectedFile = $event.target.files[0];
+    // var fileInput: any = document.getElementById('incomeCertificate');
+    // var filePath = fileInput;
+    // console.log('path', filePath);
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+    switch (id) {
+      case 1:
+        const url = window.URL.createObjectURL(selectedFile);
+        this.studentImage = this._d.bypassSecurityTrustUrl(url);
+        break;
+      case 2:
+        break;
+    }
+
+  }
+
+  clearForm() {
+    this._registrationForm.reset();
+    this._registrationForm.form.markAsUntouched();
+    this._registrationForm.form.markAsPristine();
+    this._studentImg.nativeElement.value = null;
+    this._bankPassBook.nativeElement.value = null;
+    this._incomeCertificate.nativeElement.value = null;
+    this._transferCertificate.nativeElement.value = null;
+    this.studentImage = '';
+    this.disableTaluk = true;
+    this.isDisability = false;
+    this.institutionType = '1';
   }
 
   onRoute() {
