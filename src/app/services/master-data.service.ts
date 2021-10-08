@@ -66,48 +66,39 @@ export class MasterService {
                     this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
                 })
                 break;
-            case 'RL':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'Christian', value: 'Christian' },
-                    { label: 'Hindu', value: 'Hindu' },
-                    { label: 'Muslim', value: 'Muslim' },
-                    { label: 'Others', value: 'Others' },
-                ];
+            case 'BG':
+                this.data.Table7.forEach(b => {
+                    this.masterData.push({ name: b.Name, code: b.Id });
+                })
                 break;
             case 'CS':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'MBC', value: 'MBC' },
-                    { label: 'BC', value: 'BC' },
-                    { label: 'OC', value: 'OC' },
-                    { label: 'SC/ST', value: 'SC' },
-                ];
+                this.data.Table8.forEach(c => {
+                    this.masterData.push({ name: c.Name, code: c.Id });
+                })
                 break;
-            case 'BG':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'A+', value: 'A+' },
-                    { label: 'A-', value: 'A-' },
-                    { label: 'AB+', value: 'AB+' },
-                    { label: 'AB-', value: 'AB-' },
-                    { label: 'B+', value: 'B+' },
-                    { label: 'B-', value: 'B-' },
-                    { label: 'O+', value: 'O+' },
-                    { label: 'O-', value: 'O-' },
-                ];
+            case 'RL':
+                this.data.Table9.forEach(r => {
+                    this.masterData.push({ name: r.Name, code: r.Id });
+                })
                 break;
             case 'MT':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'Tamil', value: 'Tamil' },
-                    { label: 'English', value: 'English' },
-                    { label: 'Others', value: "Others" },
-                ];
+                this.data.Table10.forEach(m => {
+                    this.masterData.push({ name: m.Name, code: m.Id });
+                })
                 break;
             case 'FD':
                 this.days.forEach(d => {
                     this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.slno });
+                })
+                break;
+            case 'CU':
+                this.data.Table11.forEach(u => {
+                    this.masterData.push({ name: u.Name, code: u.Id });
+                })
+                break;
+            case 'CL':
+                this.data.Table12.forEach(c => {
+                    this.masterData.push({ name: c.Name, code: c.Id });
                 })
                 break;
         }
