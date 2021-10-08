@@ -43,7 +43,13 @@ export class RegistrationComponent implements OnInit {
   taluks?: any;
   mobileNo: string;
   alternateMobNo: string;
-
+  institutionType: string = '1';
+  institutionName: string;
+  classOptions: SelectItem[];
+  class: string;
+  classes?: any;
+  distanceFromHostel: any;
+  distanceFromHome: any;
   constructor(private _masterService: MasterService, private _router: Router) { }
 
   ngOnInit(): void {
@@ -53,21 +59,20 @@ export class RegistrationComponent implements OnInit {
     this.bloodgroups = this._masterService.getMaster('BG');
     this.genders = this._masterService.getMaster('GD');
     this.districts = this._masterService.getMaster('DT');
-    console.log('master', this.genders, this.bloodgroups, this.districts);
   }
 
   onSelect(type) {
     let districtSelection = [];
     let genderSelection = [];
     switch (type) {
-      case 'G':
+      case 'GD':
         this.genders.forEach(g => {
           genderSelection.push({ label: g.name, value: g.code });
         })
         this.genderOptions = genderSelection;
         this.genderOptions.unshift({ label: '-select-', value: null });
         break;
-      case 'B':
+      case 'BG':
         this.bloodGroupOptions = this.bloodgroups;
         break;
       case 'MT':
@@ -80,7 +85,6 @@ export class RegistrationComponent implements OnInit {
         this.districtOptions = districtSelection;
         this.districtOptions.unshift({ label: '-select-', value: null });
         break;
-
     }
   }
 
@@ -92,7 +96,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    console.log('navigate');
     this._router.navigate(['/warden-detailsform']);
   }
 

@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
+import {ToastModule} from 'primeng/toast';
 
 
 import { AppComponent } from './app.component';
@@ -34,6 +35,9 @@ import { RestAPIService } from './services/restAPI.service';
 import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { MessageService } from 'primeng/api';
+import { UsermasterComponent } from './master/usermaster/usermaster.component';
+ //import { DataTableModule } from 'primeng/primeng';
+// import { PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -48,6 +52,7 @@ import { MessageService } from 'primeng/api';
     FoodmasterComponent,
     WardenDetailsComponent,
     CameraComponent,
+    UsermasterComponent,
     CommodityMasterComponent,
     OpeningBalanceComponent
   ],
@@ -66,8 +71,12 @@ import { MessageService } from 'primeng/api';
     PanelModule,
     TabViewModule,
     CalendarModule,
+    // DataTableModule,
+    // PaginatorModule
+
     RadioButtonModule,
     TableModule,
+    ToastModule
   ],
   providers: [RestAPIService, MasterService, MessageService],
   bootstrap: [AppComponent]

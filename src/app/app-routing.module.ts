@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
+import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { AuthGuard } from './services/auth.guard';
 
@@ -16,12 +17,13 @@ const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'foodmster',component:FoodmasterComponent},
+  { path: 'foodmaster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent},
   { path: 'commodity-master', component: CommodityMasterComponent},
+  { path: 'usermaster', component:UsermasterComponent},
 
 
 ];

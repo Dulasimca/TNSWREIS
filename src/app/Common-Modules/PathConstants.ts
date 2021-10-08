@@ -6,4 +6,8 @@ public static readonly FoodMaster_Post = 'FoodMaster';
 public static readonly Hostel_Post = 'Hostel/Post';
 public static readonly Hostel_Get = 'Hostel';
 
+public static readonly Warden_post = 'Warden/Post'; 
+public static readonly Warden_Get = 'Warden/Get'; 
+
+
 }

@@ -2,6 +2,7 @@
     <div class="p-grid">
         <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Warden">
                 <form #f="ngForm" name="wardenDetails">
                     <p-card>
@@ -17,7 +18,7 @@
                                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                         <label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
                                         <p-dropdown name="_gender" [options]="genderOptions"
-                                            (onClick)="onSelect('G')" [(ngModel)]="gender" required>
+                                            (onClick)="onSelect('GD')" [(ngModel)]="gender" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
@@ -63,15 +64,12 @@
                                                         yearRange="{{yearRange}}" inputId="hosteljoindate" dateFormat="yy-mm-dd"
                                                         required></p-calendar>
                                                 </div>
-                                            <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_hstlleavedate">Hostel Leaving Date<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <p-calendar [(ngModel)]="hstlLeaveDate" name="_hstlleavedate" [showIcon]="true"
-                                                    [monthNavigator]="true" [yearNavigator]="true"
-                                                    yearRange="{{yearRange}}" inputId="hostelleavedate" dateFormat="yy-mm-dd"
-                                                    required></p-calendar>
-                                            </div>
-                                            
+                                                <div class="p-col-12 p-md-6 p-lg-2">
+                                                    <div><label for="_email">Email Id<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="email" class="p-col-12" name="_email" pInputText
+                                                        [(ngModel)]="email" required />
+                                                </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_mobno">Mobile Number<span
                                                             class="form-mandatory-field">*</span></label></div>
@@ -89,12 +87,6 @@
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
                                             <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_email">Email Id<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <input type="email" class="p-col-12" name="_email" pInputText
-                                                    [(ngModel)]="email" required />
-                                            </div>
-                                            <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_address1">Address Line 1<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <input class="p-col-12" name="_address1" pInputText
@@ -110,14 +102,14 @@
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_taluk">Native Taluk<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk" name="_taluk">
+                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk" (onClick)="onSelect('T')" name="_taluk">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_district">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district"
-                                                    name="_district"></p-dropdown>
+                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district" (onClick)="onSelect('D')"
+                                                    name="_district" optionLabel="label"></p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_pincode">Pincode</label><span
@@ -136,13 +128,16 @@
                                                      icon="pi pi-plus edit-size" pButton type="file" #file
                                                     (click)="userFile.click()">
                                                 </button>
-                                                <label>Upload Warden Image</label>
+                                                <div>Upload Warden Image</div>
                                             </div>
                                             </div>
                                         </div>
                                     </div>
-                                            <div class="p-col-12 p-md-12 p-lg-12" style="text-align: center;"> 
-                                            <button pButton type="button" label="Submit" (click)="onSave()"></button>
+                                            <div class="p-col-12 p-md-6 p-lg-6" style="text-align: right;"> 
+                                            <button pButton type="button" label="Submit" (click)="onSave()" [disabled]="(!f.valid)"></button>
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-6"> 
+                                            <button pButton type="button" label="View" (click)="onView()"></button>
                                         </div>
                                         </div>
                                     </div>

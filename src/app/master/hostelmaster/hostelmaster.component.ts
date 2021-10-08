@@ -1,11 +1,18 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
+
+
+
+
+
+
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-hostelmaster',

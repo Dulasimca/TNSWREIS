@@ -50,7 +50,7 @@ export class MasterService {
                 break;
             case 'GD':
                 this.data.Table3.forEach(g => {
-                    this.masterData.push({ name: g.Id, code: g.Name });
+                    this.masterData.push({ name: g.Name, code: g.Id });
                 })
                 break; 
             case 'QT':
