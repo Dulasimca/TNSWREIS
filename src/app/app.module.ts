@@ -36,6 +36,7 @@ import { CommodityMasterComponent } from './master/commodity-master/commodity-ma
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { MessageService } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
+import { BlockUIModule } from 'ng-block-ui';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -76,6 +77,7 @@ import { UsermasterComponent } from './master/usermaster/usermaster.component';
 
     RadioButtonModule,
     TableModule,
+    BlockUIModule,
     ToastModule
   ],
   providers: [RestAPIService, MasterService, MessageService],

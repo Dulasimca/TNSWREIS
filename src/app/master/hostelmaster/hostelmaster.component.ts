@@ -1,17 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { SelectItem } from 'primeng/api';
-import { HttpClient } from '@angular/common/http';
-
-
-
-
-
+import { MessageService, SelectItem } from 'primeng/api';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
 
 
 @Component({
@@ -45,17 +41,37 @@ export class HostelmasterComponent implements OnInit {
   daysOptions: SelectItem[];
   masterData?: any = [];
   days?: any = [];
-  data?: any = [];
+  data: any = [];
   Table2?: any;
   Slno: any;
+  cols: any;
   openCamera: boolean;
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
-    private masterService: MasterService) { }
+    private masterService: MasterService,private messageService: MessageService) { }
 
   public ngOnInit(): void {
+   this.cols = [
+     { field: 'Slno', header: 'ID', width: '100px'},
+     { field: 'HostelName', header: 'HostelName', width: '100px'},
+     { field: 'HostelNameTamil', header: 'HostelNameTamil', width: '100px'},
+     { field: 'HTypeId', header: 'HTypeId', width: '100px'},
+     { field: 'Districtcode', header: 'Districtcode', width: '100px'},
+     { field: 'Talukid', header: 'Talukid', width: '100px'},
+     { field: 'BuildingNo', header: 'BuildingNo', width: '100px'},
+     { field: 'Street', header: 'Street', width: '100px'},
+     { field: 'Landmark', header: 'Landmark', width: '100px'},
+     { field: 'Pincode', header: 'Pincode', width: '100px'},
+     { field: 'Longitude', header: 'Longitude', width: '100px'},
+     { field: 'Latitude', header: 'Latitude', width: '100px'},
+     { field: 'Radius', header: 'Radius', width: '100px'},
+     { field: 'TotalStudent', header: 'TotalStudent', width: '100px'},
+     { field: 'Phone', header: 'Phone', width: '100px'},
+     { field: 'HostelImage', header: 'HostelImage', width: '100px'},
+
+   ];
 
     this.Districtcodes = this.masterService.getMaster('DT');
     console.log('hostel', this.Districtcodes);
@@ -94,7 +110,7 @@ export class HostelmasterComponent implements OnInit {
     switch (type) {   
       case 'HT':
         this.Hosteltypes.forEach(h => {
-          hostelSelection.push({ label: h.name, code: h.code });
+          hostelSelection.push({ label: h.name, value: h.code });
         });
         this.HosteltypeOptions = hostelSelection;
         break;
@@ -106,7 +122,7 @@ export class HostelmasterComponent implements OnInit {
         break;
       case 'TK':
         this.TalukIds.forEach(t => {
-          talukSelection.push({ label: t.name, code: t.code });
+          talukSelection.push({ label: t.name, value: t.code });
         });
         this.TalukIdOptions = talukSelection;
         break;
@@ -114,8 +130,9 @@ export class HostelmasterComponent implements OnInit {
     }
   }
   onSubmit() {
+    
     const params = {
-      'Slno': this.Slno,
+      'Slno': this.Slno != undefined ? this.Slno : 0,
       'HostelName': this.Hostelname,
       'HostelNameTamil': this.Hosteltamilname,
       'HTypeId': this.Hosteltype.value,
@@ -135,52 +152,54 @@ export class HostelmasterComponent implements OnInit {
     this.restApiService.post(PathConstants.Hostel_Post, params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
-          //   this.blockUI.stop();
-          //   this.clear();
-          //   this.messageService.clear();
-          //   this.messageService.add({
-          //     key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          //     summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-          //   });
-          // } else {
-          //   this.blockUI.stop();
-          //   this.messageService.clear();
-          //   this.messageService.add({
-          //     key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          //     summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          //   });
-          // }
-          // } else {
-          // this.messageService.clear();
-          // this.messageService.add({
-          //   key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          //   summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          // });
-          // }
-          // }, (err: HttpErrorResponse) => {
-          // this.blockUI.stop();
-          // if (err.status === 0 || err.status === 400) {
-          //   this.messageService.clear();
-          //   this.messageService.add({
-          //     key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          //     summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          //   })
+        
+            this.clear();
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+              summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            });
+          } else {
+          
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            });
+          }
+          } else {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+          }
+          }, (err: HttpErrorResponse) => {
+       
+          if (err.status === 0 || err.status === 400) {
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            })
         }
-      }
-    })
-  }
+      })
+    }
+    
+  
   onView() {
     const params = {
-      'HTypeId': 1,
-      'Talukid': 1
+      'sType':'3',
+      'HostelId': '1'
     }
+    
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
-        console.log(res);
-        this.data = res;
+        this.data = res.Table;
+        console.log(this.data);
       }
 
-    })
+    });
   }
   camera() {
     
@@ -196,6 +215,23 @@ export class HostelmasterComponent implements OnInit {
   }
   clear() {
 
+  }
+  onRowSelect(event, selectedRow) {
+    this.HosteltypeOptions = selectedRow.Hosteltype;
+    this.DistrictcodeOptions = selectedRow.Districtcode;
+    this.TalukId = selectedRow.Talukid;
+    this.Hostelname = selectedRow.HostelName;
+    this.Hosteltamilname = selectedRow.HostelNameTamil;
+    this.Buildingno = selectedRow.BuildingNo;
+    this.Street = selectedRow.Street;
+    this.Landmark = selectedRow.Landmark;
+    this.pincode = selectedRow.Pincode;
+    this.Longitude = selectedRow.Longitude;
+    this.Latitude = selectedRow.Latitude;
+    this.Radius = selectedRow.Radius;
+    this.Totalstudent = selectedRow.TotalStudent;
+    this.mobileNo = selectedRow.Phone;
+   
   }
 
 
