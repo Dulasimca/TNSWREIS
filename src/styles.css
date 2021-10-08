@@ -74,6 +74,18 @@ body,html {
 .input-spacing-with-icon {
     margin-right: -0.5rem;
 } */
+.edit-size {
+    font-size: 0.9rem !important;
+    position: absolute; 
+    right: 0;
+    left: 0;
+}
+.b-size { 
+border: 0.5px !important ;
+width: 25px!important;
+height: 25px !important;
+
+}
 .btn-bg {
     background: #eba611 !important;
     border: 1px solid #f7bd42 !important;
@@ -238,10 +250,10 @@ body,html {
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
     /* background: #e38e10 !important; */
-    background: white !important;
+    background: #208991!important;
     border-color: #208991 !important;
     /* color: whitesmoke !important; */
-    color: #105c61 !important;
+    color: #fff !important;
     border-radius: 20px 20px 0 0 !important;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
@@ -252,14 +264,9 @@ body,html {
     transition: box-shadow .2s;
     margin: 0 0 -2px;
 }
-/* .p-tabview .p-tabview-panels {
-    background: rgb(255, 251, 245) !important;
-    padding: 1rem;
-    border: 0;
-    color: #495057;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-} */
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    box-shadow: inset 0 0 0 .2rem #d5f3f5!important;
+}
 .p-dropdown {
     height: 35px;
     width: -webkit-fill-available !important;
@@ -270,7 +277,7 @@ body,html {
 .p-button.p-button-icon-only {
     width: 2.357rem;
     padding: 0 !important;
-    margin-left: -15% !important;
+    margin-left: -20% !important;
 }
 .p-calendar {
     width: -webkit-fill-available !important;
@@ -284,16 +291,4 @@ body,html {
 .p-input-icon-left, .p-input-icon-right {
     position: relative;
     display: block !important;
-}
-.edit-size {
-    font-size: 0.9rem !important;
-    position: absolute; 
-    right: 0;
-    left: 0;
-}
-.b-size { 
-border: 0.5px !important ;
-width: 25px!important;
-height: 25px !important;
-
 }

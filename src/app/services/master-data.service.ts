@@ -22,9 +22,9 @@ export class MasterService {
             this.data = master;
         })
         // setTime
-        setTimeout(this.data = function () {
-            return this.data;
-        }, 1000);
+        // setTimeout(this.data = function () {
+        //     return this.data;
+        // }, 1000);
         return of(this.data);
     }
 
@@ -55,14 +55,19 @@ export class MasterService {
                 break; 
             case 'QT':
                 this.data.Table4.forEach(q => {
-                    this.masterData.push({ name: q.Id, code: q.Name });
+                    this.masterData.push({ name: q.Name, code: q.Id });
                 })
                 break;
             case 'AY':
                 this.data.Table5.forEach(a => {
-                    this.masterData.push({ name: a.Id, code: a.ShortYear });
+                    this.masterData.push({ name: a.ShortYear, code: a.Id });
                 })
                 break;
+                case 'CM':
+                    this.data.Table6.forEach(c => {
+                        this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
+                    })
+                    break;
             case 'RL':
                 this.masterData = [
                     { label: '-select-', value: null },

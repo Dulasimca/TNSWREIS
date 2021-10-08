@@ -12,7 +12,7 @@
                                         <div class="p-col-1"></div>
                                         <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
                                             <div class="p-grid">
-                                                <div class="p-col-11 p-md-11 p-lg-11">
+                                                <div class="p-col-12 p-md-12 p-lg-10">
                                                     <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                                         <div #grid1 class="p-grid div-main no-pad-lt">
                                                             <div #field1 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -109,13 +109,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="p-col-12 p-md-12 p-lg-1 no-pad-top">
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-top">
                                                     <div class="p-col-12 p-md-12 p-lg-12">
                                                         <div><img [src]="studentImage"
                                                                 style="width: 100px; height: 100px;" />
                                                             <input style="display: none" name="_studentimage"
-                                                                type="file" (change)="onFileUpload($event)" #userFile>
-                                                            <button class="b-size" icon="pi pi-plus edit-size" pButton
+                                                                type="file" (change)="onFileUpload($event, 1)" #userFile>
+                                                            <button class="b-size" style="margin: 0 !important;" icon="pi pi-plus edit-size" pButton
                                                                 type="file" #file (click)="userFile.click()">
                                                             </button>
                                                         </div>
@@ -282,6 +282,7 @@
                                                     </span>
                                                     <span style="font-size: 12px;">eg: </span>
                                                 </div>
+                                                <div #insiderow1 class="p-col-12 p-md-12 p-lg-12">
                                                 <div #grid1 class="p-grid">
                                                     <div #field24 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label p-input-icon-right">
@@ -300,6 +301,7 @@
                                                             <label for="_taluk">Taluk</label>
                                                         </span>
                                                     </div>
+                                                </div>
                                                 </div>
                                                 <div #grid2 class="p-grid">
                                                     <div #field26 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -408,14 +410,14 @@
                                                         </div>
                                                         <div #field36 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
-                                                                <input type="text" name="_fatheroccupation" id="fname"
+                                                                <input type="text" name="_fatheroccupation"
                                                                     pInputText [(ngModel)]="fatherOccupation" required>
                                                                 <label for="_fatheroccupation">Occupation</label>
                                                             </span>
                                                         </div>
                                                         <div #field37 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
-                                                                <input type="text" name="_fathereducation" id="fname"
+                                                                <input type="text" name="_fathereducation"
                                                                     pInputText [(ngModel)]="fatherQulaification"
                                                                     required>
                                                                 <label for="_fathereducation">Qualification</label>
@@ -423,9 +425,16 @@
                                                         </div>
                                                         <div #field38 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
-                                                                <input type="text" name="_fathermobno" id="fname"
+                                                                <input type="text" name="_fathermobno"
                                                                     pInputText [(ngModel)]="fatherMobileNo" required>
                                                                 <label for="_fathermobno">Mobile No</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field39 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_fatherincome"
+                                                                    pInputText [(ngModel)]="fatherYIncome" required>
+                                                                <label for="_fatherincome">Yearly Income</label>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -438,21 +447,21 @@
                                                 <div class="div-header" style="font-weight: 500;">Mother Details </div>
                                                 <div #row1 class="p-col-12 border-blue">
                                                     <div #grid1 class="p-grid div-main">
-                                                        <div #field39 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field40 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_mothername" id="fname"
                                                                     pInputText [(ngModel)]="motherName" required>
                                                                 <label for="_mothername">Mother Name</label>
                                                             </span>
                                                         </div>
-                                                        <div #field40 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field41 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_motheroccupation" id="fname"
                                                                     pInputText [(ngModel)]="motherOccupation" required>
                                                                 <label for="_motheroccupation">Occupation</label>
                                                             </span>
                                                         </div>
-                                                        <div #field41 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_mothereducation" id="fname"
                                                                     pInputText [(ngModel)]="motherQulaification"
@@ -460,11 +469,64 @@
                                                                 <label for="_mothereducation">Qualification</label>
                                                             </span>
                                                         </div>
-                                                        <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field43 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_mothermobno" id="fname"
                                                                     pInputText [(ngModel)]="motherMobileNo" required>
                                                                 <label for="_mothermobno">Mobile No</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field44 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_motherincome"
+                                                                    pInputText [(ngModel)]="motherYIncome" required>
+                                                                <label for="_motherincome">Yearly Income</label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div #main3 class="p-grid">
+                                            <div class="p-col-1"></div>
+                                            <div class="p-col-12 p-md-12 p-lg-10">
+                                                <div class="div-header" style="font-weight: 500;">Mother Details </div>
+                                                <div #row1 class="p-col-12 border-blue">
+                                                    <div #grid1 class="p-grid div-main">
+                                                        <div #field45 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianname" id="fname"
+                                                                    pInputText [(ngModel)]="guardianName" required>
+                                                                <label for="_guardianname">Guardian Name</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field46 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianoccupation" id="fname"
+                                                                    pInputText [(ngModel)]="guardianOccupation" required>
+                                                                <label for="_guardianoccupation">Occupation</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field47 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianeducation" id="fname"
+                                                                    pInputText [(ngModel)]="guardianQulaification"
+                                                                    required>
+                                                                <label for="_guardianeducation">Qualification</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianmobno" id="fname"
+                                                                    pInputText [(ngModel)]="guardianMobileNo" required>
+                                                                <label for="_guardianmobno">Mobile No</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field49 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianincome"
+                                                                    pInputText [(ngModel)]="guardianYIncome" required>
+                                                                <label for="_guardianincome">Yearly Income</label>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -473,10 +535,43 @@
                                         </div>
                                     </div>
                                 </p-tabPanel>
-                                <p-tabPanel header="Documents">
+                                <p-tabPanel header="Document Upload">
+                                    <div class="p-col-12 p-md-12 p-lg-12 div-main card border-blue">
+                                        <div #main1 class="p-grid">
+                                            <div class="p-col-1"></div>
+                                            <div class="p-col-12 p-md-12 p-lg-10">
+                                                <div class="div-header" style="font-weight: 500;">Proofs and Certificates</div>
+                                                <div #row1 class="p-col-12 border-blue">
+                                                    <div #grid1 class="p-grid div-main">
+                                                        <div #field50 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_incomecertificate">Income Certificate</label>
+                                                            <input #incomeCertificate class="p-col-12"
+                                                                name="_incomecertificate" type="file" pInputText
+                                                                (change)="onFileUpload($event, 2)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                        </div>
+                                                        <div #field51 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_transfercertificate">TC/Bonafide</label>
+                                                            <input #transferCertificate class="p-col-12"
+                                                                name="_transfercertificate" type="file" pInputText
+                                                                (change)="onFileUpload($event, 3)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                        </div>
+                                                        <div #field52 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_bankpassbook">Bank Passbook</label>
+                                                            <input #bankPassBook class="p-col-12"
+                                                                name="_bankpassbook" type="file" pInputText
+                                                                (change)="onFileUpload($event, 4)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </p-tabPanel>
                                 <div class="p-col-12 txt-center">
-                                    <button pButton type="button" label="Submit" icon="pi pi-sign-in"
+                                    <button pButton type="button" label="Submit" icon="pi pi-send"
                                         (click)="onRoute()" class="btn-bg"></button>
                                 </div>
                             </p-tabView>

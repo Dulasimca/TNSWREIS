@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -71,12 +71,23 @@ export class RegistrationComponent implements OnInit {
   fatherQulaification: string;
   fatherOccupation: string;
   fatherMobileNo: string;
+  fatherYIncome: any;
   motherName: string;
   motherQulaification: string;
   motherOccupation: string;
   motherMobileNo: string;
+  motherYIncome: any;
+  guardianName: string;
+  guardianOccupation: string;
+  guardianQulaification: string;
+  guardianMobileNo: string;
+  guardianYIncome: any;
   studentImage: any = '';
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
+  @ViewChild('bankPassBook', { static: false }) _bankPassBook: ElementRef;
+  @ViewChild('transferCertificate', { static: false }) _transferCertificate: ElementRef;
+  @ViewChild('incomeCertificate', { static: false }) _incomeCertificate: ElementRef;
+  @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
 
   constructor(private _masterService: MasterService, private _router: Router, 
     private _d: DomSanitizer) { }
@@ -124,11 +135,32 @@ export class RegistrationComponent implements OnInit {
     this.age = age;
   }
 
-  onFileUpload($event) {
+  onFileUpload($event, id) {
     const selectedFile = $event.target.files[0];
-    const url = window.URL.createObjectURL(selectedFile);
-    this.studentImage = this._d.bypassSecurityTrustUrl(url);
+    // var fileInput: any = document.getElementById('incomeCertificate');
+    // var filePath = fileInput;
+    // console.log('path', filePath);
+    var allowedExtensions =  /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    
+    switch(id) {
+      case 1:
+      const url = window.URL.createObjectURL(selectedFile);
+      this.studentImage = this._d.bypassSecurityTrustUrl(url);
+      break;
+      case 2:
+        break;
+    }
 
+  }
+
+  clearForm() {
+    this._registrationForm.reset();
+    this._registrationForm.form.markAsUntouched();
+    this._registrationForm.form.markAsPristine();
+    this._studentImg.nativeElement.value = null;
+    this._bankPassBook.nativeElement.value = null;
+    this._incomeCertificate.nativeElement.value = null;
+    this._transferCertificate.nativeElement.value = null;
   }
 
   onRoute() {
