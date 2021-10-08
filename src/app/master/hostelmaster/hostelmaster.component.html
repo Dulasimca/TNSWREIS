@@ -24,7 +24,7 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_TalukId">TalukId</label>
                                     <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions"
-                                        class="p-col-10" [(ngModel)]="TalukId" (onClick)="onSelect('T')"
+                                        class="p-col-10" [(ngModel)]="TalukId" (onClick)="onSelect('TK')"
                                         optionLabel="label" required>
                                     </p-dropdown>
                                 </div>
@@ -105,13 +105,19 @@
                                         maxlength="10" [(ngModel)]="mobileNo" appInputFormat="digitOnly" required />
                                 </div>
                                 <div class="p-col-12 txt-center">
-                                    <button pButton type="button" label="Submit" (click)="onSubmit()" icon="pi pi-sign-in"
+                                    <button pButton type="button" label="Submit" (click)="onSubmit()" 
+                                        class="btn-bg"></button>
+                                        <button pButton type="button" label="Camera" (click)="camera()" icon="pi pi-camera"
+                                        class="btn-bg"></button>
+                                        <button pButton type="button" label="Capture" (click)="capture()" icon="pi pi-sign-in"
                                         class="btn-bg"></button>
                                 </div>
-                                <h4 *ngIf="errors.length > 0">Messages:</h4>
-<ul *ngFor="let error of errors">
-	<li>{{error | json}}</li>
-</ul>   
+                                <div *ngIf="openCamera" >
+                                <app-camera (pictureTaken)="handleImage($event)" [capture]="triggerObservable" (triggerCamera)="captureImage()" ></app-camera> 
+                            </div>
+                       <div class="snapshot" *ngIf="webcamImage">
+                	<img [src]="webcamImage.imageAsDataUrl" />
+                          </div>
                             </div>
                         </div>
                     </form>

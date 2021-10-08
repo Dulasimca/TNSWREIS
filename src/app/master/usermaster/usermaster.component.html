@@ -1,0 +1,80 @@
+<div class="p-col-12 p-md-12 p-lg-12 content">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="UserMaster">
+                <form #f="ngForm" name="Usermaster">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top" style="margin-left: -8px;">
+                            <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                    
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label>Role<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="selectrole" [options]="roleOption" [(ngModel)]="selectrole"
+                                            optionLabel="label" (onClick)="onSelect()" required>
+                                        </p-dropdown>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="usermaster">User Name<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" name="Usermaster" class="p-col-12" pInputText
+                                            [(ngModel)]="UserMaster" required />
+                                            
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="email">Email<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" name="emailid" class="p-col-12" pInputText
+                                            [(ngModel)]="emailid" required />
+                                            
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="passwd">Passsword<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" name="password" class="p-col-12" pInputText
+                                            [(ngModel)]="password" required />       
+
+                                    </div>
+                                    
+                                   
+                                    <div class="p-col-12 p-md-6 p-lg-3"></div>
+                                   <div class="p-col-12 p-md-6 p-lg-1"></div> 
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label>District<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="selectdistrict" [options]="districtOption" [(ngModel)]="selectdistrict"
+                                            optionLabel="label" (onClick)="onSelect()" required>
+                                        </p-dropdown>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label>Taluk<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="selecttaluk" [options]="talukOption" [(ngModel)]="selecttaluk"
+                                            optionLabel="label" (onClick)="onSelect()" required>
+                                        </p-dropdown>
+                                    </div>
+
+
+
+                                 </div>
+                            </div>
+                        </div>
+                    </p-card>
+                </form>
+                <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
+                    <button pButton name="save" type="button" label="Submit" (click)="onSubmit()"></button>
+        
+                    <button pButton type="button" label="View" style="margin-left:5%;" (click)="onview()"></button>
+                    <button pButton type="button" label="clear" style="margin-left:5%;" (click)="onClear()"></button>
+                </div>
+            </p-panel>
+        </div>
+    </div>
+</div>

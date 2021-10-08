@@ -16,6 +16,7 @@ import { WebcamModule } from 'ngx-webcam';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
+import {ToastModule} from 'primeng/toast';
 
 
 import { AppComponent } from './app.component';
@@ -34,6 +35,9 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
 import { MessageService } from 'primeng/api';
+import { UsermasterComponent } from './master/usermaster/usermaster.component';
+ //import { DataTableModule } from 'primeng/primeng';
+// import { PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -48,6 +52,7 @@ import { MessageService } from 'primeng/api';
     FoodmasterComponent,
     WardenDetailsComponent,
     CameraComponent,
+    UsermasterComponent,
     CommodityMasterComponent,
     OpeningBalanceComponent
   ],
@@ -66,9 +71,13 @@ import { MessageService } from 'primeng/api';
     PanelModule,
     TabViewModule,
     CalendarModule,
+    // DataTableModule,
+    // PaginatorModule
+
     RadioButtonModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    ToastModule
   ],
   providers: [RestAPIService, MasterService, MessageService],
   bootstrap: [AppComponent]

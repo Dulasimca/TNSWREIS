@@ -42,7 +42,8 @@ export class FoodmasterComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.classes = this.masterService.getMaster('Food');
+    this.classes = this.masterService.getMaster('FD');
+    console.log('hi1')
     this.cols = [
        {field:'Slno',header: 'ID'},
        {field: 'selectedday',header: 'Weekdays'},
@@ -50,16 +51,14 @@ export class FoodmasterComponent implements OnInit {
        {field: 'Lunch',header:'Lunch:மதிய உணவு'},
        {field:'Snacks',header: 'Snacks:சிற்றுண்டி'},
        {field: 'Dinner',header: 'Dinner:இரவு உணவு'},
-     
-       
      ];
      this.Slno=0;
   }
   onSelect() {
     let classSelection = [];
     
-        this.classes.forEach(c => {
-          classSelection.push({  label : c.name, value: c.code })
+        this.classes.forEach(d => {
+          classSelection.push({  label : d.name, value: d.code })
         });
         this.daysOptions = classSelection;
         this.daysOptions.unshift({ label: '-select', value: null });
@@ -146,16 +145,22 @@ export class FoodmasterComponent implements OnInit {
     }
           
   onview() {
+    console.log('hi');
     const params = { 
      
     }
     
+    
    this.restApiService.getByParameters(PathConstants.DaysMaster_Get, params).subscribe(res => {
     if(res !== null && res !== undefined && res.length !==0) {
       this.data = res;
+      console.log(res);
     }
     
   });
+
+
+}
 
 //   onRowSelect(event, selectedRow) {
 //     // this.Slno = selectedRow.RowId;
@@ -173,5 +178,8 @@ export class FoodmasterComponent implements OnInit {
 //     // this.Snacks=selectedRow.Snacks;
 //     // this.Dinner=selectedRow.Dinner;
 // }
+
+onClear() {
+  
 }
 } 
