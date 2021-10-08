@@ -36,6 +36,7 @@ import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
 import { MessageService } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
+import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
@@ -81,7 +82,7 @@ import { BlockUIModule } from 'ng-block-ui';
     CheckboxModule,
     ToastModule
   ],
-  providers: [RestAPIService, MasterService, MessageService],
+  providers: [RestAPIService, MasterService, MessageService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

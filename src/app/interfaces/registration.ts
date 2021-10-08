@@ -15,8 +15,8 @@ export interface Registration {
     medium: string;
     class: string;
     courseTitle: string;
-    lastInstitutionName: string;
-    lastInstitutionAddress: string;
+    lastStudiedInstituteName: string;
+    lastStudiedInstituteAddress: string;
     distanceFromHostelToHome: any;
     distanceFromHomeToHostel: any;
     disabilityType: any;
@@ -52,7 +52,5 @@ export interface Registration {
     incomeCertificateFilename: string;
     tcFilename: string;
     bankPassbookFilename: string;
-
-
-    
+    declarationFilename: string;
 }

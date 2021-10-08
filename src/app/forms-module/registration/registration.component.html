@@ -10,7 +10,7 @@
                                 <p-tabPanel header="Student Info">
                                     <div #main1 class="p-grid">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="p-grid">
                                                 <div class="p-col-12 p-md-12 p-lg-10">
                                                     <div #row1 class="p-col-12 p-md-12 p-lg-12">
@@ -22,21 +22,21 @@
                                                                     <label for="_studentname">Student Name</label>
                                                                 </span>
                                                             </div>
-                                                            <div #field2 class="p-field p-col-12 p-md-12 p-lg-2">
-                                                                <span class="p-float-label p-input-icon-right">
-                                                                    <p-calendar [(ngModel)]="dob" name="_dob"
+                                                            <div #field2 class="p-col-12 p-md-12 p-lg-2">
+                                                                <span class="p-float-label">
+                                                                        <p-calendar [(ngModel)]="dob" name="_dob"
                                                                         [monthNavigator]="true" [yearNavigator]="true"
                                                                         yearRange="{{yearRange}}" inputId="dateofbirth"
-                                                                        [showIcon]="true" (onChange)="calculateAge()"
+                                                                        [showIcon]="true" (onSelect)="calculateAge()"
                                                                         required>
                                                                     </p-calendar>
                                                                     <label for="_dob">D.O.B </label>
-                                                                </span>
+                                                            </span>
                                                             </div>
-                                                            <div #field3 class="p-field p-col-12 p-md-6 p-lg-1">
+                                                            <div #field3 class="p-field p-col-12 p-md-6 p-lg-2">
                                                                 <span class="p-float-label">
                                                                     <input type="text" name="_age" id="sname" pInputText
-                                                                        [(ngModel)]="age" required>
+                                                                        [(ngModel)]="ageTxt" [disabled]="true" required>
                                                                     <label for="_age">Age</label>
                                                                 </span>
                                                             </div>
@@ -130,7 +130,7 @@
                                     </div>
                                     <div #main2 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="div-header" style="font-weight: 500;">Institution Details</div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
@@ -207,7 +207,7 @@
                                     </div>
                                     <div #main3 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="div-header" style="font-weight: 500;">Last Studied Details</div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
@@ -221,7 +221,7 @@
                                                     <div #field17 class="p-field p-col-12 p-md-12 p-lg-4">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_lastaddress" pInputText
-                                                                [(ngModel)]="lastAddress" required>
+                                                                [(ngModel)]="lastInstitutionAddress" required>
                                                             <label for="_lastaddress">Institution Address</label>
                                                         </span>
                                                     </div>
@@ -231,7 +231,7 @@
                                     </div>
                                     <div #main4 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="div-header" style="font-weight: 500;">Distance Details</div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
@@ -255,7 +255,7 @@
                                     </div>
                                     <div #main5 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="div-header" style="font-weight: 500;">Disability If any
                                                 <p-checkbox [(ngModel)]="isDisability" binary="true" inputId="binary">
                                                 </p-checkbox>
@@ -275,9 +275,9 @@
                                     </div>
                                     <div #main6 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="div-header" style="font-weight: 500;">Address</div>
-                                            <div #row1 class="p-col-12  div-main border-blue">
+                                            <div #row1 class="p-col-12 p-md-12 p-lg-12 div-main border-blue">
                                                 <div #field21 class="p-field p-col-12 p-md-12 p-lg-4">
                                                     <span class="p-float-label">
                                                         <input type="text" name="_addressline1" pInputText
@@ -345,7 +345,7 @@
                                     </div>
                                     <div #main7 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="div-header" style="font-weight: 500;">Identification Details
                                             </div>
                                             <div #row1 class="p-col-12 border-blue">
@@ -377,7 +377,7 @@
                                     </div>
                                     <div #main8 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
-                                        <div class="p-col-12 p-md-12 p-lg-10 card div-main border-blue">
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="div-header" style="font-weight: 500;">Bank Details</div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid  div-main">
@@ -415,7 +415,7 @@
                                     </div>
                                 </p-tabPanel>
                                 <p-tabPanel header="Parent's Info">
-                                    <div class="p-col-12 p-md-12 p-lg-12 div-main card border-blue">
+                                    <div class="p-col-12 p-md-12 p-lg-12 card border-blue">
                                         <div #main1 class="p-grid">
                                             <div class="p-col-1"></div>
                                             <div class="p-col-12 p-md-12 p-lg-10">
@@ -562,7 +562,7 @@
                                     </div>
                                 </p-tabPanel>
                                 <p-tabPanel header="Document Upload">
-                                    <div class="p-col-12 p-md-12 p-lg-12 div-main card border-blue">
+                                    <div class="p-col-12 p-md-12 p-lg-12 card border-blue">
                                         <div #main1 class="p-grid">
                                             <div class="p-col-1"></div>
                                             <div class="p-col-12 p-md-12 p-lg-10">
@@ -584,6 +584,10 @@
                                                                 (change)="onFileUpload($event, 3)"
                                                                 accept=".pdf,.png,.jpg,.jpeg" required />
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div #row2 class="p-col-12 border-blue">
+                                                    <div #grid2 class="p-grid div-main">
                                                         <div #field52 class="p-field p-col-12 p-md-12 p-lg-4">
                                                             <label for="_bankpassbook">Bank Passbook</label>
                                                             <input #bankPassBook class="p-col-12" name="_bankpassbook"
@@ -591,7 +595,13 @@
                                                                 (change)="onFileUpload($event, 4)"
                                                                 accept=".pdf,.png,.jpg,.jpeg" required />
                                                         </div>
-                                                    </div>
+                                                        <div #field53 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_declarationform">Declaration Form</label>
+                                                            <input #declarationForm class="p-col-12" name="_declarationform"
+                                                                type="file" pInputText (change)="onFileUpload($event, 5)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                        </div>
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
