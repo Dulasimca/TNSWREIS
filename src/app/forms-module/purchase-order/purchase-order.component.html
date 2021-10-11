@@ -27,12 +27,19 @@
                                     </div>
                                     <div #field3 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
+                                            <input type="text" name="_billamnt" id="billamnt" pInputText
+                                                [(ngModel)]="billAmount" required>
+                                            <label for="_billamnt">Bill Total Amount</label>
+                                        </span>
+                                    </div>
+                                    <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
                                             <input type="text" name="_shopname" id="shopname" pInputText
                                                 [(ngModel)]="shopName" required>
                                             <label for="_shopname">Shop Name</label>
                                         </span>
                                     </div>
-                                    <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
                                             <input type="text" name="_gstno" id="gstno" pInputText [(ngModel)]="gstNo"
                                                 required>
@@ -47,7 +54,7 @@
                             <div #row2 class="p-col-12 p-md-12 p-lg-10 border-blue">
                                 <div class="div-header" style="font-weight: 500;">Commodity Details </div>
                                 <div #grid2 class="p-grid div-main">
-                                    <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <div #field6 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
                                             <p-dropdown name="_commodity" [options]="commodityOptions"
                                                 (onClick)="onSelect('CM')" [(ngModel)]="commodity" required>
@@ -55,29 +62,29 @@
                                             <label for="_commodity">Commodity</label>
                                         </span>
                                     </div>
-                                    <div #field6 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <div #field7 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
                                             <input type="text" name="_quantity" pInputText [(ngModel)]="quantity"
                                                 required>
                                             <label for="_quantity">Quantity</label>
                                         </span>
                                     </div>
-                                    <div #field7 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <div #field8 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
-                                            <p-dropdown name="_unit" [options]="commodityOptions"
+                                            <p-dropdown name="_unit" [options]="unitOptions"
                                                 (onClick)="onSelect('UN')" [(ngModel)]="unit" required>
                                             </p-dropdown>
                                             <label for="_unit">Shop Name</label>
                                         </span>
                                     </div>
-                                    <div #field8 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <div #field9 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
                                             <input type="text" name="_rate" id="gstno" pInputText [(ngModel)]="rate"
                                                 required>
                                             <label for="_rate">Rate</label>
                                         </span>
                                     </div>
-                                    <div #field9 class="p-field p-col-12 p-md-12 p-lg-1">
+                                    <div #field10 class="p-field p-col-12 p-md-12 p-lg-1">
                                         <button pButton type="button" label="Enter" (click)="onEnter()"></button>
                                     </div>
                                 </div>

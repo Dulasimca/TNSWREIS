@@ -248,7 +248,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    this._router.navigate(['/purchase-order']);
+    this._router.navigate(['/']);
   }
 
   onSubmit() {

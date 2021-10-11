@@ -14,6 +14,7 @@ export class PurchaseOrderComponent implements OnInit {
   billDate: Date = new Date();
   shopName: string = '';
   gstNo: any = '';
+  billAmount: any;
   commodity: string;
   commodityOptions: SelectItem[];
   commodities?: any;
