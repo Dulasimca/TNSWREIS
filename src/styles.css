@@ -10,6 +10,9 @@ body,html {
     background-color: #fdf8ef !important;
     line-height: 1.6em !important;
 }
+.form-mandatory-field {
+    color: #ff0131;
+}
 
 .content {
     /* padding-bottom: 45px !important;
@@ -84,7 +87,6 @@ body,html {
 border: 0.5px !important ;
 width: 25px!important;
 height: 25px !important;
-
 }
 .table-format {
     width: 35cm;
@@ -165,7 +167,7 @@ height: 25px !important;
 
   /* registration */
   .div-main {
-    padding: 20px 10px 0 10px;
+    padding: 20px 10px 0 10px !important;
   }
   .div-header {
     padding: 5px;
@@ -286,6 +288,10 @@ height: 25px !important;
 .p-calendar {
     width: -webkit-fill-available !important;
 }
+.p-calendar .p-inputtext {
+    flex: 1 1 auto;
+    width: 1% !important;
+}
 .p-datepicker:not(.p-datepicker-inline) {
     z-index: 999 !important;
 }
@@ -295,4 +301,9 @@ height: 25px !important;
 .p-input-icon-left, .p-input-icon-right {
     position: relative;
     display: block !important;
+}
+.p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
+    background: #099099 !important;
+    color: whitesmoke !important;
+    border-color: solid #208991 !important;
 }

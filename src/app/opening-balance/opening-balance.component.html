@@ -1,7 +1,7 @@
-<div class="p-col-12 p-md-12 p-lg-12 content">
+<div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
-        <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Opening Balance Entry">
                 <form #f="ngForm" name="openingBalance">
                     <p-card>
@@ -41,7 +41,7 @@
                                                     <label for="_commodityName">Commodity Name<span
                                                             class="form-mandatory-field">*</span></label>
                                                     <p-dropdown name="_commodityName" [options]="commodityOptions"
-                                                        [(ngModel)]="commodityName" required>
+                                                        [(ngModel)]="commodityName"  (onClick)="onSelect('CN')" required>
                                                     </p-dropdown>
                                                 </div>
                                                 <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
@@ -59,7 +59,7 @@
                                                 </div>
                                                 <div class="p-col-12"></div>
                                                 <div class="p-col-12 p-md-6 p-lg-4" style="text-align: right;">
-                                                    <button pButton type="button" label="Submit"></button>
+                                                    <button pButton type="button" label="Submit" (click)="onSubmit()"></button>
                                                 </div>
                                                 <div class="p-col-12 p-md-6 p-lg-6">
                                                     <button pButton type="button" label="View" (click)="onView()"></button>
@@ -78,7 +78,7 @@
 </div>
 
 <div *ngIf="showTable" class="table-format"> 
-    <p-table [value]="blncdata" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
+    <p-table [value]="data" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 3cm;">S.No</th>
@@ -86,15 +86,16 @@
                 <th>Commodity Name</th>
                 <th>Unit</th>
                 <th>Quantity</th>
+                <th>Edit/Update</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-data>
             <tr>
               <td>{{rowIndex+1}}</td>
-              <td>{{data.Name}}</td>
-                <td>{{data.NameTamil}}</td>
-                <td>{{data.CommodityGroupId}}</td>
-                <td>{{data.Flag}}</td>
+              <td>{{data.AccountingId}}</td>
+                <td>{{data.CommodityId}}</td>
+                <td>{{data.UnitId}}</td>
+                <td>{{data.Qty}}</td>
               <td style="width: 142px;"><i class="pi pi-pencil" (click)="onEdit(rowData)"
                  ></i></td>
             </tr>

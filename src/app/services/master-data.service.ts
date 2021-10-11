@@ -11,6 +11,7 @@ export class MasterService {
     masterData?: any = [];
     days?: any = [];
     data?: any = [];
+    commodity?: any = [];
 
     constructor(private restApiService: RestAPIService) { }
 
@@ -21,11 +22,14 @@ export class MasterService {
         this.restApiService.get(PathConstants.MasterAll_Get).subscribe(master => {
             this.data = master;
         })
+        this.restApiService.get(PathConstants.CommodityMaster_Get).subscribe(commodity => {
+            this.commodity = commodity;
+        })
         // setTime
         // setTimeout(this.data = function () {
         //     return this.data;
         // }, 1000);
-        return of(this.data);
+        return of(this.data, this.days, this.commodity);
     }
 
     getMaster(type): any {
@@ -33,7 +37,7 @@ export class MasterService {
         switch (type) {
             case 'DT':
                 this.data.Table.forEach(d => {
-                    this.masterData.push({ name: d.DistrictName, value: d.Districtcode });
+                    this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
                 })
                 break;
             case 'TK':
@@ -51,9 +55,9 @@ export class MasterService {
                     this.masterData.push({ name: g.Name, code: g.Id });
                 })
                 break;
-            case 'QT':
-                this.data.Table4.forEach(q => {
-                    this.masterData.push({ name: q.Name, code: q.Id });
+            case 'UN':
+                this.data.Table4.forEach(u => {
+                    this.masterData.push({ name: u.Name, code: u.Id });
                 })
                 break;
             case 'AY':
@@ -61,53 +65,54 @@ export class MasterService {
                     this.masterData.push({ name: a.ShortYear, code: a.Id });
                 })
                 break;
-            case 'CM':
+            case 'CG':
                 this.data.Table6.forEach(c => {
                     this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
                 })
                 break;
-            case 'RL':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'Christian', value: 'Christian' },
-                    { label: 'Hindu', value: 'Hindu' },
-                    { label: 'Muslim', value: 'Muslim' },
-                    { label: 'Others', value: 'Others' },
-                ];
+            case 'BG':
+                this.data.Table7.forEach(b => {
+                    this.masterData.push({ name: b.Name, code: b.Id });
+                })
                 break;
             case 'CS':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'MBC', value: 'MBC' },
-                    { label: 'BC', value: 'BC' },
-                    { label: 'OC', value: 'OC' },
-                    { label: 'SC/ST', value: 'SC' },
-                ];
+                this.data.Table8.forEach(c => {
+                    this.masterData.push({ name: c.Name, code: c.Id });
+                })
                 break;
-            case 'BG':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'A+', value: 'A+' },
-                    { label: 'A-', value: 'A-' },
-                    { label: 'AB+', value: 'AB+' },
-                    { label: 'AB-', value: 'AB-' },
-                    { label: 'B+', value: 'B+' },
-                    { label: 'B-', value: 'B-' },
-                    { label: 'O+', value: 'O+' },
-                    { label: 'O-', value: 'O-' },
-                ];
+            case 'RL':
+                this.data.Table9.forEach(r => {
+                    this.masterData.push({ name: r.Name, code: r.Id });
+                })
                 break;
             case 'MT':
-                this.masterData = [
-                    { label: '-select-', value: null },
-                    { label: 'Tamil', value: 'Tamil' },
-                    { label: 'English', value: 'English' },
-                    { label: 'Others', value: "Others" },
-                ];
+                this.data.Table10.forEach(m => {
+                    this.masterData.push({ name: m.Name, code: m.Id });
+                })
                 break;
             case 'FD':
                 this.days.forEach(d => {
                     this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.slno });
+                })
+                break;
+            case 'CU':
+                this.data.Table11.forEach(u => {
+                    this.masterData.push({ name: u.Name, code: u.Id });
+                })
+                break;
+            case 'CL':
+                this.data.Table12.forEach(c => {
+                    this.masterData.push({ name: c.Name, code: c.Id });
+                })
+                break;
+                case 'RM':
+                    this.data.Table13.forEach(r => {
+                        this.masterData.push({ name: r.Name, code: r.Id });
+                    })
+                    break;
+            case 'CM': 
+                this.commodity.forEach(c => {
+                    this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
                 })
                 break;
         }

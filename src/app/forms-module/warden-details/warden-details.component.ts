@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -23,7 +24,7 @@ export class WardenDetailsComponent implements OnInit {
   dob: number;
   servicedoj: number;
   doj: number;
-  hosteljoin: number;
+  hostelJoin: number;
   hstlLeaveDate: number;
   qualification: string;
   designation: string;
@@ -37,7 +38,8 @@ export class WardenDetailsComponent implements OnInit {
   addressOne: any;
   addressTwo: any;
   pincode: any;
-  wardenImage: string;
+  wardenImage: any = '';
+
   // data: any = [];
 
 
@@ -48,7 +50,7 @@ export class WardenDetailsComponent implements OnInit {
 
 
 
-  constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService) { }
+  constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer) { }
 
   ngOnInit(): void {
 
@@ -87,9 +89,18 @@ export class WardenDetailsComponent implements OnInit {
             break;
       }
     }
-  onFileUpload($event) {
-
-  }
+    onFileUpload($event) {
+      const selectedFile = $event.target.files[0];
+      // var fileInput: any = document.getElementById('incomeCertificate');
+      // var filePath = fileInput;
+      // console.log('path', filePath);
+      // var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+  
+      {
+          const url = window.URL.createObjectURL(selectedFile);
+          this.wardenImage = this._d.bypassSecurityTrustUrl(url);
+      }
+    }
   onSave() {
     const params =  {
       'Name' : this.wardenName,
@@ -97,7 +108,7 @@ export class WardenDetailsComponent implements OnInit {
       'DOB' : this.dob,
       'Qualification' : this.qualification,
       'HostelId': 1,
-      'HostelJoinedDate' : this.hosteljoin,
+      'HostelJoinedDate' : this.hostelJoin,
       'ServiceJoinedDate': this.servicedoj,
       'Designation': this.designation,
       'EMail': this.email,
