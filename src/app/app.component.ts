@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { MasterService } from './services/master-data.service';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +16,9 @@ export class AppComponent {
   // showNavBar: boolean;
   // items: any[];
 
-  constructor(private _router: Router, private _authService: AuthService) {
+  constructor(private _router: Router, private _authService: AuthService, private _masterService: MasterService) {
     this._authService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
-      console.log('log', this.isLoggedIn);
     });
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -28,6 +29,12 @@ export class AppComponent {
         }
       }
     });
+  }
+
+  ngOnInit() {
+    let master = new Observable<any[]>();
+    master = this._masterService.initializeMaster();
+    master.subscribe(response => {});
   }
   // onOpenSideMenu() {
   //   console.log('insi');

@@ -1,7 +1,7 @@
-<div class="p-col-12 p-md-12 p-lg-12 content">
+<div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
-        <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Warden">
                 <form #f="ngForm" name="wardenDetails">
                     <p-card>
@@ -17,7 +17,7 @@
                                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                         <label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
                                         <p-dropdown name="_gender" [options]="genderOptions"
-                                            (onClick)="onSelect('G')" [(ngModel)]="gender" required>
+                                            (onClick)="onSelect('GD')" [(ngModel)]="gender" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
@@ -58,42 +58,32 @@
                                                 <div class="p-col-12 p-md-6 p-lg-2">
                                                     <div><label for="_hstljoindate">Hostel Joining Date<span
                                                                 class="form-mandatory-field">*</span></label></div>
-                                                    <p-calendar [(ngModel)]="hosteljoin" name="_hstljoindate" [showIcon]="true"
-                                                        [monthNavigator]="true" [yearNavigator]="true"
-                                                        yearRange="{{yearRange}}" inputId="hosteljoindate" dateFormat="yy-mm-dd"
+                                                    <p-calendar [(ngModel)]="hostelJoin" name="_hstljoindate" [showIcon]="true"
+                                                    [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}" inputId="hosteljoindate"
                                                         required></p-calendar>
                                                 </div>
-                                            <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_hstlleavedate">Hostel Leaving Date<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <p-calendar [(ngModel)]="hstlLeaveDate" name="_hstlleavedate" [showIcon]="true"
-                                                    [monthNavigator]="true" [yearNavigator]="true"
-                                                    yearRange="{{yearRange}}" inputId="hostelleavedate" dateFormat="yy-mm-dd"
-                                                    required></p-calendar>
-                                            </div>
-                                            
+                                                <div class="p-col-12 p-md-6 p-lg-2">
+                                                    <div><label for="_email">Email Id<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="email" class="p-col-12" name="_email" pInputText
+                                                        [(ngModel)]="email" required />
+                                                </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_mobno">Mobile Number<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <input type="text" class="p-col-12" name="_mobno" pInputText
-                                                    [(ngModel)]="mobNo" maxlength="10" required />
+                                                    [(ngModel)]="mobNo" minlength="10" maxlength="10" required />
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_altmobno">Alternate Mobile No.</label></div>
                                                 <input type="text" class="p-col-12" name="_altmobno" pInputText
-                                                    [(ngModel)]="altMobNo" maxlength="10" required />
+                                                    [(ngModel)]="altMobNo" minlength="10" maxlength="10" required />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
-                                            <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_email">Email Id<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <input type="email" class="p-col-12" name="_email" pInputText
-                                                    [(ngModel)]="email" required />
-                                            </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_address1">Address Line 1<span
                                                             class="form-mandatory-field">*</span></label></div>
@@ -110,38 +100,43 @@
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_taluk">Native Taluk<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk"  (onClick)="onSelect('T')" name="_taluk">
+                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk" (onClick)="onSelect('T')" name="_taluk">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_district">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district"  (onClick)="onSelect('D')"
-                                                    name="_district"></p-dropdown>
+                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district" (onClick)="onSelect('D')"
+                                                    name="_district" optionLabel="label"></p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_pincode">Pincode</label><span
                                                         class="form-mandatory-field">*</span></div>
                                                 <input type="text" class="p-col-12" name="_pincode" pInputText
-                                                    [(ngModel)]="pincode" maxlength="6" required />
+                                                    [(ngModel)]="pincode" minlength="6" maxlength="6" required />
                                             </div>
                                             <div #row3 class="p-col-12 p-md-12 p-lg-12"> 
                                                 <div class="p-grid"> 
                                             <div class="p-col-12 p-md-6 p-lg-4">
                                                 <div><img [src]="wardenImage"
                                                     style="width: 110px; height: 110px;" />
-                                                <input style="display: none" name="_studentimage" type="file" (change)="onFileUpload($event)"
-                                                    #userFile>
+                                                <input style="display: none" name="_wardenimage" type="file" (change)="onFileUpload($event)"
+                                                    #userFile required>
                                                 <button class="b-size"
                                                      icon="pi pi-plus edit-size" pButton type="file" #file
                                                     (click)="userFile.click()">
                                                 </button>
+                                                <div>Upload Warden Image<span
+                                                    class="form-mandatory-field">*</span></div>
                                             </div>
                                             </div>
                                         </div>
                                     </div>
-                                            <div class="p-col-12 p-md-12 p-lg-12" style="text-align: center;"> 
-                                            <button pButton type="button" label="Submit" (click)="onSave()"></button>
+                                            <div class="p-col-12 p-md-6 p-lg-6" style="text-align: right;"> 
+                                            <button pButton type="button" label="Submit" (click)="onSave()" [disabled]="(!f.valid)"></button>
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-6"> 
+                                            <button pButton type="button" label="View" (click)="onView()"></button>
                                         </div>
                                         </div>
                                     </div>
@@ -155,3 +150,4 @@
     </div>
 
 </div>
+

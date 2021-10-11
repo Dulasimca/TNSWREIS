@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
@@ -12,6 +12,9 @@ import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 export class CameraComponent implements OnInit {
   @Output()
   public pictureTaken = new EventEmitter<WebcamImage>();
+  @Output()
+  public triggerCamera = new EventEmitter<any>();
+  @Input() capture = new Observable<void>();
 
   // toggle webcam on/off
   public showWebcam = true;
@@ -37,7 +40,7 @@ export class CameraComponent implements OnInit {
   }
 
   public triggerSnapshot(): void {
-    this.trigger.next();
+     this.triggerCamera.emit(this.trigger.next());
   }
 
   public toggleWebcam(): void {
@@ -56,12 +59,10 @@ export class CameraComponent implements OnInit {
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
     this.pictureTaken.emit(webcamImage);
   }
 
   public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
     this.deviceId = deviceId;
   }
 

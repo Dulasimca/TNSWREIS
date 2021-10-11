@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
+import {ToastModule} from 'primeng/toast';
 
 
 import { AppComponent } from './app.component';
@@ -26,17 +28,18 @@ import { RegistrationComponent } from './forms-module/registration/registration.
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
 import { WardenDetailsComponent } from './forms-module/registration/warden-details/warden-details.component';
- 
 import { CameraComponent } from './Feature-module/camera/camera.component';
+import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
+import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
-import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
-import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { MessageService } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
+import { DatePipe } from '@angular/common';
+import { BlockUIModule } from 'ng-block-ui';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -79,8 +82,11 @@ import { TalukComponent } from './master/taluk/taluk.component';
 
     RadioButtonModule,
     TableModule,
+    BlockUIModule,
+    CheckboxModule,
+    ToastModule
   ],
-  providers: [RestAPIService, MasterService, MessageService],
+  providers: [RestAPIService, MasterService, MessageService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

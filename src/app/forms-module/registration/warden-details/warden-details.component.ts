@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -23,21 +24,24 @@ export class WardenDetailsComponent implements OnInit {
   dob: number;
   servicedoj: number;
   doj: number;
-  hosteljoin: number;
+  hostelJoin: number;
   hstlLeaveDate: number;
   qualification: string;
   designation: string;
   hostelName: string;
   email: any;
   yearRange: string;
-  taluk: any;
+  taluk: number;
   district: any;
   mobNo: number;
   altMobNo: number
   addressOne: any;
   addressTwo: any;
   pincode: any;
-  wardenImage: string;
+  wardenImage: any = '';
+
+  // data: any = [];
+
 
   genders?: any;
   districts?: any;
@@ -46,13 +50,13 @@ export class WardenDetailsComponent implements OnInit {
 
 
 
-  constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService) { }
+  constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer) { }
 
   ngOnInit(): void {
 
-    this.genders = this.masterService.getMaster('G');
-    this.districts = this.masterService.getMaster('D');
-    this.taluks = this.masterService.getMaster('T');
+    this.genders = this.masterService.getMaster('GD');
+    this.districts = this.masterService.getMaster('DT');
+    this.taluks = this.masterService.getMaster('TK');
 
   }
 
@@ -61,9 +65,8 @@ export class WardenDetailsComponent implements OnInit {
     let districtSelection = [];
     let talukSelection = [];
 
-
     switch (type) {
-      case 'G':
+      case 'GD':
         this.genders.forEach(g => {
           genderSelection.push({ label: g.name, value: g.code });
         })
@@ -86,15 +89,26 @@ export class WardenDetailsComponent implements OnInit {
             break;
       }
     }
-  onFileUpload($event) {
-
-  }
+    onFileUpload($event) {
+      const selectedFile = $event.target.files[0];
+      // var fileInput: any = document.getElementById('incomeCertificate');
+      // var filePath = fileInput;
+      // console.log('path', filePath);
+      // var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+  
+      {
+          const url = window.URL.createObjectURL(selectedFile);
+          this.wardenImage = this._d.bypassSecurityTrustUrl(url);
+      }
+    }
   onSave() {
     const params =  {
       'Name' : this.wardenName,
+     'GenderId': this.gender,
       'DOB' : this.dob,
       'Qualification' : this.qualification,
-      'HostelJoinedDate' : this.hosteljoin,
+      'HostelId': 1,
+      'HostelJoinedDate' : this.hostelJoin,
       'ServiceJoinedDate': this.servicedoj,
       'Designation': this.designation,
       'EMail': this.email,
@@ -102,13 +116,15 @@ export class WardenDetailsComponent implements OnInit {
       'AlternateNo': this.altMobNo,
       'Address1': this.addressOne,
       'Address2': this.addressTwo,
+      'Districtcode': this.district.value,
+      'Talukid': this.taluk,
       'Pincode': this.pincode,
-      'Flag' : true
+      'Flag': 1,
+      'WardenId': 0
 
     };
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
       if (res) {
-        console.log('s',res);
         this.clearform();
         this.messageService.clear();
         this.messageService.add({
@@ -132,6 +148,27 @@ export class WardenDetailsComponent implements OnInit {
       }
     })
   }
+  onView() {
+  }
+
+  // onView() {
+  //   const params = {
+  //   'WardenId': 0
+  //   }
+  //   this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
+  //     if(res !== null && res !== undefined && res.length !== 0) {
+  //       if(res) {
+  //     console.log('res', res);
+  //     this.data = res;
+  //     }
+  //   }
+  //   });
+
+  // }
+  // onEdit(rowData) {
+
+  // }
+
   clearform() {
     this._wardenDetails.reset();
   }

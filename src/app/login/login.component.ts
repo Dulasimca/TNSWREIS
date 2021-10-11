@@ -17,13 +17,13 @@ export class LoginComponent implements OnInit {
   constructor(private _masterService: MasterService, private _authService: AuthService) { }
 
   ngOnInit(): void {
-    let master = new Observable<any[]>();
-    master = this._masterService.initializeMaster();
-    master.subscribe(response => {
-      if(response) {
-        console.log('res', response);
-      }
-    });
+    // let master = new Observable<any[]>();
+    // master = this._masterService.initializeMaster();
+    // master.subscribe(response => {
+    //   if(response) {
+    //     console.log('res', response);
+    //   }
+    // });
   }
 
   onLogin() {
