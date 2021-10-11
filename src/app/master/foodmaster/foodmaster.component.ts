@@ -3,13 +3,14 @@ import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-//import { ResponseMessage } from 'src/app/Common-Module/Message';
-//import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { BlockUI, NgBlockUI } from 'ng-block-Ui';
 import { Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -26,16 +27,14 @@ export class FoodmasterComponent implements OnInit {
   data:any;
   classes?: any;
   cols: any;
-  selectedday: string;
+  selectedday: any;
   daysOptions: SelectItem[];
   Slno:any;
-  //@BlockUI() blockUI: NgBlockUI;
+  @BlockUI() blockUI: NgBlockUI;
   public progress: number;
   public message: string;
 
-  //  NewFileName:string;
-  //  @ViewChild('f', { static: false }) _bookForm: NgForm;
-  //  @Output() public onUploadFinished = new EventEmitter();
+  
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService
    ) { }
@@ -43,24 +42,22 @@ export class FoodmasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.classes = this.masterService.getMaster('FD');
-    console.log('hi1')
+    
     this.cols = [
        {field:'Slno',header: 'ID'},
-       {field: 'selectedday',header: 'Weekdays'},
+       {field: 'Name',header: 'Weekdays:வார நாட்கள்'},
        {field: 'BreakFast',header:'BreakFast:காலை உணவு'},
        {field: 'Lunch',header:'Lunch:மதிய உணவு'},
        {field:'Snacks',header: 'Snacks:சிற்றுண்டி'},
        {field: 'Dinner',header: 'Dinner:இரவு உணவு'},
      ];
-     this.Slno=0;
   }
   onSelect() {
-    let classSelection = [];
-    
+    let foodSelection = [];
         this.classes.forEach(d => {
-          classSelection.push({  label : d.name, value: d.code })
+          foodSelection.push({  label : d.name, value: d.code })
         });
-        this.daysOptions = classSelection;
+        this.daysOptions = foodSelection;
         this.daysOptions.unshift({ label: '-select', value: null });
     }
     // public uploadFile = (files) => {
@@ -91,10 +88,10 @@ export class FoodmasterComponent implements OnInit {
     // }  
   
     onSubmit() {  
-      //this.blockUI.start();
+      this.blockUI.start();
       const params = {
-        'Slno': this.Slno,
-        'DayId': this.selectedday,
+        'Slno': this.Slno != undefined ? this.Slno : 0,
+        'DayId': this.selectedday.value,
         'Breakfast': this.BreakFast,  
         'Lunch': this.Lunch,     
         'Snacks': this.Snacks,
@@ -102,59 +99,52 @@ export class FoodmasterComponent implements OnInit {
         
       };
       
-      console.log(params);
+      
       this.restApiService.post(PathConstants.FoodMaster_Post, params).subscribe(res => {
         if(res !== undefined && res !== null) {
           if (res) {
   
         //     this.blockUI.stop();
-        //     this.onClear();
-        //     this.messageService.clear();
-        //     this.messageService.add({
-        //       key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-        //       summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-        //     });
-        //     this.message = 'Upload success.';
+            this.onClear();
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+              summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            });
+            this.message = 'Upload success.';
   
-        //   } else {
-        //     this.blockUI.stop();
-        //     this.messageService.clear();
-        //     this.messageService.add({
-        //       key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-        //       summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        //     });
-        //   }
-        //   } else {
-        //   this.messageService.clear();
-        //   this.messageService.add({
-        //     key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-        //     summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        //   });
-        //   }
-        //   }, (err: HttpErrorResponse) => {
-        //   this.blockUI.stop();
-        //   if (err.status === 0 || err.status === 400) {
-        //     this.messageService.clear();
-        //     this.messageService.add({
-        //       key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-        //       summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-         //   })
-         }
+          } else {
+            this.blockUI.stop();
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            });
+          }
+          } else {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+          }
+          }, (err: HttpErrorResponse) => {
+          this.blockUI.stop();
+          if (err.status === 0 || err.status === 400) {
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+           })
+         
          }
         })
     }
           
   onview() {
-    console.log('hi');
-    const params = { 
-     
-    }
-    
-    
-   this.restApiService.getByParameters(PathConstants.DaysMaster_Get, params).subscribe(res => {
+   this.restApiService.get(PathConstants.FoodMaster_Get).subscribe(res => {
     if(res !== null && res !== undefined && res.length !==0) {
-      this.data = res;
-      console.log(res);
+      this.data = res.Table;
     }
     
   });
@@ -162,24 +152,26 @@ export class FoodmasterComponent implements OnInit {
 
 }
 
-//   onRowSelect(event, selectedRow) {
-//     // this.Slno = selectedRow.RowId;
+  onRowSelect(event, selectedRow) {
+    this.Slno = selectedRow.Slno;
 
-//     // let classSelection = [];
-//     // this.classes.forEach(c => {
-//     //   if(selectedRow.ClassId==c.code)
-//     //   classSelection.push({ label: c.name, value: c.code })
-//     // });
-    
-//     // this.daysOptions  = classSelection;
-//     // this.selectedday = selectedRow.DayId;
-//     // this.BreakFast = selectedRow.Breakfast;
-//     // this.Lunch = selectedRow.Lunch;
-//     // this.Snacks=selectedRow.Snacks;
-//     // this.Dinner=selectedRow.Dinner;
-// }
+
+    let foodSelection = [];
+    this.classes.forEach(d => {
+      if(selectedRow.DayId==d.code)
+      {
+      foodSelection.push({  label : d.name, value: d.code })
+      }
+    });
+    this.daysOptions = foodSelection;
+    this.selectedday = selectedRow.DayId;
+    this.BreakFast = selectedRow.BreakFast;
+    this.Lunch = selectedRow.Lunch;
+    this.Snacks=selectedRow.Snacks;
+    this.Dinner=selectedRow.Dinner;
+}
 
 onClear() {
   
 }
-} 
+}

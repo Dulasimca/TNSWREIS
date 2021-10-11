@@ -10,8 +10,8 @@ import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.compon
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { AuthGuard } from './services/auth.guard';
-
-
+import { DistrictComponent } from './master/district/district.component';
+import { TalukComponent } from './master/taluk/taluk.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -24,6 +24,8 @@ const routes: Routes = [
   { path: 'opening-balance', component: OpeningBalanceComponent},
   { path: 'commodity-master', component: CommodityMasterComponent},
   { path: 'usermaster', component:UsermasterComponent},
+  { path:  'district', component:DistrictComponent},
+  { path: 'taluk', component:TalukComponent},
 
 
 ];
