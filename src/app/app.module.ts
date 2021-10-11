@@ -36,6 +36,8 @@ import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
 import { MessageService } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
+import { DistrictComponent } from './master/district/district.component';
+import { TalukComponent } from './master/taluk/taluk.component';
 import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
@@ -61,7 +63,9 @@ import { TableConstants } from './Common-Modules/table-constants';
     CommodityMasterComponent,
     OpeningBalanceComponent,
     PurchaseOrderComponent,
-    ConsumptionComponent
+    ConsumptionComponent,
+    DistrictComponent,
+    TalukComponent
   ],
   imports: [
     BrowserModule,
