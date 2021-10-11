@@ -51,9 +51,9 @@ export class MasterService {
                     this.masterData.push({ name: g.Name, code: g.Id });
                 })
                 break;
-            case 'QT':
-                this.data.Table4.forEach(q => {
-                    this.masterData.push({ name: q.Name, code: q.Id });
+            case 'UN':
+                this.data.Table4.forEach(u => {
+                    this.masterData.push({ name: u.Name, code: u.Id });
                 })
                 break;
             case 'AY':
@@ -101,7 +101,8 @@ export class MasterService {
                     this.masterData.push({ name: c.Name, code: c.Id });
                 })
                 break;
-        }
+         
+    }
         return this.masterData;
     }
 }

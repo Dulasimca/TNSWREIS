@@ -12,4 +12,7 @@ public static readonly Warden_Get = 'Warden/Get';
 public static readonly  CommodityMaster_Post = 'CommodityMaster/Post'; 
 public static readonly  CommodityMaster_Get = 'CommodityMaster'; 
 
+public static readonly OpeningBalance_Post = 'OpeningBalance/Post'; 
+public static readonly OpeningBalance_Get = 'OpeningBalance/Get'; 
+
 }
