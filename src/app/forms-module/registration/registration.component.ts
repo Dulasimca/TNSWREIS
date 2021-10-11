@@ -32,6 +32,7 @@ export class RegistrationComponent implements OnInit {
   caste: string;
   casteOptions: SelectItem[];
   castes?: any;
+  subCaste: string;
   schoolOptions: SelectItem[];
   school: string;
   schools?: any;
@@ -108,6 +109,7 @@ export class RegistrationComponent implements OnInit {
     const start_year_range = current_year - 30;
     this.yearRange = start_year_range + ':' + current_year;
     this.bloodgroups = this._masterService.getMaster('BG');
+    this.taluks = this._masterService.getMaster('TK');
     this.genders = this._masterService.getMaster('GD');
     this.districts = this._masterService.getMaster('DT');
     this.languages = this._masterService.getMaster('MT');
@@ -246,7 +248,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    this._router.navigate(['/']);
+    this._router.navigate(['/purchase-order']);
   }
 
   onSubmit() {
@@ -261,6 +263,7 @@ export class RegistrationComponent implements OnInit {
       altMobNo: this.alternateMobNo,
       religion: this.religion,
       caste: this.caste,
+      subCaste: this.subCaste,
       studentFilename: this.studentImage,
       instituteName: this.institutionName,
       course: this.course,

@@ -302,3 +302,8 @@ height: 25px !important;
     position: relative;
     display: block !important;
 }
+.p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
+    background: #099099 !important;
+    color: whitesmoke !important;
+    border-color: solid #208991 !important;
+}

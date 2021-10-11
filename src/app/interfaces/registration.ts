@@ -9,6 +9,7 @@ export interface Registration {
     altMobNo: string;
     religion: string;
     caste: string;
+    subCaste: string;
     studentFilename: string;
     instituteName: string;
     course: string;
