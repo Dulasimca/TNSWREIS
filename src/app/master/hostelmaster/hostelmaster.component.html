@@ -10,7 +10,7 @@
                                 <div class="p-col-12 p-md-6 p-lg-2 ">
                                     <div><label for="_Hosteltype">Hostel Type</label></div>
                                     <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
-                                        [(ngModel)]="Hosteltype" (onClick)="onSelect('HT')" optionLabel="label"
+                                        [(ngModel)]="Hosteltype" (onClick)="onSelect('HT')"
                                         required>
                                     </p-dropdown>
                                 </div>
@@ -18,14 +18,14 @@
                                     <label for="_Districtcode">Districtcode</label>
                                     <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
                                         class="p-col-10" [(ngModel)]="Districtcode" (onClick)="onSelect('D')"
-                                        optionLabel="label" required>
+                                         required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_TalukId">TalukId</label>
                                     <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions"
                                         class="p-col-10" [(ngModel)]="TalukId" (onClick)="onSelect('TK')"
-                                        optionLabel="label" required>
+                                        required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
@@ -105,28 +105,12 @@
                                         maxlength="10" [(ngModel)]="mobileNo" appInputFormat="digitOnly" required />
                                         
                                 </div>
-                                <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label></label></div>
-                                    <!-- <button pButton type="button" label="Camera" (click)="camera()" icon="pi pi-camera"
-                                        class="btn-bg"></button> -->
-                                        <div class="actionBtn" (click)="camera()" title="Take Picture">📸</div>
-                                </div>
-                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                        <button pButton type="button" class="p-col-12" label="Capture" (click)="capture()" icon="pi pi-camera"
-                                        class="btn-bg"></button>
-                                </div>
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
-                                        class="btn-bg"></button>
+                                        class="btn-bg" style="margin-left: 3%;"></button>
                                         <button pButton type="button" label="View" (click)="onView()" 
-                                        class="btn-bg"></button>
+                                        class="btn-bg" style="margin-left: 4%;"></button>
                                 </div>
-                                <div *ngIf="openCamera" >
-                                <app-camera (pictureTaken)="handleImage($event)" [capture]="triggerObservable" (triggerCamera)="captureImage()" ></app-camera> 
-                            </div>
-                       <div class="snapshot" *ngIf="webcamImage">
-                	<img [src]="webcamImage.imageAsDataUrl" />
-                          </div>
                           <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                           [rowsPerPageOptions]="[5,10,15,20]"  totalRecords="totalRecords" pageLinks="3">
                           <ng-template pTemplate="header" let-columns>

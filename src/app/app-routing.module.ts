@@ -10,6 +10,7 @@ import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.compon
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { AuthGuard } from './services/auth.guard';
+import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 
 
 
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'opening-balance', component: OpeningBalanceComponent},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'usermaster', component:UsermasterComponent},
+  { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
 
 
 ];

@@ -37,6 +37,8 @@ import { RestAPIService } from './services/restAPI.service';
 import { MessageService } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
+import { LocationService } from './location.service';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -55,7 +57,8 @@ import { BlockUIModule } from 'ng-block-ui';
     CameraComponent,
     UsermasterComponent,
     CommodityMasterComponent,
-    OpeningBalanceComponent
+    OpeningBalanceComponent,
+    HostelImageComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,7 @@ import { BlockUIModule } from 'ng-block-ui';
     CheckboxModule,
     ToastModule
   ],
-  providers: [RestAPIService, MasterService, MessageService],
+  providers: [RestAPIService, MasterService, MessageService,LocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
