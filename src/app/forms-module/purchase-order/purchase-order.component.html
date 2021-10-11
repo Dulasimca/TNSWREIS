@@ -1,0 +1,130 @@
+<div class="p-col-12 p-md-12 p-lg-12">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="Purchase Order">
+                <div class="p-col-12 p-md-12 p-lg-12 border-blue card">
+                    <form #f="ngForm" name="purchaseForm">
+                        <div #maingrid1 class="p-grid" style="margin-top: 5px;">
+                            <div class="p-col-1"></div>
+                            <div #row1 class="p-col-12 p-md-12 p-lg-10 border-blue">
+                                <div class="div-header" style="font-weight: 500;">Bill Details </div>
+                                <div #grid1 class="p-grid div-main">
+                                    <div #field1 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <input type="text" name="_billno" id="billno" pInputText
+                                                [(ngModel)]="billNo" required>
+                                            <label for="_billno">Bill No</label>
+                                        </span>
+                                    </div>
+                                    <div #field2 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <p-calendar [(ngModel)]="billDate" name="_billdate" [showIcon]="true"
+                                                required>
+                                            </p-calendar>
+                                            <label for="_billdate">Bill Date</label>
+                                        </span>
+                                    </div>
+                                    <div #field3 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <input type="text" name="_shopname" id="shopname" pInputText
+                                                [(ngModel)]="shopName" required>
+                                            <label for="_shopname">Shop Name</label>
+                                        </span>
+                                    </div>
+                                    <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <input type="text" name="_gstno" id="gstno" pInputText [(ngModel)]="gstNo"
+                                                required>
+                                            <label for="_gstno">GST No</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div #maingrid2 class="p-grid" style="margin-top: 5px;">
+                            <div class="p-col-1"></div>
+                            <div #row2 class="p-col-12 p-md-12 p-lg-10 border-blue">
+                                <div class="div-header" style="font-weight: 500;">Commodity Details </div>
+                                <div #grid2 class="p-grid div-main">
+                                    <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <p-dropdown name="_commodity" [options]="commodityOptions"
+                                                (onClick)="onSelect('CM')" [(ngModel)]="commodity" required>
+                                            </p-dropdown>
+                                            <label for="_commodity">Commodity</label>
+                                        </span>
+                                    </div>
+                                    <div #field6 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <input type="text" name="_quantity" pInputText [(ngModel)]="quantity"
+                                                required>
+                                            <label for="_quantity">Quantity</label>
+                                        </span>
+                                    </div>
+                                    <div #field7 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <p-dropdown name="_unit" [options]="commodityOptions"
+                                                (onClick)="onSelect('UN')" [(ngModel)]="unit" required>
+                                            </p-dropdown>
+                                            <label for="_unit">Shop Name</label>
+                                        </span>
+                                    </div>
+                                    <div #field8 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <input type="text" name="_rate" id="gstno" pInputText [(ngModel)]="rate"
+                                                required>
+                                            <label for="_rate">Rate</label>
+                                        </span>
+                                    </div>
+                                    <div #field9 class="p-field p-col-12 p-md-12 p-lg-1">
+                                        <button pButton type="button" label="Enter" (click)="onEnter()"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div #row2 class="p-col-12 txt-center">
+                            <button pButton type="button" label="Enter" (click)="onEnter()"
+                                ></button>
+                        </div> -->
+                        <div #row3 *ngIf="showTable" class="p-col-12 p-md-12 p-lg-12">
+                            <p-table [columns]="purcahseOrderCols" [value]="purcahseOrderData" [paginator]="true"
+                                [rows]="10" [loading]="loading">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 100px">S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                        <th style="width: 120px">Edit</th>
+                                        <th style="width: 120px">Delete</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                    <tr>
+                                        <td style="width: 100px">{{rowIndex+1}}</td>
+                                        <td *ngFor="let col of columns">
+                                            {{rowData[col.field]}}
+                                        </td>
+                                        <td style="width: 120px" (click)="onEdit(rowData)">
+                                            <button icon="pi pi-pencil" pButton type="button">
+                                            </button>
+                                        </td>
+                                        <td style="width: 120px" (click)="onDelete(rowIndex)">
+                                            <button icon="pi pi-trash" pButton type="button">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                        <div #row4 class="p-col-12 txt-center">
+                            <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
+                                ></button>
+                        </div>
+                    </form>
+                </div>
+            </p-panel>
+        </div>
+    </div>
+</div>

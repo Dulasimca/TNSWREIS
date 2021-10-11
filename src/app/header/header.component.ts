@@ -17,6 +17,7 @@ items: any[];
   constructor(private _router: Router, private _authService: AuthService) { }
 
   ngOnInit(): void {
+    this.showMenuIcon = false;
     this.headerText = 'Government Of Tamilnadu';
     this.subHeader = 'Social Welfare Department';
   }

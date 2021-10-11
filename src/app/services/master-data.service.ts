@@ -11,6 +11,7 @@ export class MasterService {
     masterData?: any = [];
     days?: any = [];
     data?: any = [];
+    commodity?: any = [];
 
     constructor(private restApiService: RestAPIService) { }
 
@@ -21,11 +22,14 @@ export class MasterService {
         this.restApiService.get(PathConstants.MasterAll_Get).subscribe(master => {
             this.data = master;
         })
+        this.restApiService.get(PathConstants.CommodityMaster_Get).subscribe(commodity => {
+            this.commodity = commodity;
+        })
         // setTime
         // setTimeout(this.data = function () {
         //     return this.data;
         // }, 1000);
-        return of(this.data);
+        return of(this.data, this.days, this.commodity);
     }
 
     getMaster(type): any {
@@ -61,7 +65,7 @@ export class MasterService {
                     this.masterData.push({ name: a.ShortYear, code: a.Id });
                 })
                 break;
-            case 'CM':
+            case 'CG':
                 this.data.Table6.forEach(c => {
                     this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
                 })
@@ -99,6 +103,11 @@ export class MasterService {
             case 'CL':
                 this.data.Table12.forEach(c => {
                     this.masterData.push({ name: c.Name, code: c.Id });
+                })
+                break;
+            case 'CM': 
+                this.commodity.forEach(c => {
+                    this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
                 })
                 break;
         }
