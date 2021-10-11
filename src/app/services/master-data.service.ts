@@ -105,6 +105,11 @@ export class MasterService {
                     this.masterData.push({ name: c.Name, code: c.Id });
                 })
                 break;
+                case 'RM':
+                    this.data.Table13.forEach(r => {
+                        this.masterData.push({ name: r.Name, code: r.Id });
+                    })
+                    break;
             case 'CM': 
                 this.commodity.forEach(c => {
                     this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });

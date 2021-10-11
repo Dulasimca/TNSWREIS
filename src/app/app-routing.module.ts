@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
-  { path: 'usermaster', component:UsermasterComponent},
+  { path: 'usermaster', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path:  'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
