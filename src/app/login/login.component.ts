@@ -35,15 +35,16 @@ export class LoginComponent implements OnInit {
           if (response.item3.length !== 0) {
             response.item3.forEach(i => {
               const obj: User = {
-                username: (i.UserName !== undefined && i.UserName !== null) ? i.UserName : ''
-                , userID: (i.Id !== undefined && i.Id !== null) ? i.Id : null
-                , emailId: (i.EMailId !== undefined && i.EMailId !== null) ? i.EMailId : ''
-                , hostelId: (i.HostelID !== undefined && i.HostelID !== null) ? i.HostelID : null
-                , talukId: (i.Talukid !== undefined && i.Talukid !== null) ? i.Talukid : null
-                , districtCode: (i.Districtcode !== undefined && i.Districtcode !== null) ? i.Districtcode : null
-                , roleId: (i.RoleId !== undefined && i.RoleId !== null) ? i.RoleId : null
-                , token: (i.EntryptedPwd !== undefined && i.EntryptedPwd !== null) ? i.EntryptedPwd : ''
+                username: (i.userName !== undefined && i.userName !== null) ? i.userName : ''
+                , userID: (i.id !== undefined && i.id !== null) ? i.id : null
+                , emailId: (i.eMailId !== undefined && i.eMailId !== null) ? i.eMailId : ''
+                , hostelId: (i.hostelID !== undefined && i.hostelID !== null) ? i.hostelID : null
+                , talukId: (i.talukid !== undefined && i.talukid !== null) ? i.talukid : null
+                , districtCode: (i.districtcode !== undefined && i.districtcode !== null) ? i.districtcode : null
+                , roleId: (i.roleId !== undefined && i.roleId !== null) ? i.roleId : null
+                , token: (i.entryptedPwd !== undefined && i.entryptedPwd !== null) ? i.entryptedPwd : ''
               }
+              console.log('user', obj);
               this._authService.login(obj);
             });
           } else {
