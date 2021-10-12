@@ -6,6 +6,7 @@ public static readonly FoodMaster_Post = 'FoodMaster/Post';
 
 public static readonly Hostel_Post = 'Hostel/Post';
 public static readonly Hostel_Get = 'Hostel/Get';
+public static readonly Hostel_put = 'Hostel/put';
 
 public static readonly Warden_post = 'Warden/Post'; 
 public static readonly Warden_Get = 'Warden/Get'; 
@@ -22,5 +23,13 @@ public static readonly  CommodityMaster_Get = 'CommodityMaster';
 
 public static readonly  Attendance_Post = 'Attendance/Post'; 
 public static readonly  Attendance_Get = 'Attendance'; 
+public static readonly OpeningBalance_Post = 'OpeningBalance/Post'; 
+public static readonly OpeningBalance_Get = 'OpeningBalance/Get'; 
+
+public static readonly Registration_Post = 'Registration/Post';
+public static readonly Login = 'Login/Post';
+
+public static readonly Hostelgo_post = 'HostelGo/Post'; 
+public static readonly Hostelgo_Get = 'HostelGo/Get'; 
 
 }
