@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from '../Common-Modules/messages';
 import { PathConstants } from '../Common-Modules/PathConstants';
@@ -29,6 +30,8 @@ export class OpeningBalanceComponent implements OnInit {
   
   units?: any;
   years?: any;
+  commodities?: any;
+  @ViewChild('f', { static: false }) _openingBalance: NgForm;
   
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService) { }
@@ -37,12 +40,14 @@ export class OpeningBalanceComponent implements OnInit {
 
     this.units = this.masterService.getMaster('UN');
     this.years = this.masterService.getMaster('AY');
+    this.commodities = this.masterService.getMaster('CM');
 
   }
 
   onSelect(type) {
     let unitSelection = [];
     let yearSelection = [];
+    let commoditySelection = [];
     switch (type) {
       case 'U':
         this.units.forEach(u => {
@@ -58,8 +63,16 @@ export class OpeningBalanceComponent implements OnInit {
           this.yearOptions = yearSelection;
           this.yearOptions.unshift({ label: '-select', value: null });
           break;
+          case 'CN':
+          this.commodities.forEach(c => {
+            commoditySelection.push({ label: c.name, value: c.code });
+          })
+          this.commodityOptions = commoditySelection;
+          this.commodityOptions.unshift({ label: '-select', value: null });
+          break;
 }
-  }
+}
+  
   onSubmit() {
     const params = {
       'Id': this.openingblncId,
@@ -69,16 +82,16 @@ export class OpeningBalanceComponent implements OnInit {
       'Districtcode' : 1,
       'Talukid': 1,
       'HostelId': 1,
-      'AccountingId': this.year.value,
+      'AccountingId': this.year,
       'CommodityId': this.commodityName,
-      'UnitId': this.unit.value,
+      'UnitId': this.unit,
       'Qty': this.quantity,
       'Flag': 1
     }
     this.restApiService.post(PathConstants.OpeningBalance_Post,params).subscribe(res => {
       if (res) {
-        // this.clearform();
-      // this.onView();
+      this.clearform();
+      this.onView();
       this.messageService.clear();
       this.messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -102,16 +115,17 @@ export class OpeningBalanceComponent implements OnInit {
   })
 }
   
-  
   onEdit(selectedRow) {
     if(selectedRow !== null && selectedRow !== undefined){
       this.openingblncId = selectedRow.Id;
       this.year = selectedRow.AccountingId;
+      this.yearOptions = [{ label: selectedRow.ShortYear, value: selectedRow.AccountingId }];
       this.commodityName = selectedRow.CommodityId;
+      this.commodityOptions = [{ label: selectedRow.CommodityName, value: selectedRow.CommodityId }];
       this.unit = selectedRow.UnitId;
+      this.unitOptions = [{ label: selectedRow.UnitName, value: selectedRow.UnitId }];
       this.quantity = selectedRow.Qty
     }
-
   }
   onView() {
     this.showTable = true;
@@ -119,12 +133,15 @@ export class OpeningBalanceComponent implements OnInit {
       'Districtcode' : 1,
       'Talukid': 1,
       'HostelId': 1,
-      'AccountingId': this.year.value
-    }
+      'AccountingId': 4
+    };
     this.restApiService.getByParameters(PathConstants.OpeningBalance_Get,params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0){
         this.data = res;
       }
     })
+  }
+  clearform() {
+    this._openingBalance.reset();
   }
 }

@@ -32,14 +32,14 @@ export class CommodityMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.commodityId = 0;
-    this.commodityGroups = this.masterService.getMaster('CM');
+    this.commodityGroups = this.masterService.getMaster('CG');
   }
 
   onSelect(type) {
     let groupSelection = [];
 
     switch (type) {
-      case 'CM':
+      case 'C':
         this.commodityGroups.forEach(g => {
           groupSelection.push({ label: g.name, value: g.code });
         })
