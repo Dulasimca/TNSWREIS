@@ -15,14 +15,13 @@ export class DistrictComponent implements OnInit {
 
   data:any;
   district:any
-  // Button1:string
-  // Button2:string
+  selectedType:number;
   districtcode:number;
   cols:any
   selectedCategory: any = null;
   Districtname:any
 
-  categories: any[] = [{name: 'Active', key: 'A'}, {name: 'InActive', key: 'I'},];
+  
 
   constructor(  private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService
@@ -30,12 +29,12 @@ export class DistrictComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.selectedCategory = this.categories[1];
+   
     this.cols = [
 
       {field:'Districtcode',header: 'District Code'},
       {field:'Districtname',header: 'District Name'},
-      
+      {field:'Flag',header: 'Status'},
 
     ];
   }
@@ -57,6 +56,10 @@ export class DistrictComponent implements OnInit {
     this.restApiService.get(PathConstants.DistrictMaster_Get).subscribe(res => {
       if(res !== null && res !== undefined && res.length !==0) {
         this.data = res.Table;
+        this.data.forEach(i => {
+          i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+        })
+       
       } 
       
     });

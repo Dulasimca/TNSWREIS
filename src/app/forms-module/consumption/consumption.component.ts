@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
 
 @Component({
   selector: 'app-consumption',
@@ -23,9 +24,10 @@ export class ConsumptionComponent implements OnInit {
   consumptionData: any = [];
   loading: boolean;
 
-  constructor() { }
+  constructor(private _tableConstants: TableConstants) { }
 
   ngOnInit(): void {
+    this.consumptionCols = this._tableConstants.consumptionColumns;
   }
 
   onSelect(id) {

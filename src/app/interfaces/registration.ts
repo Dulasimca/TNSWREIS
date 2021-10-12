@@ -1,4 +1,6 @@
 export interface Registration {
+    studentId: any;
+    hostelId: any;
     studentName: string;
     age: number;
     dob: string;
@@ -14,12 +16,12 @@ export interface Registration {
     instituteName: string;
     course: string;
     medium: string;
-    class: string;
+    classId: string;
     courseTitle: string;
     lastStudiedInstituteName: string;
     lastStudiedInstituteAddress: string;
     distanceFromHostelToHome: any;
-    distanceFromHomeToHostel: any;
+    distanceFromHostelToInstitue: any;
     disabilityType: any;
     address1: string;
     address2: string;
@@ -31,10 +33,16 @@ export interface Registration {
     aadharNo: string;
     rationCardrNo: string;
     emisno: any;
+    talukApproval: any;
+    districtApproval: any;
+    //bank
+    bankId: any;
     bankName: string;
     bankAccNo: string;
     ifscCode: string;
     branchName: string;
+    //parent's info
+    parentId: number;
     fatherName: string;
     fatherOccupation: string;
     fatherMoileNo: string;
@@ -47,11 +55,13 @@ export interface Registration {
     motherYIncome: string;
     guardianName: string;
     guardianOccupation: string;
-    guardianMoileNo: string;
+    guardianMobileNo: string;
     guardianQualification: string;
-    guardianYIncome: string;
+    totalYIncome: string;
+    documentId: number,
     incomeCertificateFilename: string;
     tcFilename: string;
     bankPassbookFilename: string;
     declarationFilename: string;
+
 }

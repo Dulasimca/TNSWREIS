@@ -40,11 +40,14 @@ import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
+import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 import { LocationService } from './location.service';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { TableConstants } from './Common-Modules/table-constants';
+import { ChangePasswordComponent } from './master/change-password/change-password.component';
+import { PasswordModule } from "primeng/password";
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -68,7 +71,9 @@ import { TableConstants } from './Common-Modules/table-constants';
     PurchaseOrderComponent,
     ConsumptionComponent,
     DistrictComponent,
-    TalukComponent
+    TalukComponent,
+    AttendanceComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -85,12 +90,13 @@ import { TableConstants } from './Common-Modules/table-constants';
     PanelModule,
     TabViewModule,
     CalendarModule,
+    PasswordModule,
     // DataTableModule,
     // PaginatorModule
 
     RadioButtonModule,
     TableModule,
-    BlockUIModule,
+    BlockUIModule.forRoot(),
     CheckboxModule,
     ToastModule
   ],
@@ -99,5 +105,6 @@ import { TableConstants } from './Common-Modules/table-constants';
   providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants,LocationService],
 
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
