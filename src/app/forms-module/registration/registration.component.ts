@@ -12,6 +12,7 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -115,12 +116,13 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private _masterService: MasterService, private _router: Router,
     private _d: DomSanitizer, private _datePipe: DatePipe, private _messageService: MessageService,
-    private _restApiService: RestAPIService) { }
+    private _restApiService: RestAPIService, private _authService: AuthService) { }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 30;
     this.yearRange = start_year_range + ':' + current_year;
+    this.logged_user = this._authService.UserInfo;
     this.bloodgroups = this._masterService.getMaster('BG');
     this.taluks = this._masterService.getMaster('TK');
     this.genders = this._masterService.getMaster('GD');
@@ -129,6 +131,7 @@ export class RegistrationComponent implements OnInit {
     this.castes = this._masterService.getMaster('CS');
     this.classes = this._masterService.getMaster('CL');
     this.courses = this._masterService.getMaster('CU');
+    this.religions = this._masterService.getMaster('RL');
   }
 
   onSelect(type) {

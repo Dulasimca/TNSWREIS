@@ -86,7 +86,14 @@
                                             <label for="_rate">Rate</label>
                                         </span>
                                     </div>
-                                    <div #field10 class="p-field p-col-12 p-md-12 p-lg-1">
+                                    <div #field10 class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label">
+                                            <input type="text" name="_total" pInputText [(ngModel)]="total"
+                                                readonly="true" required>
+                                            <label for="_total">Total</label>
+                                        </span>
+                                    </div>
+                                    <div #field11 class="p-field p-col-12 p-md-12 p-lg-1">
                                         <button pButton type="button" label="Enter" (click)="onEnter()"></button>
                                     </div>
                                 </div>

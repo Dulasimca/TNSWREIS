@@ -34,7 +34,7 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
-import { MessageService } from 'primeng/api';
+import { FilterService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
@@ -45,6 +45,8 @@ import { LocationService } from './location.service';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { TableConstants } from './Common-Modules/table-constants';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth.guard';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -90,13 +92,14 @@ import { TableConstants } from './Common-Modules/table-constants';
 
     RadioButtonModule,
     TableModule,
-    BlockUIModule,
+    BlockUIModule.forRoot(),
     CheckboxModule,
     ToastModule
   ],
 
 
-  providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants,LocationService],
+  providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants,
+    LocationService, AuthService, AuthGuard, PrimeNGConfig, FilterService],
 
   bootstrap: [AppComponent]
 })
