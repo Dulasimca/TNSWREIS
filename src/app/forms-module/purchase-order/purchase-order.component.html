@@ -1,4 +1,6 @@
-<div class="p-col-12 p-md-12 p-lg-12">
+<block-ui>
+    <div class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
     <div class="p-grid">
         <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
@@ -64,17 +66,17 @@
                                     </div>
                                     <div #field7 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
-                                            <input type="text" name="_quantity" pInputText [(ngModel)]="quantity"
-                                                required>
-                                            <label for="_quantity">Quantity</label>
+                                            <p-dropdown name="_unit" [options]="unitOptions"
+                                                (onClick)="onSelect('UN')" [(ngModel)]="unit" required>
+                                            </p-dropdown>
+                                            <label for="_unit">Unit</label>
                                         </span>
                                     </div>
                                     <div #field8 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
-                                            <p-dropdown name="_unit" [options]="unitOptions"
-                                                (onClick)="onSelect('UN')" [(ngModel)]="unit" required>
-                                            </p-dropdown>
-                                            <label for="_unit">Shop Name</label>
+                                            <input type="text" name="_quantity" pInputText [(ngModel)]="quantity"
+                                                required>
+                                            <label for="_quantity">Quantity</label>
                                         </span>
                                     </div>
                                     <div #field9 class="p-field p-col-12 p-md-6 p-lg-2">
@@ -135,3 +137,4 @@
         </div>
     </div>
 </div>
+</block-ui>

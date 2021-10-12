@@ -13,6 +13,7 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 import { AuthGuard } from './services/auth.guard';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
+import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'usermaster', component:UsermasterComponent},
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
+  { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
   { path:  'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
 
