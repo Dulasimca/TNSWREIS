@@ -90,7 +90,7 @@ import { TableConstants } from './Common-Modules/table-constants';
 
     RadioButtonModule,
     TableModule,
-    BlockUIModule,
+    BlockUIModule.forRoot(),
     CheckboxModule,
     ToastModule
   ],
