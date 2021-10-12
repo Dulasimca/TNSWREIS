@@ -28,10 +28,9 @@ const routes: Routes = [
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
 
-  { path: 'usermaster', component:UsermasterComponent},
+  { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
 
-  { path: 'usermaster', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path:  'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},

@@ -30,5 +30,6 @@ export class ResponseMessage {
     public static readonly MeetingSuccess = 'Meeting created successfully!';
     public static readonly DeleteSuccessMsg = 'Deleted successfully !';
     public static readonly DeleteFailMsg = 'Record is not deleted !';
+    public static readonly EmailAlreadyExists = 'User email already exists !';
     
 }

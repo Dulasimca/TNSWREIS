@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
     const userInfo: User = {
       username: this.username,
       password: this.password,
-      userID: 0
+      userID: 0,
+      roleId: 1
     }
     this._authService.login(userInfo)
    }
