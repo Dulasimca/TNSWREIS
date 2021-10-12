@@ -15,6 +15,7 @@ import { HostelImageComponent } from './master/hostel-image/hostel-image.compone
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
+import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
 
   { path: 'usermaster', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
+  { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
   { path:  'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
   { path: 'changepassword', component:ChangePasswordComponent},

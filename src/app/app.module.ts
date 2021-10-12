@@ -94,7 +94,7 @@ import { PasswordModule } from "primeng/password";
 
     RadioButtonModule,
     TableModule,
-    BlockUIModule,
+    BlockUIModule.forRoot(),
     CheckboxModule,
     ToastModule
   ],
@@ -103,5 +103,6 @@ import { PasswordModule } from "primeng/password";
   providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants,LocationService],
 
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
