@@ -30,6 +30,7 @@ export class PurchaseOrderComponent implements OnInit {
   loading: boolean;
   showTable: boolean;
   grandTotal: number = 0;
+  total: number = 0;
   @BlockUI() blockUI: NgBlockUI;
   constructor(private _datepipe: DatePipe, private _tableConstants: TableConstants,
     private _masterService: MasterService, private _messageService: MessageService) { }
