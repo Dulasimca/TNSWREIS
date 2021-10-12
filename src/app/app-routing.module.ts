@@ -14,6 +14,7 @@ import { AuthGuard } from './services/auth.guard';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
+import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
   { path:  'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
+  { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},
 
 

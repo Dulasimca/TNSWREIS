@@ -1,4 +1,4 @@
-<div class="p-col-12 p-md-12 p-lg-12 content">
+<div class="p-col-12 p-md-12 p-lg-12 ">
     <p-panel header="District">
     <div class="p-grid">
         
@@ -14,26 +14,14 @@
                             <input type="text" pInputText [(ngModel)]="Districtname" name="district" required />
                         </div>
 
-                        <!-- <div class="p-col-12 p-md-6 p-lg-1"></div>
-                        <div class="p-col-12 p-md-6 p-lg-2">
-                            <label for="District">Active</label>
-                            <p-radioButton name="disradio1" value="Active" 
-                            [(ngModel)]="Button1" inputId="disradio1"></p-radioButton>
-                    </div>
-
-                    
-                    <div class="p-col-12 p-md-6 p-lg-2">
-                        <label for="District">INActive</label>
-                        <p-radioButton name="disradio2" value="INActive" 
-                        [(ngModel)]="Button2" inputId="disradio2"></p-radioButton>
-                </div> -->
-
-                 <div class="p-col-12 p-md-6 p-lg-1"></div>
-                <div *ngFor="let category of categories" class="p-field-checkbox">
-                    <p-radioButton [inputId]="category.key" name="category" [value]="category" [(ngModel)]="selectedCategory"
-                        [disabled]="category.key == 'I'"></p-radioButton>
-                    <label [for]="category.key">{{category.name}}</label>
-                </div>
+                        
+                        <div class="p-col-12 p-md-12 p-lg-3" style="margin-top: 23px;">
+                            <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType" required>
+                            </p-radioButton>
+                            <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType" required>
+                            </p-radioButton>
+                        </div>
+                
 
 
 
