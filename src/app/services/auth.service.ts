@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   login(user: User){
-    if (user.username !== '' && user.password !== '' ) { 
+    if (user.username !== '' && user.token !== '' ) { 
       localStorage.setItem('UserInfo', JSON.stringify(user));
       this.loggedIn.next(true);
       this._router.navigate(['/registration']);

@@ -7,7 +7,7 @@
                     <form #f="ngForm" name="consumptionForm">
                         <div #maingrid1 class="p-grid" style="margin-top: 5px;">
                             <div class="p-col-1"></div>
-                            <div #row1 class="p-col-12 p-md-12 p-lg-8">
+                            <div #row1 class="p-col-12 p-md-12 p-lg-8 no-pad-btm">
                                 <div #grid1 class="p-grid div-main">
                                     <div #field1 class="p-field p-col-12 p-md-6 p-lg-2">
                                         <span class="p-float-label">
@@ -56,9 +56,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div #row2 class="p-col-12 txt-center">
+                            <div #row2 class="p-col-12 txt-center no-padding">
                                 <button pButton type="button" label="Enter" (click)="onEnter()"></button>
                             </div>
+                            <div class="p-grid">
                             <div #row3 class="p-col-12 p-md-12 p-lg-12">
                                 <p-table [columns]="consumptionCols" [value]="consumptionData" [paginator]="true"
                                     [rows]="10" [loading]="loading">
@@ -86,6 +87,7 @@
                                     </ng-template>
                                 </p-table>
                             </div>
+                        </div>
                         </div>
                     </form>
                 </div>
