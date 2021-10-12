@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       UserId: this.username,
       Password: this.password,
     }
-    this._restApiService.getByParameters(PathConstants.Login, params).subscribe(response => {
+    this._restApiService.post(PathConstants.Login, params).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response.item1) {
           if (response.item3.length !== 0) {
