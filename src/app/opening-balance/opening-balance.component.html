@@ -1,6 +1,7 @@
 <div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
         <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Opening Balance Entry">
                 <form #f="ngForm" name="openingBalance">
                     <p-card>
@@ -32,7 +33,7 @@
                                                 <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                                     <div><label for="_year">Accounting Year<span
                                                                 class="form-mandatory-field">*</span></label></div>
-                                                    <p-dropdown name="_year" [options]="yearOptions" optionLabel="label"
+                                                    <p-dropdown name="_year" [options]="yearOptions"
                                                         (onClick)="onSelect('Y')" [(ngModel)]="year" required>
                                                     </p-dropdown>
                                                 </div>
@@ -40,14 +41,7 @@
                                                     <label for="_commodityName">Commodity Name<span
                                                             class="form-mandatory-field">*</span></label>
                                                     <p-dropdown name="_commodityName" [options]="commodityOptions"
-                                                        [(ngModel)]="commodityName" required>
-                                                    </p-dropdown>
-                                                </div>
-                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
-                                                    <div><label for="_unit">Unit<span
-                                                                class="form-mandatory-field">*</span></label></div>
-                                                    <p-dropdown name="_unit" [options]="unitOptions" optionLabel="label"
-                                                        (onClick)="onSelect('U')" [(ngModel)]="unit" required>
+                                                        [(ngModel)]="commodityName" (onClick)="onSelect('CN')" required>
                                                     </p-dropdown>
                                                 </div>
                                                 <div class="p-col-12 p-md-12 p-lg-2">
@@ -56,12 +50,21 @@
                                                     <input type="text" class="p-col-12" name="_quantity" pInputText
                                                         [(ngModel)]="quantity" required />
                                                 </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_unit">Unit<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_unit" [options]="unitOptions"
+                                                        (onClick)="onSelect('U')" [(ngModel)]="unit" required>
+                                                    </p-dropdown>
+                                                </div>
                                                 <div class="p-col-12"></div>
                                                 <div class="p-col-12 p-md-6 p-lg-4" style="text-align: right;">
-                                                    <button pButton type="button" label="Submit"></button>
+                                                    <button pButton type="button" label="Submit"
+                                                        (click)="onSubmit()"></button>
                                                 </div>
                                                 <div class="p-col-12 p-md-6 p-lg-6">
-                                                    <button pButton type="button" label="View" (click)="onView()"></button>
+                                                    <button pButton type="button" label="View"
+                                                        (click)="onView()"></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -75,28 +78,30 @@
         </div>
     </div>
 </div>
-
-<div *ngIf="showTable" class="table-format"> 
-    <p-table [value]="blncdata" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
+<!-- show table -->
+<div *ngIf="showTable" class="table-format">
+    <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10"
+        [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords" pageLinks="3">
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 3cm;">S.No</th>
                 <th style="width: 5.5cm;">Accounting Year</th>
-                <th>Commodity Name</th>
-                <th>Unit</th>
+                <th style="width: 6.5cm;">Commodity Name</th>
                 <th>Quantity</th>
+                <th>Unit</th>
+                <th style="width: 4.3cm;">Edit/Update</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-data>
             <tr>
-              <td>{{rowIndex+1}}</td>
-              <td>{{data.Name}}</td>
-                <td>{{data.NameTamil}}</td>
-                <td>{{data.CommodityGroupId}}</td>
-                <td>{{data.Flag}}</td>
-              <td style="width: 142px;"><i class="pi pi-pencil" (click)="onEdit(rowData)"
-                 ></i></td>
+                <td>{{rowIndex+1}}</td>
+                <td>{{data.ShortYear}}</td>
+                <td>{{data.CommodityName}}</td>
+                <td>{{data.Qty}}</td>
+                <td>{{data.UnitName}}</td>
+                <td><button icon="pi pi-pencil" pButton type="button" (click)="onEdit(rowData)">
+                    </button></td>
             </tr>
-          </ng-template>
+        </ng-template>
     </p-table>
-    </div>
+</div>

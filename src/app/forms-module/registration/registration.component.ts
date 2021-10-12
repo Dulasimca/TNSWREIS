@@ -3,9 +3,15 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { Registration } from 'src/app/interfaces/registration';
+import { User } from 'src/app/interfaces/user';
 import { MasterService } from 'src/app/services/master-data.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { RestAPIService } from 'src/app/services/restAPI.service';
+import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -53,8 +59,8 @@ export class RegistrationComponent implements OnInit {
   classOptions: SelectItem[];
   class: string;
   classes?: any;
-  distanceFromHostel: any;
-  distanceFromHome: any;
+  distanceFromHostelToHome: any;
+  distanceFromHostelToInstitute: any;
   isDisability: boolean = false;
   disabilityType: string;
   addressLine1: string;
@@ -84,7 +90,7 @@ export class RegistrationComponent implements OnInit {
   guardianOccupation: string;
   guardianQulaification: string;
   guardianMobileNo: string;
-  guardianYIncome: any;
+  totalYIncome: any;
   studentImage: any = '';
   incomeFilename: string = '';
   tcFilename: string = '';
@@ -94,6 +100,12 @@ export class RegistrationComponent implements OnInit {
   medium: string;
   courseTitle: string;
   ageTxt: string;
+  logged_user: User;
+  studentId:number = 0;
+  parentId: number = 0;
+  bankId: number = 0;
+  documentId: number = 0;
+  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
   @ViewChild('bankPassBook', { static: false }) _bankPassBook: ElementRef;
   @ViewChild('transferCertificate', { static: false }) _transferCertificate: ElementRef;
@@ -102,7 +114,8 @@ export class RegistrationComponent implements OnInit {
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
 
   constructor(private _masterService: MasterService, private _router: Router,
-    private _d: DomSanitizer, private _datePipe: DatePipe) { }
+    private _d: DomSanitizer, private _datePipe: DatePipe, private _messageService: MessageService,
+    private _restApiService: RestAPIService) { }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
@@ -248,11 +261,14 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    this._router.navigate(['/']);
+    this._router.navigate(['/daily-consumption']);
   }
 
   onSubmit() {
+    this.blockUI.start();
     const data: Registration = {
+      studentId: this.studentId,
+      hostelId: this.logged_user.hostelId,
       studentName: this.studentName,
       age: this.age,
       dob: this._datePipe.transform(this.dob, 'yyyy-MM-dd'),
@@ -268,12 +284,12 @@ export class RegistrationComponent implements OnInit {
       instituteName: this.institutionName,
       course: this.course,
       medium: this.medium,
-      class: this.class,
+      classId: this.class,
       courseTitle: this.courseTitle,
       lastStudiedInstituteName: this.lastInstitutionName,
       lastStudiedInstituteAddress: this.lastInstitutionAddress,
-      distanceFromHostelToHome: this.distanceFromHostel,
-      distanceFromHomeToHostel: this.distanceFromHome,
+      distanceFromHostelToHome: this.distanceFromHostelToHome,
+      distanceFromHostelToInstitue: this.distanceFromHostelToInstitute,
       disabilityType: this.disabilityType,
       address1: this.addressLine1,
       address2: this.addressLine2,
@@ -285,10 +301,14 @@ export class RegistrationComponent implements OnInit {
       aadharNo: this.pincode,
       rationCardrNo: this.rationCardNo,
       emisno: this.emisNo,
+      talukApproval:  null,
+      districtApproval: null,
+      bankId: this.bankId,
       bankName: this.bankName,
       bankAccNo: this.bankAccNo,
       ifscCode: this.ifscCode,
       branchName: this.branchName,
+      parentId: this.parentId,
       fatherName: this.fatherName,
       fatherOccupation: this.fatherOccupation,
       fatherMoileNo: this.fatherMobileNo,
@@ -301,14 +321,50 @@ export class RegistrationComponent implements OnInit {
       motherYIncome: this.motherYIncome,
       guardianName: this.guardianName,
       guardianOccupation: this.guardianOccupation,
-      guardianMoileNo: this.guardianMobileNo,
+      guardianMobileNo: this.guardianMobileNo,
       guardianQualification: this.guardianQulaification,
-      guardianYIncome: this.guardianYIncome,
+      totalYIncome: this.totalYIncome,
+      documentId: this.documentId,
       incomeCertificateFilename: this.incomeFilename,
       tcFilename: this.tcFilename,
       bankPassbookFilename: this.bankPassbookFilename,
-      declarationFilename: this.declarationFilename
+      declarationFilename: this.declarationFilename,
     }
+    this._restApiService.post(PathConstants.Registration_Post, data).subscribe(response => {
+      if(response !== undefined && response !== null) {
+        if(response) {
+          this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          })
+        } else {
+          this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
+        }
+      } else {
+        this.blockUI.stop();
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    }, (err: HttpErrorResponse) => {
+      this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    })
   }
 
 }

@@ -27,7 +27,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './forms-module/registration/registration.component';
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
-import { WardenDetailsComponent } from './forms-module/registration/warden-details/warden-details.component';
+import { WardenDetailsComponent } from './forms-module/warden-details/warden-details.component';
 import { CameraComponent } from './Feature-module/camera/camera.component';
 import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
@@ -40,6 +40,11 @@ import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
+import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
+import { LocationService } from './location.service';
+import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
+import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
+import { TableConstants } from './Common-Modules/table-constants';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -59,6 +64,9 @@ import { BlockUIModule } from 'ng-block-ui';
     UsermasterComponent,
     CommodityMasterComponent,
     OpeningBalanceComponent,
+    HostelImageComponent,
+    PurchaseOrderComponent,
+    ConsumptionComponent,
     DistrictComponent,
     TalukComponent
   ],
@@ -86,7 +94,10 @@ import { BlockUIModule } from 'ng-block-ui';
     CheckboxModule,
     ToastModule
   ],
-  providers: [RestAPIService, MasterService, MessageService, DatePipe],
+
+
+  providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants,LocationService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
-<div class="p-col-12 p-md-12 p-lg-12">
+<block-ui>
+    <div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
         <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
@@ -245,15 +246,15 @@
                                                     <div #field22 class="p-field p-col-12 p-md-12 p-lg-4">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_distance1" pInputText
-                                                                [(ngModel)]="distanceFromHostel" required>
+                                                                [(ngModel)]="distanceFromHostelToHome" required>
                                                             <label for="_distance1">Distance From Hostel To Home</label>
                                                         </span>
                                                     </div>
                                                     <div #field23 class="p-field p-col-12 p-md-12 p-lg-4">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_distance2" pInputText
-                                                                [(ngModel)]="distanceFromHome" required>
-                                                            <label for="_distance2">Distance From Home To Hostel</label>
+                                                                [(ngModel)]="distanceFromHostelToInstitute" required>
+                                                            <label for="_distance2">Distance From Hostel To Institute</label>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -521,7 +522,7 @@
                                         <div #main3 class="p-grid">
                                             <div class="p-col-1"></div>
                                             <div class="p-col-12 p-md-12 p-lg-10">
-                                                <div class="div-header" style="font-weight: 500;">Mother Details </div>
+                                                <div class="div-header" style="font-weight: 500;">Guardian Details </div>
                                                 <div #row1 class="p-col-12 border-blue">
                                                     <div #grid1 class="p-grid div-main">
                                                         <div #field50 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -555,13 +556,6 @@
                                                                 <label for="_guardianmobno">Mobile No</label>
                                                             </span>
                                                         </div>
-                                                        <div #field54 class="p-field p-col-12 p-md-12 p-lg-2">
-                                                            <span class="p-float-label">
-                                                                <input type="text" name="_guardianincome" pInputText
-                                                                    [(ngModel)]="guardianYIncome" appInputFormat="digitOnly" required>
-                                                                <label for="_guardianincome">Yearly Income</label>
-                                                            </span>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -582,14 +576,14 @@
                                                             <input #incomeCertificate class="p-col-12"
                                                                 name="_incomecertificate" type="file" pInputText
                                                                 (change)="onFileUpload($event, 2)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
                                                         </div>
                                                         <div #field56 class="p-field p-col-12 p-md-12 p-lg-4">
                                                             <label for="_transfercertificate">TC/Bonafide</label>
                                                             <input #transferCertificate class="p-col-12"
                                                                 name="_transfercertificate" type="file" pInputText
                                                                 (change)="onFileUpload($event, 3)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
                                                         </div>
                                                     </div>
                                                     <div #grid2 class="p-grid">
@@ -598,13 +592,13 @@
                                                             <input #bankPassBook class="p-col-12" name="_bankpassbook"
                                                                 type="file" pInputText
                                                                 (change)="onFileUpload($event, 4)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
                                                         </div>
                                                         <div #field58 class="p-field p-col-12 p-md-12 p-lg-4">
                                                             <label for="_declarationform">Declaration Form</label>
                                                             <input #declarationForm class="p-col-12" name="_declarationform"
                                                                 type="file" pInputText (change)="onFileUpload($event, 5)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" required />
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
                                                         </div>
                                                         </div>
                                                 </div>
@@ -625,3 +619,4 @@
         <div class="p-col-1"></div>
     </div>
 </div>
+</block-ui>

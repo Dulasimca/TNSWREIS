@@ -1,0 +1,91 @@
+<div class="p-col-12 p-md-12 p-lg-12">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="Consumption">
+                <p-card>
+                    <form #f="ngForm" name="consumptionForm" class="div-main border-blue">
+                        <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                            <div class="p-grid">
+                                <div #field1 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <p-dropdown name="_consumption" [options]="consumptionOptions"
+                                        (onClick)="onSelect('CF')" [(ngModel)]="consumption" required>
+                                    </p-dropdown>
+                                        <label for="_consumption">Consumption For</label>
+                                    </span>
+                                </div>
+                                <div #field2 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <p-dropdown name="_commodity" [options]="commodityOptions"
+                                            (onClick)="onSelect('CM')" [(ngModel)]="commodity" required>
+                                        </p-dropdown>
+                                        <label for="_commodity">Commodity</label>
+                                    </span>
+                                </div>
+                                <div #field3 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <p-dropdown name="_unit" [options]="unitOptions"
+                                            (onClick)="onSelect('UN')" [(ngModel)]="unit" required>
+                                        </p-dropdown>
+                                        <label for="_unit">Unit</label>
+                                    </span>
+                                </div>
+                                <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <input type="text" name="_openingbalance" pInputText [(ngModel)]="openingBalance"
+                                            required>
+                                        <label for="_openingbalance">Opening Balance</label>
+                                    </span>
+                                </div>
+                                <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <input type="text" name="_requiredqty" pInputText [(ngModel)]="requiredQty"
+                                            required>
+                                        <label for="_requiredqty">Opening Balance</label>
+                                    </span>
+                                </div>
+                                <div #field6 class="p-field p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <input type="text" name="_closingbalance" pInputText [(ngModel)]="closingBalance"
+                                            required>
+                                        <label for="_closingbalance">Opening Balance</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div #row2 class="p-col-12 txt-center">
+                            <button pButton type="button" label="Enter" (click)="onEnter()"
+                                ></button>
+                        </div>
+                        <div #row3 class="p-col-12 p-md-12 p-lg-12">
+                            <p-table [columns]="consumptionCols" [value]="consumptionData" [paginator]="true" [rows]="10" [loading]="loading">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 100px">S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                    <tr>
+                                        <td style="width: 100px">{{rowIndex+1}}</td>
+                                        <td *ngFor="let col of columns">
+                                            {{rowData[col.field]}}
+                                        </td>
+                                        <td (click)="onDelete(rowIndex)">
+                                            <button icon="pi pi-trash" pButton type="button">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </form>
+                </p-card>
+            </p-panel>
+        </div>
+    </div>
+</div>
