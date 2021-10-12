@@ -40,6 +40,7 @@ import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
+import { AttendanceComponent } from './forms-module/attendance/attendance.component';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -60,7 +61,8 @@ import { BlockUIModule } from 'ng-block-ui';
     CommodityMasterComponent,
     OpeningBalanceComponent,
     DistrictComponent,
-    TalukComponent
+    TalukComponent,
+    AttendanceComponent
   ],
   imports: [
     BrowserModule,

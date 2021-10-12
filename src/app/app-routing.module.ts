@@ -12,6 +12,7 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 import { AuthGuard } from './services/auth.guard';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
+import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'usermaster', component:UsermasterComponent},
   { path:  'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
+  { path: 'attendance', component:AttendanceComponent},
 
 
 ];

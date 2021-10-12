@@ -20,4 +20,7 @@ public static readonly TalukMaster_Get = 'TalukMaster';
 public static readonly  CommodityMaster_Post = 'CommodityMaster/Post'; 
 public static readonly  CommodityMaster_Get = 'CommodityMaster'; 
 
+public static readonly  Attendance_Post = 'Attendance/Post'; 
+public static readonly  Attendance_Get = 'Attendance'; 
+
 }

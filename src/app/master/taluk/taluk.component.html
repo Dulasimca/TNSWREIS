@@ -1,84 +1,72 @@
-<div class="p-col-12 p-md-12 p-lg-12 content">
+<div class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
     <p-panel header="Taluk">
-    <div class="p-grid">
-        
-        <div class="p-col-12 p-md-12 p-lg-12">
-            
+        <div class="p-grid">
+
+            <div class="p-col-12 p-md-12 p-lg-12">
+
                 <form #f="ngForm" name="taluk">
                     <p-card>
                         <div class="p-grid">
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label>District<span
-                                    class="form-mandatory-field">*</span></label></div>
-                                <p-dropdown name="selectdistrict" [options]="districtOptions" [(ngModel)]="selectdistrict"
-                                    optionLabel="label" (onClick)="onSelect()" required>
+                                <div><label>District<span class="form-mandatory-field">*</span></label></div>
+                                <p-dropdown name="selectdistrict" [options]="districtOptions"
+                                    [(ngModel)]="selectdistrict" optionLabel="label" (onClick)="onSelect()" required>
                                 </p-dropdown>
                             </div>
-                        <div class="p-col-12 p-md-6 p-lg-2">
-                            <div><label>Taluk Name<span
-                                class="form-mandatory-field">*</span></label></div>
-                            <input type="text" pInputText [(ngModel)]="taluk" name="taluk" required />
-                        </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label>Taluk Name<span class="form-mandatory-field">*</span></label></div>
+                                <input type="text" pInputText [(ngModel)]="taluk" name="taluk" required />
+                            </div>
 
-                        <!-- <div class="p-col-12 p-md-6 p-lg-1"></div>
-                        <div class="p-col-12 p-md-6 p-lg-2">
-                            <label for="District">Active</label>
-                            <p-radioButton name="disradio1" value="Active" 
-                            [(ngModel)]="Button1" inputId="disradio1"></p-radioButton>
-                    </div>
 
-                    
-                    <div class="p-col-12 p-md-6 p-lg-2">
-                        <label for="District">INActive</label>
-                        <p-radioButton name="disradio2" value="INActive" 
-                        [(ngModel)]="Button2" inputId="disradio2"></p-radioButton>
-                </div> -->
+                            <div class="p-col-12 p-md-12 p-lg-3" style="margin-top: 23px;">
+                                <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType" required>
+                                </p-radioButton>
+                                <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType" required>
+                                </p-radioButton>
+                            </div>
 
-                 <div class="p-col-12 p-md-6 p-lg-1"></div>
-                <div *ngFor="let category of categories" class="p-field-checkbox">
-                    <p-radioButton [inputId]="category.key" name="category" [value]="category" [(ngModel)]="selectedCategory"
-                        [disabled]="category.key === 'R'"></p-radioButton>
-                    <label [for]="category.key">{{category.name}}</label>
-                </div>
 
 
 
                         </div>
                     </p-card>
                 </form>
-                <div class="p-col-12 p-md-6 p-lg12" style = "margin-left:35%;"> 
-                    <button pButton name="save" type="button" label="Submit"  (click)="onSubmit()"></button>
-                  
-                      <button pButton type="button" label="View" (click)="onview()" style = "margin-left:5%;"></button>
-                      <!-- <button pButton type="button" label="clear" (click)="onClear()" style = "margin-left:5%;"></button>  -->
-                    </div>
+                <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
+                    <button pButton name="save" type="button" label="Submit" (click)="onSubmit()"></button>
+
+                    <button pButton type="button" label="View" (click)="onview()" style="margin-left:5%;"></button>
+                    <!-- <button pButton type="button" label="clear" (click)="onClear()" style = "margin-left:5%;"></button>  -->
+                </div>
+            </div>
         </div>
-    </div>
+        <!-- <div *ngIf="showTable" class="table-format"> -->
+        <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
+            totalRecords="totalRecords" pageLinks="3">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
 
-    <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
-    totalRecords="totalRecords" pageLinks="3">
-<ng-template pTemplate="header" let-columns > 
-<tr>
-  
-  <th *ngFor="let col of columns" [style.width]="col.width">
-    {{col.header}}
-  </th>
-  
-</tr>
-</ng-template>
+                    <th *ngFor="let col of columns" [style.width]="col.width">
+                        {{col.header}}
+                    </th>
 
-  
-<ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-  <tr [pSelectableRow]="rowData"  class="cursor-pointer" (dblclick)="onRowSelect($event, rowData)">
-  <td *ngFor="let col of columns">
-    {{rowData[col.field]}}
-  </td>
-</tr>
-  
+                </tr>
+            </ng-template>
 
-</ng-template>
- </p-table> 
+
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                <tr [pSelectableRow]="rowData" class="cursor-pointer" (dblclick)="onRowSelect($event, rowData)">
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                </tr>
+
+
+            </ng-template>
+        </p-table>
+        <!-- </div> -->
 
     </p-panel>
 </div>
