@@ -21,11 +21,11 @@ export class TalukComponent implements OnInit {
   selectedCategory: any = null;
   districtOptions:SelectItem[];
   selectdistrict:any
-  
+  selectedType: number;
   cols:any
   Talukid:number;
   classes?: any;
-  categories: any[] = [{name: 'Active', key: 'A'}, {name: 'InActive', key: 'M'},];
+  
 
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService
@@ -34,14 +34,14 @@ export class TalukComponent implements OnInit {
   ngOnInit(): void {
     
     this.classes = this.masterService.getMaster('DT');
-    this.selectedCategory = this.categories[1];
-
+    
     this.cols = [
 
       {field:'Districtcode',header: 'District Code'},
       
       {field:'Districtname',header: 'District Name'},
       {field:'Talukname',header: 'Taluk Name'},
+      {field:'Flag',header: 'Status'},
       
 
     ];
@@ -53,7 +53,7 @@ export class TalukComponent implements OnInit {
    this.classes = this.masterService.getMaster('DT');
     let districtSelection = [];
         this.classes.forEach(d => {
-          districtSelection.push({  label : d.name, value: d.value })
+          districtSelection.push({  label : d.name, value: d.code })
         });
         this.districtOptions = districtSelection;
         this.districtOptions.unshift({ label: '-select', value: null });
@@ -83,7 +83,11 @@ export class TalukComponent implements OnInit {
   onview(){
     this.restApiService.get(PathConstants.TalukMaster_Get).subscribe(res => {
       if(res !== null && res !== undefined && res.length !==0) {
-        this.data = res.Table;
+         this.data = res.Table;
+         this.data.forEach(i => {
+          i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+        })
+
       } 
       
     });
@@ -92,20 +96,20 @@ export class TalukComponent implements OnInit {
   onRowSelect(event, selectedRow) {
     this.Talukid = selectedRow.Talukid;
     this.classes = this.masterService.getMaster('DT');
-    console.log(this.classes)
+   
        this.taluk=selectedRow.Talukname;
       let districtSelection = [];
       this.classes.forEach(d => {
-      if(selectedRow.Districtcode==d.value)
+      if(selectedRow.Districtcode==d.code)
       {
-        districtSelection.push({  label : d.name, value: d.value })
+        districtSelection.push({  label : d.name, value: d.code })
       }
     });
       this.districtOptions=districtSelection;
     
       this.selectdistrict=districtSelection[0];
-      console.log(this.selectdistrict)
-
+     
+      this.selectedType=selectedRow.Flag;
   }
 
 }

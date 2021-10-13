@@ -16,7 +16,10 @@ import { HostelImageComponent } from './master/hostel-image/hostel-image.compone
 import { HostelGoComponent } from './master/hostel-go/hostel-go.component';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
+import { AttendanceComponent } from './forms-module/attendance/attendance.component';
+import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
+import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -28,17 +31,21 @@ const routes: Routes = [
   { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
+  { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
+  { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},
+
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
 
   { path: 'usermaster', component:UsermasterComponent},
   { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
 
-  { path: 'usermaster', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
   { path:  'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
+  { path: 'attendance', component:AttendanceComponent},
+  { path: 'changepassword', component:ChangePasswordComponent},
 
 
 

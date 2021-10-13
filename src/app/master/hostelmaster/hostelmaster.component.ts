@@ -1,10 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-
+import { HttpClient  } from '@angular/common/http';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { MasterService } from 'src/app/services/master-data.service';
+import { NgForm } from '@angular/forms';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -37,13 +39,14 @@ export class HostelmasterComponent implements OnInit {
   Totalstudent: any;
   mobileNo: any;
   daysOptions: SelectItem[];
+  disableTaluk: boolean = true;
   masterData?: any = [];
   days?: any = [];
   data: any = [];
   Table2?: any;
   Slno: any;
   cols: any;
-
+  @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService,private messageService: MessageService) { }
 
@@ -67,12 +70,8 @@ export class HostelmasterComponent implements OnInit {
      { field: 'HostelImage', header: 'HostelImage', width: '100px'},
 
    ];
-
     this.Districtcodes = this.masterService.getMaster('DT');
-    // console.log('hostel', this.Districtcodes);
     this.Hosteltypes = this.masterService.getMaster('HT');
-    // console.log('hostel', this.Hosteltypes);
-
     this.TalukIds = this.masterService.getMaster('TK');
     this.Slno = 0;
   }
@@ -89,12 +88,17 @@ export class HostelmasterComponent implements OnInit {
         this.HosteltypeOptions = hostelSelection;
         break;
       case 'D':
-        // console.log("adithya",this.Districtcodes);
-        this.Districtcodes.forEach(d => {
-          districtSelection.push({ label: d.name, value: d.code });
-        });
-        this.DistrictcodeOptions = districtSelection;
-        break;
+          this.Districtcodes.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
+          })
+          this.DistrictcodeOptions = districtSelection;
+          this.DistrictcodeOptions.unshift({ label: '-select-', value: null });
+          if (this.Districtcode !== null && this.Districtcode !== undefined) {
+            this.disableTaluk = false;
+          } else {
+            this.disableTaluk = true;
+          }
+          break;
       case 'TK':
         this.TalukIds.forEach(t => {
           talukSelection.push({ label: t.name, value: t.code });
@@ -105,11 +109,7 @@ export class HostelmasterComponent implements OnInit {
     }
   }
   onSubmit() {
-    // console.log("abc0",this.DistrictcodeOptions)
-    // console.log("abc",this.Districtcode )
-    // console.log("abc1",this.TalukId )
-    // console.log("abc2",this.Hosteltype )
-    const params = {
+      const params = {
       'Slno': this.Slno != undefined ? this.Slno : 0,
       'HostelName': this.Hostelname,
       'HostelNameTamil': this.Hosteltamilname,
@@ -127,43 +127,33 @@ export class HostelmasterComponent implements OnInit {
       'Phone': this.mobileNo,
       'HostelImage': 12
     };
-    this.restApiService.post(PathConstants.Hostel_Post, params).subscribe(res => {
-      if (res !== undefined && res !== null) {
+      this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
         if (res) {
-        
-          //   this.clear();
-          //   this.messageService.clear();
-          //   this.messageService.add({
-          //     key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          //     summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-          //   });
-          // } else {
-          
-          //   this.messageService.clear();
-          //   this.messageService.add({
-          //     key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          //     summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          //   });
-          // }
-          // } else {
-          // this.messageService.clear();
-          // this.messageService.add({
-          //   key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          //   summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          // });
-          // }
-          // }, (err: HttpErrorResponse) => {
-       
-          // if (err.status === 0 || err.status === 400) {
-          //   this.messageService.clear();
-          //   this.messageService.add({
-          //     key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          //     summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          //   })
+          this.clear();
+          this.onView();
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+        } else {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
         }
-      }
-    })
-  }
+      }, (err: HttpErrorResponse) => {
+        if (err.status === 0 || err.status === 400) {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
+        }
+      })
+    }
+  
     
   
   onView() {
@@ -181,7 +171,7 @@ export class HostelmasterComponent implements OnInit {
     });
   }
   clear() {
-
+    this._hostelmaster.reset();
   }
   onRowSelect(event, selectedRow) {
     if(selectedRow !== null && selectedRow !==undefined){
