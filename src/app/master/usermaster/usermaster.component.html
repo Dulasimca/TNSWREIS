@@ -1,7 +1,7 @@
 <div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
-        <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="User Master">
                 <form #f="ngForm" name="Usermaster">
                     <p-card>
@@ -9,73 +9,107 @@
                             <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                 <div class="p-grid">
                                     <div class="p-col-12 p-md-6 p-lg-1"></div>
-                                    
                                     <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label>Role<span
-                                            class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="selectrole" [options]="roleOptions" [(ngModel)]="selectrole"
-                                            optionLabel="label" (onClick)="onSelect('R')" required>
+                                        <div><label for="_role">Role<span class="form-mandatory-field">*</span></label>
+                                        </div>
+                                        <p-dropdown name="_role" [options]="roleOptions" [(ngModel)]="role"
+                                            (onClick)="onSelect('R')" (onChange)="onRoleChange()" required>
                                         </p-dropdown>
                                     </div>
-
                                     <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="usermaster">User Name<span
+                                        <div><label for="_username">User Name<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <input type="text" name="Usermaster" class="p-col-12" pInputText
-                                            [(ngModel)]="UserMaster" required />
-                                            
+                                        <input type="text" name="_username" class="p-col-12" pInputText
+                                            [(ngModel)]="userName" required />
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="email">Email<span
+                                        <div><label for="_email">Email Id<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <input type="text" name="emailid" class="p-col-12" pInputText
-                                            [(ngModel)]="emailid" required />
-                                            
+                                        <input type="email" name="_email" class="p-col-12" pInputText
+                                            [(ngModel)]="emailId" (input)="checkIfEmailExists($event)" required />
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="passwd">Password<span
+                                        <div><label for="_psswd">Password<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <input type="text" name="password" class="p-col-12" pInputText
-                                            [(ngModel)]="password" required />       
+                                        <input type="text" name="_psswd" class="p-col-12" pInputText
+                                            [(ngModel)]="password" required />
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3"></div>
-                                   <div class="p-col-12 p-md-6 p-lg-1"></div> 
-                                    <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label>District<span
-                                            class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="selectdistrict" [options]="districtOptions" [(ngModel)]="selectdistrict"
-                                             (onClick)="onSelect('D')" (onChange)="selectDistrict()" required>
+                                    <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                    <div *ngIf="showDistrict" class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_district">District<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                            (onClick)="onSelect('D')" (onChange)="selectDistrict()" required>
                                         </p-dropdown>
                                     </div>
-
-                                    <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label>Taluk<span
-                                            class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="selecttaluk" [options]="talukOptions" [(ngModel)]="selecttaluk"
+                                    <div *ngIf="showTaluk" class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_taluk">Taluk<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
                                             (onClick)="onSelect('T')" required>
                                         </p-dropdown>
                                     </div>
-                                    <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label>Hostel Name<span
-                                            class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="selectHostel" [options]="hostelOptions" [(ngModel)]="hostelName"
-                                             (onClick)="onSelect('HN')" required>
+                                    <div *ngIf="showHostelName" class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_hostel">Hostel Name<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName"
+                                            (onClick)="onSelect('HN')" required>
                                         </p-dropdown>
                                     </div>
-                                    <div class="p-col-12"></div>
-                                    <div class="p-col-6 p-md-6 p-lg-6" style="text-align: right;">
-                                        <button pButton type="button" label="Submit" (click)="onSubmit()"></button>
-                                        </div>
-                                        <div class="p-col-6 p-md-6 p-lg-6"> 
-                                        <button pButton type="button" label="View" (click)="onview()"></button>
+                                    <div class="p-col-12 p-md-12 p-lg-3" style="margin-top: 23px;">
+                                        <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"
+                                            required>
+                                        </p-radioButton>
+                                        <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType"
+                                            required>
+                                        </p-radioButton>
                                     </div>
-                                 </div>
+                                    <div class="p-col-12"></div>
+                                    <div class="p-col-12 p-md-12 p-lg-12" style="text-align: center;">
+                                        <button pButton type="button" label="Submit" (click)="onSubmit()"></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </p-card>
                 </form>
-                
             </p-panel>
         </div>
+    </div>
+    <!-- showtable -->
+    <div class="table-format">
+        <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
+            [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords" pageLinks="3">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 2cm;">S.No</th>
+                    <th>Role</th>
+                    <th>Username</th>
+                    <th>Email Id</th>
+                    <th>Password</th>
+                    <th>District</th>
+                    <th>Taluk</th>
+                    <th>Hostel Name</th>
+                    <th>Status</th>
+                    <th>Edit/Update</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{rowIndex+1}}</td>
+                    <td>{{rowData.Role}}</td>
+                    <td>{{rowData.UserName}}</td>
+                    <td>{{rowData.EMailId}}</td>
+                    <td>{{rowData.Pwd}}</td>
+                    <td>{{rowData.Districtname}}</td>
+                    <td>{{rowData.Talukname}}</td>
+                    <td>{{rowData.HostelName}}</td>
+                    <td>{{rowData.status}}</td>
+                    <td><button icon="pi pi-pencil" pButton type="button" (click)="onEdit(rowData)">
+                        </button></td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

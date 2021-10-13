@@ -118,9 +118,12 @@ export class AttendanceComponent implements OnInit {
   onRowSelect(event, selectedRow) {
     
      this.date = selectedRow.Id;
-     this.hostel_name = selectedRow.HostelID;
-     this.districtn = selectedRow.Districtcode;
-     this.talukn = selectedRow.Talukid;
+     this.HostelId = selectedRow.HostelID;
+     this.DistrictId = selectedRow.Districtcode;
+     this.TalukId = selectedRow.Talukid;
+     this.hostelname = selectedRow.hostelName;
+     this.districtname = selectedRow.districtname;
+     this.taluknname = selectedRow.taluknname;
      this.date = selectedRow.AttendanceDate;
      this.no_of_student = selectedRow.NOOfStudent;
      this.remarks = selectedRow.Remarks;

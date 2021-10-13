@@ -1,4 +1,4 @@
-<div class="p-col-12 p-md-12 p-lg-12">
+<!-- <div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
         <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
@@ -6,7 +6,7 @@
                 <div class="p-col-12 p-md-12 p-lg-12 border-blue card">
                     <form #f="ngForm" name="consumptionForm">
                         <div #maingrid1 class="p-grid" style="margin-top: 5px;">
-                            <div class="p-col-1"></div>
+                            <div class="p-col-2"></div>
                             <div #row1 class="p-col-12 p-md-12 p-lg-8 no-pad-btm">
                                 <div #grid1 class="p-grid div-main">
                                     <div #field1 class="p-field p-col-12 p-md-6 p-lg-2">
@@ -59,8 +59,10 @@
                             <div #row2 class="p-col-12 txt-center no-padding">
                                 <button pButton type="button" label="Enter" (click)="onEnter()"></button>
                             </div>
-                            <div class="p-grid">
                             <div #row3 class="p-col-12 p-md-12 p-lg-12">
+                            <div class="p-grid"> 
+                                <div class="p-col-1"></div>
+                                <div class="p-col-12 p-md-12 p-lg-10">
                                 <p-table [columns]="consumptionCols" [value]="consumptionData" [paginator]="true"
                                     [rows]="10" [loading]="loading">
                                     <ng-template pTemplate="header" let-columns>
@@ -87,11 +89,120 @@
                                     </ng-template>
                                 </p-table>
                             </div>
+                            </div>
                         </div>
                         </div>
                     </form>
                 </div>
             </p-panel>
         </div>
+    </div>   
+</div> -->
+
+
+<div class="p-col-12 p-md-12 p-lg-12">
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Consumption">
+                <form #f="ngForm" name="consumptionForm">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top">
+                            <div class="p-grid">
+                                <div class="p-col-2"></div>
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                            <div><label for="_consumption">Consumption For<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_consumption" [options]="consumptionOptions"
+                                                (onClick)="onSelect('CF')" [(ngModel)]="consumption" required>
+                                            </p-dropdown>
+                                        </div>
+                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                            <div><label for="_date">Date<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                        <p-calendar [(ngModel)]="date" showButtonBar="true" name="_date"></p-calendar>
+                                    </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                            <div><label for="_commodity">Commodity<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_commodity" [options]="commodityOptions"
+                                                (onClick)="onSelect('CM')" [(ngModel)]="commodity" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                            <div><label for="_openingbalance">Unit<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_openingbalance" [options]="unitOptions"
+                                                (onClick)="onSelect('UN')" [(ngModel)]="unit" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_openingbalance">Opening Balance<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                                <input type="text" name="_openingbalance" pInputText
+                                                                [(ngModel)]="openingBalance" readonly="true" required>
+                                                </div>
+                                                <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                    <label for="_requiredqty">Required Quantity<span
+                                                            class="form-mandatory-field">*</span></label>
+                                                            <input type="text" name="_requiredqty" pInputText [(ngModel)]="requiredQty"
+                                                            required>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_closingbalance">Quantity<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                                <input type="text" name="_closingbalance" pInputText
+                                                                [(ngModel)]="closingBalance" readonly="true" required>
+                                                </div>
+                                                <div class="p-col-12"></div>
+                                                <div #row2 class="p-col-12" style="text-align: center; padding-right: 7cm;">
+                                                    <button pButton type="button" label="Enter" (click)="onEnter()"></button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-card>
+                    </form>
+                </p-panel>
+            </div>
+                                                <div class="p-col-12"></div>
+                                                        <div class="table-format">
+                                                        <p-table [columns]="consumptionCols" [value]="consumptionData" [paginator]="true"
+                                                            [rows]="10" [loading]="loading">
+                                                            <ng-template pTemplate="header" let-columns>
+                                                                <tr>
+                                                                    <th style="width: 100px">S.No</th>
+                                                                    <th *ngFor="let col of columns">
+                                                                        {{col.header}}
+                                                                    </th>
+                                                                    <th>Delete</th>
+                                                                </tr>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData
+                                                                let-columns="columns">
+                                                                <tr>
+                                                                    <td style="width: 100px">{{rowIndex+1}}</td>
+                                                                    <td *ngFor="let col of columns">
+                                                                        {{rowData[col.field]}}
+                                                                    </td>
+                                                                    <td (click)="onDelete(rowIndex)">
+                                                                        <button icon="pi pi-trash" pButton type="button">
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-template>
+                                                        </p-table>
+                                                    
+                                                </div>
+                                     
+           
     </div>
 </div>
+ 

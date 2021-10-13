@@ -26,6 +26,8 @@ public static readonly  Attendance_Get = 'Attendance';
 public static readonly OpeningBalance_Post = 'OpeningBalance/Post'; 
 public static readonly OpeningBalance_Get = 'OpeningBalance/Get'; 
 
+public static readonly UserMaster_Post = 'UserMaster/Post'; 
+public static readonly UserMaster_Get = 'UserMaster'; 
 public static readonly Registration_Post = 'Registration/Post';
 public static readonly Login = 'Login/Post';
 

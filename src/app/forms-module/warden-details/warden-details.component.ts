@@ -39,32 +39,23 @@ export class WardenDetailsComponent implements OnInit {
   addressTwo: any;
   pincode: any;
   wardenImage: any = '';
-
-  // data: any = [];
-
-
   genders?: any;
   districts?: any;
   taluks?: any;
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
 
-
-
   constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer) { }
 
   ngOnInit(): void {
-
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-
   }
 
   onSelect(type) {
     let genderSelection = [];
     let districtSelection = [];
     let talukSelection = [];
-
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
