@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { MessageService } from 'primeng/api';
@@ -7,6 +7,10 @@ import { HttpClient } from '@angular/common/http';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { BlockUI, NgBlockUI } from 'ng-block-Ui';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
+import { User } from 'src/app/Interfaces/user';
+import { AuthService } from 'src/app/Services/auth.service';
+
 
 @Component({
   selector: 'app-attendance',
@@ -16,22 +20,31 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AttendanceComponent implements OnInit {
 
   date: Date = new Date();
-  Northchennai:any 
+  districtname:any 
   data:any
   cols:any
-  hostel_name:string
-  Royapuram:string
+  hostelname:string
+  HostelId : number
+  DistrictId : number
+  TalukId : number
+  taluknname:string
   no_of_student:string
   remarks:string
-
+  login_user: User;
+  @BlockUI() blockUI: NgBlockUI;
+  @ViewChild('f', { static: false }) _registrationForm: NgForm;
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
-    private masterService: MasterService, private messageService: MessageService
-   ) { }
+    private masterService: MasterService, private messageService: MessageService, private authService: AuthService) { }
   ngOnInit(): void {
+    this.login_user = this.authService.UserInfo;
+  //   this.hostelname =this.login_user.hostelId;
+  // HostelId : number
+  // DistrictId : number
+  // districtname
     this.cols = [
       {field:'date',header: 'Id'},
       {field:'hostel_name',header: 'Hostel Name'},
-      {field:'Northchennai',header: 'District Name'},
+      {field:'districtn',header: 'District Name'},
       {field:'Royapuram',header: 'Taluk Name'},
       {field:'date',header: 'Attendance Date'},
       {field:'no_of_student',header: 'NO Of Student'},
@@ -43,11 +56,12 @@ export class AttendanceComponent implements OnInit {
 
   }
   onSubmit() {
+    this.blockUI.start();
     const params = {
       'Id': this.date, 
-      'HostelID': this.hostel_name, 
-      'Districtcode': this.Northchennai, 
-      'Talukid': this.Royapuram, 
+      'HostelID': this.HostelId, 
+      'Districtcode': this.DistrictId, 
+      'Talukid': this.TalukId, 
       'AttendanceDate': this.date, 
       'NOOfStudent': this.no_of_student, 
       'Remarks': this.remarks, 
@@ -56,7 +70,7 @@ export class AttendanceComponent implements OnInit {
     this.restApiService.post(PathConstants.Attendance_Post, params).subscribe(res => {
       if(res !== undefined && res !== null) {
         if (res) {
-         // this.blockUI.stop();
+         this.blockUI.stop();
       // this.onClear();
        this.messageService.clear();
        this.messageService.add({
@@ -65,7 +79,7 @@ export class AttendanceComponent implements OnInit {
        });
       
      } else {
-      // this.blockUI.stop();
+       this.blockUI.stop();
        this.messageService.clear();
        this.messageService.add({
          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -80,7 +94,7 @@ export class AttendanceComponent implements OnInit {
      });
      }
      }, (err: HttpErrorResponse) => {
-    // this.blockUI.stop();
+      this.blockUI.stop();
      if (err.status === 0 || err.status === 400) {
        this.messageService.clear();
        this.messageService.add({
@@ -105,8 +119,8 @@ export class AttendanceComponent implements OnInit {
     
      this.date = selectedRow.Id;
      this.hostel_name = selectedRow.HostelID;
-     this.Northchennai = selectedRow.Districtcode;
-     this.Royapuram = selectedRow.Talukid;
+     this.districtn = selectedRow.Districtcode;
+     this.talukn = selectedRow.Talukid;
      this.date = selectedRow.AttendanceDate;
      this.no_of_student = selectedRow.NOOfStudent;
      this.remarks = selectedRow.Remarks;
