@@ -39,7 +39,6 @@ export class UsermasterComponent implements OnInit {
   showDistrict: boolean;
   showTaluk: boolean;
   showHostelName: boolean;
-  showTable: boolean;
   @ViewChild('f', { static: false }) _usermaster: NgForm;
 
 
@@ -51,7 +50,7 @@ export class UsermasterComponent implements OnInit {
     this.roles = this.masterService.getMaster('RM');
     this.onView();
   }
-
+  // dropdown 
     onSelect(type) {
       let districtSelection = [];
       let talukSelection = [];
@@ -88,6 +87,7 @@ export class UsermasterComponent implements OnInit {
               break;
   }
 }
+// hstl based on district 
 selectDistrict() {
   const params = {
     'Type': 1,
@@ -103,6 +103,7 @@ selectDistrict() {
     })
   }
 }
+// role dropdown
 onRoleChange() {
   console.log('role', this.role)
   if(this.role != undefined && this.role !== null){
@@ -168,7 +169,6 @@ onRoleChange() {
     })
   }
   onView() {
-    this.showTable = true;
     this.restApiService.get(PathConstants.UserMaster_Get).subscribe(res => {
       if (res !== null && res !== undefined && res.Table.length !== 0){
         res.Table.forEach(i => {

@@ -11,6 +11,7 @@ export class ConsumptionComponent implements OnInit {
   consumption: string;
   consumptionOptions: SelectItem[];
   consumptions?: any;
+  date: any;
   commodityOptions: SelectItem[];
   commodity: string;
   commodities?: any;
