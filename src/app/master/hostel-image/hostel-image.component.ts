@@ -30,6 +30,17 @@ export class HostelImageComponent implements OnInit {
     console.log('handle');
     this.webcamImage = webcamImage;
     console.log(this.webcamImage);
+      var byteString = atob(this.webcamImage.imageAsDataUrl.split(',')[1]);
+      var ab = new ArrayBuffer(byteString.length);
+      var ia = new Uint8Array(ab);
+      for (var i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+      }
+      var formdata =  new Blob([ab], { type: 'image/jpeg' });
+      var file = <File>formdata;
+      var fd = new FormData();
+  
+    console.log('formdata', fd.append('file', file));
     this.getLocation();
     this.openCamera = false;
     // console.log('handle', this.webcamImage);
@@ -63,8 +74,8 @@ export class HostelImageComponent implements OnInit {
  async getLocation() {
   this.location = await this._locationService.getLocation();
   const params = {
-    //  'Id':this.login_user.,
-     'HostelImage':'1',
+     'Id':this.login_user.hostelId,
+     'HostelImage': '',
      'Longitude':'1',
      'Latitude':'1'
    }
