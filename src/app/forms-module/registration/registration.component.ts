@@ -264,11 +264,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-<<<<<<< HEAD
     this._router.navigate(['/']);
-=======
-    this._router.navigate(['/attendance']);
->>>>>>> 6e786a57f0a62cb69e21256a565977528f7aed15
   }
 
   onSubmit() {
