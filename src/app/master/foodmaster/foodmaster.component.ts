@@ -60,33 +60,7 @@ export class FoodmasterComponent implements OnInit {
         this.daysOptions = foodSelection;
         this.daysOptions.unshift({ label: '-select', value: null });
     }
-    // public uploadFile = (files) => {
-    //   if (files.length === 0) {
-    //     return;
-    //   }
-      
-    //   this.formData = new FormData()
-    //   let fileToUpload: any = <File>files[0];
    
-    //   const filename = fileToUpload.name + '^' + FileUploadConstant.Booksfolder;
-    //   this.formData.append('file', fileToUpload, filename);
-    //   console.log('file', fileToUpload);
-    //   console.log('formdata', this.formData);
-    //   this.NewFileName=fileToUpload.name;
-    //   this.http.post(this.restApiService.BASEURL +PathConstants.FileUpload_Post, this.formData)
-    //     .subscribe(event => 
-    //       {
-    //     //          if (event.type === HttpEventType.UploadProgress)
-    //     //    this.progress = Math.round(100 * event.loaded / event.total);
-    //     //   else if (event.type === HttpEventType.Response) {
-    //     //    this.message = 'Upload success.';
-          
-    //     //  //   this.onUploadFinished.emit(event.body);
-    //     //   }
-    //     }
-    //     );
-    // }  
-  
     onSubmit() {  
       this.blockUI.start();
       const params = {

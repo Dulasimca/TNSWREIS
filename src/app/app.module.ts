@@ -40,6 +40,7 @@ import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
+import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 import { LocationService } from './location.service';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
@@ -71,6 +72,7 @@ import { PasswordModule } from "primeng/password";
     ConsumptionComponent,
     DistrictComponent,
     TalukComponent,
+    AttendanceComponent,
     ChangePasswordComponent
   ],
   imports: [

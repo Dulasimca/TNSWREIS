@@ -7,4 +7,5 @@ export interface User {
     districtCode: number;
     talukId: number;
     token: string;
+    hostelName: string;
 }

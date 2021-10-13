@@ -264,7 +264,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    this._router.navigate(['/daily-consumption']);
+    this._router.navigate(['/ ']);
   }
 
   onSubmit() {
