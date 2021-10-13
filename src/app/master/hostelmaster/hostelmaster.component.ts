@@ -96,14 +96,17 @@ export class HostelmasterComponent implements OnInit {
           if (this.Districtcode !== null && this.Districtcode !== undefined) {
             this.disableTaluk = false;
           } else {
-            this.disableTaluk = true;
+            this.disableTaluk = true; 
           }
           break;
       case 'TK':
         this.TalukIds.forEach(t => {
+          if (t.dcode === this.Districtcode){
           talukSelection.push({ label: t.name, value: t.code });
+        }
         });
         this.TalukIdOptions = talukSelection;
+        this.TalukIdOptions.unshift({ label: '-select-', value: null });
         break;
         
     }
