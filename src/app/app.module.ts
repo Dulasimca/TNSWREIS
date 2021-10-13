@@ -45,6 +45,7 @@ import { LocationService } from './location.service';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { TableConstants } from './Common-Modules/table-constants';
+import { HostelGoComponent } from './master/hostel-go/hostel-go.component';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -68,7 +69,8 @@ import { TableConstants } from './Common-Modules/table-constants';
     PurchaseOrderComponent,
     ConsumptionComponent,
     DistrictComponent,
-    TalukComponent
+    TalukComponent,
+    HostelGoComponent
   ],
   imports: [
     BrowserModule,

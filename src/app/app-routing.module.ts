@@ -13,7 +13,7 @@ import { OpeningBalanceComponent } from './opening-balance/opening-balance.compo
 import { AuthGuard } from './services/auth.guard';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 
-
+import { HostelGoComponent } from './master/hostel-go/hostel-go.component';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
@@ -28,6 +28,8 @@ const routes: Routes = [
   { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
+
+  { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
 
   { path: 'usermaster', component:UsermasterComponent},
   { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
