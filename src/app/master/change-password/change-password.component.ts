@@ -39,7 +39,7 @@ export class ChangePasswordComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.PasswordChangeSuccess
+          // summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.PasswordChangeSuccess
         });
       } else {
         this._messageService.clear();
