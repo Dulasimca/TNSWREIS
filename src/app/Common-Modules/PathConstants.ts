@@ -32,6 +32,9 @@ public static readonly Registration_Post = 'Registration/Post';
 public static readonly Login = 'Login/Post';
 
 public static readonly Hostelgo_post = 'HostelGo/Post'; 
-public static readonly Hostelgo_Get = 'HostelGo/Get'; 
+public static readonly Hostelgo_Get = 'HostelGo'; 
+
+public static readonly ChangePassword_Get = 'ChangePassword/Get';
+public static readonly ChangePassword_Post = 'ChangePassword/Post';
 
 }
