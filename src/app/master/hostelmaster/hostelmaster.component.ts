@@ -39,6 +39,7 @@ export class HostelmasterComponent implements OnInit {
   Totalstudent: any;
   mobileNo: any;
   daysOptions: SelectItem[];
+  disableTaluk: boolean = true;
   masterData?: any = [];
   days?: any = [];
   data: any = [];
@@ -87,12 +88,17 @@ export class HostelmasterComponent implements OnInit {
         this.HosteltypeOptions = hostelSelection;
         break;
       case 'D':
-        // console.log("adithya",this.Districtcodes);
-        this.Districtcodes.forEach(d => {
-          districtSelection.push({ label: d.name, value: d.code });
-        });
-        this.DistrictcodeOptions = districtSelection;
-        break;
+          this.Districtcodes.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
+          })
+          this.DistrictcodeOptions = districtSelection;
+          this.DistrictcodeOptions.unshift({ label: '-select-', value: null });
+          if (this.Districtcode !== null && this.Districtcode !== undefined) {
+            this.disableTaluk = false;
+          } else {
+            this.disableTaluk = true;
+          }
+          break;
       case 'TK':
         this.TalukIds.forEach(t => {
           talukSelection.push({ label: t.name, value: t.code });
