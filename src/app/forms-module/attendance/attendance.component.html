@@ -10,18 +10,18 @@
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div class="no-pad-top"><label>Hostel Name</label> </div>
-                                <input type="text" name="hostel_name" pInputText required />
+                                <input type="text" [(ngModel)]="hostelname" name="hostelname" pInputText required />
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div class="no-pad-top"><label>District Name</label> </div>
-                                <input type="text" name="Northchennai" pInputText [(ngModel)]="Northchennai"
-                                    placeholder="North Chennai" required />
+                                <input type="text" name="districtname" pInputText [(ngModel)]="districtname"
+                                    placeholder="District Name" required />
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div class="no-pad-top"><label>Taluk Name</label> </div>
-                                <input type="text" name="Royapuram" placeholder="Royapuram(Z)" pInputText required />
+                                <input type="text" name="taluknname" [(ngModel)]="taluknname"  placeholder="Taluk Name" pInputText required />
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-3"></div>
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
@@ -35,12 +35,12 @@
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
                                 <div class="no-pad-top"><label>No.Of.Student</label> </div>
-                                <input type="text" name="no_of_student" pInputText required />
+                                <input type="text" name="no_of_student"  [(ngModel)]="no_of_student" pInputText required />
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
                                 <div class="no-pad-top"><label>Remarks</label> </div>
-                                <input type="text" name="remarks" pInputText required />
+                                <input type="text" name="remarks" pInputText required [(ngModel)]="remarks" />
                             </div>
                         </div>
                     </p-card>

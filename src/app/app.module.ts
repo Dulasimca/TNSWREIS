@@ -48,6 +48,7 @@ import { ConsumptionComponent } from './forms-module/consumption/consumption.com
 import { TableConstants } from './Common-Modules/table-constants';
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { PasswordModule } from "primeng/password";
+import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -73,7 +74,8 @@ import { PasswordModule } from "primeng/password";
     DistrictComponent,
     TalukComponent,
     AttendanceComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    IdCardInfoComponent
   ],
   imports: [
     BrowserModule,

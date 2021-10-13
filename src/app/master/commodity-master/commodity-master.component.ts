@@ -34,7 +34,7 @@ export class CommodityMasterComponent implements OnInit {
     this.commodityId = 0;
     this.commodityGroups = this.masterService.getMaster('CG');
   }
-
+// dropdown
   onSelect(type) {
     let groupSelection = [];
 

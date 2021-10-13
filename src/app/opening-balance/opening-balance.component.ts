@@ -41,9 +41,7 @@ export class OpeningBalanceComponent implements OnInit {
     this.units = this.masterService.getMaster('UN');
     this.years = this.masterService.getMaster('AY');
     this.commodities = this.masterService.getMaster('CM');
-
   }
-
   onSelect(type) {
     let unitSelection = [];
     let yearSelection = [];
@@ -72,7 +70,6 @@ export class OpeningBalanceComponent implements OnInit {
           break;
 }
 }
-  
   onSubmit() {
     const params = {
       'Id': this.openingblncId,
