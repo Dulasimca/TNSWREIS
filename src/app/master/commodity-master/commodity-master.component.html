@@ -2,7 +2,7 @@
     <div class="p-grid">
         <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
-        <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Commodity Master">
                 <form #f="ngForm" name="commodityMaster">
                     <p-card>
@@ -55,8 +55,8 @@
     </div>
     <!-- viewtable  -->
     <div *ngIf="showTable" class="table-format">
-        <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,20,30,40]"
-        totalRecords="totalRecords" pageLinks="3">
+        <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10"
+            [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords" pageLinks="3">
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 3cm;">S.No</th>
@@ -67,13 +67,13 @@
                     <th>Edit/Update</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-data>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
                 <tr>
                     <td>{{rowIndex+1}}</td>
-                    <td>{{data.Name}}</td>
-                    <td>{{data.NameTamil}}</td>
-                    <td>{{data.CommodityGroup}}</td>
-                    <td>{{data.status}}</td>
+                    <td>{{rowData.Name}}</td>
+                    <td>{{rowData.NameTamil}}</td>
+                    <td>{{rowData.CommodityGroup}}</td>
+                    <td>{{rowData.status}}</td>
                     <td><button icon="pi pi-pencil" pButton type="button" (click)="onEdit(rowData)">
                         </button></td>
                 </tr>

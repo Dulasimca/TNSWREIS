@@ -92,13 +92,13 @@
                 <th style="width: 4.3cm;">Edit/Update</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-data>
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
             <tr>
                 <td>{{rowIndex+1}}</td>
-                <td>{{data.ShortYear}}</td>
-                <td>{{data.CommodityName}}</td>
-                <td>{{data.Qty}}</td>
-                <td>{{data.UnitName}}</td>
+                <td>{{rowData.ShortYear}}</td>
+                <td>{{rowData.CommodityName}}</td>
+                <td>{{rowData.Qty}}</td>
+                <td>{{rowData.UnitName}}</td>
                 <td><button icon="pi pi-pencil" pButton type="button" (click)="onEdit(rowData)">
                     </button></td>
             </tr>

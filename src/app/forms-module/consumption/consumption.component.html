@@ -119,6 +119,11 @@
                                                 (onClick)="onSelect('CF')" [(ngModel)]="consumption" required>
                                             </p-dropdown>
                                         </div>
+                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                            <div><label for="_date">Date<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                        <p-calendar [(ngModel)]="date" showButtonBar="true" name="_date"></p-calendar>
+                                    </div>
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                             <div><label for="_commodity">Commodity<span
                                                         class="form-mandatory-field">*</span></label></div>
@@ -154,13 +159,21 @@
                                                                 [(ngModel)]="closingBalance" readonly="true" required>
                                                 </div>
                                                 <div class="p-col-12"></div>
-                                                <div #row2 class="p-col-12 txt-center no-padding">
+                                                <div #row2 class="p-col-12" style="text-align: center; padding-right: 7cm;">
                                                     <button pButton type="button" label="Enter" (click)="onEnter()"></button>
                                                 </div>
-                                                <div #row3 class="p-col-12 p-md-12 p-lg-12">
-                                                    <div class="p-grid"> 
-                                                        <div class="p-col-1"></div>
-                                                        <div class="p-col-12 p-md-12 p-lg-10">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-card>
+                    </form>
+                </p-panel>
+            </div>
+                                                <div class="p-col-12"></div>
+                                                        <div class="table-format">
                                                         <p-table [columns]="consumptionCols" [value]="consumptionData" [paginator]="true"
                                                             [rows]="10" [loading]="loading">
                                                             <ng-template pTemplate="header" let-columns>
@@ -186,19 +199,10 @@
                                                                 </tr>
                                                             </ng-template>
                                                         </p-table>
-                                                    </div>
-                                                    </div>
+                                                    
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </p-card>
-                </form>
-            </p-panel>
-        </div>
+                                     
+           
     </div>
 </div>
  

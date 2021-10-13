@@ -264,7 +264,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    this._router.navigate(['/ ']);
+    this._router.navigate(['/hostelgo']);
   }
 
   onSubmit() {
