@@ -42,7 +42,7 @@ const routes: Routes = [
 
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
-  { path:  'district', component:DistrictComponent},
+  { path: 'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
   { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},

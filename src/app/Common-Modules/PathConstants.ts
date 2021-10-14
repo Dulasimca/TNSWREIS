@@ -37,4 +37,10 @@ public static readonly Hostelgo_Get = 'HostelGo';
 public static readonly ChangePassword_Get = 'ChangePassword/Get';
 public static readonly ChangePassword_Post = 'ChangePassword/Post';
 
+public static readonly PurchaseOrder_Post = 'PurchaseOrder/Post';
+public static readonly PurchaseOrder_Get = 'PurchaseOrder/Get';
+
+public static readonly Consumption_Post = 'DailyConsumption/Post';
+public static readonly Consumption_Get = 'DailyConsumption/Get';
+
 }

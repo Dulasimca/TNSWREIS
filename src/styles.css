@@ -310,3 +310,6 @@ height: 25px !important;
 .p-datatable .p-datatable-tbody >tr >td {
     padding: .5rem !important;
 }
+.p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
+    padding: 0.7rem !important;
+}
