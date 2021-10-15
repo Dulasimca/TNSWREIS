@@ -50,6 +50,7 @@ import { HostelGoComponent } from './master/hostel-go/hostel-go.component';
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { PasswordModule } from "primeng/password";
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
+
 import { LocationService } from './services/location.service';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
