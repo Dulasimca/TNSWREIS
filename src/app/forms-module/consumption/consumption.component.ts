@@ -8,6 +8,7 @@ import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-consumption',
@@ -29,10 +30,14 @@ export class ConsumptionComponent implements OnInit {
   requiredQty: any;
   closingBalance: any;
   consumptionCols: any;
-  consumptionData: any = [];
+  consumptionData: any[] = [];
   consumptionId: number = 0;
   loading: boolean;
-  consumptionList: any[] = [];
+  consumedList: any[] = [];
+  showDialog: boolean;
+  toDate: any;
+  fromDate: any;
+  maxDate: Date = new Date();
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
 
@@ -53,7 +58,7 @@ export class ConsumptionComponent implements OnInit {
     let unitSelection = [];
     switch (id) {
       case 'CF':
-        if(this.consumptions.length !== 0) {
+        if (this.consumptions.length !== 0) {
           this.consumptions.forEach(c => {
             consumptionSelection.push({ label: c.name, value: c.code });
           })
@@ -82,13 +87,7 @@ export class ConsumptionComponent implements OnInit {
     }
   }
 
-  loadConsumption() {
-    this._restApiService.getByParameters(PathConstants.Consumption_Get, { 'Value': this.date }).subscribe(res => {
-      if(res !== undefined && res !== null && res.length !== 0) {
-        this.consumptionData = res.slice(0);
-      }
-    })
-  }
+  loadOB() { }
 
   onEnter() {
     this.consumptionData.push({
@@ -104,45 +103,42 @@ export class ConsumptionComponent implements OnInit {
       'QTY': this.requiredQty,
       'CB': this.closingBalance,
     })
-    this.consumptionList.push({
-      'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
-      'ConsumptionType': this.consumption.value,
-      'ConsumptionDate': this._datePipe.transform(this.date, 'yyyy-MM-dd'),
-      'Consumption': this.consumption.label,
-      'CommodityId': this.commodity.value,
-      'Commodity': this.commodity.label,
-      'UnitId': this.unit.value,
-      'Unit': this.unit.label,
-      'OB': this.openingBalance,
-      'QTY': this.requiredQty,
-      'CB': this.closingBalance,
-    })
-    this._consumptionForm.reset();
+    this.clearForm();
   }
 
   calculateBalance() {
-    if(this.openingBalance !== undefined && this.openingBalance !== null &&
+    if (this.openingBalance !== undefined && this.openingBalance !== null &&
       this.requiredQty !== undefined && this.requiredQty !== null) {
-        const entered_qty = (this.requiredQty * 1);
-        const opening_bal = (this.openingBalance * 1);
-        this.closingBalance = (opening_bal - entered_qty).toFixed(3);
-        var msg = '';
-        if(entered_qty > opening_bal) {
-          msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than OB : ' + opening_bal;
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: msg
-          });
-        } else {
-          msg = '';
-          this._messageService.clear();
-        }
+      const entered_qty = (this.requiredQty * 1);
+      const opening_bal = (this.openingBalance * 1);
+      this.closingBalance = (opening_bal - entered_qty).toFixed(3);
+      var msg = '';
+      if (entered_qty > opening_bal) {
+        msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than OB : ' + opening_bal;
+        this._consumptionForm.controls._requiredqty.reset();
+        this.requiredQty = null;
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: msg
+        });
+      } else {
+        msg = '';
+        this._messageService.clear();
       }
+    }
   }
 
-  onEdit(row) {
-    if(row !== undefined && row !== null) {
+  onEdit(row, type) {
+    if (row !== undefined && row !== null) {
+      if (type === 2) {
+        this.showDialog = false;
+        this.consumptionId = row.DailyId;
+        console.log('r', row, this.consumptionId);
+        this.date = new Date(row.ConsumptionDate);
+      } else {
+        this.consumptionId = 0;
+      }
       this.consumption = { label: row.Consumption, value: row.ConsumptionId };
       this.consumptionOptions = [{ label: row.Consumption, value: row.ConsumptionId }];
       this.commodity = { label: row.Commodity, value: row.CommodityId };
@@ -156,21 +152,120 @@ export class ConsumptionComponent implements OnInit {
     }
   }
 
-  onDelete(index) {
+  onDelete(index, type) {
+    if (index !== undefined && index !== null) {
+      if (type === 1) {
+        this.consumptionData.splice(index, 1);
+      } else {
+        //put method to delete (api call)
+        this.blockUI.start();
+      }
+    }
+  }
 
+  onDateSelect() {
+    this.consumedList = [];
+    this.checkValidDateSelection();
+    if (this.fromDate !== undefined && this.fromDate !== null &&
+      this.toDate !== undefined && this.toDate !== null) {
+      const params = {
+        'FromDate': this._datePipe.transform(this.fromDate, 'yyyy-MM-dd'),
+        'ToDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd')
+      }
+      this._restApiService.getByParameters(PathConstants.Consumption_Get, params).subscribe(res => {
+        if (res !== undefined && res !== null && res.length !== 0) {
+          this.consumedList = res.slice(0);
+        }
+      })
+    }
+  }
+
+  checkValidDateSelection() {
+    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== '') {
+      let selectedFromDate = this.fromDate.getDate();
+      let selectedToDate = this.toDate.getDate();
+      let selectedFromMonth = this.fromDate.getMonth();
+      let selectedToMonth = this.toDate.getMonth();
+      let selectedFromYear = this.fromDate.getFullYear();
+      let selectedToYear = this.toDate.getFullYear();
+      if ((selectedFromDate > selectedToDate && ((selectedFromMonth >= selectedToMonth && selectedFromYear >= selectedToYear) ||
+        (selectedFromMonth === selectedToMonth && selectedFromYear === selectedToYear))) ||
+        (selectedFromMonth > selectedToMonth && selectedFromYear === selectedToYear) || (selectedFromYear > selectedToYear)) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
+          summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ValidDateErrorMessage
+        });
+        this.fromDate = ''; this.toDate = '';
+      }
+      return this.fromDate, this.toDate;
+    }
   }
 
   onSave() {
-
+    this.blockUI.start();
+    this._restApiService.post(PathConstants.Consumption_Post, this.consumptionData).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        if (res) {
+          this.blockUI.stop();
+          this.clearAll();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+        } else {
+          this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+      } else {
+        this.blockUI.stop();
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.NetworkErrorMessage
+        })
+      }
+    })
   }
 
-  onClear() {
+  clearAll() {
     this.consumptionId = 0;
     this._consumptionForm.reset();
     this._consumptionForm.form.markAsUntouched();
     this._consumptionForm.form.markAsPristine();
     this.consumptionData = [];
-    this.consumptionList = [];
+    this.consumedList = [];
+    this.commodityOptions = [];
+    this.consumptionOptions = [];
+    this.unitOptions = [];
+  }
+
+  clearForm() {
+    this.consumptionId = 0;
+    this._consumptionForm.reset();
+    this.commodityOptions = [];
+    this.consumptionOptions = [];
+    this.unitOptions = [];
   }
 
 }

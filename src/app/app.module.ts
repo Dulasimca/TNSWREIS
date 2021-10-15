@@ -13,10 +13,11 @@ import { TabViewModule } from 'primeng/tabview';
 import { CalendarModule } from 'primeng/calendar';
 import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
-import {RadioButtonModule} from 'primeng/radiobutton';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 
 
 import { AppComponent } from './app.component';
@@ -102,7 +103,8 @@ import { LocationService } from './services/location.service';
     TableModule,
     BlockUIModule.forRoot(),
     CheckboxModule,
-    ToastModule
+    ToastModule,
+    DialogModule
   ],
 
 
