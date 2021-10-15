@@ -51,20 +51,15 @@ export class ChangePasswordComponent implements OnInit {
     })
   }
 
-  checkPassword(event) {
-    console.log('eve', event);
-    const value: string = event.data;
-    console.log('Entered', value);
-    if (value !== undefined && value !== '') {
-      if (this.newPassword !== undefined && this.newPassword !== null && this.newPassword !== '' &&
-        this.confirmPassword !== undefined && this.confirmPassword !== null && this.confirmPassword !== '') {
-          if(value.trim() !== this.newPassword.trim()) {
+  checkPassword() {
+    if (this.newPassword !== undefined && this.newPassword !== null && this.newPassword.trim() !== '' &&
+    this.confirmPassword !== undefined && this.confirmPassword !== null && this.confirmPassword.trim() !== '') {
+          if(this.newPassword.trim() !== this.confirmPassword.trim()) {
             console.log('if cond')
             this.showErrMsg = true;
           } else {
             this.showErrMsg = false;
           }
-      }
     }
   }
 
