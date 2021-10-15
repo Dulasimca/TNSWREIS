@@ -14,30 +14,30 @@
                                             <div><label for="_date">Date<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-calendar [(ngModel)]="date" showButtonBar="true" [showIcon]="true"
-                                               name="_date" [maxDate]="maxDate"></p-calendar>
+                                                name="_date" [maxDate]="maxDate"></p-calendar>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                             <div><label for="_consumption">Consumption For<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_consumption" [options]="consumptionOptions"
-                                                (onClick)="onSelect('CF')" [(ngModel)]="consumption"
-                                                optionLabel="label" required>
+                                                (onClick)="onSelect('CF')" [(ngModel)]="consumption" optionLabel="label"
+                                                required>
                                             </p-dropdown>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                             <div><label for="_commodity">Commodity<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_commodity" [options]="commodityOptions"
-                                                (onClick)="onSelect('CM')" [(ngModel)]="commodity"
-                                                optionLabel="label" required>
+                                                (onClick)="onSelect('CM')" [(ngModel)]="commodity" optionLabel="label"
+                                                required>
                                             </p-dropdown>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                             <div><label for="_openingbalance">Unit<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_openingbalance" [options]="unitOptions"
-                                                (onClick)="onSelect('UN')" [(ngModel)]="unit" 
-                                                optionLabel="label" required>
+                                                (onClick)="onSelect('UN')" [(ngModel)]="unit" optionLabel="label"
+                                                required>
                                             </p-dropdown>
                                         </div>
                                         <div #row2 class="p-col-12 p-md-12 p-lg-12">
@@ -52,7 +52,7 @@
                                                     <label for="_requiredqty">Required Quantity<span
                                                             class="form-mandatory-field">*</span></label>
                                                     <input type="text" name="_requiredqty" pInputText
-                                                    (input)="calculateBalance()" [(ngModel)]="requiredQty" required>
+                                                        (input)="calculateBalance()" [(ngModel)]="requiredQty" required>
                                                 </div>
                                                 <div class="p-col-12 p-md-12 p-lg-2">
                                                     <div><label for="_closingbalance">closing Balance</label></div>
@@ -61,8 +61,8 @@
                                                 </div>
                                                 <div class="p-col-12"></div>
                                                 <div #row2 class="p-col-10 txt-center no-padding">
-                                                    <button pButton type="button" label="Enter"
-                                                       [disabled]="(!f.valid)" (click)="onEnter()"></button>
+                                                    <button pButton type="button" label="Enter" [disabled]="(!f.valid)"
+                                                        (click)="onEnter()"></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,8 +74,8 @@
                             <div class="p-grid">
                                 <div class="p-col-1"></div>
                                 <div #row2 class="p-col-12 p-md-12 p-lg-10">
-                                    <p-table styleClass="p-datatable-gridlines" [columns]="consumptionCols" [value]="consumptionData" [paginator]="true"
-                                        [rows]="10">
+                                    <p-table styleClass="p-datatable-gridlines" [columns]="consumptionCols"
+                                        [value]="consumptionData" [paginator]="true" [rows]="10">
                                         <ng-template pTemplate="header" let-columns>
                                             <tr>
                                                 <th style="width: 100px">S.No</th>
@@ -93,12 +93,14 @@
                                                 <td *ngFor="let col of columns">
                                                     {{rowData[col.field]}}
                                                 </td>
-                                                <td style="width: 120px" (click)="onEdit(rowData, 1)">
-                                                    <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
+                                                <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 1)">
+                                                    <button style="height: 1.8rem;" icon="pi pi-pencil" pButton
+                                                        type="button">
                                                     </button>
                                                 </td>
                                                 <td style="width: 120px" (click)="onDelete(rowIndex, 1)">
-                                                    <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
+                                                    <button style="height: 1.8rem;" icon="pi pi-trash" pButton
+                                                        type="button">
                                                     </button>
                                                 </td>
                                             </tr>
@@ -109,62 +111,61 @@
                             <div #row3 class="p-grid">
                                 <div class="p-col-5"></div>
                                 <div class="p-col-6 p-md-6 p-lg-1 txt-end">
-                                <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
-                                   [disabled]="(consumptionData.length==0)"></button>
+                                    <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
+                                        [disabled]="(consumptionData.length==0)"></button>
+                                </div>
+                                <div class="p-col-6 p-md-6 p-lg-1">
+                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                        (click)="showDialog=true"></button>
+                                </div>
                             </div>
-                            <div class="p-col-6 p-md-6 p-lg-1">
-                                <button pButton type="button" label="View" icon="pi pi-eye" (click)="showDialog=true"></button>
-                            </div>
-                        </div>
                         </div>
                     </p-card>
                 </form>
             </p-panel>
-            <p-dialog header="Consumption Details" [(visible)]="showDialog" [modal]="showDialog" [style]="{width: '90vw', height: '25vw'}">
+            <p-dialog header="Consumption Details" [(visible)]="showDialog" [modal]="showDialog"
+                [style]="{width: '90vw', height: '25vw'}">
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
-                        <div><label for="_fdate">From Date<span
-                                    class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [(ngModel)]="fromDate" showButtonBar="true" [showIcon]="true"
-                            [maxDate]="maxDate" (ngModelChange)="onDateSelect()" name="_fdate"></p-calendar>
+                        <div><label for="_fdate">From Date<span class="form-mandatory-field">*</span></label></div>
+                        <p-calendar [(ngModel)]="fromDate" showButtonBar="true" [showIcon]="true" [maxDate]="maxDate"
+                            (ngModelChange)="onDateSelect()" name="_fdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
-                        <div><label for="_tdate">To Date<span
-                                    class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [(ngModel)]="toDate" showButtonBar="true" [showIcon]="true"
-                            [maxDate]="maxDate" (ngModelChange)="onDateSelect()" name="_tdate"></p-calendar>
+                        <div><label for="_tdate">To Date<span class="form-mandatory-field">*</span></label></div>
+                        <p-calendar [(ngModel)]="toDate" showButtonBar="true" [showIcon]="true" [maxDate]="maxDate"
+                            (ngModelChange)="onDateSelect()" name="_tdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12">
-                        <p-table styleClass="p-datatable-gridlines" [columns]="consumptionCols" [value]="consumedList" [paginator]="true"
-                                        [rows]="10" [loading]="loading">
-                                        <ng-template pTemplate="header" let-columns>
-                                            <tr>
-                                                <th style="width: 100px">S.No</th>
-                                                <th *ngFor="let col of columns">
-                                                    {{col.header}}
-                                                </th>
-                                                <th style="width: 120px">Edit</th>
-                                                <th style="width: 120px">Delete</th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData
-                                            let-columns="columns">
-                                            <tr>
-                                                <td style="width: 100px">{{rowIndex+1}}</td>
-                                                <td *ngFor="let col of columns">
-                                                    {{rowData[col.field]}}
-                                                </td>
-                                                <td style="width: 120px" (click)="onEdit(rowData, 2)">
-                                                    <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
-                                                    </button>
-                                                </td>
-                                                <td style="width: 120px" (click)="onDelete(rowIndex, 2)">
-                                                    <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
+                        <p-table styleClass="p-datatable-gridlines" [columns]="consumptionCols" [value]="consumedList"
+                            [paginator]="true" [rows]="10" [loading]="loading">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 100px">S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                    <th style="width: 120px">Edit</th>
+                                    <th style="width: 120px">Delete</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                <tr>
+                                    <td style="width: 100px">{{rowIndex+1}}</td>
+                                    <td *ngFor="let col of columns">
+                                        {{rowData[col.field]}}
+                                    </td>
+                                    <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 2)">
+                                        <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
+                                        </button>
+                                    </td>
+                                    <td style="width: 120px" (click)="onDelete(rowIndex, 2)">
+                                        <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </div>
             </p-dialog>

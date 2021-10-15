@@ -41,9 +41,13 @@ export class PurchaseOrderComponent implements OnInit {
   detailId: number = 0;
   logged_user: User;
   orderList: any = [];
-  viewDate: Date;
+  fromDate: any;
+  toDate: any;
   loader: boolean;
   showDialog: boolean;
+  purchaseBillCols: any;
+  purchasedBillList: any[] = [];
+  maxDate: Date = new Date();
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _purchaseForm: NgForm;
 
@@ -90,25 +94,34 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   onEnter() {
-    this.showTable = true;
-    this.loading = true;
-    this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
-    this.purcahseOrderData.push({
-      'DetailId': this.detailId,
-      'OrderId': this.purchaseId,
-      'Commodity': this.commodity.label,
-      'CommodityId': this.commodity.value,
-      'Quantity': this.quantity,
-      'Rate': this.rate,
-      'Unit': this.unit.label,
-      'UnitId': this.unit.value,
-      'Total': this.total
-    })
-    this.orderList = this.purcahseOrderData.slice(0);
-    //grand total
-    this.calculateGrandTotal();
-    this.clearOrderDetails();
-    this.loading = false;
+    var result = this.isTally(1);
+    const isTallied = result[0];
+    const message = result[1];
+    if (isTallied) {
+      this.showTable = true;
+      this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
+      this.purcahseOrderData.push({
+        'DetailId': this.detailId,
+        'OrderId': this.purchaseId,
+        'Commodity': this.commodity.label,
+        'CommodityId': this.commodity.value,
+        'Quantity': this.quantity,
+        'Rate': this.rate,
+        'Unit': this.unit.label,
+        'UnitId': this.unit.value,
+        'Total': this.total
+      })
+      this.orderList = this.purcahseOrderData.slice(0);
+      //grand total
+      this.calculateGrandTotal();
+      this.clearOrderDetails();
+    } else {
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+        summary: ResponseMessage.SUMMARY_ERROR, detail: message
+      });
+    }
   }
 
   checkIfTotalExists(data) {
@@ -144,19 +157,29 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
 
-  isTally(): [boolean, string] {
-    let result: boolean, message: string;
+  isTally(type): [boolean, string] {
+    let result: boolean, message: string = '';
     if (this.grandTotal !== undefined && this.grandTotal !== null && this.grandTotal !== NaN &&
-      this.billAmount !== undefined && this.billAmount !== null && this.billAmount !== NaN) {
+      this.billAmount !== undefined && this.billAmount !== null && this.billAmount !== NaN &&
+      this.total !== null && this.total !== undefined && this.total !== NaN) {
       const g_total = (this.grandTotal * 1);
       const b_amt = (this.billAmount * 1);
-      if (g_total === b_amt) {
-        result = true;
-        message = 'Tallied !'
+      const total = (this.total * 1);
+      if (type === 1) {
+        if (total > b_amt) {
+          result = false;
+          message = 'Bill amount entered: ' + b_amt + ' is less or greater than total amount: '
+            + total;
+        }
       } else {
-        result = false;
-        message = 'Bill amount entered: ' + b_amt + ' is less or greater than grand total of entered items in list: '
-          + g_total;
+        if (g_total === b_amt) {
+          result = true;
+          message = 'Tallied !'
+        } else {
+          result = false;
+          message = 'Bill amount entered: ' + b_amt + ' is less or greater than grand total of entered items in list: '
+            + g_total;
+        }
       }
     } else {
       result = false;
@@ -165,7 +188,7 @@ export class PurchaseOrderComponent implements OnInit {
     return [result, message];
   }
 
-  onEdit(data, index) {
+  onEdit(data, index, type) {
     if (data !== undefined && data !== null) {
       this.commodity = { label: data.Commodity, value: data.CommodityId };
       this.commodityOptions = [{ label: data.Commodity, value: data.CommodityId }];
@@ -186,23 +209,27 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
 
-  onDelete(index) {
+  onDelete(index, type) {
     if (index !== undefined && index !== null) {
-    this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
-    if (this.orderList.length !== 0) {
-        this.purcahseOrderData.splice(index, 1);
-        this.orderList = this.purcahseOrderData.slice(0);
-        this.calculateGrandTotal();
-      } else {
-        this.purcahseOrderData = [];
-        this.orderList = [];
+      if (type === 1) {
+        this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
+        if (this.orderList.length !== 0) {
+          this.purcahseOrderData.splice(index, 1);
+          this.orderList = this.purcahseOrderData.slice(0);
+          this.calculateGrandTotal();
+        } else {
+          this.purcahseOrderData = [];
+          this.orderList = [];
+        }
       }
+    } else {
+      //delete purchase bill (sp & api call)
     }
   }
 
   onSave() {
     this.blockUI.start();
-    var result = this.isTally();
+    var result = this.isTally(2);
     const isTallied = result[0];
     const message = result[1];
     if (isTallied) {
@@ -260,7 +287,6 @@ export class PurchaseOrderComponent implements OnInit {
         }
       })
     } else {
-      this.blockUI.stop();
       this._messageService.clear();
       this._messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -269,13 +295,16 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
 
-  getPurchaseOrder() {
-    // const params = {
-    //   'Value': this._datepipe.transform()
-    // }
+  loadPurchaseBills() {
+    //if cond
+    const params = {
+      //   'fdate': this._datepipe.transform(this.fromDate, 'yyyy-MM-dd'),
+      'dcode': this.logged_user.districtCode,
+      'tcode': this.logged_user.talukId
+    }
     this.loader = true;
-    this._restApiService.getByParameters(PathConstants.PurchaseOrder_Get, {'Value': this.viewDate}).subscribe(res => {
-      if(res !== undefined && res !== null && res.length !== 0) {
+    this._restApiService.getByParameters(PathConstants.PurchaseOrder_Get, params).subscribe(res => {
+      if (res !== undefined && res !== null && res.length !== 0) {
         this.loader = false;
       } else {
         this.loader = false;
@@ -286,33 +315,6 @@ export class PurchaseOrderComponent implements OnInit {
         })
       }
     })
-  }
-
-  editOrder(row) {
-    if(row !== undefined && row !== null) {
-      this.showDialog = false;
-      // res.forEach(r => {
-      //   this.purchaseId = (r.OrderId !== undefined) ? r.OrderId : null;
-      //   this.billAmount = (r.BillAmount !== undefined && r.BillAmount !== null) ? (r.BillAmount * 1) : 0;
-      //   this.billDate = (r.BillDate !== undefined && r.BillDate !== null) ? new Date(r.BillDate) : null;
-      //   this.billNo = (r.BillNo !== undefined && r.BillNo !== null) ? r.BillNo : '';
-      //   this.shopName = (r.ShopName !== undefined && r.ShopName !== null) ? r.ShopName : '';
-      //   this.gstNo = (r.GstNo !== undefined && r.GstNo !== null) ? r.GstNo : '';
-      //   if(r.DetailId !== undefined && r.DetailId !== null) {
-      //     this.purcahseOrderData.push({
-      //       'DetailId': r.DetailId,
-      //       'OrderId': r.OrderId,
-      //       'Commodity': r.Commodity,
-      //       'CommodityId': r.CommodityId,
-      //       'Quantity': r.Qty,
-      //       'Rate': r.Rate,
-      //       'Unit': r.Unit,
-      //       'UnitId': r.UnitId,
-      //       'Total': r.Total
-      //     })
-      //   }
-      // })
-    }
   }
 
   onClearAll() {

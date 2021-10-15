@@ -129,7 +129,10 @@ export class ConsumptionComponent implements OnInit {
     }
   }
 
-  onEdit(row, type) {
+  onEdit(row, index, type) {
+    if(index !== undefined && index !== null && this.consumptionData.length !== 0) {
+      this.consumptionData.splice(index, 1);
+    }
     if (row !== undefined && row !== null) {
       if (type === 2) {
         this.showDialog = false;
