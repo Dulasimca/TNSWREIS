@@ -31,5 +31,6 @@ export class ResponseMessage {
     public static readonly DeleteSuccessMsg = 'Deleted successfully !';
     public static readonly DeleteFailMsg = 'Record is not deleted !';
     public static readonly EmailAlreadyExists = 'User email already exists !';
+  static PasswordChangeSuccess: string;
     
 }
