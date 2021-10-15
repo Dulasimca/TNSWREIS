@@ -25,8 +25,11 @@
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_email">Email Id<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <input type="email" name="_email" class="p-col-12" pInputText
-                                            [(ngModel)]="emailId" (input)="checkIfEmailExists($event)" required />
+                                        <span class="p-input-icon-right">
+                                            <i *ngIf="checkEmail" class="pi pi-spin pi-spinner"></i>
+                                            <input type="email" name="_email" class="p-col-12" pInputText
+                                                [(ngModel)]="emailId" (input)="checkIfEmailExists()" required />
+                                        </span>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_psswd">Password<span
