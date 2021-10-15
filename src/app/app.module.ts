@@ -13,10 +13,11 @@ import { TabViewModule } from 'primeng/tabview';
 import { CalendarModule } from 'primeng/calendar';
 import { HttpClientModule } from '@angular/common/http';
 import { WebcamModule } from 'ngx-webcam';
-import {RadioButtonModule} from 'primeng/radiobutton';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 
 
 import { AppComponent } from './app.component';
@@ -42,7 +43,6 @@ import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
 import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
-import { LocationService } from './location.service';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { TableConstants } from './Common-Modules/table-constants';
@@ -51,6 +51,7 @@ import { ChangePasswordComponent } from './master/change-password/change-passwor
 import { PasswordModule } from "primeng/password";
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 
+import { LocationService } from './services/location.service';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -103,11 +104,12 @@ import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
     TableModule,
     BlockUIModule.forRoot(),
     CheckboxModule,
-    ToastModule
+    ToastModule,
+    DialogModule
   ],
 
 
-  providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants,LocationService],
+  providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService],
 
   bootstrap: [AppComponent]
   

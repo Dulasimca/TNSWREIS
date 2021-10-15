@@ -13,11 +13,11 @@ export class TableConstants {
         ];
 
         this.consumptionColumns = [
-            { field: 'consumptionFor', header: 'Consumption For' },
-            { field: 'commdotiy', header: 'Commodity' },
-            { field: 'unit', header: 'Unit' },
+            { field: 'Consumption', header: 'Consumption For' },
+            { field: 'Commodity', header: 'Commodity' },
+            { field: 'Unit', header: 'Unit' },
             { field: 'OB', header: 'Opening Balance' },
-            { field: 'requiredQty', header: 'Required Quantity' },
+            { field: 'QTY', header: 'Required Quantity' },
             { field: 'CB', header: 'Closing Balance' },
         ];
     }

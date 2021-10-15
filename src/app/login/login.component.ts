@@ -18,11 +18,23 @@ import { RestAPIService } from '../services/restAPI.service';
 export class LoginComponent implements OnInit {
   username: string;
   password: string;
+  showPswd: boolean;
 
   constructor(private _authService: AuthService, private _messageService: MessageService,
     private _restApiService: RestAPIService) { }
 
   ngOnInit(): void { }
+
+  onShowPswd() {
+    var inputValue = (<HTMLInputElement>document.getElementById('pswd'));
+    if (inputValue.type === 'password') {
+      inputValue.type = 'text';
+      this.showPswd = !this.showPswd;
+    } else {
+      this.showPswd = !this.showPswd;
+      inputValue.type = 'password';
+    }
+  }
 
   onLogin() {
     const params = {
@@ -75,6 +87,12 @@ export class LoginComponent implements OnInit {
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.NetworkErrorMessage
         })
       }
     })

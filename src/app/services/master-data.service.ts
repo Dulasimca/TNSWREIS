@@ -131,6 +131,12 @@ export class MasterService {
                     this.masterData.push({ name: c.Name + '/' + c.NameTamil, code: c.Id });
                 })
                 break;
+            //consumption type
+            case 'CT':
+                this.data.Table14.forEach(t => {
+                    this.masterData.push({ name: t.Name, code: t.TypeId });
+                })
+                break;
         }
         return this.masterData;
     }

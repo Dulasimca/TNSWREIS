@@ -21,7 +21,12 @@
                     <div #pwd class="p-col-12 p-md-12 p-lg-12">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                            <input type="password" pInputText placeholder="Password" [(ngModel)]="password" required>
+                            <input id="pswd" type="password" pInputText placeholder="Password" [(ngModel)]="password"
+                                required>
+                            <span class="p-inputgroup-addon" (click)="onShowPswd()">
+                                <i *ngIf="!showPswd" disabled class="fa fa-eye" aria-hidden="true"></i>
+                                <i *ngIf="showPswd" class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
