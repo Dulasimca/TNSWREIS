@@ -89,8 +89,8 @@ width: 25px!important;
 height: 25px !important;
 }
 .table-format {
-    width: 35cm;
-    padding-left: 1.3cm;
+    width: 37cm;
+    padding-left: 50px;
 }
 .btn-bg {
     background: #eba611 !important;
@@ -333,4 +333,7 @@ height: 25px !important;
 .p-inputgroup-addon {
     background: #bbdbdd !important;
     color: #56696a !important;
+}
+button.ui-button {
+    margin-right: .5rem;
 }
