@@ -3,6 +3,7 @@ export class TableConstants {
     purcahseOrderColumns: any = [];
     consumptionColumns: any = [];
     purchaseBillColumns: any = [];
+    wardenTableColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity'},
@@ -28,5 +29,15 @@ export class TableConstants {
             { field: 'ShopName', header: 'ShopName' },
             { field: 'GstNo', header: 'Gst Number' },
         ];
+
+        this.wardenTableColumns = [
+            { field: 'Name', header: 'Warden Name'},
+            { field: 'CourseName', header: 'Qualification'},
+            { field: 'Designation', header: 'Designation'},
+            { field: 'EMail', header: 'Email'},
+            // { field: 'HostelId', header: 'Hostel Name'},
+            { field: 'PhoneNo', header: 'Mobile No'},
+            { field: 'Pincode', header: 'Pincode'},
+          ];
     }
 }
