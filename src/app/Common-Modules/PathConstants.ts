@@ -42,5 +42,6 @@ public static readonly PurchaseOrder_Get = 'PurchaseOrder/Get';
 
 public static readonly Consumption_Post = 'DailyConsumption/Post';
 public static readonly Consumption_Get = 'DailyConsumption/Get';
+public static readonly Consumption_Delete = 'DailyConsumption/Put';
 
 }

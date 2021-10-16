@@ -324,6 +324,9 @@ height: 25px !important;
 .p-dialog .p-dialog-header .p-dialog-header-icon {
     color: whitesmoke !important;
 }
+.p-dialog .p-dialog-content {
+    padding: .5rem 1.5rem 2rem !important;
+}
 .p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
     border: solid 0.5px #96b1b3 !important;
 }
