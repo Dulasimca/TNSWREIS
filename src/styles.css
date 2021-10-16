@@ -330,3 +330,7 @@ height: 25px !important;
 .p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
     border: solid 0.5px #96b1b3 !important;
 }
+.p-inputgroup-addon {
+    background: #bbdbdd !important;
+    color: #56696a !important;
+}
