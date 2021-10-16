@@ -39,6 +39,7 @@ public static readonly UserMaster_Put = 'UserMaster/Put';
 
 public static readonly PurchaseOrder_Post = 'PurchaseOrder/Post';
 public static readonly PurchaseOrder_Get = 'PurchaseOrder/Get';
+public static readonly PurchaseOrder_Delete = 'PurchaseOrder/Put';
 
 public static readonly Consumption_Post = 'DailyConsumption/Post';
 public static readonly Consumption_Get = 'DailyConsumption/Get';

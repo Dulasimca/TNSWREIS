@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MessageService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { MasterService } from 'src/app/services/master-data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-purchase-order',
@@ -43,20 +44,23 @@ export class PurchaseOrderComponent implements OnInit {
   orderList: any = [];
   fromDate: any;
   toDate: any;
-  loader: boolean;
   showDialog: boolean;
+  showAlertBox: boolean;
   purchaseBillCols: any;
   purchasedBillList: any[] = [];
   maxDate: Date = new Date();
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _purchaseForm: NgForm;
+  @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
 
   constructor(private _datepipe: DatePipe, private _tableConstants: TableConstants,
     private _masterService: MasterService, private _messageService: MessageService,
-    private _authService: AuthService, private _restApiService: RestAPIService) { }
+    private _authService: AuthService, private _restApiService: RestAPIService,
+    private _confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.purcahseOrderCols = this._tableConstants.purcahseOrderColumns;
+    this.purchaseBillCols = this._tableConstants.purchaseBillColumns;
     this.logged_user = this._authService.UserInfo;
     this.units = this._masterService.getMaster('UN');
     this.commodities = this._masterService.getMaster('CM');
@@ -190,28 +194,14 @@ export class PurchaseOrderComponent implements OnInit {
 
   onEdit(data, index, type) {
     if (data !== undefined && data !== null) {
-      this.commodity = { label: data.Commodity, value: data.CommodityId };
-      this.commodityOptions = [{ label: data.Commodity, value: data.CommodityId }];
-      this.unit = { label: data.Unit, value: data.UnitId };
-      this.unitOptions = [{ label: data.Unit, value: data.UnitId }];
-      this.quantity = (data.Quantity * 1).toFixed(3);
-      this.rate = (data.Rate * 1).toFixed(2);
-      this.total = (data.Total * 1).toFixed(2);
-      this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
-      if (this.orderList.length !== 0) {
-        this.purcahseOrderData.splice(index, 1);
-        this.orderList = this.purcahseOrderData.slice(0);
-        this.calculateGrandTotal();
-      } else {
-        this.purcahseOrderData = [];
-        this.orderList = [];
-      }
-    }
-  }
-
-  onDelete(index, type) {
-    if (index !== undefined && index !== null) {
       if (type === 1) {
+        this.commodity = { label: data.Commodity, value: data.CommodityId };
+        this.commodityOptions = [{ label: data.Commodity, value: data.CommodityId }];
+        this.unit = { label: data.Unit, value: data.UnitId };
+        this.unitOptions = [{ label: data.Unit, value: data.UnitId }];
+        this.quantity = (data.Quantity * 1).toFixed(3);
+        this.rate = (data.Rate * 1).toFixed(2);
+        this.total = (data.Total * 1).toFixed(2);
         this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
         if (this.orderList.length !== 0) {
           this.purcahseOrderData.splice(index, 1);
@@ -221,10 +211,115 @@ export class PurchaseOrderComponent implements OnInit {
           this.purcahseOrderData = [];
           this.orderList = [];
         }
+      } else {
+        this._restApiService.getByParameters(PathConstants.PurchaseOrder_Get, { 'OrderId': data.OrderId }).subscribe(res => {
+          if (res !== undefined && res !== null && res.length !== 0) {
+            this.purcahseOrderData = [];
+            res.forEach(i => {
+              this.purchaseId = data.OrderId;
+              this.billNo = data.BillNo;
+              this.billDate = new Date(data.BillDate);
+              this.billAmount = (data.BillAmount !== undefined) ? (data.BillAmount * 1) : null;
+              this.shopName = (data.ShopName !== undefined) ? data.ShopName : '';
+              this.gstNo = (data.GstNo !== undefined) ? data.GstNo : '';
+              this.purcahseOrderData.push({
+                'DetailId': i.DetailId,
+                'OrderId': i.OrderId,
+                'Commodity': i.Commodity,
+                'CommodityId': i.CommodityId,
+                'Quantity': i.Qty,
+                'Rate': i.Rate,
+                'Unit': i.Unit,
+                'UnitId': i.UnitId,
+                'Total': i.Total
+              })
+            })
+            this.orderList = this.purcahseOrderData.slice(0);
+            this.calculateGrandTotal();
+          } else {
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.NetworkErrorMessage
+            })
+          }
+        })
       }
-    } else {
-      //delete purchase bill (sp & api call)
     }
+  }
+
+  onDelete(data, index, type) {
+    if (index !== undefined && index !== null) {
+      if (type === 1 && data.DetailId === 0) {
+        this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
+        if (this.orderList.length !== 0) {
+          this.purcahseOrderData.splice(index, 1);
+          this.orderList = this.purcahseOrderData.slice(0);
+          this.calculateGrandTotal();
+        } else {
+          this.purcahseOrderData = [];
+          this.orderList = [];
+        }
+      } else if (type === 1 && data.DetailId !== 0) {
+        this.purcahseOrderData = this.deleteRecord(this.purcahseOrderData, index, data.DetailId, 1);
+        this.orderList = this.purcahseOrderData.slice(0);
+        this.calculateGrandTotal();
+      } else if (type === 2) {
+        this.purchasedBillList = this.deleteRecord(this.purcahseOrderData, index, data.OrderId, 2);
+      }
+    }
+  }
+
+  deleteRecord(arr, index, id, type) {
+    var data = arr;
+    this.showAlertBox = true;
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.showAlertBox = false;
+        this.loading = true;
+        const params = {
+          'Type': type,
+          'PId': id
+        }
+        this._restApiService.put(PathConstants.PurchaseOrder_Delete, params).subscribe(res => {
+          if (res !== undefined && res !== null) {
+            if (res) {
+              this.loading = false;
+              this._messageService.clear();
+              this._messageService.add({
+                key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+                summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.DeleteSuccessMsg
+              });
+              data.splice(index, 1);
+            } else {
+              this.loading = false;
+              this._messageService.clear();
+              this._messageService.add({
+                key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+                summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.DeleteFailMsg
+              });
+            }
+          } else {
+            this.loading = false;
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ErrorMessage
+            });
+          }
+        })
+      },
+      reject: () => {
+        this.showAlertBox = false;
+        this._messageService.clear();
+        this._alert.disableModality();
+      }
+    });
+    console.log('dt', data);
+    return data;
   }
 
   onSave() {
@@ -243,7 +338,8 @@ export class PurchaseOrderComponent implements OnInit {
         'BillNo': this.billNo,
         'BillDate': this._datepipe.transform(this.billDate, 'yyyy-MM-dd'),
         'BillAmount': this.billAmount,
-        'OrderList': this.orderList
+        'OrderList': this.orderList,
+        'Type': 1
       }
       this._restApiService.post(PathConstants.PurchaseOrder_Post, params).subscribe(res => {
         if (res !== undefined && res !== null) {
@@ -296,25 +392,54 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   loadPurchaseBills() {
-    //if cond
-    const params = {
-      //   'fdate': this._datepipe.transform(this.fromDate, 'yyyy-MM-dd'),
-      'dcode': this.logged_user.districtCode,
-      'tcode': this.logged_user.talukId
+    this.loading = true;
+    this.purchasedBillList = [];
+    this.checkValidDateSelection();
+    if (this.fromDate !== undefined && this.fromDate !== null && this.toDate !== undefined && this.toDate !== null) {
+      const params = {
+        'FDate': this._datepipe.transform(this.fromDate, 'yyyy-MM-dd'),
+        'TDate': this._datepipe.transform(this.toDate, 'yyyy-MM-dd'),
+        'HostelId': this.logged_user.hostelId,
+        'DistrictCode': this.logged_user.districtCode,
+        'TalukId': this.logged_user.talukId,
+        'Type': 2
+      }
+      this._restApiService.post(PathConstants.PurchaseOrder_Post, params).subscribe(res => {
+        if (res !== undefined && res !== null && res.length !== 0) {
+          this.purchasedBillList = res.slice(0);
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          })
+        }
+      })
     }
-    this.loader = true;
-    this._restApiService.getByParameters(PathConstants.PurchaseOrder_Get, params).subscribe(res => {
-      if (res !== undefined && res !== null && res.length !== 0) {
-        this.loader = false;
-      } else {
-        this.loader = false;
+  }
+
+  checkValidDateSelection() {
+    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== '') {
+      let selectedFromDate = this.fromDate.getDate();
+      let selectedToDate = this.toDate.getDate();
+      let selectedFromMonth = this.fromDate.getMonth();
+      let selectedToMonth = this.toDate.getMonth();
+      let selectedFromYear = this.fromDate.getFullYear();
+      let selectedToYear = this.toDate.getFullYear();
+      if ((selectedFromDate > selectedToDate && ((selectedFromMonth >= selectedToMonth && selectedFromYear >= selectedToYear) ||
+        (selectedFromMonth === selectedToMonth && selectedFromYear === selectedToYear))) ||
+        (selectedFromMonth > selectedToMonth && selectedFromYear === selectedToYear) || (selectedFromYear > selectedToYear)) {
         this._messageService.clear();
         this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-        })
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
+          summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ValidDateErrorMessage
+        });
+        this.fromDate = ''; this.toDate = '';
       }
-    })
+      return this.fromDate, this.toDate;
+    }
   }
 
   onClearAll() {
