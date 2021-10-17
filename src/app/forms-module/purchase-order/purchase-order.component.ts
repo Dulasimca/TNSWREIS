@@ -49,6 +49,7 @@ export class PurchaseOrderComponent implements OnInit {
   purchaseBillCols: any;
   purchasedBillList: any[] = [];
   maxDate: Date = new Date();
+  spinner: boolean;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _purchaseForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
@@ -211,16 +212,19 @@ export class PurchaseOrderComponent implements OnInit {
           this.orderList = [];
         }
       } else {
-        this._restApiService.getByParameters(PathConstants.PurchaseOrder_Get, { 'OrderId': data.OrderId }).subscribe(res => {
+        this.showDialog = false;
+        this.blockUI.start();
+        this._restApiService.getByParameters(PathConstants.PurchaseOrder_Get, { 'OrderId': data.orderId }).subscribe(res => {
           if (res !== undefined && res !== null && res.length !== 0) {
             this.purcahseOrderData = [];
             res.forEach(i => {
-              this.purchaseId = data.OrderId;
-              this.billNo = data.BillNo;
-              this.billDate = new Date(data.BillDate);
-              this.billAmount = (data.BillAmount !== undefined) ? (data.BillAmount * 1) : null;
-              this.shopName = (data.ShopName !== undefined) ? data.ShopName : '';
-              this.gstNo = (data.GstNo !== undefined) ? data.GstNo : '';
+              this.purchaseId = data.orderId;
+              this.billNo = data.billNo;
+              this.billDate = new Date(data.billDate);
+              this.billAmount = (data.billAmount !== undefined) ? (data.billAmount * 1) : null;
+              this.shopName = (data.shopName !== undefined) ? data.shopName : '';
+              this.gstNo = (data.gstNo !== undefined) ? data.gstNo : '';
+              this.showTable = true;
               this.purcahseOrderData.push({
                 'DetailId': i.DetailId,
                 'OrderId': i.OrderId,
@@ -235,7 +239,9 @@ export class PurchaseOrderComponent implements OnInit {
             })
             this.orderList = this.purcahseOrderData.slice(0);
             this.calculateGrandTotal();
+            this.blockUI.stop();
           } else {
+            this.blockUI.stop();
             this._messageService.clear();
             this._messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -260,33 +266,35 @@ export class PurchaseOrderComponent implements OnInit {
           this.orderList = [];
         }
       } else if (type === 1 && data.DetailId !== 0) {
+        this.showAlertBox = true;
         this.purcahseOrderData = this.deleteRecord(this.purcahseOrderData, index, data.DetailId, 1);
         this.orderList = this.purcahseOrderData.slice(0);
         this.calculateGrandTotal();
       } else if (type === 2) {
-        this.purchasedBillList = this.deleteRecord(this.purcahseOrderData, index, data.OrderId, 2);
+        this.showAlertBox = true;
+        this.purchasedBillList = this.deleteRecord(this.purchasedBillList, index, data.orderId, 2);
       }
     }
   }
 
   deleteRecord(arr, index, id, type) {
-    var data = arr;
-    this.showAlertBox = true;
+    var data = arr.slice(0);
+    console.log('dt1', data);
     this._confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.showAlertBox = false;
-        this.loading = true;
+        this.spinner = true;
         const params = {
           'Type': type,
-          'PId': id
+          'PurchaseId': id
         }
         this._restApiService.put(PathConstants.PurchaseOrder_Delete, params).subscribe(res => {
           if (res !== undefined && res !== null) {
             if (res) {
-              this.loading = false;
+              this.spinner = false;
               this._messageService.clear();
               this._messageService.add({
                 key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -294,27 +302,29 @@ export class PurchaseOrderComponent implements OnInit {
               });
               data.splice(index, 1);
             } else {
-              this.loading = false;
+              this.spinner = false;
               this._messageService.clear();
               this._messageService.add({
                 key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-                summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.DeleteFailMsg
+                summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.DeleteFailMsg
               });
             }
           } else {
-            this.loading = false;
+            this.spinner = false;
             this._messageService.clear();
             this._messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-              summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ErrorMessage
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
             });
           }
+          this.showAlertBox = true;
         })
       },
       reject: () => {
-        this.showAlertBox = false;
-        this._messageService.clear();
         this._alert.disableModality();
+        this.showAlertBox = false;
+        data = this.purchasedBillList.slice(0);
+        this._messageService.clear();
       }
     });
     console.log('dt', data);
@@ -322,11 +332,11 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   onSave() {
-    this.blockUI.start();
     var result = this.isTally(2);
     const isTallied = result[0];
     const message = result[1];
     if (isTallied) {
+      this.blockUI.start();
       const params = {
         'PurchaseId': this.purchaseId,
         'HostelId': this.logged_user.hostelId,
@@ -349,6 +359,7 @@ export class PurchaseOrderComponent implements OnInit {
               key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
               summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
             });
+            this.onClearAll();
           } else {
             this.blockUI.stop();
             this._messageService.clear();
@@ -390,8 +401,15 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
 
+  onView() {
+    this.showDialog = true;
+    this.purchasedBillList = [];
+    this.fromDate = null;
+    this.toDate = null;
+  }
+
   loadPurchaseBills() {
-    this.loading = true;
+    this.spinner = true;
     this.purchasedBillList = [];
     this.checkValidDateSelection();
     if (this.fromDate !== undefined && this.fromDate !== null && this.toDate !== undefined && this.toDate !== null) {
@@ -404,11 +422,13 @@ export class PurchaseOrderComponent implements OnInit {
         'Type': 2
       }
       this._restApiService.post(PathConstants.PurchaseOrder_Post, params).subscribe(res => {
-        if (res !== undefined && res !== null && res.length !== 0) {
-          this.purchasedBillList = res.slice(0);
-          this.loading = false;
+        if (res.item2 !== undefined && res.item2 !== null && res.item2.length !== 0) {
+          this.purchasedBillList = res.item2.slice(0);
+          this.spinner = false;
+          this.showAlertBox = true;
         } else {
-          this.loading = false;
+          this.spinner = false;
+          this.showAlertBox = false;
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
@@ -420,7 +440,8 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   checkValidDateSelection() {
-    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== '') {
+    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== ''
+      && this.fromDate !== null && this.toDate !== null) {
       let selectedFromDate = this.fromDate.getDate();
       let selectedToDate = this.toDate.getDate();
       let selectedFromMonth = this.fromDate.getMonth();
@@ -435,7 +456,7 @@ export class PurchaseOrderComponent implements OnInit {
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
           summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ValidDateErrorMessage
         });
-        this.fromDate = ''; this.toDate = '';
+        this.fromDate = null; this.toDate = null;
       }
       return this.fromDate, this.toDate;
     }
@@ -454,6 +475,7 @@ export class PurchaseOrderComponent implements OnInit {
     this.purchaseId = 0;
     this.detailId = 0;
     this.clearOrderDetails();
+    this.purcahseOrderData = [];
   }
 
   clearOrderDetails() {

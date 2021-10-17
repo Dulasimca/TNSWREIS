@@ -23,11 +23,11 @@ export class TableConstants {
         ];
 
         this.purchaseBillColumns = [
-            { field: 'BillNo', header: 'Bill No.' },
-            { field: 'BillDate', header: 'Bill Date' },
-            { field: 'BillAmount', header: 'Bill Amount' },
-            { field: 'ShopName', header: 'ShopName' },
-            { field: 'GstNo', header: 'Gst Number' },
+            { field: 'billNo', header: 'Bill No.' },
+            { field: 'billDate', header: 'Bill Date' },
+            { field: 'billAmount', header: 'Bill Amount' },
+            { field: 'shopName', header: 'ShopName' },
+            { field: 'gstNo', header: 'Gst Number' },
         ];
 
         this.wardenTableColumns = [

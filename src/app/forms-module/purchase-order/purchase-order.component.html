@@ -1,4 +1,4 @@
-<block-ui>
+<block-ui> 
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <div class="p-grid">
@@ -96,7 +96,7 @@
                                         </div>
                                         <div #field11 class="p-field p-col-12 p-md-12 p-lg-1">
                                             <button pButton type="button" label="Enter"
-                                                [disabled]="(!total || !rate || !quantity || !commodity || !unit)"
+                                                [disabled]="(!total || !rate || !quantity || !commodity || !unit || !f.valid)"
                                                 (click)="onEnter()"></button>
                                         </div>
                                     </div>
@@ -150,14 +150,14 @@
                                 </div>
                                 <div class="p-col-6 p-md-6 p-lg-1">
                                     <button pButton type="button" label="View" icon="pi pi-eye"
-                                        (click)="showDialog=true"></button>
+                                        (click)="onView()"></button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </p-panel>
             </div>
-            <p-dialog #dialog header="Purchase Bill Details" [(visible)]="showDialog" [modal]="showDialog"
+            <p-dialog #dialog *ngIf="showDialog" header="Purchase Bill Details" [(visible)]="showDialog" [modal]="showDialog"
                 [style]="{width: '90vw', height: '25vw'}">
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
@@ -172,7 +172,7 @@
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12">
                         <p-table styleClass="p-datatable-gridlines" [columns]="purchaseBillCols" [value]="purchasedBillList"
-                            [paginator]="true" [rows]="10" [loading]="loading">
+                            [paginator]="true" [rows]="10" [loading]="spinner">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width: 100px">S.No</th>
@@ -203,6 +203,7 @@
                     </div>
                 </div>
                 <p-confirmDialog #cd *ngIf="showAlertBox" [style]="{width: '50vw'}" [appendTo]="dialog">
+                    <!-- *ngIf="showAlertBox" -->
                     <ng-template pTemplate="header">
                       <span>Alert</span>
                   </ng-template>

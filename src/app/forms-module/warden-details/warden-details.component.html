@@ -49,13 +49,19 @@
                                     </div>
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
-                                            <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_hostelname">Hostel Name<span
                                                         class="form-mandatory-field">*</span></label>
                                                 <p-dropdown name="_hostelname" [options]="hostelOptions"
                                                     [(ngModel)]="hostelName" (onClick)="onSelect('HN')" required>
                                                 </p-dropdown>
                                             </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left"><label for="_district">District<span
+                                                class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                        (onClick)="onSelect('D')" (onChange)="selectDistrict()" required>
+                                    </p-dropdown>
+                                </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_hstljoindate">Hostel Joining Date<span
                                                             class="form-mandatory-field">*</span></label></div>

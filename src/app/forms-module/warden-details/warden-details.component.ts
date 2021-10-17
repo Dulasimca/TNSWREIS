@@ -95,10 +95,10 @@ export class WardenDetailsComponent implements OnInit {
             break;
             case 'HN':
               this.hostels.forEach(h => {
-                hostelSelection.push({ label: h.name, value: h.code });
+                hostelSelection.push({ label: h.HostelName, value: h.Slno });
               })
               this.hostelOptions = hostelSelection;
-              this.hostelOptions.unshift({ label: '-select-', value: null });
+              this.hostelOptions.unshift({ label: '-select', value: null });
               break;
               case 'CU':
                 this.courses.forEach(q => {
@@ -107,6 +107,21 @@ export class WardenDetailsComponent implements OnInit {
                 this.qualificationOptions = courseSelection;
                 this.qualificationOptions.unshift({ label: '-select-', value: null });
                 break;
+      }
+    }
+    selectDistrict() {
+      const params = {
+        'Type': 1,
+        'Value': this.district
+  
+      }
+      if (this.district !== null && this.district !== undefined) {
+        this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+          if (res !== null && res !== undefined && res.length !== 0) {
+            this.hostels = res;
+          };
+  
+        })
       }
     }
     onFileUpload($event) {
