@@ -116,7 +116,7 @@ export class MasterService {
             //class master
             case 'CL':
                 this.data.Table12.forEach(c => {
-                    this.masterData.push({ name: c.Name, code: c.Id });
+                    this.masterData.push({ name: c.Name, code: c.Id, type: c.Type });
                 })
                 break;
             //role master

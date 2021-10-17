@@ -279,14 +279,14 @@ export class PurchaseOrderComponent implements OnInit {
 
   deleteRecord(arr, index, id, type) {
     var data = arr.slice(0);
-    console.log('dt1', data);
     this._confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this._alert.disableModality();
         this.showAlertBox = false;
-        this.spinner = true;
+        this.blockUI.start();
         const params = {
           'Type': type,
           'PurchaseId': id
@@ -294,7 +294,7 @@ export class PurchaseOrderComponent implements OnInit {
         this._restApiService.put(PathConstants.PurchaseOrder_Delete, params).subscribe(res => {
           if (res !== undefined && res !== null) {
             if (res) {
-              this.spinner = false;
+              this.blockUI.stop();
               this._messageService.clear();
               this._messageService.add({
                 key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -302,7 +302,7 @@ export class PurchaseOrderComponent implements OnInit {
               });
               data.splice(index, 1);
             } else {
-              this.spinner = false;
+              this.blockUI.stop();
               this._messageService.clear();
               this._messageService.add({
                 key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -310,7 +310,7 @@ export class PurchaseOrderComponent implements OnInit {
               });
             }
           } else {
-            this.spinner = false;
+            this.blockUI.stop();
             this._messageService.clear();
             this._messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -327,7 +327,6 @@ export class PurchaseOrderComponent implements OnInit {
         this._messageService.clear();
       }
     });
-    console.log('dt', data);
     return data;
   }
 
@@ -476,6 +475,8 @@ export class PurchaseOrderComponent implements OnInit {
     this.detailId = 0;
     this.clearOrderDetails();
     this.purcahseOrderData = [];
+    this.fromDate = null;
+    this.toDate = null;
   }
 
   clearOrderDetails() {

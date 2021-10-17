@@ -38,7 +38,7 @@ export class ConsumptionComponent implements OnInit {
   showDialog: boolean;
   toDate: any;
   fromDate: any;
-  showAlertBox: boolean;
+  // showAlertBox: boolean;
   maxDate: Date = new Date();
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
@@ -93,6 +93,7 @@ export class ConsumptionComponent implements OnInit {
   loadOB() { }
 
   onEnter() {
+    console.log('con', this.consumption);
     this.consumptionData.push({
       'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
       'ConsumptionType': this.consumption.value,
@@ -140,13 +141,13 @@ export class ConsumptionComponent implements OnInit {
       if (type === 2) {
         this.showDialog = false;
         this.consumptionId = row.Id;
-        console.log('r', row, this.consumptionId);
         this.date = new Date(row.ConsumptionDate);
       } else {
         this.consumptionId = 0;
       }
-      this.consumption = { label: row.Consumption, value: row.ConsumptionId };
-      this.consumptionOptions = [{ label: row.Consumption, value: row.ConsumptionId }];
+      this.date = new Date(row.ConsumptionDate);
+      this.consumption = { label: row.Consumption, value: row.ConsumptionType };
+      this.consumptionOptions = [{ label: row.Consumption, value: row.ConsumptionType }];
       this.commodity = { label: row.Commodity, value: row.CommodityId };
       this.commodityOptions = [{ label: row.Commodity, value: row.CommodityId }];
       this.unit = { label: row.Unit, value: row.UnitId };
@@ -163,18 +164,17 @@ export class ConsumptionComponent implements OnInit {
       if (type === 1) {
         this.consumptionData.splice(index, 1);
       } else {
-        this.showAlertBox = true;
         this._confirmationService.confirm({
           message: 'Are you sure that you want to proceed?',
           header: 'Confirmation',
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
-            this.showAlertBox = false;
-            this.loading = true;
+            this._alert.disableModality();
+            this.blockUI.start();
             this._restApiService.put(PathConstants.Consumption_Delete, { 'Id': data.Id }).subscribe(res => {
               if (res !== undefined && res !== null) {
                 if (res) {
-                  this.loading = false;
+                  this.blockUI.stop();
                   this._messageService.clear();
                   this._messageService.add({
                     key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -182,7 +182,7 @@ export class ConsumptionComponent implements OnInit {
                   });
                   this.consumedList.splice(index, 1);
                 } else {
-                  this.loading = false;
+                  this.blockUI.stop();
                   this._messageService.clear();
                   this._messageService.add({
                     key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -190,7 +190,8 @@ export class ConsumptionComponent implements OnInit {
                   });
                 }
               } else {
-                this.loading = false;
+                // this.loading = false;
+                this.blockUI.stop();
                 this._messageService.clear();
                 this._messageService.add({
                   key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -200,13 +201,19 @@ export class ConsumptionComponent implements OnInit {
             })
           },
           reject: () => {
-            this.showAlertBox = false;
             this._messageService.clear();
             this._alert.disableModality();
           }
         });
       }
     }
+  }
+
+  onView() {
+    this.showDialog = true;
+    this.fromDate = null;
+    this.toDate = null;
+    this.consumedList = [];
   }
 
   onDateSelect() {
@@ -223,10 +230,8 @@ export class ConsumptionComponent implements OnInit {
         if (res !== undefined && res !== null && res.length !== 0) {
           this.consumedList = res.slice(0);
           this.loading = false;
-          this.showAlertBox = true;
         } else {
           this.loading = false;
-          this.showAlertBox = false;
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
@@ -234,7 +239,6 @@ export class ConsumptionComponent implements OnInit {
           });
         }
       }, (err: HttpErrorResponse) => {
-        this.showAlertBox = false;
         this.loading = false;
         if (err.status === 0 || err.status === 400) {
           this._messageService.clear();
@@ -248,7 +252,8 @@ export class ConsumptionComponent implements OnInit {
   }
 
   checkValidDateSelection() {
-    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== '') {
+    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' &&
+     this.toDate !== '' && this.fromDate !== null && this.toDate !== null) {
       let selectedFromDate = this.fromDate.getDate();
       let selectedToDate = this.toDate.getDate();
       let selectedFromMonth = this.fromDate.getMonth();
@@ -263,7 +268,7 @@ export class ConsumptionComponent implements OnInit {
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
           summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ValidDateErrorMessage
         });
-        this.fromDate = ''; this.toDate = '';
+        this.fromDate = null; this.toDate = null;
       }
       return this.fromDate, this.toDate;
     }
@@ -275,7 +280,7 @@ export class ConsumptionComponent implements OnInit {
       if (res !== undefined && res !== null) {
         if (res) {
           this.blockUI.stop();
-          this.clearAll();
+          this.onClearAll();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -315,7 +320,7 @@ export class ConsumptionComponent implements OnInit {
     })
   }
 
-  clearAll() {
+  onClearAll() {
     this.consumptionId = 0;
     this._consumptionForm.reset();
     this._consumptionForm.form.markAsUntouched();
@@ -325,7 +330,6 @@ export class ConsumptionComponent implements OnInit {
     this.commodityOptions = [];
     this.consumptionOptions = [];
     this.unitOptions = [];
-    this.showAlertBox = false;
     this.loading = false;
   }
 

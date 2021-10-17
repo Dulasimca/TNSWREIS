@@ -152,6 +152,10 @@
                                     <button pButton type="button" label="View" icon="pi pi-eye"
                                         (click)="onView()"></button>
                                 </div>
+                                <div class="p-col-6 p-md-6 p-lg-1">
+                                    <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                        (click)="onClearAll()"></button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -202,7 +206,7 @@
                         </p-table>
                     </div>
                 </div>
-                <p-confirmDialog #cd *ngIf="showAlertBox" [style]="{width: '50vw'}" [appendTo]="dialog">
+                <p-confirmDialog #cd [style]="{width: '50vw'}" [appendTo]="dialog">
                     <!-- *ngIf="showAlertBox" -->
                     <ng-template pTemplate="header">
                       <span>Alert</span>
