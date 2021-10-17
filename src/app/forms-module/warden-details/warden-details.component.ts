@@ -174,7 +174,6 @@ export class WardenDetailsComponent implements OnInit {
           console.log('res', res);
           this.data = res.Table;
           }
-        
         });
   }
 

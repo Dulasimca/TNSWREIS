@@ -162,34 +162,33 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   isTally(type): [boolean, string] {
-    let result: boolean, message: string = '';
-    if (this.grandTotal !== undefined && this.grandTotal !== null && this.grandTotal !== NaN &&
-      this.billAmount !== undefined && this.billAmount !== null && this.billAmount !== NaN &&
-      this.total !== null && this.total !== undefined && this.total !== NaN) {
-      const g_total = (this.grandTotal * 1);
-      const b_amt = (this.billAmount * 1);
-      const total = (this.total * 1);
-      if (type === 1) {
-        if (total > b_amt) {
-          result = false;
-          message = 'Bill amount entered: ' + b_amt + ' is less or greater than total amount: '
-            + total;
-        }
+    let message: string = '';
+    const g_total = (this.grandTotal * 1);
+    const b_amt = (this.billAmount * 1);
+    const total = (this.total * 1);
+    if (type === 1 && this.billAmount !== undefined && this.billAmount !== null &&
+      this.billAmount !== NaN && this.total !== null && this.total !== undefined && this.total !== NaN) {
+      if (total > b_amt) {
+        message = 'Bill amount entered: ' + b_amt + ' is less or greater than total amount: '
+          + total;
+        return [false, message];
       } else {
-        if (g_total === b_amt) {
-          result = true;
-          message = 'Tallied !'
-        } else {
-          result = false;
-          message = 'Bill amount entered: ' + b_amt + ' is less or greater than grand total of entered items in list: '
-            + g_total;
-        }
+        return [true, 'Tallied'];
+      }
+    } else if (type === 2 && this.grandTotal !== undefined && this.grandTotal !== null && this.grandTotal !== NaN &&
+      this.billAmount !== undefined && this.billAmount !== null && this.billAmount !== NaN) {
+      if (g_total === b_amt) {
+        message = 'Tallied !';
+        return [true, message];
+      } else {
+        message = 'Bill amount entered: ' + b_amt + ' is less or greater than grand total of entered items in list: '
+          + g_total;
+        return [false, message];
       }
     } else {
-      result = false;
       message = 'Please ensure bill amount is entered correctly and grand total is appearing on screen !';
+      return [false, message];
     }
-    return [result, message];
   }
 
   onEdit(data, index, type) {
@@ -343,7 +342,7 @@ export class PurchaseOrderComponent implements OnInit {
       }
       this._restApiService.post(PathConstants.PurchaseOrder_Post, params).subscribe(res => {
         if (res !== undefined && res !== null) {
-          if (res) {
+          if (res.item1) {
             this.blockUI.stop();
             this._messageService.clear();
             this._messageService.add({
