@@ -122,7 +122,7 @@ export class MasterService {
             //role master
             case 'RM':
                 this.data.Table13.forEach(r => {
-                    this.masterData.push({ name: r.Name, code: r.Id });
+                    this.masterData.push({ name: r.Name, code: r.RoleId });
                 })
                 break;
             //commodity master
