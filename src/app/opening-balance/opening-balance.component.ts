@@ -140,5 +140,8 @@ export class OpeningBalanceComponent implements OnInit {
   }
   clearform() {
     this._openingBalance.reset();
+    this.commodityOptions = [];
+    this.yearOptions = [];
+    this.unitOptions = [];
   }
 }

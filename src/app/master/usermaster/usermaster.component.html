@@ -68,7 +68,6 @@
                                             required>
                                         </p-radioButton>
                                     </div>
-                                    <div class="p-col-12"></div>
                                     <div class="p-col-12 p-md-12 p-lg-12" style="text-align: center;">
                                         <button pButton type="button" label="Submit" (click)="onSubmit()"></button>
                                     </div>
@@ -77,9 +76,7 @@
                         </div>
                     </p-card>
                 </form>
-            </p-panel>
-        </div>
-    </div>
+            
     <!-- showtable -->
     <div class="table-format">
         <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
@@ -115,4 +112,7 @@
             </ng-template>
         </p-table>
     </div>
+</p-panel>
+</div>
+</div>
 </div>

@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MessageService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { MasterService } from 'src/app/services/master-data.service';
@@ -9,6 +9,7 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-consumption',
@@ -26,7 +27,7 @@ export class ConsumptionComponent implements OnInit {
   unitOptions: SelectItem[];
   unit: any;
   units?: any = [];
-  openingBalance: any;
+  openingBalance: any = 400;
   requiredQty: any;
   closingBalance: any;
   consumptionCols: any;
@@ -37,13 +38,15 @@ export class ConsumptionComponent implements OnInit {
   showDialog: boolean;
   toDate: any;
   fromDate: any;
+  // showAlertBox: boolean;
   maxDate: Date = new Date();
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
+  @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
 
   constructor(private _tableConstants: TableConstants, private _masterService: MasterService,
     private _datePipe: DatePipe, private _restApiService: RestAPIService,
-    private _messageService: MessageService) { }
+    private _messageService: MessageService, private _confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.consumptionCols = this._tableConstants.consumptionColumns;
@@ -90,6 +93,7 @@ export class ConsumptionComponent implements OnInit {
   loadOB() { }
 
   onEnter() {
+    console.log('con', this.consumption);
     this.consumptionData.push({
       'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
       'ConsumptionType': this.consumption.value,
@@ -130,43 +134,90 @@ export class ConsumptionComponent implements OnInit {
   }
 
   onEdit(row, index, type) {
-    if(index !== undefined && index !== null && this.consumptionData.length !== 0) {
+    if (index !== undefined && index !== null && this.consumptionData.length !== 0) {
       this.consumptionData.splice(index, 1);
     }
     if (row !== undefined && row !== null) {
       if (type === 2) {
         this.showDialog = false;
-        this.consumptionId = row.DailyId;
-        console.log('r', row, this.consumptionId);
+        this.consumptionId = row.Id;
         this.date = new Date(row.ConsumptionDate);
       } else {
         this.consumptionId = 0;
       }
-      this.consumption = { label: row.Consumption, value: row.ConsumptionId };
-      this.consumptionOptions = [{ label: row.Consumption, value: row.ConsumptionId }];
+      this.date = new Date(row.ConsumptionDate);
+      this.consumption = { label: row.Consumption, value: row.ConsumptionType };
+      this.consumptionOptions = [{ label: row.Consumption, value: row.ConsumptionType }];
       this.commodity = { label: row.Commodity, value: row.CommodityId };
       this.commodityOptions = [{ label: row.Commodity, value: row.CommodityId }];
       this.unit = { label: row.Unit, value: row.UnitId };
       this.unitOptions = [{ label: row.Unit, value: row.UnitId }];
-      this.consumptionId = row.DailyId;
+      this.consumptionId = row.Id;
       this.openingBalance = (row.OB * 1).toFixed(3);
       this.requiredQty = (row.QTY * 1).toFixed(3);
       this.closingBalance = (row.CB * 1).toFixed(3);
     }
   }
 
-  onDelete(index, type) {
+  onDelete(data, index, type) {
     if (index !== undefined && index !== null) {
       if (type === 1) {
         this.consumptionData.splice(index, 1);
       } else {
-        //put method to delete (api call)
-        this.blockUI.start();
+        this._confirmationService.confirm({
+          message: 'Are you sure that you want to proceed?',
+          header: 'Confirmation',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this._alert.disableModality();
+            this.blockUI.start();
+            this._restApiService.put(PathConstants.Consumption_Delete, { 'Id': data.Id }).subscribe(res => {
+              if (res !== undefined && res !== null) {
+                if (res) {
+                  this.blockUI.stop();
+                  this._messageService.clear();
+                  this._messageService.add({
+                    key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+                    summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.DeleteSuccessMsg
+                  });
+                  this.consumedList.splice(index, 1);
+                } else {
+                  this.blockUI.stop();
+                  this._messageService.clear();
+                  this._messageService.add({
+                    key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+                    summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.DeleteFailMsg
+                  });
+                }
+              } else {
+                // this.loading = false;
+                this.blockUI.stop();
+                this._messageService.clear();
+                this._messageService.add({
+                  key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+                  summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ErrorMessage
+                });
+              }
+            })
+          },
+          reject: () => {
+            this._messageService.clear();
+            this._alert.disableModality();
+          }
+        });
       }
     }
   }
 
+  onView() {
+    this.showDialog = true;
+    this.fromDate = null;
+    this.toDate = null;
+    this.consumedList = [];
+  }
+
   onDateSelect() {
+    this.loading = true;
     this.consumedList = [];
     this.checkValidDateSelection();
     if (this.fromDate !== undefined && this.fromDate !== null &&
@@ -178,13 +229,31 @@ export class ConsumptionComponent implements OnInit {
       this._restApiService.getByParameters(PathConstants.Consumption_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
           this.consumedList = res.slice(0);
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+          });
+        }
+      }, (err: HttpErrorResponse) => {
+        this.loading = false;
+        if (err.status === 0 || err.status === 400) {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
         }
       })
     }
   }
 
   checkValidDateSelection() {
-    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== '') {
+    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' &&
+     this.toDate !== '' && this.fromDate !== null && this.toDate !== null) {
       let selectedFromDate = this.fromDate.getDate();
       let selectedToDate = this.toDate.getDate();
       let selectedFromMonth = this.fromDate.getMonth();
@@ -199,7 +268,7 @@ export class ConsumptionComponent implements OnInit {
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
           summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ValidDateErrorMessage
         });
-        this.fromDate = ''; this.toDate = '';
+        this.fromDate = null; this.toDate = null;
       }
       return this.fromDate, this.toDate;
     }
@@ -211,7 +280,7 @@ export class ConsumptionComponent implements OnInit {
       if (res !== undefined && res !== null) {
         if (res) {
           this.blockUI.stop();
-          this.clearAll();
+          this.onClearAll();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -251,7 +320,7 @@ export class ConsumptionComponent implements OnInit {
     })
   }
 
-  clearAll() {
+  onClearAll() {
     this.consumptionId = 0;
     this._consumptionForm.reset();
     this._consumptionForm.form.markAsUntouched();
@@ -261,6 +330,7 @@ export class ConsumptionComponent implements OnInit {
     this.commodityOptions = [];
     this.consumptionOptions = [];
     this.unitOptions = [];
+    this.loading = false;
   }
 
   clearForm() {
@@ -270,5 +340,4 @@ export class ConsumptionComponent implements OnInit {
     this.consumptionOptions = [];
     this.unitOptions = [];
   }
-
 }

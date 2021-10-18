@@ -87,6 +87,7 @@ export class CommodityMasterComponent implements OnInit {
 }
   clearform() {
     this._commodityMaster.reset();
+    this.cgroupOptions = [];
   }
   onView() {
      this.showTable = true;

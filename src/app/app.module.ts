@@ -18,7 +18,8 @@ import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -105,11 +106,13 @@ import { LocationService } from './services/location.service';
     BlockUIModule.forRoot(),
     CheckboxModule,
     ToastModule,
-    DialogModule
+    DialogModule,
+    ConfirmDialogModule
   ],
 
 
-  providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService],
+  providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService,
+  ConfirmationService],
 
   bootstrap: [AppComponent]
   

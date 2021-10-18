@@ -1,5 +1,4 @@
 <block-ui>
-    <div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
         <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
@@ -144,10 +143,10 @@
                                                 <div #grid1 class="p-grid div-main">
                                                     <div #field13 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <p-radioButton name="_school" label="School" value=1
-                                                            [(ngModel)]="institutionType">
+                                                            [(ngModel)]="institutionType" (onClick)="onSelectType()">
                                                         </p-radioButton> &nbsp;
                                                         <p-radioButton name="_college" label="College" value=0
-                                                            [(ngModel)]="institutionType">
+                                                            [(ngModel)]="institutionType" (onClick)="onSelectType()">
                                                         </p-radioButton>
                                                     </div>
                                                     <div #field14 *ngIf="institutionType=='1'"
@@ -194,8 +193,8 @@
                                                     <div #field18 *ngIf="institutionType=='0'"
                                                         class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
-                                                            <p-dropdown name="_course" [options]="courseOptions"
-                                                                (onClick)="onSelect('CU')" [(ngModel)]="course"
+                                                            <p-dropdown name="_course" [options]="classOptions"
+                                                                (onClick)="onSelect('CL')" [(ngModel)]="class"
                                                                 required>
                                                             </p-dropdown>
                                                             <label for="_course">Course Studying</label>
@@ -618,5 +617,4 @@
         </div>
         <div class="p-col-1"></div>
     </div>
-</div>
 </block-ui>

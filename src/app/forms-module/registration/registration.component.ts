@@ -24,28 +24,25 @@ export class RegistrationComponent implements OnInit {
   dob: Date;
   yearRange: string;
   genderOptions: SelectItem[];
-  gender: any;
+  gender: number;
   genders?: any;
   age: number;
-  bloodGroup: string;
+  bloodGroup: number;
   bloodGroupOptions: SelectItem[];
   bloodgroups?: any;
   motherTongueOptions: SelectItem[];
-  motherTongue: string;
+  motherTongue: number;
   languages?: any;
-  religion: string;
+  religion: number;
   religionOptions: SelectItem[];
   religions?: any;
-  caste: string;
+  caste: number;
   casteOptions: SelectItem[];
   castes?: any;
   subCaste: string;
   schoolOptions: SelectItem[];
   school: string;
   schools?: any;
-  courseOptions: SelectItem[];
-  course: string;
-  courses?: any;
   districtOptions: SelectItem[];
   district: number;
   districts?: any;
@@ -58,10 +55,10 @@ export class RegistrationComponent implements OnInit {
   institutionType: string = '1';
   institutionName: string;
   classOptions: SelectItem[];
-  class: string;
+  class: number;
   classes?: any;
-  distanceFromHostelToHome: any;
-  distanceFromHostelToInstitute: any;
+  distanceFromHostelToHome: number;
+  distanceFromHostelToInstitute: number;
   isDisability: boolean = false;
   disabilityType: string;
   addressLine1: string;
@@ -91,21 +88,23 @@ export class RegistrationComponent implements OnInit {
   guardianOccupation: string;
   guardianQulaification: string;
   guardianMobileNo: string;
-  totalYIncome: any;
+  totalYIncome: number;
   studentImage: any = '';
   incomeFilename: string = '';
   tcFilename: string = '';
   bankPassbookFilename: string = '';
   declarationFilename: string = '';
   disableTaluk: boolean = true;
-  medium: string;
+  medium: string = '';
   courseTitle: string;
   ageTxt: string;
   logged_user: User;
-  studentId:number = 0;
+  studentId: number = 0;
   parentId: number = 0;
   bankId: number = 0;
   documentId: number = 0;
+  talukApproval: any = '0';
+  districtApproval: any = '0';
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
   @ViewChild('bankPassBook', { static: false }) _bankPassBook: ElementRef;
@@ -130,8 +129,11 @@ export class RegistrationComponent implements OnInit {
     this.languages = this._masterService.getMaster('MT');
     this.castes = this._masterService.getMaster('CS');
     this.classes = this._masterService.getMaster('CL');
-    this.courses = this._masterService.getMaster('CU');
     this.religions = this._masterService.getMaster('RL');
+  }
+
+  onSelectType() {
+    this.classOptions = [];
   }
 
   onSelect(type) {
@@ -204,18 +206,21 @@ export class RegistrationComponent implements OnInit {
         this.religionOptions.unshift({ label: '-select-', value: null });
         break;
       case 'CL':
-        this.classes.forEach(c => {
+        var filtered_data = [];
+        if (this.institutionType === '1') {
+          filtered_data = this.classes.filter(f => {
+            return f.type === 1;
+          })
+        } else {
+          filtered_data = this.classes.filter(f => {
+            return f.type === 2;
+          })
+        }
+        filtered_data.forEach(c => {
           classSelection.push({ label: c.name, value: c.code });
         })
         this.classOptions = classSelection;
         this.classOptions.unshift({ label: '-select-', value: null });
-        break;
-      case 'CU':
-        this.courses.forEach(u => {
-          courseSelection.push({ label: u.name, value: u.code });
-        })
-        this.courseOptions = courseSelection;
-        this.courseOptions.unshift({ label: '-select-', value: null });
         break;
     }
   }
@@ -261,10 +266,13 @@ export class RegistrationComponent implements OnInit {
     this.disableTaluk = true;
     this.isDisability = false;
     this.institutionType = '1';
+    this.medium = '';
+    this.districtApproval = '0';
+    this.talukApproval = '0';
   }
 
   onRoute() {
-    this._router.navigate(['/']); //purchase-order
+    this._router.navigate(['/']); //purchase-order daily-consumption
   }
 
   onSubmit() {
@@ -285,7 +293,6 @@ export class RegistrationComponent implements OnInit {
       subCaste: this.subCaste,
       studentFilename: this.studentImage,
       instituteName: this.institutionName,
-      course: this.course,
       medium: this.medium,
       classId: this.class,
       courseTitle: this.courseTitle,
@@ -304,8 +311,8 @@ export class RegistrationComponent implements OnInit {
       aadharNo: this.pincode,
       rationCardrNo: this.rationCardNo,
       emisno: this.emisNo,
-      talukApproval:  null,
-      districtApproval: null,
+      talukApproval: this.talukApproval,
+      districtApproval: this.districtApproval,
       bankId: this.bankId,
       bankName: this.bankName,
       bankAccNo: this.bankAccNo,
@@ -334,8 +341,8 @@ export class RegistrationComponent implements OnInit {
       declarationFilename: this.declarationFilename,
     }
     this._restApiService.post(PathConstants.Registration_Post, data).subscribe(response => {
-      if(response !== undefined && response !== null) {
-        if(response) {
+      if (response !== undefined && response !== null) {
+        if (response) {
           this.blockUI.stop();
           this._messageService.clear();
           this._messageService.add({
