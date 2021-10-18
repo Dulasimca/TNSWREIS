@@ -34,37 +34,32 @@ export class ChangePasswordComponent implements OnInit {
       'OldEncryptedPwd': this.logged_user.token,
       'UserId': this.logged_user.userID
     }
-    this._restApiService.post(PathConstants.ChangePassword_Post, params).subscribe(res => {
+    this._restApiService.put(PathConstants.UserMaster_Put, params).subscribe(res => {
       if (res.item1) {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          // summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.PasswordChangeSuccess
+          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.PasswordChangeSuccess
         });
       } else {
         this._messageService.clear();
         this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          summary: ResponseMessage.SUMMARY_SUCCESS, detail: res.item2
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: res.item2
         });
       }
     })
   }
 
-  checkPassword(event) {
-    console.log('eve', event);
-    const value: string = event.data;
-    console.log('Entered', value);
-    if (value !== undefined && value !== '') {
-      if (this.newPassword !== undefined && this.newPassword !== null && this.newPassword !== '' &&
-        this.confirmPassword !== undefined && this.confirmPassword !== null && this.confirmPassword !== '') {
-          if(value.trim() !== this.newPassword.trim()) {
+  checkPassword() {
+    if (this.newPassword !== undefined && this.newPassword !== null && this.newPassword.trim() !== '' &&
+    this.confirmPassword !== undefined && this.confirmPassword !== null && this.confirmPassword.trim() !== '') {
+          if(this.newPassword.trim() !== this.confirmPassword.trim()) {
             console.log('if cond')
             this.showErrMsg = true;
           } else {
             this.showErrMsg = false;
           }
-      }
     }
   }
 

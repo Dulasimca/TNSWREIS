@@ -89,8 +89,8 @@ width: 25px!important;
 height: 25px !important;
 }
 .table-format {
-    width: 35cm;
-    padding-left: 1.3cm;
+    width: 37cm;
+    padding-left: 50px;
 }
 .btn-bg {
     background: #eba611 !important;
@@ -161,7 +161,7 @@ height: 25px !important;
         width: 55px !important;
     }
     .content {
-        top: 100px !important;
+        top: 130px !important;
     }
   }
 
@@ -309,4 +309,28 @@ height: 25px !important;
 }
 .p-datatable .p-datatable-tbody >tr >td {
     padding: .5rem !important;
+}
+.p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
+    padding: 0.7rem !important;
+}
+.p-dialog .p-dialog-header .p-dialog-title {
+    font-size: 1.12rem !important;
+}
+.p-dialog .p-dialog-header {
+    background: #26666a !important;
+    color: whitesmoke !important;
+    padding: .5rem !important;
+}
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+    color: whitesmoke !important;
+}
+.p-dialog .p-dialog-content {
+    padding: .5rem 1.5rem 2rem !important;
+}
+.p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
+    border: solid 0.5px #96b1b3 !important;
+}
+.p-inputgroup-addon {
+    background: #bbdbdd !important;
+    color: #56696a !important;
 }

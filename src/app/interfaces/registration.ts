@@ -1,27 +1,26 @@
 export interface Registration {
-    studentId: any;
-    hostelId: any;
+    studentId: number;
+    hostelId: number;
     studentName: string;
     age: number;
     dob: string;
-    bloodGroup: string;
-    gender: string;
-    motherTongue: string;
+    bloodGroup: number;
+    gender: number;
+    motherTongue: number;
     mobileNo: string;
     altMobNo: string;
-    religion: string;
-    caste: string;
+    religion: number;
+    caste: number;
     subCaste: string;
     studentFilename: string;
     instituteName: string;
-    course: string;
     medium: string;
-    classId: string;
+    classId: number;
     courseTitle: string;
     lastStudiedInstituteName: string;
     lastStudiedInstituteAddress: string;
-    distanceFromHostelToHome: any;
-    distanceFromHostelToInstitue: any;
+    distanceFromHostelToHome: number;
+    distanceFromHostelToInstitue: number;
     disabilityType: any;
     address1: string;
     address2: string;
@@ -36,7 +35,7 @@ export interface Registration {
     talukApproval: any;
     districtApproval: any;
     //bank
-    bankId: any;
+    bankId: number;
     bankName: string;
     bankAccNo: string;
     ifscCode: string;
@@ -57,11 +56,10 @@ export interface Registration {
     guardianOccupation: string;
     guardianMobileNo: string;
     guardianQualification: string;
-    totalYIncome: string;
+    totalYIncome: number;
     documentId: number,
     incomeCertificateFilename: string;
     tcFilename: string;
     bankPassbookFilename: string;
     declarationFilename: string;
-
 }

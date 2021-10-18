@@ -10,14 +10,15 @@ import { AuthService } from '../services/auth.service';
 export class HeaderComponent implements OnInit {
 headerText: string;
 subHeader: string;
-@Input() showMenuIcon = false;
-// @Output() open = new EventEmitter<boolean>();
 showNavBar: boolean;
 items: any[];
+showMenuIcon: boolean;
   constructor(private _router: Router, private _authService: AuthService) { }
 
   ngOnInit(): void {
-    this.showMenuIcon = false;
+    this._authService.isLoggedIn.subscribe(value => {
+      this.showMenuIcon = value;
+    });
     this.headerText = 'Government Of Tamilnadu';
     this.subHeader = 'Social Welfare Department';
   }

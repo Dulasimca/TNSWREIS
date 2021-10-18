@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
-import { LocationService } from 'src/app/location.service';
+import { LocationService } from 'src/app/services/location.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { AuthService } from 'src/app/services/auth.service';

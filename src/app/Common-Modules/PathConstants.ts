@@ -34,7 +34,15 @@ public static readonly Login = 'Login/Post';
 public static readonly Hostelgo_post = 'HostelGo/Post'; 
 public static readonly Hostelgo_Get = 'HostelGo'; 
 
-public static readonly ChangePassword_Get = 'ChangePassword/Get';
-public static readonly ChangePassword_Post = 'ChangePassword/Post';
+public static readonly UserMaster_Put = 'UserMaster/Put';
+
+
+public static readonly PurchaseOrder_Post = 'PurchaseOrder/Post';
+public static readonly PurchaseOrder_Get = 'PurchaseOrder/Get';
+public static readonly PurchaseOrder_Delete = 'PurchaseOrder/Put';
+
+public static readonly Consumption_Post = 'DailyConsumption/Post';
+public static readonly Consumption_Get = 'DailyConsumption/Get';
+public static readonly Consumption_Delete = 'DailyConsumption/Put';
 
 }

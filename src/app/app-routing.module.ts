@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'foodmaster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
-  { path: 'warden-detailsform', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
+  { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
@@ -42,7 +42,7 @@ const routes: Routes = [
 
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
-  { path:  'district', component:DistrictComponent},
+  { path: 'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
   { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},

@@ -16,8 +16,8 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 })
 export class UsermasterComponent implements OnInit {
 
-  userName:any;
-  emailId: any;
+  userName: any;
+  emailId: string;
   password: any;
   role: number;
   district: number;
@@ -30,19 +30,20 @@ export class UsermasterComponent implements OnInit {
   hostelOptions: SelectItem[];
   userMasterId: number;
   data: any = [];
-// master
+  // master
   roles?: any;
   districts?: any;
   taluks?: any;
   hostels?: any;
-// rolemethod
+  // rolemethod
   showDistrict: boolean;
   showTaluk: boolean;
   showHostelName: boolean;
+  checkEmail: boolean;
   @ViewChild('f', { static: false }) _usermaster: NgForm;
 
-
-  constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService) { }
+  constructor(private masterService: MasterService, private restApiService: RestAPIService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.districts = this.masterService.getMaster('DT');
@@ -51,86 +52,117 @@ export class UsermasterComponent implements OnInit {
     this.onView();
   }
   // dropdown 
-    onSelect(type) {
-      let districtSelection = [];
-      let talukSelection = [];
-      let hostelSelection = [];
-      let roleSelection = [];
-      switch (type) {
-        case 'R':
-          this.roles.forEach(r => {
-            roleSelection.push({ label: r.name, value: r.code });
-          })
-          this.roleOptions = roleSelection;
-          this.roleOptions.unshift({ label: '-select', value: null });
-          break;
-        case 'D':
-          this.districts.forEach(d => {
-            districtSelection.push({ label: d.name, value: d.code });
-          })
-          this.districtOptions = districtSelection;
-          this.districtOptions.unshift({ label: '-select', value: null });
-          break;
-          case 'T':
-            this.taluks.forEach(t => {
-              talukSelection.push({ label: t.name, value: t.code });
-            })
-            this.talukOptions = talukSelection;
-            this.talukOptions.unshift({ label: '-select', value: null });
-            break;
-            case 'HN':
-              this.hostels.forEach(h => {
-                hostelSelection.push({ label: h.HostelName, value: h.Slno });
-              })
-              this.hostelOptions = hostelSelection;
-              this.hostelOptions.unshift({ label: '-select', value: null });
-              break;
-  }
-}
-// hstl based on district 
-selectDistrict() {
-  const params = {
-    'Type': 1,
-    'Value': this.district
-
-  }
-  if(this.district !== null && this.district !== undefined){
-    this.restApiService.getByParameters(PathConstants.Hostel_Get,params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0){
-        this.hostels = res;
-      };
-    
-    })
-  }
-}
-// role dropdown
-onRoleChange() {
-  console.log('role', this.role)
-  if(this.role != undefined && this.role !== null){
-    if (this.role===1){
-      this.showDistrict = false;
-      this.showTaluk = false;
-      this.showHostelName = false;
-    }else if(this.role===2){
-      this.showTaluk = false;
-      this.showDistrict = true;
-      this.showHostelName = false;
-    }else if(this.role===3){
-      this.showDistrict = true;
-      this.showTaluk = true;
-      this.showHostelName = false;
-    }else if(this.role===4){
-      this.showDistrict = true;
-      this.showTaluk = true;
-      this.showHostelName = true
-    }else{
-      this.showDistrict = false;
-      this.showTaluk = false;
-      this.showHostelName = false;
+  onSelect(type) {
+    let districtSelection = [];
+    let talukSelection = [];
+    let hostelSelection = [];
+    let roleSelection = [];
+    switch (type) {
+      case 'R':
+        this.roles.forEach(r => {
+          roleSelection.push({ label: r.name, value: r.code });
+        })
+        this.roleOptions = roleSelection;
+        this.roleOptions.unshift({ label: '-select', value: null });
+        break;
+      case 'D':
+        this.districts.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
+        })
+        this.districtOptions = districtSelection;
+        this.districtOptions.unshift({ label: '-select', value: null });
+        break;
+      case 'T':
+        this.taluks.forEach(t => {
+          talukSelection.push({ label: t.name, value: t.code });
+        })
+        this.talukOptions = talukSelection;
+        this.talukOptions.unshift({ label: '-select', value: null });
+        break;
+      case 'HN':
+        this.hostels.forEach(h => {
+          hostelSelection.push({ label: h.HostelName, value: h.Slno });
+        })
+        this.hostelOptions = hostelSelection;
+        this.hostelOptions.unshift({ label: '-select', value: null });
+        break;
     }
   }
-}
-  onSubmit(){
+  // hstl based on district 
+  selectDistrict() {
+    const params = {
+      'Type': 1,
+      'Value': this.district
+
+    }
+    if (this.district !== null && this.district !== undefined) {
+      this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          this.hostels = res;
+        };
+
+      })
+    }
+  }
+  // role dropdown
+  onRoleChange() {
+    console.log('role', this.role)
+    if (this.role != undefined && this.role !== null) {
+      if (this.role === 1) {
+        this.showDistrict = false;
+        this.showTaluk = false;
+        this.showHostelName = false;
+      } else if (this.role === 2) {
+        this.showTaluk = false;
+        this.showDistrict = true;
+        this.showHostelName = false;
+      } else if (this.role === 3) {
+        this.showDistrict = true;
+        this.showTaluk = true;
+        this.showHostelName = false;
+      } else if (this.role === 4) {
+        this.showDistrict = true;
+        this.showTaluk = true;
+        this.showHostelName = true
+      } else {
+        this.showDistrict = false;
+        this.showTaluk = false;
+        this.showHostelName = false;
+      }
+    }
+  }
+
+  checkIfEmailExists() {
+    if (this.emailId !== undefined && this.emailId !== null && this.emailId.trim() !== '' &&
+      this.data.length !== 0) {
+      this.checkEmail = true;
+      const entered_email: string = this.emailId.trim();
+      const substr = entered_email.split('@');
+      if (substr !== undefined && substr.length > 1) {
+        const last_str = substr[1].split('.');
+        if (last_str !== undefined && last_str.length > 1) {
+          if (last_str[1].toLowerCase() === 'com' || last_str[1].toLowerCase() === 'in') {
+            this.data.forEach(i => {
+              const email: string = i.EMailId;
+              if (email.trim() === entered_email) {
+                this.messageService.clear();
+                this.messageService.add({
+                  key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 2000,
+                  summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.EmailAlreadyExists
+                })
+                this.checkEmail = false;
+                this.emailId = '';
+              } else {
+                this.checkEmail = false;
+              }
+            })
+          }
+        }
+      }
+    }
+  }
+
+  onSubmit() {
     const params = {
       'Id': this.userMasterId,
       'Districtcode': (this.district !== undefined && this.district !== null) ? this.district : 0,
@@ -142,7 +174,7 @@ onRoleChange() {
       'Pwd': this.password,
       'Flag': (this.selectedType * 1),
     }
-    this.restApiService.post(PathConstants.UserMaster_Post,params).subscribe(res => {
+    this.restApiService.post(PathConstants.UserMaster_Post, params).subscribe(res => {
       if (res) {
         this.clearForm();
         this.onView();
@@ -168,65 +200,43 @@ onRoleChange() {
       }
     })
   }
+
   onView() {
     this.restApiService.get(PathConstants.UserMaster_Get).subscribe(res => {
-      if (res !== null && res !== undefined && res.Table.length !== 0){
+      if (res !== null && res !== undefined && res.Table.length !== 0) {
         res.Table.forEach(i => {
           i.status = (i.Flag) ? 'Active' : 'Inactive';
         })
         this.data = res.Table;
       }
     })
- }
- onEdit(selectedRow) {
-   if(selectedRow !== null && selectedRow !==undefined){
-     this.userMasterId = selectedRow.Id;
-     this.role = selectedRow.RoleId;
-     this.roleOptions = [{ label: selectedRow.Role, value: selectedRow.RoleId }];
+  }
 
-     this.district = selectedRow.Districtcode;
-     this.taluk = selectedRow.Talukid;
-     this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid }];
-     this.hostelName = selectedRow.HostelID;
-     this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelID }];
+  onEdit(selectedRow) {
+    if (selectedRow !== null && selectedRow !== undefined) {
+      this.userMasterId = selectedRow.Id;
+      this.role = selectedRow.RoleId;
+      this.roleOptions = [{ label: selectedRow.Role, value: selectedRow.RoleId }];
 
-     this.userName = selectedRow.UserName;
-     this.emailId = selectedRow.EMailId;
-     this.password = selectedRow.Pwd;
-     this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
-     this.selectedType =selectedRow.Flag;
-   }
-   this.onRoleChange();
- }
- clearForm() {
-   this._usermaster.reset();
- }
- checkIfEmailExists($event) {
-  //  console.log('$event',$event)
-  //  if($event !== undefined && $event.data !== null && this.data.length !== 0) {
-  //    let input: string = $event.data;
-  //    input = input.toLowerCase();
-  //   if(input.includes('@')) {
-  //     console.log('Yes')
-  //     this.data.forEach(d =>{
-  //       let userEmail: string = (d.EmailId !== undefined && d.EmailId !== null) ? d.EmailId : '';
-  //       userEmail = userEmail.toLowerCase();
-  //       console.log(userEmail, input);
-  //       if(userEmail !== '' && input !== '') {
-  //         if(userEmail === input) {
-  //           this.messageService.clear();
-  //           this.messageService.add({
-  //             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-  //             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.EmailAlreadyExists
-  //           })
-  //           this._usermaster.controls._district.reset();
-  //         }
-  //       }
-  //     })
-  //   }
-  //     else{console.log('No')}
-  //   }
-   }
- }
-  
+      this.district = selectedRow.Districtcode;
+      this.taluk = selectedRow.Talukid;
+      this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid }];
+      this.hostelName = selectedRow.HostelID;
+      this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelID }];
+
+      this.userName = selectedRow.UserName;
+      this.emailId = selectedRow.EMailId;
+      this.password = selectedRow.Pwd;
+      this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
+      this.selectedType = selectedRow.Flag;
+    }
+    this.onRoleChange();
+  }
+
+  clearForm() {
+    this._usermaster.reset();
+  }
+
+}
+
 
