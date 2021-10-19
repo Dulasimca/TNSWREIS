@@ -10,6 +10,8 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-consumption',
@@ -40,12 +42,13 @@ export class ConsumptionComponent implements OnInit {
   fromDate: any;
   // showAlertBox: boolean;
   maxDate: Date = new Date();
+  logged_user: User;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
 
   constructor(private _tableConstants: TableConstants, private _masterService: MasterService,
-    private _datePipe: DatePipe, private _restApiService: RestAPIService,
+    private _datePipe: DatePipe, private _restApiService: RestAPIService, private _authService: AuthService,
     private _messageService: MessageService, private _confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
@@ -53,6 +56,7 @@ export class ConsumptionComponent implements OnInit {
     this.consumptions = this._masterService.getMaster('CT');
     this.commodities = this._masterService.getMaster('CM');
     this.units = this._masterService.getMaster('UN');
+    this.logged_user = this._authService.UserInfo;
   }
 
   onSelect(id) {
@@ -106,6 +110,9 @@ export class ConsumptionComponent implements OnInit {
       'OB': this.openingBalance,
       'QTY': this.requiredQty,
       'CB': this.closingBalance,
+      'HostelId': this.logged_user.hostelId,
+      'TalukCode': this.logged_user.talukId,
+      'DistrictCode': this.logged_user.districtCode
     })
     this.clearForm();
   }
@@ -224,7 +231,8 @@ export class ConsumptionComponent implements OnInit {
       this.toDate !== undefined && this.toDate !== null) {
       const params = {
         'FromDate': this._datePipe.transform(this.fromDate, 'yyyy-MM-dd'),
-        'ToDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd')
+        'ToDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd'),
+        'HostelId': this.logged_user.hostelId
       }
       this._restApiService.getByParameters(PathConstants.Consumption_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
