@@ -74,7 +74,9 @@ export class UsermasterComponent implements OnInit {
         break;
       case 'T':
         this.taluks.forEach(t => {
-          talukSelection.push({ label: t.name, value: t.code });
+          if (t.dcode === this.district) {
+            talukSelection.push({ label: t.name, value: t.code });
+          }
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });

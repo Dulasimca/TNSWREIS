@@ -107,17 +107,17 @@
                                                     [(ngModel)]="addressTwo" placeholder="Area/Village/City" required />
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
-                                                <label for="_taluk">Native Taluk<span
-                                                        class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk"
-                                                    (onClick)="onSelect('T')" name="_taluk">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_nativedistrict">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
                                                 <p-dropdown [options]="districtOptions" [(ngModel)]="nativeDistrict"
                                                     (onClick)="onSelect('DT')" name="_nativedistrict">
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                <label for="_taluk">Native Taluk<span
+                                                        class="form-mandatory-field">*</span> </label>
+                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk"
+                                                    (onClick)="onSelect('T')" name="_taluk">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -158,8 +158,7 @@
                         </div>
                         <div *ngIf="showTable" class="table-format">
                             <p-table [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
-                                [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,20,30,40]"
-                                totalRecords="totalRecords" pageLinks="3">
+                                [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th>S.No</th>

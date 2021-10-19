@@ -83,9 +83,18 @@ export class WardenDetailsComponent implements OnInit {
         this.genderOptions = genderSelection;
         this.genderOptions.unshift({ label: '-select-', value: null });
         break;
+        case 'DT':
+          this.districts.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
+          })
+          this.districtOptions = districtSelection;
+          this.districtOptions.unshift({ label: '-select-', value: null });
+          break;
           case 'T':
             this.taluks.forEach(t => {
-              talukSelection.push({ label: t.name, value: t.code });
+              if (t.dcode === this.district) {
+                talukSelection.push({ label: t.name, value: t.code });
+              }
             })
             this.talukOptions = talukSelection;
             this.talukOptions.unshift({ label: '-select-', value: null });
@@ -104,13 +113,7 @@ export class WardenDetailsComponent implements OnInit {
                 this.qualificationOptions = courseSelection;
                 this.qualificationOptions.unshift({ label: '-select-', value: null });
                 break;
-                case 'DT':
-                  this.districts.forEach(d => {
-                    districtSelection.push({ label: d.name, value: d.code });
-                  })
-                  this.districtOptions = districtSelection;
-                  this.districtOptions.unshift({ label: '-select-', value: null });
-                  break;
+               
       }
     }
     selectDistrict() {

@@ -2,10 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
-import { ResponseMessage } from '../Common-Modules/messages';
-import { PathConstants } from '../Common-Modules/PathConstants';
-import { MasterService } from '../services/master-data.service';
-import { RestAPIService } from '../services/restAPI.service';
+import { ResponseMessage } from '../../Common-Modules/messages';
+import { PathConstants } from '../../Common-Modules/PathConstants';
+import { MasterService } from '../../services/master-data.service';
+import { RestAPIService } from '../../services/restAPI.service';
 
 @Component({
   selector: 'app-opening-balance',
