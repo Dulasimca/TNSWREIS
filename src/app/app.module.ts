@@ -54,6 +54,7 @@ import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 
 import { LocationService } from './services/location.service';
 import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
+import { AttendanceImageComponent } from './forms-module/attendance-image/attendance-image.component';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -82,7 +83,8 @@ import { WardenReportComponent } from './Reports/warden-report/warden-report.com
     AttendanceComponent,
     ChangePasswordComponent,
     IdCardInfoComponent,
-    WardenReportComponent
+    WardenReportComponent,
+    AttendanceImageComponent
   ],
   imports: [
     BrowserModule,

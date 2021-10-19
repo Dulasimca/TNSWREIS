@@ -21,6 +21,7 @@ import { ChangePasswordComponent } from './master/change-password/change-passwor
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
+import { AttendanceImageComponent } from './forms-module/Attendance-image/Attendance-image.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'taluk', component:TalukComponent},
   { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},
+  { path: 'attendance-image', component:AttendanceImageComponent}
 
 
 

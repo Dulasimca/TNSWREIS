@@ -5,6 +5,7 @@ export class TableConstants {
     purchaseBillColumns: any = [];
     wardenTableColumns: any = [];
     wardenDetailsReportColumns: any = [];
+    registrationColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity'},

@@ -13,6 +13,7 @@ import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
 
 @Component({
   selector: 'app-registration',
@@ -20,91 +21,39 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  studentName: string;
-  dob: Date;
   yearRange: string;
   genderOptions: SelectItem[];
-  gender: number;
   genders?: any;
-  age: number;
-  bloodGroup: number;
   bloodGroupOptions: SelectItem[];
   bloodgroups?: any;
   motherTongueOptions: SelectItem[];
-  motherTongue: number;
   languages?: any;
-  religion: number;
   religionOptions: SelectItem[];
   religions?: any;
-  caste: number;
   casteOptions: SelectItem[];
   castes?: any;
-  subCaste: string;
   schoolOptions: SelectItem[];
-  school: string;
   schools?: any;
   districtOptions: SelectItem[];
-  district: number;
   districts?: any;
-  villageName: string;
   talukOptions: SelectItem[];
-  taluk: number;
   taluks?: any;
-  mobileNo: string;
-  alternateMobNo: string;
   institutionType: string = '1';
-  institutionName: string;
   classOptions: SelectItem[];
-  class: number;
   classes?: any;
-  distanceFromHostelToHome: number;
-  distanceFromHostelToInstitute: number;
   isDisability: boolean = false;
-  disabilityType: string;
-  addressLine1: string;
-  addressLine2: string;
-  landmark: string;
-  pincode: any;
-  ifscCode: string;
-  bankName: string;
-  bankAccNo: string;
-  branchName: string;
-  lastInstitutionName: string;
-  lastInstitutionAddress: string;
-  rationCardNo: string;
-  emisNo: string;
-  aadharNo: string;
-  fatherName: string;
-  fatherQulaification: string;
-  fatherOccupation: string;
-  fatherMobileNo: string;
-  fatherYIncome: any;
-  motherName: string;
-  motherQulaification: string;
-  motherOccupation: string;
-  motherMobileNo: string;
-  motherYIncome: any;
-  guardianName: string;
-  guardianOccupation: string;
-  guardianQulaification: string;
-  guardianMobileNo: string;
-  totalYIncome: number;
-  studentImage: any = '';
-  incomeFilename: string = '';
-  tcFilename: string = '';
-  bankPassbookFilename: string = '';
-  declarationFilename: string = '';
-  disableTaluk: boolean = true;
-  medium: string = '';
-  courseTitle: string;
+  studentImage: any;
+  disableTaluk: boolean;
   ageTxt: string;
   logged_user: User;
-  studentId: number = 0;
-  parentId: number = 0;
-  bankId: number = 0;
-  documentId: number = 0;
-  talukApproval: any = '0';
-  districtApproval: any = '0';
+  registeredCols: any;
+  registeredDetails: any = [];
+  fromDate: any;
+  toDate: any;
+  loading: boolean;
+  showDialog: boolean;
+  maxDate: Date = new Date();
+  obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
   @ViewChild('bankPassBook', { static: false }) _bankPassBook: ElementRef;
@@ -115,7 +64,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private _masterService: MasterService, private _router: Router,
     private _d: DomSanitizer, private _datePipe: DatePipe, private _messageService: MessageService,
-    private _restApiService: RestAPIService, private _authService: AuthService) { }
+    private _restApiService: RestAPIService, private _authService: AuthService, 
+    private _tableConstants: TableConstants) { }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
@@ -130,6 +80,8 @@ export class RegistrationComponent implements OnInit {
     this.castes = this._masterService.getMaster('CS');
     this.classes = this._masterService.getMaster('CL');
     this.religions = this._masterService.getMaster('RL');
+    this.registeredCols = this._tableConstants.registrationColumns;
+    this.defaultValues();
   }
 
   onSelectType() {
@@ -174,16 +126,16 @@ export class RegistrationComponent implements OnInit {
         })
         this.districtOptions = districtSelection;
         this.districtOptions.unshift({ label: '-select-', value: null });
-        if (this.district !== null && this.district !== undefined) {
+        if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
           this.disableTaluk = false;
         } else {
           this.disableTaluk = true;
         }
         break;
       case 'TK':
-        if (this.district !== undefined && this.district !== null) {
+        if (this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) {
           this.taluks.forEach(t => {
-            if (t.dcode === this.district) {
+            if (t.dcode === this.obj.distrctCode) {
               talukSelection.push({ label: t.name, value: t.code });
             }
           })
@@ -226,9 +178,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   calculateAge() {
-    let timeDiff = Math.abs(Date.now() - this.dob.getTime());
+    let timeDiff = Math.abs(Date.now() - this.obj.dob.getTime());
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
-    this.age = age;
+    this.obj.age = age;
     this.ageTxt = age + ' Years';
   }
 
@@ -259,88 +211,40 @@ export class RegistrationComponent implements OnInit {
     this._incomeCertificate.nativeElement.value = null;
     this._transferCertificate.nativeElement.value = null;
     this._declarationForm.nativeElement.value = null;
-    this.studentImage = '';
-    this.tcFilename = '';
-    this.bankPassbookFilename = '';
-    this.declarationFilename = '';
-    this.disableTaluk = true;
-    this.isDisability = false;
-    this.institutionType = '1';
-    this.medium = '';
-    this.districtApproval = '0';
-    this.talukApproval = '0';
+    this.defaultValues();
   }
 
   onRoute() {
     this._router.navigate(['/']); //purchase-order daily-consumption
   }
 
+  defaultValues() {
+    this.maxDate = new Date();
+    this.obj = {} as Registration;
+    this.studentImage = '';
+    this.disableTaluk = true;
+    this.isDisability = false;
+    this.institutionType = '1';
+    this.obj.incomeCertificateFilename = '';
+    this.obj.bankPassbookFilename = '';
+    this.obj.tcFilename = '';
+    this.obj.studentFilename = '';
+    this.obj.tcFilename = '';
+    this.obj.bankPassbookFilename = '';
+    this.obj.declarationFilename = '';
+    this.obj.medium = '';
+    this.obj.districtApproval = '0';
+    this.obj.talukApproval = '0';
+    this.obj.studentId = 0;
+    this.obj.parentId = 0;
+    this.obj.bankId = 0;
+    this.obj.documentId = 0;
+  }
+
   onSubmit() {
     this.blockUI.start();
-    const data: Registration = {
-      studentId: this.studentId,
-      hostelId: this.logged_user.hostelId,
-      studentName: this.studentName,
-      age: this.age,
-      dob: this._datePipe.transform(this.dob, 'yyyy-MM-dd'),
-      bloodGroup: this.bloodGroup,
-      gender: this.gender,
-      motherTongue: this.motherTongue,
-      mobileNo: this.mobileNo,
-      altMobNo: this.alternateMobNo,
-      religion: this.religion,
-      caste: this.caste,
-      subCaste: this.subCaste,
-      studentFilename: this.studentImage,
-      instituteName: this.institutionName,
-      medium: this.medium,
-      classId: this.class,
-      courseTitle: this.courseTitle,
-      lastStudiedInstituteName: this.lastInstitutionName,
-      lastStudiedInstituteAddress: this.lastInstitutionAddress,
-      distanceFromHostelToHome: this.distanceFromHostelToHome,
-      distanceFromHostelToInstitue: this.distanceFromHostelToInstitute,
-      disabilityType: this.disabilityType,
-      address1: this.addressLine1,
-      address2: this.addressLine2,
-      landmark: this.landmark,
-      distrctCode: this.district,
-      talukCode: this.taluk,
-      village: this.villageName,
-      pincode: this.pincode,
-      aadharNo: this.pincode,
-      rationCardrNo: this.rationCardNo,
-      emisno: this.emisNo,
-      talukApproval: this.talukApproval,
-      districtApproval: this.districtApproval,
-      bankId: this.bankId,
-      bankName: this.bankName,
-      bankAccNo: this.bankAccNo,
-      ifscCode: this.ifscCode,
-      branchName: this.branchName,
-      parentId: this.parentId,
-      fatherName: this.fatherName,
-      fatherOccupation: this.fatherOccupation,
-      fatherMoileNo: this.fatherMobileNo,
-      fatherQualification: this.fatherQulaification,
-      fatherYIncome: this.fatherYIncome,
-      motherName: this.motherName,
-      motherOccupation: this.motherOccupation,
-      motherMoileNo: this.motherMobileNo,
-      motherQualification: this.motherQulaification,
-      motherYIncome: this.motherYIncome,
-      guardianName: this.guardianName,
-      guardianOccupation: this.guardianOccupation,
-      guardianMobileNo: this.guardianMobileNo,
-      guardianQualification: this.guardianQulaification,
-      totalYIncome: this.totalYIncome,
-      documentId: this.documentId,
-      incomeCertificateFilename: this.incomeFilename,
-      tcFilename: this.tcFilename,
-      bankPassbookFilename: this.bankPassbookFilename,
-      declarationFilename: this.declarationFilename,
-    }
-    this._restApiService.post(PathConstants.Registration_Post, data).subscribe(response => {
+    this.obj.dob = this._datePipe.transform(this.obj.dob, 'yyyy-MM-dd')
+    this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
           this.blockUI.stop();
@@ -377,4 +281,62 @@ export class RegistrationComponent implements OnInit {
     })
   }
 
+  checkValidDateSelection() {
+    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== ''
+      && this.fromDate !== null && this.toDate !== null) {
+      let selectedFromDate = this.fromDate.getDate();
+      let selectedToDate = this.toDate.getDate();
+      let selectedFromMonth = this.fromDate.getMonth();
+      let selectedToMonth = this.toDate.getMonth();
+      let selectedFromYear = this.fromDate.getFullYear();
+      let selectedToYear = this.toDate.getFullYear();
+      if ((selectedFromDate > selectedToDate && ((selectedFromMonth >= selectedToMonth && selectedFromYear >= selectedToYear) ||
+        (selectedFromMonth === selectedToMonth && selectedFromYear === selectedToYear))) ||
+        (selectedFromMonth > selectedToMonth && selectedFromYear === selectedToYear) || (selectedFromYear > selectedToYear)) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
+          summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ValidDateErrorMessage
+        });
+        this.fromDate = null; this.toDate = null;
+      }
+      return this.fromDate, this.toDate;
+    }
+  }
+
+  onView() {
+    this.showDialog = true;
+    this.fromDate = null;
+    this.toDate = null;
+    this.registeredDetails = [];
+  }
+
+  loadRegisteredDetails() {
+    this.checkValidDateSelection();
+    this.loading = true;
+    const params = {
+      'FDate': this._datePipe.transform(this.fromDate, 'yyyy-MM-dd'),
+      'TDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd')
+    }
+    this._restApiService.get(PathConstants.Registration_Get).subscribe(res => {
+      if(res !== undefined && res !== null && res.length !== 0) {
+        this.registeredDetails = res.slice(0);
+        this.loading = false;
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        })
+      }
+    })
+  }
+
+  onEdit(row, index) {
+
+  }
+
+  onDelete(row, index) {
+
+  }
 }
