@@ -25,30 +25,49 @@ export class AttendanceComponent implements OnInit {
   cols:any
   hostelname:string
   HostelId : number
-  DistrictId : number
+  DistrictId : number 
   TalukId : number
   taluknname:string
   no_of_student:string
   remarks:string
   login_user: User;
+  districts : any;
+  taluks : any;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService, private authService: AuthService) { }
   ngOnInit(): void {
+    this.districts = this.masterService.getMaster('DT');
+    this.taluks = this.masterService.getMaster('TK');
     this.login_user = this.authService.UserInfo;
-  //   this.hostelname =this.login_user.hostelId;
+    this.hostelname =this.login_user.hostelName;
+    this.HostelId = this.login_user.hostelId;
+    this.DistrictId = this.login_user.districtCode;
+    this.TalukId = this.login_user.talukId;
+    this.districts.forEach(d => {
+      if(this.DistrictId==d.code)
+      {
+        this.districtname=d.name
+      }
+    });
+    this.taluks.forEach(d => {
+      if(this.TalukId==d.code)
+      {
+        this.taluknname=d.name
+      }
+    });
   // HostelId : number
   // DistrictId : number
   // districtname
     this.cols = [
-      {field:'date',header: 'Id'},
-      {field:'hostel_name',header: 'Hostel Name'},
-      {field:'districtn',header: 'District Name'},
-      {field:'Royapuram',header: 'Taluk Name'},
-      {field:'date',header: 'Attendance Date'},
-      {field:'no_of_student',header: 'NO Of Student'},
-      {field:'remarks',header: 'Remarks'},
+      {field:'Id',header: 'Id'},
+      {field:'HotelName',header: 'Hostel Name'},
+      {field:'DistrictName',header: 'District Name'},
+      {field:'TalukName',header: 'Taluk Name'},
+      {field:'AttendanceDate',header: 'Attendance Date'},
+      {field:'NOOfStudent',header: 'NO Of Student'},
+      {field:'Remarks',header: 'Remarks'},
       //{field:'Flag',header: 'Status'},
 
 
@@ -121,9 +140,9 @@ export class AttendanceComponent implements OnInit {
      this.HostelId = selectedRow.HostelID;
      this.DistrictId = selectedRow.Districtcode;
      this.TalukId = selectedRow.Talukid;
-     this.hostelname = selectedRow.hostelName;
-     this.districtname = selectedRow.districtname;
-     this.taluknname = selectedRow.taluknname;
+     this.hostelname = selectedRow.HostelName;
+     this.districtname = selectedRow.DistrictName;
+     this.taluknname = selectedRow.TalukName;
      this.date = selectedRow.AttendanceDate;
      this.no_of_student = selectedRow.NOOfStudent;
      this.remarks = selectedRow.Remarks;

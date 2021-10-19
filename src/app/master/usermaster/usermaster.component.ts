@@ -98,7 +98,7 @@ export class UsermasterComponent implements OnInit {
     if (this.district !== null && this.district !== undefined) {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
-          this.hostels = res;
+          this.hostels = res.Table;
         };
 
       })
@@ -106,7 +106,6 @@ export class UsermasterComponent implements OnInit {
   }
   // role dropdown
   onRoleChange() {
-    console.log('role', this.role)
     if (this.role != undefined && this.role !== null) {
       if (this.role === 1) {
         this.showDistrict = false;
@@ -235,6 +234,9 @@ export class UsermasterComponent implements OnInit {
 
   clearForm() {
     this._usermaster.reset();
+    this.districtOptions = [];
+    this.talukOptions = [];
+    this.hostelOptions = [];
   }
 
 }
