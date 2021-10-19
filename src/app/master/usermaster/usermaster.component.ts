@@ -98,7 +98,7 @@ export class UsermasterComponent implements OnInit {
     if (this.district !== null && this.district !== undefined) {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
-          this.hostels = res;
+          this.hostels = res.Table;
         };
 
       })

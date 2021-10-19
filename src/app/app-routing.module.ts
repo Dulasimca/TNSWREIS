@@ -37,7 +37,6 @@ const routes: Routes = [
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
 
-  { path: 'usermaster', component:UsermasterComponent},
   { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
 
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
