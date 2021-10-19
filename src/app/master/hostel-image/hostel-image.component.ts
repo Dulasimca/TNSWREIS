@@ -21,8 +21,9 @@ export class HostelImageComponent implements OnInit {
 
   constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService) { }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
+    this._locationService.getLocation();
   }
   public webcamImage: WebcamImage = null;
 
@@ -36,22 +37,26 @@ export class HostelImageComponent implements OnInit {
       for (var i = 0; i < byteString.length; i++) {
           ia[i] = byteString.charCodeAt(i);
       }
-      var formdata =  new Blob([ab], { type: 'image/jpeg' });
-      var file = <File>formdata;
-      var fd = new FormData();
-  
-    console.log('formdata', fd.append('file', file));
-    this.getLocation();
     this.openCamera = false;
-    // console.log('handle', this.webcamImage);
+    const params = {
+      'HostelId':this.login_user.hostelId,
+      'HostelImage': this.webcamImage,
+      'Longitude':this.location[1],
+      'Latitude':this.location[0]
+    }
+    console.log('inside hostel async');
+     this.restApiService.put(PathConstants.Hostel_put,params).subscribe(res => {
+       if (res) {
+     console.log('loc', this.location);
+ 
+   }
+});
   }
   public triggerSnapshot(): void {
     this.trigger.next();
   }
 
   public get triggerObservable(): Observable<void> {
-    // console.log('trigger', this.trigger);  
-     
     return this.trigger.asObservable();
   }
 
@@ -61,6 +66,8 @@ export class HostelImageComponent implements OnInit {
 
   camera() {
     this.openCamera = true;
+    this.location = this._locationService.getLocation();
+    console.log('loc', this.location);
   }
 
   capture() {
@@ -71,20 +78,4 @@ export class HostelImageComponent implements OnInit {
     this.trigger.next();
   }
 
- async getLocation() {
-  this.location = await this._locationService.getLocation();
-  const params = {
-     'Id':this.login_user.hostelId,
-     'HostelImage': '',
-     'Longitude':'1',
-     'Latitude':'1'
-   }
-   console.log('inside hostel async');
-    this.restApiService.put(PathConstants.Hostel_put,params).subscribe(res => {
-      if (res) {
-    console.log('loc', this.location);
-
-  }
-});
- }
 }
