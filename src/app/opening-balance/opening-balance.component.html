@@ -60,7 +60,7 @@
                                                 <div class="p-col-12"></div>
                                                 <div class="p-col-12 p-md-6 p-lg-4" style="text-align: right;">
                                                     <button pButton type="button" label="Save" icon="pi pi-save"
-                                                        (click)="onSubmit()"></button>
+                                                        (click)="onSubmit()" [disabled]="(!f.valid || !f.dirty)"></button>
                                                 </div>
                                                 <div class="p-col-12 p-md-6 p-lg-6">
                                                     <button pButton type="button" label="View" icon="pi pi-eye"

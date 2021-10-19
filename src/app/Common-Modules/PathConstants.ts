@@ -29,6 +29,7 @@ public static readonly OpeningBalance_Get = 'OpeningBalance/Get';
 public static readonly UserMaster_Post = 'UserMaster/Post'; 
 public static readonly UserMaster_Get = 'UserMaster'; 
 public static readonly Registration_Post = 'Registration/Post';
+public static readonly Registration_Get = 'Registration/Get';
 public static readonly Login = 'Login/Post';
 
 public static readonly Hostelgo_post = 'HostelGo/Post'; 

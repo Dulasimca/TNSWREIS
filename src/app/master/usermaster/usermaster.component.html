@@ -69,7 +69,7 @@
                                         </p-radioButton>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-12" style="text-align: center;">
-                                        <button pButton type="button" label="Submit" (click)="onSubmit()"></button>
+                                        <button pButton type="button" label="Submit" (click)="onSubmit()" [disabled]="(!f.valid || !f.dirty)"></button>
                                     </div>
                                 </div>
                             </div>

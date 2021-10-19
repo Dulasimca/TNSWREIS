@@ -49,6 +49,14 @@
                                     </div>
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left"><label
+                                                    for="_district">Hostel District<span
+                                                        class="form-mandatory-field">*</span></label>
+                                                <p-dropdown name="_district" [options]="districtOptions"
+                                                    [(ngModel)]="district" (onClick)="onSelect('DT')"
+                                                    (onChange)="selectDistrict()" required>
+                                                </p-dropdown>
+                                            </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_hostelname">Hostel Name<span
                                                         class="form-mandatory-field">*</span></label>
@@ -56,12 +64,6 @@
                                                     [(ngModel)]="hostelName" (onClick)="onSelect('HN')" required>
                                                 </p-dropdown>
                                             </div>
-                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left"><label for="_district">District<span
-                                                class="form-mandatory-field">*</span></label>
-                                    <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                        (onClick)="onSelect('D')" (onChange)="selectDistrict()" required>
-                                    </p-dropdown>
-                                </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_hstljoindate">Hostel Joining Date<span
                                                             class="form-mandatory-field">*</span></label></div>
@@ -112,10 +114,10 @@
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
-                                                <label for="_district">Native District<span
+                                                <label for="_nativedistrict">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="districtOptions" [(ngModel)]="district"
-                                                    (onClick)="onSelect('D')" name="_district" optionLabel="label">
+                                                <p-dropdown [options]="districtOptions" [(ngModel)]="nativeDistrict"
+                                                    (onClick)="onSelect('DT')" name="_nativedistrict">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -141,7 +143,7 @@
                                                     <div class="p-col-12 p-md-6 p-lg-2"
                                                         style="text-align: right; padding-top: 40px;">
                                                         <button pButton type="button" label="Save" icon="pi pi-save"
-                                                            (click)="onSave()"></button>
+                                                            (click)="onSave()" [disabled]="(!f.valid || !f.dirty)"></button>
                                                     </div>
                                                     <div class="p-col-12 p-md-6 p-lg-2" style="padding-top: 40px;">
                                                         <button pButton type="button" label="View" icon="pi pi-eye"
