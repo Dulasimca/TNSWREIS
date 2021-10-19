@@ -106,7 +106,6 @@ export class UsermasterComponent implements OnInit {
   }
   // role dropdown
   onRoleChange() {
-    console.log('role', this.role)
     if (this.role != undefined && this.role !== null) {
       if (this.role === 1) {
         this.showDistrict = false;
@@ -235,6 +234,9 @@ export class UsermasterComponent implements OnInit {
 
   clearForm() {
     this._usermaster.reset();
+    this.districtOptions = [];
+    this.talukOptions = [];
+    this.hostelOptions = [];
   }
 
 }

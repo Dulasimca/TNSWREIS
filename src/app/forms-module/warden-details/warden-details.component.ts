@@ -19,6 +19,7 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 export class WardenDetailsComponent implements OnInit {
 
   wardenName: string;
+  wardenId: number;
   gender: any;
   genderOptions: SelectItem[];
   talukOptions: SelectItem[];
@@ -154,11 +155,12 @@ export class WardenDetailsComponent implements OnInit {
       'Talukid': this.taluk,
       'Pincode': this.pincode,
       'Flag': 1,
-      'WardenId': 0
+      'WardenId': this.wardenId
 
     };
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
       if (res) {
+        this.onView();
         this.clearform();
         this.messageService.clear();
         this.messageService.add({
@@ -199,6 +201,7 @@ export class WardenDetailsComponent implements OnInit {
   onEdit(selectedRow){
     if(selectedRow !== null && selectedRow !==undefined){
     this.wardenName = selectedRow.Name;
+    this.wardenId = selectedRow.WardenId;
     this.gender = selectedRow.GenderId;
     this.genderOptions = [{ label: selectedRow.GenderName, value: selectedRow.GenderId }];
     this.dob = new Date(selectedRow.DOB);

@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="p-col-12 p-md-6 p-lg-6" style="text-align: right;">
                                             <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
-                                                [disabled]="(!f.valid)"></button>
+                                                [disabled]="(!f.valid || !f.dirty)"></button>
                                         </div>
                                         <div class="p-col-12 p-md-6 p-lg-6">
                                             <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"></button>
