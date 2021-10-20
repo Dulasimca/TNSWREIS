@@ -28,6 +28,11 @@ export class WardenReportComponent implements OnInit {
   districts?: any;
   taluks?: any;
   logged_user: User;
+  show: boolean;
+
+  wardenName: any;
+  endDate: any;
+  joinDate: any;
   constructor(private _tableConstants: TableConstants, private _restApiService: RestAPIService,
     private _messageService: MessageService, private _authService: AuthService, private _masterService: MasterService) { }
 
@@ -122,6 +127,9 @@ export class WardenReportComponent implements OnInit {
       }
     }
   }
+onEdi() {
+  this.show = true;
+}
 onEdit(row) {
 
 }

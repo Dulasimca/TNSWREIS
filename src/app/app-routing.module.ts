@@ -22,6 +22,8 @@ import { ConsumptionComponent } from './forms-module/consumption/consumption.com
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
 import { AttendanceImageComponent } from './forms-module/Attendance-image/Attendance-image.component';
+import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
+import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -36,6 +38,8 @@ const routes: Routes = [
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},
   { path: 'warden-report', component:WardenReportComponent, canActivate: [AuthGuard]},
+  { path: 'dailyconsumption-report', component:DailyconsumptionReportComponent, canActivate: [AuthGuard]},
+  { path: 'purchaseorder-report', component:PurchaseorderReportComponent, canActivate: [AuthGuard]},
 
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},

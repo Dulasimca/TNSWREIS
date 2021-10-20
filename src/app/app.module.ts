@@ -55,6 +55,8 @@ import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 import { LocationService } from './services/location.service';
 import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
 import { AttendanceImageComponent } from './forms-module/attendance-image/attendance-image.component';
+import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
+import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -84,7 +86,9 @@ import { AttendanceImageComponent } from './forms-module/attendance-image/attend
     ChangePasswordComponent,
     IdCardInfoComponent,
     WardenReportComponent,
-    AttendanceImageComponent
+    AttendanceImageComponent,
+    DailyconsumptionReportComponent,
+    PurchaseorderReportComponent
   ],
   imports: [
     BrowserModule,
