@@ -141,8 +141,8 @@ export class AttendanceImageComponent implements OnInit {
       'HostelID' : this.HostelId, 
      'Districtcode' : this.DistrictId ,
      'Talukid'    :this.TalukId,
-    'FromDate'    :this.date,
-     'Todate'   :this.date
+    'FromDate'    :this.datepipe.transform(this.date,'MM/dd/yyyy'), 
+     'Todate'   :this.datepipe.transform(this.date,'MM/dd/yyyy'), 
     }
     this.restApiService.getByParameters(PathConstants.AttendanceImage_Get,params).subscribe(res => {
       if(res !== null && res !== undefined && res.length !==0) {
