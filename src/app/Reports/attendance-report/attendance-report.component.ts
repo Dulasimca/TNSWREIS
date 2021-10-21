@@ -50,7 +50,9 @@ export class AttendanceReportComponent implements OnInit {
   isTaluk:boolean;
   isHostel:boolean;
   login_user: User;
+
  
+
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService,private messageService: MessageService,private datepipe: DatePipe,private authService: AuthService) { }
 
@@ -212,6 +214,8 @@ export class AttendanceReportComponent implements OnInit {
     }
   }
 
+ 
+
   onview() {
     const params={
       'HostelID' : this.hostelName != undefined && this.hostelName != null ? this.hostelName : 0,	
@@ -227,6 +231,10 @@ export class AttendanceReportComponent implements OnInit {
 
     
    });
+
+}
+showImage(Id)
+{
 
 }
 }
