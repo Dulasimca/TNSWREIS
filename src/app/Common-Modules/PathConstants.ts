@@ -48,4 +48,6 @@ public static readonly Consumption_Post = 'DailyConsumption/Post';
 public static readonly Consumption_Get = 'DailyConsumption/Get';
 public static readonly Consumption_Delete = 'DailyConsumption/Put';
 
+public static readonly WardenDetails_Report_Get = 'WardenDetails/Get'
+
 }

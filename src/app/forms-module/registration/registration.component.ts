@@ -215,7 +215,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRoute() {
-    this._router.navigate(['/ ']); //purchase-order daily-consumption
+    this._router.navigate(['/attendancereport']); //purchase-order daily-consumption
   }
 
   defaultValues() {

@@ -25,7 +25,7 @@ export class DistrictComponent implements OnInit {
   Districtname:any
 
   @BlockUI() blockUI: NgBlockUI;
-  @ViewChild('f', { static: false }) _registrationForm: NgForm;
+  @ViewChild('f', { static: false }) districtForm: NgForm;
 
   constructor(  private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService
@@ -108,7 +108,10 @@ export class DistrictComponent implements OnInit {
     this.districtcode = selectedRow.Districtcode;
   }
   onClear(){
-
+    this.districtForm.reset();
+    this.districtForm.form.markAsUntouched();
+    this.districtForm.form.markAsPristine();
+    this.district=''
   }
 }
 

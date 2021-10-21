@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SelectItem } from 'primeng/api';
 import { MessageService } from 'primeng/api';
@@ -7,7 +7,8 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BlockUI, NgBlockUI } from 'ng-block-Ui';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
-
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-taluk',
   templateUrl: './taluk.component.html',
@@ -25,7 +26,8 @@ export class TalukComponent implements OnInit {
   cols:any
   Talukid:number;
   classes?: any;
-  
+  @BlockUI() blockUI: NgBlockUI;
+  @ViewChild('f', { static: false }) talukForm: NgForm;
 
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService
@@ -63,8 +65,8 @@ export class TalukComponent implements OnInit {
 
   onSubmit(){
 
-    console.log('hi')
-   // this.blockUI.start();
+    
+   this.blockUI.start();
    console.log(this.selectdistrict.value)
     const params = {
       
@@ -77,9 +79,47 @@ export class TalukComponent implements OnInit {
     console.log(params)
     this.restApiService.post(PathConstants.TalukMaster_post, params).subscribe(res => {
         
-    });
+      if(res !== undefined && res !== null) {
+        if (res) {
 
+          this.blockUI.stop();
+          this.onClear();
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+         
+
+        } else {
+          this.blockUI.stop();
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+        } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+        }
+        }, (err: HttpErrorResponse) => {
+        this.blockUI.stop();
+        if (err.status === 0 || err.status === 400) {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+         })
+       
+       }
+      })
   }
+
+
   onview(){
     this.restApiService.get(PathConstants.TalukMaster_Get).subscribe(res => {
       if(res !== null && res !== undefined && res.length !==0) {
@@ -111,5 +151,10 @@ export class TalukComponent implements OnInit {
      
       this.selectedType=selectedRow.Flag;
   }
-
+onClear(){
+  this.talukForm.reset();
+  this.talukForm.form.markAsUntouched();
+  this.talukForm.form.markAsPristine();
+  this.taluk=''
+}
 }

@@ -55,7 +55,6 @@ export class UsermasterComponent implements OnInit {
   onSelect(type) {
     let districtSelection = [];
     let talukSelection = [];
-    let hostelSelection = [];
     let roleSelection = [];
     switch (type) {
       case 'R':
@@ -74,22 +73,18 @@ export class UsermasterComponent implements OnInit {
         break;
       case 'T':
         this.taluks.forEach(t => {
-          talukSelection.push({ label: t.name, value: t.code });
+          if (t.dcode === this.district) {
+            talukSelection.push({ label: t.name, value: t.code });
+          }
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });
-        break;
-      case 'HN':
-        this.hostels.forEach(h => {
-          hostelSelection.push({ label: h.HostelName, value: h.Slno });
-        })
-        this.hostelOptions = hostelSelection;
-        this.hostelOptions.unshift({ label: '-select', value: null });
         break;
     }
   }
   // hstl based on district 
   selectDistrict() {
+    let hostelSelection = [];
     const params = {
       'Type': 1,
       'Value': this.district
@@ -99,6 +94,11 @@ export class UsermasterComponent implements OnInit {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
+          this.hostelOptions = hostelSelection;
+          this.hostelOptions.unshift({ label: '-select', value: null });
         };
 
       })
