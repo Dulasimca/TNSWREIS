@@ -23,7 +23,7 @@ export class HostelImageComponent implements OnInit {
 
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
-    this._locationService.getLocation();
+     this._locationService.getLocation();
   }
   public webcamImage: WebcamImage = null;
 
@@ -44,10 +44,9 @@ export class HostelImageComponent implements OnInit {
       'Longitude':this.location[1],
       'Latitude':this.location[0]
     }
-    console.log('inside hostel async');
+
      this.restApiService.put(PathConstants.Hostel_put,params).subscribe(res => {
        if (res) {
-     console.log('loc', this.location);
  
    }
 });
