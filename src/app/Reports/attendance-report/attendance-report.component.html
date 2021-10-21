@@ -93,6 +93,45 @@
             </ng-template>
         </p-table>
         </p-panel>
-       
+        <p-dialog #dialog header="Hostel Attendance Reference Image" [(visible)]="showDialog" [modal]="showDialog"
+                [style]="{width: '90vw', height: '25vw'}">
+            
+                <p-table #dt [value]="attendanceImgdata" [columns]="colsAttendance" styleClass="p-datatable-gridlines"
+                [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
+                totalRecords="totalRecords" >
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>Sl.No</th>
+                <th *ngFor="let col of columns" [style.width]="col.width">
+                    {{col.header}}
+                </th>
+                <th>
+                    Image
+                </th>
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+            <tr [pSelectableRow]="rowData" class="cursor-pointer">
+               <td>{{rowIndex+1}}</td>
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+                <td (click)="LargeImage(rowData.url)">
+                    <img alt="TN ADW Hostel image" [src]="rowData.url" width="32" style="vertical-align: middle" />
+                </td>
+            </tr>
+
+
+        </ng-template>
+        </p-table>
+    </p-dialog>
+
+            <!-- <p-dialog #dialogheader="Attendance Image" [(visible)]="showDialogLargeImg"[modal]="showDialog">
+            <img alt="TN ADW Hostel image" [src]="ImageUrl"style="vertical-align: middle"/>
+            </p-dialog> -->
+            
+            
     </div>
 
