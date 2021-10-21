@@ -90,6 +90,21 @@ height: 25px !important;
     background: #eba611 !important;
     border: 1px solid #f7bd42 !important;
 }
+.border-teal {
+    border: 1px solid #489197;
+}
+
+.div-dsh-main {
+        background: white!important;
+        color: #489197;
+        padding: 5px;
+}
+.txt-shadow-teal {
+    text-shadow: 1px 1px 2px #54b3b9;
+}
+.div-dsh-main-txt {
+    font-size: 22px;
+}
 
 /* header */
 .login-header {
@@ -444,4 +459,18 @@ main {
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover {
     background: #2a8a91 !important;
 }
-
+.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link .p-menuitem-icon {
+    color: whitesmoke !important;
+}
+.p-menubar .p-submenu-list {
+    background: #489197 !important;
+}
+.p-menubar .p-menuitem-link .p-menuitem-text {
+    color: whitesmoke !important;
+}
+.p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link, .p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link:not(.p-disabled):hover {
+    background: #2a8a91 !important;
+}
+.p-menubar .p-menuitem.p-menuitem-active>.p-menuitem-link {
+    background: #2a8a91 !important;
+}
