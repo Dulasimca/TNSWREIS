@@ -1,0 +1,83 @@
+      
+      
+<div class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-panel header="Purchase Order Report">
+        <p-card>
+            <div class="p-col-12 no-pad-top">
+                <div class="p-grid">
+                    <div class="p-col-1"></div>
+            <div class="p-col-12 p-md-12 p-lg-10 no-pad-top">
+                <div class="p-grid">
+                    <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                        <div><label for="_district">District<span
+                            class="form-mandatory-field">*</span></label>
+                        </div>
+                        <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                            (onClick)="onSelect('D')"  (ngModelChange)="loadTable()" required>
+                        </p-dropdown>
+                    </div>
+                    <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                        <div><label for="_taluk">Taluk<span
+                            class="form-mandatory-field">*</span></label>
+                        </div>
+                        <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                            (onClick)="onSelect('T')" (onChange)="loadTable()" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div><label for="_hostel">Hostel Name<span
+                                    class="form-mandatory-field">*</span></label></div>
+                        <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName"
+                            (onClick)="onSelect('HN')" (onChange)="loadTable()" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-2">
+                        <div><label for="_fromdate">From Date<span
+                                    class="form-mandatory-field">*</span></label></div>
+                        <p-calendar [(ngModel)]="fromDate" (onChange)="loadTable()" name="_fromdate" [showIcon]="true"
+                            [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
+                            inputId="fromdate" dateFormat="yy-mm-dd" required></p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-2">
+                        <div><label for="_todate">To Date<span
+                                    class="form-mandatory-field">*</span></label></div>
+                        <p-calendar [(ngModel)]="toDate" (onChange)="loadTable()" name="_todate" [showIcon]="true"
+                            [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
+                            inputId="todate" dateFormat="yy-mm-dd" required></p-calendar>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12"></div>
+            <div class="table-format">
+                <div style="text-align: right;"> 
+                    <button pButton type="button" icon="pi pi-file-excel" label="Export" 
+                     (click)="dt.exportCSV({selectionOnly:true})"></button>
+                </div>
+                <p-table #dt [value]="consumptionData" [columns]="consumptionCols" styleClass="p-datatable-gridlines"
+                    [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
+                    totalRecords="totalRecords">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>S.No</th>
+                            <th *ngFor="let col of columns">
+                                {{col.header}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                        <tr>
+                            <td>{{rowIndex+1}}</td>
+                            <td *ngFor="let col of columns">
+                                {{rowData[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+                </div>
+            </div>
+        </p-card>
+    </p-panel>
+</div>
+ 

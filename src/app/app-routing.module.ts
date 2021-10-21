@@ -9,7 +9,7 @@ import { CommodityMasterComponent } from './master/commodity-master/commodity-ma
 import { FoodmasterComponent } from './master/foodmaster/foodmaster.component';
 import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.component';
 import { UsermasterComponent } from './master/usermaster/usermaster.component';
-import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
+import { OpeningBalanceComponent } from './forms-module/opening-balance/opening-balance.component';
 import { AuthGuard } from './services/auth.guard';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 
@@ -21,6 +21,11 @@ import { ChangePasswordComponent } from './master/change-password/change-passwor
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AttendanceReportComponent } from './Reports/attendance-report/attendance-report.component';
+import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
+import { AttendanceImageComponent } from './forms-module/Attendance-image/Attendance-image.component';
+import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
+import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -35,6 +40,9 @@ const routes: Routes = [
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},
+  { path: 'warden-report', component:WardenReportComponent, canActivate: [AuthGuard]},
+  { path: 'dailyconsumption-report', component:DailyconsumptionReportComponent, canActivate: [AuthGuard]},
+  { path: 'purchaseorder-report', component:PurchaseorderReportComponent, canActivate: [AuthGuard]},
 
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
@@ -47,6 +55,8 @@ const routes: Routes = [
   { path: 'taluk', component:TalukComponent},
   { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},
+  {path:'attendancereport', component:AttendanceReportComponent},
+  { path: 'attendance-image', component:AttendanceImageComponent}
 
 
 

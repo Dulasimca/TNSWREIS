@@ -59,6 +59,9 @@ export class LoginComponent implements OnInit {
               }
               this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(res => {
                 if (res !== undefined && res !== null && res.length !== 0) {
+                  console.log('re1', res);
+                  res.push({ label: 'Logout', command: ()=> {this._authService.logout() }});
+                  console.log('re', res);
                   this._authService.setMenu(res);
                   this._authService.login(obj);
                 } else {

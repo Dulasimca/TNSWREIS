@@ -1,0 +1,89 @@
+<block-ui>
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-panel header="Attendance Report">
+            <div class="p-grid">
+                <div class="p-col-1"></div>
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <form #f="ngForm" name="attendancereportForm">
+                        <p-card>
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="no-pad-top"><label>From Date:</label> </div>
+                                    <p-calendar [(ngModel)]="fromdate" [showIcon]="true" name="_fromdate" required >
+                                </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="no-pad-top"><label>To Date:</label> </div>
+                                    <p-calendar [(ngModel)]="todate" [showIcon]="true" name="_todate" required >
+                                     </p-calendar>
+                                    
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="no-pad-top"><label>District Name</label> </div>
+                                    <p-dropdown name="_districtname" [options]="districtOptions"
+                                    [(ngModel)]="Districtcode"  (onClick)="onSelect('D')"  [disabled]="isDistrict" required>
+                                </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3"></div>
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
+                                    <div class="no-pad-top"><label>Taluk Name</label> </div>
+                                    <p-dropdown name="_taluknname" [options]="talukOptions"
+                                    [(ngModel)]="TalukId"  (onClick)="onSelect('TK')" [disabled]="isTaluk" required>
+                                </p-dropdown>
+                                </div>
+                                
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+    
+                                <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
+                                    <div class="no-pad-top"><label>Hostel Name</label> </div>
+                                    <p-dropdown name="_hostel" [options]="hostelOptions" 
+                                    [(ngModel)]="hostelName" (onClick)="onSelect('HN')"  [disabled]="isHostel" required>
+                                </p-dropdown>
+                                </div>                            
+
+                            </div>
+                        </p-card>
+                    </form>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg12" style="margin-left:40%;">
+                   
+    
+                    <button pButton type="button" label="View" style="margin-left:5%;" (click)="onview()"></button>
+                    <!-- <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;"> -->
+                        <button pButton type="button" icon="pi pi-file-excel" label="Export" style="margin-left:5%;"  
+                      (click)="dt.exportCSV({selectionOnly:true})"></button>      
+                        <!-- </div> -->
+                </div>
+            </div>
+            
+            <p-table #dt [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
+                    [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
+                    totalRecords="totalRecords" exportFilename="ATTENDANCE_REPORT">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+
+                    <th *ngFor="let col of columns" [style.width]="col.width">
+                        {{col.header}}
+                    </th>
+
+                </tr>
+            </ng-template>
+
+
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                <tr [pSelectableRow]="rowData" class="cursor-pointer">
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                </tr>
+
+
+            </ng-template>
+        </p-table>
+        </p-panel>
+    </div>
+</block-ui>

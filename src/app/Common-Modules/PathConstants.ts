@@ -23,7 +23,9 @@ public static readonly  CommodityMaster_Post = 'CommodityMaster/Post';
 public static readonly  CommodityMaster_Get = 'CommodityMaster'; 
 
 public static readonly  Attendance_Post = 'Attendance/Post'; 
-public static readonly  Attendance_Get = 'Attendance'; 
+public static readonly  AttendanceImage_Post = 'AttendanceImage/Post'; 
+public static readonly  AttendanceImage_Get = 'AttendanceImage/Get'; 
+public static readonly  Attendance_Get = 'Attendance/Get'; 
 public static readonly OpeningBalance_Post = 'OpeningBalance/Post'; 
 public static readonly OpeningBalance_Get = 'OpeningBalance/Get'; 
 
@@ -46,5 +48,7 @@ public static readonly PurchaseOrder_Delete = 'PurchaseOrder/Put';
 public static readonly Consumption_Post = 'DailyConsumption/Post';
 public static readonly Consumption_Get = 'DailyConsumption/Get';
 public static readonly Consumption_Delete = 'DailyConsumption/Put';
+
+public static readonly WardenDetails_Report_Get = 'WardenDetails/Get'
 
 }

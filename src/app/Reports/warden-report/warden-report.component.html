@@ -1,0 +1,97 @@
+<div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Warden Details Report">
+            <p-card>
+                <div class="p-col-12 no-pad-top">
+                    <div class="p-grid">
+                        <div class="p-col-2"></div>
+                <div class="p-col-12 p-md-12 p-lg-10 no-pad-top">
+                    <div class="p-grid">
+                        <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                            <div><label for="_district">District<span
+                                class="form-mandatory-field">*</span></label>
+                            </div>
+                            <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                (onClick)="onSelect('D')" (onChange)="loadTable()" required>
+                            </p-dropdown>
+                        </div>
+                        <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                            <div><label for="_taluk">Taluk<span
+                                class="form-mandatory-field">*</span></label>
+                            </div>
+                            <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                (onClick)="onSelect('T')" (onChange)="loadTable()" required>
+                            </p-dropdown>
+                        </div>
+                        <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                            <div><label for="_status">Status<span
+                                class="form-mandatory-field">*</span></label>
+                            </div>
+                            <p-dropdown name="_status" [options]="statusOptions" [(ngModel)]="status"
+                                (onChange)="filterTable()" required>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-format">
+                    <div style="text-align: right;"> 
+                        <button pButton type="button" icon="pi pi-file-excel" label="Export" 
+                         (click)="dt.exportCSV({selectionOnly:true})"></button>
+                    </div>
+                    <p-table #dt [value]="wardenDetails" [columns]="wardenDetailsCols" styleClass="p-datatable-gridlines"
+                        [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
+                        totalRecords="totalRecords">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>S.No</th>
+                                <th *ngFor="let col of columns">
+                                    {{col.header}}
+                                </th>
+                                <th>Edit/Update</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                            <tr>
+                                <td>{{rowIndex+1}}</td>
+                                <td *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                                <td><button icon="pi pi-pencil" pButton type="button" (click)="onEdit(rowData)">
+                                    </button></td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                    </div>
+                    </div>
+            </p-card>
+        </p-panel>
+</div>
+<!-- <button icon="pi pi-pencil" pButton type="button" (click)="onEdi()">
+</button> -->
+<p-dialog header="Warden Report" [(visible)]="show" 
+[style]="{width: '50vw', height: '25vw'}">
+<p-card>
+<div class="p-grid div-main">
+    
+    <div class="p-col-6 p-md-6 p-lg-6 no-pad-left">
+        <div><label for="_wardenname">Warden Name</label></div>
+                                                    <input type="text" name="_wardenname" pInputText
+                                                        [(ngModel)]="wardenName" readonly="true">
+    </div>
+    <div class="p-col-6 p-md-6 p-lg-6 no-pad-left">
+        <div><label for="_joindate">Hostel Joined Date</label></div>
+                                                    <input type="text" name="_joindate" pInputText
+                                                        [(ngModel)]="joinDate" readonly="true">
+    </div>
+</div>
+        <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+            <div class="p-col-12 p-md-6 p-lg-3">
+            <div><label for="_edate">End Date<span class="form-mandatory-field">*</span></label></div>
+            <p-calendar [(ngModel)]="endDate" showButtonBar="true" [showIcon]="true"
+                name="_edate"></p-calendar>
+            </div>
+        </div>
+    </p-card>
+     
+</p-dialog>
