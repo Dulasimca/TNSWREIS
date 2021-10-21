@@ -53,6 +53,7 @@ import { PasswordModule } from "primeng/password";
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 
 import { LocationService } from './services/location.service';
+import { AttendanceReportComponent } from './Report/attendance-report/attendance-report.component';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -80,7 +81,8 @@ import { LocationService } from './services/location.service';
     HostelGoComponent,
     AttendanceComponent,
     ChangePasswordComponent,
-    IdCardInfoComponent
+    IdCardInfoComponent,
+    AttendanceReportComponent
   ],
   imports: [
     BrowserModule,
