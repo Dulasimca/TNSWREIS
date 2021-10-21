@@ -55,10 +55,20 @@ export class LoginComponent implements OnInit {
                 , districtCode: (i.districtcode !== undefined && i.districtcode !== null) ? i.districtcode : null
                 , roleId: (i.roleId !== undefined && i.roleId !== null) ? i.roleId : null
                 , token: (i.entryptedPwd !== undefined && i.entryptedPwd !== null) ? i.entryptedPwd : ''
-                , hostelName: (i.hostelName !== undefined && i.hostelName !== null) ? i.hostelName: ''
+                , hostelName: (i.hostelName !== undefined && i.hostelName !== null) ? i.hostelName : ''
               }
-              console.log('user', obj);
-              this._authService.login(obj);
+              this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(res => {
+                if (res !== undefined && res !== null && res.length !== 0) {
+                  this._authService.setMenu(res);
+                  this._authService.login(obj);
+                } else {
+                  this._messageService.clear();
+                  this._messageService.add({
+                    key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+                    summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.MenuDataError
+                  })
+                }
+              })
             });
           } else {
             this._messageService.clear();

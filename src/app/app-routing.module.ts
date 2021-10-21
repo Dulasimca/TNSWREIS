@@ -20,11 +20,13 @@ import { AttendanceComponent } from './forms-module/attendance/attendance.compon
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'foodmaster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },

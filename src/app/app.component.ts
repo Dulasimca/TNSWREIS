@@ -10,24 +10,13 @@ import { MasterService } from './services/master-data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TNMenu';
+  title = 'TNSWREIS';
   hideHeader: boolean = false;
   isLoggedIn: boolean = false;
-  // showNavBar: boolean;
-  // items: any[];
 
-  constructor(private _router: Router, private _authService: AuthService, private _masterService: MasterService) {
+  constructor(private _authService: AuthService, private _masterService: MasterService) {
     this._authService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
-    });
-    this._router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        if (event.url === '/login') {
-          this.hideHeader = true;
-        } else {
-          this.hideHeader = false;
-        }
-      }
     });
   }
 
@@ -36,8 +25,4 @@ export class AppComponent {
     master = this._masterService.initializeMaster();
     master.subscribe(response => {});
   }
-  // onOpenSideMenu() {
-  //   console.log('insi');
-  //   this.showNavBar = true;
-  // }
 }

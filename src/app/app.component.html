@@ -1,16 +1,14 @@
-<div #main >
-  <app-header *ngIf="!hideHeader"></app-header>
-  <!-- (open)="onOpenSideMenu()" -->
-  <!-- <p-sidebar #sidebar [(visible)]="showNavBar" [baseZIndex]="10000">
-  <p-panelMenu [model]="items"></p-panelMenu>
-</p-sidebar> -->
-<div class="content">
-<router-outlet></router-outlet>
-</div>
-
-  <app-footer *ngIf="!hideHeader"></app-footer>
-</div>
-
-<!-- <div #login *ngIf="hideHeader">
-  <router-outlet></router-outlet>
-</div> -->
+ <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-menu-header (sidenavToggle)="sidenav.toggle()"></app-menu-header>
+      <main>
+        <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+      </main>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

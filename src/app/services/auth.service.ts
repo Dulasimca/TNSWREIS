@@ -9,6 +9,7 @@ import { User } from '../interfaces/user';
 export class AuthService {
   isSignedIn: boolean = false;
   getUserInfo: any;
+  menuItems: any;
   private loggedIn = new BehaviorSubject<boolean>(false); 
   /// To control if the user is logged in or not
   /// The BehaviorSubject keeps the latest value cached (in our case when the service is created the initial value is going to be false). 
@@ -26,7 +27,7 @@ export class AuthService {
     if (user.username !== '' && user.token !== '' ) { 
       localStorage.setItem('UserInfo', JSON.stringify(user));
       this.loggedIn.next(true);
-      this._router.navigate(['/registration']);
+      this._router.navigate(['/dashboard']);
     }
   }
 
@@ -36,6 +37,14 @@ export class AuthService {
     } else {
       this.loggedIn.next(false);
     }
+  }
+
+  setMenu(data) {
+    this.menuItems = data;
+  }
+
+  get menu() {
+    return this.menuItems;
   }
 
   get UserInfo() {
