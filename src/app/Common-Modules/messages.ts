@@ -32,5 +32,6 @@ export class ResponseMessage {
     public static readonly DeleteFailMsg = 'Record is not deleted !';
     public static readonly EmailAlreadyExists = 'User email already exists !';
     public static readonly PasswordChangeSuccess = 'Password has been changed successfully !';
+    public static readonly MenuDataError = 'Error occurred in loading menu !';
     
 }

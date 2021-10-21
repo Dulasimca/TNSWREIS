@@ -3,6 +3,7 @@ public static readonly DaysMaster_Get = 'DaysMaster';
 public static readonly MasterAll_Get = 'MasterData';
 public static readonly FoodMaster_Get = 'FoodMaster';
 public static readonly FoodMaster_Post = 'FoodMaster/Post';
+public static readonly MenuMaster_Get = 'MenuMaster/Get';
 
 public static readonly Hostel_Post = 'Hostel/Post';
 public static readonly Hostel_Get = 'Hostel/Get';
