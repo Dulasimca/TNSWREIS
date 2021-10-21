@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -34,7 +35,7 @@ export class DailyconsumptionReportComponent implements OnInit {
   logged_user: User;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
-    private _messageService: MessageService, private _authService: AuthService) { }
+    private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.consumptionCols = this._tableConstants.consumptionColumns;
@@ -64,7 +65,8 @@ export class DailyconsumptionReportComponent implements OnInit {
           districtSelection.push({ label: d.name, value:d.code });
         })
         this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: 'All', value: 'All'});
+        this.districtOptions.unshift( {label: 'All', value: 0});
+        this.districtOptions.unshift( {label: '-select-', value: 'null'});
         this.changeDistrict();
         break;
       case 'T':
@@ -82,7 +84,8 @@ export class DailyconsumptionReportComponent implements OnInit {
           }
         })
         this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: 'All', value: 'All'});
+        this.talukOptions.unshift({ label: 'All', value: 0});
+        this.talukOptions.unshift( {label: '-select-', value: 'null'});
         break;
       
     }
@@ -106,7 +109,8 @@ export class DailyconsumptionReportComponent implements OnInit {
     }
       console.log('sel', this.hostelOptions, hostelSelection)
       this.hostelOptions = hostelSelection;
-      this.hostelOptions.unshift({ label: 'All', value: 'All' });
+      this.hostelOptions.unshift({ label: 'All', value: 0 });
+      this.hostelOptions.unshift({ label: '-select-', value: 'null' });
     }
     loadTable() {
      // this.changeDistrict();
@@ -116,16 +120,18 @@ export class DailyconsumptionReportComponent implements OnInit {
         this.toDate !==null && this.toDate !== undefined){
       this.loading = true;
       const params = {
-        'DCode': this.district,
-        'TCode': this.taluk,
-        'HCode': this.hostelName,
-        'FromDate': this.fromDate,
-        'ToDate': this.toDate
+        'Districtcode': this.district,
+        'Talukid': this.taluk,
+        'HostelId': this.hostelName ,
+        'FromDate': this._datePipe.transform(this.fromDate, 'yyyy-MM-dd'),
+        'ToDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd')
       }
-      this.restApiService.getByParameters('', params).subscribe(res => {
-        if (res !== undefined && res !== null && res.length !== 0) {
-          this.consumptionDetails = res.slice(0);
+      this.restApiService.post(PathConstants.DailyConsumption_Report_Post, params).subscribe(res => {
+        if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
+          this.consumptionData = res.Table;
+          this.consumptionDetails = res.Table;
           this.loading = false;
+          console.log('true')
         } else {
           this.loading = false;
           this._messageService.clear();

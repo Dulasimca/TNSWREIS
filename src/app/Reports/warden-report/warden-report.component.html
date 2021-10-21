@@ -35,12 +35,12 @@
                 </div>
                 <div class="table-format">
                     <div style="text-align: right;"> 
-                        <button pButton type="button" icon="pi pi-file-excel" label="Export" 
-                         (click)="dt.exportCSV({selectionOnly:true})"></button>
+                        <button pButton type="button" icon="pi pi-file-excel" label="Export" style="color: yellowgreen;"
+                         (click)="dt.exportCSV()"  pTooltip="Excel-File dwnld"></button>
                     </div>
                     <p-table #dt [value]="wardenDetails" [columns]="wardenDetailsCols" styleClass="p-datatable-gridlines"
                         [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
-                        totalRecords="totalRecords">
+                        totalRecords="totalRecords" exportFilename="WARDEN_DETAILS_REPORT">
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th>S.No</th>
@@ -91,6 +91,10 @@
             <p-calendar [(ngModel)]="endDate" showButtonBar="true" [showIcon]="true"
                 name="_edate"></p-calendar>
             </div>
+        </div>
+        <div>
+            <button pButton type="button" label="Submit" style="text-align: center;"
+             (click)="onSubmit()"></button>
         </div>
     </p-card>
      

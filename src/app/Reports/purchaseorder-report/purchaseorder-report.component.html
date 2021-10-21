@@ -35,14 +35,14 @@
                     <div class="p-col-12 p-md-6 p-lg-2">
                         <div><label for="_fromdate">From Date<span
                                     class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [(ngModel)]="fromDate" (onChange)="loadTable()" name="_fromdate" [showIcon]="true"
+                        <p-calendar [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate" [showIcon]="true"
                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
                             inputId="fromdate" dateFormat="yy-mm-dd" required></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-6 p-lg-2">
                         <div><label for="_todate">To Date<span
                                     class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [(ngModel)]="toDate" (onChange)="loadTable()" name="_todate" [showIcon]="true"
+                        <p-calendar [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate" [showIcon]="true"
                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
                             inputId="todate" dateFormat="yy-mm-dd" required></p-calendar>
                     </div>
@@ -51,12 +51,12 @@
             <div class="p-col-12"></div>
             <div class="table-format">
                 <div style="text-align: right;"> 
-                    <button pButton type="button" icon="pi pi-file-excel" label="Export" 
-                     (click)="dt.exportCSV({selectionOnly:true})"></button>
+                    <button pButton type="button" icon="pi pi-file-excel" style="color: yellowgreen;" label="Export"
+                    pTooltip="Excel-File dwnld" (click)="dt.exportCSV()"></button>
                 </div>
-                <p-table #dt [value]="consumptionData" [columns]="consumptionCols" styleClass="p-datatable-gridlines"
+                <p-table #dt [value]="purchaseData" [columns]="purchaseCols" styleClass="p-datatable-gridlines"
                     [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
-                    totalRecords="totalRecords">
+                    totalRecords="totalRecords"  exportFilename="PURCHASE_ORDER_REPORT">
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th>S.No</th>
