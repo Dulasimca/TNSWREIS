@@ -214,10 +214,6 @@ export class RegistrationComponent implements OnInit {
     this.defaultValues();
   }
 
-  onRoute() {
-    this._router.navigate(['/']); //purchase-order daily-consumption
-  }
-
   defaultValues() {
     this.maxDate = new Date();
     this.obj = {} as Registration;

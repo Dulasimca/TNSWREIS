@@ -20,6 +20,8 @@ import { AttendanceComponent } from './forms-module/attendance/attendance.compon
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AttendanceReportComponent } from './Reports/attendance-report/attendance-report.component';
 import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
 import { AttendanceImageComponent } from './forms-module/Attendance-image/Attendance-image.component';
 import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
@@ -29,6 +31,7 @@ const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'foodmaster',component:FoodmasterComponent},
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
@@ -52,6 +55,7 @@ const routes: Routes = [
   { path: 'taluk', component:TalukComponent},
   { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},
+  {path:'attendancereport', component:AttendanceReportComponent},
   { path: 'attendance-image', component:AttendanceImageComponent}
 
 

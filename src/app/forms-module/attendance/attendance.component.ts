@@ -34,7 +34,7 @@ export class AttendanceComponent implements OnInit {
   districts : any;
   taluks : any;
   @BlockUI() blockUI: NgBlockUI;
-  @ViewChild('f', { static: false }) _registrationForm: NgForm;
+  @ViewChild('f', { static: false }) attendanceForm: NgForm;
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService, private authService: AuthService) { }
   ngOnInit(): void {
@@ -77,7 +77,7 @@ export class AttendanceComponent implements OnInit {
   onSubmit() {
     this.blockUI.start();
     const params = {
-      'Id': this.date, 
+      'Id': 0, 
       'HostelID': this.HostelId, 
       'Districtcode': this.DistrictId, 
       'Talukid': this.TalukId, 
@@ -90,7 +90,7 @@ export class AttendanceComponent implements OnInit {
       if(res !== undefined && res !== null) {
         if (res) {
          this.blockUI.stop();
-      // this.onClear();
+       this.onClear();
        this.messageService.clear();
        this.messageService.add({
          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -125,11 +125,17 @@ export class AttendanceComponent implements OnInit {
    })
 }
   onview() {
-    this.restApiService.get(PathConstants.Attendance_Get).subscribe(res => {
+    const params={
+      'HostelID' : this.HostelId,	
+     'Districtcode'	: this.DistrictId ,
+     'Talukid'		:this.TalukId,
+    'FromDate'		:this.date,
+     'Todate'		:this.date
+    }
+    this.restApiService.getByParameters(PathConstants.Attendance_Get,params).subscribe(res => {
      if(res !== null && res !== undefined && res.length !==0) {
        this.data = res.Table;
      }
-     
    });
  
  
@@ -149,7 +155,17 @@ export class AttendanceComponent implements OnInit {
      
 
   }
+onClear(){
+  this.attendanceForm.reset();
+    this.attendanceForm.form.markAsUntouched();
+    this.attendanceForm.form.markAsPristine();
+    this.hostelname='',
+    this.districtname='',
+    this.taluknname='',
+    this.no_of_student='',
+    this.remarks=''
 
+}
 
 }
     

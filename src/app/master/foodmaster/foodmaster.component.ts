@@ -34,7 +34,7 @@ export class FoodmasterComponent implements OnInit {
   public progress: number;
   public message: string;
 
-  
+  @ViewChild('f', { static: false }) foodmasterForm: NgForm;
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
     private masterService: MasterService, private messageService: MessageService
    ) { }
@@ -78,14 +78,14 @@ export class FoodmasterComponent implements OnInit {
         if(res !== undefined && res !== null) {
           if (res) {
   
-        //     this.blockUI.stop();
+            this.blockUI.stop();
             this.onClear();
             this.messageService.clear();
             this.messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
               summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
             });
-            this.message = 'Upload success.';
+           
   
           } else {
             this.blockUI.stop();
@@ -146,6 +146,13 @@ export class FoodmasterComponent implements OnInit {
 }
 
 onClear() {
-  
+  this.foodmasterForm.reset();
+    this.foodmasterForm.form.markAsUntouched();
+    this.foodmasterForm.form.markAsPristine();
+    this.BreakFast='',
+    this.Lunch='',
+    this.Snacks='',
+    this.Dinner=''
+
 }
 }

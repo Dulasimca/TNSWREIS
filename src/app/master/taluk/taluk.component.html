@@ -1,3 +1,4 @@
+<block-ui>
 <div class="p-col-12 p-md-12 p-lg-12">
     <p-toast position="top-center" key="t-msg"></p-toast>
     <p-panel header="Taluk">
@@ -5,7 +6,7 @@
 
             <div class="p-col-12 p-md-12 p-lg-12">
 
-                <form #f="ngForm" name="taluk">
+                <form #f="ngForm" name="talukForm">
                     <p-card>
                         <div class="p-grid">
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
@@ -38,7 +39,7 @@
                     <button pButton name="save" type="button" label="Submit" (click)="onSubmit()"></button>
 
                     <button pButton type="button" label="View" (click)="onview()" style="margin-left:5%;"></button>
-                    <!-- <button pButton type="button" label="clear" (click)="onClear()" style = "margin-left:5%;"></button>  -->
+                     <button pButton type="button" label="clear" (click)="onClear()" style = "margin-left:5%;"></button> 
                 </div>
             </div>
         </div>
@@ -70,3 +71,4 @@
 
     </p-panel>
 </div>
+</block-ui>

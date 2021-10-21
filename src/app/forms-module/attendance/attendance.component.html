@@ -4,7 +4,7 @@
         <div class="p-grid">
             <div class="p-col-1"></div>
             <div class="p-col-12 p-md-12 p-lg-12">
-                <form #f="ngForm" name="attendance">
+                <form #f="ngForm" name="attendanceForm">
                     <p-card>
                         <div class="p-grid">
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
@@ -50,6 +50,7 @@
                 <button pButton name="save" type="button" label="Submit" (click)="onSubmit()"></button>
 
                 <button pButton type="button" label="View" style="margin-left:5%;" (click)="onview()"></button>
+                <button pButton type="button" label="clear" style="margin-left:5%;" (click)="onClear()"></button>
             </div>
         </div>
             <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
