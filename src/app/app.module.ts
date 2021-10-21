@@ -20,6 +20,16 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MenubarModule } from 'primeng/menubar';
+import { ChartModule } from 'primeng/chart';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -53,13 +63,14 @@ import { PasswordModule } from "primeng/password";
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 
 import { LocationService } from './services/location.service';
+import { MenuHeaderComponent } from './menu-header/menu-header.component';
+import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AttendanceReportComponent } from './Reports/attendance-report/attendance-report.component';
 import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
 import { AttendanceImageComponent } from './forms-module/attendance-image/attendance-image.component';
 import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
- //import { DataTableModule } from 'primeng/primeng';
-// import { PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -86,6 +97,9 @@ import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/pur
     AttendanceComponent,
     ChangePasswordComponent,
     IdCardInfoComponent,
+    MenuHeaderComponent,
+    SidenavListComponent,
+    DashboardComponent,
     AttendanceReportComponent,
     WardenReportComponent,
     AttendanceImageComponent,
@@ -95,6 +109,7 @@ import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/pur
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     FormsModule,
     ButtonModule,
     InputTextModule,
@@ -108,23 +123,29 @@ import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/pur
     TabViewModule,
     CalendarModule,
     PasswordModule,
-    // DataTableModule,
-    // PaginatorModule
-
     RadioButtonModule,
     TableModule,
-    BlockUIModule.forRoot(),
     CheckboxModule,
     ToastModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FlexLayoutModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatListModule,
+    MenubarModule,
+    ChartModule,
+    BlockUIModule.forRoot(),
   ],
 
 
   providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService,
-  ConfirmationService],
+    ConfirmationService],
 
   bootstrap: [AppComponent]
-  
+
 })
 export class AppModule { }
