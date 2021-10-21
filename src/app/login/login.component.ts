@@ -57,12 +57,13 @@ export class LoginComponent implements OnInit {
                 , token: (i.entryptedPwd !== undefined && i.entryptedPwd !== null) ? i.entryptedPwd : ''
                 , hostelName: (i.hostelName !== undefined && i.hostelName !== null) ? i.hostelName : ''
               }
-              this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(res => {
-                if (res !== undefined && res !== null && res.length !== 0) {
-                  console.log('re1', res);
-                  res.push({ label: 'Logout', command: ()=> {this._authService.logout() }});
-                  console.log('re', res);
-                  this._authService.setMenu(res);
+              this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(response => {
+                if (response !== undefined && response !== null && response.length !== 0) {
+                  console.log('re1', response);
+                  this.checkChildItems(response);
+                  response.push({ label: 'Logout', icon: 'pi pi-power-off', command: ()=> {this._authService.logout() }});
+                  console.log('re', response);
+                  this._authService.setMenu(response);
                   this._authService.login(obj);
                 } else {
                   this._messageService.clear();
@@ -109,5 +110,18 @@ export class LoginComponent implements OnInit {
         })
       }
     })
+  }
+
+  checkChildItems(data: any) {
+    if (data.length !== 0) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].items.length !== 0) {
+          //  continue;
+          this.checkChildItems(data[i].items);
+        } else {
+          delete data[i].items;
+        }
+      }
+    }
   }
 }

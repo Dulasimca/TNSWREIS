@@ -1,35 +1,27 @@
 <div *ngIf="!hideHeader" class="p-col-12 p-md-12 p-lg-12 menu-header no-padding">
     <div class="p-col-12 p-md-12 p-lg-12 no-pad-lt">
-<mat-toolbar color="primary">
-    <div *ngIf="showMenu" (click)="onToggleSidenav()" fxHide.gt-xs>
-        <span style="float: left;">
-            <i class="pi pi-bars" style="color: whitesmoke;"></i> 
-        </span>
-    </div>
-    <div fxLayoutAlign="center center" fxLayoutGap="5px">
-        <img src="assets/layout/images/TN_Govt_Logo.png" class="menu-logo"> 
-        <span style="color: whitesmoke; font-size: 18px; text-shadow: 1px 1px 2px #54b3b9;">TNSWREIS </span>
-    </div>
-    <div *ngIf="!showMenu" fxFlex fxLayout fxLayoutAlign="end center" fxHide.xs fxHide.sm>
-            <div class="txt-center" style="color: whitesmoke;font-size:20px;"
-            [ngStyle.lt-md]="{'font-size': '16px'}">
-               &nbsp; <span>Government Of Tamilnadu</span><br/>
-                <span>TN ADW Hostel Management</span>
+        <mat-toolbar color="primary">
+            <div *ngIf="showMenu" (click)="onToggleSidenav()" fxHide.gt-xs>
+                <span style="float: left;">
+                    <i class="pi pi-bars" style="color: whitesmoke;"></i>
+                </span>
             </div>
+            <div fxLayoutAlign="center center" fxLayoutGap="5px">
+                <img src="assets/layout/images/TN_Govt_Logo.png" class="menu-logo">
+                <span class="txt-shadow-teal" style="color: whitesmoke; font-size: 18px;">TNSWREIS </span>
+            </div>
+            <div *ngIf="!showMenu" fxFlex="66%" fxLayout fxFlexFill fxLayoutAlign="center center" fxHide.xs fxHide.sm>
+                <div class="txt-center" style="color: whitesmoke;font-size:20px;"
+                    [ngStyle.lt-md]="{'font-size': '16px'}">
+                    &nbsp; <span>Government Of Tamilnadu - ADW Hostel Management</span>
+                </div>
+            </div>
+            <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+                <p-menubar [model]="items"></p-menubar>
+            </div>
+            <div *ngIf="!showMenu" fxFlex fxLayout fxFlexFill fxLayoutAlign="end end">
+                <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()"></button>
+            </div>
+        </mat-toolbar>
     </div>
-    <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="center" fxHide.xs fxHide.sm>
-        <div class="txt-center" style="color: whitesmoke;font-size:20px;"
-        [ngStyle.lt-md]="{'font-size': '16px'}">
-           &nbsp; <span>Government Of Tamilnadu</span><br/>
-            <span>TN ADW Hostel Management</span>
-        </div>
-</div>
-    <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
-        <p-menubar [model]="items"></p-menubar>
-    </div>
-    <div *ngIf="!showMenu" fxFlex fxLayout fxLayoutAlign="end">
-        <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()" ></button>
-    </div>
-  </mat-toolbar>
-</div>
 </div>
