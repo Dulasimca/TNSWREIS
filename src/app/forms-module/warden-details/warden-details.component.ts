@@ -1,4 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -17,26 +19,27 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 export class WardenDetailsComponent implements OnInit {
 
   wardenName: string;
+  wardenId: number;
   gender: any;
   genderOptions: SelectItem[];
   talukOptions: SelectItem[];
   districtOptions: SelectItem[];
   hostelOptions: SelectItem[];
   qualificationOptions: SelectItem[];
-  dob: number;
-  servicedoj: number;
-  doj: number;
-  hostelJoin: number;
-  hstlLeaveDate: number;
-  qualification: string;
+  dob: any;
+  servicedoj: any;
+  hostelJoin: any;
+  hstlLeaveDate: any;
+  qualification: any;
   designation: string;
-  hostelName: string;
+  hostelName: number;
   email: any;
   yearRange: string;
   taluk: number;
-  district: any;
+  district: number;
+  nativeDistrict: number;
   mobNo: number;
-  altMobNo: number
+  altMobNo: number;
   addressOne: any;
   addressTwo: any;
   pincode: any;
@@ -51,7 +54,8 @@ export class WardenDetailsComponent implements OnInit {
   showTable: boolean;
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
 
-  constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer, private _tableConstants: TableConstants) { }
+  constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer, private _tableConstants: TableConstants, 
+    private _datePipe:DatePipe) { }
 
   ngOnInit(): void {
     this.cols = this._tableConstants.wardenTableColumns;
@@ -61,7 +65,7 @@ export class WardenDetailsComponent implements OnInit {
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-    this.hostels = this.masterService.getMaster('HN');
+    // this.hostels = this.masterService.getMaster('HN');
     this.courses = this.masterService.getMaster('CU');
   }
 
@@ -79,7 +83,7 @@ export class WardenDetailsComponent implements OnInit {
         this.genderOptions = genderSelection;
         this.genderOptions.unshift({ label: '-select-', value: null });
         break;
-        case 'D':
+        case 'DT':
           this.districts.forEach(d => {
             districtSelection.push({ label: d.name, value: d.code });
           })
@@ -88,7 +92,9 @@ export class WardenDetailsComponent implements OnInit {
           break;
           case 'T':
             this.taluks.forEach(t => {
-              talukSelection.push({ label: t.name, value: t.code });
+              if (t.dcode === this.district) {
+                talukSelection.push({ label: t.name, value: t.code });
+              }
             })
             this.talukOptions = talukSelection;
             this.talukOptions.unshift({ label: '-select-', value: null });
@@ -107,6 +113,7 @@ export class WardenDetailsComponent implements OnInit {
                 this.qualificationOptions = courseSelection;
                 this.qualificationOptions.unshift({ label: '-select-', value: null });
                 break;
+               
       }
     }
     selectDistrict() {
@@ -118,7 +125,8 @@ export class WardenDetailsComponent implements OnInit {
       if (this.district !== null && this.district !== undefined) {
         this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
           if (res !== null && res !== undefined && res.length !== 0) {
-            this.hostels = res;
+            this.hostels = res.Table;
+            console.log('h',res);
           };
   
         })
@@ -135,26 +143,27 @@ export class WardenDetailsComponent implements OnInit {
     const params =  {
       'Name' : this.wardenName,
       'GenderId': this.gender,
-      'DOB' : this.dob,
+      'DOB' : this._datePipe.transform(this.dob, 'yyyy-MM-dd'),
       'Qualification' : this.qualification,
-      'HostelId': 1,
-      'HostelJoinedDate' : this.hostelJoin,
-      'ServiceJoinedDate': this.servicedoj,
+      'HostelId': this.hostelName,
+      'HostelJoinedDate' : this._datePipe.transform(this.hostelJoin, 'yyyy-MM-dd'),
+      'ServiceJoinedDate': this._datePipe.transform(this.servicedoj, 'yyyy-MM-dd'),
       'Designation': this.designation,
       'EMail': this.email,
       'PhoneNo': this.mobNo,
       'AlternateNo': this.altMobNo,
       'Address1': this.addressOne,
       'Address2': this.addressTwo,
-      'Districtcode': this.district.value,
+      'Districtcode': this.district,
       'Talukid': this.taluk,
       'Pincode': this.pincode,
       'Flag': 1,
-      'WardenId': 0
+      'WardenId': this.wardenId
 
     };
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
       if (res) {
+        this.onView();
         this.clearform();
         this.messageService.clear();
         this.messageService.add({
@@ -195,22 +204,25 @@ export class WardenDetailsComponent implements OnInit {
   onEdit(selectedRow){
     if(selectedRow !== null && selectedRow !==undefined){
     this.wardenName = selectedRow.Name;
-    // this.gender = selectedRow.GenderId;
-    // this.genderOptions = [{ label: selectedRow.Gender, value: selectedRow.GenderId }];
-    // this.dob = selectedRow.DOB;
+    this.wardenId = selectedRow.WardenId;
+    this.gender = selectedRow.GenderId;
+    this.genderOptions = [{ label: selectedRow.GenderName, value: selectedRow.GenderId }];
+    this.dob = new Date(selectedRow.DOB);
     this.designation = selectedRow.Designation;
     this.qualification = selectedRow.Qualification;
     this.qualificationOptions = [{ label: selectedRow.CourseName, value: selectedRow.Qualification }];
-    // this.servicedoj = selectedRow.ServiceJoinedDate;
-    // this.hostelName = selectedRow.HostelId;
-    // this.hostelJoin = selectedRow.HostelJoinedDate;
+    this.servicedoj = new Date(selectedRow.ServiceJoinedDate);
+    this.hostelJoin = new Date(selectedRow.HostelJoinedDate);
     this.email = selectedRow.EMail;
     this.mobNo = selectedRow.PhoneNo;
     this.addressOne = selectedRow.Address1;
     this.addressTwo = selectedRow.Address2;
     this.district = selectedRow.Districtcode;
-    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }]
+    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
+    this.hostelName = selectedRow.HostelId;
+    this.hostelOptions = [{ label: selectedRow.HostelName , value: selectedRow.Slno}];
     this.taluk = selectedRow.Talukid;
+    this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
     this.altMobNo = selectedRow.AlternateNo;
     this.pincode = selectedRow.Pincode;
     }
@@ -222,5 +234,6 @@ export class WardenDetailsComponent implements OnInit {
     this.districtOptions = [];
     this.genderOptions = [];
     this.qualificationOptions = [];
+    this.hostelOptions = [];
   }
 }

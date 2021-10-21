@@ -9,20 +9,18 @@ export class LocationService {
   public lat;
   public lng;
 
-  constructor() { }
+  constructor() {
+    this.getLocation();
+   }
 
-  async getLocation(): Promise<any> {
-    console.log('inside loc');
+  getLocation(): [string, string] {
+    console.log('inside loc service');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
         if (position) {
-          console.log("Latitude: " + position.coords.latitude +
-            "Longitude: " + position.coords.longitude);
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
-          console.log(this.lat);
-          console.log(this.lat);
-          return (this.lat, this.lng) as Promise<any>;
+          return [this.lat, this.lng];
         } 
       },
         (error: GeolocationPositionError) => 
@@ -31,9 +29,9 @@ export class LocationService {
           return (error);
         });
     } else {
-      return of('Please try again!')
+      return ['Please try again', '']
     }
-  return of(this.lng, this.lat);
+  return [this.lat, this.lng];
 
   }
   

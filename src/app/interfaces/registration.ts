@@ -1,9 +1,10 @@
 export interface Registration {
+ //   constructor() {}
     studentId: number;
     hostelId: number;
     studentName: string;
     age: number;
-    dob: string;
+    dob: any;
     bloodGroup: number;
     gender: number;
     motherTongue: number;
@@ -57,7 +58,7 @@ export interface Registration {
     guardianMobileNo: string;
     guardianQualification: string;
     totalYIncome: number;
-    documentId: number,
+    documentId: number;
     incomeCertificateFilename: string;
     tcFilename: string;
     bankPassbookFilename: string;

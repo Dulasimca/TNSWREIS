@@ -32,7 +32,7 @@ import { HostelmasterComponent } from './master/hostelmaster/hostelmaster.compon
 import { WardenDetailsComponent } from './forms-module/warden-details/warden-details.component';
 import { CameraComponent } from './Feature-module/camera/camera.component';
 import { CommodityMasterComponent } from './master/commodity-master/commodity-master.component';
-import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
+import { OpeningBalanceComponent } from './forms-module/opening-balance/opening-balance.component';
 
 import { MasterService } from './services/master-data.service';
 import { RestAPIService } from './services/restAPI.service';
@@ -53,7 +53,11 @@ import { PasswordModule } from "primeng/password";
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 
 import { LocationService } from './services/location.service';
-import { AttendanceReportComponent } from './Report/attendance-report/attendance-report.component';
+import { AttendanceReportComponent } from './Reports/attendance-report/attendance-report.component';
+import { WardenReportComponent } from './Reports/warden-report/warden-report.component';
+import { AttendanceImageComponent } from './forms-module/attendance-image/attendance-image.component';
+import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
+import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
  //import { DataTableModule } from 'primeng/primeng';
 // import { PaginatorModule } from 'primeng/primeng';
 
@@ -82,7 +86,11 @@ import { AttendanceReportComponent } from './Report/attendance-report/attendance
     AttendanceComponent,
     ChangePasswordComponent,
     IdCardInfoComponent,
-    AttendanceReportComponent
+    AttendanceReportComponent,
+    WardenReportComponent,
+    AttendanceImageComponent,
+    DailyconsumptionReportComponent,
+    PurchaseorderReportComponent
   ],
   imports: [
     BrowserModule,
