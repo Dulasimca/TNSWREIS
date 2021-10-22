@@ -52,6 +52,7 @@ export class WardenDetailsComponent implements OnInit {
   hostels?: any;
   courses?: any;
   showTable: boolean;
+  disableTaluk: boolean;
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
 
   constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer, private _tableConstants: TableConstants, 
@@ -67,6 +68,7 @@ export class WardenDetailsComponent implements OnInit {
     this.taluks = this.masterService.getMaster('TK');
     // this.hostels = this.masterService.getMaster('HN');
     this.courses = this.masterService.getMaster('CU');
+    this.disableTaluk = true;
   }
 
   onSelect(type) {
@@ -91,6 +93,9 @@ export class WardenDetailsComponent implements OnInit {
           this.districtOptions.unshift({ label: '-select-', value: null });
           break;
           case 'T':
+            if(this.district !== undefined && this.district !== null) {
+              this.disableTaluk = false;
+            }
             this.taluks.forEach(t => {
               if (t.dcode === this.district) {
                 talukSelection.push({ label: t.name, value: t.code });
@@ -113,9 +118,14 @@ export class WardenDetailsComponent implements OnInit {
                 this.qualificationOptions = courseSelection;
                 this.qualificationOptions.unshift({ label: '-select-', value: null });
                 break;
-               
       }
     }
+
+    resetField() {
+      this.taluk = null;
+      this.talukOptions = [];
+    }
+
     selectDistrict() {
       const params = {
         'Type': 1,

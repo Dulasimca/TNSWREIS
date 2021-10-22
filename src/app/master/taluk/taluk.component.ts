@@ -74,7 +74,7 @@ export class TalukComponent implements OnInit {
       'Districtcode': this.selectdistrict.value,
       'Talukname': this.taluk,  
       'Talukcode': "A",   
-      'Flag': 1,   
+      'Flag': (this.selectedType *1),   
     };
     console.log(params)
     this.restApiService.post(PathConstants.TalukMaster_post, params).subscribe(res => {
@@ -83,6 +83,7 @@ export class TalukComponent implements OnInit {
         if (res) {
 
           this.blockUI.stop();
+          this.onview();
           this.onClear();
           this.messageService.clear();
           this.messageService.add({
