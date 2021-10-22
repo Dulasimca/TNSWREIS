@@ -7,13 +7,27 @@
                     <form #f="ngForm" name="hostelimageForm">
                         <div class="p-col-12 p-md-12 p-lg-12 ">
                             <div class="p-grid">
-                                <div class="p-col-12 p-md-6 p-lg-2 ">
-                                    <div class="actionBtn" (click)="camera()" title="Take Picture">📸</div>
-                                </div>
-                                <div class="p-col-12 p-md-6 p-lg-2 ">
-                                    <button pButton type="button" class="p-col-12" label="Capture" (click)="capture()" icon="pi pi-camera"
-                                        class="btn-bg"></button>
-                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-4">
+                                <div class="no-pad-top"><label>Hostel Name</label> </div>
+                                <input type="text" [(ngModel)]="hostelname" name="hostelname" readonly="true" pInputText required />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div class="no-pad-top"><label>District Name</label> </div>
+                                <input type="text" name="districtname" pInputText [(ngModel)]="districtname"
+                                    placeholder="District Name" readonly="true" required />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div class="no-pad-top"><label>Taluk Name</label> </div>
+                                <input type="text" name="talukname" [(ngModel)]="talukname" readonly="true" placeholder="Taluk Name" pInputText required />
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12"></div>
+                            <div class="p-col-12 p-md-12 p-lg-12">
+                            <div class="p-grid">
+                                <div class="actionBtn" (click)="camera()" title="Take Picture">📸</div>
+                                <button pButton type="button" class="p-col-12" label="Capture" (click)="capture()" icon="pi pi-camera"
+                                class="btn-bg"></button>
+                            </div>
+                        </div>
                                 <div *ngIf="openCamera" >
                                     <app-camera (pictureTaken)="handleImage($event)" [capture]="triggerObservable" (triggerCamera)="captureImage()"  style="margin-left: 3%;" ></app-camera> 
                                 </div>
