@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'foodmaster',component:FoodmasterComponent},
-  // { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
+  { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
@@ -58,11 +58,7 @@ const routes: Routes = [
   { path: 'changepassword', component:ChangePasswordComponent},
   {path:'attendancereport', component:AttendanceReportComponent},
   { path: 'attendance-image', component:AttendanceImageComponent},
-  { path: 'hostelmaster', component:HostelReportComponent, canActivate: [AuthGuard]}
-
-
-
-
+  { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

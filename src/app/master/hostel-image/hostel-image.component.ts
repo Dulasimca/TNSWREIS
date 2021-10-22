@@ -16,6 +16,9 @@ export class HostelImageComponent implements OnInit {
   location: any;
   openCamera: boolean;
   login_user: User;
+  hostelname: string;
+  districtname: string;
+  talukname: string;
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
 
