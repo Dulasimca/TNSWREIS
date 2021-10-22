@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -15,11 +16,11 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 })
 export class WardenReportComponent implements OnInit {
   districtOptions: SelectItem[];
-  district: number;
+  district: any;
   talukOptions: SelectItem[];
-  taluk: number;
+  taluk: any;
   statusOptions: SelectItem[];
-  status: number;
+  status: any;
   wardenDetailsCols: any;
   wardenDetails: any[] = [];
   wardenDetailsAll: any[] = [];
@@ -29,12 +30,13 @@ export class WardenReportComponent implements OnInit {
   taluks?: any;
   logged_user: User;
   show: boolean;
-
   wardenName: any;
   endDate: any;
   joinDate: any;
+  
   constructor(private _tableConstants: TableConstants, private _restApiService: RestAPIService,
-    private _messageService: MessageService, private _authService: AuthService, private _masterService: MasterService) { }
+    private _messageService: MessageService, private _authService: AuthService, 
+    private _masterService: MasterService, private _datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.wardenDetailsCols = this._tableConstants.wardenDetailsReportColumns;
@@ -67,7 +69,9 @@ export class WardenReportComponent implements OnInit {
           districtSelection.push({ label: d.name, value:d.code });
         })
         this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: '-select-', value: null});
+        this.districtOptions.unshift( {label: 'All', value: 0});
+        this.districtOptions.unshift( {label: '-select-', value: 'null'});
+
         break;
       case 'T':
         var filtered_taluks = [];
@@ -84,24 +88,34 @@ export class WardenReportComponent implements OnInit {
           }
         })
         this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: '-select-', value: null});
+        this.talukOptions.unshift({ label: 'All', value: 0});
+        this.talukOptions.unshift( {label: '-select-', value: 'null'});
         break;
       }
     }
   }
-
   loadTable() {
     this.wardenDetailsAll = [];
+    if(this.district !== undefined && this.district !== null && this.taluk !== undefined && 
+      this.taluk !== null){
     this.loading = true;
     const params = {
-      'DCode': this.district,
-      'TCode': this.taluk
+      'Districtcode': this.district,
+      'Talukid': this.taluk
     }
-    this._restApiService.getByParameters(PathConstants.WardenDetails_Report_Get, params).subscribe(res => {
-      if (res !== undefined && res !== null && res.length !== 0) {
-        this.wardenDetailsAll = res.slice(0);
+    this._restApiService.post(PathConstants.WardenDetails_Report_Post, params).subscribe(res => {
+      if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
+        console.log('true')
+        res.Table.forEach(r => {
+          r.HostelJoinedDate = this._datePipe.transform(r.HostelJoinedDate, 'yyyy-MM-dd');
+          r.ServiceJoinedDate = this._datePipe.transform(r.ServiceJoinedDate, 'yyyy-MM-dd');
+          r.EndDate = (r.EndDate !== null) ? this._datePipe.transform(r.EndDate, 'yyyy-MM-dd') : null;
+        })
+        this.wardenDetails = res.Table;
+        this.wardenDetailsAll = res.Table;
         this.loading = false;
       } else {
+        console.log('false')
         this.loading = false;
         this._messageService.clear();
         this._messageService.add({
@@ -111,26 +125,27 @@ export class WardenReportComponent implements OnInit {
       }
     })
   }
-
+}
   filterTable() {
     if (this.wardenDetailsAll.length !== 0 && this.status !== undefined && this.status !== null) {
       if (this.status === 1) {
         this.wardenDetails = this.wardenDetailsAll.filter(f => {
-          return f.Flag === 1;
+          return f.Flag;
         })
       } else if (this.status === 2) {
         this.wardenDetails = this.wardenDetailsAll.filter(f => {
-          return f.Flag === 0;
+          return !f.Flag;
         })
       } else {
         this.wardenDetails = this.wardenDetailsAll;
       }
     }
   }
-onEdi() {
-  this.show = true;
-}
 onEdit(row) {
+ this.show = true;
+ this.wardenName = row.WardenName;
+ this.joinDate = row.HostelJoinedDate;
+}
+ onSubmit() {}
+}
 
-}
-}

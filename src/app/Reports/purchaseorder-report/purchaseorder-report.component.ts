@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -18,9 +19,8 @@ export class PurchaseorderReportComponent implements OnInit {
   district: any;
   taluk: any;
   hostelName: any;
-  consumptionData: any[] = [];
-  consumptionCols: any;
-  consumptionDetails: any[] = [];
+  purchaseData: any[] = [];
+  purchaseCols: any[] = [];
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
   hostelOptions: SelectItem[];
@@ -32,12 +32,13 @@ export class PurchaseorderReportComponent implements OnInit {
   hostels?: any;
   loading: boolean;
   logged_user: User;
+  totalRecords: number;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
-    private _messageService: MessageService, private _authService: AuthService) { }
+    private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    // this.consumptionCols = this._tableConstants.pur;
+    this.purchaseCols = this._tableConstants.purchaseDetailsReportColumns;
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 70;
     this.yearRange = start_year_range + ':' + current_year;
@@ -64,7 +65,8 @@ export class PurchaseorderReportComponent implements OnInit {
           districtSelection.push({ label: d.name, value:d.code });
         })
         this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: 'All', value: 'All'});
+        this.districtOptions.unshift( {label: 'All', value: 0});
+        this.districtOptions.unshift( {label: '-select-', value: 'null'});
         this.changeDistrict();
         break;
       case 'T':
@@ -82,7 +84,8 @@ export class PurchaseorderReportComponent implements OnInit {
           }
         })
         this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: 'All', value: 'All'});
+        this.talukOptions.unshift({ label: 'All', value: 0});
+        this.talukOptions.unshift( {label: '-select-', value: 'null'});
         break;
       
     }
@@ -106,25 +109,30 @@ export class PurchaseorderReportComponent implements OnInit {
     }
       console.log('sel', this.hostelOptions, hostelSelection)
       this.hostelOptions = hostelSelection;
-      this.hostelOptions.unshift({ label: 'All', value: 'All' });
+      this.hostelOptions.unshift({ label: 'All', value: 0 });
+      this.hostelOptions.unshift({ label: '-select-', value: 'null' });
     }
     loadTable() {
      // this.changeDistrict();
-      this.consumptionDetails = [];
+      this.purchaseData = [];
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
         this.hostelName !== null && this.hostelName !== undefined && this.fromDate !== null && this.hostelName !==undefined &&
         this.toDate !==null && this.toDate !== undefined){
       this.loading = true;
       const params = {
-        'DCode': this.district,
-        'TCode': this.taluk,
-        'HCode': this.hostelName,
-        'FromDate': this.fromDate,
-        'ToDate': this.toDate
+        'Districtcode': this.district,
+        'Talukid': this.taluk,
+        'HostelId': this.hostelName,
+        'FromDate': this._datePipe.transform(this.fromDate, 'MM/dd/yyyy'),
+        'ToDate': this._datePipe.transform(this.toDate, 'MM/dd/yyyy')
       }
-      this.restApiService.getByParameters('', params).subscribe(res => {
-        if (res !== undefined && res !== null && res.length !== 0) {
-          this.consumptionDetails = res.slice(0);
+      this.restApiService.post(PathConstants.PurchaseOrder_Report_Post, params).subscribe(res => {
+        if (res !== undefined && res !== null && res.Table.length !== 0) {
+          res.Table.forEach(r => {
+            r.BillDate = this._datePipe.transform(r.BillDate, 'MM/dd/yyyy');
+          })
+          this.purchaseData = res.Table;
+          this.totalRecords = this.purchaseData.length;
           this.loading = false;
         } else {
           this.loading = false;

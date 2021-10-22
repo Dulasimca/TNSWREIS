@@ -10,13 +10,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import {​​​​​​​​​ DatePipe }​​​​​​​​​ from'@angular/common';
 
+
 @Component({
   selector: 'app-attendance-image',
   templateUrl: './attendance-image.component.html',
   styleUrls: ['./attendance-image.component.css']
 })
 export class AttendanceImageComponent implements OnInit {
-  date: Date;
+  date: Date = new Date();
   districts : any;
   districtname: any;
   DistrictId : number; 
@@ -36,25 +37,21 @@ export class AttendanceImageComponent implements OnInit {
   data: any;
   NoOfStudent:number;
   AttendanceId:number;
-  latitude: any;
-  longitude: any;
   uploadimage: any;
   Slno: any;
   cols: any;
-  constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService, private masterService: MasterService,private datepipe: DatePipe) { }
+  showDialog: boolean;
+  hostelImage : string;
+  constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService, private masterService: MasterService,private datepipe: DatePipe
+    ) { }
   
   ngOnInit(): void {
     this.cols = [
-      { field: 'Slno', header: 'ID', width: '100px'},
+      { field: 'DistrictName', header: 'District', width: '100px'},
+      { field: 'TalukName', header: 'Taluk', width: '100px'},
+      { field: 'HostelName', header: 'Hostel', width: '100px'},
       { field: 'Uploaddate', header: 'Date', width: '100px'},
-      { field: 'Districtcode', header: 'District', width: '100px'},
-      { field: 'Talukid', header: 'Taluk', width: '100px'},
-      { field: 'HostelID', header: 'Hostel', width: '100px'},
-      { field: 'AttendanceId', header: 'Attendance', width: '100px'},
       { field: 'Remarks', header: 'Remarks', width: '100px'},
-      { field: 'ImageName', header: 'Image Name', width: '100px'},
-      { field: 'Latitute', header: 'Latitude', width: '100px'},
-      { field: 'Longitude', header: 'Longitude', width: '100px'},
     ];
     this.Slno = 0;
     this.NoOfStudent=0;
@@ -85,14 +82,14 @@ export class AttendanceImageComponent implements OnInit {
     const params = {
       'Slno': this.Slno != undefined ? this.Slno : 0,
       'Id': 0, 
-      'Uploaddate': this.date, 
+      'Uploaddate': this.datepipe.transform(this.date,'MM/dd/yyyy'), 
       'Districtcode': this.DistrictId, 
       'Talukid': this.TalukId, 
       'HostelID': this.HostelId, 
       'AttendanceId': this.AttendanceId,
       'Remarks': this.remarks, 
-      'Latitute': this.latitude,
-      'Longitude': this.longitude,
+      'Latitute': this.location[0],
+      'Longitude': this.location[1],
       'uploadImage': this.webcamImage,
       'Flag': 1, 
     }
@@ -111,6 +108,7 @@ export class AttendanceImageComponent implements OnInit {
   }
   GetAttendanceInfo()
   {
+    this.NoOfStudent=0;
     const params={​​​​​​​​​
     'HostelID' :this.HostelId != undefined && this.HostelId != null ? this.HostelId : 0, 
     'Districtcode' :this.DistrictId != undefined && this.DistrictId != null ? this.DistrictId : 0 ,
@@ -146,11 +144,21 @@ export class AttendanceImageComponent implements OnInit {
     }
     this.restApiService.getByParameters(PathConstants.AttendanceImage_Get,params).subscribe(res => {
       if(res !== null && res !== undefined && res.length !==0) {
+        res.Table.forEach(i => {
+          i.url = 'assets/layout/'+i.HostelID +'/' + i.ImageName;
+          console.log('url',i.url);
+        })
         this.data = res.Table;
       }
       
     });
   }
+  
+  showImage(url) {
+    this.showDialog = true;
+    this.hostelImage = url;
+  }
+
   camera() {
     this.openCamera = true;
     this.location = this._locationService.getLocation();
