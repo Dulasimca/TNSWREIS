@@ -26,6 +26,7 @@ import { WardenReportComponent } from './Reports/warden-report/warden-report.com
 import { AttendanceImageComponent } from './forms-module/Attendance-image/Attendance-image.component';
 import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
+import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -33,7 +34,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'foodmaster',component:FoodmasterComponent},
-  { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
+  // { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
@@ -56,7 +57,9 @@ const routes: Routes = [
   { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},
   {path:'attendancereport', component:AttendanceReportComponent},
-  { path: 'attendance-image', component:AttendanceImageComponent}
+  { path: 'attendance-image', component:AttendanceImageComponent},
+  { path: 'hostelmaster', component:HostelReportComponent, canActivate: [AuthGuard]}
+
 
 
 

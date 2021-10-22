@@ -66,7 +66,6 @@ export class HostelImageComponent implements OnInit {
   camera() {
     this.openCamera = true;
     this.location = this._locationService.getLocation();
-    console.log('loc', this.location);
   }
 
   capture() {
