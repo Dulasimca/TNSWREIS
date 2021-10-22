@@ -51,6 +51,22 @@ export class TableConstants {
             { field: 'EMail', header: 'Email'},
             { field: 'PhoneNo', header: 'Phone No'},
             { field: 'EndDate', header: 'Service End Date'},
+        ];
+
+        this.registrationColumns = [
+            { field: 'studentName', header: 'Name'},
+            { field: 'dob', header: 'D.O.B'},
+            { field: 'gender', header: 'Gender'},
+            { field: 'mobileNo', header: 'Mobile No.'},
+            { field: 'instituteName', header: 'Institute Name'},
+            { field: 'courseTitle', header: 'Course'},
+            { field: 'address', header: 'Address'},
+            { field: 'aadharNo', header: 'Aadhar No.'},
+            { field: 'emisno', header: 'EMIS NO.'},
+            { field: 'bankAccNo', header: 'Bank Account No.'},
+            { field: 'fatherName', header: 'Father Name'},
+            { field: 'fatherMoileNo', header: 'Father Mobile No'},
+            { field: 'totalYIncome', header: 'Yearly Income'},
 
         ]
     }
