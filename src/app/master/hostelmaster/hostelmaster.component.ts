@@ -7,6 +7,8 @@ import { MasterService } from 'src/app/services/master-data.service';
 import { NgForm } from '@angular/forms';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/Interfaces/user';
 
 
 
@@ -46,9 +48,10 @@ export class HostelmasterComponent implements OnInit {
   Table2?: any;
   Slno: any;
   cols: any;
+  login_user: User;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
-    private masterService: MasterService,private messageService: MessageService) { }
+    private masterService: MasterService,private messageService: MessageService,private _authService: AuthService) { }
 
   public ngOnInit(): void {
    this.cols = [
@@ -62,18 +65,17 @@ export class HostelmasterComponent implements OnInit {
      { field: 'Street', header: 'Street', width: '100px'},
      { field: 'Landmark', header: 'Landmark', width: '100px'},
      { field: 'Pincode', header: 'Pincode', width: '100px'},
-     { field: 'Longitude', header: 'Longitude', width: '100px'},
-     { field: 'Latitude', header: 'Latitude', width: '100px'},
-     { field: 'Radius', header: 'Radius', width: '100px'},
      { field: 'TotalStudent', header: 'TotalStudent', width: '100px'},
      { field: 'Phone', header: 'Phone', width: '100px'},
      { field: 'HostelImage', header: 'HostelImage', width: '100px'},
 
    ];
+   this.login_user = this._authService.UserInfo;
     this.Districtcodes = this.masterService.getMaster('DT');
     this.Hosteltypes = this.masterService.getMaster('HT');
     this.TalukIds = this.masterService.getMaster('TK');
-    this.Slno = 0;
+    this.Slno = this.login_user.hostelId != undefined ? this.login_user.hostelId : 0
+   
   }
   onSelect(type) {
     let hostelSelection = [];
@@ -162,7 +164,7 @@ export class HostelmasterComponent implements OnInit {
   onView() {
     const params = {
       'sType':'0',
-      'HostelId': '1'
+      'HostelId': this.Slno
     }
     
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {

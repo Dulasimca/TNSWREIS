@@ -113,13 +113,13 @@
 
 
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-            <tr [pSelectableRow]="rowData" class="cursor-pointer">
+            <tr [pSelectableRow]="rowData" >
                <td>{{rowIndex+1}}</td>
                 <td *ngFor="let col of columns">
                     {{rowData[col.field]}}
                 </td>
-                <td (click)="LargeImage(rowData.url)">
-                    <img alt="TN ADW Hostel image" [src]="rowData.url" width="32" style="vertical-align: middle" />
+                <td >
+                    <img (click)="LargeImage(rowData.url)" alt="TN ADW Hostel image" [src]="rowData.url" width="32" style="vertical-align: middle" class="cursor-pointer"/>
                 </td>
             </tr>
 
@@ -128,9 +128,9 @@
         </p-table>
     </p-dialog>
 
-            <!-- <p-dialog #dialogheader="Attendance Image" [(visible)]="showDialogLargeImg"[modal]="showDialog">
-            <img alt="TN ADW Hostel image" [src]="ImageUrl"style="vertical-align: middle"/>
-            </p-dialog> -->
+            <p-dialog  header="Attendance Image" [(visible)]="showDialogLargeImg"[modal]="showDialogLargeImg">
+            <img alt="TN ADW Hostel image" [src]="ImageUrl"style="vertical-align: middle" />
+            </p-dialog>
             
             
     </div>

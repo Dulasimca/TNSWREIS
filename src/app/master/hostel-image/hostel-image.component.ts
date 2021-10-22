@@ -16,6 +16,9 @@ export class HostelImageComponent implements OnInit {
   location: any;
   openCamera: boolean;
   login_user: User;
+  hostelname: string;
+  districtname: string;
+  talukname: string;
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
 
@@ -24,6 +27,9 @@ export class HostelImageComponent implements OnInit {
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
      this._locationService.getLocation();
+     this.districtname = this.login_user.districtName;
+     this.talukname = this.login_user.talukName;
+     this.hostelname = this.login_user.hostelName;
   }
   public webcamImage: WebcamImage = null;
 
@@ -66,7 +72,6 @@ export class HostelImageComponent implements OnInit {
   camera() {
     this.openCamera = true;
     this.location = this._locationService.getLocation();
-    console.log('loc', this.location);
   }
 
   capture() {

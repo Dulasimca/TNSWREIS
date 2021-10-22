@@ -48,13 +48,14 @@ export class DistrictComponent implements OnInit {
     const params = {
       'Districtcode': this.districtcode != undefined ? this.districtcode :0, 
       'Districtname': this.Districtname, 
-      'Flag': 1, 
+      'Flag': (this.selectedType * 1),
     };
       this.restApiService.post(PathConstants.DistrictMaster_post, params).subscribe(res => {
         if(res !== undefined && res !== null) {
           if (res) {
            this.blockUI.stop();
-           this.onClear();
+           this.onview();
+          this.onClear();
          this.messageService.clear();
          this.messageService.add({
            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -93,14 +94,15 @@ export class DistrictComponent implements OnInit {
       if(res !== null && res !== undefined && res.length !==0) {
         this.data = res.Table;
         this.data.forEach(i => {
-          i.Flag = (i.Flag) ? 'Active' : 'Inactive';
-        })
+         i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+       })
        
       } 
       
     });
 
   }
+  
 
   onRowSelect(event, selectedRow) {
 

@@ -71,6 +71,7 @@ import { WardenReportComponent } from './Reports/warden-report/warden-report.com
 import { AttendanceImageComponent } from './forms-module/attendance-image/attendance-image.component';
 import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
+import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 import { StudentDetailsComponent } from './Reports/student-details/student-details.component';
 
 @NgModule({
@@ -106,6 +107,7 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
     AttendanceImageComponent,
     DailyconsumptionReportComponent,
     PurchaseorderReportComponent,
+    HostelReportComponent,
     StudentDetailsComponent
   ],
   imports: [

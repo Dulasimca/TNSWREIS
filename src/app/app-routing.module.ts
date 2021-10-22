@@ -26,6 +26,7 @@ import { WardenReportComponent } from './Reports/warden-report/warden-report.com
 import { AttendanceImageComponent } from './forms-module/Attendance-image/Attendance-image.component';
 import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
+import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -56,10 +57,8 @@ const routes: Routes = [
   { path: 'attendance', component:AttendanceComponent},
   { path: 'changepassword', component:ChangePasswordComponent},
   {path:'attendancereport', component:AttendanceReportComponent},
-  { path: 'attendance-image', component:AttendanceImageComponent}
-
-
-
+  { path: 'attendance-image', component:AttendanceImageComponent},
+  { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
