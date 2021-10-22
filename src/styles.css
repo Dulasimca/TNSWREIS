@@ -474,3 +474,13 @@ main {
 .p-menubar .p-menuitem.p-menuitem-active>.p-menuitem-link {
     background: #2a8a91 !important;
 }
+.p-menubar .p-menuitem.p-menuitem-active>.p-menuitem-link .p-menuitem-icon, .p-menubar .p-menuitem.p-menuitem-active>.p-menuitem-link .p-submenu-icon {
+    color: whitesmoke !important;
+}
+.p-menubar-root-list>.p-menuitem-active>p-menubarsub>.p-submenu-list {
+    display: block;
+    width: auto !important;
+}
+.p-menubar .p-menuitem-link .p-menuitem-icon {
+    color: whitesmoke !important;
+}

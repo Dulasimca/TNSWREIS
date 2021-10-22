@@ -2,6 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { ResponseMessage } from '../../Common-Modules/messages';
 import { PathConstants } from '../../Common-Modules/PathConstants';
 import { MasterService } from '../../services/master-data.service';
@@ -27,20 +29,26 @@ export class OpeningBalanceComponent implements OnInit {
   data: any = [];
   showTable: boolean;
   openingblncId: number;
-  
+  logged_user: User;
   units?: any;
   years?: any;
   commodities?: any;
   @ViewChild('f', { static: false }) _openingBalance: NgForm;
   
 
-  constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService) { }
+  constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
 
     this.units = this.masterService.getMaster('UN');
     this.years = this.masterService.getMaster('AY');
     this.commodities = this.masterService.getMaster('CM');
+    this.logged_user = this.authService.UserInfo;
+    this.district = this.logged_user.districtName;
+    this.taluk = this.logged_user.talukName;
+    this.hostelName = this.logged_user.hostelName;
+
   }
   onSelect(type) {
     let unitSelection = [];

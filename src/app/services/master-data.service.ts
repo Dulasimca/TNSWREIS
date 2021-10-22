@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PathConstants } from '../Common-Modules/PathConstants';
+import { User } from '../interfaces/user';
+import { AuthService } from './auth.service';
 import { RestAPIService } from './restAPI.service';
 
 @Injectable({
@@ -9,20 +11,24 @@ import { RestAPIService } from './restAPI.service';
 
 export class MasterService {
     masterData?: any = [];
+    districtData?: any = [];
+    talukData?: any = [];
     days?: any = [];
     data?: any = [];
     commodity?: any = [];
+    log_info: User;
+    roleId: number;
 
-    constructor(private restApiService: RestAPIService) { }
+    constructor(private _restApiService: RestAPIService, private _authService: AuthService) { }
 
     initializeMaster(): Observable<any[]> {
-        this.restApiService.get(PathConstants.DaysMaster_Get).subscribe(res => {
+        this._restApiService.get(PathConstants.DaysMaster_Get).subscribe(res => {
             this.days = res;
         });
-        this.restApiService.get(PathConstants.MasterAll_Get).subscribe(master => {
+        this._restApiService.get(PathConstants.MasterAll_Get).subscribe(master => {
             this.data = master;
         })
-        this.restApiService.get(PathConstants.CommodityMaster_Get).subscribe(commodity => {
+        this._restApiService.get(PathConstants.CommodityMaster_Get).subscribe(commodity => {
             this.commodity = commodity;
         })
         // setTime
@@ -32,14 +38,45 @@ export class MasterService {
         return of(this.data, this.days, this.commodity);
     }
 
-    getMaster(type): any {
+    getDistrictAll() {
+        if (this.data.Table !== undefined && this.data.Table !== null) {
+            this.data.Table.forEach(d => {
+                this.districtData.push({ name: d.DistrictName, code: d.Districtcode });
+            })
+        } else {
+            this.districtData = [];
+        }
+        return this.districtData;
+    }
+
+    getTalukAll() {
+        if (this.data.Table1 !== undefined && this.data.Table1 !== null) {
+            this.data.Table1.forEach(t => {
+                this.talukData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+            })
+        } else {
+            this.talukData = [];
+        }
+        return this.talukData;
+    }
+
+    getMaster(value): any {
+        this.log_info = this._authService.UserInfo;
+        this.roleId = (this.log_info.roleId * 1);
+        console.log('role', this.log_info)
         this.masterData = [];
-        switch (type) {
+        switch (value) {
             //district master
             case 'DT':
                 if (this.data.Table !== undefined && this.data.Table !== null) {
                     this.data.Table.forEach(d => {
-                        this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
+                        if (this.roleId === 1) {
+                            this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
+                        } else {
+                            if ((this.log_info.districtCode * 1) === (d.Districtcode * 1)) {
+                                this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
+                            }
+                        }
                     })
                 } else {
                     this.masterData = [];
@@ -49,7 +86,13 @@ export class MasterService {
             case 'TK':
                 if (this.data.Table1 !== undefined && this.data.Table1 !== null) {
                     this.data.Table1.forEach(t => {
-                        this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+                        if (this.roleId === 1) {
+                              this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+                        } else {
+                            if ((this.log_info.districtCode * 1) === (t.Districtcode * 1)) {
+                                  this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+                            }
+                        }
                     })
                 } else {
                     this.masterData = [];
