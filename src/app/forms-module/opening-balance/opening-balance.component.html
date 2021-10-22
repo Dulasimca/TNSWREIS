@@ -14,19 +14,19 @@
                                             <label for="_district">District<span class="form-mandatory-field">*</span>
                                             </label>
                                             <input type="text" class="p-col-12" name="_district" pInputText
-                                                [(ngModel)]="district" required />
+                                                [(ngModel)]="district" readonly="true" required />
                                         </div>
                                         <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                             <label for="_taluk">Taluk<span class="form-mandatory-field">*</span>
                                             </label>
                                             <input type="text" class="p-col-12" name="_taluk" pInputText
-                                                [(ngModel)]="taluk" required />
+                                                [(ngModel)]="taluk" readonly="true" required />
                                         </div>
                                         <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
                                             <label for="_hostelname">Hostel Name<span
                                                     class="form-mandatory-field">*</span></label>
                                             <input type="text" class="p-col-12" name="_hostelname" pInputText
-                                                [(ngModel)]="hostelName" required />
+                                                [(ngModel)]="hostelName" readonly="true" required />
                                         </div>
                                         <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                             <div class="p-grid">
@@ -44,18 +44,18 @@
                                                         [(ngModel)]="commodityName" (onClick)="onSelect('CN')" required>
                                                     </p-dropdown>
                                                 </div>
-                                                <div class="p-col-12 p-md-12 p-lg-2">
-                                                    <div><label for="_quantity">Quantity<span
-                                                                class="form-mandatory-field">*</span></label></div>
-                                                    <input type="text" class="p-col-12" name="_quantity" pInputText
-                                                        [(ngModel)]="quantity" required />
-                                                </div>
                                                 <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                                     <div><label for="_unit">Unit<span
                                                                 class="form-mandatory-field">*</span></label></div>
                                                     <p-dropdown name="_unit" [options]="unitOptions"
                                                         (onClick)="onSelect('U')" [(ngModel)]="unit" required>
                                                     </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_quantity">Quantity<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text" class="p-col-12" name="_quantity" pInputText
+                                                        [(ngModel)]="quantity" required />
                                                 </div>
                                                 <div class="p-col-12"></div>
                                                 <div class="p-col-12 p-md-6 p-lg-4" style="text-align: right;">
@@ -78,7 +78,7 @@
 <!-- show table -->
 <div *ngIf="showTable" class="table-format">
     <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-        [rowsPerPageOptions]="[10,20,30,40]">
+        [rowsPerPageOptions]="[10,30,50,70,100]">
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 3cm;">S.No</th>
@@ -96,7 +96,7 @@
                 <td>{{rowData.CommodityName}}</td>
                 <td>{{rowData.Qty}}</td>
                 <td>{{rowData.UnitName}}</td>
-                <td><button icon="pi pi-pencil" pButton type="button" (click)="onEdit(rowData)">
+                <td><button icon="pi pi-pencil" pButton type="button" pTooltip="Edit" (click)="onEdit(rowData)">
                     </button></td>
             </tr>
         </ng-template>

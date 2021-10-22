@@ -51,7 +51,7 @@ export class TableConstants {
             { field: 'HostelJoinedDate', header: 'Hostel Joined Date'},
             { field: 'EMail', header: 'Email'},
             { field: 'PhoneNo', header: 'Phone No'},
-            { field: 'EndDate', header: 'Service End Date'},
+            { field: 'EndDate', header: 'Hostel Leaving Date'},
 
         ]
 
