@@ -56,6 +56,8 @@ export class LoginComponent implements OnInit {
                 , roleId: (i.roleId !== undefined && i.roleId !== null) ? i.roleId : null
                 , token: (i.entryptedPwd !== undefined && i.entryptedPwd !== null) ? i.entryptedPwd : ''
                 , hostelName: (i.hostelName !== undefined && i.hostelName !== null) ? i.hostelName : ''
+                , talukName: (i.talukName !==undefined && i.talukName !==null) ? i.talukName : ''
+                , districtName: (i.districtName !==undefined && i.districtName !==null) ? i.districtName : ''
               }
               this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(response => {
                 if (response !== undefined && response !== null && response.length !== 0) {

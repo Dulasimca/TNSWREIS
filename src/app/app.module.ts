@@ -72,6 +72,7 @@ import { AttendanceImageComponent } from './forms-module/attendance-image/attend
 import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
 import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
+import { StudentDetailsComponent } from './Reports/student-details/student-details.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { HostelReportComponent } from './Reports/hostel-report/hostel-report.com
     AttendanceImageComponent,
     DailyconsumptionReportComponent,
     PurchaseorderReportComponent,
-    HostelReportComponent
+    HostelReportComponent,
+    StudentDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -32,9 +32,10 @@ export class AttendanceReportComponent implements OnInit {
   TalukIds?: any;
   disableTaluk: boolean = true;
   data:any;
+  attendanceImgdata : any
   todate:Date = new Date();
   cols: any;
-
+  colsAttendance: any;
   hostelName: number;
   hostels?: any;
   hostelOptions: SelectItem[];
@@ -50,14 +51,16 @@ export class AttendanceReportComponent implements OnInit {
   isTaluk:boolean;
   isHostel:boolean;
   login_user: User;
-
- 
+  showDialog : boolean;
+  showDialogLargeImg : boolean;
+  ImageUrl : string;
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService,private messageService: MessageService,private datepipe: DatePipe,private authService: AuthService) { }
 
   ngOnInit(): void {
-    
+    this.showDialogLargeImg=false;
+    this.showDialog = false;
     this.login_user = this.authService.UserInfo;
     this.Districtcode=this.login_user.districtCode;
     this.TalukId=this.login_user.talukId;
@@ -74,6 +77,12 @@ export class AttendanceReportComponent implements OnInit {
       {field:'NOOfStudent',header: 'Total Student'},
       {field:'Remarks',header: 'Remarks'},
     ];
+
+    this.colsAttendance = [
+      {field:'Uploaddate',header: 'Date'},
+      {field:'CreatedDate',header: 'System Date'},
+    ];
+
     this.DataChangeBasedonRole();
   }
   onSelect(type) {
@@ -235,6 +244,23 @@ export class AttendanceReportComponent implements OnInit {
 }
 showImage(Id)
 {
+  this.showDialog = true;
+  const params={
+    'AttendanceId' : Id != undefined &&Id != null ? Id : 0
+  }
+  this.restApiService.getByParameters(PathConstants.AttendanceImageDetails_Get,params).subscribe(res => {
+   if(res !== null && res !== undefined && res.length !==0) {
+     res.Table.forEach(i => {
+      i.url = 'assets/layout/'+i.HostelID +'/' + i.ImageName;
+     });
+     this.attendanceImgdata = res.Table;
+   }
+ });
+}
+LargeImage(url)
+{
+  this.showDialogLargeImg = true;
+  this. ImageUrl = url
 
 }
 }

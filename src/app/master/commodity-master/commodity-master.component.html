@@ -15,7 +15,7 @@
                                             <div><label for="_commodityname">Commodity Name(in ENGLISH)<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <input type="text" name="_commodityname" pInputText
-                                                [(ngModel)]="commodityName" required />
+                                                [(ngModel)]="commodityName" style="text-transform: capitalize;" required />
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-3">
                                             <div><label for="_commoditytamilname">Commodity Name(தமிழில்)<span
@@ -57,7 +57,7 @@
                 <tr>
                     <th style="width: 3cm;">S.No</th>
                     <th>Commodity Name(ENGLISH)</th>
-                    <th>Commodity Name(TAMIL)</th>
+                    <th>Commodity Name(தமிழ்)</th>
                     <th>Commodity Group</th>
                     <th>Status</th>
                     <th>Edit/Update</th>
@@ -70,7 +70,7 @@
                     <td>{{rowData.NameTamil}}</td>
                     <td>{{rowData.CommodityGroup}}</td>
                     <td>{{rowData.status}}</td>
-                    <td><button icon="pi pi-pencil" pButton type="button" (click)="onEdit(rowData)">
+                    <td><button icon="pi pi-pencil" pButton type="button" pTooltip="Edit" (click)="onEdit(rowData)">
                         </button></td>
                 </tr>
             </ng-template>

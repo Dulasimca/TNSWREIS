@@ -240,6 +240,7 @@ export class ConsumptionComponent implements OnInit {
           this.loading = false;
         } else {
           this.loading = false;
+          this.showDialog = false;
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,

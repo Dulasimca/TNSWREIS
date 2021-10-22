@@ -47,9 +47,7 @@ export class RegistrationComponent implements OnInit {
   ageTxt: string;
   logged_user: User;
   registeredCols: any;
-  registeredDetails: any = [];
-  fromDate: any;
-  toDate: any;
+  registeredDetails: any[] = [];
   loading: boolean;
   showDialog: boolean;
   maxDate: Date = new Date();
@@ -64,7 +62,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private _masterService: MasterService, private _router: Router,
     private _d: DomSanitizer, private _datePipe: DatePipe, private _messageService: MessageService,
-    private _restApiService: RestAPIService, private _authService: AuthService, 
+    private _restApiService: RestAPIService, private _authService: AuthService,
     private _tableConstants: TableConstants) { }
 
   ngOnInit(): void {
@@ -73,9 +71,9 @@ export class RegistrationComponent implements OnInit {
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
     this.bloodgroups = this._masterService.getMaster('BG');
-    this.taluks = this._masterService.getMaster('TK');
+    this.taluks = this._masterService.getTalukAll();
     this.genders = this._masterService.getMaster('GD');
-    this.districts = this._masterService.getMaster('DT');
+    this.districts = this._masterService.getDistrictAll();
     this.languages = this._masterService.getMaster('MT');
     this.castes = this._masterService.getMaster('CS');
     this.classes = this._masterService.getMaster('CL');
@@ -277,45 +275,17 @@ export class RegistrationComponent implements OnInit {
     })
   }
 
-  checkValidDateSelection() {
-    if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== ''
-      && this.fromDate !== null && this.toDate !== null) {
-      let selectedFromDate = this.fromDate.getDate();
-      let selectedToDate = this.toDate.getDate();
-      let selectedFromMonth = this.fromDate.getMonth();
-      let selectedToMonth = this.toDate.getMonth();
-      let selectedFromYear = this.fromDate.getFullYear();
-      let selectedToYear = this.toDate.getFullYear();
-      if ((selectedFromDate > selectedToDate && ((selectedFromMonth >= selectedToMonth && selectedFromYear >= selectedToYear) ||
-        (selectedFromMonth === selectedToMonth && selectedFromYear === selectedToYear))) ||
-        (selectedFromMonth > selectedToMonth && selectedFromYear === selectedToYear) || (selectedFromYear > selectedToYear)) {
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
-          summary: ResponseMessage.SUMMARY_INVALID, detail: ResponseMessage.ValidDateErrorMessage
-        });
-        this.fromDate = null; this.toDate = null;
-      }
-      return this.fromDate, this.toDate;
-    }
-  }
-
   onView() {
     this.showDialog = true;
-    this.fromDate = null;
-    this.toDate = null;
     this.registeredDetails = [];
-  }
-
-  loadRegisteredDetails() {
-    this.checkValidDateSelection();
     this.loading = true;
     const params = {
-      'FDate': this._datePipe.transform(this.fromDate, 'yyyy-MM-dd'),
-      'TDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd')
+      'DCode': this.logged_user.districtCode,
+      'TCode': this.logged_user.talukId,
+      'HCode': this.logged_user.hostelId
     }
-    this._restApiService.get(PathConstants.Registration_Get).subscribe(res => {
-      if(res !== undefined && res !== null && res.length !== 0) {
+    this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
+      if (res !== undefined && res !== null && res.length !== 0) {
         this.registeredDetails = res.slice(0);
         this.loading = false;
       } else {
@@ -329,7 +299,21 @@ export class RegistrationComponent implements OnInit {
   }
 
   onEdit(row, index) {
-
+    if (row !== undefined && row !== null) {
+      this.showDialog = false;
+      this.registeredDetails.forEach(detail => {
+        this.obj = detail;
+        this.classOptions = [{ label: detail.class, value: detail.classId }];
+        this.casteOptions = [{ label: detail.casteName, value: detail.caste }];
+        this.talukOptions = [{ label: detail.Talukname, value: detail.talukCode }];
+        this.genderOptions = [{ label: detail.genderName, value: detail.gender }];
+        this.districtOptions = [{ label: detail.Districtname, value: detail.distrctCode }]
+        this.religionOptions = [{ label: detail.religionName, value: detail.religion }]
+        this.motherTongueOptions = [{ label: detail.mothertongueName, value: detail.motherTongue }]
+        this.bloodGroupOptions = [{ label: detail.bloodgroupName, value: detail.bloodGroup }]
+        console.log('it', detail, this.obj);
+      })
+    }
   }
 
   onDelete(row, index) {

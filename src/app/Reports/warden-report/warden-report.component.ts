@@ -30,10 +30,10 @@ export class WardenReportComponent implements OnInit {
   taluks?: any;
   logged_user: User;
   show: boolean;
-
   wardenName: any;
   endDate: any;
   joinDate: any;
+  
   constructor(private _tableConstants: TableConstants, private _restApiService: RestAPIService,
     private _messageService: MessageService, private _authService: AuthService, 
     private _masterService: MasterService, private _datePipe: DatePipe) { }
@@ -69,7 +69,9 @@ export class WardenReportComponent implements OnInit {
           districtSelection.push({ label: d.name, value:d.code });
         })
         this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: 'All', value: null});
+        this.districtOptions.unshift( {label: 'All', value: 0});
+        this.districtOptions.unshift( {label: '-select-', value: 'null'});
+
         break;
       case 'T':
         var filtered_taluks = [];
@@ -86,12 +88,12 @@ export class WardenReportComponent implements OnInit {
           }
         })
         this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: 'All', value: null});
+        this.talukOptions.unshift({ label: 'All', value: 0});
+        this.talukOptions.unshift( {label: '-select-', value: 'null'});
         break;
       }
     }
   }
-
   loadTable() {
     this.wardenDetailsAll = [];
     if(this.district !== undefined && this.district !== null && this.taluk !== undefined && 
@@ -139,16 +141,11 @@ export class WardenReportComponent implements OnInit {
       }
     }
   }
-  
-// onEdi() {
-//   this.show = true;
-// }
 onEdit(row) {
  this.show = true;
  this.wardenName = row.WardenName;
  this.joinDate = row.HostelJoinedDate;
 }
-
  onSubmit() {}
 }
 
