@@ -78,8 +78,8 @@ export class HostelReportComponent implements OnInit {
     ];
      this.Slno = 0;
      this.login_user = this._authService.UserInfo;
-     this.Districtcode=this.login_user.districtCode;
-     this.TalukId=this.login_user.talukId;
+     this.districtname = this.login_user.districtName;
+     this.talukname = this.login_user.talukName;
      this.hostelname=this.login_user.hostelName;
     this.role=this.login_user.roleId;
       

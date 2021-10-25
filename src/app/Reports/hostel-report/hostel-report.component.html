@@ -8,25 +8,18 @@
                         <div class="p-col-12 p-md-12 p-lg-12 ">
                             <div class="p-grid">
                                 <div class="p-col-12 p-md-6 p-lg-2 ">
-                                    <div><label for="_Hosteltype">Hostel</label></div>
-                                    <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
-                                        [(ngModel)]="Hosteltype" 
-                                        required>
-                                    </p-dropdown>
+                                    <div class="no-pad-top"><label>Hostel Name</label> </div>
+                                    <input type="text" [(ngModel)]="hostelname" name="hostelname" readonly="true" pInputText required />
+                                
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <label for="_Districtcode">District</label>
-                                    <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
-                                        class="p-col-10" [(ngModel)]="Districtcode" 
-                                         required>
-                                    </p-dropdown>
+                                    <div class="no-pad-top"><label>District Name</label> </div>
+                                <input type="text" name="districtname" pInputText [(ngModel)]="districtname"
+                                    placeholder="District Name" readonly="true" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <label for="_TalukId">Taluk</label>
-                                    <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions"
-                                        class="p-col-10" [(ngModel)]="TalukId" 
-                                        required>
-                                    </p-dropdown>
+                                    <div class="no-pad-top"><label>Taluk Name</label> </div>
+                                    <input type="text" name="talukname" [(ngModel)]="talukname" readonly="true" placeholder="Taluk Name" pInputText required />
                                 </div>
                                  <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="View" icon="pi pi-eye" style="margin-left:5%;" (click)="onview()"></button>

@@ -8,23 +8,23 @@
                         <div class="p-col-12 p-md-12 p-lg-12 ">
                             <div class="p-grid">
                                 <div class="p-col-12 p-md-6 p-lg-2 ">
-                                    <div><label for="_Hosteltype">Hostel Type</label></div>
+                                    <div><label for="_Hosteltype">Hostel Name</label></div>
                                     <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
-                                        [(ngModel)]="Hosteltype" 
+                                        [(ngModel)]="Hosteltype" (onClick)="onSelect('HT')"
                                         required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <label for="_Districtcode">Districtcode</label>
+                                    <label for="_Districtcode">District</label>
                                     <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
-                                        class="p-col-10" [(ngModel)]="Districtcode" 
+                                        class="p-col-10" [(ngModel)]="Districtcode" (onClick)="onSelect('DT')"
                                          required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <label for="_TalukId">TalukId</label>
+                                    <label for="_TalukId">Taluk</label>
                                     <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions"
-                                        class="p-col-10" [(ngModel)]="TalukId" 
+                                        class="p-col-10" [(ngModel)]="TalukId" (onClick)="onSelect('TK')"
                                         required>
                                     </p-dropdown>
                                 </div>

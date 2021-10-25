@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/Interfaces/user';
 import { AuthService } from 'src/app/Services/auth.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class AttendanceComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) attendanceForm: NgForm;
   constructor( private http: HttpClient, private restApiService: RestAPIService, 
-    private masterService: MasterService, private messageService: MessageService, private authService: AuthService) { }
+    private masterService: MasterService, private messageService: MessageService, private authService: AuthService,private datepipe: DatePipe) { }
   ngOnInit(): void {
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
@@ -129,8 +130,8 @@ export class AttendanceComponent implements OnInit {
       'HostelID' : this.HostelId,	
      'Districtcode'	: this.DistrictId ,
      'Talukid'		:this.TalukId,
-    'FromDate'		:this.date,
-     'Todate'		:this.date
+    'FromDate'		:this.datepipe.transform(this.date,'MM/dd/yyyy'), 
+     'Todate'		:this.datepipe.transform(this.date,'MM/dd/yyyy')
     }
     this.restApiService.getByParameters(PathConstants.Attendance_Get,params).subscribe(res => {
      if(res !== null && res !== undefined && res.length !==0) {

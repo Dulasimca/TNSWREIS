@@ -8,6 +8,7 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/Interfaces/user';
+import { MasterService } from 'src/app/services/master-data.service';
 
 
 
@@ -49,7 +50,7 @@ export class HostelmasterComponent implements OnInit {
   cols: any;
   login_user: User;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
-  constructor(private http: HttpClient, private restApiService: RestAPIService,
+  constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private messageService: MessageService,private _authService: AuthService) { }
 
   public ngOnInit(): void {
@@ -70,12 +71,47 @@ export class HostelmasterComponent implements OnInit {
 
    ];
    this.login_user = this._authService.UserInfo;
-    this.Districtcodes = this.login_user.districtCode
-    this.Hosteltypes = this.login_user.hostelId
-    this.TalukIds = this.login_user.talukId
+    this.Districtcodes = this._masterService.getDistrictAll();
+    this.Hosteltypes = this._masterService.getMaster('HT');
+    this.TalukIds = this._masterService.getTalukAll();
     this.Slno = this.login_user.hostelId != undefined ? this.login_user.hostelId : 0
-   
   }
+
+  onSelect(type) {
+    console.log("ent")
+    let districtSelection = [];
+    let talukSelection = [];
+    let hostelSelection = [];
+    switch (type) {
+      case 'DT':
+        this.Districtcodes.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
+        })
+        this.DistrictcodeOptions = districtSelection;
+        this.DistrictcodeOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'TK':
+        if (this.Districtcode !== undefined && this.Districtcode !== null) {
+          this.TalukIds.forEach(t => {
+            if (t.dcode === this.Districtcode) {
+              talukSelection.push({ label: t.name, value: t.code });
+            }
+          })
+          this.TalukIdOptions = talukSelection;
+          this.TalukIdOptions.unshift({ label: '-select-', value: null });
+        }
+        break;
+        case 'HT':
+        this.Hosteltypes.forEach(h => {
+          hostelSelection.push({ label: h.name, value: h.code });
+        })
+        this.HosteltypeOptions = hostelSelection;
+        this.HosteltypeOptions.unshift({ label: '-select-', value: null });
+          break;
+        
+    }
+  }
+
   onSubmit() {
       const params = {
       'Slno': this.Slno != undefined ? this.Slno : 0,
