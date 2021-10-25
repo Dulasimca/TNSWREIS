@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -29,24 +30,32 @@ export class StudentDetailsComponent implements OnInit {
   hostels?: any;
   logged_user: User;
   loading: boolean;
-  constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
+  showDialog: boolean;
+  studentName: string;
+  studentId: any;
+  roleId: number;
+  dApproval: any;
+  tApproval: number;
+  @BlockUI() blockUI: NgBlockUI;
+  constructor(private _masterService: MasterService, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.studentCols = this._tableConstants.registrationColumns;
-    this.districts = this.masterService.getMaster('DT');
-    this.taluks = this.masterService.getMaster('TK');
+    this.districts = this._masterService.getMaster('DT');
+    this.taluks = this._masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;
+    this.roleId = (this.logged_user.roleId * 1);
   }
 
   onSelect(type) {
     let districtSelection = [];
     let talukSelection = [];
-    if(this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
+    if(this.roleId !== undefined && this.roleId !== null) {
       switch(type) {
       case 'D':
         var filtered_districts = [];
-        if((this.logged_user.roleId * 1) === 2 || (this.logged_user.roleId * 1) === 3) {
+        if((this.roleId * 1) === 2 || (this.roleId * 1) === 3) {
           filtered_districts = this.districts.filter(f => {
             return f.code === this.logged_user.districtCode;
           })
@@ -62,7 +71,7 @@ export class StudentDetailsComponent implements OnInit {
         break;
       case 'T':
         var filtered_taluks = [];
-        if((this.logged_user.roleId * 1) === 3) {
+        if((this.roleId * 1) === 3) {
           filtered_taluks = this.taluks.filter(f => {
             return f.code === this.logged_user.talukId;
           })
@@ -83,13 +92,17 @@ export class StudentDetailsComponent implements OnInit {
   }
 }
   changeDistrict() {
+    this.talukOptions = [];
+    this.taluk = null;
+    this.hostelOptions = [];
+    this.hostelName = null;
     let hostelSelection = [];
     const params = {
       'Type' : 1,
       'Value': this.district
     }
     if (this.district !== null && this.district !== undefined && this.district !== 'All') {
-      this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
             this.hostels.forEach(h => {
@@ -103,8 +116,8 @@ export class StudentDetailsComponent implements OnInit {
       this.hostelOptions.unshift({ label: 'All', value: 0 });
       this.hostelOptions.unshift({ label: '-select-', value: 'null' });
     }
+
     loadTable() {
-     // this.changeDistrict();
       this.studentData = [];
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
         this.hostelName !== null && this.hostelName !== undefined && this.hostelName !==undefined ){
@@ -114,11 +127,10 @@ export class StudentDetailsComponent implements OnInit {
         'TCode': this.taluk,
         'HCode': this.hostelName 
       }
-      this.restApiService.post(PathConstants.Registration_Get, params).subscribe(res => {
+      this._restApiService.post(PathConstants.Registration_Get, params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
           this.studentData = res.Table;
           this.loading = false;
-          console.log('true')
         } else {
           this.loading = false;
           this._messageService.clear();
@@ -129,5 +141,42 @@ export class StudentDetailsComponent implements OnInit {
         }
        })
       }
+    }
+
+    selectForApproval(row) {
+      if(row !== undefined && row !== null) {
+        this.studentName = row.studentName;
+        this.hostelName = row.HostelName;
+        this.studentId = (row.studentId !== undefined && row.studentId !== null) ? row.studentId : 0;
+        this.dApproval = (row.districtApproval !== undefined && row.districtApproval !== null) ? ((row.districtApproval) ? 1 : 0) : null; 
+        this.tApproval = (row.talukApproval !== undefined && row.talukApproval !== null) ? ((row.talukApproval) ? 1 : 0) : null; 
+      }
+    }
+
+    onApprove() { 
+      this.blockUI.start();
+      const params = {
+        'studentId': this.studentId,
+        'districtApproval': (this.roleId === 2) ? 1 : this.dApproval,
+        'talukApproval': (this.roleId === 3) ? 1 : this.tApproval
+      }
+      this._restApiService.put(PathConstants.Registration_Put, params).subscribe(res => {
+        if(res) {
+          this.blockUI.stop();
+          this.studentId = null;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.ApprovalSuccess
+          })
+        } else {
+          this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
+        }
+      })
     }
 }
