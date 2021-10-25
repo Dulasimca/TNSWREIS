@@ -16,7 +16,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./hostel-report.component.css']
 })
 export class HostelReportComponent implements OnInit {
-  Hostelname: number;
+  hostelname: string;
+  districtname: string;
+  talukname: string;
   HostelId : number
   Hosteltamilname: string;
   Hosteltype: number;
@@ -24,10 +26,8 @@ export class HostelReportComponent implements OnInit {
   HosteltypeOptions: SelectItem[];
   DistrictcodeOptions: SelectItem[];
   DistrictId : number 
-  districtname:any 
   Districtcode: number;
   Districtcodes?: any;
-  taluknname:string
   taluks : any;
   TalukId: number;
   TalukIds?: any;
@@ -76,21 +76,18 @@ export class HostelReportComponent implements OnInit {
       { field: 'HostelImage', header: 'HostelImage', width: '100px'},
  
     ];
-     this.Districtcodes = this.masterService.getMaster('DT');
-     this.Hosteltypes = this.masterService.getMaster('HT');
-     this.TalukIds = this.masterService.getMaster('TK');
      this.Slno = 0;
      this.login_user = this._authService.UserInfo;
-     this.Districtcode=this.login_user.districtCode;
-     this.TalukId=this.login_user.talukId;
-     this.Hostelname=this.login_user.hostelId;
+     this.districtname = this.login_user.districtName;
+     this.talukname = this.login_user.talukName;
+     this.hostelname=this.login_user.hostelName;
     this.role=this.login_user.roleId;
       
   }
   onview() {
     const params = {
       'sType':'0',
-      'HostelId': this.Hostelname != undefined && this.Hostelname != null ? this.Hostelname : 0,	
+      'HostelId': this.hostelname != undefined && this.hostelname != null ? this.hostelname : 0,	
     }
     
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
