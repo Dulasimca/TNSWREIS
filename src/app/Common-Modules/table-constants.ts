@@ -56,19 +56,20 @@ export class TableConstants {
 
         this.registrationColumns = [
             { field: 'studentName', header: 'Name'},
-            { field: 'dob', header: 'D.O.B'},
+            { field: 'age', header: 'Age'},
             { field: 'gender', header: 'Gender'},
+            { field: 'HostelName', header: 'Hostel Name'},
             { field: 'mobileNo', header: 'Mobile No.'},
             { field: 'instituteName', header: 'Institute Name'},
             { field: 'courseTitle', header: 'Course'},
             { field: 'address', header: 'Address'},
+            { field: 'Districtname', header: 'District'},
             { field: 'aadharNo', header: 'Aadhar No.'},
             { field: 'emisno', header: 'EMIS NO.'},
             { field: 'bankAccNo', header: 'Bank Account No.'},
             { field: 'fatherName', header: 'Father Name'},
             { field: 'fatherMoileNo', header: 'Father Mobile No'},
             { field: 'totalYIncome', header: 'Yearly Income'},
-            { field: 'EndDate', header: 'Hostel Leaving Date'},
 
         ]
 

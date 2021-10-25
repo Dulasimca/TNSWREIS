@@ -36,6 +36,7 @@ public static readonly UserMaster_Post = 'UserMaster/Post';
 public static readonly UserMaster_Get = 'UserMaster'; 
 public static readonly Registration_Post = 'Registration/Post';
 public static readonly Registration_Get = 'Registration/Get';
+public static readonly Registration_Put = 'Registration/Put';
 public static readonly Login = 'Login/Post';
 
 public static readonly Hostelgo_post = 'HostelGo/Post'; 
@@ -47,6 +48,9 @@ public static readonly UserMaster_Put = 'UserMaster/Put';
 public static readonly PurchaseOrder_Post = 'PurchaseOrder/Post';
 public static readonly PurchaseOrder_Get = 'PurchaseOrder/Get';
 public static readonly PurchaseOrder_Delete = 'PurchaseOrder/Put';
+
+public static readonly PurchaseDocumentUpload_Get = 'PurchaseDocumentUpload/Get';
+public static readonly PurchaseDocumentUpload_Post = 'PurchaseDocumentUpload/Post';
 
 public static readonly Consumption_Post = 'DailyConsumption/Post';
 public static readonly Consumption_Get = 'DailyConsumption/Get';
