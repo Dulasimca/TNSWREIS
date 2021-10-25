@@ -73,6 +73,7 @@ import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-repo
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
 import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 import { StudentDetailsComponent } from './Reports/student-details/student-details.component';
+import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
     DailyconsumptionReportComponent,
     PurchaseorderReportComponent,
     HostelReportComponent,
-    StudentDetailsComponent
+    StudentDetailsComponent,
+    OpeningbalanceReportComponent
   ],
   imports: [
     BrowserModule,

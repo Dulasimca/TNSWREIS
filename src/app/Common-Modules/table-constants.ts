@@ -7,6 +7,7 @@ export class TableConstants {
     wardenDetailsReportColumns: any = [];
     registrationColumns: any = [];
     purchaseDetailsReportColumns: any = [];
+    openingBalanceReportColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity'},
@@ -83,7 +84,13 @@ export class TableConstants {
             { field: 'HostelName', header: 'Hostel Name'},
 
         ]
-
+         
+        this.openingBalanceReportColumns = [
+            { field: 'AccYear', header: 'Accounting Year'},
+            { field: 'CommodityName', header: 'Commodity Name'},
+            { field: 'Quantity', header: 'Quantity'},
+            { field: 'Unit', header: 'Unit'},
+        ]
 
     }
 }
