@@ -3,7 +3,6 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { HttpClient  } from '@angular/common/http';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
-import { MasterService } from 'src/app/services/master-data.service';
 import { NgForm } from '@angular/forms';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -51,7 +50,7 @@ export class HostelmasterComponent implements OnInit {
   login_user: User;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
-    private masterService: MasterService,private messageService: MessageService,private _authService: AuthService) { }
+    private messageService: MessageService,private _authService: AuthService) { }
 
   public ngOnInit(): void {
    this.cols = [
@@ -71,47 +70,11 @@ export class HostelmasterComponent implements OnInit {
 
    ];
    this.login_user = this._authService.UserInfo;
-    this.Districtcodes = this.masterService.getMaster('DT');
-    this.Hosteltypes = this.masterService.getMaster('HT');
-    this.TalukIds = this.masterService.getMaster('TK');
+    this.Districtcodes = this.login_user.districtCode
+    this.Hosteltypes = this.login_user.hostelId
+    this.TalukIds = this.login_user.talukId
     this.Slno = this.login_user.hostelId != undefined ? this.login_user.hostelId : 0
    
-  }
-  onSelect(type) {
-    let hostelSelection = [];
-    let districtSelection = [];
-    let talukSelection = [];
-  
-    switch (type) {   
-      case 'HT':
-        this.Hosteltypes.forEach(h => {
-          hostelSelection.push({ label: h.name, value: h.code });
-        });
-        this.HosteltypeOptions = hostelSelection;
-        break;
-      case 'D':
-          this.Districtcodes.forEach(d => {
-            districtSelection.push({ label: d.name, value: d.code });
-          })
-          this.DistrictcodeOptions = districtSelection;
-          this.DistrictcodeOptions.unshift({ label: '-select-', value: null });
-          if (this.Districtcode !== null && this.Districtcode !== undefined) {
-            this.disableTaluk = false;
-          } else {
-            this.disableTaluk = true; 
-          }
-          break;
-      case 'TK':
-        this.TalukIds.forEach(t => {
-          if (t.dcode === this.Districtcode){
-          talukSelection.push({ label: t.name, value: t.code });
-        }
-        });
-        this.TalukIdOptions = talukSelection;
-        this.TalukIdOptions.unshift({ label: '-select-', value: null });
-        break;
-        
-    }
   }
   onSubmit() {
       const params = {
