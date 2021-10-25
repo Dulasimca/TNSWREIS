@@ -11,7 +11,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 
@@ -43,6 +43,10 @@ export class RegistrationComponent implements OnInit {
   classes?: any;
   isDisability: boolean = false;
   studentImage: any;
+  incomeImg: any;
+  tcImg: any;
+  declarationImg: any;
+  passbookImg: any;
   disableTaluk: boolean;
   ageTxt: string;
   logged_user: User;
@@ -63,7 +67,7 @@ export class RegistrationComponent implements OnInit {
   constructor(private _masterService: MasterService, private _router: Router,
     private _d: DomSanitizer, private _datePipe: DatePipe, private _messageService: MessageService,
     private _restApiService: RestAPIService, private _authService: AuthService,
-    private _tableConstants: TableConstants) { }
+    private _tableConstants: TableConstants, private http: HttpClient) { }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
@@ -182,19 +186,56 @@ export class RegistrationComponent implements OnInit {
     this.ageTxt = age + ' Years';
   }
 
+  public uploadFile = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+    var formData = new FormData()
+    let fileToUpload: any = <File>files[0];
+    let actualFilename = '';
+    const folderName = this.logged_user.hostelId + '/' + 'Documents';
+    console.log('fn', folderName)
+    const filename = fileToUpload.name + '^' + folderName;
+    formData.append('file', fileToUpload, filename);
+    console.log('file', fileToUpload);
+    console.log('formdata', formData);
+    actualFilename = fileToUpload.name;
+    this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
+      .subscribe((event: any) => {
+      }
+      );
+    console.log('retn', actualFilename);
+    return actualFilename;
+  }
+
   onFileUpload($event, id) {
     const selectedFile = $event.target.files[0];
-    // var fileInput: any = document.getElementById('incomeCertificate');
-    // var filePath = fileInput;
-    // console.log('path', filePath);
     var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-
     switch (id) {
       case 1:
-        const url = window.URL.createObjectURL(selectedFile);
-        this.studentImage = this._d.bypassSecurityTrustUrl(url);
+        const s_url = window.URL.createObjectURL(selectedFile);
+        this.studentImage = this._d.bypassSecurityTrustUrl(s_url);
+        this.obj.studentFilename = this.uploadFile($event.target.files);
         break;
       case 2:
+        const i_url = window.URL.createObjectURL(selectedFile);
+        this.incomeImg = this._d.bypassSecurityTrustUrl(i_url);
+        this.obj.incomeCertificateFilename = this.uploadFile($event.target.files);
+        break;
+      case 3:
+        const t_url = window.URL.createObjectURL(selectedFile);
+        this.tcImg = this._d.bypassSecurityTrustUrl(t_url);
+        this.obj.tcFilename = this.uploadFile($event.target.files);
+        break;
+      case 4:
+        const p_url = window.URL.createObjectURL(selectedFile);
+        this.passbookImg = this._d.bypassSecurityTrustUrl(p_url);
+        this.obj.bankPassbookFilename = this.uploadFile($event.target.files);
+        break;
+      case 5:
+        const d_url = window.URL.createObjectURL(selectedFile);
+        this.declarationImg = this._d.bypassSecurityTrustUrl(d_url);
+        this.obj.declarationFilename = this.uploadFile($event.target.files);
         break;
     }
 
