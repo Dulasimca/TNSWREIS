@@ -10,7 +10,7 @@ import { MasterService } from './services/master-data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TNSWREIS';
+  title = 'TN-ADW';
   hideHeader: boolean = false;
   isLoggedIn: boolean = false;
 
