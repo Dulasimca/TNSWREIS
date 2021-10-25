@@ -110,14 +110,14 @@
                                                 <label for="_nativedistrict">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
                                                 <p-dropdown [options]="districtOptions" [(ngModel)]="nativeDistrict"
-                                                    (onClick)="onSelect('DT')" name="_nativedistrict">
+                                                    (onClick)="onSelect('DT')" (onChange)="resetField()" name="_nativedistrict">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_taluk">Native Taluk<span
                                                         class="form-mandatory-field">*</span> </label>
                                                 <p-dropdown [options]="talukOptions" [(ngModel)]="taluk"
-                                                    (onClick)="onSelect('T')" name="_taluk">
+                                                   [disabled]="disableTaluk" (onClick)="onSelect('T')" name="_taluk">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">

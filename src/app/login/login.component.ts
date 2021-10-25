@@ -1,13 +1,10 @@
-import { LocationStrategy } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Observable } from 'rxjs';
 import { ResponseMessage } from '../Common-Modules/messages';
 import { PathConstants } from '../Common-Modules/PathConstants';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
-import { MasterService } from '../services/master-data.service';
 import { RestAPIService } from '../services/restAPI.service';
 
 @Component({
@@ -61,10 +58,8 @@ export class LoginComponent implements OnInit {
               }
               this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(response => {
                 if (response !== undefined && response !== null && response.length !== 0) {
-                  console.log('re1', response);
                   this.checkChildItems(response);
                   response.push({ label: 'Logout', icon: 'pi pi-power-off', command: ()=> {this._authService.logout() }});
-                  console.log('re', response);
                   this._authService.setMenu(response);
                   this._authService.login(obj);
                 } else {

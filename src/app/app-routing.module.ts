@@ -26,6 +26,7 @@ import { WardenReportComponent } from './Reports/warden-report/warden-report.com
 import { AttendanceImageComponent } from './forms-module/Attendance-image/Attendance-image.component';
 import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-report/dailyconsumption-report.component';
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
+import { StudentDetailsComponent } from './Reports/student-details/student-details.component';
 import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 
 const routes: Routes = [
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'warden-report', component:WardenReportComponent, canActivate: [AuthGuard]},
   { path: 'dailyconsumption-report', component:DailyconsumptionReportComponent, canActivate: [AuthGuard]},
   { path: 'purchaseorder-report', component:PurchaseorderReportComponent, canActivate: [AuthGuard]},
+  { path: 'student-report', component:StudentDetailsComponent, canActivate: [AuthGuard]},
 
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
