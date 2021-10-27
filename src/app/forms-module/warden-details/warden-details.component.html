@@ -61,7 +61,7 @@
                                                 <label for="_hostelname">Hostel Name<span
                                                         class="form-mandatory-field">*</span></label>
                                                 <p-dropdown name="_hostelname" [options]="hostelOptions"
-                                                    [(ngModel)]="hostelName" (onClick)="onSelect('HN')" required>
+                                                    [(ngModel)]="hostelName" (click)="onSelect('HN')" required>
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -132,7 +132,7 @@
                                                         <div><img [src]="wardenImage"
                                                                 style="width: 110px; height: 110px;" />
                                                             <input style="display: none" name="_wardenimage" type="file"
-                                                                (change)="onFileUpload($event)" #userFile required>
+                                                                (change)="uploadFile($event)" #userFile required>
                                                             <button class="b-size" icon="pi pi-plus edit-size" pButton
                                                                 type="file" #file (click)="userFile.click()">
                                                             </button>
