@@ -27,6 +27,7 @@ export class WardenDetailsComponent implements OnInit {
   districtOptions: SelectItem[];
   hostelOptions: SelectItem[];
   qualificationOptions: SelectItem[];
+  nativeDistrictOptions: SelectItem[];
   dob: any;
   servicedoj: any;
   hostelJoin: any;
@@ -52,6 +53,7 @@ export class WardenDetailsComponent implements OnInit {
   taluks?: any;
   hostels?: any;
   courses?: any;
+  nativeDistricts?: any;
   showTable: boolean;
   disableTaluk: boolean;
   logged_user: User;
@@ -69,6 +71,7 @@ export class WardenDetailsComponent implements OnInit {
     this.yearRange = start_year_range + ':' + current_year;
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getMaster('DT');
+    this.nativeDistricts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     // this.hostels = this.masterService.getMaster('HN');
     this.courses = this.masterService.getMaster('CU');
@@ -80,6 +83,7 @@ export class WardenDetailsComponent implements OnInit {
     let districtSelection = [];
     let talukSelection = [];
     let courseSelection = [];
+    let nativeDistrictSelection = [];
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
@@ -88,22 +92,30 @@ export class WardenDetailsComponent implements OnInit {
         this.genderOptions = genderSelection;
         this.genderOptions.unshift({ label: '-select-', value: null });
         break;
-        case 'DT':
+        case 'D':
           this.districts.forEach(d => {
             districtSelection.push({ label: d.name, value: d.code });
           })
           this.districtOptions = districtSelection;
           this.districtOptions.unshift({ label: '-select-', value: null });
           break;
+          case 'ND':
+            this.nativeDistricts.forEach(d => {
+              nativeDistrictSelection.push({ label: d.name, value: d.code });
+            })
+            this.nativeDistrictOptions = nativeDistrictSelection;
+            this.nativeDistrictOptions.unshift({ label: '-select-', value: null });
+            break;
           case 'T':
-            if(this.district !== undefined && this.district !== null) {
-              this.disableTaluk = false;
-            }
+            // if(this.nativeDistrict !== undefined && this.nativeDistrict !== null) {
+            //   this.disableTaluk = false;
+            
             this.taluks.forEach(t => {
-              if (t.dcode === this.district) {
+              if (t.dcode === this.nativeDistrict) {
                 talukSelection.push({ label: t.name, value: t.code });
               }
             })
+          
             this.talukOptions = talukSelection;
             this.talukOptions.unshift({ label: '-select-', value: null });
             break;
@@ -117,10 +129,10 @@ export class WardenDetailsComponent implements OnInit {
       }
     }
 
-    resetField() {
-      this.taluk = null;
-      this.talukOptions = [];
-    }
+    // resetField() {
+    //   this.taluk = null;
+    //   this.talukOptions = [];
+    // }
 
     selectDistrict() {
     let hostelSelection = [];
@@ -132,12 +144,12 @@ export class WardenDetailsComponent implements OnInit {
       if (this.district !== null && this.district !== undefined) {
         this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
           if (res !== null && res !== undefined && res.length !== 0) {
+            this.hostels = res.Table;
             this.hostels.forEach(h => {
               hostelSelection.push({ label: h.HostelName, value: h.Slno });
             })
             this.hostelOptions = hostelSelection;
             this.hostelOptions.unshift({ label: '-select', value: null });
-            this.hostels = res.Table;
             console.log('h',res);
           };
   
@@ -193,7 +205,9 @@ export class WardenDetailsComponent implements OnInit {
       'Talukid': this.taluk,
       'Pincode': this.pincode,
       'Flag': 1,
-      'WardenId': this.wardenId
+      'WardenId': this.wardenId,
+      // 'WardenImage': this.wardenImage,
+      // 'EndDate': ''
 
     };
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
@@ -252,14 +266,15 @@ export class WardenDetailsComponent implements OnInit {
     this.mobNo = selectedRow.PhoneNo;
     this.addressOne = selectedRow.Address1;
     this.addressTwo = selectedRow.Address2;
-    this.district = selectedRow.Districtcode;
-    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
+    this.nativeDistrict = selectedRow.Districtcode;
+    this.nativeDistrictOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
     this.hostelName = selectedRow.HostelId;
     this.hostelOptions = [{ label: selectedRow.HostelName , value: selectedRow.Slno}];
     this.taluk = selectedRow.Talukid;
     this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
     this.altMobNo = selectedRow.AlternateNo;
     this.pincode = selectedRow.Pincode;
+    this.wardenImage = selectedRow.WardenImage;
     }
   }
 

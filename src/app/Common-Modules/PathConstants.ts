@@ -12,6 +12,7 @@ public static readonly Hostel_put = 'Hostel/put';
 
 public static readonly Warden_post = 'Warden/Post'; 
 public static readonly Warden_Get = 'Warden/Get'; 
+public static readonly Warden_Put = 'Warden/Put';
 
 public static readonly DistrictMaster_post = 'DistrictMaster/post';
 public static readonly DistrictMaster_Get = 'DistrictMaster';
