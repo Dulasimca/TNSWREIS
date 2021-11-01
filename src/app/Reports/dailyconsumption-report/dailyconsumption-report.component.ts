@@ -112,6 +112,7 @@ export class DailyconsumptionReportComponent implements OnInit {
       this.hostelOptions.unshift({ label: 'All', value: 0 });
       this.hostelOptions.unshift({ label: '-select-', value: 'null' });
     }
+   
     loadTable() {
      // this.changeDistrict();
       this.consumptionDetails = [];
