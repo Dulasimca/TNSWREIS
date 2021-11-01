@@ -7,15 +7,15 @@
                         <div class="p-col-12 p-md-12 p-lg-12">
                             <div class="p-grid">
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <span class="p-float-label">
-                                        <div class="p-inputgroup">
+                                    <div class="p-inputgroup">
+                                        <span class="p-float-label">
                                             <input type="text" name="_billNo" pInputText [(ngModel)]="billNo" required>
                                             <button type="button" pButton pRipple icon="pi pi-search"
                                                 (click)="onSearch()" styleClass="p-button-warn"></button>
-                                        </div>
                                         <label for="_billNo">Bill No</label>
                                     </span>
                                 </div>
+                            </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <span class="p-float-label">
                                         <input type="text" name="_billAmnt" pInputText [(ngModel)]="billAmount"
