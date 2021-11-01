@@ -124,12 +124,8 @@ export class HostelmasterComponent implements OnInit {
       'Street': this.Street,
       'Landmark': this.Landmark,
       'Pincode': this.pincode,
-      'Longitude': this.Longitude,
-      'Latitude': this.Latitude,
-      'Radius': this.Radius,
       'TotalStudent': this.Totalstudent,
       'Phone': this.mobileNo,
-      'HostelImage': 12
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
         if (res) {
