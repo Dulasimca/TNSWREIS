@@ -37,7 +37,7 @@ export class PurchaseUploadComponent implements OnInit {
         'HostelId': this.logged_user.hostelId,
         'BillNo': this.billNo
       }
-      this._restApiService.getByParameters(PathConstants.PurchaseOrder_Get, params).subscribe(res => {
+      this._restApiService.getByParameters(PathConstants.PurchaseDocumentUpload_Get, params).subscribe(res => {
         if(res !== undefined && res !== null && res.length !== 0) {
           this.blockUI.stop();
           res.forEach(i => {
