@@ -13,6 +13,7 @@ export class ResponseMessage {
     public static readonly SUMMARY_INVALID = 'Invalid Date!'
     public static readonly SuccessMessage = 'Saved Successfully!';
     public static readonly UploadSucess = 'Uploaded Successfully!';
+    public static readonly UploadFail = 'Upload Failed!';
     public static readonly SubmitMessage = 'Submitted Successfully!';
     public static readonly ErrorMessage = 'Please Contact Administrator!';
     public static readonly WarningMessage = 'Please try after sometime!';
@@ -33,5 +34,7 @@ export class ResponseMessage {
     public static readonly EmailAlreadyExists = 'User email already exists !';
     public static readonly PasswordChangeSuccess = 'Password has been changed successfully !';
     public static readonly MenuDataError = 'Error occurred in loading menu !';
+    public static readonly ApprovalSuccess = 'Approved !';
+    public static readonly NoBillMsg = 'Cannot find matching details !';
     
 }

@@ -73,7 +73,8 @@ import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-repo
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
 import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 import { StudentDetailsComponent } from './Reports/student-details/student-details.component';
-
+import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
+import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +85,6 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
     FoodmasterComponent,
     HostelmasterComponent,
     RegistrationComponent,
-    FoodmasterComponent,
     WardenDetailsComponent,
     CameraComponent,
     UsermasterComponent,
@@ -108,7 +108,9 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
     DailyconsumptionReportComponent,
     PurchaseorderReportComponent,
     HostelReportComponent,
-    StudentDetailsComponent
+    StudentDetailsComponent,
+    OpeningbalanceReportComponent,
+    PurchaseUploadComponent,
   ],
   imports: [
     BrowserModule,

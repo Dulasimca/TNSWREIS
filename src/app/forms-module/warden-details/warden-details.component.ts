@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -8,6 +8,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { User } from 'src/app/interfaces/user';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 
@@ -26,6 +27,7 @@ export class WardenDetailsComponent implements OnInit {
   districtOptions: SelectItem[];
   hostelOptions: SelectItem[];
   qualificationOptions: SelectItem[];
+  nativeDistrictOptions: SelectItem[];
   dob: any;
   servicedoj: any;
   hostelJoin: any;
@@ -51,12 +53,16 @@ export class WardenDetailsComponent implements OnInit {
   taluks?: any;
   hostels?: any;
   courses?: any;
+  nativeDistricts?: any;
   showTable: boolean;
   disableTaluk: boolean;
+  logged_user: User;
+  public formData = new FormData();
+
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
 
   constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer, private _tableConstants: TableConstants, 
-    private _datePipe:DatePipe) { }
+    private _datePipe:DatePipe, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.cols = this._tableConstants.wardenTableColumns;
@@ -65,6 +71,7 @@ export class WardenDetailsComponent implements OnInit {
     this.yearRange = start_year_range + ':' + current_year;
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getMaster('DT');
+    this.nativeDistricts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     // this.hostels = this.masterService.getMaster('HN');
     this.courses = this.masterService.getMaster('CU');
@@ -75,8 +82,8 @@ export class WardenDetailsComponent implements OnInit {
     let genderSelection = [];
     let districtSelection = [];
     let talukSelection = [];
-    let hostelSelection = [];
     let courseSelection = [];
+    let nativeDistrictSelection = [];
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
@@ -85,32 +92,33 @@ export class WardenDetailsComponent implements OnInit {
         this.genderOptions = genderSelection;
         this.genderOptions.unshift({ label: '-select-', value: null });
         break;
-        case 'DT':
+        case 'D':
           this.districts.forEach(d => {
             districtSelection.push({ label: d.name, value: d.code });
           })
           this.districtOptions = districtSelection;
           this.districtOptions.unshift({ label: '-select-', value: null });
           break;
+          case 'ND':
+            this.nativeDistricts.forEach(d => {
+              nativeDistrictSelection.push({ label: d.name, value: d.code });
+            })
+            this.nativeDistrictOptions = nativeDistrictSelection;
+            this.nativeDistrictOptions.unshift({ label: '-select-', value: null });
+            break;
           case 'T':
-            if(this.district !== undefined && this.district !== null) {
-              this.disableTaluk = false;
-            }
+            // if(this.nativeDistrict !== undefined && this.nativeDistrict !== null) {
+            //   this.disableTaluk = false;
+            
             this.taluks.forEach(t => {
-              if (t.dcode === this.district) {
+              if (t.dcode === this.nativeDistrict) {
                 talukSelection.push({ label: t.name, value: t.code });
               }
             })
+          
             this.talukOptions = talukSelection;
             this.talukOptions.unshift({ label: '-select-', value: null });
             break;
-            case 'HN':
-              this.hostels.forEach(h => {
-                hostelSelection.push({ label: h.HostelName, value: h.Slno });
-              })
-              this.hostelOptions = hostelSelection;
-              this.hostelOptions.unshift({ label: '-select', value: null });
-              break;
               case 'CU':
                 this.courses.forEach(q => {
                   courseSelection.push({ label: q.name, value: q.code });
@@ -121,12 +129,13 @@ export class WardenDetailsComponent implements OnInit {
       }
     }
 
-    resetField() {
-      this.taluk = null;
-      this.talukOptions = [];
-    }
+    // resetField() {
+    //   this.taluk = null;
+    //   this.talukOptions = [];
+    // }
 
     selectDistrict() {
+    let hostelSelection = [];
       const params = {
         'Type': 1,
         'Value': this.district
@@ -136,19 +145,47 @@ export class WardenDetailsComponent implements OnInit {
         this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
           if (res !== null && res !== undefined && res.length !== 0) {
             this.hostels = res.Table;
+            this.hostels.forEach(h => {
+              hostelSelection.push({ label: h.HostelName, value: h.Slno });
+            })
+            this.hostelOptions = hostelSelection;
+            this.hostelOptions.unshift({ label: '-select', value: null });
             console.log('h',res);
           };
   
         })
       }
     }
-    onFileUpload($event) {
-      const selectedFile = $event.target.files[0];
-      {
-          const url = window.URL.createObjectURL(selectedFile);
-          this.wardenImage = this._d.bypassSecurityTrustUrl(url);
-      }
-    }
+    public uploadFile = (event) => {
+      const selectedFile = event.target.files[0];
+        {
+             const url = window.URL.createObjectURL(selectedFile);
+            this.wardenImage = this._d.bypassSecurityTrustUrl(url);
+        }
+      this.formData = new FormData()
+      
+      let fileToUpload: any = <File>event.target.files[0];
+      const folderName = this.logged_user.hostelId + '/' + 'Documents';
+      const filename = fileToUpload.name + '^' + folderName;
+      this.formData.append('file', fileToUpload, filename);
+      // console.log('file', fileToUpload);
+      // console.log('formdata', this.formData);
+      alert("Uploaded Successfully")
+      this.wardenImage=fileToUpload.name;
+      this.http.post(this.restApiService.BASEURL +PathConstants.FileUpload_Post, this.formData)
+        .subscribe(event => 
+          {
+        }
+        );
+    }  
+  
+    // onFileUpload($event) {
+    //   const selectedFile = $event.target.files[0];
+    //   {
+    //       const url = window.URL.createObjectURL(selectedFile);
+    //       this.wardenImage = this._d.bypassSecurityTrustUrl(url);
+    //   }
+    // }
   onSave() {
     const params =  {
       'Name' : this.wardenName,
@@ -168,7 +205,9 @@ export class WardenDetailsComponent implements OnInit {
       'Talukid': this.taluk,
       'Pincode': this.pincode,
       'Flag': 1,
-      'WardenId': this.wardenId
+      'WardenId': this.wardenId,
+      // 'WardenImage': this.wardenImage,
+      // 'EndDate': ''
 
     };
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
@@ -227,14 +266,15 @@ export class WardenDetailsComponent implements OnInit {
     this.mobNo = selectedRow.PhoneNo;
     this.addressOne = selectedRow.Address1;
     this.addressTwo = selectedRow.Address2;
-    this.district = selectedRow.Districtcode;
-    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
+    this.nativeDistrict = selectedRow.Districtcode;
+    this.nativeDistrictOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
     this.hostelName = selectedRow.HostelId;
     this.hostelOptions = [{ label: selectedRow.HostelName , value: selectedRow.Slno}];
     this.taluk = selectedRow.Talukid;
     this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
     this.altMobNo = selectedRow.AlternateNo;
     this.pincode = selectedRow.Pincode;
+    this.wardenImage = selectedRow.WardenImage;
     }
   }
 

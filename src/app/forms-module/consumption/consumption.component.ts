@@ -29,7 +29,7 @@ export class ConsumptionComponent implements OnInit {
   unitOptions: SelectItem[];
   unit: any;
   units?: any = [];
-  openingBalance: any = 400;
+  openingBalance: any;
   requiredQty: any;
   closingBalance: any;
   consumptionCols: any;

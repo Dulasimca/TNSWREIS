@@ -28,6 +28,8 @@ import { DailyconsumptionReportComponent } from './Reports/dailyconsumption-repo
 import { PurchaseorderReportComponent } from './Reports/purchaseorder-report/purchaseorder-report.component';
 import { StudentDetailsComponent } from './Reports/student-details/student-details.component';
 import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
+import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
+import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -46,13 +48,14 @@ const routes: Routes = [
   { path: 'dailyconsumption-report', component:DailyconsumptionReportComponent, canActivate: [AuthGuard]},
   { path: 'purchaseorder-report', component:PurchaseorderReportComponent, canActivate: [AuthGuard]},
   { path: 'student-report', component:StudentDetailsComponent, canActivate: [AuthGuard]},
-
+  { path: 'openingblnc-report', component:OpeningbalanceReportComponent, canActivate: [AuthGuard]},
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
 
   { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
 
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
+  { path: 'purchase-bill-upload', component:PurchaseUploadComponent, canActivate: [AuthGuard]},
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
   { path: 'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},

@@ -55,7 +55,7 @@
                                     <td *ngFor="let col of columns">
                                         {{rowData[col.field]}}
                                     </td>
-                                    <td><button icon="pi pi-pencil" pButton type="button" pTooltip="Edit" (click)="onEdit(rowData)">
+                                    <td><button icon="pi pi-pencil" pButton type="button" pTooltip="Tap to edit" (click)="onEdit(rowData)">
                                         </button></td>
                                 </tr>
                             </ng-template>
@@ -67,7 +67,7 @@
     </p-panel>
 </div>
 <!-- dialog  -->
-<p-dialog header="Warden Report" [(visible)]="show" [style]="{width: '50vw', height: '25vw'}">
+<p-dialog header="End Date Update" [(visible)]="show" [modal]="true" [style]="{width: '50vw', height: '25vw'}">
     <p-card>
         <div class="p-grid div-main">
 
@@ -85,7 +85,7 @@
                 <div><label for="_edate">End Date<span class="form-mandatory-field">*</span></label></div>
                 <p-calendar [(ngModel)]="endDate" [showIcon]="true" name="_edate"></p-calendar>
             </div>
-            <span>*Note: Select hostel leaving date</span>
+            <span>*Note: Please select hostel leaving date</span>
         </div>
         <div style="text-align: center;">
             <button pButton type="button" label="Submit" (click)="onSubmit()"></button>

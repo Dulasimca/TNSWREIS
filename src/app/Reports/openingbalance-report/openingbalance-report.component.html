@@ -1,6 +1,6 @@
 <div class="p-col-12 p-md-12 p-lg-12">
     <p-toast position="top-center" key="t-msg"></p-toast>
-    <p-panel header="Daily Consumption Report">
+    <p-panel header="Opening Balance Report">
         <p-card>
             <div class="p-col-12 no-pad-top">
                 <div class="p-grid">
@@ -28,34 +28,25 @@
                                     (onClick)="onSelect('HN')" (onChange)="loadTable()" required>
                                 </p-dropdown>
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_fromdate">From Date<span class="form-mandatory-field">*</span></label>
-                                </div>
-                                <p-calendar [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
-                                    [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="fromdate" dateFormat="yy-mm-dd" required>
-                                </p-calendar>
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_todate">To Date<span class="form-mandatory-field">*</span></label>
-                                </div>
-                                <p-calendar [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
-                                    [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="todate" dateFormat="yy-mm-dd" required>
-                                </p-calendar>
-                            </div>
+                                                    <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_accyear">Accounting Year<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_accyear" [options]="yearOptions"
+                                                        (onClick)="onSelect('Y')" [(ngModel)]="accYear" required>
+                                                    </p-dropdown>
+                                                </div>
                         </div>
                     </div>
+                    <div class="p-col-12"></div>
                     <!-- table  -->
-                    <div class="p-col-12 p-md-12 p-lg-12">
+                    <div class="table-format">
                         <div style="text-align: right;">
                             <button pButton type="button" icon="pi pi-file-excel" style="color: yellowgreen;"
-                                label="Export" (click)="dt.exportCSV()" pTooltip="Excel-File download"></button>
+                                label="Export" pTooltip="Excel-File download" (click)="dt.exportCSV()"></button>
                         </div>
-                        <p-table #dt [value]="consumptionData" [columns]="consumptionCols"
-                            styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                            [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords"
-                            exportFilename="DAILY_CONSUMPTION_REPORT">
+                        <p-table #dt [value]="openingData" [columns]="openingCols" styleClass="p-datatable-gridlines"
+                            [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
+                            totalRecords="totalRecords" exportFilename="PURCHASE_ORDER_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th>S.No</th>

@@ -194,17 +194,13 @@ export class RegistrationComponent implements OnInit {
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
-    console.log('fn', folderName)
     const filename = fileToUpload.name + '^' + folderName;
     formData.append('file', fileToUpload, filename);
-    console.log('file', fileToUpload);
-    console.log('formdata', formData);
     actualFilename = fileToUpload.name;
     this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
       .subscribe((event: any) => {
       }
       );
-    console.log('retn', actualFilename);
     return actualFilename;
   }
 
@@ -352,7 +348,6 @@ export class RegistrationComponent implements OnInit {
         this.religionOptions = [{ label: detail.religionName, value: detail.religion }]
         this.motherTongueOptions = [{ label: detail.mothertongueName, value: detail.motherTongue }]
         this.bloodGroupOptions = [{ label: detail.bloodgroupName, value: detail.bloodGroup }]
-        console.log('it', detail, this.obj);
       })
     }
   }
