@@ -53,7 +53,7 @@
                                                     for="_district">Hostel District<span
                                                         class="form-mandatory-field">*</span></label>
                                                 <p-dropdown name="_district" [options]="districtOptions"
-                                                    [(ngModel)]="district" (onClick)="onSelect('DT')"
+                                                    [(ngModel)]="district" (onClick)="onSelect('D')"
                                                     (onChange)="selectDistrict()" required>
                                                 </p-dropdown>
                                             </div>
@@ -61,7 +61,7 @@
                                                 <label for="_hostelname">Hostel Name<span
                                                         class="form-mandatory-field">*</span></label>
                                                 <p-dropdown name="_hostelname" [options]="hostelOptions"
-                                                    [(ngModel)]="hostelName" (onClick)="onSelect('HN')" required>
+                                                    [(ngModel)]="hostelName" (click)="onSelect('HN')" required>
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -97,27 +97,27 @@
                                                 <div><label for="_address1">Address Line 1<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <input class="p-col-12" name="_address1" pInputText
-                                                    [(ngModel)]="addressOne" placeholder="Door No./street name"
+                                                    [(ngModel)]="addressOne" placeholder="Door No./Area/Street name"
                                                     required />
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_address2">Address Line 2<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <input class="p-col-12" name="_address2" pInputText
-                                                    [(ngModel)]="addressTwo" placeholder="Area/Village/City" style="text-transform: capitalize;" required />
+                                                    [(ngModel)]="addressTwo" placeholder="Village/City name" style="text-transform: capitalize;" required />
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_nativedistrict">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
-                                                <p-dropdown [options]="districtOptions" [(ngModel)]="nativeDistrict"
-                                                    (onClick)="onSelect('DT')" (onChange)="resetField()" name="_nativedistrict">
+                                                <p-dropdown [options]="nativeDistrictOptions" [(ngModel)]="nativeDistrict"
+                                                    (onClick)="onSelect('ND')" name="_nativedistrict">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                 <label for="_taluk">Native Taluk<span
                                                         class="form-mandatory-field">*</span> </label>
                                                 <p-dropdown [options]="talukOptions" [(ngModel)]="taluk"
-                                                   [disabled]="disableTaluk" (onClick)="onSelect('T')" name="_taluk">
+                                                     (onClick)="onSelect('T')" name="_taluk">
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -132,8 +132,8 @@
                                                         <div><img [src]="wardenImage"
                                                                 style="width: 110px; height: 110px;" />
                                                             <input style="display: none" name="_wardenimage" type="file"
-                                                                (change)="onFileUpload($event)" #userFile required>
-                                                            <button class="b-size" icon="pi pi-plus edit-size" pButton
+                                                                (change)="uploadFile($event)" #userFile required>
+                                                            <button class="b-size" icon="pi pi-plus edit-size" pTooltip="Click to add photo" pButton
                                                                 type="file" #file (click)="userFile.click()">
                                                             </button>
                                                             <div>Upload Warden Image<span
@@ -174,7 +174,7 @@
                                         <td *ngFor="let col of columns">
                                             {{rowData[col.field]}}
                                         </td>
-                                        <td><button icon="pi pi-pencil" pButton type="button"  pTooltip="Edit" (click)="onEdit(rowData)">
+                                        <td><button icon="pi pi-pencil" pButton type="button"  pTooltip="Tap to edit" (click)="onEdit(rowData)">
                                             </button></td>
                                     </tr>
                                 </ng-template>

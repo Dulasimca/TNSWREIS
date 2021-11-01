@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -33,6 +34,7 @@ export class WardenReportComponent implements OnInit {
   wardenName: any;
   endDate: any;
   joinDate: any;
+  wardenId: number;
   
   constructor(private _tableConstants: TableConstants, private _restApiService: RestAPIService,
     private _messageService: MessageService, private _authService: AuthService, 
@@ -145,7 +147,41 @@ onEdit(row) {
  this.show = true;
  this.wardenName = row.WardenName;
  this.joinDate = row.HostelJoinedDate;
+ this.wardenId = row.WardenId;  
 }
- onSubmit() {}
+ onSubmit() {
+   const params = {
+     'WardenId': this.wardenId,
+     'EndDate':  this._datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+   }
+   this._restApiService.put(PathConstants.Warden_Put, params).subscribe(res => {
+         if (res !== undefined && res !== null && res.length !== 0) {
+           this.loadTable();
+           this._messageService.clear();
+           this._messageService.add({
+             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+           });
+         } else {
+           this._messageService.clear();
+           this._messageService.add({
+             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+           });
+         }
+       }, (err: HttpErrorResponse) => {
+         if (err.status === 0 || err.status === 400) {
+           this._messageService.clear();
+           this._messageService.add({
+             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+           })
+         }
+  })
 }
+}
+  
+   
+ 
+
 
