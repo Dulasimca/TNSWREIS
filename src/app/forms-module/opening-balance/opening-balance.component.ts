@@ -151,5 +151,8 @@ export class OpeningBalanceComponent implements OnInit {
     this.commodityOptions = [];
     this.yearOptions = [];
     this.unitOptions = [];
+    this.district = this.logged_user.districtName;
+    this.taluk = this.logged_user.talukName;
+    this.hostelName = this.logged_user.hostelName;
   }
 }
