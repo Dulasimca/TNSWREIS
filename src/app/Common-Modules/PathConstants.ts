@@ -60,5 +60,6 @@ public static readonly Consumption_Delete = 'DailyConsumption/Put';
 public static readonly WardenDetails_Report_Post = 'WardenDetails/Post'
 public static readonly DailyConsumption_Report_Post = 'DailyConsumptionDetails/Post' 
 public static readonly PurchaseOrder_Report_Post = 'PurchaseOrderDetails/Post'
+public static readonly OpeningBalanceDetails_Report_Post = 'OpeningBalanceDetails/Post'
 
 }
