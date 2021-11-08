@@ -110,7 +110,7 @@
                                                 <label for="_nativedistrict">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
                                                 <p-dropdown [options]="nativeDistrictOptions" [(ngModel)]="nativeDistrict"
-                                                    (onClick)="onSelect('ND')" name="_nativedistrict">
+                                                    (onClick)="onSelect('ND')" name="_nativedistrict" required>
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
@@ -131,8 +131,8 @@
                                                     <div class="p-col-12 p-md-6 p-lg-4">
                                                         <div><img [src]="wardenImage"
                                                                 style="width: 110px; height: 110px;" />
-                                                            <input style="display: none" name="_wardenimage" type="file"
-                                                                (change)="uploadFile($event)" #userFile required>
+                                                            <input style="display: none" name="_wardenimage" type="file" #userFile
+                                                                (change)="uploadFile($event)" required />
                                                             <button class="b-size" icon="pi pi-plus edit-size" pTooltip="Click to add photo" pButton
                                                                 type="file" #file (click)="userFile.click()">
                                                             </button>
@@ -140,14 +140,18 @@
                                                                     class="form-mandatory-field">*</span></div>
                                                         </div>
                                                     </div>
-                                                    <div class="p-col-12 p-md-6 p-lg-2"
-                                                        style="text-align: right; padding-top: 40px;">
+                                                    <div class="p-col-12 p-md-6 p-lg-1"
+                                                        style="padding-top: 40px;">
                                                         <button pButton type="button" label="Save" icon="pi pi-save"
                                                             (click)="onSave()" [disabled]="(!f.valid || !f.dirty)"></button>
                                                     </div>
-                                                    <div class="p-col-12 p-md-6 p-lg-2" style="padding-top: 40px;">
+                                                    <div class="p-col-12 p-md-6 p-lg-1" style="padding-top: 40px;">
                                                         <button pButton type="button" label="View" icon="pi pi-eye"
                                                             (click)="onView()"></button>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-6 p-lg-2" style="padding-top: 40px;">
+                                                        <button pButton type="button" label="Clear" icon="pi pi-times-circle"
+                                                            (click)="onClear()"></button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -9,6 +9,7 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 
@@ -57,15 +58,17 @@ export class WardenDetailsComponent implements OnInit {
   showTable: boolean;
   disableTaluk: boolean;
   logged_user: User;
+  wardenFileName: string;
   public formData = new FormData();
 
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
 
   constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer, private _tableConstants: TableConstants, 
-    private _datePipe:DatePipe, private http: HttpClient) { }
+    private _datePipe:DatePipe, private http: HttpClient, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.cols = this._tableConstants.wardenTableColumns;
+    this.logged_user =this.authService.UserInfo;
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 70;
     this.yearRange = start_year_range + ':' + current_year;
@@ -170,8 +173,7 @@ export class WardenDetailsComponent implements OnInit {
       this.formData.append('file', fileToUpload, filename);
       // console.log('file', fileToUpload);
       // console.log('formdata', this.formData);
-      alert("Uploaded Successfully")
-      this.wardenImage=fileToUpload.name;
+      this.wardenFileName=fileToUpload.name;
       this.http.post(this.restApiService.BASEURL +PathConstants.FileUpload_Post, this.formData)
         .subscribe(event => 
           {
@@ -206,6 +208,7 @@ export class WardenDetailsComponent implements OnInit {
       'Pincode': this.pincode,
       'Flag': 1,
       'WardenId': this.wardenId,
+      'WardenImage': this.wardenFileName
       // 'WardenImage': this.wardenImage,
       // 'EndDate': ''
 
@@ -213,7 +216,7 @@ export class WardenDetailsComponent implements OnInit {
     this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
       if (res) {
         this.onView();
-        this.clearform();
+        this.onClear();
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -274,16 +277,21 @@ export class WardenDetailsComponent implements OnInit {
     this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
     this.altMobNo = selectedRow.AlternateNo;
     this.pincode = selectedRow.Pincode;
-    this.wardenImage = selectedRow.WardenImage;
+    this.wardenFileName = selectedRow.WardenImage;
+    var filePath = '../assets/layout/' + this.logged_user.hostelId + '/Documents' + '/'+ this.wardenFileName;
+    this.wardenImage = filePath;
     }
   }
 
-  clearform() {
+  onClear() {
     this._wardenDetails.reset();
     this.talukOptions = [];
     this.districtOptions = [];
     this.genderOptions = [];
     this.qualificationOptions = [];
     this.hostelOptions = [];
+    this.nativeDistrictOptions = [];
+    this.data = [];
+    this.wardenFileName = '';
   }
 }
