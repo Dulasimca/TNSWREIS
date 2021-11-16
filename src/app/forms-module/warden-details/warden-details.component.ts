@@ -243,7 +243,10 @@ export class WardenDetailsComponent implements OnInit {
     this.showTable = true;
     const params = {
         'Type': 2,
-        'Value': 0
+        'RoleId': this.logged_user.roleId,
+        'DCode': this.logged_user.districtCode,
+        'TCode': this.logged_user.talukId,
+        'WardenId': this.logged_user.userID
         }
         this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
           if(res !== null && res !== undefined && res.length !== 0) {
@@ -278,7 +281,7 @@ export class WardenDetailsComponent implements OnInit {
     this.altMobNo = selectedRow.AlternateNo;
     this.pincode = selectedRow.Pincode;
     this.wardenFileName = selectedRow.WardenImage;
-    var filePath = '../assets/layout/' + this.logged_user.hostelId + '/Documents' + '/'+ this.wardenFileName;
+    var filePath = '../assets/layout/' + this.logged_user.hostelId + '/Documents' + '/'+   this.wardenFileName;
     this.wardenImage = filePath;
     }
   }
