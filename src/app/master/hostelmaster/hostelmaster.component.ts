@@ -46,16 +46,16 @@ export class HostelmasterComponent implements OnInit {
   days?: any = [];
   data: any = [];
   Table2?: any;
-  Slno: any;
   cols: any;
   login_user: User;
+  hostelRowId: number;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
-    private messageService: MessageService,private _authService: AuthService) { }
+    private messageService: MessageService,private _authService: AuthService,
+    private _messageService: MessageService) { }
 
   public ngOnInit(): void {
    this.cols = [
-     { field: 'Slno', header: 'ID', width: '100px'},
      { field: 'HostelName', header: 'HostelName', width: '100px'},
      { field: 'HostelNameTamil', header: 'HostelNameTamil', width: '100px'},
      { field: 'Name', header: 'HType', width: '100px'},
@@ -74,7 +74,6 @@ export class HostelmasterComponent implements OnInit {
     this.Districtcodes = this._masterService.getDistrictAll();
     this.Hosteltypes = this._masterService.getMaster('HT');
     this.TalukIds = this._masterService.getTalukAll();
-    this.Slno = this.login_user.hostelId != undefined ? this.login_user.hostelId : 0
   }
 
   onSelect(type) {
@@ -114,7 +113,7 @@ export class HostelmasterComponent implements OnInit {
 
   onSubmit() {
       const params = {
-      'Slno': this.Slno != undefined ? this.Slno : 0,
+      'Slno': (this.hostelRowId != undefined && this.hostelRowId !== null) ? this.hostelRowId : 0,
       'HostelName': this.Hostelname,
       'HostelNameTamil': this.Hosteltamilname,
       'HTypeId': this.Hosteltype,
@@ -157,17 +156,25 @@ export class HostelmasterComponent implements OnInit {
     
   
   onView() {
+    this.data = [];
     const params = {
       'sType':'0',
-      'HostelId': this.Slno
+      'Id': (this.login_user.districtCode !== undefined && this.login_user.districtCode !== null) 
+      ? this.login_user.districtCode : 0,
+      'TCode': (this.login_user.talukId !== undefined && this.login_user.talukId !== null) ?
+       this.login_user.talukId : 0,
+      'HCode': (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? this.login_user.hostelId : 0,
     }
-    
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         this.data = res.Table;
-        console.log(this.data);
+      }  else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        })
       }
-
     });
   }
   clear() {
@@ -175,25 +182,22 @@ export class HostelmasterComponent implements OnInit {
   }
   onRowSelect(event, selectedRow) {
     if(selectedRow !== null && selectedRow !==undefined){
-    this.Hosteltype=selectedRow.HTypeId;
-    this.HosteltypeOptions= [{ label: selectedRow.Name, value: selectedRow.HTypeId }];
-    this.Districtcode=selectedRow.Districtcode;
-    this.DistrictcodeOptions=[{ label: selectedRow.Districtname, value: selectedRow.Districtcode}];
+    this.hostelRowId = selectedRow.Slno;
+    this.Hosteltype = selectedRow.HTypeId;
+    this.HosteltypeOptions = [{ label: selectedRow.Name, value: selectedRow.HTypeId }];
+    this.Districtcode = selectedRow.Districtcode;
+    this.DistrictcodeOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode}];
     this.TalukId = selectedRow.Talukid;
-    this.TalukIdOptions= [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
+    this.TalukIdOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
     this.Hostelname = selectedRow.HostelName;
     this.Hosteltamilname = selectedRow.HostelNameTamil;
     this.Buildingno = selectedRow.BuildingNo;
     this.Street = selectedRow.Street; 
     this.Landmark = selectedRow.Landmark;
     this.pincode = selectedRow.Pincode;
-    this.Longitude = selectedRow.Longitude;
-    this.Latitude = selectedRow.Latitude;
-    this.Radius = selectedRow.Radius;
     this.Totalstudent = selectedRow.TotalStudent;
     this.mobileNo = selectedRow.Phone;
-   
-  }
+ }
   }
 
 }

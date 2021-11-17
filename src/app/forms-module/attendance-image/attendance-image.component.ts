@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { LocationService } from 'src/app/services/location.service';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
@@ -9,6 +9,8 @@ import { User } from 'src/app/Interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import {​​​​​​​​​ DatePipe }​​​​​​​​​ from'@angular/common';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+
 
 
 @Component({
@@ -43,7 +45,7 @@ export class AttendanceImageComponent implements OnInit {
   showDialog: boolean;
   hostelImage : string;
   constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService, private masterService: MasterService,private datepipe: DatePipe
-    ) { }
+  ,private _messageService: MessageService  ) { }
   
   ngOnInit(): void {
     this.cols = [
@@ -94,18 +96,17 @@ export class AttendanceImageComponent implements OnInit {
       'Flag': 1, 
     }
       this.restApiService.post(PathConstants.AttendanceImage_Post,params).subscribe(res=> {​​​​​​​​​
-        if(res !== undefined && res !== null) {
           if (res) {
-        //    this.blockUI.stop();
-        // // this.onClear();
-        //  this.messageService.clear();
-        //  this.messageService.add({
-        //    key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-        //    summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-          }
-         };
-     });
-  }
+        //  this.blockUI.stop();
+        //  this.onClear();
+         this._messageService.clear();
+         this._messageService.add({
+           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+        summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+      });
+    }
+  });
+}
   GetAttendanceInfo()
   {
     this.NoOfStudent=0;
@@ -146,9 +147,15 @@ export class AttendanceImageComponent implements OnInit {
       if(res !== null && res !== undefined && res.length !==0) {
         res.Table.forEach(i => {
           i.url = 'assets/layout/'+i.HostelID +'/' + i.ImageName;
-          console.log('url',i.url);
         })
         this.data = res.Table;
+      }
+      else{
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_ALERT, detail: ResponseMessage.SelectUploadDate
+        });
       }
       
     });

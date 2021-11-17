@@ -8,7 +8,7 @@
                         <div class="p-col-12 p-md-12 p-lg-12 ">
                             <div class="p-grid">
                                 <div class="p-col-12 p-md-6 p-lg-2 ">
-                                    <div><label for="_Hosteltype">Hostel Name</label></div>
+                                    <div><label for="_Hosteltype">Hostel Type</label></div>
                                     <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
                                         [(ngModel)]="Hosteltype" (onClick)="onSelect('HT')"
                                         required>
@@ -29,17 +29,17 @@
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_Hostelname">Hostelname<span
+                                    <div><label for="_hostelname">Hostelname<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
-                                    <input type="text" name="_Hostelname" class="p-col-10" pInputText
+                                    <input type="text" name="_hostelname" class="p-col-10" pInputText
                                         [(ngModel)]="Hostelname" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_Hostelname">HostelnameTamil<span
+                                    <div><label for="_hosteltamilname">HostelnameTamil<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
-                                    <input type="text" name="_Hostelname" class="p-col-10" pInputText
+                                    <input type="text" name="_hosteltamilname" class="p-col-10" pInputText
                                         [(ngModel)]="Hosteltamilname" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
@@ -87,15 +87,24 @@
                                 </div>
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
-                                        class="btn-bg" style="margin-left: 3%;"></button>
+                                        class="btn-bg"></button>&nbsp;
                                         <button pButton type="button" label="View" (click)="onView()" 
-                                        class="btn-bg" style="margin-left: 4%;"></button>
+                                        class="btn-bg"></button>
                                 </div>
-                          <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
-                          [rowsPerPageOptions]="[5,10,15,20]"  totalRecords="totalRecords" pageLinks="3">
+                          <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                          [rowsPerPageOptions]="[5,10,15,20]"  totalRecords="totalRecords" pageLinks="3"
+                          [globalFilterFields]="['Name','HostelNameTamil','HostelName']">
+                          <ng-template pTemplate="caption">
+                            <div class="p-d-flex">
+                                <span class="p-input-icon-left p-ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                                </span>
+                            </div>
+                            </ng-template>
                           <ng-template pTemplate="header" let-columns>
                             <tr>
-            
+                                <th style="width: 90px;">S.No:</th>
                               <th *ngFor="let col of columns" [style.width]="col.width">
                                 {{col.header}}
                               </th>
@@ -103,7 +112,7 @@
                           </ng-template>
                           <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                             <tr [pSelectableRow]="rowData" class="cursor"  (dblclick)="onRowSelect($event, rowData)">
-                            
+                              <td style="width: 90px;">{{rowIndex + 1}}</td>
                               <td *ngFor="let col of columns">
                                 {{rowData[col.field]}}
                               </td>
