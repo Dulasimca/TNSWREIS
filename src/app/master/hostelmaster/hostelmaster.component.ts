@@ -22,7 +22,10 @@ export class HostelmasterComponent implements OnInit {
   Hostelname: string;
   Hosteltamilname: string;
   Hosteltype: number;
+  Functioningtype: number;
+  FunctioningtypeOptions: SelectItem[];
   Hosteltypes?: any;
+  Hostelfunctions?: any;
   HosteltypeOptions: SelectItem[];
   DistrictcodeOptions: SelectItem[];
   Districtcode: number;
@@ -73,6 +76,7 @@ export class HostelmasterComponent implements OnInit {
    this.login_user = this._authService.UserInfo;
     this.Districtcodes = this._masterService.getDistrictAll();
     this.Hosteltypes = this._masterService.getMaster('HT');
+    this.Hostelfunctions = this._masterService.getMaster('HF');
     this.TalukIds = this._masterService.getTalukAll();
   }
 
@@ -81,6 +85,7 @@ export class HostelmasterComponent implements OnInit {
     let districtSelection = [];
     let talukSelection = [];
     let hostelSelection = [];
+    let hostelfunctionSelection = [];
     switch (type) {
       case 'DT':
         this.Districtcodes.forEach(d => {
@@ -107,7 +112,13 @@ export class HostelmasterComponent implements OnInit {
         this.HosteltypeOptions = hostelSelection;
         this.HosteltypeOptions.unshift({ label: '-select-', value: null });
           break;
-        
+        case 'HF':
+        this.Hostelfunctions.forEach(f => {
+          hostelfunctionSelection.push({ label: f.name, value: f.code });
+        })
+        this.FunctioningtypeOptions = hostelfunctionSelection;
+        this.FunctioningtypeOptions.unshift({ label: '-select-', value: null });
+        break;       
     }
   }
 

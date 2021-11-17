@@ -248,6 +248,15 @@ export class MasterService {
                     this.masterData = [];
                 }
                 break;
+                case 'HF':
+                    if (this.data.Table15 !== undefined && this.data.Table15 !== null) {
+                        this.data.Table15.forEach(h => {
+                            this.masterData.push({ name: h.Name, code: h.Id });
+                        })
+                    } else {
+                        this.masterData = [];
+                    }
+                    break;
         }
         return this.masterData;
     }

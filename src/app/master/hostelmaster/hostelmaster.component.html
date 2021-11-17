@@ -14,6 +14,13 @@
                                         required>
                                     </p-dropdown>
                                 </div>
+                                <div class="p-col-12 p-md-6 p-lg-2 ">
+                                    <div><label for="_Functioningtype">Hostel Functioning Type</label></div>
+                                    <p-dropdown name="_Functioningtype" [options]="FunctioningtypeOptions"
+                                        [(ngModel)]="Functioningtype" (onClick)="onSelect('HF')"
+                                        required>
+                                    </p-dropdown>
+                                </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_Districtcode">District</label>
                                     <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
