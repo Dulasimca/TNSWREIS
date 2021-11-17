@@ -118,29 +118,33 @@ export class OpeningbalanceReportComponent implements OnInit {
         }
       })
     }
-      console.log('sel', this.hostelOptions, hostelSelection)
       this.hostelOptions = hostelSelection;
       this.hostelOptions.unshift({ label: 'All', value: 0 });
       this.hostelOptions.unshift({ label: '-select-', value: 'null' });
     }
-    loadTable() {
+
+    loadTable(type) {
      // this.changeDistrict();
+     if(type === 'D') {
+       this.taluk = null;
+       this.talukOptions= [];
+     //  this.hostelName = null;
+      // this.hostelOptions = [];
+     }
       this.openingData = [];
+      this.totalRecords = 0;
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
         this.hostelName !== null && this.hostelName !== undefined && this.accYear !== null && this.hostelName !==undefined 
-        ){
+        && this.accYear !== undefined){
       this.loading = true;
       const params = {
         'Districtcode': this.district,
         'Talukid': this.taluk,
         'HostelId': this.hostelName,
-        'AccYear': this._datePipe.transform(this.accYear, 'MM/dd/yyyy'),
+        'ShortYear': this.accYear
       }
-      this.restApiService.post( '', params).subscribe(res => {
+      this.restApiService.post(PathConstants.OpeningBalanceDetails_Report_Post, params).subscribe(res => {
         if (res !== undefined && res !== null && res.Table.length !== 0) {
-          res.Table.forEach(r => {
-            r.AccYear = this._datePipe.transform(r.AccYear, 'MM/dd/yyyy');
-          })
           this.openingData = res.Table;
           this.totalRecords = this.openingData.length;
           this.loading = false;

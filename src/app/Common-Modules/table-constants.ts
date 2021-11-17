@@ -87,10 +87,10 @@ export class TableConstants {
         ]
          
         this.openingBalanceReportColumns = [
-            { field: 'AccYear', header: 'Accounting Year'},
+            { field: 'ShortYear', header: 'Accounting Year'},
             { field: 'CommodityName', header: 'Commodity Name'},
-            { field: 'Quantity', header: 'Quantity'},
-            { field: 'Unit', header: 'Unit'},
+            { field: 'Qty', header: 'Quantity'},
+            { field: 'UnitName', header: 'Unit'},
         ]
 
     }

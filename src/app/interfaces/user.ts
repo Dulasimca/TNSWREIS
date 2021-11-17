@@ -10,4 +10,5 @@ export interface User {
     talukName: string;
     token: string;
     hostelName: string;
+    
 }
