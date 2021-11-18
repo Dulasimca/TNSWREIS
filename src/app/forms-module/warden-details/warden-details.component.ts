@@ -293,6 +293,6 @@ export class WardenDetailsComponent implements OnInit {
     this.hostelOptions = [];
     this.nativeDistrictOptions = [];
     this.data = [];
-    this.wardenFileName = '';
+    this.wardenImage = '';
   }
 }
