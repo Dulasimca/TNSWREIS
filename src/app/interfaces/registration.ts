@@ -12,10 +12,10 @@ export interface Registration {
     altMobNo: string;
     religion: number;
     caste: number;
-    subCaste: string;
+    subCaste: number;
     studentFilename: string;
     instituteName: string;
-    medium: string;
+    medium: number;
     classId: number;
     courseTitle: string;
     lastStudiedInstituteName: string;

@@ -14,7 +14,7 @@
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                             <div><label for="_date">Date<span
                                                         class="form-mandatory-field">*</span></label></div>
-                                            <p-calendar [(ngModel)]="date" [showIcon]="true"
+                                            <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true"
                                                 name="_date" [maxDate]="maxDate"></p-calendar>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
@@ -134,12 +134,12 @@
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                         <div><label for="_fdate">From Date<span class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [(ngModel)]="fromDate" [showIcon]="true"  [maxDate]="maxDate"
+                        <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" [showIcon]="true"  [maxDate]="maxDate"
                             (ngModelChange)="onDateSelect()" name="_fdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                         <div><label for="_tdate">To Date<span class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [(ngModel)]="toDate" [showIcon]="true"  [maxDate]="maxDate"
+                        <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" [showIcon]="true"  [maxDate]="maxDate"
                             (ngModelChange)="onDateSelect()" name="_tdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12">

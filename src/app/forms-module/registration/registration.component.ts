@@ -41,6 +41,10 @@ export class RegistrationComponent implements OnInit {
   institutionType: string = '1';
   classOptions: SelectItem[];
   classes?: any;
+  mediumOptions: SelectItem[];
+  mediums?: any;
+  subCasteOptions: SelectItem[];
+  subcastes?: any;
   isDisability: boolean = false;
   studentImage: any;
   incomeImg: any;
@@ -82,6 +86,8 @@ export class RegistrationComponent implements OnInit {
     this.castes = this._masterService.getMaster('CS');
     this.classes = this._masterService.getMaster('CL');
     this.religions = this._masterService.getMaster('RL');
+    this.mediums = this._masterService.getMaster('MD');
+    this.subcastes = this._masterService.getMaster('SC');
     this.registeredCols = this._tableConstants.registrationColumns;
     this.defaultValues();
   }
@@ -99,6 +105,8 @@ export class RegistrationComponent implements OnInit {
     let casteSelection = [];
     let religionSelection = [];
     let classSelection = [];
+    let mediumSelection = [];
+    let subcasteSelection = [];
     let courseSelection = [];
     switch (type) {
       case 'GD':
@@ -175,6 +183,20 @@ export class RegistrationComponent implements OnInit {
         })
         this.classOptions = classSelection;
         this.classOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'MD':
+        this.mediums.forEach(m => {
+          mediumSelection.push({ label: m.name, value: m.code });
+        })
+        this.mediumOptions = mediumSelection;
+        this.mediumOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'SC':
+        this.subcastes.forEach(m => {
+          subcasteSelection.push({ label: m.name, value: m.code });
+        })
+        this.subCasteOptions = subcasteSelection;
+        this.subCasteOptions.unshift({ label: '-select-', value: null });
         break;
     }
   }
@@ -263,7 +285,6 @@ export class RegistrationComponent implements OnInit {
     this.obj.tcFilename = '';
     this.obj.bankPassbookFilename = '';
     this.obj.declarationFilename = '';
-    this.obj.medium = '';
     this.obj.districtApproval = '0';
     this.obj.talukApproval = '0';
     this.obj.studentId = 0;
@@ -274,7 +295,7 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.blockUI.start();
-    this.obj.dob = this._datePipe.transform(this.obj.dob, 'yyyy-MM-dd')
+    this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy')
     this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {

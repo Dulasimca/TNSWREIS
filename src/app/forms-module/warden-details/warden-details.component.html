@@ -23,7 +23,7 @@
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_dob">Date of Birth<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <p-calendar [(ngModel)]="dob" name="_dob" [showIcon]="true"
+                                        <p-calendar [showOtherMonths]="false" [(ngModel)]="dob" name="_dob" [showIcon]="true"
                                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
                                             inputId="dateofbirth" dateFormat="yy-mm-dd" required></p-calendar>
                                     </div>
@@ -37,7 +37,7 @@
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_doj">Service Joined Date<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <p-calendar [(ngModel)]="servicedoj" name="_doj" [showIcon]="true"
+                                        <p-calendar [showOtherMonths]="false" [(ngModel)]="servicedoj" name="_doj" [showIcon]="true"
                                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
                                             inputId="dateofjoin" dateFormat="yy-mm-dd" required></p-calendar>
                                     </div>
@@ -67,7 +67,7 @@
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_hstljoindate">Hostel Joining Date<span
                                                             class="form-mandatory-field">*</span></label></div>
-                                                <p-calendar [(ngModel)]="hostelJoin" name="_hstljoindate"
+                                                <p-calendar [showOtherMonths]="false" [(ngModel)]="hostelJoin" name="_hstljoindate"
                                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
                                                     yearRange="{{yearRange}}" inputId="hosteljoindate" required>
                                                 </p-calendar>

@@ -82,7 +82,7 @@
         <div class="p-col-12 p-md-12 p-lg-12">
             <div class="p-col-12 p-md-6 p-lg-4">
                 <div><label for="_edate">End Date<span class="form-mandatory-field">*</span></label></div>
-                <p-calendar [(ngModel)]="endDate" [showIcon]="true" name="_edate"></p-calendar>
+                <p-calendar [showOtherMonths]="false" [(ngModel)]="endDate" [showIcon]="true" name="_edate"></p-calendar>
             </div>
             <span>*Note: Please select hostel leaving date</span>
         </div>

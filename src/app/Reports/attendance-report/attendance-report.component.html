@@ -10,13 +10,13 @@
                                 <div class="p-col-12 p-md-6 p-lg-1"></div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div class="no-pad-top"><label>From Date:</label> </div>
-                                    <p-calendar [(ngModel)]="fromdate" [showIcon]="true" name="_fromdate" required >
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="fromdate" [showIcon]="true" name="_fromdate" required >
                                 </p-calendar>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-1"></div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div class="no-pad-top"><label>To Date:</label> </div>
-                                    <p-calendar [(ngModel)]="todate" [showIcon]="true" name="_todate" required >
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="todate" [showIcon]="true" name="_todate" required >
                                      </p-calendar>
                                     
                                 </div>
