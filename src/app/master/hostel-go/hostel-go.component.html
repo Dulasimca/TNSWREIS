@@ -42,7 +42,7 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_GoDate">Go.Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [(ngModel)]="GoDate" name="_GoDate" [showIcon]="true"
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="GoDate" name="_GoDate" [showIcon]="true"
                                     [monthNavigator]="true" [yearNavigator]="true" required></p-calendar>
                             </div>
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../interfaces/user';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,14 +15,18 @@ export class DashboardComponent implements OnInit {
   consumptionData: any;
   expensesToday: any;
   expensesMonthly: any;
-  constructor() { }
+  roleId: number;
+  login_user: User;
+  constructor(private _authService: AuthService) { }
 
   ngOnInit(): void {
+    this.login_user = this._authService.UserInfo;
     this.hostelCount = 877;
     this.wardenCount = 871;
     this.studentCount = 1577;
     this.expensesToday = 10147;
     this.expensesMonthly = 45871;
+    this.roleId = (this.login_user.roleId * 1);
     this.loadChart();
   }
 

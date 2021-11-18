@@ -387,6 +387,9 @@ height: 25px !important;
     background: #bbdbdd !important;
     color: #56696a !important;
 }
+.p-datatable .p-datatable-tbody>tr>td {
+    text-align: center !important;
+}
 
  /*menu  */
 mat-toolbar{

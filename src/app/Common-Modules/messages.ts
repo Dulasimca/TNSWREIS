@@ -38,5 +38,6 @@ export class ResponseMessage {
     public static readonly NoBillMsg = 'Cannot find bill details ! Please check the bill no.';
     public static readonly CaptureSuccess = 'Image captured successfully !';
 
+    public static readonly SelectUploadDate = 'Please select upload date';
     
 }

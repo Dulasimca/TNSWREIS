@@ -12,6 +12,7 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { Dialog } from 'primeng/dialog';
 
 @Component({
   selector: 'app-purchase-order',
@@ -50,10 +51,11 @@ export class PurchaseOrderComponent implements OnInit {
   purchasedBillList: any[] = [];
   maxDate: Date = new Date();
   spinner: boolean;
+  showInnerDialog: boolean;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _purchaseForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
-
+  
   constructor(private _datepipe: DatePipe, private _tableConstants: TableConstants,
     private _masterService: MasterService, private _messageService: MessageService,
     private _authService: AuthService, private _restApiService: RestAPIService,
@@ -99,7 +101,8 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   onEnter() {
-    var result = this.isTally(1);
+    this._purchaseForm.control.markAsDirty();
+    var result = this.isTally(1, 0);
     const isTallied = result[0];
     const message = result[1];
     if (isTallied) {
@@ -162,7 +165,7 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
 
-  isTally(type): [boolean, string] {
+  isTally(type, value): [boolean, string] {
     let message: string = '';
     const g_total = (this.grandTotal * 1);
     const b_amt = (this.billAmount * 1);
@@ -186,7 +189,15 @@ export class PurchaseOrderComponent implements OnInit {
           + g_total;
         return [false, message];
       }
-    } else {
+    } else if (type === 3 && this.billAmount !== undefined && this.billAmount !== null && this.billAmount !== NaN) {
+      if ((this.billAmount * 1) !== value) {
+        message = 'Please re-enter the correct bill amount if you wish to delete any commodity item from below list!'
+        return [false, message];
+      } else {
+        return [true, 'Tallied!'];
+      }
+    }
+    else {
       message = 'Please ensure bill amount is entered correctly and grand total is appearing on screen !';
       return [false, message];
     }
@@ -194,6 +205,7 @@ export class PurchaseOrderComponent implements OnInit {
 
   onEdit(data, index, type) {
     if (data !== undefined && data !== null) {
+      this._purchaseForm.control.markAsDirty();
       if (type === 1) {
         this.commodity = { label: data.Commodity, value: data.CommodityId };
         this.commodityOptions = [{ label: data.Commodity, value: data.CommodityId }];
@@ -254,6 +266,7 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   onDelete(data, index, type) {
+    console.log('inside delete', data);
     if (index !== undefined && index !== null) {
       if (type === 1 && data.DetailId === 0) {
         this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
@@ -266,12 +279,34 @@ export class PurchaseOrderComponent implements OnInit {
           this.orderList = [];
         }
       } else if (type === 1 && data.DetailId !== 0) {
-        this.showAlertBox = true;
-        this.purcahseOrderData = this.deleteRecord(this.purcahseOrderData, index, data.DetailId, 1);
-        this.orderList = this.purcahseOrderData.slice(0);
-        this.calculateGrandTotal();
+        var amountOfItem = (data.Total !== undefined && data.Total !== null) ? (data.Total * 1) : 0;
+        var totalAmount = 0;
+        var finalAmnt = 0;
+        if (this.orderList.length !== 0) {
+          this.orderList.forEach(d => {
+            if (d.Commodity !== 'Total Amount') {
+              totalAmount += (d.Total * 1);
+            }
+          })
+        }
+        finalAmnt = (totalAmount - amountOfItem);
+        var result = this.isTally(3, finalAmnt);
+        const isTallied = result[0];
+        const message = result[1];
+        if (isTallied) {
+          this.showAlertBox = true;
+          this.purcahseOrderData = this.deleteRecord(this.purcahseOrderData, index, data.DetailId, 1);
+        } else {
+          this.showAlertBox = false;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: message
+          });
+        }
       } else if (type === 2) {
         this.showAlertBox = true;
+        this.showInnerDialog = true;
         this.purchasedBillList = this.deleteRecord(this.purchasedBillList, index, data.orderId, 2);
       }
     }
@@ -291,21 +326,31 @@ export class PurchaseOrderComponent implements OnInit {
           'Type': type,
           'PurchaseId': id
         }
+        var msg_key = (type === 1) ? 't-msg' : 't-dialog-msg';
         this._restApiService.put(PathConstants.PurchaseOrder_Delete, params).subscribe(res => {
           if (res !== undefined && res !== null) {
             if (res) {
               this.blockUI.stop();
+              this.showInnerDialog = false;
               this._messageService.clear();
               this._messageService.add({
-                key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+                key: msg_key, severity: ResponseMessage.SEVERITY_SUCCESS,
                 summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.DeleteSuccessMsg
               });
               data.splice(index, 1);
+              if (type === 1) {
+                this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
+                this.orderList = this.purcahseOrderData.slice(0);
+                this.calculateGrandTotal();
+                setTimeout(() => {
+                  this.onSave();
+                }, 300)
+              }
             } else {
               this.blockUI.stop();
               this._messageService.clear();
               this._messageService.add({
-                key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+                key: msg_key, severity: ResponseMessage.SEVERITY_ERROR,
                 summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.DeleteFailMsg
               });
             }
@@ -313,7 +358,7 @@ export class PurchaseOrderComponent implements OnInit {
             this.blockUI.stop();
             this._messageService.clear();
             this._messageService.add({
-              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              key: msg_key, severity: ResponseMessage.SEVERITY_ERROR,
               summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
             });
           }
@@ -331,7 +376,7 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   onSave() {
-    var result = this.isTally(2);
+    var result = this.isTally(2, 0);
     const isTallied = result[0];
     const message = result[1];
     if (isTallied) {
@@ -408,10 +453,10 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   loadPurchaseBills() {
-    this.spinner = true;
     this.purchasedBillList = [];
     this.checkValidDateSelection();
     if (this.fromDate !== undefined && this.fromDate !== null && this.toDate !== undefined && this.toDate !== null) {
+      this.spinner = true;
       const params = {
         'FDate': this._datepipe.transform(this.fromDate, 'yyyy-MM-dd'),
         'TDate': this._datepipe.transform(this.toDate, 'yyyy-MM-dd'),
@@ -430,7 +475,7 @@ export class PurchaseOrderComponent implements OnInit {
           this.showAlertBox = false;
           this._messageService.clear();
           this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            key: 't-dialog-msg', severity: ResponseMessage.SEVERITY_WARNING,
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
         }

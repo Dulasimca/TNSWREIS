@@ -31,7 +31,7 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_fromdate">From Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
                                     yearRange="{{yearRange}}" inputId="fromdate" dateFormat="yy-mm-dd" required>
                                 </p-calendar>
@@ -39,7 +39,7 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_todate">To Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
                                     yearRange="{{yearRange}}" inputId="todate" dateFormat="yy-mm-dd" required>
                                 </p-calendar>

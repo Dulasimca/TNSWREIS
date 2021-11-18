@@ -19,15 +19,16 @@ export class TableConstants {
         ];
 
         this.consumptionColumns = [
-            { field: 'Districtname', header: 'District' },
-            { field: 'Talukname', header: 'Taluk' },
-            { field: 'HostelName', header: 'Hostel Name' },
-            { field: 'Consumption', header: 'Consumption For' },
-            { field: 'Commodity', header: 'Commodity' },
-            { field: 'Unit', header: 'Unit' },
-            { field: 'OB', header: 'Opening Balance' },
-            { field: 'QTY', header: 'Required Quantity' },
-            { field: 'CB', header: 'Closing Balance' },
+            { field: 'Districtname', header: 'District', align: 'left !important' },
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'  },
+            { field: 'HostelName', header: 'Hostel', align: 'left !important'  },
+            { field: 'TotalStudent', header: 'Total No.Of Students', align: 'right !important'  },
+            { field: 'Consumption', header: 'Consumption For', align: 'left !important'  },
+            { field: 'Commodity', header: 'Commodity', align: 'left !important'  },
+            { field: 'Unit', header: 'Unit', align: 'left !important'  },
+            { field: 'OB', header: 'Opening Balance', align: 'right !important'  },
+            { field: 'QTY', header: 'Required Quantity', align: 'right !important'  },
+            { field: 'CB', header: 'Closing Balance', align: 'right !important'  },
         ];
 
         this.purchaseBillColumns = [

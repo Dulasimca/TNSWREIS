@@ -26,7 +26,7 @@
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_date">Upload Date</label></div>
-                                    <p-calendar [(ngModel)]="date" name="_date" [monthNavigator]="true"
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="date" name="_date" [monthNavigator]="true"
                                         [yearNavigator]="true" [showIcon]="true" (onSelect)="GetAttendanceInfo()" required>
                                     </p-calendar>
                                 </div>    

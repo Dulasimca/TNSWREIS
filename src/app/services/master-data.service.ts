@@ -248,6 +248,36 @@ export class MasterService {
                     this.masterData = [];
                 }
                 break;
+                //hotsel fnunctioning type
+                case 'HF':
+                    if (this.data.Table15 !== undefined && this.data.Table15 !== null) {
+                        this.data.Table15.forEach(h => {
+                            this.masterData.push({ name: h.Name, code: h.Id });
+                        })
+                    } else {
+                        this.masterData = [];
+                    }
+                    break;
+            //medium
+            case 'MD':
+                if (this.data.Table16 !== undefined && this.data.Table16 !== null) {
+                    this.data.Table16.forEach(m => {
+                        this.masterData.push({ name: m.Name, code: m.Id });
+                    })
+                } else {
+                    this.masterData = [];
+                }
+                break;
+                 //sub caste
+            case 'SC':
+                if (this.data.Table17 !== undefined && this.data.Table17 !== null) {
+                    this.data.Table17.forEach(s => {
+                        this.masterData.push({ name:s.Name, code:s.SubId });
+                    })
+                } else {
+                    this.masterData = [];
+                }
+                break;
         }
         return this.masterData;
     }

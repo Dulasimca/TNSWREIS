@@ -31,7 +31,7 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_fromdate">From Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
                                     yearRange="{{yearRange}}" inputId="fromdate" dateFormat="yy-mm-dd" required>
                                 </p-calendar>
@@ -39,7 +39,7 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_todate">To Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
                                     yearRange="{{yearRange}}" inputId="todate" dateFormat="yy-mm-dd" required>
                                 </p-calendar>
@@ -52,7 +52,7 @@
                             <button pButton type="button" icon="pi pi-file-excel" style="color: yellowgreen;"
                                 label="Export" (click)="dt.exportCSV()" pTooltip="Excel-File download"></button>
                         </div>
-                        <p-table #dt [value]="consumptionData" [columns]="consumptionCols"
+                        <p-table #dt [value]="consumptionDetails" [columns]="consumptionCols"
                             styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
                             [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords"
                             exportFilename="DAILY_CONSUMPTION_REPORT">
@@ -67,7 +67,7 @@
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                 <tr>
                                     <td>{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns">
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
                                         {{rowData[col.field]}}
                                     </td>
                                 </tr>
