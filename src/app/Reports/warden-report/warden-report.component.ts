@@ -162,6 +162,7 @@ onEdit(row) {
              key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
              summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
            });
+           this.endDate = '';
          } else {
            this._messageService.clear();
            this._messageService.add({

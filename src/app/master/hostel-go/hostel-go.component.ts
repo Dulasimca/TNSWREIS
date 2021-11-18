@@ -7,6 +7,8 @@ import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { textChangeRangeIsUnchanged } from 'typescript';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-hostel-go',
@@ -18,7 +20,7 @@ export class HostelGoComponent implements OnInit {
   Gono:any;
   GoDate: any;
   Remarks: any;
- 
+  logged_user: User;
   Totalstudent:any;
   
 
@@ -42,13 +44,13 @@ export class HostelGoComponent implements OnInit {
 
   disableTaluk: boolean = true;
   constructor(private restApiService: RestAPIService, private messageService: MessageService ,
-                     private masterService: MasterService,private _datePipe: DatePipe) { }
+                     private masterService: MasterService,private _datePipe: DatePipe, private authService: AuthService) { }
 
   ngOnInit(): void {
 
     this.districts = this.masterService.getMaster('DT');
     this.Taluks = this.masterService.getMaster('TK');
-
+    this.logged_user = this.authService.UserInfo;
     this.cols = [
       {field: 'RID',header: 'ID'},
       {field: 'HostelID',header: 'HostelID'	},
@@ -142,7 +144,12 @@ export class HostelGoComponent implements OnInit {
      
   }
   onView() {
-    this.restApiService.get(PathConstants.Hostelgo_Get).subscribe(res => {
+    const params = {
+      'DCode' : this.logged_user.districtCode,
+      'TCode' : this.logged_user.talukId,
+      'HostelId': this.logged_user.hostelId
+    }
+    this.restApiService.getByParameters(PathConstants.Hostelgo_Get, params).subscribe(res => {
      if(res !== null && res !== undefined && res.length !==0) {
        this.data = res.Table;
      }     

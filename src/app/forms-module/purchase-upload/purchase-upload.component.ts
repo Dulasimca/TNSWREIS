@@ -31,6 +31,8 @@ export class PurchaseUploadComponent implements OnInit {
   }
 
   onSearch() {
+    this.billAmount = null;
+    this.billDate = null;
     if(this.billNo !== undefined && this.billNo !== null) {
       this.blockUI.start();
       const params = {

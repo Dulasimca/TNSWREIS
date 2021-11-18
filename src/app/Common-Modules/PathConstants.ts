@@ -10,6 +10,7 @@ public static readonly Hostel_Post = 'Hostel/Post';
 public static readonly Hostel_Get = 'Hostel/Get';
 public static readonly Hostel_put = 'Hostel/put';
 
+
 public static readonly Warden_post = 'Warden/Post'; 
 public static readonly Warden_Get = 'Warden/Get'; 
 public static readonly Warden_Put = 'Warden/Put';
@@ -41,7 +42,7 @@ public static readonly Registration_Put = 'Registration/Put';
 public static readonly Login = 'Login/Post';
 
 public static readonly Hostelgo_post = 'HostelGo/Post'; 
-public static readonly Hostelgo_Get = 'HostelGo'; 
+public static readonly Hostelgo_Get = 'HostelGo/Get'; 
 
 public static readonly UserMaster_Put = 'UserMaster/Put';
 
@@ -61,5 +62,7 @@ public static readonly WardenDetails_Report_Post = 'WardenDetails/Post'
 public static readonly DailyConsumption_Report_Post = 'DailyConsumptionDetails/Post' 
 public static readonly PurchaseOrder_Report_Post = 'PurchaseOrderDetails/Post'
 public static readonly OpeningBalanceDetails_Report_Post = 'OpeningBalanceDetails/Post'
+public static readonly HostelDetails_Report_Post = 'HostelDetails/Post'
+
 
 }

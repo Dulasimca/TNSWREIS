@@ -158,8 +158,11 @@ export class HostelmasterComponent implements OnInit {
   
   onView() {
     const params = {
-      'sType':'0',
-      'HostelId': this.Slno
+      'Type': 2,
+      'DCode' : this.login_user.districtCode,
+      'TCode' : this.login_user.talukId,
+      'RoleId' : this.login_user.roleId,
+      'HostelId': this.login_user.userID
     }
     
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {

@@ -35,7 +35,7 @@ export class WardenDetailsComponent implements OnInit {
   hstlLeaveDate: any;
   qualification: any;
   designation: string;
-  hostelName: number;
+  hostelName: any;
   email: any;
   yearRange: string;
   taluk: number;
@@ -74,8 +74,8 @@ export class WardenDetailsComponent implements OnInit {
     this.yearRange = start_year_range + ':' + current_year;
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getMaster('DT');
-    this.nativeDistricts = this.masterService.getMaster('DT');
-    this.taluks = this.masterService.getMaster('TK');
+    this.nativeDistricts = this.masterService.getDistrictAll();
+    this.taluks = this.masterService.getTalukAll();
     // this.hostels = this.masterService.getMaster('HN');
     this.courses = this.masterService.getMaster('CU');
     this.disableTaluk = true;
@@ -242,11 +242,9 @@ export class WardenDetailsComponent implements OnInit {
   onView() {
     this.showTable = true;
     const params = {
-        'Type': 2,
-        'RoleId': this.logged_user.roleId,
         'DCode': this.logged_user.districtCode,
         'TCode': this.logged_user.talukId,
-        'WardenId': this.logged_user.userID
+        'Value': this.logged_user.userID
         }
         this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
           if(res !== null && res !== undefined && res.length !== 0) {

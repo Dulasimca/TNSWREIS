@@ -8,6 +8,7 @@ export class TableConstants {
     registrationColumns: any = [];
     purchaseDetailsReportColumns: any = [];
     openingBalanceReportColumns: any = [];
+    hostelReportCols: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity'},
@@ -18,6 +19,9 @@ export class TableConstants {
         ];
 
         this.consumptionColumns = [
+            { field: 'Districtname', header: 'District' },
+            { field: 'Talukname', header: 'Taluk' },
+            { field: 'HostelName', header: 'Hostel Name' },
             { field: 'Consumption', header: 'Consumption For' },
             { field: 'Commodity', header: 'Commodity' },
             { field: 'Unit', header: 'Unit' },
@@ -50,6 +54,9 @@ export class TableConstants {
             { field: 'ServiceJoinedDate', header: 'Service Joined Date'},
             { field: 'Designation', header: 'Designation'},
             { field: 'HostelJoinedDate', header: 'Hostel Joined Date'},
+            { field: 'Districtname', header: 'District'},
+            { field: 'Talukname', header: 'Taluk'},
+            { field: 'HostelName', header: 'Hostel Name'},
             { field: 'EMail', header: 'Email'},
             { field: 'PhoneNo', header: 'Phone No'},
             { field: 'EndDate', header: 'Service End Date'},
@@ -91,6 +98,20 @@ export class TableConstants {
             { field: 'CommodityName', header: 'Commodity Name'},
             { field: 'Qty', header: 'Quantity'},
             { field: 'UnitName', header: 'Unit'},
+        ]
+
+        this.hostelReportCols = [
+            { field: 'HostelName', header: 'Hostel Name'},
+             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்'},
+            { field: 'Name', header: 'Hostel Type'},
+            { field: 'Districtname', header: 'District'},
+            { field: 'Talukname', header: 'Taluk'},
+            // { field: 'BuildingNo', header: 'BuildingNo', width: '100px'},
+            // { field: 'Street', header: 'Street', width: '100px'},
+            // { field: 'Landmark', header: 'Landmark', width: '100px'},
+            { field: 'Pincode', header: 'Pincode'},
+            { field: 'Phone', header: 'Contact No.'},
+            { field: 'TotalStudent', header: 'Student Count'}
         ]
 
     }

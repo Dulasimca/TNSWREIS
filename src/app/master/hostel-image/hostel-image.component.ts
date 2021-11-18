@@ -6,6 +6,9 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/Interfaces/user';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-hostel-image',
@@ -19,10 +22,12 @@ export class HostelImageComponent implements OnInit {
   hostelname: string;
   districtname: string;
   talukname: string;
+  hostelImage: string;
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
 
-  constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService) { }
+  constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
@@ -30,7 +35,39 @@ export class HostelImageComponent implements OnInit {
      this.districtname = this.login_user.districtName;
      this.talukname = this.login_user.talukName;
      this.hostelname = this.login_user.hostelName;
+
+     const params = {
+       'Type': 2,
+       'DCode': this.login_user.districtCode,
+       'TCode': this.login_user.talukId,
+       'HostelId': this.login_user.hostelId
+
+     }
+     this.restApiService.getByParameters(PathConstants.Hostel_Get ,params).subscribe(res =>{
+      if (res !== null && res !== undefined) {
+        if(res.Table.length !== 0) {
+        res.Table.forEach(i => {
+          this.hostelImage = (i.HostelImage !== undefined && i.HostelImage !== null) ? (i.HostelImage.trim() !== '') ?
+          ('../../assets/layout/'+ this.login_user.hostelId +'/Documents/wardenimage.jpg') : '' : '';
+          console.log('img',this.hostelImage)
+      }) 
+    } else{
+    this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+    })
   }
+  } else {
+  this.messageService.clear();
+  this.messageService.add({
+    key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+    summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+  });
+  }
+     })
+  }
+  
   public webcamImage: WebcamImage = null;
 
   handleImage(webcamImage: WebcamImage) {
@@ -53,7 +90,11 @@ export class HostelImageComponent implements OnInit {
 
      this.restApiService.put(PathConstants.Hostel_put,params).subscribe(res => {
        if (res) {
- 
+         this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+      summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.CaptureSuccess
+    });
    }
 });
   }
@@ -76,9 +117,11 @@ export class HostelImageComponent implements OnInit {
 
   capture() {
     this.captureImage();
+    
   }
 
   captureImage() {
+     
     this.trigger.next();
   }
 

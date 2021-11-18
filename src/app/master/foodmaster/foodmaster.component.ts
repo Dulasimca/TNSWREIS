@@ -138,7 +138,8 @@ export class FoodmasterComponent implements OnInit {
       }
     });
     this.daysOptions = foodSelection;
-    this.selectedday = selectedRow.DayId;
+    this.selectedday = selectedRow.DayId; 
+    this.daysOptions = [{ label: selectedRow.Name, value: selectedRow.DayId }];
     this.BreakFast = selectedRow.BreakFast;
     this.Lunch = selectedRow.Lunch;
     this.Snacks=selectedRow.Snacks;
