@@ -248,6 +248,16 @@ export class MasterService {
                     this.masterData = [];
                 }
                 break;
+                //hotsel fnunctioning type
+                case 'HF':
+                    if (this.data.Table15 !== undefined && this.data.Table15 !== null) {
+                        this.data.Table15.forEach(h => {
+                            this.masterData.push({ name: h.Name, code: h.Id });
+                        })
+                    } else {
+                        this.masterData = [];
+                    }
+                    break;
             //medium
             case 'MD':
                 if (this.data.Table16 !== undefined && this.data.Table16 !== null) {
