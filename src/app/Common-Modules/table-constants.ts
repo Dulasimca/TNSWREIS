@@ -21,7 +21,7 @@ export class TableConstants {
         this.consumptionColumns = [
             { field: 'Districtname', header: 'District', align: 'left !important' },
             { field: 'Talukname', header: 'Taluk', align: 'left !important'  },
-            { field: 'HostelName', header: 'Hostel', align: 'left !important'  },
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'  },
             { field: 'TotalStudent', header: 'Total No.Of Students', align: 'right !important'  },
             { field: 'Consumption', header: 'Consumption For', align: 'left !important'  },
             { field: 'Commodity', header: 'Commodity', align: 'left !important'  },

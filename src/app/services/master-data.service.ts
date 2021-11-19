@@ -192,7 +192,7 @@ export class MasterService {
             case 'FD':
                 if (this.days !== undefined && this.days !== null) {
                     this.days.forEach(d => {
-                        this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.slno });
+                        this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.Slno });
                     })
                 } else {
                     this.masterData = [];

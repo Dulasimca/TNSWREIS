@@ -45,10 +45,10 @@ export class HostelImageComponent implements OnInit {
      }
      this.restApiService.getByParameters(PathConstants.Hostel_Get ,params).subscribe(res =>{
       if (res !== null && res !== undefined) {
-        if(res.Table.length !== 0) {
-        res.Table.forEach(i => {
+        if(res.length !== 0) {
+        res.forEach(i => {
           this.hostelImage = (i.HostelImage !== undefined && i.HostelImage !== null) ? (i.HostelImage.trim() !== '') ?
-          ('../../assets/layout/'+ this.login_user.hostelId +'/Documents/wardenimage.jpg') : '' : '';
+          ('../../assets/layout/'+ this.login_user.hostelId + i.HostelImage) : '' : '';
           console.log('img',this.hostelImage)
       }) 
     } else{
