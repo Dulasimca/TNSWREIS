@@ -146,7 +146,7 @@ export class HostelGoComponent implements OnInit {
     const params = {
       'DCode' : this.logged_user.districtCode,
       'TCode' : this.logged_user.talukId,
-      'Value': this.logged_user.hostelId
+      'HostelId': this.logged_user.hostelId
     }
     this.restApiService.getByParameters(PathConstants.Hostelgo_Get, params).subscribe(res => {
      if(res !== null && res !== undefined && res.length !==0) {
