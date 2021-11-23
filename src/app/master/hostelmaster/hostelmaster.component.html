@@ -7,32 +7,32 @@
                     <form #f="ngForm" name="hostelmasterForm">
                         <div class="p-col-12 p-md-12 p-lg-12 ">
                             <div class="p-grid">
-                                <div class="p-col-12 p-md-6 p-lg-2 ">
+                                <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_Hosteltype">Hostel Type</label></div>
                                     <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
                                         [(ngModel)]="Hosteltype" (onClick)="onSelect('HT')"
                                         required>
                                     </p-dropdown>
                                 </div>
-                                <div class="p-col-12 p-md-6 p-lg-2 ">
+                                <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_Functioningtype">Hostel Functioning Type</label></div>
                                     <p-dropdown name="_Functioningtype" [options]="FunctioningtypeOptions"
                                         [(ngModel)]="Functioningtype" (onClick)="onSelect('HF')"
-                                        required>
+                                        [disabled]="disableFields" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_Districtcode">District</label>
                                     <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
                                         class="p-col-10" [(ngModel)]="Districtcode" (onClick)="onSelect('DT')"
-                                         required>
+                                        [disabled]="disableFields" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_TalukId">Taluk</label>
                                     <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions"
                                         class="p-col-10" [(ngModel)]="TalukId" (onClick)="onSelect('TK')"
-                                        required>
+                                        [disabled]="disableFields" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
@@ -40,14 +40,14 @@
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <input type="text" name="_hostelname" class="p-col-10" pInputText
-                                        [(ngModel)]="Hostelname" required />
+                                    [disabled]="disableFields" [(ngModel)]="Hostelname" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_hosteltamilname">HostelnameTamil<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <input type="text" name="_hosteltamilname" class="p-col-10" pInputText
-                                        [(ngModel)]="Hosteltamilname" required />
+                                    [disabled]="disableFields"  [(ngModel)]="Hosteltamilname" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_Buildingno">Buildingno<span
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
-                                        class="btn-bg"></button>&nbsp;
+                                    [disabled]="((disableFields && !f.dirty) || (!disableFields && !f.valid))"  class="btn-bg"></button>&nbsp;
                                         <button pButton type="button" label="View" (click)="onView()" 
                                         class="btn-bg"></button>
                                 </div>
