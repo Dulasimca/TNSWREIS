@@ -94,7 +94,7 @@ export class PurchaseorderReportComponent implements OnInit {
       console.log('sel', this.hostelOptions, hostelSelection)
       this.hostelOptions = hostelSelection;
       this.hostelOptions.unshift({ label: 'All', value: 0 });
-      this.hostelOptions.unshift({ label: '-select-', value: 'null' });
+      this.hostelOptions.unshift({ label: '-select-', value: null });
     }
     loadTable() {
      // this.changeDistrict();

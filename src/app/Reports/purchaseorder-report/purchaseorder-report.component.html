@@ -33,7 +33,7 @@
                                 </div>
                                 <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="fromdate" dateFormat="yy-mm-dd" required>
+                                    yearRange="{{yearRange}}" inputId="fromdate" dateFormat="dd/mm/yy" required>
                                 </p-calendar>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -41,7 +41,7 @@
                                 </div>
                                 <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="todate" dateFormat="yy-mm-dd" required>
+                                    yearRange="{{yearRange}}" inputId="todate" dateFormat="dd/mm/yy" required>
                                 </p-calendar>
                             </div>
                         </div>

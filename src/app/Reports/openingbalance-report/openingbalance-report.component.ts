@@ -70,7 +70,7 @@ export class OpeningbalanceReportComponent implements OnInit {
           })
           this.districtOptions = districtSelection;
           this.districtOptions.unshift({ label: 'All', value: 0 });
-          this.districtOptions.unshift({ label: '-select-', value: 'null' });
+          this.districtOptions.unshift({ label: '-select-', value: null });
           this.changeDistrict();
           break;
         case 'T':
@@ -121,7 +121,7 @@ export class OpeningbalanceReportComponent implements OnInit {
     }
     this.hostelOptions = hostelSelection;
     this.hostelOptions.unshift({ label: 'All', value: 0 });
-    this.hostelOptions.unshift({ label: '-select-', value: 'null' });
+    this.hostelOptions.unshift({ label: '-select-', value: null });
   }
 
   loadTable(type) {

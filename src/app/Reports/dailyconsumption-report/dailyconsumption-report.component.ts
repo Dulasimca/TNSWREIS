@@ -24,7 +24,6 @@ export class DailyconsumptionReportComponent implements OnInit {
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
   hostelOptions: SelectItem[];
-  yearRange: string;
   toDate: any;
   fromDate: any;
   districts?: any;
@@ -38,9 +37,6 @@ export class DailyconsumptionReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.consumptionCols = this._tableConstants.consumptionColumns;
-    const current_year = new Date().getFullYear();
-    const start_year_range = current_year - 70;
-    this.yearRange = start_year_range + ':' + current_year;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;
@@ -74,13 +70,14 @@ export class DailyconsumptionReportComponent implements OnInit {
       }
     }
   }
-  changeDistrict() {
+
+  loadHostelList() {
     let hostelSelection = [];
     const params = {
       'Type' : 0,
       'DCode': this.district,
       'TCode': this.taluk,
-      'HostelId': 0
+      'HostelId': ((this.logged_user.roleId * 1) === 4) ? this.logged_user.hostelId : 0
     }
     if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
     this.taluk !== null && this.taluk !== undefined) {
@@ -94,12 +91,21 @@ export class DailyconsumptionReportComponent implements OnInit {
       })
     }
       this.hostelOptions = hostelSelection;
+      if((this.logged_user.roleId * 1) !== 4) {
       this.hostelOptions.unshift({ label: 'All', value: 0 });
-      this.hostelOptions.unshift({ label: '-select-', value: 'null' });
+    }
+      this.hostelOptions.unshift({ label: '-select-', value: null });
     }
    
+    refreshFields(value) {
+      if(value === 'D') {
+        this.taluk = null;
+        this.talukOptions = [];
+      } 
+      this.loadHostelList();
+    }
+
     loadTable() {
-      this.changeDistrict();
       this.consumptionDetails = [];
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
         this.hostelName !== null && this.hostelName !== undefined && this.fromDate !== null && this.hostelName !==undefined &&

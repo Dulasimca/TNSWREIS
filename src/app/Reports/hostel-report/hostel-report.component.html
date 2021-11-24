@@ -14,7 +14,7 @@
                                                     class="form-mandatory-field">*</span></label>
                                         </div>
                                         <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                            (onClick)="onSelect('D')" (ngModelChange)="loadTable()" required>
+                                            (onClick)="onSelect('D')" (ngModelChange)="reloadFields('D')" required>
                                         </p-dropdown>
                                     </div>
                                     <div #row1 class="p-col-6 p-md-6 p-lg-2">
@@ -22,7 +22,7 @@
                                                     class="form-mandatory-field">*</span></label>
                                         </div>
                                         <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
-                                            (onClick)="onSelect('T')" (onChange)="loadTable()" required>
+                                            (onClick)="onSelect('T')" (ngModelChange)="reloadFields('T')" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3">
@@ -30,7 +30,7 @@
                                                     class="form-mandatory-field">*</span></label>
                                         </div>
                                         <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
-                                            (onClick)="onSelect('HN')" (onChange)="loadTable()" required>
+                                            (onClick)="onSelect('H')" (onChange)="loadTable()" required>
                                         </p-dropdown>
                                     </div>
                                 </div>
