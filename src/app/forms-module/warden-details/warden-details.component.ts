@@ -73,7 +73,7 @@ export class WardenDetailsComponent implements OnInit {
     const start_year_range = current_year - 70;
     this.yearRange = start_year_range + ':' + current_year;
     this.genders = this.masterService.getMaster('GD');
-    this.districts = this.masterService.getMaster('DT');
+    this.districts = this.masterService.getDistrictAll();
     this.nativeDistricts = this.masterService.getDistrictAll();
     this.taluks = this.masterService.getTalukAll();
     // this.hostels = this.masterService.getMaster('HN');
@@ -138,6 +138,8 @@ export class WardenDetailsComponent implements OnInit {
     // }
 
     selectDistrict() {
+    this.hostelName = null;
+    this.hostelOptions = [];
     let hostelSelection = [];
       const params = {
         'Type': 1,
@@ -159,6 +161,12 @@ export class WardenDetailsComponent implements OnInit {
         })
       }
     }
+
+    refreshTaluk() {
+      this.taluk = null;
+      this.talukOptions = [];
+    }
+
     public uploadFile = (event) => {
       const selectedFile = event.target.files[0];
         {
@@ -239,12 +247,13 @@ export class WardenDetailsComponent implements OnInit {
       }
     })
   }
+
   onView() {
     this.showTable = true;
     const params = {
         'DCode': this.logged_user.districtCode,
         'TCode': this.logged_user.talukId,
-        'Value': this.logged_user.userID
+        'Value': this.logged_user.hostelId
         }
         this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
           if(res !== null && res !== undefined && res.length !== 0) {
@@ -276,6 +285,8 @@ export class WardenDetailsComponent implements OnInit {
     this.hostelOptions = [{ label: selectedRow.HostelName , value: selectedRow.Slno}];
     this.taluk = selectedRow.Talukid;
     this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
+    this.district = selectedRow.HostelDCode;
+    this.districtOptions = [{ label: selectedRow.HostelDName, value: selectedRow.HostelDCode}];
     this.altMobNo = selectedRow.AlternateNo;
     this.pincode = selectedRow.Pincode;
     this.wardenFileName = selectedRow.WardenImage;

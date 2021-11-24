@@ -50,92 +50,93 @@ export class OpeningbalanceReportComponent implements OnInit {
   }
 
   onSelect(type) {
+    let yearSelection = [];
+
     let districtSelection = [];
     let talukSelection = [];
-    let yearSelection = [];
-    if(this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
-      switch(type) {
-      case 'D':
-        var filtered_districts = [];
-        if((this.logged_user.roleId * 1) === 2 || (this.logged_user.roleId * 1) === 3) {
-          filtered_districts = this.districts.filter(f => {
-            return f.code === this.logged_user.districtCode;
-          })
-        } else {
-          filtered_districts = this.districts.slice(0);
-        }
-        filtered_districts.forEach(d => {
-          districtSelection.push({ label: d.name, value:d.code });
-        })
-        this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: 'All', value: 0});
-        this.districtOptions.unshift( {label: '-select-', value: 'null'});
-        this.changeDistrict();
-        break;
-      case 'T':
-        var filtered_taluks = [];
-        if((this.logged_user.roleId * 1) === 3) {
-          filtered_taluks = this.taluks.filter(f => {
-            return f.code === this.logged_user.talukId;
-          })
-        } else {
-          filtered_taluks = this.taluks.slice(0);
-        }
-        filtered_taluks.forEach(t => {
-          if (t.dcode === this.district) {
-            talukSelection.push({ label: t.name, value: t.code });
+    if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
+      switch (type) {
+        case 'D':
+          var filtered_districts = [];
+          if ((this.logged_user.roleId * 1) === 2 || (this.logged_user.roleId * 1) === 3) {
+            filtered_districts = this.districts.filter(f => {
+              return f.code === this.logged_user.districtCode;
+            })
+          } else {
+            filtered_districts = this.districts.slice(0);
           }
-        })
-        this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: 'All', value: 0});
-        this.talukOptions.unshift( {label: '-select-', value: 'null'});
-        break;
+          filtered_districts.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
+          })
+          this.districtOptions = districtSelection;
+          this.districtOptions.unshift({ label: 'All', value: 0 });
+          this.districtOptions.unshift({ label: '-select-', value: 'null' });
+          this.changeDistrict();
+          break;
+        case 'T':
+          var filtered_taluks = [];
+          if ((this.logged_user.roleId * 1) === 3) {
+            filtered_taluks = this.taluks.filter(f => {
+              return f.code === this.logged_user.talukId;
+            })
+          } else {
+            filtered_taluks = this.taluks.slice(0);
+          }
+          filtered_taluks.forEach(t => {
+            if (t.dcode === this.district) {
+              talukSelection.push({ label: t.name, value: t.code });
+            }
+          })
+          this.talukOptions = talukSelection;
+          this.talukOptions.unshift({ label: 'All', value: 0 });
+          this.talukOptions.unshift({ label: '-select-', value: 'null' });
+          break;
         case 'Y':
           this.years.forEach(y => {
             yearSelection.push({ label: y.name, value: y.code });
           })
           this.yearOptions = yearSelection;
-          this.yearOptions.unshift({ label: 'All', value: 0});
+          this.yearOptions.unshift({ label: 'All', value: 0 });
           this.yearOptions.unshift({ label: '-select', value: null });
           break;
-      
+
+      }
     }
   }
-}
   changeDistrict() {
     let hostelSelection = [];
     const params = {
-      'Type' : 1,
+      'Type': 1,
       'Value': this.district
     }
     if (this.district !== null && this.district !== undefined && this.district !== 'All') {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
-            this.hostels.forEach(h => {
-              hostelSelection.push({ label: h.HostelName, value: h.Slno });
-            })
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
         }
       })
     }
-      this.hostelOptions = hostelSelection;
-      this.hostelOptions.unshift({ label: 'All', value: 0 });
-      this.hostelOptions.unshift({ label: '-select-', value: 'null' });
-    }
+    this.hostelOptions = hostelSelection;
+    this.hostelOptions.unshift({ label: 'All', value: 0 });
+    this.hostelOptions.unshift({ label: '-select-', value: 'null' });
+  }
 
-    loadTable(type) {
-     // this.changeDistrict();
-     if(type === 'D') {
-       this.taluk = null;
-       this.talukOptions= [];
-     //  this.hostelName = null;
+  loadTable(type) {
+    // this.changeDistrict();
+    if (type === 'D') {
+      this.taluk = null;
+      this.talukOptions = [];
+      //  this.hostelName = null;
       // this.hostelOptions = [];
-     }
-      this.openingData = [];
-      this.totalRecords = 0;
-      if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
-        this.hostelName !== null && this.hostelName !== undefined && this.accYear !== null && this.hostelName !==undefined 
-        && this.accYear !== undefined){
+    }
+    this.openingData = [];
+    this.totalRecords = 0;
+    if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
+      this.hostelName !== null && this.hostelName !== undefined && this.accYear !== null && this.hostelName !== undefined
+      && this.accYear !== undefined) {
       this.loading = true;
       const params = {
         'Districtcode': this.district,
@@ -156,8 +157,8 @@ export class OpeningbalanceReportComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
         }
-       })
-      }
+      })
     }
+  }
 }
 
