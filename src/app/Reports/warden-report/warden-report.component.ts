@@ -69,6 +69,7 @@ export class WardenReportComponent implements OnInit {
           this.districtOptions.unshift({ label: '-select-', value: 'null' });
           break;
         case 'T':
+          console.log('tlk', this.taluks)
             this.taluks.forEach(t => {
                 talukSelection.push({ label: t.name, value: t.code });
             })
@@ -81,25 +82,27 @@ export class WardenReportComponent implements OnInit {
       }
     }
   }
+
   loadTable() {
+    this.wardenDetails = [];
     this.wardenDetailsAll = [];
     if (this.district !== undefined && this.district !== null && this.taluk !== undefined &&
       this.taluk !== null) {
       this.loading = true;
       const params = {
         'Districtcode': this.district,
-        'Talukid': this.taluk
+        'Talukid': this.taluk,
+        'HostelId': ((this.logged_user.roleId * 1) === 4) ? this.logged_user.hostelId : 0
       }
       this._restApiService.post(PathConstants.WardenDetails_Report_Post, params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
-          console.log('true')
           res.Table.forEach(r => {
             r.HostelJoinedDate = this._datePipe.transform(r.HostelJoinedDate, 'yyyy-MM-dd');
             r.ServiceJoinedDate = this._datePipe.transform(r.ServiceJoinedDate, 'yyyy-MM-dd');
             r.EndDate = (r.EndDate !== null) ? this._datePipe.transform(r.EndDate, 'yyyy-MM-dd') : null;
           })
+          this.wardenDetailsAll = res.Table.slice(0);
           this.wardenDetails = res.Table;
-          this.wardenDetailsAll = res.Table;
           this.loading = false;
         } else {
           console.log('false')

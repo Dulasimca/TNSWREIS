@@ -10,49 +10,49 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_district">District<span class="form-mandatory-field">*</span></label>
                                     <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                        (onClick)="onSelect('DT')" optionLabel="label" required>
+                                        (onClick)="onSelect('DT')" (onChange)="refreshFields('D')"  required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <label for="_Taluk">Taluk<span class="form-mandatory-field">*</span></label>
-                                    <p-dropdown name="_Taluk" [options]="TalukIdOptions" [(ngModel)]="Taluk"
-                                        (onClick)="onSelect('TK')" optionLabel="label" [disabled]="disableTaluk"
+                                    <label for="_taluk">Taluk<span class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_taluk" [options]="talukIdOptions" [(ngModel)]="taluk"
+                                        (onClick)="onSelect('TK')" (onChange)="refreshFields('T')"   
                                         required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <label for="_Hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
-                                    <p-dropdown name="_Hostel" [options]="HostelOptions" [(ngModel)]="Hostel"
-                                        optionLabel="label" required>
+                                    <label for="_hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
+                                         required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_Gono">Go. No<span class="form-mandatory-field">*</span></label>
+                                    <div><label for="_gono">Go. No<span class="form-mandatory-field">*</span></label>
                                     </div>
-                                    <input type="text" name="_Gono" class="p-col-12" pInputText [(ngModel)]="Gono"
+                                    <input type="text" name="_gono" class="p-col-12" pInputText [(ngModel)]="gono"
                                         required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_GoDate">Go.Date<span class="form-mandatory-field">*</span></label>
+                                    <div><label for="_godate">Go.Date<span class="form-mandatory-field">*</span></label>
                                     </div>
-                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="GoDate" name="_GoDate"
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="goDate" name="_godate"
                                         [showIcon]="true" [monthNavigator]="true" required></p-calendar>
                                 </div>
                                 <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                     <div class="p-grid">
                                         <div class="p-col-12 p-md-6 p-lg-2">
-                                            <div><label for="_Totalstudent">Total no. of Students<span
+                                            <div><label for="_totalstudent">Total no. of Students<span
                                                         class="form-mandatory-field">*</span></label>
                                             </div>
-                                            <input type="text" name="_Totalstudent" class="p-col-12" pInputText
-                                                [(ngModel)]="Totalstudent" required />
+                                            <input type="text" name="_totalstudent" class="p-col-12" pInputText
+                                                [(ngModel)]="totalstudent" required />
                                         </div>
                                         <div class="p-col-12 p-md-6 p-lg-2">
-                                            <div><label for="_Remarks">Remarks<span
+                                            <div><label for="_remarks">Remarks<span
                                                         class="form-mandatory-field">*</span></label>
                                             </div>
-                                            <textarea type="text" name="_Remarks" class="p-col-12" pInputText
-                                                [(ngModel)]="Remarks" rows="2" cols="15" required></textarea>
+                                            <textarea type="text" name="_remarks" class="p-col-12" pInputText
+                                                [(ngModel)]="remarks" rows="2" cols="15" required></textarea>
                                         </div>
                                     </div>
                                 </div>

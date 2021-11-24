@@ -1,4 +1,4 @@
-import { Component, ElementRef,OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-hostel-go',
@@ -17,56 +18,46 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HostelGoComponent implements OnInit {
   Mslno: 0;
-  Gono:any;
-  GoDate: any;
-  Remarks: any;
+  gono: any;
+  goDate: any;
+  remarks: any;
   logged_user: User;
-  Totalstudent:any;
-  
-
-  Hostel: any;
-  Hostels?: any;
-  HostelOptions: SelectItem[];
-
- 
+  totalstudent: any;
+  hostel: any;
+  hostels?: any;
+  hostelOptions: SelectItem[];
   district: any;
   districts?: any;
   districtOptions: SelectItem[];
-  
-
-
-  Taluk:any;
-  Taluks?:any;
-  TalukIdOptions:SelectItem[];
-
-  data:any;
+  taluk: any;
+  taluks?: any;
+  talukIdOptions: SelectItem[];
+  data: any;
   cols: any;
-
   disableTaluk: boolean = true;
-  constructor(private restApiService: RestAPIService, private messageService: MessageService ,
-                     private masterService: MasterService,private _datePipe: DatePipe, private authService: AuthService) { }
+  @ViewChild('f', { static: false }) hostelgoForm: NgForm;
+  constructor(private restApiService: RestAPIService, private messageService: MessageService,
+    private masterService: MasterService, private _datePipe: DatePipe, private authService: AuthService) { }
 
   ngOnInit(): void {
-
     this.districts = this.masterService.getMaster('DT');
-    this.Taluks = this.masterService.getMaster('TK');
+    this.taluks = this.masterService.getMaster('TK');
     this.logged_user = this.authService.UserInfo;
     this.cols = [
-      {field: 'HostelID',header: 'Hostel ID'	},
-      {field: 'HostelName',header: 'Hostel Name'},
-      {field: 'GoNumber',header:'Go Number'},
-      {field: 'GoDate',header:'Go Date'},
-      {field: 'AllotmentStudent',header: 'Total Student'},
-      {field: 'Districtname',header: 'District Name'},
-      {field: 'Talukname',header: 'Taluk Name'},
-      {field: 'Remarks',header: 'Remarks'},
+      { field: 'HostelID', header: 'Hostel ID' },
+      { field: 'HostelName', header: 'Hostel Name' },
+      { field: 'GoNumber', header: 'Go Number' },
+      { field: 'GoDate', header: 'Go Date' },
+      { field: 'AllotmentStudent', header: 'Total Student' },
+      { field: 'Districtname', header: 'District Name' },
+      { field: 'Talukname', header: 'Taluk Name' },
+      { field: 'Remarks', header: 'Remarks' },
     ];
-    
   }
+
   onSelect(type) {
     let districtSelection = [];
     let talukSelection = [];
-    
     switch (type) {
       case 'DT':
         this.districts.forEach(d => {
@@ -74,46 +65,45 @@ export class HostelGoComponent implements OnInit {
         })
         this.districtOptions = districtSelection;
         this.districtOptions.unshift({ label: '-select-', value: null });
-       
-        if (this.district.value !== null && this.district.value !== undefined) {
-          this.disableTaluk = false;
-           this.Hostelfilter()
-        } else {
-          this.disableTaluk = true;
+        break;
+      case 'TK':
+        if (this.district !== undefined && this.district !== null) {
+          this.taluks.forEach(t => {
+            if (t.dcode === this.district) {
+              talukSelection.push({ label: t.name, value: t.code });
+            }
+          })
+          this.talukIdOptions = talukSelection;
+          this.talukIdOptions.unshift({ label: '-select-', value: null });
         }
         break;
-        case 'TK':
-          if (this.district.value !== undefined && this.district.value !== null) {
-            this.Taluks.forEach(t => {
-              if (t.dcode === this.district.value) {
-                talukSelection.push({ label: t.name, value: t.code });
-              }
-            })
-            this.TalukIdOptions = talukSelection;
-            this.TalukIdOptions.unshift({ label: '-select-', value: null });
-          }
-         
-          break;
-         
     }
   }
+
+  refreshFields(value) {
+    if(value === 'D') {
+      this.taluk = null;
+      this.talukIdOptions = [];
+    }
+    this.loadHostelList();
+  }
   onSave() {
-    const params =  {
-      'Slno'	:		this.Mslno,
-      'hostelid': this.Hostel.value,
-      'Districtcode': this.district.value,      
-      'Talukid': this.Taluk.value,
-      'GoNo': this.Gono,
-      'GoDate': this._datePipe.transform(this.GoDate, 'yyyy-MM-dd'),
-      'Remarks': this.Remarks,
-      'TotalStudent': this.Totalstudent,
-      'Flag' : true
+    const params = {
+      'Slno': this.Mslno,
+      'hostelid': this.hostel,
+      'Districtcode': this.district,
+      'Talukid': this.taluk,
+      'GoNo': this.gono,
+      'GoDate': this._datePipe.transform(this.goDate, 'yyyy-MM-dd'),
+      'Remarks': this.remarks,
+      'TotalStudent': this.totalstudent,
+      'Flag': true
     };
-    this.restApiService.post(PathConstants.Hostelgo_post,params).subscribe(res => {
+    this.restApiService.post(PathConstants.Hostelgo_post, params).subscribe(res => {
       if (res) {
-        console.log('s',res);
+        console.log('s', res);
         this.clearform();
-      
+
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -136,54 +126,72 @@ export class HostelGoComponent implements OnInit {
       }
     })
   }
+
   clearform() {
-     this.Gono = '',
-     this.Remarks = '',
-     this.Totalstudent =''
-     
+    this.hostelgoForm.reset();
+    this.districtOptions = [];
+    this.talukIdOptions = [];
+    this.hostelOptions = [];
   }
+
   onView() {
     const params = {
-      'DCode' : this.logged_user.districtCode,
-      'TCode' : this.logged_user.talukId,
+      'DCode': this.logged_user.districtCode,
+      'TCode': this.logged_user.talukId,
       'HostelId': this.logged_user.hostelId
     }
     this.restApiService.getByParameters(PathConstants.Hostelgo_Get, params).subscribe(res => {
-     if(res !== null && res !== undefined && res.length !==0) {
-       this.data = res.Table;
-     }     
-   });
- }
-
- Hostelfilter() {
-    const Params = {
-      'Type'	:		1,
-      'Value': this.district.value,
+      if (res !== null && res !== undefined) {
+        if(res.length !== 0) {
+        this.data = res.Table;
+        } else {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+          })
+        }
+      } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        })
       }
-  this.restApiService.getByParameters(PathConstants.Hostel_Get,Params).subscribe(res => {
-   if(res !== null && res !== undefined && res.length !==0) {
-     this.Hostels = res.Table;
-     let HostelSelection = [];
-     this.Hostels.forEach(t => {
-          HostelSelection.push({ label: t.HostelName, value: t.Slno });
-      })
-      this.HostelOptions = HostelSelection;
-      this.HostelOptions.unshift({ label: '-select-', value: null });
-      console.log(this.Hostels)
-   }     
- });
-}
+    });
+  }
 
- onRowSelect(event, selectedRow) {
-  this.Mslno = selectedRow.RID;
-  this.Gono = selectedRow.GoNumber;
-  this.GoDate = this._datePipe.transform(selectedRow.GoDate, 'MM/dd/yyyy');
-  this.Remarks = selectedRow.Remarks;
-  this.Totalstudent = selectedRow.AllotmentStudent;
-  this.districtOptions= [{ label: selectedRow.Districtname, value: selectedRow.Districtname }];
-  this.TalukIdOptions= [{ label: selectedRow.Talukname, value: selectedRow.Talukname }];
-  this.HostelOptions= [{ label: selectedRow.HostelName, value: selectedRow.Slno }];
-}
+  loadHostelList() {
+    const Params = {
+      'Type': 0,
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
+        this.logged_user.hostelId : 0,
+    }
+    this.restApiService.getByParameters(PathConstants.Hostel_Get, Params).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.hostels = res.Table;
+        let hostelSelection = [];
+        this.hostels.forEach(t => {
+          hostelSelection.push({ label: t.HostelName, value: t.Slno });
+        })
+        this.hostelOptions = hostelSelection;
+        this.hostelOptions.unshift({ label: '-select-', value: null });
+      }
+    });
+  }
+
+  onRowSelect(event, selectedRow) {
+    this.Mslno = selectedRow.RID;
+    this.gono = selectedRow.GoNumber;
+    this.goDate = this._datePipe.transform(selectedRow.GoDate, 'MM/dd/yyyy');
+    this.remarks = selectedRow.Remarks;
+    this.totalstudent = selectedRow.AllotmentStudent;
+    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtname }];
+    this.talukIdOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukname }];
+    this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.Slno }];
+  }
 }
 
 
