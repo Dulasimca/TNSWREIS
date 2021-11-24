@@ -347,6 +347,7 @@ export class RegistrationComponent implements OnInit {
         this.registeredDetails = res.slice(0);
         this.loading = false;
       } else {
+        this.loading = false;
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,

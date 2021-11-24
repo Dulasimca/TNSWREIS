@@ -122,7 +122,6 @@ export class DailyconsumptionReportComponent implements OnInit {
         if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
           this.consumptionDetails = res.Table;
           this.loading = false;
-          console.log('true')
         } else {
           this.loading = false;
           this._messageService.clear();

@@ -109,7 +109,7 @@
                                                 <label for="_nativedistrict">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
                                                 <p-dropdown [options]="nativeDistrictOptions" [(ngModel)]="nativeDistrict"
-                                                    (onClick)="onSelect('ND')" name="_nativedistrict" required>
+                                                    (onClick)="onSelect('ND')" (onChange)="refreshTaluk()" name="_nativedistrict" required>
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">

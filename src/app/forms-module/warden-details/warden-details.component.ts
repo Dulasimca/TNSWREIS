@@ -136,7 +136,11 @@ export class WardenDetailsComponent implements OnInit {
     //   this.taluk = null;
     //   this.talukOptions = [];
     // }
-
+    refreshTaluk() {
+      this.taluk = null;
+      this.talukOptions = [];
+    }
+    
     selectDistrict() {
     this.hostelName = null;
     this.hostelOptions = [];
@@ -162,10 +166,7 @@ export class WardenDetailsComponent implements OnInit {
       }
     }
 
-    refreshTaluk() {
-      this.taluk = null;
-      this.talukOptions = [];
-    }
+    
 
     public uploadFile = (event) => {
       const selectedFile = event.target.files[0];
