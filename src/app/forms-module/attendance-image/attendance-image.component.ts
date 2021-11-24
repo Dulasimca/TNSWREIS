@@ -44,6 +44,7 @@ export class AttendanceImageComponent implements OnInit {
   cols: any;
   showDialog: boolean;
   hostelImage : string;
+  yearRange: string;
   constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService, private masterService: MasterService,private datepipe: DatePipe
   ,private _messageService: MessageService  ) { }
   

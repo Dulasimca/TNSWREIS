@@ -88,10 +88,14 @@ export class MasterService {
                     this.data.Table1.forEach(t => {
                         if (this.roleId === 1) {
                               this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
-                        } else {
+                        } else if(this.roleId === 2) {
                             if ((this.log_info.districtCode * 1) === (t.Districtcode * 1)) {
                                   this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
                             }
+                        } else {
+                            if ((this.log_info.talukId * 1) === (t.Talukid * 1)) {
+                                this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+                          }
                         }
                     })
                 } else {
