@@ -29,19 +29,27 @@ export class FoodmasterComponent implements OnInit {
   selectedday: number;
   daysOptions: SelectItem[];
   Slno: any;
+  Hosteltypes?: any;
+  Hostelfunctions?: any;
+  HosteltypeOptions: SelectItem[];
+  Hosteltype: number;
+
   public progress: number;
   public message: string;
 
   @ViewChild('f', { static: false }) foodmasterForm: NgForm;
-  constructor(private http: HttpClient, private restApiService: RestAPIService,
+  constructor(private http: HttpClient, private restApiService: RestAPIService,private _masterService: MasterService,
     private masterService: MasterService, private messageService: MessageService
   ) { }
 
 
   ngOnInit(): void {
     this.days = this.masterService.getMaster('FD');
+     this.Hosteltypes = this._masterService.getMaster('HF');
+    //this.Hosteltypes = this._masterService.getMaster('HT');
 
     this.cols = [
+      { field: 'HostelTypeName', header: 'Hostel Type' },
       { field: 'Name', header: 'Weekdays:வார நாட்கள்' },
       { field: 'BreakFast', header: 'Breakfast:காலை உணவு' },
       { field: 'Lunch', header: 'Lunch:மதிய உணவு' },
@@ -51,6 +59,7 @@ export class FoodmasterComponent implements OnInit {
   }
   onSelect(type) {
     let foodSelection = [];
+    let hostelSelection = [];
     switch (type) {
       case 'D':
         this.days.forEach(d => {
@@ -59,11 +68,19 @@ export class FoodmasterComponent implements OnInit {
         this.daysOptions = foodSelection;
         this.daysOptions.unshift({ label: '-select', value: null });
         break;
+        case 'HF':
+          this.Hosteltypes.forEach(h => {
+            hostelSelection.push({ label: h.name, value: h.code });
+          })
+          this.HosteltypeOptions = hostelSelection;
+          this.HosteltypeOptions.unshift({ label: '-select-', value: null });
+            break;
     }
   }
   onSubmit() {
     const params = {
       'Slno': this.Slno != undefined ? this.Slno : 0,
+      'HTypeId': this.Hosteltype,
       'DayId': this.selectedday,
       'Breakfast': this.BreakFast,
       'Lunch': this.Lunch,
@@ -76,7 +93,7 @@ export class FoodmasterComponent implements OnInit {
     this.restApiService.post(PathConstants.FoodMaster_Post, params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
-          this.onview();
+       
           this.onClear();
           this.messageService.clear();
           this.messageService.add({
@@ -110,14 +127,32 @@ export class FoodmasterComponent implements OnInit {
   }
 
   onview() {
-    this.restApiService.get(PathConstants.FoodMaster_Get).subscribe(res => {
+    this.data = [];
+    if(this.Hosteltype !=undefined && this.Hosteltype != null)
+    {
+    const param=
+    {
+      'HTypeId' : this.Hosteltype
+    }
+    this.restApiService.getByParameters(PathConstants.FoodMaster_Get,param).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         this.data = res.Table;
       }
     });
   }
+  else
+  {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.SelectHostelType
+    })
+  }
+  }
 
   onRowSelect(event, selectedRow) {
+    this.Hosteltype = selectedRow.HTypeId;
+    this.HosteltypeOptions = [{ label: selectedRow.HostelTypeName, value: selectedRow.HTypeId }];
     this.selectedday = selectedRow.DayId;
     this.daysOptions = [{ label: selectedRow.Name, value: selectedRow.DayId }];
     this.BreakFast = selectedRow.BreakFast;

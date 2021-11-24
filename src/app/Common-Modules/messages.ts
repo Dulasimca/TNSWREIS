@@ -39,5 +39,8 @@ export class ResponseMessage {
     public static readonly CaptureSuccess = 'Image captured successfully !';
 
     public static readonly SelectUploadDate = 'Please select upload date';
+     
+
+    public static readonly SelectHostelType = 'Please select Hostel Type';
     
 }
