@@ -295,11 +295,13 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.blockUI.start();
-    this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy')
+    this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
+    this.obj.hostelId = this.logged_user.hostelId;
     this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
           this.blockUI.stop();
+          this.clearForm();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
