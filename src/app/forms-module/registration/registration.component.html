@@ -627,9 +627,9 @@
                                 </p-tabPanel>
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" icon="pi pi-send"
-                                        (click)="onSubmit()"></button>
+                                        (click)="onSubmit()"></button>&nbsp;
                                     <button pButton type="button" label="View" icon="pi pi-eye"
-                                        (click)="onView()"></button>
+                                        (click)="onView()"></button>&nbsp;
                                     <button pButton type="button" label="Clear" (click)="clearForm()"></button>
                                 </div>
                             </p-tabView>
@@ -637,7 +637,7 @@
                     </form>
                 </p-card>
             </p-panel>
-            <p-dialog #dialog *ngIf="showDialog" header="Purchase Bill Details" [(visible)]="showDialog"
+            <p-dialog #dialog *ngIf="showDialog" header="Registered Student List" [(visible)]="showDialog"
                 [modal]="showDialog" [style]="{width: '90vw', height: '25vw'}">
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-12">
