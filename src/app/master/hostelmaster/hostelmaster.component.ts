@@ -133,6 +133,7 @@ export class HostelmasterComponent implements OnInit {
       const params = {
       'Slno': (this.hostelRowId != undefined && this.hostelRowId !== null) ? this.hostelRowId : 0,
       'HostelName': this.Hostelname,
+      'HostelFunctioningType': this.Functioningtype,
       'HostelNameTamil': this.Hosteltamilname,
       'HTypeId': this.Hosteltype,
       'Districtcode': this.Districtcode,
@@ -197,6 +198,14 @@ export class HostelmasterComponent implements OnInit {
   }
   clear() {
     this._hostelmaster.reset();
+    this.Hosteltype = null;
+    this.HosteltypeOptions = [];
+    this.Functioningtype = null;
+    this.FunctioningtypeOptions = [];
+    this.Districtcode = null;
+    this.DistrictcodeOptions = [];
+    this.TalukId = null;
+    this.TalukIdOptions = [];
   }
   onRowSelect(event, selectedRow) {
     if(selectedRow !== null && selectedRow !==undefined){

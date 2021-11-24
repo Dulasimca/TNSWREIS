@@ -82,19 +82,19 @@
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <input type="text" name="_Totalstudent" class="p-col-10" pInputText
-                                        [(ngModel)]="Totalstudent" required />
+                                        [(ngModel)]="Totalstudent"  appInputFormat="digitOnly" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_mobno">Mobile Number<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
-                                    <input class="p-col-12" type="tel" name="_mobno" pInputText minlength="10"
+                                    <input class="p-col-12" type="text" name="_mobno" pInputText minlength="10"
                                         maxlength="10" [(ngModel)]="mobileNo" appInputFormat="digitOnly" required />
                                         
                                 </div>
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
-                                    [disabled]="((disableFields && !f.dirty) || (!disableFields && !f.valid))"  class="btn-bg"></button>&nbsp;
+                                    [disabled]="((disableFields && (!f.dirty || !f.valid)) || (!disableFields && !f.valid))"  class="btn-bg"></button>&nbsp;
                                         <button pButton type="button" label="View" (click)="onView()" 
                                         class="btn-bg"></button>
                                 </div>
