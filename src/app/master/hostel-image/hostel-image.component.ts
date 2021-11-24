@@ -56,6 +56,9 @@ export class HostelImageComponent implements OnInit {
                 this.hostelImage = '';
                 this.showCapture = true;
               }
+            } else {
+              this.hostelImage = '';
+              this.showCapture = true;
             }
           })
         } else {
