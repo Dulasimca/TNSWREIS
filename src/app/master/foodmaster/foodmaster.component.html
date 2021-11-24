@@ -7,32 +7,42 @@
                     <p-card>
                        
                         <div class="p-grid">
+                            
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_Hosteltype">Hostel Type<span class="form-mandatory-field">*</span></label></div>
+                                    <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
+                                        [(ngModel)]="Hosteltype" (onClick)="onSelect('HF')"
+                                        required >
+                                    </p-dropdown> </div>
+                            
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_day">Week Days:வார நாட்கள்<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-dropdown name="_day" [options]="daysOptions" [(ngModel)]="selectedday"  
-                                   (onClick)="onSelect('D')" required>
+                                   (onClick)="onSelect('D')" required >
                                 </p-dropdown>
                             </div>
-                          
+                           
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_breakfast">Breakfast:காலை உணவு<span class="form-mandatory-field">*</span></label></div>
                                 <input type="text" pInputText [(ngModel)]="BreakFast" name="_breakfast" required />
                             </div>
 
-                          
+                            
+                            
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_lunch">Lunch:மதிய உணவு<span class="form-mandatory-field">*</span></label></div>
                                 <input type="text" pInputText [(ngModel)]="Lunch" name="_lunch" required />
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg-5"></div>
+
+                            <div class="p-col-12 p-md-6 p-lg-3"></div>
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_snacks">Snacks:சிற்றுண்டி<span class="form-mandatory-field">*</span></label></div>
                                 <input type="text" pInputText [(ngModel)]="Snacks" name="_snacks" required />
                             </div>
-                           
+                            
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_dinner">Dinner:இரவு உணவு<span class="form-mandatory-field">*</span></label></div>
                                 <input type="text" pInputText [(ngModel)]="Dinner" name="_dinner" required />
@@ -47,14 +57,16 @@
 
                 <button pButton type="button" label="View" style="margin-left:5%;"  icon="pi pi-eye" (click)="onview()"></button>
                 <button pButton type="button" label="Clear" style="margin-left:5%;" icon="pi pi-times-circle" (click)="onClear()"></button>
+                <button pButton type="button" icon="pi pi-file-excel" label="Export" style="margin-left:5%;"  
+                (click)="dt.exportCSV()"></button>
             </div>
     </div>
-         <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
-            totalRecords="totalRecords"  styleClass="p-datatable-gridlines" >
+         <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
+            totalRecords="totalRecords"  styleClass="p-datatable-gridlines"  exportFilename="Food_Details_REPORT">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th>S.No</th>
-                    <th *ngFor="let col of columns" [style.width]="col.width">
+                    <th *ngFor="let col of columns" >
                         {{col.header}}
                     </th>
 
