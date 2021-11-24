@@ -30,6 +30,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
+import {GalleriaModule} from 'primeng/galleria';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -144,6 +146,7 @@ import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/o
     MatListModule,
     MenubarModule,
     ChartModule,
+    GalleriaModule,
     BlockUIModule.forRoot(),
   ],
 
