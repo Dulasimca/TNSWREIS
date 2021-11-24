@@ -23,81 +23,88 @@ export class HostelImageComponent implements OnInit {
   districtname: string;
   talukname: string;
   hostelImage: string;
+  showCapture: boolean = false;
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
 
-  constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService,
+  constructor(private _locationService: LocationService, private restApiService: RestAPIService, private _authService: AuthService,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
-     this._locationService.getLocation();
-     this.districtname = this.login_user.districtName;
-     this.talukname = this.login_user.talukName;
-     this.hostelname = this.login_user.hostelName;
+    this._locationService.getLocation();
+    this.districtname = this.login_user.districtName;
+    this.talukname = this.login_user.talukName;
+    this.hostelname = this.login_user.hostelName;
 
-     const params = {
-       'Type': 2,
-       'DCode': this.login_user.districtCode,
-       'TCode': this.login_user.talukId,
-       'HostelId': this.login_user.hostelId
+    const params = {
+      'Type': 0,
+      'DCode': this.login_user.districtCode,
+      'TCode': this.login_user.talukId,
+      'HostelId': this.login_user.hostelId
 
-     }
-     this.restApiService.getByParameters(PathConstants.Hostel_Get ,params).subscribe(res =>{
+    }
+    this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
-        if(res.length !== 0) {
-        res.forEach(i => {
-          this.hostelImage = (i.HostelImage !== undefined && i.HostelImage !== null) ? (i.HostelImage.trim() !== '') ?
-          ('../../assets/layout/'+ this.login_user.hostelId + i.HostelImage) : '' : '';
-          console.log('img',this.hostelImage)
-      }) 
-    } else{
-    this.messageService.clear();
-    this.messageService.add({
-      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        if (res.length !== 0) {
+          res.Table.forEach(i => {
+            if (i.HostelImage !== undefined && i.HostelImage !== null) {
+              if (i.HostelImage.trim() !== '') {
+                this.hostelImage = 'assets/layout/' + this.login_user.hostelId + '/' + i.HostelImage;
+                this.showCapture = false;
+              } else {
+                this.hostelImage = '';
+                this.showCapture = true;
+              }
+            }
+          })
+        } else {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+          })
+        }
+      } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        });
+      }
     })
   }
-  } else {
-  this.messageService.clear();
-  this.messageService.add({
-    key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-    summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
-  });
-  }
-     })
-  }
-  
+
   public webcamImage: WebcamImage = null;
 
   handleImage(webcamImage: WebcamImage) {
-    console.log('handle');
+    console.log('handle', webcamImage);
     this.webcamImage = webcamImage;
     console.log(this.webcamImage);
-      var byteString = atob(this.webcamImage.imageAsDataUrl.split(',')[1]);
-      var ab = new ArrayBuffer(byteString.length);
-      var ia = new Uint8Array(ab);
-      for (var i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
-      }
+    var byteString = atob(this.webcamImage.imageAsDataUrl.split(',')[1]);
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
     this.openCamera = false;
     const params = {
-      'HostelId':this.login_user.hostelId,
+      'HostelId': this.login_user.hostelId,
       'HostelImage': this.webcamImage,
-      'Longitude':this.location[1],
-      'Latitude':this.location[0]
+      'Longitude': this.location[1],
+      'Latitude': this.location[0]
     }
-
-     this.restApiService.put(PathConstants.Hostel_put,params).subscribe(res => {
-       if (res) {
-         this.messageService.clear();
-    this.messageService.add({
-      key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-      summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.CaptureSuccess
+    this.restApiService.put(PathConstants.Hostel_put, params).subscribe(res => {
+      if (res) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.CaptureSuccess
+        });
+      }
     });
-   }
-});
   }
+
   public triggerSnapshot(): void {
     this.trigger.next();
   }
@@ -117,11 +124,9 @@ export class HostelImageComponent implements OnInit {
 
   capture() {
     this.captureImage();
-    
   }
 
   captureImage() {
-     
     this.trigger.next();
   }
 
