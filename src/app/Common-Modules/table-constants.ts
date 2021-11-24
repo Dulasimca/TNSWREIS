@@ -44,7 +44,9 @@ export class TableConstants {
             { field: 'CourseName', header: 'Qualification'},
             { field: 'Designation', header: 'Designation'},
             { field: 'EMail', header: 'Email'},
-            // { field: 'HostelId', header: 'Hostel Name'},
+            { field: 'HostelName', header: 'Hostel Name'},
+            { field: 'Talukname', header: 'Taluk'},
+            { field: 'Districtname', header: 'District'},
             { field: 'PhoneNo', header: 'Mobile No'},
             { field: 'Pincode', header: 'Pincode'},
           ];

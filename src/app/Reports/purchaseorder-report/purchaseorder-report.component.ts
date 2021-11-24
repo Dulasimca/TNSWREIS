@@ -47,50 +47,34 @@ export class PurchaseorderReportComponent implements OnInit {
     this.logged_user = this._authService.UserInfo;
   }
 
-  onSelect(type) {
+  onSelect(value) {
     let districtSelection = [];
     let talukSelection = [];
-    if(this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
-      switch(type) {
-      case 'D':
-        var filtered_districts = [];
-        if((this.logged_user.roleId * 1) === 2 || (this.logged_user.roleId * 1) === 3) {
-          filtered_districts = this.districts.filter(f => {
-            return f.code === this.logged_user.districtCode;
+    if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
+      switch (value) {
+        case 'D':
+          this.districts.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
           })
-        } else {
-          filtered_districts = this.districts.slice(0);
-        }
-        filtered_districts.forEach(d => {
-          districtSelection.push({ label: d.name, value:d.code });
-        })
-        this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: 'All', value: 0});
-        this.districtOptions.unshift( {label: '-select-', value: 'null'});
-        this.changeDistrict();
-        break;
-      case 'T':
-        var filtered_taluks = [];
-        if((this.logged_user.roleId * 1) === 3) {
-          filtered_taluks = this.taluks.filter(f => {
-            return f.code === this.logged_user.talukId;
-          })
-        } else {
-          filtered_taluks = this.taluks.slice(0);
-        }
-        filtered_taluks.forEach(t => {
-          if (t.dcode === this.district) {
-            talukSelection.push({ label: t.name, value: t.code });
+          this.districtOptions = districtSelection;
+          if ((this.logged_user.roleId * 1) === 1) {
+            this.districtOptions.unshift({ label: 'All', value: 0 });
           }
-        })
-        this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: 'All', value: 0});
-        this.talukOptions.unshift( {label: '-select-', value: 'null'});
-        break;
-      
+          this.districtOptions.unshift({ label: '-select-', value: 'null' });
+          break;
+        case 'T':
+            this.taluks.forEach(t => {
+                talukSelection.push({ label: t.name, value: t.code });
+            })
+            this.talukOptions = talukSelection;
+            if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
+              this.talukOptions.unshift({ label: 'All', value: 0 });
+            }
+            this.talukOptions.unshift({ label: '-select-', value: 'null' });
+          break;
+      }
     }
   }
-}
   changeDistrict() {
     let hostelSelection = [];
     const params = {
