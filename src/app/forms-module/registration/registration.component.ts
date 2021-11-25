@@ -297,6 +297,7 @@ export class RegistrationComponent implements OnInit {
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
     this.obj.hostelId = this.logged_user.hostelId;
+    console.log('type',typeof(this.obj.medium));
     this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
