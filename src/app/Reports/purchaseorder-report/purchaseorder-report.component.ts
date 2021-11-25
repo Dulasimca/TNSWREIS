@@ -78,10 +78,13 @@ export class PurchaseorderReportComponent implements OnInit {
   changeDistrict() {
     let hostelSelection = [];
     const params = {
-      'Type' : 1,
-      'Value': this.district
+      'Type' : 0,
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HostelId': ((this.logged_user.roleId * 1) === 4) ? this.logged_user.hostelId : 0
     }
-    if (this.district !== null && this.district !== undefined && this.district !== 'All') {
+    if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
+    this.taluk !== null && this.taluk !== undefined) {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
@@ -91,11 +94,20 @@ export class PurchaseorderReportComponent implements OnInit {
         }
       })
     }
-      console.log('sel', this.hostelOptions, hostelSelection)
       this.hostelOptions = hostelSelection;
+      if((this.logged_user.roleId * 1) !== 4) {
       this.hostelOptions.unshift({ label: 'All', value: 0 });
+    }
       this.hostelOptions.unshift({ label: '-select-', value: null });
     }
+    refreshFields(value) {
+      if(value === 'D') {
+        this.taluk = null;
+        this.talukOptions = [];
+      } 
+      this.changeDistrict();
+    }
+      
     loadTable() {
      // this.changeDistrict();
       this.purchaseData = [];
