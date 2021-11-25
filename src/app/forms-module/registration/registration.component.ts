@@ -201,6 +201,19 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+  refreshFields(value) {
+    if(value === 'D') {
+      if(this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
+      this.disableTaluk = false;
+      } else {
+        this.disableTaluk = true;
+      }
+      this._registrationForm.form.controls['_taluk'].reset();
+      this.obj.talukCode = null;
+      this.talukOptions = [];
+    }
+  }
+
   calculateAge() {
     let timeDiff = Math.abs(Date.now() - this.obj.dob.getTime());
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
