@@ -97,7 +97,6 @@ export class ConsumptionComponent implements OnInit {
   loadOB() { }
 
   onEnter() {
-    console.log('con', this.consumption);
     this.consumptionData.push({
       'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
       'ConsumptionType': this.consumption.value,
