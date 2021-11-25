@@ -35,7 +35,12 @@ export class ResponseMessage {
     public static readonly PasswordChangeSuccess = 'Password has been changed successfully !';
     public static readonly MenuDataError = 'Error occurred in loading menu !';
     public static readonly ApprovalSuccess = 'Approved !';
-    public static readonly NoBillMsg = 'Cannot find matching details !';
+    public static readonly NoBillMsg = 'Cannot find bill details ! Please check the bill no.';
+    public static readonly CaptureSuccess = 'Image captured successfully !';
     public static readonly SelectUploadDate = 'Please select upload date';
+     
+
+    public static readonly SelectHostelType = 'Please select Hostel Type';
+    public static readonly TalukSelectionMsg = 'Please select district to select taluk !';
     
 }

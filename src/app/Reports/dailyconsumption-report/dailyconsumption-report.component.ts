@@ -24,7 +24,6 @@ export class DailyconsumptionReportComponent implements OnInit {
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
   hostelOptions: SelectItem[];
-  yearRange: string;
   toDate: any;
   fromDate: any;
   districts?: any;
@@ -38,63 +37,47 @@ export class DailyconsumptionReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.consumptionCols = this._tableConstants.consumptionColumns;
-    const current_year = new Date().getFullYear();
-    const start_year_range = current_year - 70;
-    this.yearRange = start_year_range + ':' + current_year;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;
   }
 
-  onSelect(type) {
+  onSelect(value) {
     let districtSelection = [];
     let talukSelection = [];
-    if(this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
-      switch(type) {
-      case 'D':
-        var filtered_districts = [];
-        if((this.logged_user.roleId * 1) === 2 || (this.logged_user.roleId * 1) === 3) {
-          filtered_districts = this.districts.filter(f => {
-            return f.code === this.logged_user.districtCode;
+    if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
+      switch (value) {
+        case 'D':
+          this.districts.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
           })
-        } else {
-          filtered_districts = this.districts.slice(0);
-        }
-        filtered_districts.forEach(d => {
-          districtSelection.push({ label: d.name, value:d.code });
-        })
-        this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: 'All', value: 0});
-        this.districtOptions.unshift( {label: '-select-', value: 'null'});
-        break;
-      case 'T':
-        var filtered_taluks = [];
-        if((this.logged_user.roleId * 1) === 3) {
-          filtered_taluks = this.taluks.filter(f => {
-            return f.code === this.logged_user.talukId;
-          })
-        } else {
-          filtered_taluks = this.taluks.slice(0);
-        }
-        filtered_taluks.forEach(t => {
-          if (t.dcode === this.district) {
-            talukSelection.push({ label: t.name, value: t.code });
+          this.districtOptions = districtSelection;
+          if ((this.logged_user.roleId * 1) === 1) {
+            this.districtOptions.unshift({ label: 'All', value: 0 });
           }
-        })
-        this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: 'All', value: 0});
-        this.talukOptions.unshift( {label: '-select-', value: 'null'});
-        break;
+          this.districtOptions.unshift({ label: '-select-', value: 'null' });
+          break;
+        case 'T':
+            this.taluks.forEach(t => {
+                talukSelection.push({ label: t.name, value: t.code });
+            })
+            this.talukOptions = talukSelection;
+            if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
+              this.talukOptions.unshift({ label: 'All', value: 0 });
+            }
+            this.talukOptions.unshift({ label: '-select-', value: 'null' });
+          break;
+      }
     }
   }
-}
-  changeDistrict() {
+
+  loadHostelList() {
     let hostelSelection = [];
     const params = {
       'Type' : 0,
       'DCode': this.district,
       'TCode': this.taluk,
-      'HostelId': 0
+      'HostelId': ((this.logged_user.roleId * 1) === 4) ? this.logged_user.hostelId : 0
     }
     if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
     this.taluk !== null && this.taluk !== undefined) {
@@ -108,12 +91,21 @@ export class DailyconsumptionReportComponent implements OnInit {
       })
     }
       this.hostelOptions = hostelSelection;
+      if((this.logged_user.roleId * 1) !== 4) {
       this.hostelOptions.unshift({ label: 'All', value: 0 });
-      this.hostelOptions.unshift({ label: '-select-', value: 'null' });
+    }
+      this.hostelOptions.unshift({ label: '-select-', value: null });
     }
    
+    refreshFields(value) {
+      if(value === 'D') {
+        this.taluk = null;
+        this.talukOptions = [];
+      } 
+      this.loadHostelList();
+    }
+
     loadTable() {
-      this.changeDistrict();
       this.consumptionDetails = [];
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
         this.hostelName !== null && this.hostelName !== undefined && this.fromDate !== null && this.hostelName !==undefined &&
@@ -130,7 +122,6 @@ export class DailyconsumptionReportComponent implements OnInit {
         if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
           this.consumptionDetails = res.Table;
           this.loading = false;
-          console.log('true')
         } else {
           this.loading = false;
           this._messageService.clear();

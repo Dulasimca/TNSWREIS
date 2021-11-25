@@ -11,37 +11,35 @@
                                 <div><label for="_district">District<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                    (onClick)="onSelect('D')" (ngModelChange)="loadTable()" required>
+                                    (onClick)="onSelect('D')" (ngModelChange)="refreshFields('D')" required>
                                 </p-dropdown>
                             </div>
                             <div #row1 class="p-col-6 p-md-6 p-lg-2">
                                 <div><label for="_taluk">Taluk<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
-                                    (onClick)="onSelect('T')" (onChange)="loadTable()" required>
+                                    (onClick)="onSelect('T')" (onChange)="refreshFields('T')" required>
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-3">
                                 <div><label for="_hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName"
-                                    (onClick)="onSelect('HN')" (onChange)="loadTable()" required>
+                                   (onChange)="loadTable()" required>
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_fromdate">From Date<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
-                                    [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="fromdate" dateFormat="yy-mm-dd" required>
+                                    [showIcon]="true" inputId="fromdate" dateFormat="dd/mm/yy" required>
                                 </p-calendar>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_todate">To Date<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
-                                    [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="todate" dateFormat="yy-mm-dd" required>
+                                    [showIcon]="true" inputId="todate" dateFormat="dd/mm/yy" required>
                                 </p-calendar>
                             </div>
                         </div>
@@ -58,7 +56,7 @@
                             exportFilename="DAILY_CONSUMPTION_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
-                                    <th>S.No</th>
+                                    <th style="width: 45px;">S.No</th>
                                     <th *ngFor="let col of columns">
                                         {{col.header}}
                                     </th>

@@ -1,6 +1,4 @@
-<div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
-        <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
             <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Commodity Master">
@@ -53,9 +51,9 @@
     <div *ngIf="showTable" class="table-format">
         <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
             [rowsPerPageOptions]="[10,20,30,40]">
-            <ng-template pTemplate="header">
+            <ng-template pTemplate="header"> 
                 <tr>
-                    <th style="width: 3cm;">S.No</th>
+                    <th style="width: 50px;">S.No</th>
                     <th>Commodity Name(ENGLISH)</th>
                     <th>Commodity Name(தமிழ்)</th>
                     <th>Commodity Group</th>
@@ -78,6 +76,5 @@
     </div>
 </form>
 </p-panel>
-</div>
 </div>
 </div>

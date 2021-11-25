@@ -1,66 +1,72 @@
-<block-ui>
 <div class="p-col-12 p-md-12 p-lg-12">
-    <p-panel header="FoodMaster">
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-panel header="Food Master">
         <div class="p-grid">
-           
             <div class="p-col-12 p-md-12 p-lg-12">
-
                 <form #f="ngForm" name="foodmasterForm">
                     <p-card>
                        
                         <div class="p-grid">
+                            
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label>Weeek Days:வார நாட்கள்<span class="form-mandatory-field">*</span></label>
+                            <div><label for="_Hosteltype">Hostel Type<span class="form-mandatory-field">*</span></label></div>
+                                    <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
+                                        [(ngModel)]="Hosteltype" (onClick)="onSelect('HF')"
+                                        required >
+                                    </p-dropdown> </div>
+                            
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_day">Week Days:வார நாட்கள்<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-dropdown name="selectedday" [options]="daysOptions" [(ngModel)]="selectedday"
-                                    optionLabel="label" (onClick)="onSelect()" required>
+                                <p-dropdown name="_day" [options]="daysOptions" [(ngModel)]="selectedday"  
+                                   (onClick)="onSelect('D')" required >
                                 </p-dropdown>
-                            </div>
-                          
-                            <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label>BreakFast:காலை உணவு<span class="form-mandatory-field">*</span></label></div>
-                                <input type="text" pInputText [(ngModel)]="BreakFast" name="BreakFast" required />
-                            </div>
-
-                          
-                            <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label>Lunch:மதிய உணவு<span class="form-mandatory-field">*</span></label></div>
-                                <input type="text" pInputText [(ngModel)]="Lunch" name="Lunch" required />
-                            </div>
-                            <div class="p-col-12 p-md-6 p-lg-5"></div>
-                            <div class="p-col-12 p-md-6 p-lg-1"></div>
-                            <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label>Snacks:சிற்றுண்டி<span class="form-mandatory-field">*</span></label></div>
-                                <input type="text" pInputText [(ngModel)]="Snacks" name="Snacks" required />
                             </div>
                            
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label>Dinner:இரவு உணவு<span class="form-mandatory-field">*</span></label></div>
-                                <input type="text" pInputText [(ngModel)]="Dinner" name="Dinner" required />
+                                <div><label for="_breakfast">Breakfast:காலை உணவு<span class="form-mandatory-field">*</span></label></div>
+                                <input type="text" pInputText [(ngModel)]="BreakFast" name="_breakfast" required />
                             </div>
-                        </div>
+
+                            
+                            
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_lunch">Lunch:மதிய உணவு<span class="form-mandatory-field">*</span></label></div>
+                                <input type="text" pInputText [(ngModel)]="Lunch" name="_lunch" required />
+                            </div>
+
+                            <div class="p-col-12 p-md-6 p-lg-3"></div>
+                            <div class="p-col-12 p-md-6 p-lg-1"></div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_snacks">Snacks:சிற்றுண்டி<span class="form-mandatory-field">*</span></label></div>
+                                <input type="text" pInputText [(ngModel)]="Snacks" name="_snacks" required />
+                            </div>
+                            
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_dinner">Dinner:இரவு உணவு<span class="form-mandatory-field">*</span></label></div>
+                                <input type="text" pInputText [(ngModel)]="Dinner" name="_dinner" required />
+                            </div>
                        
-                    </p-card>
-                </form>
-            </div>
+                    
 
 
 
             <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
-                <button pButton name="save" type="button" label="Submit" icon="pi pi-save" (click)="onSubmit()"></button>
+                <button pButton name="save" type="button" label="Submit" icon="pi pi-save" (click)="onSubmit()" [disabled]='(!f.valid || !f.dirty)'></button>
 
                 <button pButton type="button" label="View" style="margin-left:5%;"  icon="pi pi-eye" (click)="onview()"></button>
-                <button pButton type="button" label="clear" style="margin-left:5%;" icon="pi pi-trash" (click)="onClear()"></button>
+                <button pButton type="button" label="Clear" style="margin-left:5%;" icon="pi pi-times-circle" (click)="onClear()"></button>
+                <button pButton type="button" icon="pi pi-file-excel" label="Export" style="margin-left:5%;"  
+                (click)="dt.exportCSV()"></button>
             </div>
-           </div>
-
-         <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
-            totalRecords="totalRecords" pageLinks="3">
+    </div>
+         <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
+            totalRecords="totalRecords"  styleClass="p-datatable-gridlines"  exportFilename="Food_Details_REPORT">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-
-                    <th *ngFor="let col of columns" [style.width]="col.width">
+                    <th>S.No</th>
+                    <th *ngFor="let col of columns" >
                         {{col.header}}
                     </th>
 
@@ -70,6 +76,7 @@
 
             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                 <tr [pSelectableRow]="rowData" class="cursor-pointer" (dblclick)="onRowSelect($event, rowData)">
+                    <td>{{rowIndex+1}}</td>
                     <td *ngFor="let col of columns">
                         {{rowData[col.field]}}
                     </td>
@@ -78,6 +85,11 @@
 
             </ng-template>
         </p-table>
-    </p-panel>
+
+    </p-card>
+</form>
 </div>
-</block-ui>
+</div> 
+    </p-panel>
+    </div>
+ 

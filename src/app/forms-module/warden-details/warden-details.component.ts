@@ -35,7 +35,7 @@ export class WardenDetailsComponent implements OnInit {
   hstlLeaveDate: any;
   qualification: any;
   designation: string;
-  hostelName: number;
+  hostelName: any;
   email: any;
   yearRange: string;
   taluk: number;
@@ -46,8 +46,8 @@ export class WardenDetailsComponent implements OnInit {
   addressOne: any;
   addressTwo: any;
   pincode: any;
-  cols : any;
-  data : any = [];
+  cols: any;
+  data: any = [];
   wardenImage: any = '';
   genders?: any;
   districts?: any;
@@ -63,19 +63,19 @@ export class WardenDetailsComponent implements OnInit {
 
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
 
-  constructor(private restApiService: RestAPIService, private messageService: MessageService , private masterService: MasterService,   private _d: DomSanitizer, private _tableConstants: TableConstants, 
-    private _datePipe:DatePipe, private http: HttpClient, private authService: AuthService) { }
+  constructor(private restApiService: RestAPIService, private messageService: MessageService, private masterService: MasterService, private _d: DomSanitizer, private _tableConstants: TableConstants,
+    private _datePipe: DatePipe, private http: HttpClient, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.cols = this._tableConstants.wardenTableColumns;
-    this.logged_user =this.authService.UserInfo;
+    this.logged_user = this.authService.UserInfo;
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 70;
     this.yearRange = start_year_range + ':' + current_year;
     this.genders = this.masterService.getMaster('GD');
-    this.districts = this.masterService.getMaster('DT');
-    this.nativeDistricts = this.masterService.getMaster('DT');
-    this.taluks = this.masterService.getMaster('TK');
+    this.districts = this.masterService.getDistrictAll();
+    this.nativeDistricts = this.masterService.getDistrictAll();
+    this.taluks = this.masterService.getTalukAll();
     // this.hostels = this.masterService.getMaster('HN');
     this.courses = this.masterService.getMaster('CU');
     this.disableTaluk = true;
@@ -95,107 +95,118 @@ export class WardenDetailsComponent implements OnInit {
         this.genderOptions = genderSelection;
         this.genderOptions.unshift({ label: '-select-', value: null });
         break;
-        case 'D':
-          this.districts.forEach(d => {
-            districtSelection.push({ label: d.name, value: d.code });
-          })
-          this.districtOptions = districtSelection;
-          this.districtOptions.unshift({ label: '-select-', value: null });
-          break;
-          case 'ND':
-            this.nativeDistricts.forEach(d => {
-              nativeDistrictSelection.push({ label: d.name, value: d.code });
-            })
-            this.nativeDistrictOptions = nativeDistrictSelection;
-            this.nativeDistrictOptions.unshift({ label: '-select-', value: null });
-            break;
-          case 'T':
-            // if(this.nativeDistrict !== undefined && this.nativeDistrict !== null) {
-            //   this.disableTaluk = false;
-            
-            this.taluks.forEach(t => {
-              if (t.dcode === this.nativeDistrict) {
-                talukSelection.push({ label: t.name, value: t.code });
-              }
-            })
-          
-            this.talukOptions = talukSelection;
-            this.talukOptions.unshift({ label: '-select-', value: null });
-            break;
-              case 'CU':
-                this.courses.forEach(q => {
-                  courseSelection.push({ label: q.name, value: q.code });
-                })
-                this.qualificationOptions = courseSelection;
-                this.qualificationOptions.unshift({ label: '-select-', value: null });
-                break;
-      }
-    }
-
-    // resetField() {
-    //   this.taluk = null;
-    //   this.talukOptions = [];
-    // }
-
-    selectDistrict() {
-    let hostelSelection = [];
-      const params = {
-        'Type': 1,
-        'Value': this.district
-  
-      }
-      if (this.district !== null && this.district !== undefined) {
-        this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-          if (res !== null && res !== undefined && res.length !== 0) {
-            this.hostels = res.Table;
-            this.hostels.forEach(h => {
-              hostelSelection.push({ label: h.HostelName, value: h.Slno });
-            })
-            this.hostelOptions = hostelSelection;
-            this.hostelOptions.unshift({ label: '-select', value: null });
-            console.log('h',res);
-          };
-  
+      case 'D':
+        this.districts.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
         })
-      }
+        this.districtOptions = districtSelection;
+        this.districtOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'ND':
+        this.nativeDistricts.forEach(d => {
+          nativeDistrictSelection.push({ label: d.name, value: d.code });
+        })
+        this.nativeDistrictOptions = nativeDistrictSelection;
+        this.nativeDistrictOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'T':
+        // if(this.nativeDistrict !== undefined && this.nativeDistrict !== null) {
+        //   this.disableTaluk = false;
+
+        this.taluks.forEach(t => {
+          if (t.dcode === this.nativeDistrict) {
+            talukSelection.push({ label: t.name, value: t.code });
+          }
+        })
+
+        this.talukOptions = talukSelection;
+        this.talukOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'CU':
+        this.courses.forEach(q => {
+          courseSelection.push({ label: q.name, value: q.code });
+        })
+        this.qualificationOptions = courseSelection;
+        this.qualificationOptions.unshift({ label: '-select-', value: null });
+        break;
     }
-    public uploadFile = (event) => {
-      const selectedFile = event.target.files[0];
-        {
-             const url = window.URL.createObjectURL(selectedFile);
-            this.wardenImage = this._d.bypassSecurityTrustUrl(url);
-        }
-      this.formData = new FormData()
-      
-      let fileToUpload: any = <File>event.target.files[0];
-      const folderName = this.logged_user.hostelId + '/' + 'Documents';
-      const filename = fileToUpload.name + '^' + folderName;
-      this.formData.append('file', fileToUpload, filename);
-      // console.log('file', fileToUpload);
-      // console.log('formdata', this.formData);
-      this.wardenFileName=fileToUpload.name;
-      this.http.post(this.restApiService.BASEURL +PathConstants.FileUpload_Post, this.formData)
-        .subscribe(event => 
-          {
-        }
-        );
-    }  
-  
-    // onFileUpload($event) {
-    //   const selectedFile = $event.target.files[0];
-    //   {
-    //       const url = window.URL.createObjectURL(selectedFile);
-    //       this.wardenImage = this._d.bypassSecurityTrustUrl(url);
-    //   }
-    // }
+  }
+
+  // resetField() {
+  //   this.taluk = null;
+  //   this.talukOptions = [];
+  // }
+  refreshTaluk() {
+    this.taluk = null;
+    this.talukOptions = [];
+  }
+
+  selectDistrict() {
+    this.hostelName = null;
+    this.hostelOptions = [];
+    let hostelSelection = [];
+    const params = {
+      'Type': 1,
+      'DCode': this.district,
+      'TCode': (this.logged_user.talukId !== undefined && this.logged_user.talukId !== null) ?
+      this.logged_user.talukId : 0,
+      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
+        this.logged_user.hostelId : 0,
+    }
+    if (this.district !== null && this.district !== undefined) {
+      this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          this.hostels = res.Table;
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
+          this.hostelOptions = hostelSelection;
+          this.hostelOptions.unshift({ label: '-select', value: null });
+          console.log('h', res);
+        };
+
+      })
+    }
+  }
+
+
+
+  public uploadFile = (event) => {
+    const selectedFile = event.target.files[0];
+    {
+      const url = window.URL.createObjectURL(selectedFile);
+      this.wardenImage = this._d.bypassSecurityTrustUrl(url);
+    }
+    this.formData = new FormData()
+
+    let fileToUpload: any = <File>event.target.files[0];
+    const folderName = this.logged_user.hostelId + '/' + 'Documents';
+    const filename = fileToUpload.name + '^' + folderName;
+    this.formData.append('file', fileToUpload, filename);
+    // console.log('file', fileToUpload);
+    // console.log('formdata', this.formData);
+    this.wardenFileName = fileToUpload.name;
+    this.http.post(this.restApiService.BASEURL + PathConstants.FileUpload_Post, this.formData)
+      .subscribe(event => {
+      }
+      );
+  }
+
+  // onFileUpload($event) {
+  //   const selectedFile = $event.target.files[0];
+  //   {
+  //       const url = window.URL.createObjectURL(selectedFile);
+  //       this.wardenImage = this._d.bypassSecurityTrustUrl(url);
+  //   }
+  // }
   onSave() {
-    const params =  {
-      'Name' : this.wardenName,
+    const params = {
+      'Name': this.wardenName,
       'GenderId': this.gender,
-      'DOB' : this._datePipe.transform(this.dob, 'yyyy-MM-dd'),
-      'Qualification' : this.qualification,
+      'DOB': this._datePipe.transform(this.dob, 'yyyy-MM-dd'),
+      'Qualification': this.qualification,
       'HostelId': this.hostelName,
-      'HostelJoinedDate' : this._datePipe.transform(this.hostelJoin, 'yyyy-MM-dd'),
+      'HostelJoinedDate': this._datePipe.transform(this.hostelJoin, 'yyyy-MM-dd'),
       'ServiceJoinedDate': this._datePipe.transform(this.servicedoj, 'yyyy-MM-dd'),
       'Designation': this.designation,
       'EMail': this.email,
@@ -213,7 +224,7 @@ export class WardenDetailsComponent implements OnInit {
       // 'EndDate': ''
 
     };
-    this.restApiService.post(PathConstants.Warden_post,params).subscribe(res => {
+    this.restApiService.post(PathConstants.Warden_post, params).subscribe(res => {
       if (res) {
         this.onView();
         this.onClear();
@@ -239,50 +250,51 @@ export class WardenDetailsComponent implements OnInit {
       }
     })
   }
+
   onView() {
     this.showTable = true;
     const params = {
-        'Type': 2,
-        'RoleId': this.logged_user.roleId,
-        'DCode': this.logged_user.districtCode,
-        'TCode': this.logged_user.talukId,
-        'WardenId': this.logged_user.userID
-        }
-        this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
-          if(res !== null && res !== undefined && res.length !== 0) {
-          console.log('res', res);
-          this.data = res.Table;
-          }
-        });
+      'DCode': this.logged_user.districtCode,
+      'TCode': this.logged_user.talukId,
+      'Value': this.logged_user.hostelId
+    }
+    this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        console.log('res', res);
+        this.data = res.Table;
+      }
+    });
   }
 
-  onEdit(selectedRow){
-    if(selectedRow !== null && selectedRow !==undefined){
-    this.wardenName = selectedRow.Name;
-    this.wardenId = selectedRow.WardenId;
-    this.gender = selectedRow.GenderId;
-    this.genderOptions = [{ label: selectedRow.GenderName, value: selectedRow.GenderId }];
-    this.dob = new Date(selectedRow.DOB);
-    this.designation = selectedRow.Designation;
-    this.qualification = selectedRow.Qualification;
-    this.qualificationOptions = [{ label: selectedRow.CourseName, value: selectedRow.Qualification }];
-    this.servicedoj = new Date(selectedRow.ServiceJoinedDate);
-    this.hostelJoin = new Date(selectedRow.HostelJoinedDate);
-    this.email = selectedRow.EMail;
-    this.mobNo = selectedRow.PhoneNo;
-    this.addressOne = selectedRow.Address1;
-    this.addressTwo = selectedRow.Address2;
-    this.nativeDistrict = selectedRow.Districtcode;
-    this.nativeDistrictOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
-    this.hostelName = selectedRow.HostelId;
-    this.hostelOptions = [{ label: selectedRow.HostelName , value: selectedRow.Slno}];
-    this.taluk = selectedRow.Talukid;
-    this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
-    this.altMobNo = selectedRow.AlternateNo;
-    this.pincode = selectedRow.Pincode;
-    this.wardenFileName = selectedRow.WardenImage;
-    var filePath = '../assets/layout/' + this.logged_user.hostelId + '/Documents' + '/'+   this.wardenFileName;
-    this.wardenImage = filePath;
+  onEdit(selectedRow) {
+    if (selectedRow !== null && selectedRow !== undefined) {
+      this.wardenName = selectedRow.Name;
+      this.wardenId = selectedRow.WardenId;
+      this.gender = selectedRow.GenderId;
+      this.genderOptions = [{ label: selectedRow.GenderName, value: selectedRow.GenderId }];
+      this.dob = new Date(selectedRow.DOB);
+      this.designation = selectedRow.Designation;
+      this.qualification = selectedRow.Qualification;
+      this.qualificationOptions = [{ label: selectedRow.CourseName, value: selectedRow.Qualification }];
+      this.servicedoj = new Date(selectedRow.ServiceJoinedDate);
+      this.hostelJoin = new Date(selectedRow.HostelJoinedDate);
+      this.email = selectedRow.EMail;
+      this.mobNo = selectedRow.PhoneNo;
+      this.addressOne = selectedRow.Address1;
+      this.addressTwo = selectedRow.Address2;
+      this.nativeDistrict = selectedRow.Districtcode;
+      this.nativeDistrictOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
+      this.hostelName = selectedRow.HostelId;
+      this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.Slno }];
+      this.taluk = selectedRow.Talukid;
+      this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid }];
+      this.district = selectedRow.HostelDCode;
+      this.districtOptions = [{ label: selectedRow.HostelDName, value: selectedRow.HostelDCode }];
+      this.altMobNo = selectedRow.AlternateNo;
+      this.pincode = selectedRow.Pincode;
+      this.wardenFileName = selectedRow.WardenImage;
+      var filePath = '../assets/layout/' + this.logged_user.hostelId + '/Documents' + '/' + this.wardenFileName;
+      this.wardenImage = filePath;
     }
   }
 
@@ -295,6 +307,6 @@ export class WardenDetailsComponent implements OnInit {
     this.hostelOptions = [];
     this.nativeDistrictOptions = [];
     this.data = [];
-    this.wardenFileName = '';
+    this.wardenImage = '';
   }
 }

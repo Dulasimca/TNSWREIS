@@ -1,4 +1,3 @@
-<div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
         <div class="p-col-12 p-md-12 p-lg-12">
             <p-toast position="top-center" key="t-msg"></p-toast>
@@ -12,7 +11,7 @@
                                         <div><label for="_wardenname">Warden Name<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <input type="text" name="_wardenname" class="p-col-12" pInputText
-                                            [(ngModel)]="wardenName" style="text-transform: capitalize;" required />
+                                            [(ngModel)]="wardenName" style="text-transform: capitalize;" appInputFormat="noSpecialChars" required />
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                         <label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
@@ -25,7 +24,7 @@
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-calendar [showOtherMonths]="false" [(ngModel)]="dob" name="_dob" [showIcon]="true"
                                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
-                                            inputId="dateofbirth" dateFormat="yy-mm-dd" required></p-calendar>
+                                            inputId="dateofbirth" dateFormat="dd/mm/yy" required></p-calendar>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_qualification">Qualification<span
@@ -39,13 +38,13 @@
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-calendar [showOtherMonths]="false" [(ngModel)]="servicedoj" name="_doj" [showIcon]="true"
                                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
-                                            inputId="dateofjoin" dateFormat="yy-mm-dd" required></p-calendar>
+                                            inputId="dateofjoin" dateFormat="dd/mm/yy" required></p-calendar>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_designation">Designation<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <input type="text" class="p-col-12" name="_designation" pInputText
-                                            [(ngModel)]="designation" required />
+                                            [(ngModel)]="designation" appInputFormat="noSpecialChars" required />
                                     </div>
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
@@ -65,7 +64,7 @@
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_hstljoindate">Hostel Joining Date<span
+                                                <div><label for="_hstljoindate">Joined as warden in<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <p-calendar [showOtherMonths]="false" [(ngModel)]="hostelJoin" name="_hstljoindate"
                                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
@@ -82,17 +81,17 @@
                                                 <div><label for="_mobno">Mobile Number<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <input type="text" class="p-col-12" name="_mobno" pInputText
-                                                    [(ngModel)]="mobNo" minlength="10" maxlength="10" required />
+                                                    [(ngModel)]="mobNo" minlength="10" maxlength="10" appInputFormat="digitOnly" required />
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_altmobno">Alternate Mobile No.</label></div>
                                                 <input type="text" class="p-col-12" name="_altmobno" pInputText
-                                                    [(ngModel)]="altMobNo" minlength="10" maxlength="10" required />
+                                                    [(ngModel)]="altMobNo" minlength="10" maxlength="10" appInputFormat="digitOnly" required />
                                             </div>
                                         </div>
                                     </div>
-                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
-                                        <div class="p-grid">
+                                        <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid">
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_address1">Address Line 1<span
                                                             class="form-mandatory-field">*</span></label></div>
@@ -110,7 +109,7 @@
                                                 <label for="_nativedistrict">Native District<span
                                                         class="form-mandatory-field">*</span> </label>
                                                 <p-dropdown [options]="nativeDistrictOptions" [(ngModel)]="nativeDistrict"
-                                                    (onClick)="onSelect('ND')" name="_nativedistrict" required>
+                                                    (onClick)="onSelect('ND')" (onChange)="refreshTaluk()" name="_nativedistrict" required>
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
@@ -124,7 +123,7 @@
                                                 <div><label for="_pincode">Pincode</label><span
                                                         class="form-mandatory-field">*</span></div>
                                                 <input type="text" class="p-col-12" name="_pincode" pInputText
-                                                    [(ngModel)]="pincode" minlength="6" maxlength="6" required />
+                                                    [(ngModel)]="pincode" minlength="6" maxlength="6" appInputFormat="digitOnly" required />
                                             </div>
                                             <div #row3 class="p-col-12 p-md-12 p-lg-12">
                                                 <div class="p-grid">
@@ -165,7 +164,7 @@
                                 [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th>S.No</th>
+                                        <th style="width: 50px;">S.No</th>
                                         <th *ngFor="let col of columns">
                                             {{col.header}}
                                         </th>
@@ -189,4 +188,3 @@
             </p-panel>
         </div>
     </div>
-</div>

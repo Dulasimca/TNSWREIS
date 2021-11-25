@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-format">
+                    <div class="p-col-12 p-md-12 p-lg-12">
                         <div style="text-align: right;">
                             <button pButton type="button" icon="pi pi-file-excel" label="Export"
                                 style="color: yellowgreen;" (click)="dt.exportCSV()"
@@ -68,6 +68,7 @@
 </div>
 <!-- dialog  -->
 <p-dialog header="End Date Update" [(visible)]="show" [modal]="true" [style]="{width: '70vw', height: '35vw'}">
+    <div class="p-col-1"></div>
     <p-card>
         <div class="p-grid div-main">
             <div class="p-col-6 p-md-6 p-lg-6 no-pad-left">

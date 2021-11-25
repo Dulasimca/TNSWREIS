@@ -52,6 +52,7 @@ export class HostelmasterComponent implements OnInit {
   cols: any;
   login_user: User;
   hostelRowId: number;
+  disableFields: boolean;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private messageService: MessageService,private _authService: AuthService,
@@ -61,6 +62,7 @@ export class HostelmasterComponent implements OnInit {
    this.cols = [
      { field: 'HostelName', header: 'HostelName', width: '100px'},
      { field: 'HostelNameTamil', header: 'HostelNameTamil', width: '100px'},
+     { field: 'FunctioningName', header: 'Functioning Type', width: '100px'},
      { field: 'Name', header: 'HType', width: '100px'},
      { field: 'Districtname', header: 'District', width: '100px'},
      { field: 'Talukname', header: 'Taluk', width: '100px'},
@@ -78,10 +80,15 @@ export class HostelmasterComponent implements OnInit {
     this.Hosteltypes = this._masterService.getMaster('HT');
     this.Hostelfunctions = this._masterService.getMaster('HF');
     this.TalukIds = this._masterService.getTalukAll();
+    if((this.login_user.roleId * 1) === 4) {
+        this.disableFields = true;
+    } else {
+      this.disableFields = false;
+    }
+    
   }
 
   onSelect(type) {
-    console.log("ent")
     let districtSelection = [];
     let talukSelection = [];
     let hostelSelection = [];
@@ -126,6 +133,7 @@ export class HostelmasterComponent implements OnInit {
       const params = {
       'Slno': (this.hostelRowId != undefined && this.hostelRowId !== null) ? this.hostelRowId : 0,
       'HostelName': this.Hostelname,
+      'HostelFunctioningType': this.Functioningtype,
       'HostelNameTamil': this.Hosteltamilname,
       'HTypeId': this.Hosteltype,
       'Districtcode': this.Districtcode,
@@ -169,12 +177,12 @@ export class HostelmasterComponent implements OnInit {
   onView() {
     this.data = [];
     const params = {
-      'sType':'0',
-      'Id': (this.login_user.districtCode !== undefined && this.login_user.districtCode !== null) 
+      'Type':'0',
+      'DCode': (this.login_user.districtCode !== undefined && this.login_user.districtCode !== null) 
       ? this.login_user.districtCode : 0,
       'TCode': (this.login_user.talukId !== undefined && this.login_user.talukId !== null) ?
        this.login_user.talukId : 0,
-      'HCode': (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? this.login_user.hostelId : 0,
+      'HostelId': (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? this.login_user.hostelId : 0,
     }
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
@@ -190,6 +198,14 @@ export class HostelmasterComponent implements OnInit {
   }
   clear() {
     this._hostelmaster.reset();
+    this.Hosteltype = null;
+    this.HosteltypeOptions = [];
+    this.Functioningtype = null;
+    this.FunctioningtypeOptions = [];
+    this.Districtcode = null;
+    this.DistrictcodeOptions = [];
+    this.TalukId = null;
+    this.TalukIdOptions = [];
   }
   onRowSelect(event, selectedRow) {
     if(selectedRow !== null && selectedRow !==undefined){
@@ -200,6 +216,8 @@ export class HostelmasterComponent implements OnInit {
     this.DistrictcodeOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode}];
     this.TalukId = selectedRow.Talukid;
     this.TalukIdOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid}];
+    this.Functioningtype = selectedRow.HostelFunctioningType;
+    this.FunctioningtypeOptions = [{ label: selectedRow.FunctioningName, value: selectedRow.HostelFunctioningType}];
     this.Hostelname = selectedRow.HostelName;
     this.Hosteltamilname = selectedRow.HostelNameTamil;
     this.Buildingno = selectedRow.BuildingNo;

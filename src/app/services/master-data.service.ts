@@ -88,10 +88,14 @@ export class MasterService {
                     this.data.Table1.forEach(t => {
                         if (this.roleId === 1) {
                               this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
-                        } else {
+                        } else if(this.roleId === 2) {
                             if ((this.log_info.districtCode * 1) === (t.Districtcode * 1)) {
                                   this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
                             }
+                        } else {
+                            if ((this.log_info.talukId * 1) === (t.Talukid * 1)) {
+                                this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+                          }
                         }
                     })
                 } else {
@@ -192,7 +196,7 @@ export class MasterService {
             case 'FD':
                 if (this.days !== undefined && this.days !== null) {
                     this.days.forEach(d => {
-                        this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.slno });
+                        this.masterData.push({ name: d.Name + ' / ' + d.NameTamil, code: d.Slno });
                     })
                 } else {
                     this.masterData = [];

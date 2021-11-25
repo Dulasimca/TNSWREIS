@@ -1,7 +1,7 @@
 export class PathConstants {
 public static readonly DaysMaster_Get = 'DaysMaster';
 public static readonly MasterAll_Get = 'MasterData';
-public static readonly FoodMaster_Get = 'FoodMaster';
+public static readonly FoodMaster_Get = 'FoodMaster/Get';
 public static readonly FoodMaster_Post = 'FoodMaster/Post';
 public static readonly MenuMaster_Get = 'MenuMaster/Get';
 public static readonly FileUpload_Post = 'FileUpload';
@@ -9,6 +9,7 @@ public static readonly FileUpload_Post = 'FileUpload';
 public static readonly Hostel_Post = 'Hostel/Post';
 public static readonly Hostel_Get = 'Hostel/Get';
 public static readonly Hostel_put = 'Hostel/put';
+
 
 public static readonly Warden_post = 'Warden/Post'; 
 public static readonly Warden_Get = 'Warden/Get'; 
@@ -41,7 +42,7 @@ public static readonly Registration_Put = 'Registration/Put';
 public static readonly Login = 'Login/Post';
 
 public static readonly Hostelgo_post = 'HostelGo/Post'; 
-public static readonly Hostelgo_Get = 'HostelGo'; 
+public static readonly Hostelgo_Get = 'HostelGo/Get'; 
 
 public static readonly UserMaster_Put = 'UserMaster/Put';
 
