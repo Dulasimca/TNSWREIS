@@ -19,7 +19,7 @@ export class StudentDetailsComponent implements OnInit {
 
   district: any;
   taluk: any;
-  hostelName: any;
+  hostel: any;
   studentData: any[] = [];
   studentCols: any;
   districtOptions: SelectItem[];
@@ -36,6 +36,7 @@ export class StudentDetailsComponent implements OnInit {
   roleId: number;
   dApproval: any;
   tApproval: number;
+  hostelName: string;
   @BlockUI() blockUI: NgBlockUI;
   constructor(private _masterService: MasterService, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
@@ -53,79 +54,76 @@ export class StudentDetailsComponent implements OnInit {
     let talukSelection = [];
     if(this.roleId !== undefined && this.roleId !== null) {
       switch(type) {
-      case 'D':
-        var filtered_districts = [];
-        if((this.roleId * 1) === 2 || (this.roleId * 1) === 3) {
-          filtered_districts = this.districts.filter(f => {
-            return f.code === this.logged_user.districtCode;
-          })
-        } else {
-          filtered_districts = this.districts.slice(0);
-        }
-        filtered_districts.forEach(d => {
-          districtSelection.push({ label: d.name, value:d.code });
+        case 'D':
+        this.districts.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
         })
         this.districtOptions = districtSelection;
-        this.districtOptions.unshift( {label: '-select-', value: 'null'});
-        this.changeDistrict();
+        if ((this.logged_user.roleId * 1) === 1) {
+          this.districtOptions.unshift({ label: 'All', value: 0 });
+        }
+        this.districtOptions.unshift({ label: '-select-', value: 'null' });
         break;
       case 'T':
-        var filtered_taluks = [];
-        if((this.roleId * 1) === 3) {
-          filtered_taluks = this.taluks.filter(f => {
-            return f.code === this.logged_user.talukId;
-          })
-        } else {
-          filtered_taluks = this.taluks.slice(0);
-        }
-        filtered_taluks.forEach(t => {
-          if (t.dcode === this.district) {
-            talukSelection.push({ label: t.name, value: t.code });
-          }
+        this.taluks.forEach(t => {
+          talukSelection.push({ label: t.name, value: t.code });
         })
         this.talukOptions = talukSelection;
-        this.talukOptions.unshift({ label: 'All', value: 0});
-        this.talukOptions.unshift( {label: '-select-', value: 'null'});
+        if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
+          this.talukOptions.unshift({ label: 'All', value: 0 });
+        }
+        this.talukOptions.unshift({ label: '-select-', value: 'null' });
         break;
-      
     }
   }
 }
-  changeDistrict() {
-    this.talukOptions = [];
+
+reloadFields(value) {
+  if(value === 'D') {
     this.taluk = null;
-    this.hostelOptions = [];
-    this.hostelName = null;
-    let hostelSelection = [];
-    const params = {
-      'Type' : 1,
-      'Value': this.district
-    }
-    if (this.district !== null && this.district !== undefined && this.district !== 'All') {
-      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-        if (res !== null && res !== undefined && res.length !== 0) {
-          this.hostels = res.Table;
-            this.hostels.forEach(h => {
-              hostelSelection.push({ label: h.HostelName, value: h.Slno });
-            })
-        }
-      })
-    }
-      console.log('sel', this.hostelOptions, hostelSelection)
-      this.hostelOptions = hostelSelection;
-      this.hostelOptions.unshift({ label: 'All', value: 0 });
-      this.hostelOptions.unshift({ label: '-select-', value: null });
-    }
+    this.talukOptions = [];
+  }
+    this.loadHostelList();
+}
+
+loadHostelList() {
+  this.hostel = null;
+  this.hostelOptions = [];
+  let hostelSelection = [];
+  const params = {
+    'Type': 0,
+    'DCode': this.district,
+    'TCode': this.taluk,
+    'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
+    this.logged_user.hostelId : 0,
+  }
+  if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
+  this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
+    this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.hostels = res.Table;
+        this.hostels.forEach(h => {
+          hostelSelection.push({ label: h.HostelName, value: h.Slno });
+        })
+      }
+    })
+  }
+  this.hostelOptions = hostelSelection;
+  if((this.logged_user.roleId * 1) !== 4) {
+    this.hostelOptions.unshift({ label: 'All', value: 0 });
+  }
+  this.hostelOptions.unshift({ label: '-select-', value: null });
+}
 
     loadTable() {
       this.studentData = [];
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
-        this.hostelName !== null && this.hostelName !== undefined && this.hostelName !==undefined ){
+        this.hostel !== null && this.hostel !== undefined && this.hostel !==undefined ){
       this.loading = true;
       const params = {
         'DCode': this.district,
         'TCode': this.taluk,
-        'HCode': this.hostelName 
+        'HCode': this.hostel 
       }
       this._restApiService.post(PathConstants.Registration_Get, params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {

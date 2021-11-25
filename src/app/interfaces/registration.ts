@@ -41,6 +41,7 @@ export interface Registration {
     bankAccNo: string;
     ifscCode: string;
     branchName: string;
+    micrNo: string;
     //parent's info
     parentId: number;
     fatherName: string;

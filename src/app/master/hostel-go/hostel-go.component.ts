@@ -47,7 +47,7 @@ export class HostelGoComponent implements OnInit {
       { field: 'HostelID', header: 'Hostel ID' },
       { field: 'HostelName', header: 'Hostel Name' },
       { field: 'GoNumber', header: 'Go Number' },
-      { field: 'GoDate', header: 'Go Date' },
+      { field: 'gdate', header: 'Go Date' },
       { field: 'AllotmentStudent', header: 'Total Student' },
       { field: 'Districtname', header: 'District Name' },
       { field: 'Talukname', header: 'Taluk Name' },
@@ -143,6 +143,9 @@ export class HostelGoComponent implements OnInit {
     this.restApiService.getByParameters(PathConstants.Hostelgo_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
         if(res.length !== 0) {
+          res.Table.forEach(r => {
+            r.gdate = this._datePipe.transform(r.GoDate, 'dd/MM/yyyy');
+          })
         this.data = res.Table;
         } else {
           this.messageService.clear();
@@ -185,7 +188,7 @@ export class HostelGoComponent implements OnInit {
   onRowSelect(event, selectedRow) {
     this.Mslno = selectedRow.RID;
     this.gono = selectedRow.GoNumber;
-    this.goDate = this._datePipe.transform(selectedRow.GoDate, 'MM/dd/yyyy');
+    this.goDate = new Date(selectedRow.GoDate);
     this.remarks = selectedRow.Remarks;
     this.totalstudent = selectedRow.AllotmentStudent;
     this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtname }];
