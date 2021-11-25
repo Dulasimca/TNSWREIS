@@ -62,12 +62,11 @@ export class AttendanceComponent implements OnInit {
   // DistrictId : number
   // districtname
     this.cols = [
-      {field:'Id',header: 'Id'},
-      {field:'HotelName',header: 'Hostel Name'},
+      {field:'HostelName',header: 'Hostel Name'},
       {field:'DistrictName',header: 'District Name'},
       {field:'TalukName',header: 'Taluk Name'},
-      {field:'AttendanceDate',header: 'Attendance Date'},
-      {field:'NOOfStudent',header: 'NO Of Student'},
+      {field:'aDate',header: 'Attendance Date'},
+      {field:'NOOfStudent',header: 'No.of Students'},
       {field:'Remarks',header: 'Remarks'},
       //{field:'Flag',header: 'Status'},
 
@@ -125,7 +124,8 @@ export class AttendanceComponent implements OnInit {
     }
    })
 }
-  onview() {
+  onView() {
+    this.data = [];
     const params={
       'HostelID' : this.HostelId,	
      'Districtcode'	: this.DistrictId ,
@@ -134,15 +134,30 @@ export class AttendanceComponent implements OnInit {
      'Todate'		:this.datepipe.transform(this.date,'MM/dd/yyyy')
     }
     this.restApiService.getByParameters(PathConstants.Attendance_Get,params).subscribe(res => {
-     if(res !== null && res !== undefined && res.length !==0) {
+     if(res !== null && res !== undefined) {
+       if(res.Table.length !== 0) {
+       res.Table.forEach(r =>{
+         r.aDate = this.datepipe.transform(r.AttendanceDate, 'dd/MM/yyyy');
+       })
        this.data = res.Table;
-     }
-   });
- 
- 
- }
+      } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+        })
+      }
+     } else {
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+      })
+    }
+  })
+}
+   
   onRowSelect(event, selectedRow) {
-    
      this.date = selectedRow.Id;
      this.HostelId = selectedRow.HostelID;
      this.DistrictId = selectedRow.Districtcode;
@@ -150,22 +165,17 @@ export class AttendanceComponent implements OnInit {
      this.hostelname = selectedRow.HostelName;
      this.districtname = selectedRow.DistrictName;
      this.taluknname = selectedRow.TalukName;
-     this.date = selectedRow.AttendanceDate;
+     this.date = new Date(selectedRow.AttendanceDate);
      this.no_of_student = selectedRow.NOOfStudent;
      this.remarks = selectedRow.Remarks;
-     
-
   }
+
 onClear(){
-  this.attendanceForm.reset();
     this.attendanceForm.form.markAsUntouched();
     this.attendanceForm.form.markAsPristine();
-    this.hostelname='',
-    this.districtname='',
-    this.taluknname='',
-    this.no_of_student='',
-    this.remarks=''
-
+    this.no_of_student='';
+    this.remarks='';
+    this.date = new Date();
 }
 
 }

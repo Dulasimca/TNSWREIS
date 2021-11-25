@@ -3,62 +3,66 @@
     <p-toast position="top-center" key="t-msg"></p-toast>
     <p-panel header="Attendance">
         <div class="p-grid">
-            <div class="p-col-1"></div>
             <div class="p-col-12 p-md-12 p-lg-12">
                 <form #f="ngForm" name="attendanceForm">
                     <p-card>
                         <div class="p-grid">
-                            <div class="p-col-12 p-md-6 p-lg-1"></div>
+                            <div class="p-col-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div class="no-pad-top"><label>Hostel Name</label> </div>
-                                <input type="text" [(ngModel)]="hostelname" name="hostelname" pInputText required />
+                                <div class="no-pad-top"><label for="_district">District</label> </div>
+                                <input type="text" name="_district" pInputText [(ngModel)]="districtname"
+                                    readonly="true" required />
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg-1"></div>
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div class="no-pad-top"><label>District Name</label> </div>
-                                <input type="text" name="districtname" pInputText [(ngModel)]="districtname"
-                                    placeholder="District Name" required />
+                                <div class="no-pad-top"><label for="_taluk">Taluk</label> </div>
+                                <input type="text" name="_taluk" pInputText [(ngModel)]="taluknname" readonly="true" required />
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg-1"></div>
-                            <div class="p-col-12 p-md-6 p-lg-2">
-                                <div class="no-pad-top"><label>Taluk Name</label> </div>
-                                <input type="text" name="taluknname" [(ngModel)]="taluknname"  placeholder="Taluk Name" pInputText required />
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <div class="no-pad-top"><label for="_hostelname">Hostel Name</label> </div>
+                                <input type="text" pInputText [(ngModel)]="hostelname" name="_hostelname" readonly="true"   required />
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg-3"></div>
-                            <div class="p-col-12 p-md-6 p-lg-1"></div>
+                            
 
-                            <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
-                                <div class="no-pad-top"><label>Date:</label> </div>
-                                <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true" name="date" required>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div class="no-pad-top"><label for="_date">Date<span
+                                    class="form-mandatory-field">*</span></label> </div>
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true" name="_date" required>
                                 </p-calendar>
-
+                                <div style="font-size: smaller; font-style: italic;"> 
+                                <span>*Note:Select date to view attendance list</span>
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg-1"></div>
-                            <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
-                                <div class="no-pad-top"><label>No.Of.Student</label> </div>
-                                <input type="text" name="no_of_student"  [(ngModel)]="no_of_student" pInputText required />
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg-1"></div>
-                            <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
-                                <div class="no-pad-top"><label>Remarks</label> </div>
-                                <input type="text" name="remarks" pInputText required [(ngModel)]="remarks" />
+                            <div #row3 class="p-col-12 p-md-12 p-lg-12">
+                            <div class="p-grid">
+                            <div class="p-col-1"></div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div class="no-pad-top"><label for="_noofstudent">No.of Students<span
+                                    class="form-mandatory-field">*</span></label> </div>
+                                <input type="text" name="_noofstudent"  [(ngModel)]="no_of_student" pInputText required />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div class="no-pad-top"><label for="_remarks">Remarks<span
+                                    class="form-mandatory-field">*</span></label> </div>
+                                <input type="text" name="_remarks" pInputText required [(ngModel)]="remarks" />
                             </div>
                         </div>
-                    </p-card>
-                </form>
-            </div>
+                        </div>
+                    </div>
             <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
-                <button pButton name="save" type="button" label="Submit" (click)="onSubmit()"></button>
+                <button pButton name="_save" type="button" label="Submit" icon="pi pi-save" (click)="onSubmit()" [disabled]='(!f.valid)'></button>
 
-                <button pButton type="button" label="View" style="margin-left:5%;" (click)="onview()"></button>
-                <button pButton type="button" label="clear" style="margin-left:5%;" (click)="onClear()"></button>
+                <button pButton type="button" label="View" style="margin-left:5%;" icon="pi pi-eye" (click)="onView()"></button>
+                <button pButton type="button" label="Clear" style="margin-left:5%;" icon="pi pi-times-circle" (click)="onClear()"></button>
             </div>
+        </p-card>
+    </form>
+</div>
         </div>
             <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
                 totalRecords="totalRecords" pageLinks="3">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-
+                        <th>S.No</th>
                         <th *ngFor="let col of columns" [style.width]="col.width">
                             {{col.header}}
                         </th>
@@ -69,6 +73,7 @@
 
                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                     <tr [pSelectableRow]="rowData" class="cursor-pointer" (dblclick)="onRowSelect($event, rowData)">
+                        <td>{{rowIndex+1}}</td>
                         <td *ngFor="let col of columns">
                             {{rowData[col.field]}}
                         </td>
