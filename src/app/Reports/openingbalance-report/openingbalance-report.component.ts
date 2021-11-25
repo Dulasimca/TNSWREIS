@@ -112,17 +112,29 @@ export class OpeningbalanceReportComponent implements OnInit {
         }
       })
     }
-  }
   
-
-  loadTable(type) {
-    // this.changeDistrict();
-    if (type === 'D') {
+  this.hostelOptions = hostelSelection;
+  if((this.logged_user.roleId * 1) !== 4) {
+  this.hostelOptions.unshift({ label: 'All', value: 0 });
+}
+  this.hostelOptions.unshift({ label: '-select-', value: null });
+}
+  refreshFields(value) {
+    if(value === 'D') {
       this.taluk = null;
       this.talukOptions = [];
+    } 
+    this.changeDistrict();
+  }
+
+  loadTable() {
+    // this.changeDistrict();
+    // if (type === 'D') {
+    //   this.taluk = null;
+    //   this.talukOptions = [];
       //  this.hostelName = null;
       // this.hostelOptions = [];
-    }
+    // }
     this.openingData = [];
     this.totalRecords = 0;
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&

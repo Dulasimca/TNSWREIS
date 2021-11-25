@@ -191,9 +191,12 @@ export class HostelGoComponent implements OnInit {
     this.goDate = new Date(selectedRow.GoDate);
     this.remarks = selectedRow.Remarks;
     this.totalstudent = selectedRow.AllotmentStudent;
-    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtname }];
-    this.talukIdOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukname }];
-    this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.Slno }];
+    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
+    this.talukIdOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid }];
+    this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelID }];
+     this.hostel =  selectedRow.HostelID;
+      this.district = selectedRow.Districtcode;
+      this.taluk = selectedRow.Talukid;
   }
 }
 
