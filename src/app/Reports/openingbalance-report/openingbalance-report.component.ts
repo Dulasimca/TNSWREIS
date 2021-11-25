@@ -52,45 +52,35 @@ export class OpeningbalanceReportComponent implements OnInit {
   onSelect(type) {
     let yearSelection = [];
 
-    let districtSelection = [];
-    let talukSelection = [];
-    if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
-      switch (type) {
-        case 'D':
-          var filtered_districts = [];
-          if ((this.logged_user.roleId * 1) === 2 || (this.logged_user.roleId * 1) === 3) {
-            filtered_districts = this.districts.filter(f => {
-              return f.code === this.logged_user.districtCode;
+  
+      let districtSelection = [];
+      let talukSelection = [];
+      if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
+        switch (type) {
+          case 'D':
+            this.districts.forEach(d => {
+              districtSelection.push({ label: d.name, value: d.code });
             })
-          } else {
-            filtered_districts = this.districts.slice(0);
-          }
-          filtered_districts.forEach(d => {
-            districtSelection.push({ label: d.name, value: d.code });
-          })
-          this.districtOptions = districtSelection;
-          this.districtOptions.unshift({ label: 'All', value: 0 });
-          this.districtOptions.unshift({ label: '-select-', value: null });
-          this.changeDistrict();
-          break;
-        case 'T':
-          var filtered_taluks = [];
-          if ((this.logged_user.roleId * 1) === 3) {
-            filtered_taluks = this.taluks.filter(f => {
-              return f.code === this.logged_user.talukId;
-            })
-          } else {
-            filtered_taluks = this.taluks.slice(0);
-          }
-          filtered_taluks.forEach(t => {
-            if (t.dcode === this.district) {
-              talukSelection.push({ label: t.name, value: t.code });
+            this.districtOptions = districtSelection;
+            if ((this.logged_user.roleId * 1) === 1) {
+              this.districtOptions.unshift({ label: 'All', value: 0 });
             }
-          })
-          this.talukOptions = talukSelection;
-          this.talukOptions.unshift({ label: 'All', value: 0 });
-          this.talukOptions.unshift({ label: '-select-', value: 'null' });
-          break;
+            this.districtOptions.unshift({ label: '-select-', value: 'null' });
+            break;
+          case 'T':
+              this.taluks.forEach(t => {
+                  talukSelection.push({ label: t.name, value: t.code });
+              })
+              this.talukOptions = talukSelection;
+              if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
+                this.talukOptions.unshift({ label: 'All', value: 0 });
+              }
+              this.talukOptions.unshift({ label: '-select-', value: 'null' });
+            break;
+        
+      
+    
+      
         case 'Y':
           this.years.forEach(y => {
             yearSelection.push({ label: y.name, value: y.code });
@@ -106,23 +96,24 @@ export class OpeningbalanceReportComponent implements OnInit {
   changeDistrict() {
     let hostelSelection = [];
     const params = {
-      'Type': 1,
-      'Value': this.district
+      'Type' : 0,
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HostelId': ((this.logged_user.roleId * 1) === 4) ? this.logged_user.hostelId : 0
     }
-    if (this.district !== null && this.district !== undefined && this.district !== 'All') {
+    if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
+    this.taluk !== null && this.taluk !== undefined) {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
-          this.hostels.forEach(h => {
-            hostelSelection.push({ label: h.HostelName, value: h.Slno });
-          })
+            this.hostels.forEach(h => {
+              hostelSelection.push({ label: h.HostelName, value: h.Slno });
+            })
         }
       })
     }
-    this.hostelOptions = hostelSelection;
-    this.hostelOptions.unshift({ label: 'All', value: 0 });
-    this.hostelOptions.unshift({ label: '-select-', value: null });
   }
+  
 
   loadTable(type) {
     // this.changeDistrict();
