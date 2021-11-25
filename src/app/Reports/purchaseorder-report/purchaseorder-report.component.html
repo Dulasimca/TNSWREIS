@@ -11,21 +11,21 @@
                                 <div><label for="_district">District<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                    (onClick)="onSelect('D')" (ngModelChange)="loadTable()" required>
+                                    (onClick)="onSelect('D')" (onChange)="refreshFields('D')" required>
                                 </p-dropdown>
                             </div>
                             <div #row1 class="p-col-6 p-md-6 p-lg-2">
                                 <div><label for="_taluk">Taluk<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
-                                    (onClick)="onSelect('T')" (onChange)="loadTable()" required>
+                                    (onClick)="onSelect('T')"(onChange)="refreshFields('T')" required>
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-3">
                                 <div><label for="_hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName"
-                                    (onClick)="onSelect('HN')" (onChange)="loadTable()" required>
+                                    (onChange)="loadTable()" required>
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">

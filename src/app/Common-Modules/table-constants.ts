@@ -98,9 +98,13 @@ export class TableConstants {
          
         this.openingBalanceReportColumns = [
             { field: 'ShortYear', header: 'Accounting Year'},
+            { field: 'Districtname', header: 'District'},
+            { field: 'Talukname', header: 'Taluk'},
+            { field: 'HostelName', header: 'Hostel Name'},
             { field: 'CommodityName', header: 'Commodity Name'},
             { field: 'Qty', header: 'Quantity'},
             { field: 'UnitName', header: 'Unit'},
+            
         ]
 
         this.hostelReportCols = [

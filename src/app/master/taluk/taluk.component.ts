@@ -148,5 +148,6 @@ export class TalukComponent implements OnInit {
     this.talukForm.form.markAsPristine();
     this.taluk = '';
     this.districtOptions = [];
+    this.data = [];
   }
 }

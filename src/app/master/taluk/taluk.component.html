@@ -10,14 +10,14 @@
                                 <div class="p-col-12 p-md-6 p-lg-1"></div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label>District<span class="form-mandatory-field">*</span></label></div>
-                                    <p-dropdown name="selectdistrict" [options]="districtOptions"
+                                    <p-dropdown name="_district" [options]="districtOptions"
                                         [(ngModel)]="selectdistrict" optionLabel="label" (onClick)="onSelect()"
                                         required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label>Taluk Name<span class="form-mandatory-field">*</span></label></div>
-                                    <input type="text" pInputText [(ngModel)]="taluk" name="taluk" required />
+                                    <input type="text" pInputText [(ngModel)]="taluk" name="_taluk" required />
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-3" style="margin-top: 23px;">
                                     <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"

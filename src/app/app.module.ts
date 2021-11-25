@@ -77,6 +77,7 @@ import { HostelReportComponent } from './Reports/hostel-report/hostel-report.com
 import { StudentDetailsComponent } from './Reports/student-details/student-details.component';
 import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
 import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
+import { InputFormatDirective } from './directives/input-format.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,6 +114,7 @@ import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/o
     StudentDetailsComponent,
     OpeningbalanceReportComponent,
     PurchaseUploadComponent,
+    InputFormatDirective
   ],
   imports: [
     BrowserModule,
