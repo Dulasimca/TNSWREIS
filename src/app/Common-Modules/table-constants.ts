@@ -9,6 +9,7 @@ export class TableConstants {
     purchaseDetailsReportColumns: any = [];
     openingBalanceReportColumns: any = [];
     hostelReportCols: any = [];
+    studentDetailsColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity'},
@@ -68,13 +69,12 @@ export class TableConstants {
         this.registrationColumns = [
             { field: 'studentName', header: 'Name'},
             { field: 'age', header: 'Age'},
-            { field: 'gender', header: 'Gender'},
+            { field: 'genderName', header: 'Gender'},
             { field: 'HostelName', header: 'Hostel Name'},
             { field: 'mobileNo', header: 'Mobile No.'},
             { field: 'instituteName', header: 'Institute Name'},
             { field: 'courseTitle', header: 'Course'},
             { field: 'address', header: 'Address'},
-            { field: 'Districtname', header: 'District'},
             { field: 'aadharNo', header: 'Aadhar No.'},
             { field: 'emisno', header: 'EMIS NO.'},
             { field: 'bankAccNo', header: 'Bank Account No.'},
@@ -82,6 +82,21 @@ export class TableConstants {
             { field: 'fatherMoileNo', header: 'Father Mobile No'},
             { field: 'totalYIncome', header: 'Yearly Income'},
 
+        ];
+
+        this.studentDetailsColumns = [
+            { field: 'studentName', header: 'Name'},
+            { field: 'Districtname', header: 'District'},
+            { field: 'Talukname', header: 'Taluk'},
+            { field: 'HostelName', header: 'Hostel Name'},
+            { field: 'age', header: 'Age'},
+            { field: 'genderName', header: 'Gender'},
+            { field: 'mobileNo', header: 'Mobile No.'},
+            { field: 'instituteName', header: 'Institute Name'},
+            { field: 'courseTitle', header: 'Course'},
+            { field: 'address', header: 'Address'},
+            { field: 'aadharNo', header: 'Aadhar No.'},
+            { field: 'emisno', header: 'EMIS NO.'},
         ]
 
         this.purchaseDetailsReportColumns = [

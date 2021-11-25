@@ -162,14 +162,10 @@ export class WardenDetailsComponent implements OnInit {
           })
           this.hostelOptions = hostelSelection;
           this.hostelOptions.unshift({ label: '-select', value: null });
-          console.log('h', res);
         };
-
       })
     }
   }
-
-
 
   public uploadFile = (event) => {
     const selectedFile = event.target.files[0];
@@ -178,13 +174,10 @@ export class WardenDetailsComponent implements OnInit {
       this.wardenImage = this._d.bypassSecurityTrustUrl(url);
     }
     this.formData = new FormData()
-
     let fileToUpload: any = <File>event.target.files[0];
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
     const filename = fileToUpload.name + '^' + folderName;
     this.formData.append('file', fileToUpload, filename);
-    // console.log('file', fileToUpload);
-    // console.log('formdata', this.formData);
     this.wardenFileName = fileToUpload.name;
     this.http.post(this.restApiService.BASEURL + PathConstants.FileUpload_Post, this.formData)
       .subscribe(event => {
