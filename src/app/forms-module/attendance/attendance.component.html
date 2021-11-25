@@ -26,7 +26,8 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div class="no-pad-top"><label for="_date">Date<span
                                     class="form-mandatory-field">*</span></label> </div>
-                                <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true" name="_date" required>
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true" name="_date" 
+                                dateFormat="dd/mm/yy" required>
                                 </p-calendar>
                                 <div style="font-size: smaller; font-style: italic;"> 
                                 <span>*Note:Select date to view attendance list</span>
