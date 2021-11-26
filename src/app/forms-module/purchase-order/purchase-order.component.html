@@ -21,7 +21,7 @@
                                         </div>
                                         <div #field2 class="p-field p-col-12 p-md-6 p-lg-2">
                                             <span class="p-float-label">
-                                                <p-calendar [showOtherMonths]="false" [(ngModel)]="billDate"
+                                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="billDate"
                                                     name="_billdate" [showIcon]="true" required>
                                                 </p-calendar>
                                                 <label for="_billdate">Bill Date</label>
@@ -68,7 +68,8 @@
                                         <div #field7 class="p-field p-col-12 p-md-6 p-lg-2">
                                             <span class="p-float-label">
                                                 <p-dropdown name="_unit" [options]="unitOptions"
-                                                    (onClick)="onSelect('UN')" [(ngModel)]="unit" optionLabel="label">
+                                                    (onClick)="onSelect('UN')" [(ngModel)]="unit"
+                                                    (onChange)="calculateTotal()" optionLabel="label">
                                                 </p-dropdown>
                                                 <label for="_unit">Unit</label>
                                             </span>
@@ -103,7 +104,7 @@
                                 </div>
                             </div>
                             <div #row3 *ngIf="showTable" class="p-col-12 p-md-12 p-lg-12">
-                                <p-table [columns]="purcahseOrderCols" [value]="purcahseOrderData" [paginator]="true"
+                                <p-table styleClass="p-datatable-gridlines" [columns]="purcahseOrderCols" [value]="purcahseOrderData" [paginator]="true"
                                     [loading]="loading" [rows]="10">
                                     <ng-template pTemplate="header" let-columns>
                                         <tr>
@@ -121,7 +122,7 @@
                                             <td *ngIf="(rowData.Commodity != 'Total Amount')" style="width: 100px">
                                                 {{rowIndex+1}}</td>
                                             <td *ngIf="(rowData.Commodity == 'Total Amount')" style="width: 100px"></td>
-                                            <td *ngFor="let col of columns">
+                                            <td *ngFor="let col of columns" [style.text-align]="col.align">
                                                 {{rowData[col.field]}}
                                             </td>
                                             <td *ngIf="(rowData.Commodity != 'Total Amount')" style="width: 120px"
@@ -142,20 +143,13 @@
                                     </ng-template>
                                 </p-table>
                             </div>
-                            <div #row4 class="p-grid">
-                                <div class="p-col-5"></div>
-                                <div class="p-col-6 p-md-6 p-lg-1 txt-end">
+                            <div #row4 class="p-col-12 p-md-12 p-lg-12 txt-center">
                                     <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
-                                        [disabled]="(!f.valid || orderList.length==0 || !f.dirty)"></button>
-                                </div>
-                                <div class="p-col-6 p-md-6 p-lg-1">
+                                        [disabled]="(!f.valid || orderList.length==0 || !f.dirty)"></button>&nbsp;
                                     <button pButton type="button" label="View" icon="pi pi-eye"
-                                        (click)="onView()"></button>
-                                </div>
-                                <div class="p-col-6 p-md-6 p-lg-1">
+                                        (click)="onView()"></button>&nbsp;
                                     <button pButton type="button" label="Clear" icon="pi pi-trash"
                                         (click)="onClearAll()"></button>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -177,12 +171,12 @@
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                         <div><label for="_fdate">From Date<span class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" [showIcon]="true"
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="fromDate" [showIcon]="true"
                             [maxDate]="maxDate" (ngModelChange)="loadPurchaseBills()" name="_fdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                         <div><label for="_tdate">To Date<span class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" [showIcon]="true" [maxDate]="maxDate"
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="toDate" [showIcon]="true" [maxDate]="maxDate"
                             (ngModelChange)="loadPurchaseBills()" name="_tdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12">
@@ -201,7 +195,7 @@
                             <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
                                 <tr>
                                     <td style="width: 100px">{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns">
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
                                         {{rowData[col.field]}}
                                     </td>
                                     <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 2)">

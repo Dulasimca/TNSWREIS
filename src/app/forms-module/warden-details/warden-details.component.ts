@@ -256,7 +256,6 @@ export class WardenDetailsComponent implements OnInit {
     }
     this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
-        console.log('res', res);
         this.data = res.Table;
       }
     });

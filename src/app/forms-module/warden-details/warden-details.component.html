@@ -22,9 +22,9 @@
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_dob">Date of Birth<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <p-calendar [showOtherMonths]="false" [(ngModel)]="dob" name="_dob" [showIcon]="true"
+                                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="dob" name="_dob" [showIcon]="true"
                                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
-                                            inputId="dateofbirth" dateFormat="dd/mm/yy" required></p-calendar>
+                                            inputId="dateofbirth"  required></p-calendar>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_qualification">Qualification<span
@@ -36,9 +36,9 @@
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_doj">Service Joined Date<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <p-calendar [showOtherMonths]="false" [(ngModel)]="servicedoj" name="_doj" [showIcon]="true"
+                                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="servicedoj" name="_doj" [showIcon]="true"
                                             [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
-                                            inputId="dateofjoin" dateFormat="dd/mm/yy" required></p-calendar>
+                                            inputId="dateofjoin"  required></p-calendar>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label for="_designation">Designation<span
@@ -66,7 +66,7 @@
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_hstljoindate">Joined as warden in<span
                                                             class="form-mandatory-field">*</span></label></div>
-                                                <p-calendar [showOtherMonths]="false" [(ngModel)]="hostelJoin" name="_hstljoindate"
+                                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="hostelJoin" name="_hstljoindate"
                                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
                                                     yearRange="{{yearRange}}" inputId="hosteljoindate" required>
                                                 </p-calendar>
@@ -149,7 +149,7 @@
                                                             (click)="onView()"></button>
                                                     </div>
                                                     <div class="p-col-12 p-md-6 p-lg-2" style="padding-top: 40px;">
-                                                        <button pButton type="button" label="Clear" icon="pi pi-times-circle"
+                                                        <button pButton type="button" label="Clear" icon="pi pi-trash"
                                                             (click)="onClear()"></button>
                                                     </div>
                                                 </div>
@@ -174,7 +174,7 @@
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                     <tr>
                                         <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns">
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align">
                                             {{rowData[col.field]}}
                                         </td>
                                         <td><button icon="pi pi-pencil" pButton type="button"  pTooltip="Tap to edit" (click)="onEdit(rowData)">

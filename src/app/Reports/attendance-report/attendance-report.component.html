@@ -25,14 +25,14 @@
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2">
                             <div class="no-pad-top"><label>From Date:</label> </div>
-                            <p-calendar [showOtherMonths]="false" [(ngModel)]="fromdate" [showIcon]="true"
-                                name="_fromdate" dateFormat="dd/mm/yy" (ngModelChange)="loadAttendance()" required>
+                            <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="fromdate" [showIcon]="true"
+                                name="_fromdate"  (ngModelChange)="loadAttendance()" required>
                             </p-calendar>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2">
                             <div class="no-pad-top"><label>To Date:</label> </div>
-                            <p-calendar [showOtherMonths]="false" [(ngModel)]="todate" [showIcon]="true" name="_todate"
-                                dateFormat="dd/mm/yy" (ngModelChange)="loadAttendance()" required>
+                            <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="todate" [showIcon]="true" name="_todate"
+                                 (ngModelChange)="loadAttendance()" required>
                             </p-calendar>
                         </div>
 

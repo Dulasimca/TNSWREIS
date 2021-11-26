@@ -31,17 +31,17 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_fromdate">From Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
+                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="fromdate" dateFormat="dd/mm/yy" required>
+                                    yearRange="{{yearRange}}" inputId="fromdate"  required>
                                 </p-calendar>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_todate">To Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
+                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="{{yearRange}}" inputId="todate" dateFormat="dd/mm/yy" required>
+                                    yearRange="{{yearRange}}" inputId="todate"  required>
                                 </p-calendar>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                 <tr>
                                     <td>{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns">
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
                                         {{rowData[col.field]}}
                                     </td>
                                 </tr>

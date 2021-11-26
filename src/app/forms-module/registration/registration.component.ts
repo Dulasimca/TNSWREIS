@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Registration } from 'src/app/interfaces/registration';
 import { User } from 'src/app/interfaces/user';
@@ -68,8 +67,8 @@ export class RegistrationComponent implements OnInit {
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
 
-  constructor(private _masterService: MasterService, private _router: Router,
-    private _d: DomSanitizer, private _datePipe: DatePipe, private _messageService: MessageService,
+  constructor(private _masterService: MasterService, private _d: DomSanitizer,
+    private _datePipe: DatePipe, private _messageService: MessageService,
     private _restApiService: RestAPIService, private _authService: AuthService,
     private _tableConstants: TableConstants, private http: HttpClient) { }
 
@@ -192,9 +191,15 @@ export class RegistrationComponent implements OnInit {
         this.mediumOptions.unshift({ label: '-select-', value: null });
         break;
       case 'SC':
+        if(this.obj.caste !== null && this.obj.caste !== undefined) {
         this.subcastes.forEach(m => {
-          subcasteSelection.push({ label: m.name, value: m.code });
+          if((m.casteId * 1) === (this.obj.caste * 1)) {
+            subcasteSelection.push({ label: m.name, value: m.code });
+          }
         })
+      } else {
+        subcasteSelection = [];
+      }
         this.subCasteOptions = subcasteSelection;
         this.subCasteOptions.unshift({ label: '-select-', value: null });
         break;
@@ -310,7 +315,6 @@ export class RegistrationComponent implements OnInit {
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
     this.obj.hostelId = this.logged_user.hostelId;
-    console.log('type',typeof(this.obj.medium));
     this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
@@ -382,10 +386,13 @@ export class RegistrationComponent implements OnInit {
         this.casteOptions = [{ label: detail.casteName, value: detail.caste }];
         this.talukOptions = [{ label: detail.Talukname, value: detail.talukCode }];
         this.genderOptions = [{ label: detail.genderName, value: detail.gender }];
-        this.districtOptions = [{ label: detail.Districtname, value: detail.distrctCode }]
-        this.religionOptions = [{ label: detail.religionName, value: detail.religion }]
-        this.motherTongueOptions = [{ label: detail.mothertongueName, value: detail.motherTongue }]
-        this.bloodGroupOptions = [{ label: detail.bloodgroupName, value: detail.bloodGroup }]
+        this.districtOptions = [{ label: detail.Districtname, value: detail.distrctCode }];
+        this.religionOptions = [{ label: detail.religionName, value: detail.religion }];
+        this.motherTongueOptions = [{ label: detail.mothertongueName, value: detail.motherTongue }];
+        this.bloodGroupOptions = [{ label: detail.bloodgroupName, value: detail.bloodGroup }];
+        this.obj.dob = new Date(detail.dob);
+        this.ageTxt = this.obj.age + ' Years';
+        this.studentImage = 'assets/layout' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
       })
     }
   }

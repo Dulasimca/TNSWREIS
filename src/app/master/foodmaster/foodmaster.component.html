@@ -56,7 +56,7 @@
                 <button pButton name="save" type="button" label="Submit" icon="pi pi-save" (click)="onSubmit()" [disabled]='(!f.valid || !f.dirty)'></button>
 
                 <button pButton type="button" label="View" style="margin-left:5%;"  icon="pi pi-eye" (click)="onview()"></button>
-                <button pButton type="button" label="Clear" style="margin-left:5%;" icon="pi pi-times-circle" (click)="onClear()"></button>
+                <button pButton type="button" label="Clear" style="margin-left:5%;" icon="pi pi-trash" (click)="onClear()"></button>
                 <button pButton type="button" icon="pi pi-file-excel" label="Export" style="margin-left:5%;"  
                 (click)="dt.exportCSV()"></button>
             </div>

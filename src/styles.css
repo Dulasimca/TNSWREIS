@@ -67,7 +67,12 @@ body,html {
 .txt-center {
     text-align: center !important;
 }
-
+.txt-start {
+    text-align: left !important;
+}
+.txt-right {
+    text-align: right !important;
+}
 .align-center {
     align-self: center !important;
 }
@@ -170,7 +175,7 @@ height: 25px !important;
         width: 55px !important;
     }
     .content {
-        top: 130px !important;
+        top: 90px !important;
     }
   }
 
@@ -246,6 +251,59 @@ height: 25px !important;
     font-size: 20px;
     font-weight: 600;
     color: whitesmoke;
+}
+
+/* home images */
+.home-img-lg {
+    width: 900px !important;
+    height: 340px !important;
+    display: block !important;
+}
+.home-img-lt-lg {
+    width: 520px !important;
+    height: 300px !important;
+    display: block !important;
+}
+.home-img-gt-md {
+    width: 870px !important;
+    height: 300px !important;
+    display: block !important;
+}
+.home-img-md {
+    width: 700px !important;height: 310px !important; display: block !important;
+}
+.home-img-xs {
+    width: 420px !important;height: 200px !important; display: block !important;
+}
+.home-pr-xs {
+    width: 420px !important;
+}
+.home-pr-md {
+    width: 700px !important;
+    margin-left: 3.5rem !important;
+}
+.home-pr-gt-md {
+    width: 870px !important;
+    margin-left: 18rem !important;
+}
+.home-pr-gt-lg {
+    width: 870px !important;
+    margin-left: 18.5rem !important;
+}
+.home-pr-lg {
+    width: 900px !important;
+    margin-left: 4.5rem !important;
+}
+.home-pr-xl {
+    width: 950px !important;
+    margin-left: 6rem !important;
+}
+.home-pr-lt-lg {
+    width: 520px !important;
+}
+.home-pr-lt-md {
+    width: 520px !important;
+    margin-left: 6rem !important;
 }
 /* primeng styles */
 
@@ -364,7 +422,7 @@ height: 25px !important;
     padding: .5rem !important;
 }
 .p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
-    padding: 0.7rem !important;
+    padding: 0.5rem !important;
 }
 .p-dialog .p-dialog-header .p-dialog-title {
     font-size: 1.12rem !important;
@@ -390,7 +448,9 @@ height: 25px !important;
 .p-datatable .p-datatable-tbody>tr>td {
     text-align: center !important;
 }
-
+.p-datatable .p-datatable-thead>tr>th {
+    text-align: center !important;
+}
  /*menu  */
 mat-toolbar{
     border-radius: 3px;

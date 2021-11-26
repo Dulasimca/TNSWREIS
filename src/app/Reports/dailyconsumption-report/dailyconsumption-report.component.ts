@@ -36,7 +36,7 @@ export class DailyconsumptionReportComponent implements OnInit {
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.consumptionCols = this._tableConstants.consumptionColumns;
+    this.consumptionCols = this._tableConstants.consumptionReportColumns;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;
@@ -109,7 +109,7 @@ export class DailyconsumptionReportComponent implements OnInit {
       this.consumptionDetails = [];
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
         this.hostelName !== null && this.hostelName !== undefined && this.fromDate !== null && this.hostelName !==undefined &&
-        this.toDate !==null && this.toDate !== undefined){
+        this.toDate !==null && this.toDate !== undefined) {
       this.loading = true;
       const params = {
         'Districtcode': this.district,
@@ -120,6 +120,9 @@ export class DailyconsumptionReportComponent implements OnInit {
       }
       this.restApiService.post(PathConstants.DailyConsumption_Report_Post, params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
+          res.Table.forEach(r => {
+            r.ConsumptionDate = this._datePipe.transform(r.ConsumptionDate, 'dd/MM/yyyy');
+          })
           this.consumptionDetails = res.Table;
           this.loading = false;
         } else {

@@ -69,7 +69,6 @@ export class WardenReportComponent implements OnInit {
           this.districtOptions.unshift({ label: '-select-', value: 'null' });
           break;
         case 'T':
-          console.log('tlk', this.taluks)
             this.taluks.forEach(t => {
                 talukSelection.push({ label: t.name, value: t.code });
             })
@@ -105,7 +104,6 @@ export class WardenReportComponent implements OnInit {
           this.wardenDetails = res.Table;
           this.loading = false;
         } else {
-          console.log('false')
           this.loading = false;
           this._messageService.clear();
           this._messageService.add({

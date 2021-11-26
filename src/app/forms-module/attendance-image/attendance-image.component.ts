@@ -121,7 +121,6 @@ export class AttendanceImageComponent implements OnInit {
     this.restApiService.getByParameters(PathConstants.Attendance_Get,params).subscribe(res=> {​​​​​​​​​
          if(res !== null && res !== undefined && res.length !==0) {​​​​​​​​​
           res.Table.forEach(element => {
-            console.log(element.NOOfStudent);
             this.NoOfStudent = element.NOOfStudent;
             this.AttendanceId = element.Id
           });;

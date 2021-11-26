@@ -1,7 +1,8 @@
 
 export class TableConstants {
     purcahseOrderColumns: any = [];
-    consumptionColumns: any = [];
+    consumptionDetailsColumns: any = [];
+    consumptionReportColumns: any = [];
     purchaseBillColumns: any = [];
     wardenTableColumns: any = [];
     wardenDetailsReportColumns: any = [];
@@ -12,17 +13,18 @@ export class TableConstants {
     studentDetailsColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
-            { field: 'Commodity', header: 'Commodity'},
-            { field: 'Quantity', header: 'Quantity'},
-            { field: 'Unit', header: 'Unit'},
-            { field: 'Rate', header: 'Rate'},
-            { field: 'Total', header: 'Total'},
+            { field: 'Commodity', header: 'Commodity', align: 'left !important'},
+            { field: 'Quantity', header: 'Quantity', align: 'right !important'},
+            { field: 'Unit', header: 'Unit', align: 'left !important'},
+            { field: 'Rate', header: 'Rate', align: 'right !important'},
+            { field: 'Total', header: 'Total', align: 'right !important'},
         ];
 
-        this.consumptionColumns = [
+        this.consumptionReportColumns = [
             { field: 'Districtname', header: 'District', align: 'left !important' },
             { field: 'Talukname', header: 'Taluk', align: 'left !important'  },
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'  },
+            { field: 'ConsumptionDate', header: 'Consumption Date', align: 'center !important'  },
             { field: 'TotalStudent', header: 'Total No.Of Students', align: 'right !important'  },
             { field: 'Consumption', header: 'Consumption For', align: 'left !important'  },
             { field: 'Commodity', header: 'Commodity', align: 'left !important'  },
@@ -32,108 +34,112 @@ export class TableConstants {
             { field: 'CB', header: 'Closing Balance', align: 'right !important'  },
         ];
 
+        this.consumptionDetailsColumns = [
+            { field: 'Consumption', header: 'Consumption For', align: 'left !important'  },
+            { field: 'cDate', header: 'Consumption Date', align: 'center !important'  },
+            { field: 'Commodity', header: 'Commodity', align: 'left !important'  },
+            { field: 'Unit', header: 'Unit', align: 'left !important'  },
+            { field: 'OB', header: 'Opening Balance', align: 'right !important'  },
+            { field: 'QTY', header: 'Required Quantity', align: 'right !important'  },
+            { field: 'CB', header: 'Closing Balance', align: 'right !important'  },
+        ];
+
         this.purchaseBillColumns = [
-            { field: 'billNo', header: 'Bill No.' },
-            { field: 'billDate', header: 'Bill Date' },
-            { field: 'billAmount', header: 'Bill Amount' },
-            { field: 'shopName', header: 'ShopName' },
-            { field: 'gstNo', header: 'Gst Number' },
+            { field: 'billNo', header: 'Bill No.', align: 'left !important' },
+            { field: 'bDate', header: 'Bill Date', align: 'center !important' },
+            { field: 'billAmount', header: 'Bill Amount', align: 'right !important' },
+            { field: 'shopName', header: 'ShopName', align: 'left !important' },
+            { field: 'gstNo', header: 'Gst Number', align: 'left !important' },
         ];
 
         this.wardenTableColumns = [
-            { field: 'Name', header: 'Warden Name'},
-            { field: 'CourseName', header: 'Qualification'},
-            { field: 'Designation', header: 'Designation'},
-            { field: 'EMail', header: 'Email'},
-            { field: 'HostelName', header: 'Hostel Name'},
-            { field: 'Talukname', header: 'Taluk'},
-            { field: 'Districtname', header: 'District'},
-            { field: 'PhoneNo', header: 'Mobile No'},
-            { field: 'Pincode', header: 'Pincode'},
+            { field: 'Name', header: 'Warden Name', align: 'left !important'},
+            { field: 'CourseName', header: 'Qualification', align: 'left !important'},
+            { field: 'Designation', header: 'Designation', align: 'left !important'},
+            { field: 'EMail', header: 'Email', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'PhoneNo', header: 'Mobile No', align: 'center !important'},
+            { field: 'Pincode', header: 'Pincode', align: 'center !important'},
           ];
 
         this.wardenDetailsReportColumns = [
-            { field: 'WardenName', header: 'Name'},
-            { field: 'Qualification', header: 'Qualification'},
-            { field: 'ServiceJoinedDate', header: 'Service Joined Date'},
-            { field: 'Designation', header: 'Designation'},
-            { field: 'HostelJoinedDate', header: 'Hostel Joined Date'},
-            { field: 'Districtname', header: 'District'},
-            { field: 'Talukname', header: 'Taluk'},
-            { field: 'HostelName', header: 'Hostel Name'},
-            { field: 'EMail', header: 'Email'},
-            { field: 'PhoneNo', header: 'Phone No'},
-            { field: 'EndDate', header: 'Service End Date'},
+            { field: 'WardenName', header: 'Name', align: 'left !important'},
+            { field: 'Qualification', header: 'Qualification', align: 'left !important'},
+            { field: 'ServiceJoinedDate', header: 'Service Joined Date', align: 'center !important'},
+            { field: 'Designation', header: 'Designation', align: 'left !important'},
+            { field: 'HostelJoinedDate', header: 'Hostel Joined Date', align: 'center !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'EMail', header: 'Email', align: 'left !important'},
+            { field: 'PhoneNo', header: 'Phone No', align: 'right !important'},
+            { field: 'EndDate', header: 'Service End Date', align: 'center !important'},
         ];
 
         this.registrationColumns = [
-            { field: 'studentName', header: 'Name'},
-            { field: 'age', header: 'Age'},
-            { field: 'genderName', header: 'Gender'},
-            { field: 'HostelName', header: 'Hostel Name'},
-            { field: 'mobileNo', header: 'Mobile No.'},
-            { field: 'instituteName', header: 'Institute Name'},
-            { field: 'courseTitle', header: 'Course'},
-            { field: 'address', header: 'Address'},
-            { field: 'aadharNo', header: 'Aadhar No.'},
-            { field: 'emisno', header: 'EMIS NO.'},
-            { field: 'bankAccNo', header: 'Bank Account No.'},
-            { field: 'fatherName', header: 'Father Name'},
-            { field: 'fatherMoileNo', header: 'Father Mobile No'},
-            { field: 'totalYIncome', header: 'Yearly Income'},
-
+            { field: 'studentName', header: 'Name', align: 'left !important'},
+            { field: 'age', header: 'Age', align: 'right !important'},
+            { field: 'genderName', header: 'Gender', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'mobileNo', header: 'Mobile No.', align: 'right !important'},
+            { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
+            { field: 'courseTitle', header: 'Course', align: 'left !important'},
+            { field: 'aadharNo', header: 'Aadhar No.', align: 'right !important'},
+            { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
+            { field: 'totalYIncome', header: 'Yearly Income', align: 'right !important'},
         ];
 
         this.studentDetailsColumns = [
-            { field: 'studentName', header: 'Name'},
-            { field: 'Districtname', header: 'District'},
-            { field: 'Talukname', header: 'Taluk'},
-            { field: 'HostelName', header: 'Hostel Name'},
-            { field: 'age', header: 'Age'},
-            { field: 'genderName', header: 'Gender'},
-            { field: 'mobileNo', header: 'Mobile No.'},
-            { field: 'instituteName', header: 'Institute Name'},
-            { field: 'courseTitle', header: 'Course'},
-            { field: 'address', header: 'Address'},
-            { field: 'aadharNo', header: 'Aadhar No.'},
-            { field: 'emisno', header: 'EMIS NO.'},
-        ]
+            { field: 'studentName', header: 'Name', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'age', header: 'Age', align: 'right !important'},
+            { field: 'genderName', header: 'Gender', align: 'left !important'},
+            { field: 'mobileNo', header: 'Mobile No.', align: 'right !important'},
+            { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
+            { field: 'courseTitle', header: 'Course', align: 'left !important'},
+            { field: 'address', header: 'Address', align: 'left !important'},
+            { field: 'aadharNo', header: 'Aadhar No.', align: 'right !important'},
+            { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
+        ];
 
         this.purchaseDetailsReportColumns = [
-            { field: 'BillNo', header: 'Bill No.' },
-            { field: 'BillDate', header: 'Bill Date' },
-            { field: 'BillAmount', header: 'Bill Amount' },
-            { field: 'ShopName', header: 'ShopName' },
-            { field: 'GstNo', header: 'Gst Number' },
-            { field: 'Districtname', header: 'District'},
-            { field: 'Talukname', header: 'Taluk'},
-            { field: 'HostelName', header: 'Hostel Name'},
-
-        ]
+            { field: 'BillNo', header: 'Bill No.', align: 'left !important'},
+            { field: 'BillDate', header: 'Bill Date', align: 'center !important'},
+            { field: 'BillAmount', header: 'Bill Amount',align: 'right !important'},
+            { field: 'ShopName', header: 'ShopName', align: 'left !important'},
+            { field: 'GstNo', header: 'Gst Number', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+        ];
          
         this.openingBalanceReportColumns = [
-            { field: 'ShortYear', header: 'Accounting Year'},
-            { field: 'Districtname', header: 'District'},
-            { field: 'Talukname', header: 'Taluk'},
-            { field: 'HostelName', header: 'Hostel Name'},
-            { field: 'CommodityName', header: 'Commodity Name'},
-            { field: 'Qty', header: 'Quantity'},
-            { field: 'UnitName', header: 'Unit'},
+            { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'CommodityName', header: 'Commodity Name', align: 'left !important'},
+            { field: 'Qty', header: 'Quantity', align: 'right !important'},
+            { field: 'UnitName', header: 'Unit', align: 'left !important'},
             
         ]
 
         this.hostelReportCols = [
-            { field: 'HostelName', header: 'Hostel Name'},
-             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்'},
-            { field: 'Name', header: 'Hostel Type'},
-            { field: 'Districtname', header: 'District'},
-            { field: 'Talukname', header: 'Taluk'},
-            // { field: 'BuildingNo', header: 'BuildingNo', width: '100px'},
-            // { field: 'Street', header: 'Street', width: '100px'},
-            // { field: 'Landmark', header: 'Landmark', width: '100px'},
-            { field: 'Pincode', header: 'Pincode'},
-            { field: 'Phone', header: 'Contact No.'},
-            { field: 'TotalStudent', header: 'Student Count'}
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
+            { field: 'Name', header: 'Hostel Type', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            // { field: 'BuildingNo', header: 'BuildingNo', width: '100px', align: 'left !important'},
+            // { field: 'Street', header: 'Street', width: '100px', align: 'left !important'},
+            // { field: 'Landmark', header: 'Landmark', width: '100px', align: 'left !important'},
+            { field: 'Pincode', header: 'Pincode', align: 'right !important'},
+            { field: 'Phone', header: 'Contact No.', align: 'right !important'},
+            { field: 'TotalStudent', header: 'Student Count', align: 'right !important'},
         ]
 
     }

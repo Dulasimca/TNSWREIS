@@ -52,7 +52,7 @@ export class ConsumptionComponent implements OnInit {
     private _messageService: MessageService, private _confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.consumptionCols = this._tableConstants.consumptionColumns;
+    this.consumptionCols = this._tableConstants.consumptionDetailsColumns;
     this.consumptions = this._masterService.getMaster('CT');
     this.commodities = this._masterService.getMaster('CM');
     this.units = this._masterService.getMaster('UN');
@@ -223,11 +223,11 @@ export class ConsumptionComponent implements OnInit {
   }
 
   onDateSelect() {
-    this.loading = true;
     this.consumedList = [];
     this.checkValidDateSelection();
     if (this.fromDate !== undefined && this.fromDate !== null &&
       this.toDate !== undefined && this.toDate !== null) {
+      this.loading = true;
       const params = {
         'FromDate': this._datePipe.transform(this.fromDate, 'yyyy-MM-dd'),
         'ToDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd'),
@@ -235,6 +235,9 @@ export class ConsumptionComponent implements OnInit {
       }
       this._restApiService.getByParameters(PathConstants.Consumption_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
+          res.forEach(r => {
+            r.cDate = this._datePipe.transform(r.ConsumptionDate, 'dd/MM/yyyy');
+          })
           this.consumedList = res.slice(0);
           this.loading = false;
         } else {
@@ -261,7 +264,7 @@ export class ConsumptionComponent implements OnInit {
 
   checkValidDateSelection() {
     if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' &&
-     this.toDate !== '' && this.fromDate !== null && this.toDate !== null) {
+      this.toDate !== '' && this.fromDate !== null && this.toDate !== null) {
       let selectedFromDate = this.fromDate.getDate();
       let selectedToDate = this.toDate.getDate();
       let selectedFromMonth = this.fromDate.getMonth();
@@ -347,5 +350,6 @@ export class ConsumptionComponent implements OnInit {
     this.commodityOptions = [];
     this.consumptionOptions = [];
     this.unitOptions = [];
+    this.date = new Date();
   }
 }

@@ -14,7 +14,6 @@ export class LocationService {
    }
 
   getLocation(): [string, string] {
-    console.log('inside loc service');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
         if (position) {
@@ -25,7 +24,6 @@ export class LocationService {
       },
         (error: GeolocationPositionError) => 
         {
-          console.log(error)
           return (error);
         });
     } else {

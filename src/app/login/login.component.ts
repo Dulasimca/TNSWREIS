@@ -1,10 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { ResponseMessage } from '../Common-Modules/messages';
 import { PathConstants } from '../Common-Modules/PathConstants';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
+import { MasterService } from '../services/master-data.service';
 import { RestAPIService } from '../services/restAPI.service';
 
 @Component({
@@ -18,9 +20,14 @@ export class LoginComponent implements OnInit {
   showPswd: boolean;
 
   constructor(private _authService: AuthService, private _messageService: MessageService,
-    private _restApiService: RestAPIService) { }
+    private _restApiService: RestAPIService, private _masterService: MasterService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    let master = new Observable<any[]>();
+    master = this._masterService.initializeMaster();
+    master.subscribe(response => {});
+   }
+  
 
   onShowPswd() {
     var inputValue = (<HTMLInputElement>document.getElementById('pswd'));

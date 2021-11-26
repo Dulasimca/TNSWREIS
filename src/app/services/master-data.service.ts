@@ -63,7 +63,6 @@ export class MasterService {
     getMaster(value): any {
         this.log_info = this._authService.UserInfo;
         this.roleId = (this.log_info.roleId * 1);
-        console.log('role', this.log_info)
         this.masterData = [];
         switch (value) {
             //district master
@@ -276,7 +275,7 @@ export class MasterService {
             case 'SC':
                 if (this.data.Table17 !== undefined && this.data.Table17 !== null) {
                     this.data.Table17.forEach(s => {
-                        this.masterData.push({ name:s.Name, code:s.SubId });
+                        this.masterData.push({ name: s.Name, code: s.SubId, casteId: s.Id });
                     })
                 } else {
                     this.masterData = [];

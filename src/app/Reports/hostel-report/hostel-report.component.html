@@ -44,8 +44,8 @@
                                 pTooltip="Excel-File download"></button>
                         </div>
                         <p-table #dt [columns]="hostelCols" [value]="hostelData" [paginator]="true" [rows]="100"
-                            [rowsPerPageOptions]="[10,30,50,100]" totalRecords="totalRecords"
-                            styleClass="p-datatable-gridlines" exportFilename="HOSTEL_REPORT">
+                            [rowsPerPageOptions]="[10,30,50,100]" styleClass="p-datatable-gridlines" 
+                            exportFilename="HOSTEL_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width: 45px;">S.No</th>
@@ -57,7 +57,7 @@
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                 <tr [pSelectableRow]="rowData" class="cursor">
                                     <td>{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns">
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
                                         {{rowData[col.field]}}
                                     </td>
                                 </tr>

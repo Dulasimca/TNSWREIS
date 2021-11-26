@@ -31,15 +31,15 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_fromdate">From Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
-                                    [showIcon]="true" inputId="fromdate" dateFormat="dd/mm/yy" required>
+                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
+                                    [showIcon]="true" inputId="fromdate"  required>
                                 </p-calendar>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_todate">To Date<span class="form-mandatory-field">*</span></label>
                                 </div>
-                                <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
-                                    [showIcon]="true" inputId="todate" dateFormat="dd/mm/yy" required>
+                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
+                                    [showIcon]="true" inputId="todate"  required>
                                 </p-calendar>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         </div>
                         <p-table #dt [value]="consumptionDetails" [columns]="consumptionCols"
                             styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                            [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords"
+                            [rowsPerPageOptions]="[10,20,30,40]" [loading]="loading"
                             exportFilename="DAILY_CONSUMPTION_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>

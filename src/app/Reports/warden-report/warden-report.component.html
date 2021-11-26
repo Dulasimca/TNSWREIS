@@ -52,7 +52,7 @@
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                 <tr>
                                     <td>{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns">
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
                                         {{rowData[col.field]}}
                                     </td>
                                     <td><button icon="pi pi-pencil" pButton type="button" pTooltip="Tap to edit" (click)="onEdit(rowData)">
@@ -83,7 +83,7 @@
         <div class="p-col-12 p-md-12 p-lg-12">
             <div class="p-col-12 p-md-6 p-lg-4">
                 <div><label for="_edate">End Date<span class="form-mandatory-field">*</span></label></div>
-                <p-calendar [showOtherMonths]="false" [(ngModel)]="endDate" [showIcon]="true" name="_edate"></p-calendar>
+                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="endDate" [showIcon]="true" name="_edate"></p-calendar>
             </div>
             <span>*Note: Please select hostel leaving date</span>
         </div>

@@ -63,12 +63,8 @@ export class TalukComponent implements OnInit {
 
 
   onSubmit() {
-
-
     this.blockUI.start();
-    console.log(this.selectdistrict.value)
     const params = {
-
       'Talukid': this.Talukid != undefined ? this.Talukid : 0,
       'Districtcode': this.selectdistrict.value,
       'Talukname': this.taluk,

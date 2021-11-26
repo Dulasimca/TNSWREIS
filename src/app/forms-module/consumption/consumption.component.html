@@ -14,10 +14,10 @@
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                             <div><label for="_date">Date<span
                                                         class="form-mandatory-field">*</span></label></div>
-                                            <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true"
+                                            <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true"
                                                 name="_date" [maxDate]="maxDate"></p-calendar>
                                         </div>
-                                        <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                        <div class="p-col-12 p-md-12 p-lg-3 no-pad-left">
                                             <div><label for="_consumption">Consumption For<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_consumption" [options]="consumptionOptions"
@@ -33,7 +33,7 @@
                                                 required>
                                             </p-dropdown>
                                         </div>
-                                        <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                        <div class="p-col-12 p-md-12 p-lg-1 no-pad-left">
                                             <div><label for="_openingbalance">Unit<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_openingbalance" [options]="unitOptions"
@@ -56,13 +56,12 @@
                                                     <input type="text" name="_requiredqty" pInputText
                                                         (input)="calculateBalance()" [(ngModel)]="requiredQty" required>
                                                 </div>
-                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div class="p-col-12 p-md-6 p-lg-2">
                                                     <div><label for="_closingbalance">Closing Balance</label></div>
                                                     <input type="text" name="_closingbalance" pInputText
                                                         [(ngModel)]="closingBalance" readonly="true">
                                                 </div>
-                                                <div class="p-col-12"></div>
-                                                <div #row2 class="p-col-10 txt-center no-padding">
+                                                <div class="p-col-12 p-md-4 p-lg-1" style="margin-top: 1.5rem">
                                                     <button pButton type="button" label="Enter" [disabled]="(!f.valid)"
                                                         (click)="onEnter()"></button>
                                                 </div>
@@ -92,7 +91,7 @@
                                             let-columns="columns">
                                             <tr>
                                                 <td style="width: 100px">{{rowIndex+1}}</td>
-                                                <td *ngFor="let col of columns">
+                                                <td *ngFor="let col of columns" [style.text-align]="col.align">
                                                     {{rowData[col.field]}}
                                                 </td>
                                                 <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 1)">
@@ -110,20 +109,13 @@
                                     </p-table>
                                 </div>
                             </div>
-                            <div #row3 class="p-grid">
-                                <div class="p-col-5"></div>
-                                <div class="p-col-6 p-md-6 p-lg-1 txt-end">
+                            <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
                                     <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
-                                        [disabled]="(consumptionData.length==0)"></button>
-                                </div>
-                                <div class="p-col-6 p-md-6 p-lg-1">
+                                        [disabled]="(consumptionData.length==0)"></button>&nbsp;
                                     <button pButton type="button" label="View" icon="pi pi-eye"
-                                        (click)="onView()"></button>
-                                </div>
-                                <div class="p-col-6 p-md-6 p-lg-1">
+                                        (click)="onView()"></button>&nbsp;
                                     <button pButton type="button" label="Clear" icon="pi pi-trash"
                                         (click)="onClearAll()"></button>
-                                </div>
                             </div>
                         </div>
                     </p-card>
@@ -134,12 +126,12 @@
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                         <div><label for="_fdate">From Date<span class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" [showIcon]="true"  [maxDate]="maxDate"
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="fromDate" [showIcon]="true"  [maxDate]="maxDate"
                             (ngModelChange)="onDateSelect()" name="_fdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                         <div><label for="_tdate">To Date<span class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" [showIcon]="true"  [maxDate]="maxDate"
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="toDate" [showIcon]="true"  [maxDate]="maxDate"
                             (ngModelChange)="onDateSelect()" name="_tdate"></p-calendar>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12">
@@ -158,7 +150,7 @@
                             <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
                                 <tr>
                                     <td style="width: 100px">{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns">
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
                                         {{rowData[col.field]}}
                                     </td>
                                     <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 2)">

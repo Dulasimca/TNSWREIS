@@ -55,7 +55,7 @@ export class PurchaseOrderComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _purchaseForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
-  
+
   constructor(private _datepipe: DatePipe, private _tableConstants: TableConstants,
     private _masterService: MasterService, private _messageService: MessageService,
     private _authService: AuthService, private _restApiService: RestAPIService,
@@ -96,7 +96,11 @@ export class PurchaseOrderComponent implements OnInit {
 
   calculateTotal() {
     if (this.rate !== undefined && this.rate !== null && this.quantity !== undefined && this.quantity !== null) {
-      this.total = ((this.quantity * 1) * (this.rate * 1)).toFixed(2);
+      if ((this.unit.value * 1) === 2) {
+        this.total = (this.rate * 1).toFixed(2);
+      } else {
+        this.total = ((this.quantity * 1) * (this.rate * 1)).toFixed(2);
+      }
     }
   }
 
@@ -266,7 +270,6 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   onDelete(data, index, type) {
-    console.log('inside delete', data);
     if (index !== undefined && index !== null) {
       if (type === 1 && data.DetailId === 0) {
         this.purcahseOrderData = this.checkIfTotalExists(this.purcahseOrderData);
@@ -467,6 +470,9 @@ export class PurchaseOrderComponent implements OnInit {
       }
       this._restApiService.post(PathConstants.PurchaseOrder_Post, params).subscribe(res => {
         if (res.item2 !== undefined && res.item2 !== null && res.item2.length !== 0) {
+          res.item2.forEach(r => {
+            r.bDate = this._datepipe.transform(r.billDate, 'dd/MM/yyyy');
+          })
           this.purchasedBillList = res.item2.slice(0);
           this.spinner = false;
           this.showAlertBox = true;

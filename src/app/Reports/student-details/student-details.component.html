@@ -39,8 +39,8 @@
                             </div>
                             <p-table #dt [value]="studentData" [columns]="studentCols"
                                 styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                                [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords"
-                                exportFilename="WARDEN_DETAILS_REPORT">
+                                [rowsPerPageOptions]="[10,20,30,40]" [loading]="loading"
+                                exportFilename="STUDENT_DETAILS_REPORT">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th>S.No</th>
@@ -55,7 +55,7 @@
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                     <tr>
                                         <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns">
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align">
                                             {{rowData[col.field]}}
                                         </td>
                                         <td *ngIf="(roleId==2 && !(rowData.districtApproval))"
@@ -66,9 +66,9 @@
                                             (click)="selectForApproval(rowData)"><button label="Approve" pButton
                                                 type="button">
                                             </button></td>
-                                        <td *ngIf="((roleId==1 || roleId==4) || (roleId==2 && (rowData.districtApproval)))">
+                                        <td style="text-align: left;" *ngIf="((roleId==1 || roleId==4) || (roleId==2 && (rowData.districtApproval)))">
                                             {{rowData.dstatus}}</td>
-                                        <td *ngIf="((roleId==1 || roleId==4) || (roleId==3 && (rowData.talukApproval)))">
+                                        <td style="text-align: left;" *ngIf="((roleId==1 || roleId==4) || (roleId==3 && (rowData.talukApproval)))">
                                             {{rowData.tstatus}}</td>
                                     </tr>
                                 </ng-template>

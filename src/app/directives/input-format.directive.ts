@@ -16,7 +16,6 @@ export class InputFormatDirective {
 
   @HostListener('keypress', ['$event']) onKeyPress(event) {
       if (this.appInputFormat === 'digitOnly') {
-        console.log('press', event)
         this.digitOnly(event);
       } else if (this.appInputFormat === 'noSpecialChars') {
           this.noSpecialChars(event);
@@ -94,7 +93,6 @@ export class InputFormatDirective {
       if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].indexOf(e.key) === -1) {
           e.preventDefault();
       }
-      console.log('eve', event, e.key);
   }
 
   noSpecialChars(event) {

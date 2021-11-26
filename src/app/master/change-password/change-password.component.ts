@@ -55,7 +55,6 @@ export class ChangePasswordComponent implements OnInit {
     if (this.newPassword !== undefined && this.newPassword !== null && this.newPassword.trim() !== '' &&
     this.confirmPassword !== undefined && this.confirmPassword !== null && this.confirmPassword.trim() !== '') {
           if(this.newPassword.trim() !== this.confirmPassword.trim()) {
-            console.log('if cond')
             this.showErrMsg = true;
           } else {
             this.showErrMsg = false;

@@ -60,7 +60,6 @@ export class CommodityMasterComponent implements OnInit {
 
   this.restApiService.post(PathConstants.CommodityMaster_Post,params).subscribe(res => {
     if (res) {
-      console.log('s',res);
       this.clearform();
       this.onView();
       this.messageService.clear();
