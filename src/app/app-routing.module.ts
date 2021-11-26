@@ -61,7 +61,7 @@ const routes: Routes = [
   { path: 'taluk', component:TalukComponent},
   { path: 'attendance', component:AttendanceComponent, canActivate: [AuthGuard]},
   { path: 'changepassword', component:ChangePasswordComponent},
-  {path:'attendancereport', component:AttendanceReportComponent},
+  { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'attendance-image', component:AttendanceImageComponent},
   { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]}
 ];
