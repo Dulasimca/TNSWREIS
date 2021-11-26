@@ -142,6 +142,9 @@ export class AttendanceReportComponent implements OnInit {
     this.restApiService.getByParameters(PathConstants.Attendance_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
         if (res.length !== 0) {
+          res.Table.forEach(r => {
+            r.AttendanceDate = this.datepipe.transform(r.AttendanceDate, 'MM/dd/yyyy');
+          })
           this.data = res.Table;
         } else {
           this.messageService.clear();
@@ -169,6 +172,8 @@ export class AttendanceReportComponent implements OnInit {
       if (res !== null && res !== undefined && res.length !== 0) {
         res.Table.forEach(i => {
           i.url = 'assets/layout/' + i.HostelID + '/' + i.ImageName;
+          i.CreatedDate = this.datepipe.transform(i.CreatedDate, 'MM/dd/yyyy');
+          i.Uploaddate = this.datepipe.transform(i.Uploaddate, ' MM/dd/yyyy');
         });
         this.attendanceImgdata = res.Table;
       }
