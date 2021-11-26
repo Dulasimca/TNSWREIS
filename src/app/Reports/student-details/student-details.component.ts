@@ -62,7 +62,7 @@ export class StudentDetailsComponent implements OnInit {
           if ((this.logged_user.roleId * 1) === 1) {
             this.districtOptions.unshift({ label: 'All', value: 0 });
           }
-          this.districtOptions.unshift({ label: '-select-', value: 'null' });
+          this.districtOptions.unshift({ label: '-select-', value: null });
           break;
         case 'T':
           this.taluks.forEach(t => {
@@ -72,7 +72,7 @@ export class StudentDetailsComponent implements OnInit {
           if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
             this.talukOptions.unshift({ label: 'All', value: 0 });
           }
-          this.talukOptions.unshift({ label: '-select-', value: 'null' });
+          this.talukOptions.unshift({ label: '-select-', value: null });
           break;
       }
     }

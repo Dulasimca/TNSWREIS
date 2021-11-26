@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { LocationService } from 'src/app/services/location.service';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import {​​​​​​​​​ DatePipe }​​​​​​​​​ from'@angular/common';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
-
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -44,7 +44,9 @@ export class AttendanceImageComponent implements OnInit {
   cols: any;
   showDialog: boolean;
   hostelImage : string;
+  imagecount: number;
   yearRange: string;
+  @ViewChild('f', { static: false }) attendanceimageForm: NgForm;
   constructor(private _locationService: LocationService,private restApiService: RestAPIService,private _authService: AuthService, private masterService: MasterService,private datepipe: DatePipe
   ,private _messageService: MessageService  ) { }
   
@@ -57,6 +59,7 @@ export class AttendanceImageComponent implements OnInit {
       { field: 'Remarks', header: 'Remarks', width: '100px'},
     ];
     this.Slno = 0;
+    this.imagecount =0;
     this.NoOfStudent=0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
@@ -79,13 +82,24 @@ export class AttendanceImageComponent implements OnInit {
       }
     });
     this._locationService.getLocation();
+    this.GetAttendanceInfo();
+    this.onView(); 
   }
   public webcamImage: WebcamImage = null;
   onSubmit() {
+     if(this.imagecount===5)
+    {
+      this._messageService.clear();
+      this._messageService.add({
+    key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+ summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.AttendanceimageRestrict});
+}
+else
+{
     const params = {
       'Slno': this.Slno != undefined ? this.Slno : 0,
       'Id': 0, 
-      'Uploaddate': this.datepipe.transform(this.date,'MM/dd/yyyy'), 
+      'Uploaddate': this.date, 
       'Districtcode': this.DistrictId, 
       'Talukid': this.TalukId, 
       'HostelID': this.HostelId, 
@@ -97,16 +111,25 @@ export class AttendanceImageComponent implements OnInit {
       'Flag': 1, 
     }
       this.restApiService.post(PathConstants.AttendanceImage_Post,params).subscribe(res=> {​​​​​​​​​
-          if (res) {
+          if (res.Item1) {
+            this. onView();
         //  this.blockUI.stop();
         //  this.onClear();
          this._messageService.clear();
          this._messageService.add({
            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-        summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+        summary: ResponseMessage.SUMMARY_SUCCESS, detail: res.Item2
       });
     }
+    else{
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+     summary: ResponseMessage.SUMMARY_SUCCESS, detail: res.Item2
+   });
+    }
   });
+}
 }
   GetAttendanceInfo()
   {
@@ -137,6 +160,7 @@ export class AttendanceImageComponent implements OnInit {
 
   }
   onView() {
+    this.data = [];
     const params={
       'HostelID' : this.HostelId, 
      'Districtcode' : this.DistrictId ,
@@ -148,8 +172,10 @@ export class AttendanceImageComponent implements OnInit {
       if(res !== null && res !== undefined && res.length !==0) {
         res.Table.forEach(i => {
           i.url = 'assets/layout/'+i.HostelID +'/' + i.ImageName;
+          
         })
         this.data = res.Table;
+        this.imagecount = res.Table.length;
       }
       else{
         this._messageService.clear();
@@ -201,5 +227,13 @@ export class AttendanceImageComponent implements OnInit {
 }
 onRowSelect(event, selectedRow) {
 
+}
+onClear(){
+  this.attendanceimageForm.form.markAsUntouched();
+  this.attendanceimageForm.form.markAsPristine();
+  this.date = new Date();
+  this.webcamImage = null;
+  this.openCamera = false;
+  this.data = [];
 }
 }

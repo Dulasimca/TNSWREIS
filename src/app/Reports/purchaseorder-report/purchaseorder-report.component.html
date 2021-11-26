@@ -8,28 +8,28 @@
                     <div class="p-col-12 p-md-12 p-lg-10 no-pad-top">
                         <div class="p-grid">
                             <div #row1 class="p-col-6 p-md-6 p-lg-2">
-                                <div><label for="_district">District<span class="form-mandatory-field">*</span></label>
+                                <div><label for="_district">District</label>
                                 </div>
                                 <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
                                     (onClick)="onSelect('D')" (onChange)="refreshFields('D')" required>
                                 </p-dropdown>
                             </div>
                             <div #row1 class="p-col-6 p-md-6 p-lg-2">
-                                <div><label for="_taluk">Taluk<span class="form-mandatory-field">*</span></label>
+                                <div><label for="_taluk">Taluk</label>
                                 </div>
                                 <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
                                     (onClick)="onSelect('T')"(onChange)="refreshFields('T')" required>
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-3">
-                                <div><label for="_hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
+                                <div><label for="_hostel">Hostel Name</label>
                                 </div>
                                 <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName"
                                     (onChange)="loadTable()" required>
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_fromdate">From Date<span class="form-mandatory-field">*</span></label>
+                                <div><label for="_fromdate">From Date</label>
                                 </div>
                                 <p-calendar [showOtherMonths]="false" [(ngModel)]="fromDate" (onSelect)="loadTable()" name="_fromdate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
@@ -37,7 +37,7 @@
                                 </p-calendar>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_todate">To Date<span class="form-mandatory-field">*</span></label>
+                                <div><label for="_todate">To Date</label>
                                 </div>
                                 <p-calendar [showOtherMonths]="false" [(ngModel)]="toDate" (onSelect)="loadTable()" name="_todate"
                                     [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"

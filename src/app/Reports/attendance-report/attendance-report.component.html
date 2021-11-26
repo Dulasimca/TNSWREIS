@@ -2,17 +2,16 @@
     <p-panel header="Attendance Report">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <div class="p-col-12 p-md-12 p-lg-12">
-            <form #f="ngForm" name="attendancereportForm">
                 <p-card>
                     <div class="p-grid">
                         <div class="p-col-12 p-md-6 p-lg-2">
-                            <div class="no-pad-top"><label>District Name</label> </div>
+                            <div class="no-pad-top"><label>District</label> </div>
                             <p-dropdown name="_districtname" [options]="districtOptions" [(ngModel)]="district"
                                 (onClick)="onSelect('D')" (onChange)="refreshFields('D')" required>
                             </p-dropdown>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2">
-                            <div class="no-pad-top"><label>Taluk Name</label> </div>
+                            <div class="no-pad-top"><label>Taluk</label> </div>
                             <p-dropdown name="_taluknname" [options]="talukOptions" [(ngModel)]="taluk"
                                 (onClick)="onSelect('TK')" (onChange)="refreshFields('T')" required>
                             </p-dropdown>
@@ -24,38 +23,36 @@
                             </p-dropdown>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2">
-                            <div class="no-pad-top"><label>From Date:</label> </div>
+                            <div class="no-pad-top"><label>From Date</label> </div>
                             <p-calendar [showOtherMonths]="false" [(ngModel)]="fromdate" [showIcon]="true"
                                 name="_fromdate" dateFormat="dd/mm/yy" (ngModelChange)="loadAttendance()" required>
                             </p-calendar>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2">
-                            <div class="no-pad-top"><label>To Date:</label> </div>
+                            <div class="no-pad-top"><label>To Date</label> </div>
                             <p-calendar [showOtherMonths]="false" [(ngModel)]="todate" [showIcon]="true" name="_todate"
                                 dateFormat="dd/mm/yy" (ngModelChange)="loadAttendance()" required>
                             </p-calendar>
                         </div>
 
                     </div>
-                </p-card>
-            </form>
-        </div>
+                
         <div class="p-col-12 p-md-12 p-lg-12">
             <div style="text-align: right;">
                 <button pButton type="button" icon="pi pi-file-excel" style="color: yellowgreen;" label="Export"
                     (click)="dt.exportCSV()" pTooltip="Excel-File download"></button>
             </div>
             <p-table #dt [value]="data" [columns]="cols" styleClass="p-datatable-gridlines" [paginator]="true"
-                [rows]="40" [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords"
+                [rows]="100" [rowsPerPageOptions]="[10,20,30,50,100]" totalRecords="totalRecords"
                 exportFilename="ATTENDANCE_REPORT">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                        <th>Sl.No</th>
+                        <th>S.No</th>
                         <th *ngFor="let col of columns" [style.width]="col.width">
                             {{col.header}}
                         </th>
                         <th>
-                            Show Display
+                            Attendance Image
                         </th>
                     </tr>
                 </ng-template>
@@ -66,21 +63,23 @@
                             {{rowData[col.field]}}
                         </td>
                         <td>
-                            <button pButton type="button" icon="pi pi-file-excel" label="Show Image"
+                            <button pButton type="button" icon="pi pi-images" pTooltip="Tap to open"
                                 style="margin-left:5%;" (click)="showImage(rowData.Id)"></button>
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
+    </p-card>
+</div>
     </p-panel>
     <p-dialog #dialog header="Hostel Attendance Reference Image" [(visible)]="showDialog" [modal]="showDialog"
-        [style]="{width: '90vw', height: '25vw'}">
+        [style]="{width: '70vw', height: '25vw'}">
         <p-table #dt [value]="attendanceImgdata" [columns]="colsAttendance" styleClass="p-datatable-gridlines"
-            [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords">
+            [paginator]="true" [rows]="100" [rowsPerPageOptions]="[10,30,50,70,100]" totalRecords="totalRecords">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>Sl.No</th>
+                    <th style="width: 60px;">S.No</th>
                     <th *ngFor="let col of columns" [style.width]="col.width">
                         {{col.header}}
                     </th>
@@ -97,7 +96,7 @@
                     </td>
                     <td>
                         <img (click)="LargeImage(rowData.url)" alt="TN ADW Hostel image" [src]="rowData.url" width="32"
-                            style="vertical-align: middle" class="cursor-pointer" />
+                            style="vertical-align: middle" class="cursor-pointer" title="Tap to view image" />
                     </td>
                 </tr>
             </ng-template>
