@@ -27,35 +27,31 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.images = [
       {
-        "previewImageSrc": '../assets/layout/images/home.png',
+        "previewImageSrc": '../assets/layout/images/TN_ADW_Hostel Image.png',
         "alt": "Description for Image 1",
         "title": "Title 0"
     },
       {
-          "previewImageSrc": '../assets/layout/images/hstl.jpg',
-          "alt": "Description for Image 1",
+          "previewImageSrc": '../assets/layout/images/TN_ADW_Hostel Room.png',
+          "alt": "Description for Image 2",
           "title": "Title 1"
       },
       {
-          "previewImageSrc": '../assets/layout/images/mess.jpg',
-          "alt": "Description for Image 2",
+          "previewImageSrc": '../assets/layout/images/TN_ADW_Hostel Mess.png',
+          "alt": "Description for Image 3",
           "title": "Title 2"
       },
       {
-          "previewImageSrc": '../assets/layout/images/yoga.jpg',
-          "alt": "Description for Image 3",
+          "previewImageSrc": '../assets/layout/images/TN_ADW_Hostel Study.png',
+          "alt": "Description for Image 4",
           "title": "Title 3"
       },
       {
-          "previewImageSrc": '../assets/layout/images/hostelroom.jpeg',
-          "alt": "Description for Image 4",
+          "previewImageSrc": '../assets/layout/images/TN_ADW_Hostel Ground.png',
+          "alt": "Description for Image 5",
           "title": "Title 4"
       },
-      {
-        "previewImageSrc": '../assets/layout/images/home.png',
-        "alt": "Description for Image 1",
-        "title": "Title 5 "
-    },
+      
     ];
   }
 

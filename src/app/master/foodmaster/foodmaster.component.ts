@@ -58,6 +58,7 @@ export class FoodmasterComponent implements OnInit {
     ];
   }
   onSelect(type) {
+    this.data = [];
     let foodSelection = [];
     let hostelSelection = [];
     switch (type) {
@@ -93,8 +94,9 @@ export class FoodmasterComponent implements OnInit {
     this.restApiService.post(PathConstants.FoodMaster_Post, params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
+          
+          this.onClear(); 
        
-          this.onClear();
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -129,14 +131,18 @@ export class FoodmasterComponent implements OnInit {
   onview() {
     this.data = [];
     if(this.Hosteltype !=undefined && this.Hosteltype != null)
+    
     {
     const param=
     {
       'HTypeId' : this.Hosteltype
+      
     }
+    
     this.restApiService.getByParameters(PathConstants.FoodMaster_Get,param).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         this.data = res.Table;
+       
       }
     });
   }
@@ -163,11 +169,14 @@ export class FoodmasterComponent implements OnInit {
 
   onClear() {
     this.foodmasterForm.reset();
+    this.Hosteltype = null;
+    this.HosteltypeOptions = [];
     this.BreakFast = '',
       this.Lunch = '',
       this.Snacks = '',
       this.Dinner = '',
       this.daysOptions = [];
+      this.data = [];
 
   }
 }

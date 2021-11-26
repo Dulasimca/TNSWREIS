@@ -59,10 +59,13 @@ const routes: Routes = [
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
   { path: 'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
-  { path: 'attendance', component:AttendanceComponent},
+  { path: 'attendance', component:AttendanceComponent, canActivate: [AuthGuard]},
   { path: 'changepassword', component:ChangePasswordComponent},
-  {path:'attendancereport', component:AttendanceReportComponent},
-  { path: 'attendance-image', component:AttendanceImageComponent},
+
+
+  { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
+  { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},
+
   { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]}
 ];
 

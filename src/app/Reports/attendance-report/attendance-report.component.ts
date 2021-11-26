@@ -53,8 +53,8 @@ export class AttendanceReportComponent implements OnInit {
     this.taluks = this.masterService.getMaster('TK');
     this.cols = [
       { field: 'AttendanceDate', header: 'Date' },
-      { field: 'DistrictName', header: 'District Name' },
-      { field: 'TalukName', header: 'Taluk Name' },
+      { field: 'DistrictName', header: 'District' },
+      { field: 'TalukName', header: 'Taluk' },
       { field: 'HostelName', header: 'Hostel Name' },
       { field: 'NOOfStudent', header: 'Total Student' },
       { field: 'Remarks', header: 'Remarks' },
@@ -76,7 +76,7 @@ export class AttendanceReportComponent implements OnInit {
           districtSelection.push({ label: d.name, value: d.code });
         })
         this.districtOptions = districtSelection;
-        if ((this.login_user.roleId * 1) !== 4) {
+        if ((this.login_user.roleId * 1) === 1) {
           this.districtOptions.unshift({ label: 'All', value: 0 });
         }
         this.districtOptions.unshift({ label: '-select-', value: null });
@@ -88,7 +88,7 @@ export class AttendanceReportComponent implements OnInit {
           }
         });
         this.talukOptions = talukSelection;
-        if ((this.login_user.roleId * 1) !== 4) {
+        if ((this.login_user.roleId * 1) === 1 || (this.login_user.roleId * 1) === 2) {
           this.talukOptions.unshift({ label: 'All', value: 0 });
         }
         this.talukOptions.unshift({ label: '-select-', value: null });
@@ -141,9 +141,13 @@ export class AttendanceReportComponent implements OnInit {
     }
     this.restApiService.getByParameters(PathConstants.Attendance_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
-        if (res.length !== 0) {
+        if (res.Table.length !== 0) {
+          res.Table.forEach(r => {
+            r.AttendanceDate = this.datepipe.transform(r.AttendanceDate, 'dd/MM/yyyy');
+          })
           this.data = res.Table;
         } else {
+          console.log('j')
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
@@ -169,6 +173,8 @@ export class AttendanceReportComponent implements OnInit {
       if (res !== null && res !== undefined && res.length !== 0) {
         res.Table.forEach(i => {
           i.url = 'assets/layout/' + i.HostelID + '/' + i.ImageName;
+          i.CreatedDate = this.datepipe.transform(i.CreatedDate, 'dd/MM/yyyy');
+          i.Uploaddate = this.datepipe.transform(i.Uploaddate, 'dd/MM/yyyy');
         });
         this.attendanceImgdata = res.Table;
       }
