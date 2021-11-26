@@ -2,7 +2,6 @@
     <p-panel header="Attendance Report">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <div class="p-col-12 p-md-12 p-lg-12">
-            <form #f="ngForm" name="attendancereportForm">
                 <p-card>
                     <div class="p-grid">
                         <div class="p-col-12 p-md-6 p-lg-2">
@@ -72,7 +71,6 @@
             </p-table>
         </div>
     </p-card>
-</form>
 </div>
     </p-panel>
     <p-dialog #dialog header="Hostel Attendance Reference Image" [(visible)]="showDialog" [modal]="showDialog"
