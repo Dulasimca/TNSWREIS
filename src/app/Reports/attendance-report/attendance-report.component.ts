@@ -76,7 +76,7 @@ export class AttendanceReportComponent implements OnInit {
           districtSelection.push({ label: d.name, value: d.code });
         })
         this.districtOptions = districtSelection;
-        if ((this.login_user.roleId * 1) !== 4) {
+        if ((this.login_user.roleId * 1) === 1) {
           this.districtOptions.unshift({ label: 'All', value: 0 });
         }
         this.districtOptions.unshift({ label: '-select-', value: null });
@@ -88,7 +88,7 @@ export class AttendanceReportComponent implements OnInit {
           }
         });
         this.talukOptions = talukSelection;
-        if ((this.login_user.roleId * 1) !== 4) {
+        if ((this.login_user.roleId * 1) === 1 || (this.login_user.roleId * 1) === 2) {
           this.talukOptions.unshift({ label: 'All', value: 0 });
         }
         this.talukOptions.unshift({ label: '-select-', value: null });
