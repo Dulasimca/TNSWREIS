@@ -111,15 +111,22 @@ else
       'Flag': 1, 
     }
       this.restApiService.post(PathConstants.AttendanceImage_Post,params).subscribe(res=> {​​​​​​​​​
-          if (res) {
+          if (res.Item1) {
             this. onView();
         //  this.blockUI.stop();
         //  this.onClear();
          this._messageService.clear();
          this._messageService.add({
            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-        summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+        summary: ResponseMessage.SUMMARY_SUCCESS, detail: res.Item2
       });
+    }
+    else{
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+     summary: ResponseMessage.SUMMARY_SUCCESS, detail: res.Item2
+   });
     }
   });
 }
