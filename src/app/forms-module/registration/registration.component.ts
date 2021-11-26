@@ -216,6 +216,10 @@ export class RegistrationComponent implements OnInit {
       this._registrationForm.form.controls['_taluk'].reset();
       this.obj.talukCode = null;
       this.talukOptions = [];
+    } else if(value === 'C') {
+      this._registrationForm.form.controls['_subcaste'].reset();
+      this.obj.subCaste = null;
+      this.subCasteOptions = [];
     }
   }
 

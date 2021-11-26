@@ -96,7 +96,7 @@
                                                             <div #field8 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span class="p-float-label p-input-icon-right">
                                                                     <p-dropdown name="_caste" [options]="casteOptions"
-                                                                        (onClick)="onSelect('CT')"
+                                                                        (onClick)="onSelect('CT')" (onChange)="refreshFields('C')"
                                                                         [(ngModel)]="obj.caste" required>
                                                                     </p-dropdown>
                                                                     <label for="_caste">Caste<span
