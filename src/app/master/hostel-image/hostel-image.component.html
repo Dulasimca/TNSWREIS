@@ -28,7 +28,7 @@
                                     <div class="p-grid">
                                         <div class="actionBtn" (click)="camera()" title="Click to Open Camera">📸</div>
                                         <button pButton type="button" class="p-col-12" label="Capture"
-                                            (click)="capture()" icon="pi pi-camera" class="btn-bg"></button>
+                                            (click)="capture()" [disabled]="(disableCapture)"icon="pi pi-camera" class="btn-bg"></button>
                                     </div>
                                 </div>
                                 <div *ngIf="openCamera">

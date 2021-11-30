@@ -189,7 +189,7 @@ export class HostelmasterComponent implements OnInit {
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         res.Table.forEach(i => {
-          i.url = 'assets/layout/'+i.hostelId +'/' + i.ImageName;
+          i.url = 'assets/layout/'+i.hostelId +'/' + i.HostelImage;
           
         })
         this.data = res.Table;

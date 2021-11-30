@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
- 
 
 @Injectable({
   providedIn: 'root'
@@ -10,27 +8,19 @@ export class LocationService {
   public lng;
 
   constructor() {
-    this.getLocation();
-   }
-
-  getLocation(): [string, string] {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-        if (position) {
-          this.lat = position.coords.latitude;
-          this.lng = position.coords.longitude;
-          return [this.lat, this.lng];
-        } 
-      },
-        (error: GeolocationPositionError) => 
-        {
-          return (error);
-        });
-    } else {
-      return ['Please try again', '']
-    }
-  return [this.lat, this.lng];
-
   }
+
+  getLocation(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resp => {
+          console.log('res', resp)
+          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+        },
+          err => {
+            console.log('err', err);
+            reject(err);
+          });
+    }).catch(error => error);
+}
   
 }

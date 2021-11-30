@@ -24,6 +24,7 @@ export class HostelImageComponent implements OnInit {
   talukname: string;
   hostelImage: string;
   showCapture: boolean = false;
+  disableCapture: boolean;
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
 
@@ -36,6 +37,7 @@ export class HostelImageComponent implements OnInit {
     this.districtname = this.login_user.districtName;
     this.talukname = this.login_user.talukName;
     this.hostelname = this.login_user.hostelName;
+    this.disableCapture = true;
 
     const params = {
       'Type': 0,
@@ -92,8 +94,8 @@ export class HostelImageComponent implements OnInit {
     const params = {
       'HostelId': this.login_user.hostelId,
       'HostelImage': this.webcamImage,
-      'Longitude': this.location[1],
-      'Latitude': this.location[0]
+      'Longitude': this.location.lng,
+      'Latitude': this.location.lat,
     }
     this.restApiService.put(PathConstants.Hostel_put, params).subscribe(res => {
       if (res) {
@@ -119,9 +121,38 @@ export class HostelImageComponent implements OnInit {
   }
 
   camera() {
-    this.openCamera = true;
-    this.location = this._locationService.getLocation();
-  }
+    
+    //this.location = this._locationService.getLocation();
+
+  this._locationService.getLocation().then(pos=>
+      {
+        if(pos !== undefined && pos !== null) {
+          if(pos.code !== 1) {
+            this.disableCapture = false;
+            this.openCamera = true;
+            this.messageService.clear();
+            this.location = pos;
+          } else {
+            this.disableCapture = true;
+            this.openCamera = false;
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_ALERT, detail: 'Please check if location is enabled and Try again !'
+            });
+          }
+        } else {
+          this.disableCapture = true;
+          this.openCamera = false;
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_ALERT, detail: 'Please check if location is enabled and Try again !'
+          });
+        }
+      });
+    }
+
 
   capture() {
     this.captureImage();
