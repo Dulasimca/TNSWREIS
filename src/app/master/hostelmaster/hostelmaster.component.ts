@@ -53,6 +53,8 @@ export class HostelmasterComponent implements OnInit {
   login_user: User;
   hostelRowId: number;
   disableFields: boolean;
+  showDialog: boolean;
+  hostelImage : string;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private messageService: MessageService,private _authService: AuthService,
@@ -72,7 +74,7 @@ export class HostelmasterComponent implements OnInit {
      { field: 'Pincode', header: 'Pincode', width: '100px'},
      { field: 'TotalStudent', header: 'TotalStudent', width: '100px'},
      { field: 'Phone', header: 'Phone', width: '100px'},
-     { field: 'HostelImage', header: 'HostelImage', width: '100px'},
+    //  { field: 'HostelImage', header: 'HostelImage', width: '100px'},
 
    ];
    this.login_user = this._authService.UserInfo;
@@ -186,6 +188,10 @@ export class HostelmasterComponent implements OnInit {
     }
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
+        res.Table.forEach(i => {
+          i.url = 'assets/layout/'+i.hostelId +'/' + i.ImageName;
+          
+        })
         this.data = res.Table;
       }  else {
         this._messageService.clear();
@@ -195,6 +201,10 @@ export class HostelmasterComponent implements OnInit {
         })
       }
     });
+  }
+  showImage(url) {
+    this.showDialog = true;
+    this.hostelImage = url;
   }
   clear() {
     this._hostelmaster.reset();
