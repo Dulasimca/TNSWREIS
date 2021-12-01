@@ -215,7 +215,6 @@ export class AttendanceImageComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_ALERT, detail: 'Please check if location is enabled and Try again !'
           });
         }
-        // console.log(`Positon: ${pos.lng} ${pos.lat}`);
       });
     }
 
