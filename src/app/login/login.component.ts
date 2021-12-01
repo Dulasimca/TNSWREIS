@@ -22,11 +22,7 @@ export class LoginComponent implements OnInit {
   constructor(private _authService: AuthService, private _messageService: MessageService,
     private _restApiService: RestAPIService, private _masterService: MasterService) { }
 
-  ngOnInit(): void {
-    let master = new Observable<any[]>();
-    master = this._masterService.initializeMaster();
-    master.subscribe(response => {});
-   }
+  ngOnInit(): void { }
   
 
   onShowPswd() {
@@ -69,6 +65,9 @@ export class LoginComponent implements OnInit {
                   response.push({ label: 'Logout', icon: 'pi pi-power-off', command: ()=> {this._authService.logout() }});
                   this._authService.setMenu(response);
                   this._authService.login(obj);
+                  let master = new Observable<any[]>();
+                  master = this._masterService.initializeMaster();
+                  master.subscribe(response => {});
                 } else {
                   this._messageService.clear();
                   this._messageService.add({

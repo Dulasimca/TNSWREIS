@@ -32,7 +32,6 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -54,7 +53,6 @@ import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
-import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
@@ -78,6 +76,7 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
 import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
 import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 import { InputFormatDirective } from './directives/input-format.directive';
+import { AuditComponent } from './forms-module/audit/audit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,7 +98,6 @@ import { InputFormatDirective } from './directives/input-format.directive';
     DistrictComponent,
     TalukComponent,
     HostelGoComponent,
-    AttendanceComponent,
     ChangePasswordComponent,
     IdCardInfoComponent,
     MenuHeaderComponent,
@@ -114,7 +112,8 @@ import { InputFormatDirective } from './directives/input-format.directive';
     StudentDetailsComponent,
     OpeningbalanceReportComponent,
     PurchaseUploadComponent,
-    InputFormatDirective
+    InputFormatDirective,
+    AuditComponent
   ],
   imports: [
     BrowserModule,

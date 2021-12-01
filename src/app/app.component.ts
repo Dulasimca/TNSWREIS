@@ -20,9 +20,5 @@ export class AppComponent {
     });
   }
 
-  ngOnInit() {
-    let master = new Observable<any[]>();
-    master = this._masterService.initializeMaster();
-    master.subscribe(response => {});
-  }
+  ngOnInit() { }
 }

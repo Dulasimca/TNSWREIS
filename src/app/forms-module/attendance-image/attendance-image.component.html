@@ -64,12 +64,11 @@
                                     <img #webCamImg [src]="webcamImage.imageAsDataUrl" />
                                 </div>
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
+                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                                 <button pButton type="button" label="Submit" (click)="onSubmit()"
-                                    [disabled]="((NoOfStudent>0 ? false : true) || !webcamImage)" class="btn-bg"></button>
-                                <button pButton type="button" label="View" (click)="onView()" class="btn-bg"
-                                    style="margin-left: 5%;"></button>
-                                <button pButton type="button" label="Clear" style="margin-left:5%;"
+                                    [disabled]="((NoOfStudent>0 ? false : true) || !webcamImage)" class="btn-bg"></button>&nbsp;
+                                <button pButton type="button" label="View" (click)="onView()" class="btn-bg"></button>&nbsp;
+                                <button pButton type="button" label="Clear" 
                                     icon="pi pi-times-circle" (click)="onClear()"></button>
                             </div>
                             <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"

@@ -12,11 +12,9 @@ import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { OpeningBalanceComponent } from './forms-module/opening-balance/opening-balance.component';
 import { AuthGuard } from './services/auth.guard';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
-
 import { HostelGoComponent } from './master/hostel-go/hostel-go.component';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
-import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
@@ -30,6 +28,7 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
 import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
+import { AuditComponent } from './forms-module/audit/audit.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -59,7 +58,7 @@ const routes: Routes = [
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
   { path: 'district', component:DistrictComponent},
   { path: 'taluk', component:TalukComponent},
-  { path: 'attendance', component:AttendanceComponent, canActivate: [AuthGuard]},
+  { path: 'attendance', component:AuditComponent, canActivate: [AuthGuard]},
   { path: 'changepassword', component:ChangePasswordComponent},
 
 
