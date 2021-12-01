@@ -14,11 +14,22 @@ body,html {
     color: #ff0131;
 }
 
-.content {
+.content-mobile {
     /* padding-bottom: 45px !important;
     padding-top: 7.5rem !important; */
     position: absolute;
-    top: 90px !important;
+    top: 70px !important;
+    bottom: 25px !important;
+    left: 0;
+    right: 0;
+    overflow: auto !important;
+}
+
+.content-system {
+    /* padding-bottom: 45px !important;
+    padding-top: 7.5rem !important; */
+    position: absolute;
+    top: 85px !important;
     bottom: 25px !important;
     left: 0;
     right: 0;
@@ -107,7 +118,13 @@ height: 25px !important;
 .txt-shadow-teal {
     text-shadow: 1px 1px 2px #54b3b9;
 }
-.div-dsh-main-txt {
+.div-dsh-main-txt-xs {
+    font-size: 18px;
+}
+.div-dsh-main-txt-md {
+    font-size: 20px;
+}
+.div-dsh-main-txt-lg {
     font-size: 22px;
 }
 
@@ -545,5 +562,20 @@ main {
     width: auto !important;
 }
 .p-menubar .p-menuitem-link .p-menuitem-icon {
+    color: whitesmoke !important;
+}
+.p-panelmenu .p-panelmenu-header>a {
+    color: whitesmoke !important;
+}
+.p-panelmenu .p-panelmenu-header.p-highlight:not(.p-disabled)>a:hover {
+    color: whitesmoke !important;
+}
+.p-panelmenu .p-panelmenu-content {
+    background: #489197 !important;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover {
+    background: #2a8a91 !important;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link {
     color: whitesmoke !important;
 }

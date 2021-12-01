@@ -394,6 +394,8 @@ export class RegistrationComponent implements OnInit {
         this.religionOptions = [{ label: detail.religionName, value: detail.religion }];
         this.motherTongueOptions = [{ label: detail.mothertongueName, value: detail.motherTongue }];
         this.bloodGroupOptions = [{ label: detail.bloodgroupName, value: detail.bloodGroup }];
+        this.mediumOptions = [{ label: detail.mediumName, value: detail.medium }];
+        this.subCasteOptions = [{ label: detail.subcasteName, value: detail.subCaste }];
         this.obj.dob = new Date(detail.dob);
         this.ageTxt = this.obj.age + ' Years';
         this.studentImage = 'assets/layout' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
