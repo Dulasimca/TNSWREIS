@@ -17,7 +17,7 @@
                                                     <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                                         <div #grid1 class="p-grid div-main"
                                                             style="padding-left: 0 !important">
-                                                            <div #field1 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <div #field1 class="p-field p-col-12 p-md-12 p-lg-3">
                                                                 <span class="p-float-label">
                                                                     <input type="text" name="_studentname" id="sname"
                                                                         pInputText [(ngModel)]="obj.studentName"
@@ -50,7 +50,7 @@
                                                                     </label>
                                                                 </span>
                                                             </div>
-                                                            <div #field4 class="p-field p-col-12 p-md-6 p-lg-1">
+                                                            <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
                                                                 <span class="p-float-label">
                                                                     <input type="text" name="_age" id="sname" pInputText
                                                                         [(ngModel)]="ageTxt" [disabled]="true">
@@ -68,6 +68,10 @@
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                                        <div #grid2 class="p-grid">
                                                             <div #field6 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span class="p-float-label p-input-icon-right">
                                                                     <p-dropdown name="_gender" [options]="genderOptions"
@@ -78,11 +82,7 @@
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
-                                                        <div #grid2 class="p-grid">
-                                                            <div #field7 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                             <div #field7 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span class="p-float-label p-input-icon-right">
                                                                     <p-dropdown name="_mothertongue"
                                                                         [options]="motherTongueOptions"

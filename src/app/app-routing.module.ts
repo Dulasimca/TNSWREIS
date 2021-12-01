@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'foodmaster',component:FoodmasterComponent},
+  { path: 'foodmaster',component:FoodmasterComponent, canActivate: [AuthGuard]},
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
@@ -57,10 +57,10 @@ const routes: Routes = [
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path: 'purchase-bill-upload', component:PurchaseUploadComponent, canActivate: [AuthGuard]},
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
-  { path: 'district', component:DistrictComponent},
-  { path: 'taluk', component:TalukComponent},
+  { path: 'district', component:DistrictComponent, canActivate: [AuthGuard] },
+  { path: 'taluk', component:TalukComponent, canActivate: [AuthGuard]},
   { path: 'attendance', component:AttendanceComponent, canActivate: [AuthGuard]},
-  { path: 'changepassword', component:ChangePasswordComponent},
+  { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
 
 
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
