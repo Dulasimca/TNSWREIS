@@ -25,6 +25,7 @@ export class AuditComponent implements OnInit {
   remarks: string;
   disableFields: boolean;
   login_user: User;
+  maxDate: Date = new Date();
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild ('f', { static: false }) auditForm: NgForm;
   constructor(private _authService: AuthService,private _restApiService: RestAPIService,
@@ -90,10 +91,10 @@ export class AuditComponent implements OnInit {
   }
 
   onClear(){
+    this.auditForm.form.markAsUntouched();
     this.noOfStudent = null;
     this.remarks = null;
     this.attendanceDate = new Date();
-    this.auditForm.form.markAsUntouched();
   }
   
   GetAttendanceInfo() {

@@ -1,9 +1,8 @@
 <block-ui>
-    <div class="p-col-12 p-md-12 p-lg-12">
-        <p-toast position="top-center" key="t-msg"></p-toast>
-        <div class="p-grid">
-            <div class="p-col-1"></div>
-            <div class="p-col-12 p-md-12 p-lg-12">
+    <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
                 <p-panel header="Purchase Order">
                     <div class="p-col-12 p-md-12 p-lg-12 border-blue card">
                         <form #f="ngForm" name="purchaseForm">
@@ -95,7 +94,8 @@
                                                 <label for="_total">Total</label>
                                             </span>
                                         </div>
-                                        <div #field11 class="p-field p-col-12 p-md-12 p-lg-1">
+                                        <div class="p-col-12 p-md-7 p-lg-1" [ngClass.xs]="'txt-center'" [ngClass.lt-sm]="'txt-center'" 
+                                                [ngClass.lt-md]="'txt-end'" style="margin-top: 1.5rem">
                                             <button pButton type="button" label="Enter"
                                                 [disabled]="(!total || !rate || !quantity || !commodity || !unit || !f.valid)"
                                                 (click)="onEnter()"></button>
@@ -239,5 +239,4 @@
                 </div>
             </p-dialog>
         </div>
-    </div>
 </block-ui>

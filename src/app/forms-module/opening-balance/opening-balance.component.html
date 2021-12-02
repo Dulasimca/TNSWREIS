@@ -1,7 +1,7 @@
-<div class="p-col-12 p-md-12 p-lg-12">
-    <div class="p-grid">
-        <div class="p-col-12 p-md-12 p-lg-12">
-            <p-toast position="top-center" key="t-msg"></p-toast>
+<div class="p-grid">
+    <div class="p-col-1"></div>
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Opening Balance Entry">
                 <form #f="ngForm" name="openingBalance">
                     <p-card>
@@ -58,7 +58,7 @@
                                                         [(ngModel)]="quantity" />
                                                 </div>
                                                 <div class="p-col-12"></div>
-                                                <div class="p-col-12 p-md-6 p-lg-12 txt-center">
+                                                <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                                                     <button pButton type="button" label="Save" icon="pi pi-save"
                                                         (click)="onSubmit()" [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
                                                     <button pButton type="button" label="View" icon="pi pi-eye"
@@ -101,6 +101,5 @@
 </p-card>
 </form>
 </p-panel>
-</div>
 </div>
 </div>

@@ -1,5 +1,4 @@
 <block-ui>
-<div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
         <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
@@ -27,7 +26,7 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_date"> Attendance Date</label></div>
                                     <p-calendar [showOtherMonths]="false" [(ngModel)]="attendanceDate" dateFormat="dd/mm/yy"
-                                        name="_date" [showIcon]="true" (onSelect)="GetAttendanceInfo()" required>
+                                        name="_date" [showIcon]="true" [maxDate]="maxDate" (onSelect)="GetAttendanceInfo()" required>
                                     </p-calendar>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2"></div>
@@ -55,5 +54,4 @@
             </p-panel>
         </div>
     </div>
-</div>
 </block-ui>
