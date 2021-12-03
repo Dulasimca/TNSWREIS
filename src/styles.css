@@ -129,6 +129,9 @@ height: 25px !important;
 .div-dsh-main-txt-lg {
     font-size: 22px;
 }
+.td-border {
+    border-bottom: 0.2px solid #dfdada !important;
+}
 
 /* header */
 .login-header {
@@ -586,4 +589,8 @@ main {
 }
 .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text {
     color: whitesmoke !important;
+}
+.p-datatable-tbody > tr > td > .p-column-title {
+    white-space: pre !important;
+    color: #0288d1 !important;
 }

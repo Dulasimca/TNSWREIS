@@ -14,7 +14,7 @@ export class MenuHeaderComponent implements OnInit {
   items: MenuItem[] = [];
   showMenu: boolean = false;
   hideHeader: boolean = false;
-  constructor(private _authService: AuthService, private _router: Router) { 
+  constructor(private _authService: AuthService, private _router: Router) {
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login') {
@@ -26,18 +26,41 @@ export class MenuHeaderComponent implements OnInit {
     });
     this._authService.isLoggedIn.subscribe(value => {
       this.showMenu = value;
-      if(this.showMenu) {
+      if (this.showMenu) {
         this.items = this._authService.menu;
+        console.log('auth menu', this.items)
+        if (this.items.length !== 0) {
+          this.items.forEach(i => {
+            if (i.routerLink !== null && i.routerLink !== '' && i.label !== 'Logout') {
+              i.command = () => { this.onToggleSidenav(); };
+            } else if(i.label === 'Logout') {
+              i.command = () => { this.onLogout(); };
+            }
+              else if (i.items.length !== 0) {
+              i.items.forEach(j => {
+                if (j.routerLink !== null && j.routerLink !== '') {
+                  j.command = () => { this.onToggleSidenav(); };
+                }
+              });
+            }
+          })
+        }
       }
+      console.log('menu', this.items);
     });
   }
 
   ngOnInit(): void { }
 
+  onLogout() {
+    this._authService.logout();
+    this.onToggleSidenav();
+  }
+
   onSignIn() {
     this._router.navigate(['/login']);
   }
-  
+
   public onToggleSidenav = () => {
     console.log('emit')
     this.sidenavToggle.emit();

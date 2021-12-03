@@ -14,7 +14,7 @@ export class AppComponent {
   hideHeader: boolean = false;
   isLoggedIn: boolean = false;
 
-  constructor(private _authService: AuthService, private _masterService: MasterService) {
+  constructor(private _authService: AuthService, private _router: Router) {
     this._authService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
     });

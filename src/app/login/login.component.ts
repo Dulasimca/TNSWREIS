@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
               this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(response => {
                 if (response !== undefined && response !== null && response.length !== 0) {
                   this.checkChildItems(response);
-                  response.push({ label: 'Logout', icon: 'pi pi-power-off', command: ()=> {this._authService.logout() }});
+                  response.push({ label: 'Logout', icon: 'pi pi-power-off' });
                   this._authService.setMenu(response);
                   this._authService.login(obj);
                   let master = new Observable<any[]>();
