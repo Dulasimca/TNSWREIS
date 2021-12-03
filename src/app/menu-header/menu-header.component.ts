@@ -28,7 +28,6 @@ export class MenuHeaderComponent implements OnInit {
       this.showMenu = value;
       if (this.showMenu) {
         this.items = this._authService.menu;
-        console.log('auth menu', this.items)
         if (this.items.length !== 0) {
           this.items.forEach(i => {
             if (i.routerLink !== null && i.routerLink !== '' && i.label !== 'Logout') {
