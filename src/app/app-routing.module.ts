@@ -30,6 +30,14 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
 import { HostelReportComponent } from './Reports/hostel-report/hostel-report.component';
 import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
+import { FeedingchargestypeComponent } from './master/feedingchargestype/feedingchargestype.component';
+import { HostelinfrastructureComponent } from './master/hostelinfrastructure/hostelinfrastructure.component';
+import { MonthlywiseintentComponent } from './forms-module/monthlywiseintent/monthlywiseintent.component';
+import { DOFundManagementComponent } from './Fund-Management-Module/do-fund-management/do-fund-management.component';
+import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanagement/ho-fundmanagement.component';
+import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
+import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-fund-management/hostel-fund-management.component';
+
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -66,7 +74,15 @@ const routes: Routes = [
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},
 
-  { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]}
+  { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]},
+  { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
+  { path: 'hostelinfrastructure', component:HostelinfrastructureComponent,}, 
+  { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
+  { path: 'dofundmanagement', component:DOFundManagementComponent,},
+  { path: 'hofundmanagement', component:HOFundmanagementComponent,}, 
+  { path: 'tofundmanagement', component:TOFundManagementComponent,},
+  { path: 'hostelfundmanagement', component:HOFundmanagementComponent,},
+  
 ];
 
 @NgModule({

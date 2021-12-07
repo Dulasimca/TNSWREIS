@@ -63,4 +63,14 @@ public static readonly DailyConsumption_Report_Post = 'DailyConsumptionDetails/P
 public static readonly PurchaseOrder_Report_Post = 'PurchaseOrderDetails/Post'
 public static readonly OpeningBalanceDetails_Report_Post = 'OpeningBalanceDetails/Post'
 
+public static readonly FeedingChargesType_Post = 'FeedingChargesType/Post';
+public static readonly FeedingChargesType_Get = 'FeedingChargesType';
+
+public static readonly FeedingChargesDetail_Post = 'FeedingChargesDetail/Post';
+public static readonly FeedingChargesDetail_Get = 'FeedingChargesDetail/Get';
+
+public static readonly HostelInfraStructure_Post = 'HostelInfraStructure/Post';
+
+public static readonly HostelInfraStructure_Get = 'HostelInfraStructure';
+
 }

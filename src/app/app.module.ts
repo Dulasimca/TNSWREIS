@@ -78,6 +78,14 @@ import { StudentDetailsComponent } from './Reports/student-details/student-detai
 import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
 import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 import { InputFormatDirective } from './directives/input-format.directive';
+import { FeedingchargestypeComponent } from './master/feedingchargestype/feedingchargestype.component';
+import { HostelinfrastructureComponent } from './master/hostelinfrastructure/hostelinfrastructure.component';
+import { MonthlywiseintentComponent } from './forms-module/monthlywiseintent/monthlywiseintent.component';
+import { DOFundManagementComponent } from './Fund-Management-Module/do-fund-management/do-fund-management.component';
+import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanagement/ho-fundmanagement.component'; 
+import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
+import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-fund-management/hostel-fund-management.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,7 +122,15 @@ import { InputFormatDirective } from './directives/input-format.directive';
     StudentDetailsComponent,
     OpeningbalanceReportComponent,
     PurchaseUploadComponent,
-    InputFormatDirective
+    InputFormatDirective,
+    FeedingchargestypeComponent,
+    HostelinfrastructureComponent,
+    MonthlywiseintentComponent,
+    DOFundManagementComponent,
+    HOFundmanagementComponent,
+    TOFundManagementComponent,
+    HostelFundManagementComponent,
+
   ],
   imports: [
     BrowserModule,
