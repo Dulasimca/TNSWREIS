@@ -29,6 +29,8 @@ import { HostelReportComponent } from './Reports/hostel-report/hostel-report.com
 import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
 import { AuditComponent } from './forms-module/audit/audit.component';
+import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
+import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -65,7 +67,9 @@ const routes: Routes = [
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},
 
-  { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]}
+  { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]},
+  { path: 'studentfacility', component:StudentfacilityMasterComponent},
+  { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
 ];
 
 @NgModule({

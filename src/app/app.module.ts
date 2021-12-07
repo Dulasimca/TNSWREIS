@@ -77,6 +77,8 @@ import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase
 import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/openingbalance-report.component';
 import { InputFormatDirective } from './directives/input-format.directive';
 import { AuditComponent } from './forms-module/audit/audit.component';
+import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
+import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,7 +115,9 @@ import { AuditComponent } from './forms-module/audit/audit.component';
     OpeningbalanceReportComponent,
     PurchaseUploadComponent,
     InputFormatDirective,
-    AuditComponent
+    AuditComponent,
+    StudentfacilityMasterComponent,
+    StudentfacilityReportComponent
   ],
   imports: [
     BrowserModule,

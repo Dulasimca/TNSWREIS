@@ -63,4 +63,8 @@ public static readonly DailyConsumption_Report_Post = 'DailyConsumptionDetails/P
 public static readonly PurchaseOrder_Report_Post = 'PurchaseOrderDetails/Post'
 public static readonly OpeningBalanceDetails_Report_Post = 'OpeningBalanceDetails/Post'
 
+public static readonly StudentFacility_Post = 'StudentFacility/Post';
+public static readonly StudentFacility_Get = 'StudentFacility';
+public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get';
+
 }
