@@ -1,6 +1,5 @@
 <block-ui>
     <div class="p-grid">
-        <div class="p-col-1"></div>
         <div class="p-col-12 p-md-12 p-lg-12">
             <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Registration">
@@ -17,7 +16,7 @@
                                                     <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                                         <div #grid1 class="p-grid div-main"
                                                             style="padding-left: 0 !important">
-                                                            <div #field1 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <div #field1 class="p-field p-col-12 p-md-12 p-lg-3">
                                                                 <span class="p-float-label">
                                                                     <input type="text" name="_studentname" id="sname"
                                                                         pInputText [(ngModel)]="obj.studentName"
@@ -36,7 +35,7 @@
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
                                                             </div>
-                                                            <div #field3 class="p-col-12 p-md-12 p-lg-2">
+                                                            <div #field3 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span class="p-float-label">
                                                                     <p-calendar dateFormat="dd/mm/yy"
                                                                         [showOtherMonths]="false" [(ngModel)]="obj.dob"
@@ -50,7 +49,7 @@
                                                                     </label>
                                                                 </span>
                                                             </div>
-                                                            <div #field4 class="p-field p-col-12 p-md-6 p-lg-1">
+                                                            <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
                                                                 <span class="p-float-label">
                                                                     <input type="text" name="_age" id="sname" pInputText
                                                                         [(ngModel)]="ageTxt" [disabled]="true">
@@ -68,6 +67,10 @@
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                                        <div #grid2 class="p-grid">
                                                             <div #field6 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span class="p-float-label p-input-icon-right">
                                                                     <p-dropdown name="_gender" [options]="genderOptions"
@@ -78,11 +81,7 @@
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
-                                                        <div #grid2 class="p-grid">
-                                                            <div #field7 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                             <div #field7 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span class="p-float-label p-input-icon-right">
                                                                     <p-dropdown name="_mothertongue"
                                                                         [options]="motherTongueOptions"
@@ -285,14 +284,14 @@
                                     <div #main4 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
                                         <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
-                                            <div class="div-header" style="font-weight: 500;">Distance Details</div>
+                                            <div class="div-header" style="font-weight: 500;">Distance Details - in Kms</div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
                                                     <div #field24 class="p-field p-col-12 p-md-12 p-lg-4">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_distance1" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToHome"
-                                                                appInputFormat="allowDecimal" required>
+                                                                appInputFormat="digitOnly" required>
                                                             <label for="_distance1">Distance From Hostel To Home<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
@@ -300,8 +299,8 @@
                                                     <div #field25 class="p-field p-col-12 p-md-12 p-lg-4">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_distance2" pInputText
-                                                                [(ngModel)]="obj.distanceFromHostelToInstitue"
-                                                                appInputFormat="allowDecimal" required>
+                                                                [(ngModel)]="obj.distanceFromHostelToInstitute"
+                                                                appInputFormat="digitOnly" required>
                                                             <label for="_distance2">Distance From Hostel To
                                                                 Institute<span
                                                                     class="form-mandatory-field">*</span></label>
@@ -480,8 +479,7 @@
                                                     <div #field41 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_micrno" pInputText
-                                                                [(ngModel)]="obj.micrNo" appInputFormat="digitOnly"
-                                                                required>
+                                                                [(ngModel)]="obj.micrNo" appInputFormat="digitOnly">
                                                             <label for="_micrno">MICR No.</label>
                                                         </span>
                                                     </div>

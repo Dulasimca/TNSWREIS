@@ -21,7 +21,7 @@ export interface Registration {
     lastStudiedInstituteName: string;
     lastStudiedInstituteAddress: string;
     distanceFromHostelToHome: number;
-    distanceFromHostelToInstitue: number;
+    distanceFromHostelToInstitute: number;
     disabilityType: any;
     address1: string;
     address2: string;

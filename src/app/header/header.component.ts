@@ -24,16 +24,10 @@ showMenuIcon: boolean;
   }
 
   onSignIn() { 
-    console.log('sign in');
     this._router.navigate(['/login']);
   }
 
   onSignOut() {
     this._authService.logout();
   }
-
-  // onEmit() {
-  //   console.log('emit');
-  //   this.open.emit(true);
-  // }
 }

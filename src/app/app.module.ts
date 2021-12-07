@@ -32,7 +32,6 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -54,7 +53,6 @@ import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
 import { DatePipe } from '@angular/common';
 import { BlockUIModule } from 'ng-block-ui';
-import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
 import { PurchaseOrderComponent } from './forms-module/purchase-order/purchase-order.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
@@ -86,6 +84,9 @@ import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanag
 import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
 import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-fund-management/hostel-fund-management.component';
 
+import { AuditComponent } from './forms-module/audit/audit.component';
+import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
+import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,6 @@ import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-f
     DistrictComponent,
     TalukComponent,
     HostelGoComponent,
-    AttendanceComponent,
     ChangePasswordComponent,
     IdCardInfoComponent,
     MenuHeaderComponent,
@@ -131,6 +131,9 @@ import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-f
     TOFundManagementComponent,
     HostelFundManagementComponent,
 
+    AuditComponent,
+    StudentfacilityMasterComponent,
+    StudentfacilityReportComponent
   ],
   imports: [
     BrowserModule,

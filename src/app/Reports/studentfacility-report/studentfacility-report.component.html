@@ -1,7 +1,7 @@
 <div class="p-grid">
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
-            <p-panel header="Hostel Report">
+            <p-panel header="Student Facility Report">
                 <p-card>
                     <div class="p-col-12 no-pad-top">
                         <div class="p-grid">
@@ -41,7 +41,7 @@
                         </div>
                         <p-table #dt [columns]="hostelCols" [value]="hostelData" [paginator]="true" [rows]="100"
                             [rowsPerPageOptions]="[10,30,50,100]" styleClass="p-datatable-gridlines" 
-                            exportFilename="HOSTEL_REPORT">
+                            exportFilename="STUDENTFACILITY_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width: 45px;">S.No</th>

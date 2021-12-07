@@ -1,7 +1,6 @@
-<div class="p-col-12 p-md-12 p-lg-12">
-    <div class="p-grid">
-        <div class="p-col-1"></div>
-        <div class="p-col-12 p-md-12 p-lg-12">
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="HostelMaster">
                 <p-card>
                     <form #f="ngForm" name="hostelmasterForm">
@@ -23,15 +22,15 @@
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_Districtcode">District</label>
-                                    <p-dropdown name="_Districtcode" class="p-col-12" [options]="DistrictcodeOptions"
-                                        class="p-col-10" [(ngModel)]="Districtcode" (onClick)="onSelect('DT')"
+                                    <p-dropdown name="_Districtcode" [options]="DistrictcodeOptions"
+                                        [(ngModel)]="Districtcode" (onClick)="onSelect('DT')"
                                         [disabled]="disableFields" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_TalukId">Taluk</label>
-                                    <p-dropdown name="_TalukId" class="p-col-12" [options]="TalukIdOptions"
-                                        class="p-col-10" [(ngModel)]="TalukId" (onClick)="onSelect('TK')"
+                                    <p-dropdown name="_TalukId"  [options]="TalukIdOptions"
+                                         [(ngModel)]="TalukId" (onClick)="onSelect('TK')"
                                         [disabled]="disableFields" required>
                                     </p-dropdown>
                                 </div>
@@ -143,4 +142,3 @@
         </div>
     </div>
 
-</div>

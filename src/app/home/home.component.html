@@ -5,7 +5,7 @@
             <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions" [numVisible]="5" [autoPlay]="true"
                 [transitionInterval]="2500" [showThumbnails]="false">
                 <ng-template pTemplate="item" let-item>
-                    <img [src]="item.previewImageSrc" [ngClass.xs]="'home-img-xs'" [ngClass.md]="'home-img-md'"
+                    <img [src]="item.previewImageSrc" [ngClass.sm]="'home-img-sm'" [ngClass.xs]="'home-img-xs'" [ngClass.md]="'home-img-md'"
                         [ngClass.lg]="'home-img-lg'" [ngClass.lt-lg]="'home-img-lt-lg'" [ngClass.gt-md]="'home-img-gt-md'" />
                 </ng-template>
                 <ng-template pTemplate="thumbnail" let-item>

@@ -1,5 +1,4 @@
 <block-ui>
-    <div class="p-col-12 p-md-12 p-lg-12">
     <div class="p-grid">
         <div class="p-col-12 p-md-12 p-lg-12">
             <p-toast position="top-center" key="t-msg"></p-toast>
@@ -61,7 +60,8 @@
                                                     <input type="text" name="_closingbalance" pInputText
                                                         [(ngModel)]="closingBalance" readonly="true">
                                                 </div>
-                                                <div class="p-col-12 p-md-4 p-lg-1" style="margin-top: 1.5rem">
+                                                <div class="p-col-12 p-md-7 p-lg-1" [ngClass.xs]="'txt-center'" [ngClass.lt-sm]="'txt-center'" 
+                                                [ngClass.lt-md]="'txt-end'" style="margin-top: 1.5rem">
                                                     <button pButton type="button" label="Enter" [disabled]="(!f.valid)"
                                                         (click)="onEnter()"></button>
                                                 </div>
@@ -178,5 +178,4 @@
             </p-dialog>
         </div>
     </div>
-</div>
 </block-ui>

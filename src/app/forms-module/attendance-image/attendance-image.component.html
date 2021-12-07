@@ -1,8 +1,6 @@
-<div class="p-col-12 p-md-12 p-lg-12">
-    <div class="p-grid">
-        <div class="p-col-1"></div>
-        <div class="p-col-12 p-md-12 p-lg-12">
-            <p-toast position="top-center" key="t-msg"></p-toast>
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Attendance Image">
                 <p-card>
                     <form #f="ngForm" name="attendanceimageForm">
@@ -64,12 +62,11 @@
                                     <img #webCamImg [src]="webcamImage.imageAsDataUrl" />
                                 </div>
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
+                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                                 <button pButton type="button" label="Submit" (click)="onSubmit()"
-                                    [disabled]="((NoOfStudent>0 ? false : true) || !webcamImage)" class="btn-bg"></button>
-                                <button pButton type="button" label="View" (click)="onView()" class="btn-bg"
-                                    style="margin-left: 5%;"></button>
-                                <button pButton type="button" label="Clear" style="margin-left:5%;"
+                                    [disabled]="((NoOfStudent>0 ? false : true) || !webcamImage)" class="btn-bg"></button>&nbsp;
+                                <button pButton type="button" label="View" (click)="onView()" class="btn-bg"></button>&nbsp;
+                                <button pButton type="button" label="Clear" 
                                     icon="pi pi-times-circle" (click)="onClear()"></button>
                             </div>
                             <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
@@ -105,4 +102,3 @@
             </p-dialog>
         </div>
     </div>
-</div>

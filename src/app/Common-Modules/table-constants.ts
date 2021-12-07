@@ -11,6 +11,7 @@ export class TableConstants {
     openingBalanceReportColumns: any = [];
     hostelReportCols: any = [];
     studentDetailsColumns: any = [];
+    studentFacilityReportCols: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -141,6 +142,15 @@ export class TableConstants {
             { field: 'Phone', header: 'Contact No.', align: 'right !important'},
             { field: 'TotalStudent', header: 'Student Count', align: 'right !important'},
         ]
+        this.studentFacilityReportCols = [
+            { field: 'Districtname', header: 'Districtname', width: '200px'},
+            { field: 'Talukname', header: 'HostelName', width: '200px'},
+            { field: 'HostelName', header: 'HostelName', width: '200px'},
+            { field: 'FacilityName', header: 'FacilityName', width: '200px'},
+            { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px'},
+            { field: 'Remarks', header: 'Remarks', width: '200px'},
+        ]
+
 
     }
 }

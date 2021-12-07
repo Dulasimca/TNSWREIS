@@ -12,11 +12,9 @@ import { UsermasterComponent } from './master/usermaster/usermaster.component';
 import { OpeningBalanceComponent } from './forms-module/opening-balance/opening-balance.component';
 import { AuthGuard } from './services/auth.guard';
 import { HostelImageComponent } from './master/hostel-image/hostel-image.component';
-
 import { HostelGoComponent } from './master/hostel-go/hostel-go.component';
 import { DistrictComponent } from './master/district/district.component';
 import { TalukComponent } from './master/taluk/taluk.component';
-import { AttendanceComponent } from './forms-module/attendance/attendance.component';
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
 import { ConsumptionComponent } from './forms-module/consumption/consumption.component';
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
@@ -38,13 +36,16 @@ import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanag
 import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
 import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-fund-management/hostel-fund-management.component';
 
+import { AuditComponent } from './forms-module/audit/audit.component';
+import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
+import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'foodmaster',component:FoodmasterComponent},
+  { path: 'foodmaster',component:FoodmasterComponent, canActivate: [AuthGuard]},
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
@@ -65,10 +66,10 @@ const routes: Routes = [
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path: 'purchase-bill-upload', component:PurchaseUploadComponent, canActivate: [AuthGuard]},
   { path: 'daily-consumption', component:ConsumptionComponent, canActivate: [AuthGuard]},
-  { path: 'district', component:DistrictComponent},
-  { path: 'taluk', component:TalukComponent},
-  { path: 'attendance', component:AttendanceComponent, canActivate: [AuthGuard]},
-  { path: 'changepassword', component:ChangePasswordComponent},
+  { path: 'district', component:DistrictComponent, canActivate: [AuthGuard]},
+  { path: 'taluk', component:TalukComponent, canActivate: [AuthGuard]},
+  { path: 'attendance', component:AuditComponent, canActivate: [AuthGuard]},
+  { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
 
 
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
@@ -83,6 +84,8 @@ const routes: Routes = [
   { path: 'tofundmanagement', component:TOFundManagementComponent,},
   { path: 'hostelfundmanagement', component:HOFundmanagementComponent,},
   
+  { path: 'studentfacility', component:StudentfacilityMasterComponent},
+  { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
 ];
 
 @NgModule({
