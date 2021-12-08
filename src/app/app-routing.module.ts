@@ -31,6 +31,7 @@ import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase
 import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
+import { ApprovalComponent } from './forms-module/approval/approval.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -70,6 +71,7 @@ const routes: Routes = [
   { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]},
   { path: 'studentfacility', component:StudentfacilityMasterComponent},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
+  { path: 'approval', component:ApprovalComponent},
 ];
 
 @NgModule({

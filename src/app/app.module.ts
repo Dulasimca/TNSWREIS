@@ -79,6 +79,7 @@ import { InputFormatDirective } from './directives/input-format.directive';
 import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
+import { ApprovalComponent } from './forms-module/approval/approval.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -117,7 +118,8 @@ import { StudentfacilityReportComponent } from './Reports/studentfacility-report
     InputFormatDirective,
     AuditComponent,
     StudentfacilityMasterComponent,
-    StudentfacilityReportComponent
+    StudentfacilityReportComponent,
+    ApprovalComponent
   ],
   imports: [
     BrowserModule,
