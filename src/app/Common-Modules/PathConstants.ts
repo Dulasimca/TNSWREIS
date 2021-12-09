@@ -76,7 +76,6 @@ public static readonly StudentFacility_Post = 'StudentFacility/Post';
 public static readonly StudentFacility_Get = 'StudentFacility';
 public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get';
 
-<<<<<<< HEAD
 
 public static readonly HOFundAllotment_Post = 'HOFundAllotment/Post';
 public static readonly HOFundAllotment_Get = 'HOFundAllotment/Get';
@@ -86,10 +85,8 @@ public static readonly TOFundAllotment_Post = 'TOFundAllotment/Post';
 public static readonly TOFundAllotment_Get = 'TOFundAllotment/Get';
 public static readonly HostelFundAllotment_Post = 'HostelFundAllotment/Post';
 public static readonly HostelFundAllotment_Get = 'HostelFundAllotment/Get';
-=======
 public static readonly ApprovalList_Get = 'ApprovalList';
 public static readonly ApprovalDetails_Post = 'ApprovalDetails/Post';
 
->>>>>>> ef902166bd0c721257883cf3097ba3b23dc3fc71
 
 }
