@@ -35,6 +35,10 @@ export interface Registration {
     emisno: any;
     talukApproval: any;
     districtApproval: any;
+    admissionNo: string;
+    remarks: string;
+    scholarshipId: any;
+    policeStationAddress: string;
     //bank
     bankId: number;
     bankName: string;
@@ -48,12 +52,12 @@ export interface Registration {
     fatherOccupation: string;
     fatherMoileNo: string;
     fatherQualification: string;
-    fatherYIncome: string;
+    fatherYIncome: any;
     motherName: string;
     motherOccupation: string;
     motherMoileNo: string;
     motherQualification: string;
-    motherYIncome: string;
+    motherYIncome: any;
     guardianName: string;
     guardianOccupation: string;
     guardianMobileNo: string;
