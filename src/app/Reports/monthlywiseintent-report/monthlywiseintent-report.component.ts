@@ -68,7 +68,7 @@ export class MonthlywiseintentReportComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.hostelCols = this.tableConstants.hostelinfrastructureReportCols
+    //this.hostelCols = this.tableConstants.hostelinfrastructureReportCols
     this.Slno = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');

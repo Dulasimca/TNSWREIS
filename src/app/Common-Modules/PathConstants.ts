@@ -76,4 +76,10 @@ public static readonly StudentFacility_Post = 'StudentFacility/Post';
 public static readonly StudentFacility_Get = 'StudentFacility';
 public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get';
 
+public static readonly MonthlywiseIntent_Post = 'MonthlywiseIntent/Post';
+
+public static readonly MonthlywiseIntent_Get = 'MonthlywiseIntent/Get';
+
+
+
 }

@@ -83,10 +83,14 @@ import { DOFundManagementComponent } from './Fund-Management-Module/do-fund-mana
 import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanagement/ho-fundmanagement.component'; 
 import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
 import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-fund-management/hostel-fund-management.component';
-
+import { MonthlywiseintentReportComponent } from './Reports/monthlywiseintent-report/monthlywiseintent-report.component';
 import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
+import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastructure-report/hostelinfrastructure-report.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,10 +134,11 @@ import { StudentfacilityReportComponent } from './Reports/studentfacility-report
     HOFundmanagementComponent,
     TOFundManagementComponent,
     HostelFundManagementComponent,
-
+    MonthlywiseintentReportComponent,
     AuditComponent,
     StudentfacilityMasterComponent,
-    StudentfacilityReportComponent
+    StudentfacilityReportComponent,
+    HostelinfrastructureReportComponent,
   ],
   imports: [
     BrowserModule,

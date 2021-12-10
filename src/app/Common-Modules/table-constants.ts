@@ -12,6 +12,7 @@ export class TableConstants {
     hostelReportCols: any = [];
     studentDetailsColumns: any = [];
     studentFacilityReportCols: any = [];
+    hostelinfrastructureReportCols:any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -151,6 +152,21 @@ export class TableConstants {
             { field: 'Remarks', header: 'Remarks', width: '200px'},
         ]
 
+        this.hostelinfrastructureReportCols = [
+  
+            { field: 'Districtname', header: 'District code' },
+            { field: 'Talukname', header: 'Taluk id' },
+            { field: 'HostelName', header: 'HostelId' },
+            { field: 'TotalArea', header: 'Total Area' },
+            { field: 'BuildingArea', header: 'Building Area' },
+            { field: 'NoOfFloor', header: 'No Of Floor' },
+            { field: 'NoOfRoom', header: 'No Of Room' }, 
+            { field: 'Kitchen', header: 'Kitchen' },
+            { field: 'Bathroom', header: 'Bathroom' },
+            { field: 'CreatedDate', header: 'Created Date' },
+           
+
+        ]
 
     }
 }
