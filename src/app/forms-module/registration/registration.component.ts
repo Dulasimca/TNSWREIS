@@ -225,7 +225,14 @@ export class RegistrationComponent implements OnInit {
   }
 
   checkScholardhipEligibility() {
-    if(this.obj.classId !== undefined && this.obj.classId !== null) {
+    if (this.institutionType === '1') {
+      if (this.obj.classId !== undefined && this.obj.classId !== null && (this.obj.classId * 1) > 7) {
+        this.enableScholarship = true;
+      } else {
+        this.enableScholarship = false;
+        this.obj.scholarshipId = '';
+      }
+    } else if (this.institutionType === '0') {
       this.enableScholarship = true;
     } else {
       this.enableScholarship = false;
@@ -308,6 +315,7 @@ export class RegistrationComponent implements OnInit {
     this.studentImage = '';
     this.disableTaluk = true;
     this.isDisability = false;
+    this.enableScholarship = true;
     this.institutionType = '1';
     this.obj.incomeCertificateFilename = '';
     this.obj.bankPassbookFilename = '';
