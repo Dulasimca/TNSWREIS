@@ -1,53 +1,61 @@
 <div class="p-grid">
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
-            <p-panel header="TO-Fund Management">
-                <form #f="ngForm" name="toFundForm">
-                    <p-card>
-                        <div class="p-col-2"></div>
-                        <div class="p-col-12 no-pad-top">
-                            <div class="p-grid">
-                                <div class="p-col-2"></div>
-                                <div #row1 class="p-col-12 p-md-12 p-lg-8">
-                                    <div class="p-grid">
-                                        <div class="p-col-12 p-md-12 p-lg-3">
-                                            <div><label for="_year">Accounting Year<span
-                                                class="form-mandatory-field">*</span></label></div>
-                                    <p-dropdown name="_year" [options]="yearOptions"
-                                        (onClick)="onSelect('Y')" [(ngModel)]="year" required>
-                                    </p-dropdown>
-                                        </div>
-                                        <div class="p-col-12 p-md-6 p-lg-2">
-                                            <div><label for="_district">District<span
-                                                        class="form-mandatory-field">*</span></label></div>
-                                            <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                                (onClick)="onSelect('D')" required>
-                                            </p-dropdown>
-                                        </div>
-                                        <div class="p-col-12 p-md-12 p-lg-3">
-                                            <div><label for="_damnt">Amount<span
-                                                class="form-mandatory-field">*</span></label></div>
-                                    <input type="text" name="_damnt" class="p-col-12" pInputText
-                                        [(ngModel)]="Damount" placeholder="From District" required />
-                                          </div>
-                                          
-                                        <div class="p-col-12 p-md-12 p-lg-3">
-                                            <div><label for="_amount">Taluk Amount<span
-                                                class="form-mandatory-field">*</span></label></div>
-                                    <input type="text" name="_amount" class="p-col-12" pInputText
-                                        [(ngModel)]="amount" required />
-                                          </div>
-                                        <div class="p-col-12 p-md-12 p-lg-12 txt-center">
-                                            <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
-                                                [disabled]="(!f.valid || !f.dirty)"></button>
-                                            <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"></button>
-                                        </div>
+        <p-panel header="TO-Fund Management">
+            <form #f="ngForm" name="toFundForm">
+                <p-card>
+                    <div class="p-col-2"></div>
+                    <div class="p-col-12 no-pad-top">
+                        <div class="p-grid">
+                            <div class="p-col-1"></div>
+                            <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-12 p-lg-2">
+                                        <div><label for="_year">Accounting Year<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')"
+                                            [(ngModel)]="year" (onChange)="loadAmount()" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_district">District<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                            (onClick)="onSelect('D')" (onChange)="loadAmount()" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-12 p-lg-2">
+                                        <div><label for="_damnt">Budjet Amount<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" name="_damnt" class="p-col-12" pInputText
+                                            [(ngModel)]="Damount" appInputFormat="digitOnly" placeholder="From District"
+                                            (input)="checkBudjetAmount()" readonly="true"  required />
+                                    </div>
+                                   
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_taluk">Taluk<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                            (onClick)="onSelect('T')"  (onChange)="loadToFunds()" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-12 p-lg-2">
+                                        <div><label for="_amount">Amount<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" name="_amount" class="p-col-12" pInputText
+                                            [(ngModel)]="talukAmount" appInputFormat="digitOnly" (input)="checkBudjetAmount()" required />
                                     </div>
                                 </div>
                             </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
+                                    [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                <!-- <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"></button> -->
+                            </div>
                         </div>
-                    </p-card>
-</form>
-</p-panel>
-</div>
+                    </div>
+                </p-card>
+            </form>
+        </p-panel>
+    </div>
 </div>

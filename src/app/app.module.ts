@@ -91,6 +91,8 @@ import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastruct
 
 
 
+import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
+import { ApprovalComponent } from './forms-module/approval/approval.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,6 +141,9 @@ import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastruct
     StudentfacilityMasterComponent,
     StudentfacilityReportComponent,
     HostelinfrastructureReportComponent,
+    ApprovalRequestComponent,
+    ApprovalComponent,
+    
   ],
   imports: [
     BrowserModule,

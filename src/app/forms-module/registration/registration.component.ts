@@ -57,6 +57,7 @@ export class RegistrationComponent implements OnInit {
   registeredDetails: any[] = [];
   loading: boolean;
   showDialog: boolean;
+  enableScholarship: boolean;
   maxDate: Date = new Date();
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
@@ -223,6 +224,14 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+  checkScholardhipEligibility() {
+    if(this.obj.classId !== undefined && this.obj.classId !== null) {
+      this.enableScholarship = true;
+    } else {
+      this.enableScholarship = false;
+    }
+  }
+
   calculateAge() {
     let timeDiff = Math.abs(Date.now() - this.obj.dob.getTime());
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
@@ -319,6 +328,9 @@ export class RegistrationComponent implements OnInit {
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
     this.obj.hostelId = this.logged_user.hostelId;
+    this.obj.motherYIncome = 0;
+    this.obj.fatherYIncome = 0;
+    this.obj.scholarshipId = (this.obj.scholarshipId !== undefined) ? this.obj.scholarshipId : '';
     this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
@@ -398,7 +410,7 @@ export class RegistrationComponent implements OnInit {
         this.subCasteOptions = [{ label: detail.subcasteName, value: detail.subCaste }];
         this.obj.dob = new Date(detail.dob);
         this.ageTxt = this.obj.age + ' Years';
-        this.studentImage = 'assets/layout' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
+        this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
       })
     }
   }

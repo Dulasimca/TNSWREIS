@@ -39,6 +39,8 @@ import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-f
 import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
+import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
+import { ApprovalComponent } from './forms-module/approval/approval.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -79,13 +81,15 @@ const routes: Routes = [
   { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
   { path: 'hostelinfrastructure', component:HostelinfrastructureComponent,}, 
   { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
-  { path: 'dofundmanagement', component:DOFundManagementComponent,},
-  { path: 'hofundmanagement', component:HOFundmanagementComponent,}, 
-  { path: 'tofundmanagement', component:TOFundManagementComponent,},
-  { path: 'hostelfundmanagement', component:HOFundmanagementComponent,},
+  { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
+  { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 
+  { path: 'to-fundmanagement', component:TOFundManagementComponent, canActivate: [AuthGuard]},
+  { path: 'hostel-fundmanagement', component:HostelFundManagementComponent, canActivate: [AuthGuard]},
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
+  { path: 'approvalrequest', component:ApprovalRequestComponent},
+  { path: 'approval', component:ApprovalComponent},
 ];
 
 @NgModule({

@@ -80,6 +80,20 @@ public static readonly MonthlywiseIntent_Post = 'MonthlywiseIntent/Post';
 
 public static readonly MonthlywiseIntent_Get = 'MonthlywiseIntent/Get';
 
+public static readonly HOFundAllotment_Post = 'HOFundAllotment/Post';
+public static readonly HOFundAllotment_Get = 'HOFundAllotment/Get';
+public static readonly DOFundAllotment_Post = 'DOFundAllotment/Post';
+public static readonly DOFundAllotment_Get = 'DOFundAllotment/Get';
+public static readonly TOFundAllotment_Post = 'TOFundAllotment/Post';
+public static readonly TOFundAllotment_Get = 'TOFundAllotment/Get';
+public static readonly HostelFundAllotment_Post = 'HostelFundAllotment/Post';
+public static readonly HostelFundAllotment_Get = 'HostelFundAllotment/Get';
+public static readonly ApprovalList_Get = 'ApprovalList';
+public static readonly ApprovalDetails_Post = 'ApprovalDetails/Post';
+public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';
+
+public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
+
 
 
 }
