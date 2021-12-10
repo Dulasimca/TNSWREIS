@@ -91,7 +91,7 @@
             </div>
         </p-panel>
         <p-dialog #dialog header="Hostel Attendance Reference Image" [(visible)]="showDialog" [modal]="showDialog"
-            [style]="{width: '70vw', height: '25vw'}">
+        [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">>
             <p-table #dt [value]="attendanceImgdata" [columns]="colsAttendance" styleClass="p-datatable-gridlines"
                 [paginator]="true" [rows]="100" [rowsPerPageOptions]="[10,30,50,70,100]" >
                 <ng-template pTemplate="header" let-columns>

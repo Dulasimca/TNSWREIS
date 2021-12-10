@@ -164,8 +164,8 @@
                     <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
                 </ng-template>
             </p-confirmDialog>
-            <p-dialog #dialog *ngIf="showDialog" header="Purchase Bill Details" [(visible)]="showDialog"
-                [modal]="showDialog" [style]="{width: '90vw', height: '40vw'}">
+            <p-dialog #dialog header="Purchase Bill Details" [(visible)]="showDialog"
+                [modal]="showDialog">
                 <p-toast position="top-center" key="t-dialog-msg"></p-toast>
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
@@ -210,7 +210,7 @@
                         </p-table>
                     </div>
                     <p-dialog #innerdialog [(visible)]="showInnerDialog" [modal]="showInnerDialog" header="Alert"
-                        [style]="{width: '35vw', height: '15vw'}" [appendTo]="dialog">
+                        [style]="{width: '90vw', height: '90vw'}" [appendTo]="dialog">
                         <div class="p-col-12 p-md-12 p-lg-12" style="margin-top: 1.2rem;">
                             <span><i class="pi pi-exclamation-triangle" style="font-size:1.2rem; margin-right: 5px;"></i>
                                 <span style="font-size: 16px;">Do you want to delete the record?</span>

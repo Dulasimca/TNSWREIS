@@ -398,7 +398,7 @@ export class RegistrationComponent implements OnInit {
         this.subCasteOptions = [{ label: detail.subcasteName, value: detail.subCaste }];
         this.obj.dob = new Date(detail.dob);
         this.ageTxt = this.obj.age + ' Years';
-        this.studentImage = 'assets/layout' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
+        this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
       })
     }
   }

@@ -80,7 +80,7 @@
             </p-card>
         </p-panel>
         <p-dialog #dialog header="Student Approval" [(visible)]="showDialog" [modal]="showDialog"
-            [style]="{width: '40vw', height: '15vw'}">
+        [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">>
             <div class="p-grid div-main">
                 <div class="p-col-12 p-md-12 p-lg-5">
                     <label for="_studentname">Student Name</label>

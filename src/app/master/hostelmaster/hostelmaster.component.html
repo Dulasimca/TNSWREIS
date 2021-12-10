@@ -136,7 +136,7 @@
                 </p-card>
 
             </p-panel>
-            <p-dialog #dialog header="Hostel Image" [(visible)]="showDialog" [modal]="showDialog">
+            <p-dialog #dialog header="Hostel Image" [(visible)]="showDialog" [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
                 <img alt="TN ADW Hostel image" [src]="hostelImage" style="vertical-align: middle" />
             </p-dialog>
         </div>

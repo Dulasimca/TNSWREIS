@@ -699,7 +699,7 @@
                 </p-card>
             </p-panel>
             <p-dialog #dialog *ngIf="showDialog" header="Registered Student List" [(visible)]="showDialog"
-                [modal]="showDialog" [style]="{width: '95%', height: '95%'}">
+                [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">>
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-12">
                         <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
