@@ -39,6 +39,7 @@ import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-f
 import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
+import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
 
 const routes: Routes = [
@@ -87,6 +88,7 @@ const routes: Routes = [
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
+  { path: 'approvalrequest', component:ApprovalRequestComponent},
   { path: 'approval', component:ApprovalComponent},
 ];
 

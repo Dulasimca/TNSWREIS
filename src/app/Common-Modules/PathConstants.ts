@@ -78,6 +78,10 @@ public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get'
 
 public static readonly ApprovalList_Get = 'ApprovalList';
 public static readonly ApprovalDetails_Post = 'ApprovalDetails/Post';
+public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';
+
+public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
+
 
 
 }
