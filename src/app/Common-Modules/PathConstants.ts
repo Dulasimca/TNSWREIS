@@ -1,4 +1,5 @@
 export class PathConstants {
+public static readonly Dashboard_Get = 'Dashboard/Get';
 public static readonly DaysMaster_Get = 'DaysMaster';
 public static readonly MasterAll_Get = 'MasterData';
 public static readonly FoodMaster_Get = 'FoodMaster/Get';
