@@ -58,6 +58,7 @@ export class RegistrationComponent implements OnInit {
   loading: boolean;
   showDialog: boolean;
   enableScholarship: boolean;
+  aadharNo: string;
   maxDate: Date = new Date();
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
@@ -192,15 +193,15 @@ export class RegistrationComponent implements OnInit {
         this.mediumOptions.unshift({ label: '-select-', value: null });
         break;
       case 'SC':
-        if(this.obj.caste !== null && this.obj.caste !== undefined) {
-        this.subcastes.forEach(m => {
-          if((m.casteId * 1) === (this.obj.caste * 1)) {
-            subcasteSelection.push({ label: m.name, value: m.code });
-          }
-        })
-      } else {
-        subcasteSelection = [];
-      }
+        if (this.obj.caste !== null && this.obj.caste !== undefined) {
+          this.subcastes.forEach(m => {
+            if ((m.casteId * 1) === (this.obj.caste * 1)) {
+              subcasteSelection.push({ label: m.name, value: m.code });
+            }
+          })
+        } else {
+          subcasteSelection = [];
+        }
         this.subCasteOptions = subcasteSelection;
         this.subCasteOptions.unshift({ label: '-select-', value: null });
         break;
@@ -208,16 +209,16 @@ export class RegistrationComponent implements OnInit {
   }
 
   refreshFields(value) {
-    if(value === 'D') {
-      if(this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
-      this.disableTaluk = false;
+    if (value === 'D') {
+      if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
+        this.disableTaluk = false;
       } else {
         this.disableTaluk = true;
       }
       this._registrationForm.form.controls['_taluk'].reset();
       this.obj.talukCode = null;
       this.talukOptions = [];
-    } else if(value === 'C') {
+    } else if (value === 'C') {
       this._registrationForm.form.controls['_subcaste'].reset();
       this.obj.subCaste = null;
       this.subCasteOptions = [];
@@ -244,6 +245,16 @@ export class RegistrationComponent implements OnInit {
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
     this.obj.age = age;
     this.ageTxt = age + ' Years';
+  }
+
+  maskInput(value) {
+    this.obj.aadharNo = value;
+    var len = value.length;
+    if (len > 11) {
+      this.aadharNo = '*'.repeat(len - 4) + this.aadharNo.substr(8, 4);
+      console.log('sus',this.obj.aadharNo, this.aadharNo, this.aadharNo.substr(8, 4))
+    }
+
   }
 
   public uploadFile = (files) => {
@@ -388,6 +399,12 @@ export class RegistrationComponent implements OnInit {
     }
     this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
+        res.forEach(r => {
+          var len = r.aadharNo.toString().length;
+          if (len > 11) {
+            r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
+          }
+        })
         this.registeredDetails = res.slice(0);
         this.loading = false;
       } else {
@@ -419,6 +436,7 @@ export class RegistrationComponent implements OnInit {
         this.obj.dob = new Date(detail.dob);
         this.ageTxt = this.obj.age + ' Years';
         this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
+        this.maskInput(this.obj.aadharNo);
       })
     }
   }

@@ -115,6 +115,7 @@ export class StudentDetailsComponent implements OnInit {
     this.hostelOptions.unshift({ label: '-select-', value: null });
   }
 
+
   loadTable() {
     this.studentData = [];
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
@@ -128,6 +129,10 @@ export class StudentDetailsComponent implements OnInit {
       this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
           res.forEach(r => {
+            var len = r.aadharNo.toString().length;
+            if(len > 11) {
+              r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
+            }
             r.isDApproved = (r.districtApproval !== null && r.districtApproval !== 0 && (r.districtApproval)) ? 'true' : 'false';
             r.isTAprroved = (r.talukApproval !== null && r.talukApproval !== 0 && (r.talukApproval)) ? 'true' : 'false';
             if (this.roleId === 1 || this.roleId === 4) {

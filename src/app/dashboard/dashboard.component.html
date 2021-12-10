@@ -9,7 +9,7 @@
             <div #row1 class="txt-center">
                 <div #grid1 class="p-grid div-main">
                     <div [ngClass]="(roleId==1) ? 'p-col-1 p-md-1 p-lg-1' : 'p-col-1 p-md-1 p-lg-2'"></div>
-                    <div class="p-col-10 p-md-10 p-lg-10 no-pad-top" style="margin-left: 5%;"
+                    <div class="p-col-10 p-md-10 p-lg-10 no-pad-top" [ngStyle]="{'margin-left': (roleId==1) ? '5%;' : '0'}"
                     [ngStyle.xs]="{'margin-left.rem': -0.5}">
                         <div class="p-grid">
                             <div #el1 [ngClass]="(roleId==1) ? 'p-col-12 p-md-6 p-lg-2' : 'p-col-12 p-md-6 p-lg-3'" class="dashboard overview-box view1 card">
