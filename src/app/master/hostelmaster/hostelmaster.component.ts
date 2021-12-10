@@ -57,8 +57,7 @@ export class HostelmasterComponent implements OnInit {
   hostelImage : string;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
-    private messageService: MessageService,private _authService: AuthService,
-    private _messageService: MessageService) { }
+    private messageService: MessageService,private _authService: AuthService) { }
 
   public ngOnInit(): void {
    this.cols = [
@@ -194,8 +193,8 @@ export class HostelmasterComponent implements OnInit {
         })
         this.data = res.Table;
       }  else {
-        this._messageService.clear();
-        this._messageService.add({
+        this.messageService.clear();
+        this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
           summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
         })
