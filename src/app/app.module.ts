@@ -31,6 +31,7 @@ import { MatListModule } from '@angular/material/list';
 import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
+import {TreeTableModule} from 'primeng/treetable';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -93,6 +94,10 @@ import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastruct
 
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
+
+
+
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 @NgModule({
   declarations: [
@@ -144,6 +149,7 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
     HostelinfrastructureReportComponent,
     ApprovalRequestComponent,
     ApprovalComponent,
+    FundmanagementReportComponent,
     StudentTransferFormComponent,
     
   ],
@@ -180,6 +186,7 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
     MenubarModule,
     ChartModule,
     GalleriaModule,
+    TreeTableModule,
     BlockUIModule.forRoot(),
   ],
 

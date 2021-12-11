@@ -12,6 +12,7 @@ export class TableConstants {
     hostelReportCols: any = [];
     studentDetailsColumns: any = [];
     studentFacilityReportCols: any = [];
+    OpeningBalanceColumns: any = [];
     hostelinfrastructureReportCols:any = [];
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
@@ -151,6 +152,15 @@ export class TableConstants {
             { field: 'FacilityName', header: 'FacilityName', width: '200px'},
             { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px'},
             { field: 'Remarks', header: 'Remarks', width: '200px'},
+        ]
+        this.OpeningBalanceColumns = [
+            { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+            // { field: 'Districtname', header: 'District', align: 'left !important'},
+            // { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            // { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'CommodityName', header: 'Commodity Name', align: 'left !important'},
+            { field: 'Qty', header: 'Quantity', align: 'right !important'},
+            { field: 'UnitName', header: 'Unit', align: 'left !important'},
         ]
 
         this.hostelinfrastructureReportCols = [

@@ -42,6 +42,7 @@ import { StudentfacilityReportComponent } from './Reports/studentfacility-report
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
+import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -83,10 +84,12 @@ const routes: Routes = [
   { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
   { path: 'hostelinfrastructure', component:HostelinfrastructureComponent,}, 
   { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
-  { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
+  { path: 'taluk', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 
+  { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'to-fundmanagement', component:TOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'hostel-fundmanagement', component:HostelFundManagementComponent, canActivate: [AuthGuard]},
+  { path: 'fund-report', component:FundmanagementReportComponent, canActivate: [AuthGuard]},
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent},

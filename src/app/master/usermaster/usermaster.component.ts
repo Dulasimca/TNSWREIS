@@ -30,6 +30,7 @@ export class UsermasterComponent implements OnInit {
   hostelOptions: SelectItem[];
   userMasterId: number;
   data: any = [];
+  logged_user: User;
   // master
   roles?: any;
   districts?: any;
@@ -84,11 +85,16 @@ export class UsermasterComponent implements OnInit {
   }
   // hstl based on district 
   selectDistrict() {
+    this.hostelName = null;
+    this.hostelOptions = [];
     let hostelSelection = [];
     const params = {
       'Type': 1,
-      'Value': this.district
-
+      'DCode': this.district,
+      'TCode': (this.logged_user.talukId !== undefined && this.logged_user.talukId !== null) ?
+      this.logged_user.talukId : 0,
+      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
+        this.logged_user.hostelId : 0,
     }
     if (this.district !== null && this.district !== undefined) {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
@@ -100,10 +106,10 @@ export class UsermasterComponent implements OnInit {
           this.hostelOptions = hostelSelection;
           this.hostelOptions.unshift({ label: '-select', value: null });
         };
-
       })
     }
   }
+
   // role dropdown
   onRoleChange() {
     if (this.role != undefined && this.role !== null) {
