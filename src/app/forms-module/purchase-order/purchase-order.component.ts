@@ -55,6 +55,7 @@ export class PurchaseOrderComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _purchaseForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
+  @ViewChild('dialog', { static: false }) _dialogBox: Dialog;
 
   constructor(private _datepipe: DatePipe, private _tableConstants: TableConstants,
     private _masterService: MasterService, private _messageService: MessageService,
@@ -450,6 +451,7 @@ export class PurchaseOrderComponent implements OnInit {
 
   onView() {
     this.showDialog = true;
+    this._dialogBox.maximized = true;
     this.purchasedBillList = [];
     this.fromDate = null;
     this.toDate = null;
