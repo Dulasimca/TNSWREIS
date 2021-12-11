@@ -31,6 +31,7 @@ import { MatListModule } from '@angular/material/list';
 import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
+import {TreeTableModule} from 'primeng/treetable';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -83,14 +84,23 @@ import { DOFundManagementComponent } from './Fund-Management-Module/do-fund-mana
 import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanagement/ho-fundmanagement.component'; 
 import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
 import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-fund-management/hostel-fund-management.component';
-
+import { MonthlywiseintentReportComponent } from './Reports/monthlywiseintent-report/monthlywiseintent-report.component';
 import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
+import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastructure-report/hostelinfrastructure-report.component';
+
+
+
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
 import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
 import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
+import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
+
+
+
+import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,14 +144,17 @@ import { EmployeeReportComponent } from './Reports/employee-report/employee-repo
     HOFundmanagementComponent,
     TOFundManagementComponent,
     HostelFundManagementComponent,
-
+    MonthlywiseintentReportComponent,
     AuditComponent,
     StudentfacilityMasterComponent,
     StudentfacilityReportComponent,
+    HostelinfrastructureReportComponent,
     ApprovalRequestComponent,
     ApprovalComponent,
     EmployeeMasterComponent,
     EmployeeReportComponent,
+    FundmanagementReportComponent,
+    StudentTransferFormComponent,
     
   ],
   imports: [
@@ -177,6 +190,7 @@ import { EmployeeReportComponent } from './Reports/employee-report/employee-repo
     MenubarModule,
     ChartModule,
     GalleriaModule,
+    TreeTableModule,
     BlockUIModule.forRoot(),
   ],
 

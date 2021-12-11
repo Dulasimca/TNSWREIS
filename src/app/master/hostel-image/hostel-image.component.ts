@@ -84,6 +84,7 @@ export class HostelImageComponent implements OnInit {
 
   handleImage(webcamImage: WebcamImage) {
     this.webcamImage = webcamImage;
+    console.log('img',this.webcamImage)
     var byteString = atob(this.webcamImage.imageAsDataUrl.split(',')[1]);
     var ab = new ArrayBuffer(byteString.length);
     var ia = new Uint8Array(ab);

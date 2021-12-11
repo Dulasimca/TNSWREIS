@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -22,13 +23,18 @@ export class DOFundManagementComponent implements OnInit {
   hoAmount: number;
   doFundId: number;
   hoFundId: number;
+  blncAmount: number;
+  totalDistrictAmt: number;
   @ViewChild('f', { static: false }) _doFundForm: NgForm;
+  @BlockUI() blockUI: NgBlockUI;
+
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.years = this.masterService.getMaster('AY');
     this.districts = this.masterService.getMaster('DT');
+    this.totalDistrictAmt = 0;
   }
 
   onSelect(type) {
@@ -81,8 +87,9 @@ export class DOFundManagementComponent implements OnInit {
   }
 
   loadAmount() {
-    this.budjetAmount = 0;
+    this.budjetAmount = 0;  
     if (this.year !== null && this.year !== undefined) {
+    this.blockUI.start();
       const params = {
         'AccountingYearId': this.year
       }
@@ -92,38 +99,80 @@ export class DOFundManagementComponent implements OnInit {
             res.forEach(res => {
               this.budjetAmount = (res.BudjetAmount !== null && res.BudjetAmount !== undefined) ? res.BudjetAmount : 0;
               this.hoFundId = res.HOFundId;
+              this.blockUI.stop();
             })
+          }else {
+            this.blockUI.stop();
           }
+        }else{
+          this.blockUI.stop();
         }
-      });
+      });  
     }
-    this.loadDoFunds();
-  }
+      this.blncAmount = 0;
+      if(this.blncAmount === 0){
+      this.blockUI.start();
+        const data = {
+          'YearId': this.year,
+          'DCode': 0,
+          'Type': 1
+        }
+        this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
+          if (res !== null && res !== undefined) {
+            if (res.length !== 0) {
+              res.forEach(res => {
+                this.totalDistrictAmt = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null) 
+                ? (res.BalanceBudjetAmount * 1) : 0;
+             this.blockUI.stop();
+              })
+            } else {
+              this.blockUI.stop();
+              this.blncAmount = 0;
+            }
+          } else {
+            this.blockUI.stop();
+            this.blncAmount = 0;
+          }
+          this.blncAmount = this.budjetAmount - this.totalDistrictAmt;
+        });
+    }
+     this.loadDoFunds();
+}
 
   loadDoFunds() {
+    this.hoAmount = null;
     if (this.year !== undefined && this.year !== null && this.district !== null && this.year !== undefined) {
+      this.blockUI.start();
       const data = {
         'YearId': this.year,
-        'DCode': this.district
+        'DCode': this.district,
+        'Type': 2
       }
       this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.length !== 0) {
             res.forEach(res => {
               this.hoAmount = res.DOBudjetAmount;
+        this.blockUI.stop();
             })
-          }
-        }
+          } else {
+            this.blockUI.stop();
+            this.hoAmount = 0;
+          } 
+        } else {
+          this.blockUI.stop();
+          this.hoAmount = 0;
+        } 
       });
     }
   }
 
   checkBudjetAmount() {
     if (this.hoAmount !== undefined && this.hoAmount !== null &&
-      this.budjetAmount !== undefined && this.budjetAmount !== null &&
-      this.hoAmount !== NaN && this.budjetAmount !== NaN) {
-      if ((this.budjetAmount * 1) < (this.budjetAmount * 1)) {
-        var msg = 'Entering amount should not be greater than budjet amount !';
+      this.blncAmount !== undefined && this.blncAmount !== null &&
+      this.hoAmount !== NaN && this.blncAmount !== NaN) {
+      if ((this.blncAmount * 1) < (this.hoAmount * 1)) {
+        var msg = 'Entering amount should not be greater than available budjet amount !';
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -138,6 +187,7 @@ export class DOFundManagementComponent implements OnInit {
     this._doFundForm.reset();
     this.districtOptions = [];
     this.yearOptions = [];
+    this.totalDistrictAmt = 0;
   }
 }
 

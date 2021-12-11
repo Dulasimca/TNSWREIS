@@ -192,14 +192,6 @@
                                                             <label for="_remarks">Remarks</label>
                                                         </span>
                                                     </div>
-                                                    <div #field16 class="p-field p-col-12 p-md-12 p-lg-3">
-                                                        <span class="p-float-label">
-                                                            <input type="text" name="_policstationaddr" pInputText
-                                                                [(ngModel)]="obj.policeStationAddress">
-                                                            <label for="_policstationaddr">Near By Police Station
-                                                                Address</label>
-                                                        </span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -253,7 +245,7 @@
                                                         </span>
                                                     </div>
                                                     <div #field21 *ngIf="institutionType=='0'"
-                                                        class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
                                                             <!-- <p-dropdown name="_collegename" [options]="schoolOptions"
                                                         (onClick)="onSelect('SC')" [(ngModel)]="school"
@@ -277,7 +269,7 @@
                                                         </span>
                                                     </div>
                                                     <div #field23 *ngIf="institutionType=='0'"
-                                                        class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_coursetitle" pInputText
                                                                 [(ngModel)]="obj.courseTitle">
@@ -460,8 +452,8 @@
                                                     <div #field38 class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_aadharno" pInputText
-                                                                [(ngModel)]="obj.aadharNo" appInputFormat="digitOnly"
-                                                                required>
+                                                                [(ngModel)]="aadharNo" appInputFormat="digitOnly"
+                                                                (input)="maskInput(aadharNo)" minlength="12" maxlength="12" required>
                                                             <label for="_aadharno">Aadhar No<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
@@ -740,7 +732,7 @@
                 </p-card>
             </p-panel>
             <p-dialog #dialog *ngIf="showDialog" header="Registered Student List" [(visible)]="showDialog"
-                [modal]="showDialog" [style]="{width: '95%', height: '95%'}">
+                [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-12">
                         <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"

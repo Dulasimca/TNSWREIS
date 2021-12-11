@@ -13,6 +13,9 @@ export class TableConstants {
     studentDetailsColumns: any = [];
     studentFacilityReportCols: any = [];
     employeeReportCols: any = [];
+    OpeningBalanceColumns: any = [];
+    hostelinfrastructureReportCols:any = [];
+    studentAcademicStatusDetailsColumns: any =[];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -88,7 +91,7 @@ export class TableConstants {
             { field: 'mobileNo', header: 'Mobile No.', align: 'right !important'},
             { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
             { field: 'courseTitle', header: 'Course', align: 'left !important'},
-            { field: 'aadharNo', header: 'Aadhar No.', align: 'right !important'},
+            { field: 'aadharNoMasked', header: 'Aadhar No.', align: 'right !important'},
             { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
             { field: 'totalYIncome', header: 'Yearly Income', align: 'right !important'},
         ];
@@ -104,7 +107,7 @@ export class TableConstants {
             { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
             { field: 'courseTitle', header: 'Course', align: 'left !important'},
             { field: 'address', header: 'Address', align: 'left !important'},
-            { field: 'aadharNo', header: 'Aadhar No.', align: 'right !important'},
+            { field: 'aadharNoMasked', header: 'Aadhar No.', align: 'right !important'},
             { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
         ];
 
@@ -164,7 +167,34 @@ export class TableConstants {
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
             { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
         ]
+        this.OpeningBalanceColumns = [
+            { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+            // { field: 'Districtname', header: 'District', align: 'left !important'},
+            // { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            // { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'CommodityName', header: 'Commodity Name', align: 'left !important'},
+            { field: 'Qty', header: 'Quantity', align: 'right !important'},
+            { field: 'UnitName', header: 'Unit', align: 'left !important'},
+        ]
 
+        this.hostelinfrastructureReportCols = [
+            { field: 'Districtname', header: 'District code' },
+            { field: 'Talukname', header: 'Taluk id' },
+            { field: 'HostelName', header: 'HostelId' },
+            { field: 'TotalArea', header: 'Total Area' },
+            { field: 'BuildingArea', header: 'Building Area' },
+            { field: 'NoOfFloor', header: 'No Of Floor' },
+            { field: 'NoOfRoom', header: 'No Of Room' }, 
+            { field: 'Kitchen', header: 'Kitchen' },
+            { field: 'Bathroom', header: 'Bathroom' },
+            { field: 'CreatedDate', header: 'Created Date' },
+        ];
+
+        this.studentAcademicStatusDetailsColumns = [
+            { field: 'StudentName', header: 'Student Name' },
+            { field: 'Emisno', header: 'EMISNO.' },
+            { field: 'Class', header: 'Class' },
+        ];
 
     }
 }

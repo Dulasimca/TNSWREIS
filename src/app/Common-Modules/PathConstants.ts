@@ -1,4 +1,5 @@
 export class PathConstants {
+public static readonly Dashboard_Get = 'Dashboard/Get';
 public static readonly DaysMaster_Get = 'DaysMaster';
 public static readonly MasterAll_Get = 'MasterData';
 public static readonly FoodMaster_Get = 'FoodMaster/Get';
@@ -76,6 +77,9 @@ public static readonly StudentFacility_Post = 'StudentFacility/Post';
 public static readonly StudentFacility_Get = 'StudentFacility';
 public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get';
 
+public static readonly MonthlywiseIntent_Post = 'MonthlywiseIntent/Post';
+
+public static readonly MonthlywiseIntent_Get = 'MonthlywiseIntent/Get';
 
 public static readonly HOFundAllotment_Post = 'HOFundAllotment/Post';
 public static readonly HOFundAllotment_Get = 'HOFundAllotment/Get';
@@ -94,6 +98,8 @@ public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
 public static readonly EmployeeDesignation_Get = 'EmployeeDesignation';
 public static readonly EmployeeDetails_Post = 'EmployeeDetails/Post';
 public static readonly EmployeeDetails_Get = 'EmployeeDetails/Get';
+public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
+public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
 
 
 }

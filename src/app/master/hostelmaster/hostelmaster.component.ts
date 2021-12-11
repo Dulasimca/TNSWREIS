@@ -10,15 +10,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/Interfaces/user';
 import { MasterService } from 'src/app/services/master-data.service';
 
-
-
 @Component({
   selector: 'app-hostelmaster',
   templateUrl: './hostelmaster.component.html',
   styleUrls: ['./hostelmaster.component.css']
 })
+
 export class HostelmasterComponent implements OnInit {
- 
   Hostelname: string;
   Hosteltamilname: string;
   Hosteltype: number;
@@ -55,6 +53,7 @@ export class HostelmasterComponent implements OnInit {
   disableFields: boolean;
   showDialog: boolean;
   hostelImage : string;
+  policeStationAddress: string;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private messageService: MessageService,private _authService: AuthService) { }
@@ -145,6 +144,7 @@ export class HostelmasterComponent implements OnInit {
       'Pincode': this.pincode,
       'TotalStudent': this.Totalstudent,
       'Phone': this.mobileNo,
+      'PoliceStationAddress': this.policeStationAddress
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
         if (res) {
@@ -235,6 +235,7 @@ export class HostelmasterComponent implements OnInit {
     this.pincode = selectedRow.Pincode;
     this.Totalstudent = selectedRow.TotalStudent;
     this.mobileNo = selectedRow.Phone;
+    this.policeStationAddress = selectedRow.PoliceStationAddress;
  }
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -32,7 +33,11 @@ export class HostelFundManagementComponent implements OnInit {
   toFundId: number;
   hostelFundId: number;
   logged_user: User;
+  blncAmount: number;
+  totalHostelAmount: number;
+
   @ViewChild('f', { static: false }) _hostelFundForm: NgForm;
+  @BlockUI() blockUI: NgBlockUI;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
     private authService: AuthService) { }
@@ -42,6 +47,8 @@ export class HostelFundManagementComponent implements OnInit {
     this.years = this.masterService.getMaster('AY');
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
+    this.totalHostelAmount = 0;
+
   }
   onSelect(type) {
     let districtSelection = [];
@@ -101,8 +108,10 @@ export class HostelFundManagementComponent implements OnInit {
   }
   // to load taluk amount
   loadAmount() {
+    this.hostelName = null;
     this.talukAmount = 0;
     if (this.year !== null && this.year !== undefined && this.taluk !== null && this.taluk !== undefined) {
+      this.blockUI.start();
       const params = {
         'YearId': this.year,
         'TCode': this.taluk
@@ -113,12 +122,43 @@ export class HostelFundManagementComponent implements OnInit {
             res.forEach(r => {
               this.talukAmount = (r.TOBudjetAmount !== undefined && r.TOBudjetAmount !== null) ? r.TOBudjetAmount : 0;
               this.toFundId = r.TOFundId;
+              this.blockUI.stop();
             })
-          } 
+          } else {
+            this.blockUI.stop();
+          }
+        }else {
+          this.blockUI.stop();
         }
+      })
+      this.blncAmount = 0;
+      if(this.blncAmount === 0){
+        this.blockUI.start();
+      const data = {
+        'YearId': this.year,
+        'HCode': this.taluk,
+        'Type': 1
       }
-      )
-    }
+      this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
+        if (res !== null && res !== undefined) {
+          if (res.length !== 0) {
+            res.forEach(res => {
+              this.totalHostelAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null) 
+              ? (res.BalanceBudjetAmount * 1) : 0;
+              this.blockUI.stop();
+            })
+          }else {
+            this.blockUI.stop();
+            this.blncAmount = 0;
+          }
+        } else {
+          this.blockUI.stop();
+          this.blncAmount = 0;
+        }
+        this.blncAmount = this.talukAmount - this.totalHostelAmount;
+            })
+          }
+        }
     this.loadHostelFunds();
   }
 
@@ -155,17 +195,27 @@ export class HostelFundManagementComponent implements OnInit {
   loadHostelFunds() {
     this.hostelAmount = null;
     if (this.year !== undefined && this.year !== null && this.hostelName !== null && this.hostelName !== undefined) {
+      this.blockUI.start();
       const data = {
         'YearId': this.year,
-        'HCode': this.hostelName
+        'HCode': this.hostelName,
+        'Type': 2
       }
       this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.length !== 0) {
             res.forEach(res => {
               this.hostelAmount = res.HostelBudjetAmount;
+              this.blockUI.stop();
             })
-          }
+          }else {
+            this.blockUI.stop();
+            this.hostelAmount = 0;
+          } 
+        } else {
+          this.blockUI.stop();
+          this.hostelAmount = 0;
+        
         }
       });
     }
@@ -193,6 +243,7 @@ export class HostelFundManagementComponent implements OnInit {
     this.districtOptions = [];
     this.talukOptions = [];
     this.hostelOptions = [];
+    this.totalHostelAmount = 0;
   }
 }
 

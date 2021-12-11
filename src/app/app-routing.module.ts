@@ -43,6 +43,8 @@ import { ApprovalRequestComponent } from './forms-module/approval-request/approv
 import { ApprovalComponent } from './forms-module/approval/approval.component';
 import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
 import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
+import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
+import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -54,6 +56,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
   { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
+  { path: 'student-transfer', component: StudentTransferFormComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},
@@ -83,10 +86,12 @@ const routes: Routes = [
   { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
   { path: 'hostelinfrastructure', component:HostelinfrastructureComponent,}, 
   { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
-  { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
+  { path: 'taluk', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 
+  { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'to-fundmanagement', component:TOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'hostel-fundmanagement', component:HostelFundManagementComponent, canActivate: [AuthGuard]},
+  { path: 'fund-report', component:FundmanagementReportComponent, canActivate: [AuthGuard]},
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
