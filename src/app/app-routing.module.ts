@@ -41,6 +41,7 @@ import { StudentfacilityMasterComponent } from './master/studentfacility-master/
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -51,7 +52,8 @@ const routes: Routes = [
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
-  { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
+ // { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
+  { path: 'opening-balance', component: StudentTransferFormComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
@@ -22,11 +23,13 @@ export class StudentTransferFormComponent implements OnInit {
   loading: boolean;
 
   constructor(private _masterService: MasterService, private _authService: AuthService,
-    private _restApiService: RestAPIService, private _messageService: MessageService) { }
+    private _restApiService: RestAPIService, private _messageService: MessageService,
+    private _tableConstants: TableConstants,) { }
 
   ngOnInit(): void {
     this.years = this._masterService.getMaster('AY');
     this.login_user = this._authService.UserInfo;
+    this.studentDetailCols = this._tableConstants.studentAcademicStatusDetailsColumns;
   }
 
   onSelect() {
@@ -66,5 +69,9 @@ export class StudentTransferFormComponent implements OnInit {
         }
       })
     }
+  }
+
+  click() {
+    console.log('data', this.studentDetails);
   }
 }

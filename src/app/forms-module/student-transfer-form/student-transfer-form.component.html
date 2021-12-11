@@ -7,8 +7,7 @@
                     <p-card>
                         <div class="p-col-12 no-pad-top">
                             <div class="p-grid">
-                                <div class="p-col-2"></div>
-                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                     <div class="p-grid">
                                         <div class="p-col-12 p-md-12 p-lg-2">
                                             <div><label for="_year">Accounting Year<span
@@ -17,9 +16,12 @@
                                                 [(ngModel)]="year" (onChange)="loadStudentDetails()" required>
                                             </p-dropdown>
                                         </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2 txt-center">
+                                            <button pButton type="button" label="Approve" (click)="click()"></button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div #row2 class="p-col-12 p-md-12 p-lg-10">
+                                <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                     <p-table styleClass="p-datatable-gridlines" [columns]="studentDetailCols"
                                         [value]="studentDetails" [paginator]="true" dataKey="StudentId"  [rows]="10">
                                         <ng-template pTemplate="header" let-columns>
@@ -31,6 +33,7 @@
                                                 <th *ngFor="let col of columns">
                                                     {{col.header}}
                                                 </th>
+                                                <th>Remarks</th>
                                                 <!-- <th style="width: 120px">Select</th> -->
                                             </tr>
                                         </ng-template>
@@ -43,6 +46,16 @@
                                                 <td style="width: 100px">{{rowIndex+1}}</td>
                                                 <td *ngFor="let col of columns" [style.text-align]="col.align">
                                                     {{rowData[col.field]}}
+                                                </td>
+                                                <td pEditableColumn>
+                                                    <p-cellEditor>
+                                                        <ng-template pTemplate="input">
+                                                            <input pInputText type="text" [(ngModel)]="rowData.Remarks">
+                                                        </ng-template>
+                                                        <ng-template pTemplate="output">
+                                                            {{rowData.Remarks}}
+                                                        </ng-template>
+                                                    </p-cellEditor>
                                                 </td>
                                                 <!-- <td style="width: 120px" (click)="onDelete(rowData, rowIndex, 1)">
                                                     <p-checkbox [(ngModel)]="selected" binary="true"
