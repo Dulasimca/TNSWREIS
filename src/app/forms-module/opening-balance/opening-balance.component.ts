@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResponseMessage } from '../../Common-Modules/messages';
@@ -18,15 +19,16 @@ export class OpeningBalanceComponent implements OnInit {
 
   commodityName: any;
   commodityOptions: SelectItem[];
-  yearOptions:  SelectItem[];;
+  yearOptions: SelectItem[];;
   unit: any;
   year: any;
   taluk: any;
   hostelName: any;
   district: any;
-  unitOptions:  SelectItem[];
+  unitOptions: SelectItem[];
   quantity: any;
-  data: any = [];
+  openingBlncData: any = [];
+  openingBlncCols: any;
   showTable: boolean;
   openingblncId: number;
   logged_user: User;
@@ -34,13 +36,12 @@ export class OpeningBalanceComponent implements OnInit {
   years?: any;
   commodities?: any;
   @ViewChild('f', { static: false }) _openingBalance: NgForm;
-  
+
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
-    private authService: AuthService) { }
+    private authService: AuthService, private tableConstants: TableConstants) { }
 
   ngOnInit(): void {
-
     this.units = this.masterService.getMaster('UN');
     this.years = this.masterService.getMaster('AY');
     this.commodities = this.masterService.getMaster('CM');
@@ -48,8 +49,9 @@ export class OpeningBalanceComponent implements OnInit {
     this.district = this.logged_user.districtName;
     this.taluk = this.logged_user.talukName;
     this.hostelName = this.logged_user.hostelName;
-
+    this.openingBlncCols = this.tableConstants.OpeningBalanceColumns
   }
+
   onSelect(type) {
     let unitSelection = [];
     let yearSelection = [];
@@ -62,66 +64,64 @@ export class OpeningBalanceComponent implements OnInit {
         this.unitOptions = unitSelection;
         this.unitOptions.unshift({ label: '-select', value: null });
         break;
-        case 'Y':
-          this.years.forEach(y => {
-            yearSelection.push({ label: y.name, value: y.code });
-          })
-          this.yearOptions = yearSelection;
-          this.yearOptions.unshift({ label: '-select', value: null });
-          break;
-          case 'CN':
-          this.commodities.forEach(c => {
-            commoditySelection.push({ label: c.name, value: c.code });
-          })
-          this.commodityOptions = commoditySelection;
-          this.commodityOptions.unshift({ label: '-select', value: null });
-          break;
-}
-}
+      case 'Y':
+        this.years.forEach(y => {
+          yearSelection.push({ label: y.name, value: y.code });
+        })
+        this.yearOptions = yearSelection;
+        this.yearOptions.unshift({ label: '-select', value: null });
+        break;
+      case 'CN':
+        this.commodities.forEach(c => {
+          commoditySelection.push({ label: c.name, value: c.code });
+        })
+        this.commodityOptions = commoditySelection;
+        this.commodityOptions.unshift({ label: '-select', value: null });
+        break;
+    }
+  }
+
   onSubmit() {
     const params = {
       'Id': this.openingblncId,
-      // 'Districtcode': this.district,
-      // 'Talukid': this.taluk,
-      // 'HostelId': this.hostelName,
-      'Districtcode' : 1,
-      'Talukid': 1,
-      'HostelId': 1,
+      'Districtcode': this.logged_user.districtCode,
+      'Talukid': this.logged_user.talukId,
+      'HostelId': this.logged_user.hostelId,
       'AccountingId': this.year,
       'CommodityId': this.commodityName,
       'UnitId': this.unit,
       'Qty': this.quantity,
       'Flag': 1
     }
-    this.restApiService.post(PathConstants.OpeningBalance_Post,params).subscribe(res => {
+    this.restApiService.post(PathConstants.OpeningBalance_Post, params).subscribe(res => {
       if (res) {
-      this.clearform();
-      this.onView();
-      this.messageService.clear();
-      this.messageService.add({
-        key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-        summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-      });
-    } else {
-      this.messageService.clear();
-      this.messageService.add({
-        key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-        summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-      });
-    }
-  }, (err: HttpErrorResponse) => {
-    if (err.status === 0 || err.status === 400) {
-      this.messageService.clear();
-      this.messageService.add({
-        key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-        summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-      })
-    }
-  })
-}
-  
+        this.clearform();
+        this.onView();
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+        });
+      } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.status === 0 || err.status === 400) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    })
+  }
+
   onEdit(selectedRow) {
-    if(selectedRow !== null && selectedRow !== undefined){
+    if (selectedRow !== null && selectedRow !== undefined) {
       this.openingblncId = selectedRow.Id;
       this.year = selectedRow.AccountingId;
       this.yearOptions = [{ label: selectedRow.ShortYear, value: selectedRow.AccountingId }];
@@ -132,20 +132,46 @@ export class OpeningBalanceComponent implements OnInit {
       this.quantity = selectedRow.Qty
     }
   }
+
   onView() {
-    this.showTable = true;
-    const params = {
-      'Districtcode' : 1,
-      'Talukid': 1,
-      'HostelId': 1,
-      'AccountingId': 4
-    };
-    this.restApiService.getByParameters(PathConstants.OpeningBalance_Get,params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0){
-        this.data = res;
-      }
-    })
+    if (this.year !== null && this.year !== undefined) {
+      const params = {
+        'Districtcode': this.logged_user.districtCode,
+        'Talukid': this.logged_user.talukId,
+        'HostelId': this.logged_user.hostelId,
+        'AccountingId': this.year
+      };
+      this.restApiService.getByParameters(PathConstants.OpeningBalance_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined) {
+          if (res.length !== 0) {
+            this.showTable = true;
+            this.openingBlncData = res;
+          } else {
+            this.showTable = false;
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            });
+          }
+        } else {
+          this.showTable = false;
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          });
+        }
+      })
+    } else {
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select academic year to view data !'
+      });
+    }
   }
+
   clearform() {
     this.commodityOptions = [];
     this.yearOptions = [];

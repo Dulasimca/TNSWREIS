@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -21,6 +22,8 @@ export class HOFundmanagementComponent implements OnInit {
   year: any;
   years?: any;
   hoFundId: number;
+  @BlockUI() blockUI: NgBlockUI;
+
   @ViewChild('f', { static: false }) _hoFundForm: NgForm;
   
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
@@ -68,16 +71,25 @@ export class HOFundmanagementComponent implements OnInit {
   }
 
   loadData() {
+    this.blockUI.start();
     const params = {
       'AccountingYearId': this.year
     }
     this.restApiService.getByParameters(PathConstants.HOFundAllotment_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
+        if(res.length !== 0){
         res.forEach(res => {
           this.goNumber = res.GONumber;
           this.Date = new Date(res.GODate);
           this.budjetAmount = res.BudjetAmount;
+        this.blockUI.stop();
+
         })
+      }else {
+        this.blockUI.stop();
+      }
+    }else {
+        this.blockUI.stop();
       }
     })
   }

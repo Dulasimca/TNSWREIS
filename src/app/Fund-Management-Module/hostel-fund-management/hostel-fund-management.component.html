@@ -1,3 +1,4 @@
+<block-ui> 
 <div class="p-grid">
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
@@ -31,15 +32,21 @@
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_damnt">Budjet Amount<span
+                                        <div><label for="_damnt">Total Budget Amount<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <input type="text" name="_damnt" class="p-col-12" pInputText
                                             [(ngModel)]="talukAmount" placeholder="From Taluk"
-                                            appInputFormat="digitOnly" (input)="checkBudjetAmount()" readonly="true"
+                                            readonly="true"
                                             required />
                                     </div>
                                     <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
+                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div><label for="_blncamount">Available Budget Amount</label></div>
+                                                <input type="text" name="_blncamount" class="p-col-12" pInputText
+                                                    [(ngModel)]="blncAmount" (input)="checkBudjetAmount()" readonly="true"
+                                                   required />
+                                            </div>
                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_hostel">Hostel<span
                                                             class="form-mandatory-field">*</span></label></div>
@@ -70,3 +77,4 @@
         </p-panel>
     </div>
 </div>
+</block-ui>
