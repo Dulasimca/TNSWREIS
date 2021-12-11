@@ -91,6 +91,9 @@ public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';
 
 public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
 
+public static readonly EmployeeDesignation_Get = 'EmployeeDesignation';
+public static readonly EmployeeDetails_Post = 'EmployeeDetails/Post';
+public static readonly EmployeeDetails_Get = 'EmployeeDetails/Get';
 
 
 }

@@ -41,6 +41,8 @@ import { StudentfacilityMasterComponent } from './master/studentfacility-master/
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
+import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -90,6 +92,8 @@ const routes: Routes = [
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
   { path: 'approvalrequest', component:ApprovalRequestComponent},
   { path: 'approval', component:ApprovalComponent},
+  { path: 'employeemaster', component:EmployeeMasterComponent},
+  { path: 'employeereport', component:EmployeeReportComponent},
 ];
 
 @NgModule({

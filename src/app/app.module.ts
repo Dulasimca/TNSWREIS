@@ -89,6 +89,8 @@ import { StudentfacilityMasterComponent } from './master/studentfacility-master/
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
+import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,6 +140,8 @@ import { ApprovalComponent } from './forms-module/approval/approval.component';
     StudentfacilityReportComponent,
     ApprovalRequestComponent,
     ApprovalComponent,
+    EmployeeMasterComponent,
+    EmployeeReportComponent,
     
   ],
   imports: [

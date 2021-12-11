@@ -17,6 +17,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./audit.component.css']
 })
 export class AuditComponent implements OnInit {
+  RowID: 0;
   districtName: string;
   talukName: string;
   hostelName: string;
@@ -42,7 +43,7 @@ export class AuditComponent implements OnInit {
   onSubmit() {
     this.blockUI.start();
     const params = {
-      'Id': 0,
+      'Id': this.RowID,
       'HostelID': this.login_user.hostelId,
       'Districtcode': this.login_user.districtCode,
       'Talukid': this.login_user.talukId,
@@ -95,11 +96,13 @@ export class AuditComponent implements OnInit {
     this.noOfStudent = null;
     this.remarks = null;
     this.attendanceDate = new Date();
+    this.RowID = 0;
   }
   
   GetAttendanceInfo() {
     this.noOfStudent = null;
     this.remarks = null;
+    this.RowID = 0;
     if(this.attendanceDate !== null && this.attendanceDate !== undefined) {
     const params = {
       'HostelID': this.login_user.hostelId,
@@ -115,6 +118,7 @@ export class AuditComponent implements OnInit {
           res.Table.forEach(r => {
             this.noOfStudent = r.NOOfStudent;
             this.remarks = r.Remarks;
+            this.RowID = r.Id;
           })
           this._messageService.clear();
           this._messageService.add({
