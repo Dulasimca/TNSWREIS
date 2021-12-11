@@ -50,7 +50,7 @@
                                         <div><label for="_taluk">Taluk<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
-                                            (onClick)="onSelect('T')" required>
+                                            (onClick)="onSelect('T')" (onChange)="selectDistrict()" required>
                                         </p-dropdown>
                                     </div>
                                     <div *ngIf="showHostelName" class="p-col-12 p-md-6 p-lg-2">
