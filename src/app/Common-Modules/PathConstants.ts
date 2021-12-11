@@ -94,7 +94,8 @@ public static readonly ApprovalDetails_Post = 'ApprovalDetails/Post';
 public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';
 
 public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
-
+public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
+public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
 
 
 }

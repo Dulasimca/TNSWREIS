@@ -33,6 +33,7 @@ export class StudentDetailsComponent implements OnInit {
   showDialog: boolean;
   studentName: string;
   studentId: any;
+  student: any = {};
   roleId: number;
   dApproval: any;
   tApproval: number;
@@ -175,12 +176,18 @@ export class StudentDetailsComponent implements OnInit {
       this.showDialog = true;
       this.studentName = row.studentName;
       this.hostelName = row.HostelName;
+      this.student = {
+        'hostelId': (row.hostelId !== undefined && row.hostelId !== null) ? row.hostelId : 0,
+        'emisno': (row.emisno !== undefined) ? row.emisno : null,
+        'academicYear': (row.AcademicYear !== undefined) ? row.AcademicYear : null,
+      }
       this.studentId = (row.studentId !== undefined && row.studentId !== null) ? row.studentId : 0;
       this.dApproval = (row.districtApproval !== undefined && row.districtApproval !== null) ? ((row.districtApproval) ? 1 : 0) : null;
       this.tApproval = (row.talukApproval !== undefined && row.talukApproval !== null) ? ((row.talukApproval) ? 1 : 0) : null;
     } else {
       this.showDialog = false;
     }
+    this.insertStudentTransferDetails();
   }
 
   onApprove() {
@@ -192,6 +199,9 @@ export class StudentDetailsComponent implements OnInit {
     }
     this._restApiService.put(PathConstants.Registration_Put, params).subscribe(res => {
       if (res) {
+        if(this.roleId === 2) {
+          this.insertStudentTransferDetails();
+        }
         this.blockUI.stop();
         this.studentId = null;
         this.showDialog = false;
@@ -208,6 +218,25 @@ export class StudentDetailsComponent implements OnInit {
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
         })
+      }
+    })
+  }
+
+  insertStudentTransferDetails() {
+    const params = {
+      'Id': 0,
+      'HostelId': this.student.hostelId,
+      'StudentId': this.studentId,
+      'AcademicYear': this.student.academicYear,
+      'EMISNO': this.student.emisno,
+      'AcademicStatus': 1, //approved 
+      'Flag': 1 // default
+    }
+    this._restApiService.post(PathConstants.StudentTransferDetails_Post, params).subscribe(res => {
+      if (res) {
+        console.log('student data is inserted successfully')
+      } else {
+        console.log('student data is not inserted')
       }
     })
   }

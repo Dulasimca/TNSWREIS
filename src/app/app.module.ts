@@ -93,6 +93,7 @@ import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastruct
 
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -143,6 +144,7 @@ import { ApprovalComponent } from './forms-module/approval/approval.component';
     HostelinfrastructureReportComponent,
     ApprovalRequestComponent,
     ApprovalComponent,
+    StudentTransferFormComponent,
     
   ],
   imports: [

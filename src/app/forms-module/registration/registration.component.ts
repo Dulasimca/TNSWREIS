@@ -251,10 +251,8 @@ export class RegistrationComponent implements OnInit {
     this.obj.aadharNo = value;
     var len = value.length;
     if (len > 11) {
-      this.aadharNo = '*'.repeat(len - 4) + this.aadharNo.substr(8, 4);
-      console.log('sus',this.obj.aadharNo, this.aadharNo, this.aadharNo.substr(8, 4))
+      this.aadharNo = '*'.repeat(len - 4) + value.substr(8, 4);
     }
-
   }
 
   public uploadFile = (files) => {
