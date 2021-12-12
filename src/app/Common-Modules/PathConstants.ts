@@ -71,7 +71,7 @@ public static readonly FeedingChargesDetail_Get = 'FeedingChargesDetail/Get';
 
 public static readonly HostelInfraStructure_Post = 'HostelInfraStructure/Post';
 
-public static readonly HostelInfraStructure_Get = 'HostelInfraStructure';
+public static readonly HostelInfraStructure_Get = 'HostelInfraStructure/Get';
 public static readonly StudentFacility_Post = 'StudentFacility/Post';
 public static readonly StudentFacility_Get = 'StudentFacility';
 public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get';
@@ -94,6 +94,7 @@ public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';
 
 public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
 
+public static readonly MonthlywiseIntent_put = 'MonthlywiseIntent/put';
 
 
 }

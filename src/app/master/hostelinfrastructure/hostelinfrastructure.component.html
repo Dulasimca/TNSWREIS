@@ -51,7 +51,7 @@
                                     <input type="text" pInputText [(ngModel)]="Bathroom" name="Bathroom" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
-                                    <button pButton name="save" type="button" label="Submit" icon="pi pi-save" (click)="onSubmit()" [disabled]='(!f.valid || !f.dirty)'></button>
+                                    <button pButton name="save" type="button" label="Submit" icon="pi pi-save" (click)="onSubmit()" [disabled]="((!f.valid) || disableFields)"></button>
                     
                                     <button pButton type="button" label="View" style="margin-left:5%;"  icon="pi pi-eye" (click)="onview()"></button>
                                     <button pButton type="button" label="Clear" style="margin-left:5%;" icon="pi pi-trash" (click)="onClear()"></button>

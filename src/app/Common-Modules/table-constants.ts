@@ -13,6 +13,9 @@ export class TableConstants {
     studentDetailsColumns: any = [];
     studentFacilityReportCols: any = [];
     hostelinfrastructureReportCols:any = [];
+    monthlywiseintentReportCols:any = [];
+
+
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -167,6 +170,22 @@ export class TableConstants {
            
 
         ]
+
+       this.monthlywiseintentReportCols = [
+ 
+        { field: 'ShortYear', header: 'Accounting Year' },
+        { field: 'CommodityName', header: 'Commodity Name' },
+        { field: 'UnitName', header: 'Unit' },
+        { field: 'Qty', header: 'Quantity' },
+        { field: 'MonthwiseDate',  header: 'Month'},
+        { field: 'ApprovalStatusName', header: 'Approval Status'},
+  
+
+
+
+
+
+       ]
 
     }
 }

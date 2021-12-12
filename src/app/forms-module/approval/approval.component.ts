@@ -25,7 +25,7 @@ export class ApprovalComponent implements OnInit {
   constructor(private _authService: AuthService, private _restApiService: RestAPIService
     , private _messageService: MessageService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
     this.tabIndex = 0;
     this.cols = [
       { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important' },

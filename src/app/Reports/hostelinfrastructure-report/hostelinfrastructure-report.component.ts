@@ -148,10 +148,14 @@ export class HostelinfrastructureReportComponent implements OnInit {
         console.log('hi')
       this.loading = true;
       const params = {
+        // 'DCode': this.district,
+        // 'TCode': this.taluk,
+        // 'HCode': this.hostel, 
         'Districtcode': this.district,
         'Talukid': this.taluk,
         'HostelId': this.hostel,
       }
+      console.log(params)
       this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {

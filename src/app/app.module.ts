@@ -88,11 +88,10 @@ import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastructure-report/hostelinfrastructure-report.component';
-
-
-
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { MonthlywiseintentapprovalComponent } from './forms-module/monthlywiseintentapproval/monthlywiseintentapproval.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -143,6 +142,7 @@ import { ApprovalComponent } from './forms-module/approval/approval.component';
     HostelinfrastructureReportComponent,
     ApprovalRequestComponent,
     ApprovalComponent,
+    MonthlywiseintentapprovalComponent,
     
   ],
   imports: [

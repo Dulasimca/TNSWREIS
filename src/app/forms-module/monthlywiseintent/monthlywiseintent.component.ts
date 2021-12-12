@@ -24,6 +24,9 @@ export class MonthlywiseintentComponent implements OnInit {
   unit: any;
   year: any;
   taluk: any;
+  Districtcode: any;
+  Talukid: any;
+  HostelId: any;
   hostelName: any;
   district: any;
   unitOptions:  SelectItem[];
@@ -54,6 +57,10 @@ export class MonthlywiseintentComponent implements OnInit {
     this.taluk = this.logged_user.talukName;
     this.hostelName = this.logged_user.hostelName;
 
+    this.Districtcode = this.logged_user.districtCode;
+    this.Talukid = this.logged_user.talukId;
+    this.HostelId = this.logged_user.hostelId;
+
     this.cols = [
       // { field: 'Districtname', header: 'District code' },
       // { field: 'Talukname', header: 'Taluk id' },
@@ -63,6 +70,7 @@ export class MonthlywiseintentComponent implements OnInit {
       { field: 'UnitName', header: 'Unit' },
       { field: 'Qty', header: 'Quantity' },
       { field: 'MonthwiseDate',  header: 'Month'},
+      { field: 'ApprovalStatusName', header: 'Approval Status'},
 
     ]
   }
@@ -100,9 +108,9 @@ onSubmit() {
     // 'Districtcode': this.district,
     // 'Talukid': this.taluk,
     // 'HostelId': this.hostelName,
-    'Districtcode' : 1,
-    'Talukid': 1,
-    'HostelId': 1,
+    'Districtcode' : this.Districtcode,
+    'Talukid': this.Talukid,
+    'HostelId': this.HostelId,
     'AccountingId': this.year,
     'CommodityId': this.commodityName,
     'UnitId': this.unit,
@@ -158,9 +166,9 @@ onView()
 {
   this.showTable = true;
   const params = {
-    'Districtcode' : 1,
-    'Talukid': 1,
-    'HostelId': 1,
+    'Districtcode' : this.Districtcode,
+    'Talukid': this.Talukid,
+    'HostelId': this.HostelId,
     'AccountingId': 4,
   };
   
