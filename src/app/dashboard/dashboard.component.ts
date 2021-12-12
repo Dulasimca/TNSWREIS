@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PathConstants } from '../Common-Modules/PathConstants';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
+import { RestAPIService } from '../services/restAPI.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,17 +19,40 @@ export class DashboardComponent implements OnInit {
   expensesMonthly: any;
   roleId: number;
   login_user: User;
-  constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService, private _restApiService: RestAPIService) { }
 
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
-    this.hostelCount = 877;
-    this.wardenCount = 871;
-    this.studentCount = 1577;
+    this.hostelCount = 0;
+    this.wardenCount = 0;
+    this.studentCount = 0;
     this.expensesToday = 10147;
     this.expensesMonthly = 45871;
     this.roleId = (this.login_user.roleId * 1);
+    this.loadCount();
     this.loadChart();
+  }
+
+  loadCount() {
+    const params = {
+      'RoleId': this.roleId,
+      'DCode': (this.login_user.districtCode !== null) ? this.login_user.districtCode : 0,
+      'TCode': (this.login_user.talukId !== null) ? this.login_user.talukId : 0,
+      'HCode': (this.login_user.hostelId !== null) ? this.login_user.hostelId : 0
+    }
+    this._restApiService.getByParameters(PathConstants.Dashboard_Get, params).subscribe(res => {
+      if(res !== undefined && res !== null) {
+        if(res.Table1 !== undefined && res.Table1 !== null && res.Table1.length !== 0) {
+          this.hostelCount = res.Table1[0].hostelcount;
+        }
+        if(res.Table2 !== undefined && res.Table2 !== null && res.Table2.length !== 0) {
+          this.wardenCount = res.Table2[0].wardencount;
+        }
+        if(res.Table3 !== undefined && res.Table3 !== null && res.Table3.length !== 0) {
+          this.studentCount = res.Table3[0].studentcount;
+        }
+      }
+    })
   }
 
   loadChart() {

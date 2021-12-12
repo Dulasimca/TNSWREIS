@@ -22,7 +22,7 @@ export class UsermasterComponent implements OnInit {
   role: number;
   district: number;
   taluk: number;
-  hostelName: number;
+  hostelName: any;
   selectedType: number;
   roleOptions: SelectItem[];
   districtOptions: SelectItem[];
@@ -30,6 +30,7 @@ export class UsermasterComponent implements OnInit {
   hostelOptions: SelectItem[];
   userMasterId: number;
   data: any = [];
+  logged_user: User;
   // master
   roles?: any;
   districts?: any;
@@ -43,12 +44,13 @@ export class UsermasterComponent implements OnInit {
   @ViewChild('f', { static: false }) _usermaster: NgForm;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService,
-    private messageService: MessageService) { }
+    private messageService: MessageService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.roles = this.masterService.getMaster('RM');
+    this.logged_user = this.authService.UserInfo;
     this.onView();
   }
   // dropdown 
@@ -84,11 +86,16 @@ export class UsermasterComponent implements OnInit {
   }
   // hstl based on district 
   selectDistrict() {
+    this.hostelName = null;
+    this.hostelOptions = [];
     let hostelSelection = [];
+    if(this.district !== undefined && this.district !== null && this.taluk !== undefined && this.taluk !== null){
     const params = {
       'Type': 1,
-      'Value': this.district
-
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
+        this.logged_user.hostelId : 0,
     }
     if (this.district !== null && this.district !== undefined) {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
@@ -100,9 +107,9 @@ export class UsermasterComponent implements OnInit {
           this.hostelOptions = hostelSelection;
           this.hostelOptions.unshift({ label: '-select', value: null });
         };
-
       })
     }
+  }
   }
   // role dropdown
   onRoleChange() {

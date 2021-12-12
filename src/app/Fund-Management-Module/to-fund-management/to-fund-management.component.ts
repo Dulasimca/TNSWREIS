@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -25,7 +26,11 @@ export class TOFundManagementComponent implements OnInit {
   talukOptions: SelectItem[];
   toFundId: number;
   doFundId: number;
+  blncAmount: number;
+  totalTalukAmount: number;
+
   @ViewChild('f', { static: false }) _toFundForm: NgForm;
+  @BlockUI() blockUI: NgBlockUI;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService) { }
 
@@ -33,6 +38,7 @@ export class TOFundManagementComponent implements OnInit {
     this.years = this.masterService.getMaster('AY');
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
+    this.totalTalukAmount = 0;
   }
 
   onSelect(type) {
@@ -68,8 +74,10 @@ export class TOFundManagementComponent implements OnInit {
   }
   // to load district amount
   loadAmount() {
+    this.taluk = null;
     this.Damount = 0;
     if (this.year !== null && this.year !== undefined && this.district !== null && this.district !== undefined) {
+      this.blockUI.start();
       const params = {
         'YearId': this.year,
         'DCode': this.district
@@ -80,11 +88,44 @@ export class TOFundManagementComponent implements OnInit {
             res.forEach(r => {
               this.Damount = (r.DOBudjetAmount !== undefined && r.DOBudjetAmount !== null) ? r.DOBudjetAmount : 0;
               this.doFundId = r.DOFundId;
+            this.blockUI.stop();
             })
+          }else{
+            this.blockUI.stop();
           }
+        }else {
+          this.blockUI.stop();
+
         }
+        
+      })
+      this.blncAmount = 0;
+      if(this.blncAmount === 0){
+      this.blockUI.start();
+      const data = {
+        'YearId': this.year,
+        'TCode': this.district,
+        'Type': 1
       }
-      )
+      this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
+        if (res !== null && res !== undefined) {
+          if (res.length !== 0) {
+            res.forEach(res => {
+              this.totalTalukAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null) 
+                ? (res.BalanceBudjetAmount * 1) : 0;
+                this.blockUI.stop();
+              })
+            }else {
+              this.blockUI.stop();
+              this.blncAmount = 0;
+            }
+          } else {
+            this.blockUI.stop();
+            this.blncAmount = 0;
+          }
+          this.blncAmount = this.Damount - this.totalTalukAmount;
+      });
+    }
     }
     this.loadToFunds();
   }
@@ -121,28 +162,38 @@ export class TOFundManagementComponent implements OnInit {
   loadToFunds() {
     this.talukAmount = null;
     if (this.year !== undefined && this.year !== null && this.taluk !== null && this.taluk !== undefined) {
+      this.blockUI.start();
       const data = {
         'YearId': this.year,
-        'TCode': this.taluk
+        'TCode': this.taluk,
+        'Type':2
       }
       this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.length !== 0) {
             res.forEach(res => {
               this.talukAmount = res.TOBudjetAmount;
+              this.blockUI.stop();
             })
-          }
+          } else {
+            this.blockUI.stop();
+            this.talukAmount = 0;
+          } 
+        } else {
+          this.blockUI.stop();
+          this.talukAmount = 0;
+        
         }
       });
     }
   }
 
   checkBudjetAmount() {
-    if (this.Damount !== undefined && this.Damount !== null &&
+    if (this.blncAmount !== undefined && this.blncAmount !== null &&
       this.talukAmount !== undefined && this.talukAmount !== null &&
-      this.Damount !== NaN && this.talukAmount !== NaN) {
-      if ((this.Damount * 1) < (this.talukAmount * 1)) {
-        var msg = 'Entering amount should not be greater than budjet amount !';
+      this.blncAmount !== NaN && this.talukAmount !== NaN) {
+      if ((this.blncAmount * 1) < (this.talukAmount * 1)) {
+        var msg = 'Entering amount should not be greater than available budjet amount !';
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -158,5 +209,6 @@ export class TOFundManagementComponent implements OnInit {
     this.districtOptions = [];
     this.talukOptions = [];
     this.yearOptions = [];
+    this.totalTalukAmount = 0;
   }
 }

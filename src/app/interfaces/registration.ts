@@ -38,7 +38,6 @@ export interface Registration {
     admissionNo: string;
     remarks: string;
     scholarshipId: any;
-    policeStationAddress: string;
     //bank
     bankId: number;
     bankName: string;

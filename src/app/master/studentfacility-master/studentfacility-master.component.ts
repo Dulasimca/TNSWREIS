@@ -30,6 +30,7 @@ export class StudentfacilityMasterComponent implements OnInit {
   // facilitySelection?:any = [];
   facilityNames?:any = [];
   FacilityDetailIds = 0;
+ 
   
 
   @ViewChild ('f', { static: false }) facilityForm: NgForm;
@@ -37,12 +38,12 @@ export class StudentfacilityMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'Districtname', header: 'Districtname', width: '200px'},
-      { field: 'Talukname', header: 'HostelName', width: '200px'},
-      { field: 'HostelName', header: 'HostelName', width: '200px'},
-      { field: 'FacilityName', header: 'FacilityName', width: '200px'},
-      { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px'},
-      { field: 'Remarks', header: 'Remarks', width: '200px'},
+      { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important'},
+      { field: 'Talukname', header: 'Taluk Name', width: '200px', align: 'left !important'},
+      { field: 'HostelName', header: 'Hostel Name', width: '200px', align: 'left !important'},
+      { field: 'FacilityName', header: 'Facility Name', width: '200px', align: 'left !important'},
+      { field: 'NoOfCounts', header: 'No Of Counts', width: '200px', align: 'left !important'},
+      { field: 'Remarks', header: 'Remarks', width: '200px', align: 'left !important'},
     ];
     this.login_user = this._authService.UserInfo;
     this.districtName = this.login_user.districtName;
@@ -57,6 +58,7 @@ export class StudentfacilityMasterComponent implements OnInit {
       console.log(this.facilityNames)
     })
     this.onView();
+    this.onDataChecking();
   }
 
   onSubmit() {
@@ -144,6 +146,42 @@ export class StudentfacilityMasterComponent implements OnInit {
       break;
     }
   }
+
+  onDataChecking() {
+    this.data = [];
+    this.noofCounts = 0;
+    this.remarks ='';
+    this.FacilityDetailIds =0;
+    const params = {
+   'DCode' : this.login_user.districtCode,
+   'TCode' : this.login_user.talukId,
+   'HostelId' : this.login_user.hostelId,
+   'FacilityId' : this.facilityName
+    }
+    this._restApiService.getByParameters(PathConstants.StudentFacilityDetails_Get,params).subscribe(res =>{
+      if (res !== null && res !== undefined && res.length !== 0) {
+        res.Table.forEach(i => {
+        this.noofCounts = i.NoOfCounts;
+        this.remarks =i.Remarks;
+        this.FacilityDetailIds =i.FacilityDetailId;  
+    })
+    this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
+            summary: ResponseMessage.SUMMARY_ALERT, life: 4000,
+            detail: 'Facility already exist' 
+          })
+    
+  } else {
+    this._messageService.clear();
+    this._messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+    })
+  }
+});
+}
+
   onRowSelect(event, selectedRow) {
    this.FacilityDetailIds = selectedRow.FacilityDetailId;
    this.facilityName = selectedRow.FacilityId;
@@ -151,6 +189,7 @@ export class StudentfacilityMasterComponent implements OnInit {
    this.noofCounts = selectedRow.NoOfCounts;
    this.remarks = selectedRow.Remarks;
   }
+
   onClear(){
     this.facilityForm.form.markAsUntouched();
     this.facilityName = null;

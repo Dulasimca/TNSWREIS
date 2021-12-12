@@ -49,6 +49,21 @@
                                     [disabled]="disableFields"  [(ngModel)]="Hosteltamilname" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_mobno">Mobile Number<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input class="p-col-12" type="text" name="_mobno" pInputText minlength="10"
+                                        maxlength="10" [(ngModel)]="mobileNo" appInputFormat="digitOnly" required />
+                                        
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1">
+                                    <div><label for="_Totalstudent">Total Student<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_Totalstudent" class="p-col-10" pInputText
+                                        [(ngModel)]="Totalstudent"  appInputFormat="digitOnly" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1">
                                     <div><label for="_Buildingno">Buildingno<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
@@ -69,28 +84,23 @@
                                     <input type="text" name="_Landmark" class="p-col-10" pInputText
                                         [(ngModel)]="Landmark" required />
                                 </div>
-                                <div class="p-col-12 p-md-6 p-lg-2">
+                            
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <div><label for="_policestation">Nearby PoliceStation Address <span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input class="p-col-12" type="text" name="_policestation" pInputText  [(ngModel)]="policeStationAddress" appInputFormat="noSpecialChars" required />
+                                        
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1">
                                     <div><label for="_pincode">Postal Code<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <input class="p-col-12" name="_pincode" type="text" pInputText minlength="6"
                                         maxlength="6" [(ngModel)]="pincode" appInputFormat="digitOnly" required />
                                 </div>
-                                <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_Totalstudent">Total Student<span
-                                                class="form-mandatory-field">*</span></label>
-                                    </div>
-                                    <input type="text" name="_Totalstudent" class="p-col-10" pInputText
-                                        [(ngModel)]="Totalstudent"  appInputFormat="digitOnly" required />
-                                </div>
-                                <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_mobno">Mobile Number<span
-                                                class="form-mandatory-field">*</span></label>
-                                    </div>
-                                    <input class="p-col-12" type="text" name="_mobno" pInputText minlength="10"
-                                        maxlength="10" [(ngModel)]="mobileNo" appInputFormat="digitOnly" required />
-                                        
-                                </div>
+                             
+                            
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
                                     [disabled]="((disableFields && (!f.dirty || !f.valid)) || (!disableFields && !f.valid))"  class="btn-bg"></button>&nbsp;
