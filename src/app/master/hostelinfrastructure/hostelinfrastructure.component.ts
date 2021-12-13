@@ -3,10 +3,10 @@ import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -33,22 +33,19 @@ export class HostelinfrastructureComponent implements OnInit {
   Bathroom:any;
   data:any;
   cols:any;
-
+  disableFields: boolean;
   hostelinfras:any;
   Districtcode:any;
   Talukid:any;
   HostelId:any;
   CreatedDate:Date;
- 
   hostelinfraId = 0;
-  
-
  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService,  private messageService: MessageService, private _authService: AuthService,  
-    private _restApiService: RestAPIService, 
+    private _restApiService: RestAPIService, private _messageService: MessageService 
   ) { }
 
   ngOnInit(): void 
@@ -61,25 +58,16 @@ export class HostelinfrastructureComponent implements OnInit {
     this.Districtcode = this.login_user.districtCode;
     this.Talukid = this.login_user.talukId;
     this.HostelId = this.login_user.hostelId;
-    
-    // 'DCode': this.login_user.districtCode,
-    // 'TCode': 
-    // 'HostelId': 
-   
-    // const params = {
-    //   'Type': 0,
-    //   'DCode': this.login_user.districtCode,
-    //   'TCode': this.login_user.talukId,
-    //   'HostelId': this.login_user.hostelId
+    this.disableFields = true;
+    this.onview();
 
-    // }
 
     this.cols = [
 
       
-      { field: 'Districtname', header: 'District code' },
-      { field: 'Talukname', header: 'Taluk id' },
-      { field: 'HostelName', header: 'HostelId' },
+      { field: 'Districtname', header: 'District' },
+      { field: 'Talukname', header: 'Taluk' },
+      { field: 'HostelName', header: 'Hostel' },
       { field: 'TotalArea', header: 'Total Area' },
       { field: 'BuildingArea', header: 'Building Area' },
       { field: 'NoOfFloor', header: 'No Of Floor' },
@@ -87,11 +75,6 @@ export class HostelinfrastructureComponent implements OnInit {
       { field: 'Kitchen', header: 'Kitchen' },
       { field: 'Bathroom', header: 'Bathroom' },
       { field: 'CreatedDate', header: 'Created Date' },
-     
-
-
-
-   
     ]
   }
 
@@ -156,39 +139,60 @@ export class HostelinfrastructureComponent implements OnInit {
   
   onview() {
    
-    const params = {
-      
+  
+      const params = {
+        'Districtcode'	: this.Districtcode,
+        'Talukid'	: this.Talukid ,
+        'HostelId'	: this.HostelId
     };
-    this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
-        this.data = res.Table;
-        this.districtname = this.login_user.districtName;
-          this.talukname = this.login_user.talukName;
-          this.hostelname = this.login_user.hostelName;
+    // this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
+    //   if (res !== null && res !== undefined && res.length !== 0) {
+    //     this.data = res.Table;
+    //     this.districtname = this.login_user.districtName;
+    //       this.talukname = this.login_user.talukName;
+    //       this.hostelname = this.login_user.hostelName;
       
-          this.Districtcode = this.login_user.districtCode;
-          this.Talukid = this.login_user.talukId;
-          this.HostelId = this.login_user.hostelId;
+    //       this.Districtcode = this.login_user.districtCode;
+    //       this.Talukid = this.login_user.talukId;
+    //       this.HostelId = this.login_user.hostelId;
+    //   }
+    // });
+
+    this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
+      if (res !== null && res !== undefined) {
+        if (res.Table.length !== 0) {
+            this.disableFields = true;
+            res.Table.forEach(r => {
+          
+          })
+          this.data = res.Table;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
+            summary: ResponseMessage.SUMMARY_ALERT, life: 4000,
+            detail: 'Existing Data for ' + this.hostelname
+          })
+        } else {
+          this._messageService.clear();
+          this.disableFields = false;
+        }
+      } else {
+        this._messageService.clear();
+        this.disableFields = false;
       }
-    });
-
-
-    
+    }) 
     }
-
-
-
-onClear()
-{
- 
-
-  this.hostelinfraId = 0,
-  this.hostelinfrastructure.reset();
-  this.hostelinfrastructure.form.markAsUntouched();
-  this.hostelinfrastructure.form.markAsPristine();
-  this.hostelinfras=''
-
-}
+    onClear()
+    {
+     this.hostelinfraId = 0;
+     this.Kitchen='';
+     this.NoOfFloor='';
+     this.NoOfRoom='';
+     this.TotalArea='';
+     this.BuildingArea='';
+     this.Bathroom='';
+     this.disableFields = true;
+    }
 onRowSelect(event, selectedRow)
 {
   console.log(selectedRow)
@@ -202,5 +206,7 @@ onRowSelect(event, selectedRow)
   this.NoOfRoom = selectedRow.NoOfRoom;
   this.Kitchen = selectedRow.Kitchen;
   this.Bathroom = selectedRow.Bathroom;
+  this.HostelId = selectedRow.HostelId;
+  this.disableFields = false;
 }
 }

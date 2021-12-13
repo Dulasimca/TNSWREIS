@@ -9,13 +9,12 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 
-
 @Component({
-  selector: 'app-hostelinfrastructure-report',
-  templateUrl: './hostelinfrastructure-report.component.html',
-  styleUrls: ['./hostelinfrastructure-report.component.css']
+  selector: 'app-employee-report',
+  templateUrl: './employee-report.component.html',
+  styleUrls: ['./employee-report.component.css']
 })
-export class HostelinfrastructureReportComponent implements OnInit {
+export class EmployeeReportComponent implements OnInit {
 
   hostel: any;
   district: any;
@@ -65,14 +64,16 @@ export class HostelinfrastructureReportComponent implements OnInit {
     private masterService: MasterService, private _authService: AuthService,
     private _messageService: MessageService, private tableConstants: TableConstants) { }
 
-
   ngOnInit(): void {
-    this.hostelCols = this.tableConstants.hostelinfrastructureReportCols
+    this.hostelCols = this.tableConstants.employeeReportCols
     this.Slno = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-
+    //  this.districtname = this.login_user.districtName;
+    //  this.talukname = this.login_user.talukName;
+    //  this.hostelname=this.login_user.hostelName;
+    // this.role=this.login_user.roleId;
 
   }
 
@@ -141,22 +142,18 @@ export class HostelinfrastructureReportComponent implements OnInit {
     }
     this.hostelOptions.unshift({ label: '-select-', value: null });
   }
+
   loadTable() {
     this.hostelData = [];
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
       this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined) {
-        console.log('hi')
       this.loading = true;
       const params = {
-        // 'DCode': this.district,
-        // 'TCode': this.taluk,
-        // 'HCode': this.hostel, 
-        'Districtcode': this.district,
-        'Talukid': this.taluk,
+        'DCode': this.district,
+        'TCode': this.taluk,
         'HostelId': this.hostel,
       }
-      console.log(params)
-      this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
+      this.restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
             this.hostelData = res.Table;
@@ -180,5 +177,4 @@ export class HostelinfrastructureReportComponent implements OnInit {
       })
     }
   }
-
 }

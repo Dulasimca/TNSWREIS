@@ -12,8 +12,12 @@ export class TableConstants {
     hostelReportCols: any = [];
     studentDetailsColumns: any = [];
     studentFacilityReportCols: any = [];
+    employeeReportCols: any = [];
     OpeningBalanceColumns: any = [];
     hostelinfrastructureReportCols:any = [];
+    monthlywiseintentReportCols:any = [];
+
+
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
         this.purcahseOrderColumns = [
@@ -146,12 +150,25 @@ export class TableConstants {
             { field: 'TotalStudent', header: 'Student Count', align: 'right !important'},
         ]
         this.studentFacilityReportCols = [
-            { field: 'Districtname', header: 'Districtname', width: '200px'},
-            { field: 'Talukname', header: 'HostelName', width: '200px'},
-            { field: 'HostelName', header: 'HostelName', width: '200px'},
-            { field: 'FacilityName', header: 'FacilityName', width: '200px'},
-            { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px'},
-            { field: 'Remarks', header: 'Remarks', width: '200px'},
+            { field: 'Districtname', header: 'Districtname', width: '200px', align: 'left !important'},
+            { field: 'Talukname', header: 'HostelName', width: '200px', align: 'left !important'},
+            { field: 'HostelName', header: 'HostelName', width: '200px', align: 'left !important'},
+            { field: 'FacilityName', header: 'FacilityName', width: '200px', align: 'left !important'},
+            { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px', align: 'left !important'},
+            { field: 'Remarks', header: 'Remarks', width: '200px', align: 'left !important'},
+        ]
+        this.employeeReportCols = [
+            { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
+            { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
+            { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
+            { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
+            { field: 'Doj', header: 'Doj', width: '100px', align: 'left !important'},
+            { field: 'GenderName', header: 'Gender', width: '100px', align: 'left !important'},
+            { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
+            { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
+            { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
         ]
         this.OpeningBalanceColumns = [
             { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
@@ -181,6 +198,22 @@ export class TableConstants {
             { field: 'Emisno', header: 'EMISNO.' },
             { field: 'Class', header: 'Class' },
         ];
+
+       this.monthlywiseintentReportCols = [
+ 
+        { field: 'ShortYear', header: 'Accounting Year' },
+        { field: 'CommodityName', header: 'Commodity Name' },
+        { field: 'UnitName', header: 'Unit' },
+        { field: 'Qty', header: 'Quantity' },
+        { field: 'MonthwiseDate',  header: 'Month'},
+        { field: 'ApprovalStatusName', header: 'Approval Status'},
+  
+
+
+
+
+
+       ]
 
     }
 }

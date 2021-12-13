@@ -21,7 +21,8 @@
                             <div class="p-col-12 p-md-6 p-lg-3">
                                 <div><label for="_facilityname">Facility Name</label></div>
                                 <p-dropdown name="_facilityname" [options]="FacilitynameOptions"
-                                    (onClick)="onSelect('FC')" [(ngModel)]="facilityName" required>
+                                    (onClick)="onSelect('FC')" [(ngModel)]="facilityName"
+                                    (onChange)="onDataChecking()" required>
                                 </p-dropdown>
                             </div>
                             <div #row2 class="p-col-12 p-md-12 p-lg-2">
@@ -56,7 +57,7 @@
                                     <tr [pSelectableRow]="rowData" class="cursor-pointer"
                                         (dblclick)="onRowSelect($event, rowData)">
                                         <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns">
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align">
                                             {{rowData[col.field]}}
                                         </td>
                                     </tr>

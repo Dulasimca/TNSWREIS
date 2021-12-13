@@ -1,0 +1,90 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Employee Details">
+            <p-card>
+                <form #f="ngForm" name="employeeForm">
+                    <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_designation">Designation</label><span
+                                    class="form-mandatory-field">*</span></div>
+                                <p-dropdown name="_designation" [options]="designationOptions"
+                                (onClick)="onSelect('ED')"  [(ngModel)]="designationName" required>
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_fname">First Name</label><span class="form-mandatory-field">*</span>
+                                </div>
+                                <input type="text" name="_fname" pInputText [(ngModel)]="firstName" required>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_lname">Last Name</label><span class="form-mandatory-field">*</span>
+                                </div>
+                                <input type="text" name="_lname" pInputText [(ngModel)]="lastName" required>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_doj">Date of Joining<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                <p-calendar [showOtherMonths]="false" [(ngModel)]="doj"
+                                    name="_doj" [showIcon]="true" [monthNavigator]="true" inputId="dateofjoining"
+                                    required></p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
+                                </div>
+                                <p-dropdown name="_gender" [options]="genderOptions" (onClick)="onSelect('GD')"
+                                    [(ngModel)]="gender" required>
+                                </p-dropdown>
+                            </div>
+                            <div #row2 class="p-col-12 p-md-12 p-lg-3">
+                                <label for="_address">Address<span class="form-mandatory-field">*</span></label>
+                                <input type="text" name="_address" pInputText [(ngModel)]="address" required>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_district">Native District<span class="form-mandatory-field">*</span></label>
+                                <p-dropdown name="_district" [options]="districtOptions" (onClick)="onSelect('DT')"
+                                    [(ngModel)]="nativeDistrict" required>
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_mobno">Mobile No<span class="form-mandatory-field">*</span></label>
+                                <input type="text" name="_mobno" pInputText [(ngModel)]="mobileNo"
+                                    appInputFormat="digitOnly" maxlength="10" minlength="10" required>
+                            </div>
+                            <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="Submit" (click)="onSubmit()"
+                                [disabled]="(!f.valid)" class="btn-bg"></button>&nbsp;
+                                    <button pButton type="button" label="View" (click)="onView()"
+                                    class="btn-bg"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" 
+                                    icon="pi pi-times-circle" (click)="onClear()"></button>
+                            </div>
+                        </div>
+                        <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                                [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                                styleClass="p-datatable-gridlines">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                    <tr [pSelectableRow]="rowData" class="cursor-pointer"
+                                        (dblclick)="onRowSelect($event, rowData)">
+                                        <td>{{rowIndex+1}}</td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align">
+                                            {{rowData[col.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                    </div>
+                </form>
+            </p-card>
+        </p-panel>
+    </div>
+</div>

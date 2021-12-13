@@ -21,7 +21,9 @@ export class StudentTransferFormComponent implements OnInit {
   studentDetailCols: any;
   studentDetails: any[] = [];
   loading: boolean;
-
+  selectedStudentList: any[] = [];
+  unSelectedStudentList: any[] = [];
+  studentStatus: number;
   constructor(private _masterService: MasterService, private _authService: AuthService,
     private _restApiService: RestAPIService, private _messageService: MessageService,
     private _tableConstants: TableConstants,) { }
@@ -51,6 +53,9 @@ export class StudentTransferFormComponent implements OnInit {
       this._restApiService.getByParameters(PathConstants.StudentTransferDetails_Get, params).subscribe(res => {
         if (res !== undefined && res !== null) {
           if (res.length !== 0) {
+            res.forEach(r => {
+              r.showStatusSelector = 'false';
+            })
             this.studentDetails = res;
             this.loading = false;
           } else {
@@ -71,7 +76,82 @@ export class StudentTransferFormComponent implements OnInit {
     }
   }
 
-  click() {
-    console.log('data', this.studentDetails);
+  onRowSelect($event) {
+    console.log('ee', $event)
+    if ($event !== undefined && $event !== null) {
+      this.studentDetails.forEach(x => {
+        if (x.StudentId === $event.data.StudentId || x.showStatusSelector === 'true') {
+          x.showStatusSelector = 'true';
+        } else {
+          x.showStatusSelector = 'false';
+        }
+      })
+    }
+  }
+
+  onRowUnselect($event) {
+    if ($event !== undefined && $event !== null && this.selectedStudentList.length !== 0) {
+      this.studentDetails.forEach(x => {
+        if (x.StudentId === $event.data.StudentId) {
+          x.showStatusSelector = 'false';
+        } 
+      })
+      this.selectedStudentList.forEach((s, index) => {
+        if (s.StudentId === $event.data.StudentId) {
+          this.selectedStudentList.splice(index, 1);
+        }
+      })
+    }
+    console.log('unselect', this.selectedStudentList)
+  }
+
+  //remarks
+  onSelectToTransfer(data, status) {
+    this.selectedStudentList.push({
+      'Id': data.StudentId,
+      'HostelId': data.HostelID,
+      'StudentId': data.StudentId,
+      'AcademicYear': data.AcademicYear,
+      'EMISNO': data.Emisno,
+      'AcademicStatus': (status === 1) ? 1 : 0, //1 = pass & 0 = fail
+      'Flag': 1 // default
+    })
+    console.log('select', this.selectedStudentList)
+    this.unSelectedStudents()
+  }
+
+  unSelectedStudents() {
+    if (this.studentDetails.length !== 0) {
+      if (this.selectedStudentList.length !== 0) {
+        this.studentDetails.forEach(sd => {
+          this.selectedStudentList.forEach(ss => {
+            if (ss.StudentId !== sd.StudentId) {
+              this.unSelectedStudentList.push({
+                'Id': sd.StudentId,
+                'HostelId': sd.HostelID,
+                'StudentId': sd.StudentId,
+                'AcademicYear': sd.AcademicYear,
+                'EMISNO': sd.Emisno,
+                'AcademicStatus': 2, //discontinued 
+                'Flag': 1 // default
+              })
+            }
+          })
+        })
+      } else {
+        this.studentDetails.forEach(s => {
+          this.unSelectedStudentList.push({
+            'Id': s.StudentId,
+            'HostelId': s.HostelID,
+            'StudentId': s.StudentId,
+            'AcademicYear': s.AcademicYear,
+            'EMISNO': s.Emisno,
+            'AcademicStatus': 2, //discontinued 
+            'Flag': 1 // default
+          })
+        })
+      }
+    }
+    console.log('unselected', this.selectedStudentList)
   }
 }
