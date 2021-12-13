@@ -102,6 +102,7 @@ import { FeedingchargestypeReportComponent } from './Reports/feedingchargestype-
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 
 
+import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -158,6 +159,7 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
     FundmanagementReportComponent,
     StudentTransferFormComponent,
     FeedingchargestypeReportComponent,
+    EmployeeattendanceDetailsComponent,
     
   ],
   imports: [

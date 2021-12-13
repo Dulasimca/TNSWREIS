@@ -64,8 +64,10 @@ loadBudjet() {
             res.forEach(res => {
               this.budjetAmount = res.BudjetAmount ;
             })
-          }
-        }else {
+          } else {
+          this.showField = false;
+        } 
+      }else {
           this.showField = false;
         }
       });

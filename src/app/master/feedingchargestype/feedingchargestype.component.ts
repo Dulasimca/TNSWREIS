@@ -23,7 +23,7 @@ export class FeedingchargestypeComponent implements OnInit {
 
   AccountingyearOptions:SelectItem[];
   feedingchargeOptions:SelectItem[];
-  data:any;
+  data:any = [];
   cols:any;
   Accountingyear:any;
   Accountingyears?:any;
@@ -68,7 +68,7 @@ export class FeedingchargestypeComponent implements OnInit {
       { field: 'FeedingChargeName', header: 'FeedingChargesType' },
       { field: 'School', header: 'Amount For School' },
       { field: 'College', header: 'Amount For College' },
-      { field: 'Flag',  header: 'Status'},
+      { field: 'status',  header: 'Status'},
     ]
     }
 
@@ -125,7 +125,7 @@ export class FeedingchargestypeComponent implements OnInit {
     if (res !== undefined && res !== null) {
       if (res) {
         this.blockUI.stop();
-       
+        this.onview();
         this.onClear();
         this.messageService.clear();
         this.messageService.add({
@@ -166,12 +166,11 @@ onview() {
     'AccountingYearId' : 4,
   };
   this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get,params).subscribe(res => {
-    if (res !== null && res !== undefined && res.length !== 0) {
-      this.data = res.Table;
-     console.log(this.data)
-      this.data.forEach(i => {
-        i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+    if (res !== null && res !== undefined && res.Table.length !== 0) {
+      res.Table.forEach(i => {
+        i.status = (i.Flag) ? 'Active' : 'Inactive';
       })
+      this.data = res.Table;
     }
   });
 

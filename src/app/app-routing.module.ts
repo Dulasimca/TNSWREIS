@@ -51,6 +51,7 @@ import { EmployeeMasterComponent } from './master/employee-master/employee-maste
 import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
+import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -97,8 +98,8 @@ const routes: Routes = [
   { path: 'hostel-fundmanagement', component:HostelFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'fund-report', component:FundmanagementReportComponent, canActivate: [AuthGuard]},
   
-  { path: 'studentfacility', component:StudentfacilityMasterComponent},
-  { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
+  { path: 'studentfacility', component:StudentfacilityMasterComponent, canActivate: [AuthGuard]},
+  { path: 'studentfacilityreport', component:StudentfacilityReportComponent, canActivate: [AuthGuard]},
   { path: 'approvalrequest', component:ApprovalRequestComponent},
   { path: 'approval', component:ApprovalComponent},
 
@@ -108,6 +109,7 @@ const routes: Routes = [
   { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent,},
   { path: 'employeemaster', component:EmployeeMasterComponent},
   { path: 'employeereport', component:EmployeeReportComponent},
+  { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent},
 ];
 
 

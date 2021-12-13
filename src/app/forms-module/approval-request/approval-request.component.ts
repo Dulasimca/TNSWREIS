@@ -32,6 +32,7 @@ export class ApprovalRequestComponent implements OnInit {
   hostels?: any;
   data: any = [];
   cols: any;
+  remarks: any;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) approvalForm: NgForm;
   constructor(private _authService: AuthService, private _restApiService: RestAPIService
@@ -39,12 +40,14 @@ export class ApprovalRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'Districtname', header: 'District Name', width: '200px'},
-      { field: 'Talukname', header: 'Taluk Name', width: '200px'},
-      { field: 'HostelName', header: 'Hostel Name', width: '200px'},
-      { field: 'ApprovalName', header: 'Approval Type', width: '200px'},
-      { field: 'ApprovalTypeName', header: 'Request For', width: '200px'},
-      { field: 'ApprovalStatusName', header: 'Approval Status', width: '200px'},
+      { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important'},
+      { field: 'Talukname', header: 'Taluk Name', width: '200px', align: 'left !important'},
+      { field: 'HostelName', header: 'Hostel Name', width: '200px', align: 'left !important'},
+      { field: 'ApprovalName', header: 'Approval Type', width: '200px', align: 'left !important'},
+      { field: 'ApprovalTypeName', header: 'Request For', width: '200px', align: 'left !important'},
+      { field: 'Remarks', header: 'Remarks', width: '200px', align: 'left !important'},
+      { field: 'CreatedDate', header: 'Requested Date', width: '200px', align: 'center !important'},
+      { field: 'ApprovalStatusName', header: 'Approval Status', width: '200px', align: 'left !important'},
     ];
     this.login_user = this._authService.UserInfo;
     this.districtName = this.login_user.districtName;
@@ -67,6 +70,7 @@ export class ApprovalRequestComponent implements OnInit {
       'Talukid': this.TalukId,
       'ApprovalType': this.approvalType,
       'RequestId': this.requestId,
+      'Remarks': this.remarks,
       'Flag': 1
     };
     this._restApiService.post(PathConstants.ApprovalDetails_Post,params).subscribe(res => {
