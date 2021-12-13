@@ -88,8 +88,7 @@ export class HostelFundManagementComponent implements OnInit {
     const params = {
       'Type': 1,
       'DCode': this.district,
-      'TCode': (this.logged_user.talukId !== undefined && this.logged_user.talukId !== null) ?
-        this.logged_user.talukId : 0,
+      'TCode': this.taluk,
       'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
         this.logged_user.hostelId : 0,
     }
@@ -160,6 +159,7 @@ export class HostelFundManagementComponent implements OnInit {
           }
         }
     this.loadHostelFunds();
+    this.selectDistrict();
   }
 
   onSubmit() {
