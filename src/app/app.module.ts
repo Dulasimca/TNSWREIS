@@ -100,6 +100,7 @@ import { FundmanagementReportComponent } from './Reports/fundmanagement-report/f
 
 
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
+import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,6 +156,7 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
     EmployeeReportComponent,
     FundmanagementReportComponent,
     StudentTransferFormComponent,
+    EmployeeattendanceDetailsComponent,
     
   ],
   imports: [
