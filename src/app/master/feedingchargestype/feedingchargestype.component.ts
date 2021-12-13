@@ -163,7 +163,7 @@ export class FeedingchargestypeComponent implements OnInit {
 onview() {
  
   const params = {
-    'AccountingYearId' : this.Accountingyear,
+    'AccountingYearId' : 4,
   };
   this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get,params).subscribe(res => {
     if (res !== null && res !== undefined && res.length !== 0) {

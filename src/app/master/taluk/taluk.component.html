@@ -22,20 +22,20 @@
                                 <div class="p-col-12 p-md-12 p-lg-3" style="margin-top: 23px;">
                                     <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"
                                         required>
-                                    </p-radioButton>
+                                    </p-radioButton>&nbsp;
                                     <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType"
                                         required>
                                     </p-radioButton>
                                 </div>
                             </div>
-                            <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
+                            <div class="p-col-12 p-md-6 p-lg-12 txt-center">
                                 <button pButton name="save" type="button" icon="pi pi-save" label="Submit"
-                                    (click)="onSubmit()" (disabled)='(!f.valid || !f.dirty)'></button>
+                                    (click)="onSubmit()" (disabled)='(!f.valid || !f.dirty)'></button>&nbsp;
 
                                 <button pButton type="button" label="View" icon="pi pi-eye" (click)="onview()"
-                                    style="margin-left:5%;"></button>
+                                    ></button>&nbsp;
                                 <button pButton type="button" label="Clear" icon="pi pi-trash" (click)="onClear()"
-                                    style="margin-left:5%;"></button>
+                                    ></button>
                             </div>
 
                             <div class="table-format">
