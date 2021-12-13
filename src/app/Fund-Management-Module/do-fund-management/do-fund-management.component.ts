@@ -141,7 +141,7 @@ export class DOFundManagementComponent implements OnInit {
 
   loadDoFunds() {
     this.hoAmount = null;
-    if (this.year !== undefined && this.year !== null && this.district !== null && this.year !== undefined) {
+    if (this.year !== undefined && this.year !== null && this.district !== null && this.district !== undefined) {
       this.blockUI.start();
       const data = {
         'YearId': this.year,
