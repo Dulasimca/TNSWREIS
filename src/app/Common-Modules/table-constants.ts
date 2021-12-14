@@ -16,7 +16,7 @@ export class TableConstants {
     OpeningBalanceColumns: any = [];
     hostelinfrastructureReportCols:any = [];
     monthlywiseintentReportCols:any = [];
-
+    feedingchargetypeReportCols:any = [];
 
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
@@ -207,9 +207,15 @@ export class TableConstants {
         { field: 'Qty', header: 'Quantity' },
         { field: 'MonthwiseDate',  header: 'Month'},
         { field: 'ApprovalStatusName', header: 'Approval Status'},
-  
 
-
+       ]
+       this.feedingchargetypeReportCols = [
+        
+        { field: 'AccountingYear', header: 'Accounting Year' },
+        { field: 'FeedingChargeName', header: 'FeedingChargesType' },
+        { field: 'School', header: 'Amount For School' },
+        { field: 'College', header: 'Amount For College' },
+        { field: 'Flag',  header: 'Status'},
 
 
 

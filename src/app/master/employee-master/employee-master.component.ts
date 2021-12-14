@@ -113,6 +113,7 @@ export class EmployeeMasterComponent implements OnInit {
         if (res) {
           // this.blockUI.stop();
            this.onClear();
+           this.onView();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -193,7 +194,10 @@ onRowSelect(event, selectedRow) {
 
 onClear() {
   this.employeeForm.form.markAsUntouched();
- 
+  this.designationName = null;
+  this.designationOptions = [];
+  this.nativeDistrict = null;
+  this.districtOptions = [];
   this.firstName = null;
   this.lastName = null;
   this.doj = new Date();

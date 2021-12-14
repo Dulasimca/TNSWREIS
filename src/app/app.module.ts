@@ -97,9 +97,12 @@ import { EmployeeMasterComponent } from './master/employee-master/employee-maste
 import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 
-
+import { FeedingchargestypeReportComponent } from './Reports/feedingchargestype-report/feedingchargestype-report.component';
 
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
+
+
+import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,6 +158,8 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
     EmployeeReportComponent,
     FundmanagementReportComponent,
     StudentTransferFormComponent,
+    FeedingchargestypeReportComponent,
+    EmployeeattendanceDetailsComponent,
     
   ],
   imports: [
