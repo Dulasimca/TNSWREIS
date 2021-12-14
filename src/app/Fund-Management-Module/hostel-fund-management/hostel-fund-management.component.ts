@@ -88,8 +88,7 @@ export class HostelFundManagementComponent implements OnInit {
     const params = {
       'Type': 1,
       'DCode': this.district,
-      'TCode': (this.logged_user.talukId !== undefined && this.logged_user.talukId !== null) ?
-        this.logged_user.talukId : 0,
+      'TCode': this.taluk,
       'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
         this.logged_user.hostelId : 0,
     }
@@ -124,42 +123,44 @@ export class HostelFundManagementComponent implements OnInit {
               this.toFundId = r.TOFundId;
               this.blockUI.stop();
             })
+            this.blncAmount = 0;
+            this.totalHostelAmount = 0;
+            if (this.blncAmount === 0) {
+              this.blockUI.start();
+              const data = {
+                'YearId': this.year,
+                'HCode': this.taluk,
+                'Type': 1
+              }
+              this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
+                if (res !== null && res !== undefined) {
+                  if (res.length !== 0) {
+                    res.forEach(res => {
+                      this.totalHostelAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
+                        ? (res.BalanceBudjetAmount * 1) : 0;
+                      this.blockUI.stop();
+                    })
+                  } else {
+                    this.blockUI.stop();
+                    this.blncAmount = 0;
+                  }
+                } else {
+                  this.blockUI.stop();
+                  this.blncAmount = 0;
+                }
+                this.blncAmount = this.talukAmount - this.totalHostelAmount;
+              })
+            }
           } else {
             this.blockUI.stop();
           }
-        }else {
+        } else {
           this.blockUI.stop();
         }
       })
-      this.blncAmount = 0;
-      if(this.blncAmount === 0){
-        this.blockUI.start();
-      const data = {
-        'YearId': this.year,
-        'HCode': this.taluk,
-        'Type': 1
-      }
-      this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
-        if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-            res.forEach(res => {
-              this.totalHostelAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null) 
-              ? (res.BalanceBudjetAmount * 1) : 0;
-              this.blockUI.stop();
-            })
-          }else {
-            this.blockUI.stop();
-            this.blncAmount = 0;
-          }
-        } else {
-          this.blockUI.stop();
-          this.blncAmount = 0;
-        }
-        this.blncAmount = this.talukAmount - this.totalHostelAmount;
-            })
-          }
-        }
+    }
     this.loadHostelFunds();
+    this.selectDistrict();
   }
 
   onSubmit() {
@@ -208,14 +209,14 @@ export class HostelFundManagementComponent implements OnInit {
               this.hostelAmount = res.HostelBudjetAmount;
               this.blockUI.stop();
             })
-          }else {
+          } else {
             this.blockUI.stop();
             this.hostelAmount = 0;
-          } 
+          }
         } else {
           this.blockUI.stop();
           this.hostelAmount = 0;
-        
+
         }
       });
     }

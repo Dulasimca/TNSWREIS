@@ -36,7 +36,7 @@ export class DistrictComponent implements OnInit {
    
     this.cols = [
 
-      {field:'Districtcode',header: 'District Code'},
+      {field:'Districtcode',header: 'District Code' },
       {field:'Districtname',header: 'District Name'},
       {field:'Flag',header: 'Status'},
 

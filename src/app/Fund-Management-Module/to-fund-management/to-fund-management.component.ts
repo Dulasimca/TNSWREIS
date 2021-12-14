@@ -88,44 +88,44 @@ export class TOFundManagementComponent implements OnInit {
             res.forEach(r => {
               this.Damount = (r.DOBudjetAmount !== undefined && r.DOBudjetAmount !== null) ? r.DOBudjetAmount : 0;
               this.doFundId = r.DOFundId;
-            this.blockUI.stop();
-            })
-          }else{
-            this.blockUI.stop();
-          }
-        }else {
-          this.blockUI.stop();
-
-        }
-        
-      })
-      this.blncAmount = 0;
-      if(this.blncAmount === 0){
-      this.blockUI.start();
-      const data = {
-        'YearId': this.year,
-        'TCode': this.district,
-        'Type': 1
-      }
-      this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
-        if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-            res.forEach(res => {
-              this.totalTalukAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null) 
-                ? (res.BalanceBudjetAmount * 1) : 0;
-                this.blockUI.stop();
-              })
-            }else {
               this.blockUI.stop();
-              this.blncAmount = 0;
+            })
+            this.blncAmount = 0;
+            this.totalTalukAmount = 0;
+            if (this.blncAmount === 0) {
+              this.blockUI.start();
+              const data = {
+                'YearId': this.year,
+                'TCode': this.district,
+                'Type': 1
+              }
+              this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
+                if (res !== null && res !== undefined) {
+                  if (res.length !== 0) {
+                    res.forEach(res => {
+                      this.totalTalukAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
+                        ? (res.BalanceBudjetAmount * 1) : 0;
+                      this.blockUI.stop();
+                    })
+                  } else {
+                    this.blockUI.stop();
+                    this.blncAmount = 0;
+                  }
+                } else {
+                  this.blockUI.stop();
+                  this.blncAmount = 0;
+                }
+                this.blncAmount = this.Damount - this.totalTalukAmount;
+              });
             }
           } else {
             this.blockUI.stop();
-            this.blncAmount = 0;
           }
-          this.blncAmount = this.Damount - this.totalTalukAmount;
-      });
-    }
+        } else {
+          this.blockUI.stop();
+        }
+
+      })
     }
     this.loadToFunds();
   }
@@ -166,7 +166,7 @@ export class TOFundManagementComponent implements OnInit {
       const data = {
         'YearId': this.year,
         'TCode': this.taluk,
-        'Type':2
+        'Type': 2
       }
       this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
@@ -178,11 +178,11 @@ export class TOFundManagementComponent implements OnInit {
           } else {
             this.blockUI.stop();
             this.talukAmount = 0;
-          } 
+          }
         } else {
           this.blockUI.stop();
           this.talukAmount = 0;
-        
+
         }
       });
     }

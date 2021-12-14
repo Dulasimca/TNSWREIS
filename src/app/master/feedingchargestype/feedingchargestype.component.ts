@@ -23,7 +23,7 @@ export class FeedingchargestypeComponent implements OnInit {
 
   AccountingyearOptions:SelectItem[];
   feedingchargeOptions:SelectItem[];
-  data:any;
+  data:any = [];
   cols:any;
   Accountingyear:any;
   Accountingyears?:any;
@@ -42,6 +42,8 @@ export class FeedingchargestypeComponent implements OnInit {
 
   FeedingCharges:any
   feedchargeId=0;
+
+  showTable: boolean;
 
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) FeedingChargesType: NgForm;
@@ -68,7 +70,7 @@ export class FeedingchargestypeComponent implements OnInit {
       { field: 'FeedingChargeName', header: 'FeedingChargesType' },
       { field: 'School', header: 'Amount For School' },
       { field: 'College', header: 'Amount For College' },
-      { field: 'Flag',  header: 'Status'},
+      { field: 'status',  header: 'Status'},
     ]
     }
 
@@ -99,7 +101,7 @@ export class FeedingchargestypeComponent implements OnInit {
             this.feedingchargeOptions = feedingselection;
             this.feedingchargeOptions.unshift({ label: '-select', value: null });
       } else {
-        this.masterData = [];
+        this.masterData = []; 
       }
         break;
       }
@@ -125,7 +127,7 @@ export class FeedingchargestypeComponent implements OnInit {
     if (res !== undefined && res !== null) {
       if (res) {
         this.blockUI.stop();
-       
+        //this.onview();
         this.onClear();
         this.messageService.clear();
         this.messageService.add({
@@ -160,22 +162,65 @@ export class FeedingchargestypeComponent implements OnInit {
   })
 }
 
-onview() {
+// onview() {
  
-  const params = {
-    'AccountingYearId' : this.Accountingyear,
-  };
-  this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get,params).subscribe(res => {
-    if (res !== null && res !== undefined && res.length !== 0) {
-      this.data = res.Table;
-     console.log(this.data)
-      this.data.forEach(i => {
-        i.Flag = (i.Flag) ? 'Active' : 'Inactive';
-      })
-    }
-  });
+//   const params = {
+//     'AccountingYearId' : this.Accountingyear,
+//   };
+//   this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get,params).subscribe(res => {
+//     if (res !== null && res !== undefined && res.Table.length !== 0) {
+//       res.Table.forEach(i => {
+//         i.status = (i.Flag) ? 'Active' : 'Inactive';
+//       })
+//       this.data = res.Table;
+//     }
+//   });
 
+// }
+
+onview() {
+  this.data = [];
+  if (this.Accountingyear !== null && this.Accountingyear !== undefined) {
+    const params = {
+     
+      'AccountingId': this.Accountingyear
+    };
+    this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.Table.length !== 0) {
+          if (res.length !== 0) {
+          res.Table.forEach(i => {
+                i.status = (i.Flag) ? 'Active' : 'Inactive';
+                })
+          this.showTable = true;
+          this.data = res.Table;
+          }
+          
+         else {
+          this.showTable = false;
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          });
+        }
+      } else {
+        this.showTable = false;
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+        });
+      }
+    })
+  } else {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select academic year to view data !'
+    });
+  }
 }
+
 
 onClear()
 {

@@ -10,7 +10,6 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
   styleUrls: ['./fundmanagement-report.component.css']
 })
 export class FundmanagementReportComponent implements OnInit {
-
   accYear: any;
   district: any;
   districtOptions: SelectItem[];
@@ -19,7 +18,8 @@ export class FundmanagementReportComponent implements OnInit {
   years?: any;
   budjetAmount: number;
   showField: boolean;
-  fundData: TreeNode[];
+  fundData: any[] = [];
+  treeData: TreeNode[];
   cols: any = [];
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService) { }
@@ -27,8 +27,13 @@ export class FundmanagementReportComponent implements OnInit {
   ngOnInit(): void {
     this.years = this.masterService.getMaster('AY');
     this.districts = this.masterService.getMaster('DT');
+    this.cols = [
+      { field: 'name', header: 'Name' },
+      { field: 'size', header: 'Date' },
+      { field: 'type', header: 'Budjet Amount' }
+    ];
   }
-  
+
 
   onSelect(type) {
     let yearSelection = [];
@@ -46,13 +51,14 @@ export class FundmanagementReportComponent implements OnInit {
           districtSelection.push({ label: d.name, value: d.code });
         })
         this.districtOptions = districtSelection;
+        this.districtOptions.unshift({ label: 'All', value: 0 });
         this.districtOptions.unshift({ label: '-select-', value: null });
         break;
+    }
   }
 
-}
-loadBudjet() {
-  // this.budjetAmount = 0;
+  loadBudjet() {
+    this.budjetAmount = 0;
     if (this.accYear !== null && this.accYear !== undefined) {
       const params = {
         'AccountingYearId': this.accYear
@@ -62,20 +68,62 @@ loadBudjet() {
           this.showField = true;
           if (res.length !== 0) {
             res.forEach(res => {
-              this.budjetAmount = res.BudjetAmount ;
+              this.budjetAmount = res.BudjetAmount;
             })
+          } else {
+            this.showField = false;
           }
-        }else {
+        } else {
           this.showField = false;
         }
       });
     }
-}
-loadTable() {
-  this.cols = [
-    { field: 'name', header: 'Name' },
-    { field: 'size', header: 'Date' },
-    { field: 'type', header: 'Budjet Amount' }
-];
-}
+  }
+
+  loadTable() {
+    if (this.district !== null && this.district !== undefined && this.accYear !== null && this.accYear !== undefined) {
+      const params = {
+        'DCode': this.district,
+        'AccountingYear': this.accYear
+      }
+      this.restApiService.getByParameters(PathConstants.FundManagementReport_Get, params).subscribe(res => {
+        if (res !== undefined && res !== null && res.length !== 0) {
+          this.fundData = res;
+        }
+      })
+    }
+  }
+
+  constructTreeData() {
+    var treeData = [];
+    var district = [];
+    var taluk = [];
+    var hostel = [];
+    if (this.fundData.length !== 0) {
+      for (let i = 0; i < this.fundData.length - 1; i++) {
+        if (this.fundData[i].Districtcode === this.fundData[i + 1].Districtcode) {
+          treeData.push({ 
+            "data": {
+              'name': this.fundData[i].Districtname,
+              'amount': this.fundData[i].DOBudjetAmount,
+            },
+            "children": [{
+              "data": {
+                'name': this.fundData[i].Talukname,
+                'amount': this.fundData[i].TOBudjetAmount
+              },
+              "children": [
+                {
+                  "data": {
+                    'name': this.fundData[i].HostelName,
+                    'amount': this.fundData[i].HostelBudjetAmount
+                  }
+                }
+              ]
+            }]
+          })
+        }
+      }
+    }
+  }
 }

@@ -4,8 +4,7 @@
         <div class="p-grid">
             <div class="p-col-12 p-md-12 p-lg-12">
                 <form #f="ngForm" name="foodmasterForm">
-                    <p-card>
-                       
+                    <p-card>        
                         <div class="p-grid">
                             
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
@@ -52,12 +51,13 @@
 
 
 
-            <div class="p-col-12 p-md-6 p-lg12" style="margin-left:35%;">
-                <button pButton name="save" type="button" label="Submit" icon="pi pi-save" (click)="onSubmit()" [disabled]='(!f.valid || !f.dirty)'></button>
+            <div class="p-col-12 p-md-6 p-lg-12 txt-center" >
+                <button pButton name="save" type="button" label="Submit" 
+                icon="pi pi-save" (click)="onSubmit()" [disabled]='(!f.valid || !f.dirty)'></button>&nbsp;
 
-                <button pButton type="button" label="View" style="margin-left:5%;"  icon="pi pi-eye" (click)="onview()"></button>
-                <button pButton type="button" label="Clear" style="margin-left:5%;" icon="pi pi-trash" (click)="onClear()"></button>
-                <button pButton type="button" icon="pi pi-file-excel" label="Export" style="margin-left:5%;"  
+                <button pButton type="button" label="View" icon="pi pi-eye" (click)="onview()"></button>&nbsp;
+                <button pButton type="button" label="Clear" icon="pi pi-trash" (click)="onClear()"></button>&nbsp;
+                <button pButton type="button" icon="pi pi-file-excel" label="Export"  
                 (click)="dt.exportCSV()"></button>
             </div>
     </div>

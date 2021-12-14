@@ -89,16 +89,20 @@ import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastructure-report/hostelinfrastructure-report.component';
-
-
-
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { MonthlywiseintentapprovalComponent } from './forms-module/monthlywiseintentapproval/monthlywiseintentapproval.component';
+
+import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
+import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 
-
+import { FeedingchargestypeReportComponent } from './Reports/feedingchargestype-report/feedingchargestype-report.component';
 
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
+
+
+import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -149,8 +153,13 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
     HostelinfrastructureReportComponent,
     ApprovalRequestComponent,
     ApprovalComponent,
+    MonthlywiseintentapprovalComponent,
+    EmployeeMasterComponent,
+    EmployeeReportComponent,
     FundmanagementReportComponent,
     StudentTransferFormComponent,
+    FeedingchargestypeReportComponent,
+    EmployeeattendanceDetailsComponent,
     
   ],
   imports: [

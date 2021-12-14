@@ -6,23 +6,24 @@
                         <div class="p-col-2"></div>
                         <div class="p-col-12 no-pad-top">
                             <div class="p-grid">
-                                <div class="p-col-3"></div>
-                                <div #row1 class="p-col-12 p-md-12 p-lg-8">
+                                <div class="p-col-2"></div>
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
                                     <div class="p-grid">
-                                        <div class="p-col-12 p-md-12 p-lg-3">
+                                   <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-2">
                                             <div><label for="_year">Accounting Year</label></div>
                                             <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')"
                                                 [(ngModel)]="accYear" (onChange)="loadBudjet()" required>
                                             </p-dropdown>
                                         </div>
-                                        <div class="p-col-12 p-md-6 p-lg-3">
+                                        <div class="p-col-12 p-md-6 p-lg-2">
                                             <div><label for="_district">District</label></div>
                                             <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
                                                 (onClick)="onSelect('D')" (onChange)="loadTable()" required>
                                             </p-dropdown>
                                         </div>
-                                        <div *ngIf="showField" class="p-col-12 p-md-12 p-lg-3">
-                                            <div><label for="_budjetamnt">Budjet Amount</label></div>
+                                        <div *ngIf="showField" class="p-col-12 p-md-12 p-lg-2">
+                                            <div><label for="_budjetamnt">Total Budjet Amount</label></div>
                                             <input type="text" name="_budjetamnt" class="p-col-12" pInputText
                                                 [(ngModel)]="budjetAmount" readonly="true"
                                                 required />
@@ -31,7 +32,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p-treeTable [value]="fundData" styleClass="p-datatable-gridlines">
+                        <p-treeTable [value]="fundData" styleClass="p-datatable-gridlines" [columns]="cols">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th>S.No</th>

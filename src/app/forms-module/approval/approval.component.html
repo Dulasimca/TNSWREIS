@@ -7,23 +7,7 @@
              <form #f="ngForm" name="approvalForm">
                  <div #row1 class="p-col-12 p-md-12 p-lg-12">
                     <!-- <div class="p-col-12 p-md-12 p-lg-12"> -->
-                        <div style="text-align: right;">
-                            <button pButton type="button" icon="pi pi-file-excel" label="Export"
-                                style="color: yellowgreen;" (click)="dt.exportCSV()"
-                                pTooltip="Excel-File download"></button>
-                        </div>
-                        <p-table #dt [columns]="cols" [value]="filteredData" [paginator]="true" [rows]="10"
-                        [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
-                        exportFilename="APPROVAL_REPORT" styleClass="p-datatable-gridlines">
-                        <!-- <ng-template pTemplate="caption">
-                           <div class="p-d-flex">
-                               <span class="p-input-icon-left p-ml-auto">
-                                   <i class="pi pi-search"></i>
-                                   <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-                               </span>
-                           </div>
-                           </ng-template> -->
-                           <ng-template pTemplate="caption">
+                        <div class="p-col-12 p-md-6 p-lg-12">
                             <p-tabView #tabview (onChange)="onTabChange($event)">
                                 <p-tabPanel header="Pending">
                                 </p-tabPanel>
@@ -32,7 +16,24 @@
                                 <p-tabPanel header="Disapproved">
                                 </p-tabPanel>
                             </p-tabView>
-                           </ng-template>
+                        </div>
+                        <div style="text-align: right;">
+                            <button pButton type="button" icon="pi pi-file-excel" label="Export"
+                                style="color: yellowgreen;" (click)="dt.exportCSV()"
+                                pTooltip="Excel-File download"></button>
+                        </div>
+                      
+                        <p-table #dt [columns]="cols" [value]="filteredData" [paginator]="true" [rows]="10"
+                        [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" [globalFilterFields]="['ApprovalStatusName','RequestId','ApprovalName']"
+                        exportFilename="APPROVAL_REPORT" styleClass="p-datatable-gridlines">
+                         <ng-template pTemplate="caption">
+                           <div class="p-d-flex">
+                               <span class="p-input-icon-left p-ml-auto">
+                                   <i class="pi pi-search"></i>
+                                   <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                               </span>
+                           </div>
+                           </ng-template> 
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th>S.No</th>

@@ -59,7 +59,9 @@ export class DailyconsumptionReportComponent implements OnInit {
           break;
         case 'T':
             this.taluks.forEach(t => {
+              if (t.dcode === this.district) {
                 talukSelection.push({ label: t.name, value: t.code });
+              }
             })
             this.talukOptions = talukSelection;
             if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
@@ -67,6 +69,7 @@ export class DailyconsumptionReportComponent implements OnInit {
             }
             this.talukOptions.unshift({ label: '-select-', value: 'null' });
           break;
+         
       }
     }
   }

@@ -41,8 +41,17 @@ import { StudentfacilityMasterComponent } from './master/studentfacility-master/
 import { StudentfacilityReportComponent } from './Reports/studentfacility-report/studentfacility-report.component';
 import { ApprovalRequestComponent } from './forms-module/approval-request/approval-request.component';
 import { ApprovalComponent } from './forms-module/approval/approval.component';
+import { MonthlywiseintentapprovalComponent } from './forms-module/monthlywiseintentapproval/monthlywiseintentapproval.component';
+import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastructure-report/hostelinfrastructure-report.component';
+import { MonthlywiseintentReportComponent } from './Reports/monthlywiseintent-report/monthlywiseintent-report.component';
+import { FeedingchargestypeReportComponent } from './Reports/feedingchargestype-report/feedingchargestype-report.component';
+
+
+import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
+import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
+import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -58,7 +67,7 @@ const routes: Routes = [
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},
-  { path: 'warden-report', component:WardenReportComponent, canActivate: [AuthGuard]},
+  { path: 'warden-report', component:MonthlywiseintentComponent, canActivate: [AuthGuard]},
   { path: 'dailyconsumption-report', component:DailyconsumptionReportComponent, canActivate: [AuthGuard]},
   { path: 'purchaseorder-report', component:PurchaseorderReportComponent, canActivate: [AuthGuard]},
   { path: 'student-report', component:StudentDetailsComponent, canActivate: [AuthGuard]},
@@ -76,26 +85,33 @@ const routes: Routes = [
   { path: 'attendance', component:AuditComponent, canActivate: [AuthGuard]},
   { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
 
-
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
-  { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},
-
+  { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},  
   { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]},
   { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
   { path: 'hostelinfrastructure', component:HostelinfrastructureComponent,}, 
   { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
   { path: 'taluk', component:DOFundManagementComponent, canActivate: [AuthGuard]},
-  { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 
-  { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
+ { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 
+ { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'to-fundmanagement', component:TOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'hostel-fundmanagement', component:HostelFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'fund-report', component:FundmanagementReportComponent, canActivate: [AuthGuard]},
   
-  { path: 'studentfacility', component:StudentfacilityMasterComponent},
-  { path: 'studentfacilityreport', component:StudentfacilityReportComponent},
+  { path: 'studentfacility', component:StudentfacilityMasterComponent, canActivate: [AuthGuard]},
+  { path: 'studentfacilityreport', component:StudentfacilityReportComponent, canActivate: [AuthGuard]},
   { path: 'approvalrequest', component:ApprovalRequestComponent},
   { path: 'approval', component:ApprovalComponent},
+
+  { path: 'monthlywiseapproval', component:MonthlywiseintentapprovalComponent},
+  { path: 'hostelinfrareport', component:HostelinfrastructureReportComponent,},
+  { path: 'monthlywisereport', component:MonthlywiseintentReportComponent,},
+  { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent,},
+  { path: 'employeemaster', component:EmployeeMasterComponent},
+  { path: 'employeereport', component:EmployeeReportComponent},
+  { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent},
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

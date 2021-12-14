@@ -62,13 +62,17 @@ export class MonthlywiseintentReportComponent implements OnInit {
   loading: boolean;
   year?: any;
   date: 'MM';
+
+
+
+
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
     private _messageService: MessageService, private tableConstants: TableConstants) { }
 
 
   ngOnInit(): void {
-    //this.hostelCols = this.tableConstants.hostelinfrastructureReportCols
+    this.hostelCols = this.tableConstants.monthlywiseintentReportCols
     this.Slno = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
@@ -146,18 +150,21 @@ export class MonthlywiseintentReportComponent implements OnInit {
     this.hostelData = [];
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
       this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined) {
-        console.log('hi')
+        
       this.loading = true;
       const params = {
-        'Districtcode': this.district,
+        'Districtcode' : this.district,
         'Talukid': this.taluk,
         'HostelId': this.hostel,
-        'AccountingId': this.year,
+        'AccountingId': 4,
       }
+      console.log(params)
       this.restApiService.getByParameters(PathConstants.MonthlywiseIntent_Get,params).subscribe(res => {
-        if (res.Table !== undefined && res.Table !== null) {
-          if (res.Table.length !== 0) {
-            this.hostelData = res.Table;
+        console.log(res)
+        if (res !== undefined && res !== null) {
+         
+          if (res.length !== 0) {
+            this.hostelData = res;
             this.loading = false;
           } else {
             this.loading = false;

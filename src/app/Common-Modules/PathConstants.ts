@@ -72,7 +72,7 @@ public static readonly FeedingChargesDetail_Get = 'FeedingChargesDetail/Get';
 
 public static readonly HostelInfraStructure_Post = 'HostelInfraStructure/Post';
 
-public static readonly HostelInfraStructure_Get = 'HostelInfraStructure';
+public static readonly HostelInfraStructure_Get = 'HostelInfraStructure/Get';
 public static readonly StudentFacility_Post = 'StudentFacility/Post';
 public static readonly StudentFacility_Get = 'StudentFacility';
 public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get';
@@ -89,11 +89,19 @@ public static readonly TOFundAllotment_Post = 'TOFundAllotment/Post';
 public static readonly TOFundAllotment_Get = 'TOFundAllotment/Get';
 public static readonly HostelFundAllotment_Post = 'HostelFundAllotment/Post';
 public static readonly HostelFundAllotment_Get = 'HostelFundAllotment/Get';
+public static readonly FundManagementReport_Get = 'FundManagementReport/Get';
+
+
 public static readonly ApprovalList_Get = 'ApprovalList';
 public static readonly ApprovalDetails_Post = 'ApprovalDetails/Post';
 public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';
 
 public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
+
+public static readonly MonthlywiseIntent_put = 'MonthlywiseIntent/put';
+public static readonly EmployeeDesignation_Get = 'EmployeeDesignation';
+public static readonly EmployeeDetails_Post = 'EmployeeDetails/Post';
+public static readonly EmployeeDetails_Get = 'EmployeeDetails/Get';
 public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
 public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
 

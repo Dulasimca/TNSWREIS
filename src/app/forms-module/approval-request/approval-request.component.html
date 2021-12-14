@@ -31,6 +31,10 @@
                                  [(ngModel)]="requestId" required>
                             </p-dropdown>
                         </div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <label for="_remarks">Remarks</label>
+                            <input type="text" name="_remarks" pInputText [(ngModel)]="remarks" />
+                        </div>
                         <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
                             <button pButton type="button" label="Submit" (click)="onSubmit()"
                             [disabled]="(!f.valid)" class="btn-bg"></button>&nbsp;
@@ -60,9 +64,9 @@
                          </tr>
                      </ng-template>
                      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                         <tr [pSelectableRow]="rowData" class="cursor-pointer">
+                         <tr [pSelectableRow]="rowData">
                              <td>{{rowIndex+1}}</td>
-                             <td *ngFor="let col of columns">
+                             <td *ngFor="let col of columns" [style.text-align]="col.align">
                                  {{rowData[col.field]}}
                              </td>
                          </tr>
