@@ -127,7 +127,7 @@ export class FeedingchargestypeComponent implements OnInit {
     if (res !== undefined && res !== null) {
       if (res) {
         this.blockUI.stop();
-        //this.onview();
+        this.onview();
         this.onClear();
         this.messageService.clear();
         this.messageService.add({
@@ -162,28 +162,13 @@ export class FeedingchargestypeComponent implements OnInit {
   })
 }
 
-// onview() {
- 
-//   const params = {
-//     'AccountingYearId' : this.Accountingyear,
-//   };
-//   this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get,params).subscribe(res => {
-//     if (res !== null && res !== undefined && res.Table.length !== 0) {
-//       res.Table.forEach(i => {
-//         i.status = (i.Flag) ? 'Active' : 'Inactive';
-//       })
-//       this.data = res.Table;
-//     }
-//   });
-
-// }
 
 onview() {
-  this.data = [];
-  if (this.Accountingyear !== null && this.Accountingyear !== undefined) {
+  
+   if (this.Accountingyear !== null && this.Accountingyear !== undefined) {
     const params = {
-     
-      'AccountingId': this.Accountingyear
+      'AccountingYearId': this.Accountingyear      
+
     };
     this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.Table.length !== 0) {

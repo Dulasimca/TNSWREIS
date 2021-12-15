@@ -5,6 +5,12 @@
             <p-card>
                 <div class="p-col-12 no-pad-top">
                     <div class="p-grid">
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_accountingyear">Accounting Year<span class="form-mandatory-field">*</span></label></div>
+                                    <p-dropdown name="_accountingyear" [options]="AccountingyearOptions"
+                                        [(ngModel)]="Accountingyear" (onChange)="loadTable()" (onClick)="onSelect('AY')"
+                                        required >
+                                    </p-dropdown> </div>
                     </div>
                 </div>
                 <div class="p-col-12 p-md-12 p-lg-12">

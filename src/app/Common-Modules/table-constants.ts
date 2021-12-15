@@ -181,9 +181,9 @@ export class TableConstants {
         ]
 
         this.hostelinfrastructureReportCols = [
-            { field: 'Districtname', header: 'District code' },
-            { field: 'Talukname', header: 'Taluk id' },
-            { field: 'HostelName', header: 'HostelId' },
+            { field: 'Districtname', header: 'District' },
+            { field: 'Talukname', header: 'Taluk' },
+            { field: 'HostelName', header: 'Hostel' },
             { field: 'TotalArea', header: 'Total Area' },
             { field: 'BuildingArea', header: 'Building Area' },
             { field: 'NoOfFloor', header: 'No Of Floor' },
