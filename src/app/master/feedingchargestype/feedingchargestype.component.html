@@ -4,7 +4,7 @@
     <p-panel header="FeedingChargesType">
         <div class="p-grid">
             <div class="p-col-12 p-md-12 p-lg-12">
-                <form #f="ngForm" name="FeedingChargesType">
+                <form #f="ngForm" name="FeedingCharges Type">
                     <p-card>
                        
                         <div class="p-grid">
@@ -13,7 +13,7 @@
                             <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_accountingyear">Accounting Year<span class="form-mandatory-field">*</span></label></div>
                                     <p-dropdown name="_accountingyear" [options]="AccountingyearOptions"
-                                        [(ngModel)]="Accountingyear" (onClick)="onSelect('AY')"
+                                        [(ngModel)]="Accountingyear"  (onClick)="onSelect('AY')"
                                         required >
                                     </p-dropdown> </div>
                             <div class="p-col-12 p-md-6 p-lg-1"></div>
@@ -63,6 +63,7 @@
                
             </div>
     </div>
+    <div *ngIf="showTable" class="p-col-12 p-md-12 p-lg-12">
          <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
             totalRecords="totalRecords"  styleClass="p-datatable-gridlines">
             <ng-template pTemplate="header" let-columns>
@@ -87,7 +88,7 @@
 
             </ng-template>
         </p-table>
-
+    </div>
     </p-card>
 </form>
 </div>

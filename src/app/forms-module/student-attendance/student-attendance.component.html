@@ -1,0 +1,99 @@
+
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Student Attendance Register">
+            <form #f="ngForm" name="studentAttendanceForm">
+                <p-card>
+                    <div class="p-col-12 no-pad-top">
+                        <div class="p-grid">
+                            <div class="p-col-2"></div>
+                            <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                        <label for="_district">District </label>
+                                        <input type="text" class="p-col-12" name="_district" pInputText
+                                            [(ngModel)]="district" readonly="true" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                        <label for="_taluk">Taluk</label>
+                                        <input type="text" class="p-col-12" name="_taluk" pInputText [(ngModel)]="taluk"
+                                            readonly="true" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                                        <label for="_hostelname">Hostel Name</label>
+                                        <input type="text" class="p-col-12" name="_hostelname" pInputText
+                                            [(ngModel)]="hostelName" readonly="true" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-12 p-lg-2">
+                                        <div><label for="_date">Date<span
+                                            class="form-mandatory-field">*</span> </label>
+                                        </div>
+                                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="date"
+                                            name="_date" [showIcon]="true" (onChange)="loadTable()" required>
+                                        </p-calendar>
+                                    </div>
+                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_studentname">Student Name<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <p-dropdown name="_studentname" [options]="studentOptions"
+                                                    [(ngModel)]="studentName" (onClick)="onSelect('S')" required>
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 20px;">
+                                                <p-radioButton name="Flag" label="Present" value=1 [(ngModel)]="selectedType"
+                                                    required>
+                                                </p-radioButton>
+                                                <p-radioButton name="Flag" label="Absent" value=0
+                                                    [(ngModel)]="selectedType" required>
+                                                </p-radioButton>
+                                            </div>
+                                    
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_remarks">Remarks<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <textarea type="text" class="p-col-12" name="_remarks" pInputText
+                                            [(ngModel)]="remarks"></textarea>
+                                    </div>
+                                    <div class="p-col-12 p-md-8 p-lg-1" [ngClass.xs]="'txt-center'" [ngClass.lt-sm]="'txt-center'" 
+                                    [ngClass.lt-md]="'txt-end'" style="margin-top: 1.5rem">
+                                        <button pButton type="button" label="Enter" [disabled]="(!f.valid)"
+                                            (click)="onEnter()"></button>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <div *ngIf="showTable">
+                                        <p-table [value]="studentAttendanceData" [columns]="StudentAttendanceCols" styleClass="p-datatable-gridlines"
+                                            [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th style="width: 50px;">S.No</th>
+                                                    <th *ngFor="let col of columns">
+                                                        {{col.header}}
+                                                    </th>
+                                                    <th>Present/Absent</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                                <tr>
+                                                    <td>{{rowIndex+1}}</td>
+                                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
+                                                        {{rowData[col.field]}}
+                                                    </td>
+                                                    <td><button icon="pi pi-pencil" pButton type="button"  pTooltip="Tap to edit"  >
+                                                        </button></td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                    </p-card>
+                                    </form>
+        </p-panel>
+    </div>
+</div>

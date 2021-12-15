@@ -89,6 +89,9 @@ public static readonly TOFundAllotment_Post = 'TOFundAllotment/Post';
 public static readonly TOFundAllotment_Get = 'TOFundAllotment/Get';
 public static readonly HostelFundAllotment_Post = 'HostelFundAllotment/Post';
 public static readonly HostelFundAllotment_Get = 'HostelFundAllotment/Get';
+public static readonly FundManagementReport_Get = 'FundManagementReport/Get';
+
+
 public static readonly ApprovalList_Get = 'ApprovalList';
 public static readonly ApprovalDetails_Post = 'ApprovalDetails/Post';
 public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';

@@ -76,9 +76,9 @@ export class MonthlywiseintentapprovalComponent implements OnInit {
     this.HostelId = this.logged_user.hostelId;
      
     this.cols = [
-      { field: 'Districtname', header: 'District code' },
-      { field: 'Talukname', header: 'Taluk id' },
-      { field: 'HostelName', header: 'Hostel Id' },
+      { field: 'Districtname', header: 'District ' },
+      { field: 'Talukname', header: 'Taluk ' },
+      { field: 'HostelName', header: 'Hostel ' },
       { field: 'ShortYear', header: 'Accounting Year' },
       { field: 'CommodityName', header: 'Commodity Name' },
       { field: 'UnitName', header: 'Unit' },
@@ -214,7 +214,7 @@ export class MonthlywiseintentapprovalComponent implements OnInit {
         this.taluk = null;
         this.talukOptions = [];
       } 
-      this.loadHostelList();
+     this.loadHostelList();
     }
 
   onView()
@@ -250,7 +250,7 @@ loadTable() {
       console.log('hi')
     this.loading = true;
     const params = {
-      'Districtcode' : this.district,
+    'Districtcode' : this.district,
     'Talukid': this.taluk,
     'HostelId': this.hostelName,
     'AccountingId': 4,

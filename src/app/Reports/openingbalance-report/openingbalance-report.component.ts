@@ -159,7 +159,7 @@ export class OpeningbalanceReportComponent implements OnInit {
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
-        }
+        } 
       })
     }
   }

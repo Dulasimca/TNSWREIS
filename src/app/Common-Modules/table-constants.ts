@@ -17,6 +17,7 @@ export class TableConstants {
     hostelinfrastructureReportCols:any = [];
     monthlywiseintentReportCols:any = [];
     feedingchargetypeReportCols:any = [];
+    StudentAttendanceTable: any = [];
 
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
@@ -181,9 +182,9 @@ export class TableConstants {
         ]
 
         this.hostelinfrastructureReportCols = [
-            { field: 'Districtname', header: 'District code' },
-            { field: 'Talukname', header: 'Taluk id' },
-            { field: 'HostelName', header: 'HostelId' },
+            { field: 'Districtname', header: 'District' },
+            { field: 'Talukname', header: 'Taluk' },
+            { field: 'HostelName', header: 'Hostel' },
             { field: 'TotalArea', header: 'Total Area' },
             { field: 'BuildingArea', header: 'Building Area' },
             { field: 'NoOfFloor', header: 'No Of Floor' },
@@ -218,6 +219,11 @@ export class TableConstants {
         { field: 'Flag',  header: 'Status'},
 
 
+
+       ]
+       this.StudentAttendanceTable = [
+        { field: 'StudentName', header: 'Student Name' },
+        { field: 'remarks', header: 'Remarks' },
 
        ]
 
