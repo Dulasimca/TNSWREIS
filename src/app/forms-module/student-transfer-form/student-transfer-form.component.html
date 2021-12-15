@@ -8,17 +8,22 @@
                             <div class="p-grid">
                                 <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                     <div class="p-grid">
-                                        <div class="p-col-12 p-md-12 p-lg-2">
+                                        <div class="p-col-12 p-md-6 p-lg-2">
                                             <div><label for="_year">Accounting Year<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect()"
                                                 [(ngModel)]="year" (onChange)="loadStudentDetails()" required>
                                             </p-dropdown>
                                         </div>
+                                    <div class="p-col-9"></div>
+                                    <div class="p-col-6 p-md-6 p-lg-1">
+                                        <button pButton type="button" label="Submit" icon="pi pi-send" (click)="onSubmit()"
+                                        [disabled]="(studentDetailCols.length==0)"></button>
                                     </div>
                                 </div>
+                            </div>
                                 <div #row2 class="p-col-12 p-md-12 p-lg-12">
-                                    <p-table styleClass="p-datatable-gridlines" [columns]="studentDetailCols"
+                                    <p-table #dt styleClass="p-datatable-gridlines" [columns]="studentDetailCols"
                                         [value]="studentDetails" [paginator]="true" dataKey="StudentId" [rows]="10"
                                         (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                                         <ng-template pTemplate="header" let-columns let-rowData>
@@ -38,7 +43,7 @@
                                             let-columns="columns">
                                             <tr>
                                                 <td>
-                                                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                                    <p-tableCheckbox [value]="rowData" (click)="onToggle(rowData)"></p-tableCheckbox>
                                                 </td>
                                                 <td style="width: 100px">{{rowIndex+1}}</td>
                                                 <td *ngFor="let col of columns" [style.text-align]="col.align">
@@ -56,11 +61,11 @@
                                                 </td>
                                                 <td *ngIf="(rowData.showStatusSelector == 'true')">
                                                     <p-radioButton name="_pass" label="Pass" value=1
-                                                        [(ngModel)]="studentStatus"
+                                                        [(ngModel)]="rowData.studentStatus"
                                                         (onClick)="onSelectToTransfer(rowData, 1)">
                                                     </p-radioButton> &nbsp;
                                                     <p-radioButton name="_fail" label="Fail" value=0
-                                                        [(ngModel)]="studentStatus"
+                                                        [(ngModel)]="rowData.studentStatus"
                                                         (onClick)="onSelectToTransfer(rowData, 0)">
                                                     </p-radioButton>
                                                 </td>

@@ -17,6 +17,7 @@ export class TableConstants {
     hostelinfrastructureReportCols:any = [];
     monthlywiseintentReportCols:any = [];
     feedingchargetypeReportCols:any = [];
+    StudentAttendanceTable: any = [];
 
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
@@ -218,6 +219,11 @@ export class TableConstants {
         { field: 'Flag',  header: 'Status'},
 
 
+
+       ]
+       this.StudentAttendanceTable = [
+        { field: 'StudentName', header: 'Student Name' },
+        { field: 'remarks', header: 'Remarks' },
 
        ]
 
