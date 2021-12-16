@@ -18,6 +18,7 @@ export class TableConstants {
     monthlywiseintentReportCols:any = [];
     feedingchargetypeReportCols:any = [];
     StudentAttendanceTable: any = [];
+    employeeAttendanceReportCols: any = [];
 
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
@@ -157,6 +158,15 @@ export class TableConstants {
             { field: 'FacilityName', header: 'FacilityName', width: '200px', align: 'left !important'},
             { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px', align: 'left !important'},
             { field: 'Remarks', header: 'Remarks', width: '200px', align: 'left !important'},
+        ]
+        this.employeeAttendanceReportCols = [
+            { field: 'Districtname', header: 'Districtname', width: '100px', align: 'left !important'},
+            { field: 'Talukname', header: 'HostelName', width: '100px', align: 'left !important'},
+            { field: 'HostelName', header: 'HostelName', width: '100px', align: 'left !important'},
+            { field: 'FirstName', header: 'Employee Name', width: '100px', align: 'left !important' },
+            { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
+            { field: 'CreatedDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
+            { field: 'Remarks', header: 'Remarks', width: '100px', align: 'left !important' },
         ]
         this.employeeReportCols = [
             { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
