@@ -77,6 +77,7 @@ export class StudentfacilityMasterComponent implements OnInit {
         if (res) {
           // this.blockUI.stop();
            this.onClear();
+           this.onView();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -164,13 +165,14 @@ export class StudentfacilityMasterComponent implements OnInit {
         this.noofCounts = i.NoOfCounts;
         this.remarks =i.Remarks;
         this.FacilityDetailIds =i.FacilityDetailId;  
-    })
+ 
     this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
             summary: ResponseMessage.SUMMARY_ALERT, life: 4000,
             detail: 'Facility already exist' 
           })
+        })
     
   } else {
     this._messageService.clear();
