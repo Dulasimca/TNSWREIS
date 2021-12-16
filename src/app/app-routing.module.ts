@@ -68,7 +68,7 @@ const routes: Routes = [
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},
-  { path: 'warden-report', component:MonthlywiseintentComponent, canActivate: [AuthGuard]},
+  { path: 'warden-report',component:WardenReportComponent,},
   { path: 'dailyconsumption-report', component:DailyconsumptionReportComponent, canActivate: [AuthGuard]},
   { path: 'purchaseorder-report', component:PurchaseorderReportComponent, canActivate: [AuthGuard]},
   { path: 'student-report', component:StudentDetailsComponent, canActivate: [AuthGuard]},
