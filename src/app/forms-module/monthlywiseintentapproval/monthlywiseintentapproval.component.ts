@@ -71,9 +71,9 @@ export class MonthlywiseintentapprovalComponent implements OnInit {
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     
-    this.Districtcode = this.logged_user.districtCode;
-    this.Talukid = this.logged_user.talukId;
-    this.HostelId = this.logged_user.hostelId;
+    // this.Districtcode = this.logged_user.districtCode;
+    // this.Talukid = this.logged_user.talukId;
+    // this.HostelId = this.logged_user.hostelId;
      
     this.cols = [
       { field: 'Districtname', header: 'District ' },
@@ -257,6 +257,7 @@ loadTable() {
 
     }
     this.restApiService.getByParameters(PathConstants.MonthlywiseIntent_Get,params).subscribe(res => {
+     console.log("abc")
       if (res.Table !== undefined && res.Table !== null) {
         if (res.Table.length !== 0) {
           this.hostelData = res.Table;

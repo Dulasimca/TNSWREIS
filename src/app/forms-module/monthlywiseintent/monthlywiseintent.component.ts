@@ -168,11 +168,10 @@ onView()
   const params = {
     'Districtcode' : this.Districtcode,
     'Talukid': this.Talukid,
-    'HostelId': this.HostelId,
+    'HostelId': this.HostelId,  
     'AccountingId': 4,
   };
-  
-
+  this.data =[];
   this.restApiService.getByParameters(PathConstants.MonthlywiseIntent_Get,params).subscribe(res => {
   console.log(res)
     if (res !== null && res !== undefined && res.length !== 0){
