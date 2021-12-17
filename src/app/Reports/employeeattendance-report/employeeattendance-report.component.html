@@ -26,19 +26,19 @@
                                         <div><label for="_hostel">Hostel Name</label>
                                         </div>
                                         <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
-                                         (onChange)="loadTable()" required>
+                                          required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div class="no-pad-top"><label>From Date</label> </div>
-                            <p-calendar [showOtherMonths]="false" [(ngModel)]="fromdate" [showIcon]="true"
-                                name="_fromdate" dateFormat="dd/mm/yy" required>
+                            <p-calendar [showOtherMonths]="false" [(ngModel)]="fromdate" (onSelect)="loadTable()" 
+                            [showIcon]="true" name="_fromdate" required>
                             </p-calendar>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div class="no-pad-top"><label>To Date</label> </div>
-                            <p-calendar [showOtherMonths]="false" [(ngModel)]="todate" [showIcon]="true" name="_todate"
-                                dateFormat="dd/mm/yy"  required>
+                            <p-calendar [showOtherMonths]="false" [(ngModel)]="todate" (onSelect)="loadTable()"
+                             [showIcon]="true" name="_todate" required>
                             </p-calendar>
                                     </div>
                                 </div>

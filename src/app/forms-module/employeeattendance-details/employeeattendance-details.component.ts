@@ -64,7 +64,8 @@ export class EmployeeattendanceDetailsComponent implements OnInit {
       'DCode' : this.login_user.districtCode,
       'TCode' : this.login_user.talukId,
       'HostelId': this.login_user.hostelId,
-      'AttendanceDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
+      'FromDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
+      'Todate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy')
     }
     this._restApiService.getByParameters(PathConstants.EmployeeAttendance_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
@@ -86,7 +87,7 @@ export class EmployeeattendanceDetailsComponent implements OnInit {
             if (res !== null && res !== undefined && res.length !== 0) {
               res.Table.forEach(i => {
                 i.status = 'Present';
-                i.remarks = 'Present';
+                i.Remarks = 'Present';
                 i.AttendanceId = 0;
                 i.PresenAbsent = 1; 
                 i.AttendanceDate = this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy');

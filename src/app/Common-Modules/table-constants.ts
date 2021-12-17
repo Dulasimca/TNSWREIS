@@ -140,7 +140,8 @@ export class TableConstants {
 
         this.hostelReportCols = [
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
-             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
+            { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
+            { field: 'HostelOpeningDate', header: 'Hostel Opening Date', width: '100px'},
             { field: 'Name', header: 'Hostel Type', align: 'left !important'},
             { field: 'Districtname', header: 'District', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk', align: 'left !important'},

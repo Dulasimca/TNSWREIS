@@ -155,7 +155,8 @@ export class EmployeeattendanceReportComponent implements OnInit {
         'DCode': this.district,
         'TCode': this.taluk,
         'HostelId': this.hostel,
-        'AttendanceDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
+        'FromDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
+        'Todate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy')
       }
       this.restApiService.getByParameters(PathConstants.EmployeeAttendance_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {

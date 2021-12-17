@@ -152,6 +152,7 @@ export class EmployeeReportComponent implements OnInit {
         'DCode': this.district,
         'TCode': this.taluk,
         'HostelId': this.hostel,
+        
       }
       this.restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {

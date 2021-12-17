@@ -42,11 +42,19 @@
                                     [disabled]="disableFields" [(ngModel)]="Hostelname" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_hosteltamilname">HostelnameTamil<span
+                                    <div><label for="_hosteltamilname">Hostel Name Tamil<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <input type="text" name="_hosteltamilname" class="p-col-10" pInputText
                                     [disabled]="disableFields"  [(ngModel)]="Hosteltamilname" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_hostelopendate">Hostel Opening Date<span
+                                        class="form-mandatory-field">*</span></label>
+                                        <p-calendar [showOtherMonths]="false" [(ngModel)]="hostelOpeningDate"  
+                                        [disabled]="disableFields" [showIcon]="true" name="_hostelopendate" required>
+                                        </p-calendar>
+                            </div>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_mobno">Mobile Number<span
@@ -99,7 +107,6 @@
                                     <input class="p-col-12" name="_pincode" type="text" pInputText minlength="6"
                                         maxlength="6" [(ngModel)]="pincode" appInputFormat="digitOnly" required />
                                 </div>
-                             
                             
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
