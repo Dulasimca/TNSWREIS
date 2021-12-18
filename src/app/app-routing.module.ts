@@ -53,6 +53,7 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
 import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 import { StudentAttendanceComponent } from './forms-module/student-attendance/student-attendance.component';
+import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-report/employeeattendance-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -114,6 +115,7 @@ const routes: Routes = [
   { path: 'employeemaster', component:EmployeeMasterComponent},
   { path: 'employeereport', component:EmployeeReportComponent},
   { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent},
+  { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent},
 ];
 
 

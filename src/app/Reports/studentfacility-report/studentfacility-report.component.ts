@@ -60,6 +60,10 @@ export class StudentfacilityReportComponent implements OnInit {
   hostelCols: any;
   hostelData: any = [];
   loading: boolean;
+  FacilityType: any;
+  facilityOptions: SelectItem[];
+  facilitytypes?: any = [];
+
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
     private _messageService: MessageService, private tableConstants: TableConstants) { }
@@ -74,13 +78,17 @@ export class StudentfacilityReportComponent implements OnInit {
     //  this.talukname = this.login_user.talukName;
     //  this.hostelname=this.login_user.hostelName;
     // this.role=this.login_user.roleId;
-
+    this.restApiService.get(PathConstants.StudentFacilityType_Get).subscribe(facilitytypes => {
+      this.facilitytypes = facilitytypes;
+      console.log('ent',this.facilitytypes)
+    })
   }
 
   onSelect(type) {
     let districtSelection = [];
     let talukSelection = [];
     let hostelSelection = [];
+    let studentfacilitySelection = [];
     if (this.login_user.roleId !== undefined && this.login_user.roleId !== null) {
       switch (type) {
         case 'D':
@@ -103,6 +111,16 @@ export class StudentfacilityReportComponent implements OnInit {
           }
           this.talukOptions.unshift({ label: '-select-', value: null });
           break;
+          case 'SF':
+            this.facilitytypes.forEach(c => {
+              studentfacilitySelection.push({ label: c.FacilityType, value: c.Id });
+            })
+            this.facilityOptions  = studentfacilitySelection;;
+          if ((this.login_user.roleId * 1) === 1 || (this.login_user.roleId * 1) === 2) {
+            this.facilityOptions.unshift({ label: 'All', value: 0 });
+          }
+          this.facilityOptions.unshift({ label: '-select-', value: null });
+            break;
       }
     }
   }
@@ -152,6 +170,7 @@ export class StudentfacilityReportComponent implements OnInit {
         'DCode': this.district,
         'TCode': this.taluk,
         'HostelId': this.hostel,
+        'Ftype': this.FacilityType,
       }
       this.restApiService.getByParameters(PathConstants.StudentFacilityDetails_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {

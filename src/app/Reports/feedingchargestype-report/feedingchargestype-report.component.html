@@ -1,13 +1,18 @@
-
     <div class="p-col-12 p-md-12 p-lg-12">
         <!-- <p-toast position="top-center" key="t-msg"></p-toast> -->
         <p-panel header="FeedingChargesType Report">
             <p-card>
                 <div class="p-col-12 no-pad-top">
                     <div class="p-grid">
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_accountingyear">Accounting Year<span class="form-mandatory-field">*</span></label></div>
+                                    <p-dropdown name="_accountingyear" [options]="AccountingyearOptions"
+                                        [(ngModel)]="Accountingyear" (onChange)="loadTable()" (onClick)="onSelect('AY')"
+                                        required >
+                                    </p-dropdown> </div>
                     </div>
                 </div>
-                <div class="p-col-12 p-md-12 p-lg-12">
+                <div class="p-col-12 p-md-6 p-lg-12">
                     <div style="text-align: right;">
                         <button pButton type="button" icon="pi pi-file-excel" label="Export"
                             style="color: yellowgreen;" (click)="dt.exportCSV()"

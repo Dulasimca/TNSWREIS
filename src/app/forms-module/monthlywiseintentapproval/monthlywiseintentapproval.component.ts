@@ -71,14 +71,14 @@ export class MonthlywiseintentapprovalComponent implements OnInit {
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     
-    this.Districtcode = this.logged_user.districtCode;
-    this.Talukid = this.logged_user.talukId;
-    this.HostelId = this.logged_user.hostelId;
+    // this.Districtcode = this.logged_user.districtCode;
+    // this.Talukid = this.logged_user.talukId;
+    // this.HostelId = this.logged_user.hostelId;
      
     this.cols = [
-      { field: 'Districtname', header: 'District code' },
-      { field: 'Talukname', header: 'Taluk id' },
-      { field: 'HostelName', header: 'Hostel Id' },
+      { field: 'Districtname', header: 'District ' },
+      { field: 'Talukname', header: 'Taluk ' },
+      { field: 'HostelName', header: 'Hostel ' },
       { field: 'ShortYear', header: 'Accounting Year' },
       { field: 'CommodityName', header: 'Commodity Name' },
       { field: 'UnitName', header: 'Unit' },
@@ -214,7 +214,7 @@ export class MonthlywiseintentapprovalComponent implements OnInit {
         this.taluk = null;
         this.talukOptions = [];
       } 
-      this.loadHostelList();
+     this.loadHostelList();
     }
 
   onView()
@@ -250,13 +250,14 @@ loadTable() {
       console.log('hi')
     this.loading = true;
     const params = {
-      'Districtcode' : this.district,
+    'Districtcode' : this.district,
     'Talukid': this.taluk,
     'HostelId': this.hostelName,
     'AccountingId': 4,
 
     }
     this.restApiService.getByParameters(PathConstants.MonthlywiseIntent_Get,params).subscribe(res => {
+     console.log("abc")
       if (res.Table !== undefined && res.Table !== null) {
         if (res.Table.length !== 0) {
           this.hostelData = res.Table;

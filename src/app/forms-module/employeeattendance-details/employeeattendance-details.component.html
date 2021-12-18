@@ -7,14 +7,55 @@
                     <div #row1 class="p-col-12 p-md-12 p-lg-12">
                         <div class="p-grid">
                             <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_districtname">District Name</label>
+                                <input type="text" name="_districtname" pInputText [(ngModel)]="districtName"
+                                     />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_talukname">Taluk Name</label>
+                                <input type="text" name="_talukname" pInputText [(ngModel)]="talukName"
+                                     />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-4">
+                                <label for="_hostelname">Hostel Name</label>
+                                <input type="text" name="_hostelname" pInputText [(ngModel)]="hostelName"
+                                     />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_date">Attendance Date<span
                                     class="form-mandatory-field">*</span></label></div>
-                        <p-calendar [showOtherMonths]="false" [(ngModel)]="attendanceDate"
-                            name="_date" [showIcon]="true" [monthNavigator]="true" inputId="attendanceDate"
+                        <p-calendar [showOtherMonths]="false" [maxDate]="maxDate" [(ngModel)]="attendanceDate"
+                            name="_date" [showIcon]="true" (onSelect)="onView()" [monthNavigator]="true" inputId="attendanceDate"
                             required></p-calendar>
                             </div>
+                            <div #row2 class="p-col-12 p-md-12 p-lg-3">
+                                <label for="_empname">Employee Name</label>
+                                <input type="text" name="_empname" pInputText [(ngModel)]="employeeName" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
+                            <p-radioButton name="Flag" label="PRESENT" value=1 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>&nbsp;
+                                    <p-radioButton name="Flag" label="ABSENT" value=0 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_remarks">Remarks</label>
+                                <input type="text" name="_remarks" pInputText [(ngModel)]="remarks" />
+                            </div>
+                            <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="Enter" (click)="onEnter()"
+                                 class="btn-bg"></button>&nbsp;
+                                 <button pButton type="button" label="Submit" [disabled]="(disableSubmit)" (click)="onSubmit()"
+                                 class="btn-bg"></button>
+                                    <!-- <button pButton type="button" label="View" (click)="onView()"
+                                    class="btn-bg"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" 
+                                    icon="pi pi-times-circle" (click)="onClear()"></button> -->
+                            </div>
                         </div>
-                        <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                        <p-table #t [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                         [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
                         styleClass="p-datatable-gridlines">
                         <ng-template pTemplate="header" let-columns>
@@ -23,20 +64,29 @@
                                 <th *ngFor="let col of columns">
                                     {{col.header}}
                                 </th>
+                                <th>Attendance Status</th>
                                 <th>Present/Absent</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                            <tr [pSelectableRow]="rowData" class="cursor-pointer"
-                                (dblclick)="onRowSelect($event, rowData)">
+                            <tr>
                                 <td>{{rowIndex+1}}</td>
                                 <td *ngFor="let col of columns" [style.text-align]="col.align">
                                     {{rowData[col.field]}}
                                 </td>
-                                <td>
-                                    <p-radioButton name="Flag" label="INACTIVE" value=0
-                                    [(ngModel)]="selectedType" required>
-                                </p-radioButton>
+                                <td *ngIf="(rowData.status == 'Present')">
+                                    <i class="status-icon-green pi pi-check"></i>
+                                </td>
+                                <td *ngIf="(rowData.status == 'Absent')">
+                                    <i class="status-icon-red pi pi-times"></i>
+                                </td>   
+                                <td *ngIf="showediticon">
+                                    <button style="height: 1.8rem;" (click)="onEdit(rowData)"
+                                     icon="pi pi-pencil" pButton type="button">
+                                    </button>
+                                </td>
+                                <td *ngIf="!showediticon">
+                                    <span>{{rowData.status}}</span>      
                                 </td>
                             </tr>
                         </ng-template>
@@ -45,5 +95,14 @@
                 </form>
             </p-card>
         </p-panel>
+        <p-confirmDialog #cd [style]="{width: '50vw'}">
+            <ng-template pTemplate="header">
+              <span>Alert</span>
+          </ng-template>
+          <ng-template pTemplate="footer">
+              <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+              <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+          </ng-template>
+          </p-confirmDialog>
     </div>
 </div>

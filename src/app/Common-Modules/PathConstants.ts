@@ -75,6 +75,7 @@ public static readonly HostelInfraStructure_Post = 'HostelInfraStructure/Post';
 public static readonly HostelInfraStructure_Get = 'HostelInfraStructure/Get';
 public static readonly StudentFacility_Post = 'StudentFacility/Post';
 public static readonly StudentFacility_Get = 'StudentFacility';
+public static readonly StudentFacilityType_Get = 'StudentFacilityType';
 public static readonly StudentFacilityDetails_Get = 'StudentFacilityDetails/Get';
 
 public static readonly MonthlywiseIntent_Post = 'MonthlywiseIntent/Post';
@@ -105,6 +106,12 @@ public static readonly MonthlywiseIntent_put = 'MonthlywiseIntent/put';
 public static readonly EmployeeDesignation_Get = 'EmployeeDesignation';
 public static readonly EmployeeDetails_Post = 'EmployeeDetails/Post';
 public static readonly EmployeeDetails_Get = 'EmployeeDetails/Get';
+public static readonly EmployeeDetails_put = 'EmployeeDetails/Put';
+
+public static readonly EmployeeAttendance_Get = 'EmployeeAttendance/Get';
+public static readonly EmployeeAttendance_Post = 'EmployeeAttendance/Post';
+
+
 public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
 public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
 
