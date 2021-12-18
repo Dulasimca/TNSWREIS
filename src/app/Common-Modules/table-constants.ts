@@ -153,11 +153,12 @@ export class TableConstants {
             { field: 'TotalStudent', header: 'Student Count', align: 'right !important'},
         ]
         this.studentFacilityReportCols = [
-            { field: 'Districtname', header: 'Districtname', width: '200px', align: 'left !important'},
-            { field: 'Talukname', header: 'HostelName', width: '200px', align: 'left !important'},
-            { field: 'HostelName', header: 'HostelName', width: '200px', align: 'left !important'},
-            { field: 'FacilityName', header: 'FacilityName', width: '200px', align: 'left !important'},
-            { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px', align: 'left !important'},
+            { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important'},
+            { field: 'Talukname', header: 'Hostel Name', width: '200px', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', width: '200px', align: 'left !important'},
+            { field: 'FacilityName', header: 'Facility Name', width: '200px', align: 'left !important'},
+            { field: 'FacilityType', header: 'Facility Type', width: '200px', align: 'left !important'},
+            { field: 'NoOfCounts', header: 'No Of Counts', width: '200px', align: 'left !important'},
             { field: 'Remarks', header: 'Remarks', width: '200px', align: 'left !important'},
         ]
         this.employeeAttendanceReportCols = [

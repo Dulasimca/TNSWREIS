@@ -26,7 +26,14 @@
                                         <div><label for="_hostel">Hostel Name</label>
                                         </div>
                                         <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
-                                         (onChange)="loadTable()" required>
+                                          required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3">
+                                        <div><label for="_facility">Facility Type</label>
+                                        </div>
+                                        <p-dropdown name="_facility" [options]="facilityOptions" (onClick)="onSelect('SF')"
+                                           (onChange)="loadTable()" [(ngModel)]="FacilityType" required>
                                         </p-dropdown>
                                     </div>
                                 </div>
