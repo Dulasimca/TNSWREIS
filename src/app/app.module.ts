@@ -32,6 +32,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
 import {TreeTableModule} from 'primeng/treetable';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -198,6 +199,7 @@ import { StudentAttendanceComponent } from './forms-module/student-attendance/st
     ChartModule,
     GalleriaModule,
     TreeTableModule,
+    ToggleButtonModule,
     BlockUIModule.forRoot(),
   ],
 

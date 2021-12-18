@@ -84,6 +84,13 @@ export class UsermasterComponent implements OnInit {
         break;
     }
   }
+  refreshFields(value) {
+    if(value === 'D') {
+      this.taluk = null;
+      this.talukOptions = [];
+    } 
+    this.selectDistrict();
+  }
   // hstl based on district 
   selectDistrict() {
     this.hostelName = null;

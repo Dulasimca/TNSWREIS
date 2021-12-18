@@ -52,6 +52,7 @@ import { EmployeeReportComponent } from './Reports/employee-report/employee-repo
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
 import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
+import { StudentAttendanceComponent } from './forms-module/student-attendance/student-attendance.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -67,7 +68,7 @@ const routes: Routes = [
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
   { path: 'idcard-info', component:IdCardInfoComponent, canActivate: [AuthGuard]},
-  { path: 'warden-report', component:MonthlywiseintentComponent, canActivate: [AuthGuard]},
+  { path: 'warden-report', component:WardenReportComponent, canActivate: [AuthGuard]},
   { path: 'dailyconsumption-report', component:DailyconsumptionReportComponent, canActivate: [AuthGuard]},
   { path: 'purchaseorder-report', component:PurchaseorderReportComponent, canActivate: [AuthGuard]},
   { path: 'student-report', component:StudentDetailsComponent, canActivate: [AuthGuard]},
@@ -97,6 +98,9 @@ const routes: Routes = [
   { path: 'to-fundmanagement', component:TOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'hostel-fundmanagement', component:HostelFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'fund-report', component:FundmanagementReportComponent, canActivate: [AuthGuard]},
+  { path: 'student-attendance', component:StudentAttendanceComponent, canActivate: [AuthGuard]},
+  
+
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent, canActivate: [AuthGuard]},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent, canActivate: [AuthGuard]},
