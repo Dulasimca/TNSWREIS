@@ -104,6 +104,7 @@ public static readonly EmployeeDetails_Post = 'EmployeeDetails/Post';
 public static readonly EmployeeDetails_Get = 'EmployeeDetails/Get';
 public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
 public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
+public static readonly StudentTransferDetails_Put = 'StudentTransferDetails/Put';
 
 
 }
