@@ -2,7 +2,7 @@
     <div class="p-grid">
         <div class="p-col-12 p-md-12 p-lg-12">
             <p-toast position="top-center" key="t-msg"></p-toast>
-            <p-panel header="Student Transfer">
+            <p-panel header="Student Renewal/Discontinue">
                     <p-card>
                         <div class="p-col-12 no-pad-top">
                             <div class="p-grid">
@@ -43,7 +43,7 @@
                                             let-columns="columns">
                                             <tr>
                                                 <td>
-                                                    <p-tableCheckbox [value]="rowData" (click)="onToggle(rowData)"></p-tableCheckbox>
+                                                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                                 </td>
                                                 <td style="width: 100px">{{rowIndex+1}}</td>
                                                 <td *ngFor="let col of columns" [style.text-align]="col.align">

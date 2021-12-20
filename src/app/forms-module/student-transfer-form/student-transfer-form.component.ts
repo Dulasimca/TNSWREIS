@@ -80,7 +80,6 @@ export class StudentTransferFormComponent implements OnInit {
   }
 
   onRowSelect($event) {
-    console.log('ee', $event)
     if ($event !== undefined && $event !== null) {
       this.studentDetails.forEach(x => {
         if (x.StudentId === $event.data.StudentId || x.showStatusSelector === 'true') {
@@ -95,18 +94,20 @@ export class StudentTransferFormComponent implements OnInit {
   }
 
   onRowUnselect($event) {
-    if ($event !== undefined && $event !== null && this.selectedStudentList.length !== 0) {
+    if ($event !== undefined && $event !== null) {
       this.studentDetails.forEach(x => {
         if (x.StudentId === $event.data.StudentId) {
           x.showStatusSelector = 'false';
           x.checked = false;
         }
       })
+      if(this.selectedStudentList.length !== 0) {
       this.selectedStudentList.forEach((s, index) => {
         if (s.StudentId === $event.data.StudentId) {
           this.selectedStudentList.splice(index, 1);
         }
       })
+    }
       this._table.value = this.studentDetails;
     } else {
       this.showHeader = false;
@@ -121,7 +122,7 @@ export class StudentTransferFormComponent implements OnInit {
       'AcademicYear': data.AcademicYear,
       'EMISNO': data.Emisno,
       'Remarks': data.Remarks,
-      'AcademicStatus': (status === 1) ? 1 : 0, //1 = pass & 0 = fail
+      'AcademicStatus': (status === 1) ? 1 : 0, //1 = pass & 0 = fail (in student approval table)
       'Flag': 1, // default
     })
   }
@@ -137,7 +138,7 @@ export class StudentTransferFormComponent implements OnInit {
           'AcademicYear': s.AcademicYear,
           'EMISNO': s.Emisno,
           'Remarks': s.Remarks,
-          'AcademicStatus': 2, //discontinued 
+          'AcademicStatus': 1, //discontinued (in student table)
           'Flag': 1 // default
         })
       })
@@ -165,43 +166,60 @@ export class StudentTransferFormComponent implements OnInit {
 
   onToggle(data) {
     console.log('data', data)
-   
+
   }
 
-  isStudentStatus(): boolean {
-    var result;
-    if(this.studentDetails.length !== 0) {
+  isStudentStatus(): [boolean, string] {
+    var isValid;
+    var msg = '';
+    if (this.studentDetails.length !== 0) {
       var checkedList = this.studentDetails.filter(f => {
         return f.checked;
       })
-        this.studentDetails.forEach(t => {
-        if(t.checked && this.selectedStudentList.length === 0) {
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please choose pass/fail for all selected students !'
-          });
-          result = false;
-        } else if(checkedList.length > this.selectedStudentList.length) {
-          console.log('count', checkedList.length, this.selectedStudentList.length);
-          result = false;
-            this._messageService.clear();
-            this._messageService.add({
-              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-              summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please choose pass/fail for all selected students !'
-            });
-          } else {
-            result = true;
-          }
+      this.studentDetails.forEach(t => {
+        if (t.checked && this.selectedStudentList.length === 0) {
+          msg = 'Please choose pass/fail for all selected students !';
+          isValid = false;
+        } else if (checkedList.length > this.selectedStudentList.length) {
+          msg = 'Please choose pass/fail for all selected students !';
+          isValid = false;
+        } else {
+          msg = '';
+          isValid = true;
+        }
       })
-      return result;
+      return [isValid, msg];
     }
   }
 
   onSubmit() {
     this.unSelectedStudents();
-    var result: boolean = this.isStudentStatus();
-    console.log('res', result)
-    
+    var result: [boolean, string] = this.isStudentStatus();
+    const isValid = result[0];
+    const msg = result[1];
+    if (isValid) {
+      this._restApiService.post(PathConstants.StudentTransferDetails_Post, this.selectedStudentList).subscribe(res => {
+        if (res) {
+          console.log('student data is inserted successfully')
+        } else {
+          console.log('student data is not inserted')
+        }
+      })
+      this._restApiService.put(PathConstants.StudentTransferDetails_Put, this.unSelectedStudentList).subscribe(res => {
+        if (res) {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+        }
+      })
+    } else {
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: msg
+      });
+    }
   }
 }

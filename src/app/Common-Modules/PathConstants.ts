@@ -118,6 +118,7 @@ public static readonly EmployeeAttendance_Post = 'EmployeeAttendance/Post';
 
 public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
 public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
+public static readonly StudentTransferDetails_Put = 'StudentTransferDetails/Put';
 
 
 }
