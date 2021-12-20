@@ -40,6 +40,20 @@ export class HostelinfrastructureComponent implements OnInit {
   HostelId:any;
   CreatedDate:Date;
   hostelinfraId = 0;
+  floor: any;
+  studentStayingRoom: any;
+  wardenStayingRoom: any;
+  kitchen: any;
+  bathroom: any;
+  toilet: any;
+  urine: any;
+  studentStudyingRoom: any;
+  floorOptions: SelectItem[];
+  showDialog: boolean;
+  floorwisedetails?:any = [];
+  floorwisedetail: any;
+  floorwisedetaildata: any;
+
  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;
 
@@ -61,10 +75,7 @@ export class HostelinfrastructureComponent implements OnInit {
     this.disableFields = true;
     this.onview();
 
-
     this.cols = [
-
-      
       { field: 'Districtname', header: 'District' },
       { field: 'Talukname', header: 'Taluk' },
       { field: 'HostelName', header: 'Hostel' },
@@ -76,6 +87,15 @@ export class HostelinfrastructureComponent implements OnInit {
       { field: 'Bathroom', header: 'Bathroom' },
       { field: 'CreatedDate', header: 'Created Date' },
     ]
+    this.floorwisedetail = [
+      { field: 'Districtname', header: 'District' },
+      { field: 'Talukname', header: 'Taluk' },
+      { field: 'HostelName', header: 'Hostel' },
+    ]
+    this._restApiService.get(PathConstants.FloorWiseDetails_Get).subscribe(floorwisedetails => {
+      this.floorwisedetails = floorwisedetails;
+      console.log('t',this.floorwisedetails)
+    })
   }
 
   onSubmit()
@@ -136,10 +156,23 @@ export class HostelinfrastructureComponent implements OnInit {
     })
    
   }
+
+  onSelect(type) { 
+    let floorwiseSelection = [];
+    switch (type) {
+    case 'FD':
+      this.floorwisedetails.forEach(c => {
+        floorwiseSelection.push({ label:c.FloorName, value: c.FloorId });
+    })
+    this.floorOptions = floorwiseSelection;
+    this.floorOptions.unshift({ label: '-select', value: null });
+    break;
+}
+}
+
+  
   
   onview() {
-   
-  
       const params = {
         'Districtcode'	: this.Districtcode,
         'Talukid'	: this.Talukid ,
@@ -182,6 +215,65 @@ export class HostelinfrastructureComponent implements OnInit {
       }
     }) 
     }
+
+    onUpdate() {
+      const params = {
+        'Id': this.hostelinfraId,
+        'Districtcode':  this.Districtcode,
+        'Talukid': this.Talukid,
+        'HostelId': this.HostelId,
+        'FloorNo'	: this.floor,
+        'StudentRoom'	: this.studentStayingRoom ,
+        'WardenRoom'	: this.wardenStayingRoom,
+        'BathRoomNos' : this.bathroom,
+        'ToiletRoomNos': this.toilet,
+        'UrinalNos': this.urine,
+        'StudyingArea': this.studentStudyingRoom,
+        'Kitchen': this.kitchen
+    };
+    this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post,params).subscribe(res => {
+      console.log(res)
+      if (res !== undefined && res !== null) {
+        if (res) {
+         this.blockUI.stop();
+         this.onClear();
+         this.showDialog = false;
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+          
+        } else {
+          this.blockUI.stop();
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+      } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+  
+      }
+    })
+   
+  }
+
+    
     onClear()
     {
      this.hostelinfraId = 0;
@@ -192,6 +284,12 @@ export class HostelinfrastructureComponent implements OnInit {
      this.BuildingArea='';
      this.Bathroom='';
      this.disableFields = true;
+    }
+
+    onEdit(data) {
+      this.showDialog = true;
+      // this.hostelinfraId = data.Id;
+
     }
 onRowSelect(event, selectedRow)
 {
