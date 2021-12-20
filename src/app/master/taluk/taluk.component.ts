@@ -39,8 +39,8 @@ export class TalukComponent implements OnInit {
 
     this.cols = [
 
-      { field: 'Districtcode', header: 'District Code', width: '72px' },
-      { field: 'Districtname', header: 'District Name' },
+      { field: 'Districtcode', header: 'ID', width: '72px' },
+      { field: 'Districtname', header: 'District' },
       { field: 'Talukname', header: 'Taluk Name' },
       { field: 'Flag', header: 'Status' },
 

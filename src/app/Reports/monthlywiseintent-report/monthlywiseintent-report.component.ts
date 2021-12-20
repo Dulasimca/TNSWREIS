@@ -155,7 +155,7 @@ export class MonthlywiseintentReportComponent implements OnInit {
       const params = {
         'Districtcode' : this.district,
         'Talukid': this.taluk,
-        'HostelId': this.hostel,
+        'HostelId': this.hostel,  
         'AccountingId': 4,
       }
       console.log(params)

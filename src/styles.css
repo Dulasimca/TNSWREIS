@@ -171,6 +171,12 @@ height: 25px !important;
 .menu-logo {
     margin-left: 5px;
 }
+.status-icon-green {
+    color: #1bd521;
+}
+.status-icon-red {
+    color: #f00a0a;
+}
 
 @media only screen and (max-width: 600px) {
     .header-text {

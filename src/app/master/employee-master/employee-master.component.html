@@ -1,4 +1,5 @@
-<div class="p-grid">
+<block-ui>
+    <div class="p-grid">
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <p-panel header="Employee Details">
@@ -70,6 +71,9 @@
                                         <th *ngFor="let col of columns">
                                             {{col.header}}
                                         </th>
+                                        <th>
+                                            End Date Update
+                                        </th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
@@ -79,6 +83,11 @@
                                         <td *ngFor="let col of columns" [style.text-align]="col.align">
                                             {{rowData[col.field]}}
                                         </td>
+                                        <td>
+                                            <button style="height: 1.8rem;" (click)="onEdit(rowData)"
+                                            icon="pi pi-pencil" pButton type="button">
+                                           </button>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -86,5 +95,36 @@
                 </form>
             </p-card>
         </p-panel>
+        <p-dialog #dialog header="Employee End Date Update" [(visible)]="showDialog" [modal]="showDialog"
+               [maximizable]="true">
+                <div class="p-grid div-main">
+                    <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                        <div><label for="_empname">Employee Name</label>
+                        </div>
+                        <input type="text" name="_empname" readonly="true" pInputText [(ngModel)]="empName">
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                        <div><label for="_design">Designation</label>
+                        </div>
+                        <input type="text" name="_design" readonly="true" pInputText [(ngModel)]="designation">
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                        <div><label for="_enddate">End Date<span
+                            class="form-mandatory-field">*</span></label></div>
+                <p-calendar [showOtherMonths]="false" [(ngModel)]="endDate"
+                    name="_enddate" [showIcon]="true" [monthNavigator]="true" 
+                    required></p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                        <div><label for="_remarks">Remarks<span class="form-mandatory-field">*</span></label></div>
+                        <input type="text" name="_remarks" [(ngModel)]="remarks" pInputText required />
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                        <button pButton type="button" label="Update" (click)="onUpdate()"
+                         class="btn-bg"></button>
+                   </div>
+                </div>
+                   </p-dialog>   
     </div>
 </div>
+</block-ui>

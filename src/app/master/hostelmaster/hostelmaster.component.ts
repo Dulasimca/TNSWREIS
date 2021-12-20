@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/Interfaces/user';
 import { MasterService } from 'src/app/services/master-data.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-hostelmaster',
@@ -54,14 +55,16 @@ export class HostelmasterComponent implements OnInit {
   showDialog: boolean;
   hostelImage : string;
   policeStationAddress: string;
+  hostelOpeningDate: Date = new Date();
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
-    private messageService: MessageService,private _authService: AuthService) { }
+    private _datepipe: DatePipe, private messageService: MessageService,private _authService: AuthService) { }
 
   public ngOnInit(): void {
    this.cols = [
      { field: 'HostelName', header: 'HostelName', width: '100px'},
      { field: 'HostelNameTamil', header: 'HostelNameTamil', width: '100px'},
+     { field: 'HostelOpeningDate', header: 'Hostel Opening Date', width: '100px'},
      { field: 'FunctioningName', header: 'Functioning Type', width: '100px'},
      { field: 'Name', header: 'HType', width: '100px'},
      { field: 'Districtname', header: 'District', width: '100px'},
@@ -144,7 +147,8 @@ export class HostelmasterComponent implements OnInit {
       'Pincode': this.pincode,
       'TotalStudent': this.Totalstudent,
       'Phone': this.mobileNo,
-      'PoliceStationAddress': this.policeStationAddress
+      'PoliceStationAddress': this.policeStationAddress,
+      'HostelOpeningDate': this._datepipe.transform(this.hostelOpeningDate, 'MM/dd/yyyy')
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
         if (res) {
@@ -236,6 +240,7 @@ export class HostelmasterComponent implements OnInit {
     this.Totalstudent = selectedRow.TotalStudent;
     this.mobileNo = selectedRow.Phone;
     this.policeStationAddress = selectedRow.PoliceStationAddress;
+    this.hostelOpeningDate = (selectedRow.HostelOpeningDate !== null) ? new Date(selectedRow.HostelOpeningDate) : null;
  }
   }
 
