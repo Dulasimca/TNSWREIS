@@ -32,6 +32,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
 import {TreeTableModule} from 'primeng/treetable';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -104,6 +105,7 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
 
 import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 import { StudentAttendanceComponent } from './forms-module/student-attendance/student-attendance.component';
+import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-report/employeeattendance-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -162,6 +164,7 @@ import { StudentAttendanceComponent } from './forms-module/student-attendance/st
     FeedingchargestypeReportComponent,
     EmployeeattendanceDetailsComponent,
     StudentAttendanceComponent,
+    EmployeeattendanceReportComponent,
     
   ],
   imports: [
@@ -198,6 +201,7 @@ import { StudentAttendanceComponent } from './forms-module/student-attendance/st
     ChartModule,
     GalleriaModule,
     TreeTableModule,
+    ToggleButtonModule,
     BlockUIModule.forRoot(),
   ],
 

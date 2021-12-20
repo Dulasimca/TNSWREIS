@@ -130,10 +130,6 @@ export class StudentDetailsComponent implements OnInit {
       this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
           res.forEach(r => {
-            var len = r.aadharNo.toString().length;
-            if(len > 11) {
-              r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
-            }
             r.isDApproved = (r.districtApproval !== null && r.districtApproval !== 0 && (r.districtApproval)) ? 'true' : 'false';
             r.isTAprroved = (r.talukApproval !== null && r.talukApproval !== 0 && (r.talukApproval)) ? 'true' : 'false';
             if (this.roleId === 1 || this.roleId === 4) {
@@ -223,15 +219,17 @@ export class StudentDetailsComponent implements OnInit {
   }
 
   insertStudentTransferDetails() {
-    const params = {
+    const params = [];
+    params.push({
       'Id': 0,
       'HostelId': this.student.hostelId,
       'StudentId': this.studentId,
       'AcademicYear': this.student.academicYear,
       'EMISNO': this.student.emisno,
-      'AcademicStatus': 1, //approved 
+      'Remarks': '',
+      'AcademicStatus': 1, //approved (default pass)
       'Flag': 1 // default
-    }
+    })
     this._restApiService.post(PathConstants.StudentTransferDetails_Post, params).subscribe(res => {
       if (res) {
         console.log('student data is inserted successfully')

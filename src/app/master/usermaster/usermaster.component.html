@@ -43,7 +43,7 @@
                                         <div><label for="_district">District<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                            (onClick)="onSelect('D')" (onChange)="selectDistrict()" required>
+                                            (onClick)="onSelect('D')" (onChange)="refreshFields('D')" required>
                                         </p-dropdown>
                                     </div>
                                     <div *ngIf="showTaluk" class="p-col-12 p-md-6 p-lg-2">

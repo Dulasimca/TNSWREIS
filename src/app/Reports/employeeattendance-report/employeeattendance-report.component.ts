@@ -8,14 +8,14 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-employee-report',
-  templateUrl: './employee-report.component.html',
-  styleUrls: ['./employee-report.component.css']
+  selector: 'app-employeeattendance-report',
+  templateUrl: './employeeattendance-report.component.html',
+  styleUrls: ['./employeeattendance-report.component.css']
 })
-export class EmployeeReportComponent implements OnInit {
-
+export class EmployeeattendanceReportComponent implements OnInit {
   hostel: any;
   district: any;
   taluk: any;
@@ -60,12 +60,15 @@ export class EmployeeReportComponent implements OnInit {
   hostelCols: any;
   hostelData: any = [];
   loading: boolean;
+  attendanceDate: Date = new Date();
+  fromdate: Date = new Date();
+  todate: Date = new Date();
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
-    private _messageService: MessageService, private tableConstants: TableConstants) { }
+    private _messageService: MessageService, private tableConstants: TableConstants,private _datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.hostelCols = this.tableConstants.employeeReportCols
+    this.hostelCols = this.tableConstants.employeeAttendanceReportCols
     this.Slno = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
@@ -152,9 +155,10 @@ export class EmployeeReportComponent implements OnInit {
         'DCode': this.district,
         'TCode': this.taluk,
         'HostelId': this.hostel,
-        
+        'FromDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
+        'Todate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy')
       }
-      this.restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res => {
+      this.restApiService.getByParameters(PathConstants.EmployeeAttendance_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
             this.hostelData = res.Table;
@@ -179,3 +183,4 @@ export class EmployeeReportComponent implements OnInit {
     }
   }
 }
+

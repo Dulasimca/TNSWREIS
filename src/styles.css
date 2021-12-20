@@ -171,6 +171,12 @@ height: 25px !important;
 .menu-logo {
     margin-left: 5px;
 }
+.status-icon-green {
+    color: #1bd521;
+}
+.status-icon-red {
+    color: #f00a0a;
+}
 
 @media only screen and (max-width: 600px) {
     .header-text {
@@ -438,16 +444,40 @@ height: 25px !important;
     position: relative;
     display: block !important;
 }
+.p-treetable .p-treetable-footer, .p-treetable .p-treetable-thead>tr>th {
+    background: #099099 !important;
+    color: whitesmoke !important;
+    border-color: solid #208991 !important;
+}
+.p-treetable .p-treetable-footer, .p-treetable .p-treetable-thead>tr>th {
+    border: solid #f0f2f3 !important;
+    border-width: 1px !important;
+}
+.p-treetable .p-treetable-thead>tr>th {
+    text-align: center !important;
+}
 .p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
     background: #099099 !important;
     color: whitesmoke !important;
     border-color: solid #208991 !important;
+    padding: 0.5rem !important;
+}
+.p-treetable .p-treetable-tbody>tr>td {
+    padding: 0.3rem !important;
+}
+.p-treetable .p-treetable-footer, .p-treetable .p-treetable-thead>tr>th {
+    padding: .5rem !important;
 }
 .p-datatable .p-datatable-tbody >tr >td {
     padding: .5rem !important;
 }
 .p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead>tr>th {
     padding: 0.5rem !important;
+}
+.p-treetable .p-treetable-tbody>tr>td {
+    text-align: left;
+    border: solid #e2e4e5 !important;
+    border-width: 1px !important;
 }
 .p-dialog .p-dialog-header .p-dialog-title {
     font-size: 1.12rem !important;

@@ -48,7 +48,6 @@ export class EmployeeattendanceDetailsComponent implements OnInit {
 
     this.cols = [
       { field: 'FirstName', header: 'Employee Name', width: '100px', align: 'left !important' },
-      //{ field:'FirstName', header: 'Present/Absent', width: '100px', align: 'left !important'},
       { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important' },
       { field: 'Remarks', header: 'Remarks', width: '100px', align: 'left !important' }
     ];
@@ -62,8 +61,11 @@ export class EmployeeattendanceDetailsComponent implements OnInit {
   onView() {
     this.data = [];
     const params = {
-      'HCode': this.login_user.hostelId,
-      'AttendanceDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
+      'DCode' : this.login_user.districtCode,
+      'TCode' : this.login_user.talukId,
+      'HostelId': this.login_user.hostelId,
+      'FromDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
+      'Todate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy')
     }
     this._restApiService.getByParameters(PathConstants.EmployeeAttendance_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
@@ -85,7 +87,7 @@ export class EmployeeattendanceDetailsComponent implements OnInit {
             if (res !== null && res !== undefined && res.length !== 0) {
               res.Table.forEach(i => {
                 i.status = 'Present';
-                i.remarks = 'Present';
+                i.Remarks = 'Present';
                 i.AttendanceId = 0;
                 i.PresenAbsent = 1; 
                 i.AttendanceDate = this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy');

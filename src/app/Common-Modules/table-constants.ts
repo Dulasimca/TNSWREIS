@@ -18,7 +18,7 @@ export class TableConstants {
     monthlywiseintentReportCols:any = [];
     feedingchargetypeReportCols:any = [];
     StudentAttendanceTable: any = [];
-
+    employeeAttendanceReportCols: any = [];
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
         this.purcahseOrderColumns = [
@@ -110,9 +110,6 @@ export class TableConstants {
             { field: 'mobileNo', header: 'Mobile No.', align: 'right !important'},
             { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
             { field: 'courseTitle', header: 'Course', align: 'left !important'},
-            { field: 'address', header: 'Address', align: 'left !important'},
-            { field: 'aadharNoMasked', header: 'Aadhar No.', align: 'right !important'},
-            { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
         ];
 
         this.purchaseDetailsReportColumns = [
@@ -139,7 +136,8 @@ export class TableConstants {
 
         this.hostelReportCols = [
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
-             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
+            { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
+            { field: 'HostelOpeningDate', header: 'Hostel Opening Date', width: '100px'},
             { field: 'Name', header: 'Hostel Type', align: 'left !important'},
             { field: 'Districtname', header: 'District', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk', align: 'left !important'},
@@ -151,12 +149,22 @@ export class TableConstants {
             { field: 'TotalStudent', header: 'Student Count', align: 'right !important'},
         ]
         this.studentFacilityReportCols = [
-            { field: 'Districtname', header: 'Districtname', width: '200px', align: 'left !important'},
-            { field: 'Talukname', header: 'HostelName', width: '200px', align: 'left !important'},
-            { field: 'HostelName', header: 'HostelName', width: '200px', align: 'left !important'},
-            { field: 'FacilityName', header: 'FacilityName', width: '200px', align: 'left !important'},
-            { field: 'NoOfCounts', header: 'NoOfCounts', width: '200px', align: 'left !important'},
+            { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important'},
+            { field: 'Talukname', header: 'Hostel Name', width: '200px', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', width: '200px', align: 'left !important'},
+            { field: 'FacilityName', header: 'Facility Name', width: '200px', align: 'left !important'},
+            { field: 'FacilityType', header: 'Facility Type', width: '200px', align: 'left !important'},
+            { field: 'NoOfCounts', header: 'No Of Counts', width: '200px', align: 'left !important'},
             { field: 'Remarks', header: 'Remarks', width: '200px', align: 'left !important'},
+        ]
+        this.employeeAttendanceReportCols = [
+            { field: 'Districtname', header: 'Districtname', width: '100px', align: 'left !important'},
+            { field: 'Talukname', header: 'HostelName', width: '100px', align: 'left !important'},
+            { field: 'HostelName', header: 'HostelName', width: '100px', align: 'left !important'},
+            { field: 'FirstName', header: 'Employee Name', width: '100px', align: 'left !important' },
+            { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
+            { field: 'CreatedDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
+            { field: 'Remarks', header: 'Remarks', width: '100px', align: 'left !important' },
         ]
         this.employeeReportCols = [
             { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
@@ -196,7 +204,6 @@ export class TableConstants {
 
         this.studentAcademicStatusDetailsColumns = [
             { field: 'StudentName', header: 'Student Name' },
-            { field: 'Emisno', header: 'EMISNO.' },
             { field: 'Class', header: 'Class' },
         ];
 

@@ -37,6 +37,11 @@ export class EmployeeMasterComponent implements OnInit {
   HostelId: number;
   login_user: User;
   RowId: 0;
+  remarks: any;
+  endDate: Date = new Date();
+  showDialog: boolean;
+  empName: string;
+  designation: string;
   
   @ViewChild ('f', { static: false }) employeeForm: NgForm;
   constructor(private _authService: AuthService,private _masterService: MasterService
@@ -179,6 +184,7 @@ export class EmployeeMasterComponent implements OnInit {
 
 onRowSelect(event, selectedRow) {
   this.RowId = selectedRow.Id;
+  console.log('t',this.RowId)
   this.designationName = selectedRow.Designation;
   this.designationOptions = [{ label: selectedRow.DesignationName, value: selectedRow.Designation}];
   this.firstName = selectedRow.FirstName;
@@ -191,6 +197,60 @@ onRowSelect(event, selectedRow) {
   this.districtOptions = [{ label: selectedRow.NativeDistrict, value: selectedRow.NativeDistrictID}];
   this.mobileNo = selectedRow.MobileNo;
 }
+
+onEdit(data) {
+ this.showDialog = true;
+ this.RowId = data.Id;
+ this.empName = data.FirstName;
+ this.designation = data.DesignationName;
+}
+
+onUpdate() {
+    const params = {
+      'Id': this.RowId,
+      'EndDate': this.endDate,
+      'Remarks': this.remarks
+    }
+    this._restApiService.put(PathConstants.EmployeeDetails_put,params).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        if (res) {
+          //this.blockUI.stop();
+          this.onView();
+          this.showDialog = false;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+        } else {
+          //this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+     // this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+
+      }
+    })
+
+  }
+
 
 onClear() {
   this.employeeForm.form.markAsUntouched();

@@ -281,6 +281,15 @@ export class MasterService {
                     this.masterData = [];
                 }
                 break;
+                case 'M':
+                    if (this.data.Table18 !== undefined && this.data.Table18 !== null) {
+                        this.data.Table18.forEach(m => {
+                            this.masterData.push({ name: m.MealName, code: m.Id});
+                        })
+                    } else {
+                        this.masterData = [];
+                    }
+                    break;
         }
         return this.masterData;
     }
