@@ -107,6 +107,14 @@
                                     <input class="p-col-12" name="_pincode" type="text" pInputText minlength="6"
                                         maxlength="6" [(ngModel)]="pincode" appInputFormat="digitOnly" required />
                                 </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <div><label for="_nearestphc">Nearest PHC (Primary Health Centre) <span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input class="p-col-12" type="text" name="_nearestphc" [disabled]="disableFields"
+                                    pInputText  [(ngModel)]="nearestPhc" appInputFormat="noSpecialChars" required />
+                                        
+                                </div>
                             
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
