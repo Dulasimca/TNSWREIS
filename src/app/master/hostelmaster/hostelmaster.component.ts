@@ -56,6 +56,7 @@ export class HostelmasterComponent implements OnInit {
   hostelImage : string;
   policeStationAddress: string;
   hostelOpeningDate: Date = new Date();
+  nearestPhc: any;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private _datepipe: DatePipe, private messageService: MessageService,private _authService: AuthService) { }
@@ -148,7 +149,8 @@ export class HostelmasterComponent implements OnInit {
       'TotalStudent': this.Totalstudent,
       'Phone': this.mobileNo,
       'PoliceStationAddress': this.policeStationAddress,
-      'HostelOpeningDate': this._datepipe.transform(this.hostelOpeningDate, 'MM/dd/yyyy')
+      'HostelOpeningDate': this._datepipe.transform(this.hostelOpeningDate, 'MM/dd/yyyy'),
+      'NearestPhc': this.nearestPhc
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
         if (res) {
