@@ -54,6 +54,7 @@ export class HostelinfrastructureComponent implements OnInit {
   floorwisedetail: any;
   floorwisedetaildata: any;
   library: any;
+  hostelinfrastructureId: any;
 
  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;
@@ -75,7 +76,8 @@ export class HostelinfrastructureComponent implements OnInit {
     this.HostelId = this.login_user.hostelId;
     this.disableFields = true;
     this.onview();
-
+console.log("hi")
+console.log(this.hostelinfraId)
     this.cols = [
       { field: 'Districtname', header: 'District' },
       { field: 'Talukname', header: 'Taluk' },
@@ -200,6 +202,9 @@ export class HostelinfrastructureComponent implements OnInit {
           
           })
           this.data = res.Table;
+          this.hostelinfrastructureId = res.Table[0].Id;
+          console.log("hello")
+          console.log(this.hostelinfrastructureId)
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
@@ -219,11 +224,11 @@ export class HostelinfrastructureComponent implements OnInit {
 
     onUpdate() {
       const params = {
-        'Id': this.hostelinfraId,
+        'HostelInfraStructureId': this.hostelinfrastructureId,
         'Districtcode':  this.Districtcode,
         'Talukid': this.Talukid,
         'HostelId': this.HostelId,
-        'FloorNo'	: this.floor,
+        'FloorNo'	: 2,
         'StudentRoom'	: this.studentStayingRoom ,
         'WardenRoom'	: this.wardenStayingRoom,
         'BathRoomNos' : this.bathroom,
@@ -232,6 +237,8 @@ export class HostelinfrastructureComponent implements OnInit {
         'StudyingArea': this.studentStudyingRoom,
         'Kitchen': this.kitchen
     };
+
+    console.log(params)
     this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post,params).subscribe(res => {
       console.log(res)
       if (res !== undefined && res !== null) {
