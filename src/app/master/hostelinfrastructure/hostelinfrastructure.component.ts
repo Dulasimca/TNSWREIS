@@ -53,6 +53,7 @@ export class HostelinfrastructureComponent implements OnInit {
   floorwisedetails?:any = [];
   floorwisedetail: any;
   floorwisedetaildata: any;
+  library: any;
 
  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;

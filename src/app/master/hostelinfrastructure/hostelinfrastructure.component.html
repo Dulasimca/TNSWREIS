@@ -116,14 +116,16 @@
                 [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
                  <div class="p-grid div-main">
                      <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
-                         <div><label for="_floor">Floor</label>
+                         <div><label for="_floor">Floor<span class="form-mandatory-field">*</span>
+                        </label>
                          </div>
                          <p-dropdown name="_floor" [options]="floorOptions"
                          (onClick)="onSelect('FD')" [(ngModel)]="floor" required>
                                 </p-dropdown>
                      </div>
                      <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
-                         <div><label for="_studstayingroom">Student Staying Rooms</label>
+                         <div><label for="_studstayingroom">Student Staying Rooms<span class="form-mandatory-field">*</span>
+                        </label>
                          </div>
                          <input type="text" name="_studstayingroom"  pInputText [(ngModel)]="studentStayingRoom">
                      </div>
@@ -151,6 +153,10 @@
                      <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
                         <div><label for="_studentstudyingroom">Student Studying Area(In Square-Feet)<span class="form-mandatory-field">*</span></label></div>
                         <input type="text" name="_studentstudyingroom" [(ngModel)]="studentStudyingRoom" pInputText required />
+                     </div>
+                     <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                        <div><label for="_library">Library<span class="form-mandatory-field">*</span></label></div>
+                        <input type="text" name="_library" [(ngModel)]="library" pInputText required />
                      </div>
                      <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                          <button pButton type="button" label="Submit" (click)="onUpdate()"
