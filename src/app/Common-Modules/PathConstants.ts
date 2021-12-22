@@ -73,6 +73,10 @@ public static readonly FeedingChargesDetail_Get = 'FeedingChargesDetail/Get';
 public static readonly HostelInfraStructure_Post = 'HostelInfraStructure/Post';
 
 public static readonly HostelInfraStructure_Get = 'HostelInfraStructure/Get';
+
+public static readonly HostelInfraStructureExtent_Post = 'HostelInfraStructureExtent/Post';
+public static readonly FloorWiseDetails_Get = 'FloorWiseDetails';
+
 public static readonly StudentFacility_Post = 'StudentFacility/Post';
 public static readonly StudentFacility_Get = 'StudentFacility';
 public static readonly StudentFacilityType_Get = 'StudentFacilityType';
@@ -114,6 +118,7 @@ public static readonly EmployeeAttendance_Post = 'EmployeeAttendance/Post';
 
 public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
 public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
+public static readonly StudentTransferDetails_Put = 'StudentTransferDetails/Put';
 
 
 }

@@ -418,6 +418,7 @@ export class RegistrationComponent implements OnInit {
 
   onEdit(row, index) {
     if (row !== undefined && row !== null) {
+      this.obj = null;
       this.showDialog = false;
       this.registeredDetails.forEach(detail => {
         this.obj = detail;

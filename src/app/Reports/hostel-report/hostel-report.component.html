@@ -51,10 +51,21 @@
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                                <tr>
-                                    <td>{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns" [style.text-align]="col.align">
-                                        {{rowData[col.field]}}
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
                                     </td>
                                 </tr>
                             </ng-template>

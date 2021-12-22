@@ -19,7 +19,6 @@ export class TableConstants {
     feedingchargetypeReportCols:any = [];
     StudentAttendanceTable: any = [];
     employeeAttendanceReportCols: any = [];
-
     studentAcademicStatusDetailsColumns: any =[];
     constructor() {
         this.purcahseOrderColumns = [
@@ -111,9 +110,6 @@ export class TableConstants {
             { field: 'mobileNo', header: 'Mobile No.', align: 'right !important'},
             { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
             { field: 'courseTitle', header: 'Course', align: 'left !important'},
-            { field: 'address', header: 'Address', align: 'left !important'},
-            { field: 'aadharNoMasked', header: 'Aadhar No.', align: 'right !important'},
-            { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
         ];
 
         this.purchaseDetailsReportColumns = [
@@ -208,7 +204,6 @@ export class TableConstants {
 
         this.studentAcademicStatusDetailsColumns = [
             { field: 'StudentName', header: 'Student Name' },
-            { field: 'Emisno', header: 'EMISNO.' },
             { field: 'Class', header: 'Class' },
         ];
 
