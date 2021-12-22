@@ -64,7 +64,7 @@ const routes: Routes = [
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
-  { path: 'opening-balance', component: StudentTransferFormComponent, canActivate: [AuthGuard]},
+  // { path: 'student-transfer', component: StudentTransferFormComponent, canActivate: [AuthGuard]},
   { path: 'student-transfer', component: StudentTransferFormComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
@@ -76,8 +76,8 @@ const routes: Routes = [
   { path: 'openingblnc-report', component:OpeningbalanceReportComponent, canActivate: [AuthGuard]},
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
-
   { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
+  { path: 'opening-balance', component:OpeningBalanceComponent, canActivate: [AuthGuard]},
 
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path: 'purchase-bill-upload', component:PurchaseUploadComponent, canActivate: [AuthGuard]},
