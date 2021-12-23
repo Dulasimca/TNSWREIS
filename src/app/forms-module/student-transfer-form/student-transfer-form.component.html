@@ -3,6 +3,13 @@
         <div class="p-col-12 p-md-12 p-lg-12">
             <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Student Renewal/Discontinue">
+                <span style="font-size: 13px;color: #686666;">
+                    * Please select students from below list to transfer. <br/>
+                    * Once you selected the student, please click if he/she is pass/fail. <br/>
+                    * By clicking remarks, can type the feedback. <br/>
+                    * Once you selected all the required students along with pass/fail status, you can proceed to submit the list.<br/>
+                    * Once submitted, all the selected students will get transferred to same hostel.
+                </span>
                     <p-card>
                         <div class="p-col-12 no-pad-top">
                             <div class="p-grid">
@@ -12,13 +19,13 @@
                                             <div><label for="_year">Accounting Year<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect()"
-                                                [(ngModel)]="year" (onChange)="loadStudentDetails()" required>
+                                                [(ngModel)]="year" (onChange)="loadStudentDetails()">
                                             </p-dropdown>
                                         </div>
                                     <div class="p-col-9"></div>
-                                    <div class="p-col-6 p-md-6 p-lg-1">
+                                    <div class="p-col-6 p-md-6 p-lg-1" style="text-align: end; align-self: center;">
                                         <button pButton type="button" label="Submit" icon="pi pi-send" (click)="onSubmit()"
-                                        [disabled]="(studentDetailCols.length==0)"></button>
+                                        [disabled]="(selectedStudentList.length==0)"></button>
                                     </div>
                                 </div>
                             </div>

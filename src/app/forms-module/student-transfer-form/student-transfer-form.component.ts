@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -26,6 +27,7 @@ export class StudentTransferFormComponent implements OnInit {
   unSelectedStudentList: any[] = [];
   studentStatus: number;
   showHeader: boolean;
+  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('dt', { static: false }) _table: Table;
   constructor(private _masterService: MasterService, private _authService: AuthService,
     private _restApiService: RestAPIService, private _messageService: MessageService,
@@ -57,7 +59,13 @@ export class StudentTransferFormComponent implements OnInit {
         if (res !== undefined && res !== null) {
           if (res.length !== 0) {
             res.forEach(r => {
+              r.checked = false;
+              if(r.Flag) {
+                r.showStatusSelector = 'true';
+                r.studentStatus = r.AcademicStatus;
+              } else {
               r.showStatusSelector = 'false';
+              }
             })
             this.studentDetails = res;
             this.loading = false;
@@ -101,13 +109,13 @@ export class StudentTransferFormComponent implements OnInit {
           x.checked = false;
         }
       })
-      if(this.selectedStudentList.length !== 0) {
-      this.selectedStudentList.forEach((s, index) => {
-        if (s.StudentId === $event.data.StudentId) {
-          this.selectedStudentList.splice(index, 1);
-        }
-      })
-    }
+      if (this.selectedStudentList.length !== 0) {
+        this.selectedStudentList.forEach((s, index) => {
+          if (s.StudentId === $event.data.StudentId) {
+            this.selectedStudentList.splice(index, 1);
+          }
+        })
+      }
       this._table.value = this.studentDetails;
     } else {
       this.showHeader = false;
@@ -115,16 +123,31 @@ export class StudentTransferFormComponent implements OnInit {
   }
 
   onSelectToTransfer(data, status) {
+    if(data.checked) {
+    if(this.selectedStudentList.length !== 0) {
+      this.selectedStudentList.forEach((s, index) => {
+        if((s.Id * 1) === (data.TransferId * 1)) {
+          this.selectedStudentList.splice(index, 1);
+        }
+      })
+    } 
     this.selectedStudentList.push({
-      'Id': data.StudentId,
-      'HostelId': data.HostelID,
+      'Id': data.TransferId,
+      'HostelId': data.HostelId,
       'StudentId': data.StudentId,
       'AcademicYear': data.AcademicYear,
       'EMISNO': data.Emisno,
       'Remarks': data.Remarks,
       'AcademicStatus': (status === 1) ? 1 : 0, //1 = pass & 0 = fail (in student approval table)
-      'Flag': 1, // default
+      'Flag': 1, // default(update)
     })
+  } else {
+    this._messageService.clear();
+    this._messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select the corresponding checkbox of the student to select pass/fail !'
+    });
+  }
   }
 
   unSelectedStudents() {
@@ -132,14 +155,14 @@ export class StudentTransferFormComponent implements OnInit {
       this.unSelectedStudentList = [];
       this.studentDetails.forEach(s => {
         this.unSelectedStudentList.push({
-          'Id': s.StudentId,
-          'HostelId': s.HostelID,
+          'Id': s.TransferId,
+          'HostelId': s.HostelId,
           'StudentId': s.StudentId,
           'AcademicYear': s.AcademicYear,
           'EMISNO': s.Emisno,
           'Remarks': s.Remarks,
           'AcademicStatus': 1, //discontinued (in student table)
-          'Flag': 1 // default
+          'Flag': 1 // default(update)
         })
       })
       if (this.selectedStudentList.length !== 0) {
@@ -148,25 +171,20 @@ export class StudentTransferFormComponent implements OnInit {
           this.studentDetails.forEach(d => {
             if (s.StudentId !== d.StudentId) {
               this.unSelectedStudentList.push({
-                'Id': d.StudentId,
-                'HostelId': d.HostelID,
+                'Id': d.TransferId,
+                'HostelId': d.HostelId,
                 'StudentId': d.StudentId,
                 'AcademicYear': d.AcademicYear,
                 'EMISNO': d.Emisno,
                 'Remarks': d.Remarks,
                 'AcademicStatus': 2, //discontinued 
-                'Flag': 1 // default
+                'Flag': 1 // default(update)
               })
             }
           })
         })
       }
     }
-  }
-
-  onToggle(data) {
-    console.log('data', data)
-
   }
 
   isStudentStatus(): [boolean, string] {
@@ -198,23 +216,48 @@ export class StudentTransferFormComponent implements OnInit {
     const isValid = result[0];
     const msg = result[1];
     if (isValid) {
+      this.blockUI.start();
       this._restApiService.post(PathConstants.StudentTransferDetails_Post, this.selectedStudentList).subscribe(res => {
         if (res) {
-          console.log('student data is inserted successfully')
-        } else {
-          console.log('student data is not inserted')
-        }
-      })
-      this._restApiService.put(PathConstants.StudentTransferDetails_Put, this.unSelectedStudentList).subscribe(res => {
-        if (res) {
+          console.log('student data is inserted successfully');
+          this.blockUI.stop();
+          this.selectedStudentList = [];
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           });
+        } else {
+          this.blockUI.stop();
+          console.log('student data is not inserted')
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
         }
       })
+      if (this.unSelectedStudentList.length !== 0) {
+        this.blockUI.start();
+        this._restApiService.put(PathConstants.StudentTransferDetails_Put, this.unSelectedStudentList).subscribe(res => {
+          if (res) {
+            this.blockUI.stop();
+            this.studentDetails = [];
+            this.unSelectedStudentList = [];
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+              summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            });
+          } else {
+            this.blockUI.stop();
+          }
+        })
+      } else {
+        this.studentDetails = [];
+      }
     } else {
+      this.blockUI.stop();
       this._messageService.clear();
       this._messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,

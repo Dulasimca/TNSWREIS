@@ -46,7 +46,6 @@ import { HostelinfrastructureReportComponent } from './Reports/hostelinfrastruct
 import { MonthlywiseintentReportComponent } from './Reports/monthlywiseintent-report/monthlywiseintent-report.component';
 import { FeedingchargestypeReportComponent } from './Reports/feedingchargestype-report/feedingchargestype-report.component';
 
-
 import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
 import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
@@ -64,7 +63,7 @@ const routes: Routes = [
   { path: 'hostelmaster',component:HostelmasterComponent, canActivate: [AuthGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warden-details', component: WardenDetailsComponent, canActivate: [AuthGuard]}, 
-  { path: 'opening-balance', component: StudentTransferFormComponent, canActivate: [AuthGuard]},
+  { path: 'opening-balance', component: OpeningBalanceComponent, canActivate: [AuthGuard]},
   { path: 'student-transfer', component: StudentTransferFormComponent, canActivate: [AuthGuard]},
   { path: 'commodity-master', component: CommodityMasterComponent, canActivate: [AuthGuard]},
   { path: 'user-master', component:UsermasterComponent, canActivate: [AuthGuard]},
@@ -100,8 +99,6 @@ const routes: Routes = [
   { path: 'hostel-fundmanagement', component:HostelFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'fund-report', component:FundmanagementReportComponent, canActivate: [AuthGuard]},
   { path: 'student-attendance', component:StudentAttendanceComponent, canActivate: [AuthGuard]},
-  
-
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent, canActivate: [AuthGuard]},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent, canActivate: [AuthGuard]},
