@@ -38,7 +38,7 @@
                             </div>
                             <p-table #dt [value]="wardenDetails" [columns]="wardenDetailsCols"
                                 styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                                [rowsPerPageOptions]="[10,20,30,40]" totalRecords="totalRecords"
+                                [rowsPerPageOptions]="[10,20,30,40]" totalR       ecords="totalRecords"
                                 exportFilename="WARDEN_DETAILS_REPORT">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
@@ -98,7 +98,7 @@
         <div style="text-align: center;">
             <button pButton type="button" label="Submit" (click)="onSubmit()" [disabled]="(!endDate)"></button>
         </div>
-    </p-card>
+       </p-card>
 </p-dialog>
 <!-- warden transfer  -->
 <p-dialog header="Warden Transfer" [(visible)]="showTransfer" [modal]="true" [maximizable]="true"
