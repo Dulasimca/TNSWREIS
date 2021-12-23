@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { MessageService, SelectItem } from 'primeng/api';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
@@ -35,10 +37,19 @@ export class WardenReportComponent implements OnInit {
   endDate: any;
   joinDate: any;
   wardenId: number;
+  showTransfer: boolean;
+  @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
+  hostelName: any;
+  hostelOptions: SelectItem[];
+  districtName: any;
+  talukName: any;
+  hostels?: any;
+  data: any;
+
 
   constructor(private _tableConstants: TableConstants, private _restApiService: RestAPIService,
     private _messageService: MessageService, private _authService: AuthService,
-    private _masterService: MasterService, private _datePipe: DatePipe) { }
+    private _masterService: MasterService, private _datePipe: DatePipe, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.wardenDetailsCols = this._tableConstants.wardenDetailsReportColumns;
@@ -84,6 +95,33 @@ export class WardenReportComponent implements OnInit {
     }
   }
 
+  selectDistrict() {
+    this.hostelName = null;
+    this.hostelOptions = [];
+    let hostelSelection = [];
+    if(this.district !== undefined && this.district !== null && this.taluk !== undefined && this.taluk !== null){
+    const params = {
+      'Type': 1,
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
+        this.logged_user.hostelId : 0,
+    }
+    if (this.district !== null && this.district !== undefined) {
+      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          this.hostels = res.Table;
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
+          this.hostelOptions = hostelSelection;
+          this.hostelOptions.unshift({ label: '-select', value: null });
+        };
+      })
+    }
+  }
+  }
+
   loadTable() {
     this.wardenDetails = [];
     this.wardenDetailsAll = [];
@@ -101,6 +139,7 @@ export class WardenReportComponent implements OnInit {
             r.HostelJoinedDate = this._datePipe.transform(r.HostelJoinedDate, 'yyyy-MM-dd');
             r.ServiceJoinedDate = this._datePipe.transform(r.ServiceJoinedDate, 'yyyy-MM-dd');
             r.EndDate = (r.EndDate !== null) ? this._datePipe.transform(r.EndDate, 'yyyy-MM-dd') : null;
+            r.disableTransfer = (r.EndDate !== null) ? 'true' : 'false';
           })
           this.wardenDetailsAll = res.Table.slice(0);
           this.wardenDetails = res.Table;
@@ -116,6 +155,7 @@ export class WardenReportComponent implements OnInit {
       })
     }
   }
+
   filterTable() {
     if (this.wardenDetailsAll.length !== 0 && this.status !== undefined && this.status !== null) {
       if (this.status === 1) {
@@ -131,12 +171,73 @@ export class WardenReportComponent implements OnInit {
       }
     }
   }
-  onEdit(row) {
+   
+  onDiscontinue(row) {
     this.show = true;
     this.wardenName = row.WardenName;
     this.joinDate = row.HostelJoinedDate;
     this.wardenId = row.WardenId;
+    console.log('n', row)
+    
   }
+  onTransfer(rowData) {
+    this.showTransfer = true;
+    this.wardenName = rowData.WardenName;
+    this.joinDate = rowData.HostelJoinedDate;
+    this.wardenId = rowData.WardenId;
+    this.data = rowData;
+  }
+
+  Transfer(data) {
+console.log('g',this.data)
+const params = {
+  'Name': this.data.WardenName,
+  'GenderId': 1,
+  'DOB': this.data.DOB,
+  'Qualification': this.data.QId,
+  'HostelId': this.hostelName,
+  'HostelJoinedDate': this.data.HostelJoinedDate,
+  'ServiceJoinedDate': this.data.ServiceJoinedDate,
+  'Designation': this.data.Designation,
+  'EMail': this.data.EMail,
+  'PhoneNo': this.data.PhoneNo,
+  'AlternateNo': this.data.AlternateNo,
+  'Address1': this.data.Address1,
+  'Address2': this.data.Address2,
+  'Districtcode': this.districtName,
+  'Talukid': this.talukName,
+  'Pincode': this.data.Pincode,
+  'Flag': 1,
+  'WardenId': 0,
+  'WardenImage':''
+}
+this._restApiService.post(PathConstants.Warden_post, params).subscribe(res => {
+  if (res) {
+    console.log('res',res);
+    this.clear();
+    this._messageService.clear();
+    this._messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+      summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SubmitMessage
+    });
+  } else {
+    this._messageService.clear();
+    this._messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+      summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+    });
+  }
+}, (err: HttpErrorResponse) => {
+  if (err.status === 0 || err.status === 400) {
+    this._messageService.clear();
+    this._messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+      summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+    })
+  }
+})
+}
+ 
   onSubmit() {
     const params = {
       'WardenId': this.wardenId,
@@ -148,7 +249,7 @@ export class WardenReportComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.EndDateMsg
         });
         this.endDate = '';
       } else {
@@ -167,6 +268,9 @@ export class WardenReportComponent implements OnInit {
         })
       }
     })
+  }
+  clear() {
+    this.hostelOptions = [];
   }
 }
 

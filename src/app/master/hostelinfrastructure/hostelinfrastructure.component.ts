@@ -25,20 +25,20 @@ export class HostelinfrastructureComponent implements OnInit {
   hostelname: string;
   districtname: any;
   talukname: string;
-  TotalArea:any;
-  BuildingArea:any;
-  NoOfFloor:any;
-  NoOfRoom:any;
-  Kitchen:any;
-  Bathroom:any;
-  data:any;
-  cols:any;
+  TotalArea: any;
+  BuildingArea: any;
+  NoOfFloor: any;
+  // NoOfRoom: any;
+  // Kitchen: any;
+  // Bathroom: any;
+  data: any;
+  cols: any;
   disableFields: boolean;
-  hostelinfras:any;
-  Districtcode:any;
-  Talukid:any;
-  HostelId:any;
-  CreatedDate:Date;
+  hostelinfras: any;
+  Districtcode: any;
+  Talukid: any;
+  HostelId: any;
+  CreatedDate: Date;
   hostelinfraId = 0;
   floor: any;
   studentStayingRoom: any;
@@ -46,26 +46,26 @@ export class HostelinfrastructureComponent implements OnInit {
   kitchen: any;
   bathroom: any;
   toilet: any;
-  urine: any;
+  urinal: any;
   studentStudyingRoom: any;
   floorOptions: SelectItem[];
   showDialog: boolean;
-  floorwisedetails?:any = [];
+  floorwisedetails?: any = [];
   floorwisedetail: any;
   floorwisedetaildata: any;
   library: any;
   hostelinfrastructureId: any;
-
- @BlockUI() blockUI: NgBlockUI;
+  hostelInfraRow: any;
+  filteredFloorData: any[] = [];
+  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
-    private masterService: MasterService,  private messageService: MessageService, private _authService: AuthService,  
-    private _restApiService: RestAPIService, private _messageService: MessageService 
+    private masterService: MasterService, private messageService: MessageService, private _authService: AuthService,
+    private _restApiService: RestAPIService, private _messageService: MessageService
   ) { }
 
-  ngOnInit(): void 
-  {
+  ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
     this.districtname = this.login_user.districtName;
     this.talukname = this.login_user.talukName;
@@ -76,8 +76,6 @@ export class HostelinfrastructureComponent implements OnInit {
     this.HostelId = this.login_user.hostelId;
     this.disableFields = true;
     this.onview();
-console.log("hi")
-console.log(this.hostelinfraId)
     this.cols = [
       { field: 'Districtname', header: 'District' },
       { field: 'Talukname', header: 'Taluk' },
@@ -85,52 +83,59 @@ console.log(this.hostelinfraId)
       { field: 'TotalArea', header: 'Total Area' },
       { field: 'BuildingArea', header: 'Building Area' },
       { field: 'NoOfFloor', header: 'No Of Floor' },
-      { field: 'NoOfRoom', header: 'No Of Room' }, 
-      { field: 'Kitchen', header: 'Kitchen' },
-      { field: 'Bathroom', header: 'Bathroom' },
+      // { field: 'NoOfRoom', header: 'No Of Room' },
+      // { field: 'Kitchen', header: 'Kitchen' },
+      // { field: 'Bathroom', header: 'Bathroom' },
       { field: 'CreatedDate', header: 'Created Date' },
     ]
     this.floorwisedetail = [
       { field: 'Districtname', header: 'District' },
       { field: 'Talukname', header: 'Taluk' },
       { field: 'HostelName', header: 'Hostel' },
+      { field: 'FloorNo', header: 'Floors' },
+      { field: 'StudentRoom', header: 'No of Student Rooms' },
+      { field: 'WardenRoom', header: 'No of Warden Rooms' },
+      { field: 'BathRoomNos', header: 'No of BathRooms' },
+      { field: 'ToiletRoomNos', header: 'No of Toilets' },
+      { field: 'UrinalNos', header: 'No of Urinal' },
+      { field: 'Kitchen', header: 'No of Kitchens' },
+      { field: 'Library', header: 'No of Librarys' },
     ]
     this._restApiService.get(PathConstants.FloorWiseDetails_Get).subscribe(floorwisedetails => {
-      this.floorwisedetails = floorwisedetails;
-      console.log('t',this.floorwisedetails)
+      this.floorwisedetails = floorwisedetails.slice(0);
+      console.log('t', this.floorwisedetails)
     })
   }
 
-  onSubmit()
-  {
+  onSubmit() {
     this.blockUI.start();
     const params = {
       'Id': this.hostelinfraId,
-      'Districtcode':  this.Districtcode,
+      'Districtcode': this.Districtcode,
       'Talukid': this.Talukid,
       'HostelId': this.HostelId,
       'TotalArea': this.TotalArea,
       'BuildingArea': this.BuildingArea,
       'NoOfFloor': this.NoOfFloor,
-      'NoOfRoom': this.NoOfRoom,
-      'Kitchen': this.Kitchen,
-      'Bathroom': this.Bathroom,
+      // 'NoOfRoom': this.NoOfRoom,
+      // 'Kitchen': this.Kitchen,
+      // 'Bathroom': this.Bathroom,
       'Flag': 1,
     };
-   //console.log(params)
-    this.restApiService.post(PathConstants.HostelInfraStructure_Post,params).subscribe(res => {
+    //console.log(params)
+    this.restApiService.post(PathConstants.HostelInfraStructure_Post, params).subscribe(res => {
       console.log(res)
       if (res !== undefined && res !== null) {
         if (res) {
           this.blockUI.stop();
-         
+
           this.onClear();
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           });
-          
+
         } else {
           this.blockUI.stop();
           this.messageService.clear();
@@ -154,52 +159,58 @@ console.log(this.hostelinfraId)
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
         })
-  
+
       }
     })
-   
+
   }
 
-  onSelect(type) { 
+  onLoad() {
+    const params = {
+      'Districtcode': this.Districtcode,
+      'Talukid': this.Talukid,
+      'HostelId': this.HostelId
+    };
+    this._restApiService.getByParameters(PathConstants.HostelInfraStructureExtent_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.floorwisedetaildata = res;
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        })
+      }
+    });
+  }
+
+  onSelect(type) {
     let floorwiseSelection = [];
     switch (type) {
-    case 'FD':
-      this.floorwisedetails.forEach(c => {
-        floorwiseSelection.push({ label:c.FloorName, value: c.FloorId });
-    })
-    this.floorOptions = floorwiseSelection;
-    this.floorOptions.unshift({ label: '-select', value: null });
-    break;
-}
-}
+      case 'FD':
+        this.filteredFloorData.forEach(c => {
+          floorwiseSelection.push({ label: c.FloorName, value: c.FloorId });
+        })
+        this.floorOptions = floorwiseSelection;
+        this.floorOptions.unshift({ label: '-select', value: null });
+        break;
 
-  
-  
+    }
+  }
+
+
+
   onview() {
-      const params = {
-        'Districtcode'	: this.Districtcode,
-        'Talukid'	: this.Talukid ,
-        'HostelId'	: this.HostelId
+    const params = {
+      'Districtcode': this.Districtcode,
+      'Talukid': this.Talukid,
+      'HostelId': this.HostelId
     };
-    // this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
-    //   if (res !== null && res !== undefined && res.length !== 0) {
-    //     this.data = res.Table;
-    //     this.districtname = this.login_user.districtName;
-    //       this.talukname = this.login_user.talukName;
-    //       this.hostelname = this.login_user.hostelName;
-      
-    //       this.Districtcode = this.login_user.districtCode;
-    //       this.Talukid = this.login_user.talukId;
-    //       this.HostelId = this.login_user.hostelId;
-    //   }
-    // });
-
-    this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
+    this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get, params).subscribe(res => {
       if (res !== null && res !== undefined) {
         if (res.Table.length !== 0) {
-            this.disableFields = true;
-            res.Table.forEach(r => {
-          
+          this.disableFields = true;
+          res.Table.forEach(r => {
           })
           this.data = res.Table;
           this.hostelinfrastructureId = res.Table[0].Id;
@@ -219,39 +230,42 @@ console.log(this.hostelinfraId)
         this._messageService.clear();
         this.disableFields = false;
       }
-    }) 
-    }
+    })
+  }
 
-    onUpdate() {
-      const params = {
-        'HostelInfraStructureId': this.hostelinfrastructureId,
-        'Districtcode':  this.Districtcode,
-        'Talukid': this.Talukid,
-        'HostelId': this.HostelId,
-        'FloorNo'	: 2,
-        'StudentRoom'	: this.studentStayingRoom ,
-        'WardenRoom'	: this.wardenStayingRoom,
-        'BathRoomNos' : this.bathroom,
-        'ToiletRoomNos': this.toilet,
-        'UrinalNos': this.urine,
-        'StudyingArea': this.studentStudyingRoom,
-        'Kitchen': this.kitchen
+  onUpdate() {
+    const params = {
+      'Id': 0,
+      'HostelInfraStructureId': this.hostelinfrastructureId,
+      'Districtcode': this.Districtcode,
+      'Talukid': this.Talukid,
+      'HostelId': this.HostelId,
+      'FloorNo': this.floor,
+      'StudentRoom': this.studentStayingRoom,
+      'WardenRoom': this.wardenStayingRoom,
+      'BathRoomNos': this.bathroom,
+      'ToiletRoomNos': this.toilet,
+      'UrinalNos': this.urinal,
+      'StudyingArea': this.studentStudyingRoom,
+      'Kitchen': this.kitchen,
+      'Library': this.library,
+      'Flag': 1,
     };
 
     console.log(params)
-    this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post,params).subscribe(res => {
+    this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post, params).subscribe(res => {
       console.log(res)
       if (res !== undefined && res !== null) {
         if (res) {
-         this.blockUI.stop();
-         this.onClear();
-         this.showDialog = false;
+          this.blockUI.stop();
+          this.onClear();
+          this.showDialog = false;
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           });
-          
+
         } else {
           this.blockUI.stop();
           this.messageService.clear();
@@ -275,44 +289,126 @@ console.log(this.hostelinfraId)
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
         })
-  
+
       }
     })
-   
+
   }
 
-    
-    onClear()
-    {
-     this.hostelinfraId = 0;
-     this.Kitchen='';
-     this.NoOfFloor='';
-     this.NoOfRoom='';
-     this.TotalArea='';
-     this.BuildingArea='';
-     this.Bathroom='';
-     this.disableFields = true;
-    }
 
-    onEdit(data) {
-      this.showDialog = true;
-      // this.hostelinfraId = data.Id;
+  onClear() {
+    this.hostelinfrastructure.form.markAsUntouched();
+    this.hostelinfraId = 0;
+    this.NoOfFloor = null;
+    this.TotalArea = null;
+    this.BuildingArea = null;
+    this.studentStayingRoom = null;
+    this.wardenStayingRoom = null;
+    this.library = null;
+    this.kitchen = null;
+    this.bathroom = null;
+    this.toilet = null;
+    this.urinal = null;
+    this.studentStudyingRoom = null;
+    this.floor = null;
+    this.floorOptions = [];
+    this.disableFields = true;
+  }
 
-    }
-onRowSelect(event, selectedRow)
-{
-  console.log(selectedRow)
-  this.hostelinfraId = selectedRow.Id;
-  this.hostelname = selectedRow.HostelName;
-  this.districtname =selectedRow.Districtname;
-  this.talukname = selectedRow.Talukname;
-  this.TotalArea = selectedRow.TotalArea;
-  this.BuildingArea = selectedRow.TotalArea;
-  this.NoOfFloor = selectedRow.NoOfFloor;
-  this.NoOfRoom = selectedRow.NoOfRoom;
-  this.Kitchen = selectedRow.Kitchen;
-  this.Bathroom = selectedRow.Bathroom;
-  this.HostelId = selectedRow.HostelId;
-  this.disableFields = false;
-}
+  onEdit(data) {
+    this.showDialog = true;
+    this.hostelInfraRow = data;
+    this.filteredFloorData = this.floorwisedetails.filter(f => {
+      return ((f.FloorId * 1) <= (this.hostelInfraRow.NoOfFloor * 1));
+    }) 
+  }
+
+  // checkInput(type) {
+  //   switch(type) {
+  //     case 1:
+  //   if(this.studentStayingRoom !== undefined && this.studentStayingRoom !== null) {
+  //     if(this.wardenStayingRoom !== undefined && this.wardenStayingRoom !== null) {
+  //       let balance = (this.hostelInfraRow.NoOfRoom * 1) - (this.wardenStayingRoom * 1);
+  //       if((this.studentStayingRoom * 1) > (balance * 1)) {
+  //         this.studentStayingRoom = null;
+  //         this.messageService.clear();
+  //         this.messageService.add({
+  //           key: 't-dmsg', severity: ResponseMessage.SEVERITY_ERROR,
+  //           summary: ResponseMessage.SUMMARY_ERROR, detail: 'Number of Student Staying Rooms Cannot Be greater than balance rooms - ' + balance
+  //         })
+  //       }
+  //     } else if((this.studentStayingRoom * 1) > (this.hostelInfraRow.NoOfRoom * 1)) {
+  //       this.studentStayingRoom = null;
+  //       this.messageService.clear();
+  //       this.messageService.add({
+  //         key: 't-dmsg', severity: ResponseMessage.SEVERITY_ERROR,
+  //         summary: ResponseMessage.SUMMARY_ERROR, detail: 'Number of Student Staying Rooms Cannot Be greater than allotted rooms - ' + this.hostelInfraRow.NoOfRoom
+  //       })
+  //     }
+  //   }
+  //   break;
+  //   case 2:
+  //     if(this.wardenStayingRoom !== undefined && this.wardenStayingRoom !== null) {
+  //       if(this.studentStayingRoom !== undefined && this.studentStayingRoom !== null) {
+  //         let balance = (this.hostelInfraRow.NoOfRoom * 1) - (this.studentStayingRoom * 1);
+  //         if((this.wardenStayingRoom * 1) > (balance * 1)) {
+  //           this.wardenStayingRoom = null;
+  //           this.messageService.clear();
+  //           this.messageService.add({
+  //             key: 't-dmsg', severity: ResponseMessage.SEVERITY_ERROR,
+  //             summary: ResponseMessage.SUMMARY_ERROR, detail: 'Number of Student Staying Rooms Cannot Be greater than balance rooms - ' + balance
+  //           })
+  //         }
+  //       } else if((this.wardenStayingRoom * 1) > (this.hostelInfraRow.NoOfRoom * 1)) {
+  //         this.wardenStayingRoom = null;
+  //         this.messageService.clear();
+  //         this.messageService.add({
+  //           key: 't-dmsg', severity: ResponseMessage.SEVERITY_ERROR,
+  //           summary: ResponseMessage.SUMMARY_ERROR, detail: 'Number of Student Staying Rooms Cannot Be greater than allotted rooms - ' + this.hostelInfraRow.NoOfRoom
+  //         })
+  //       }
+  //     }
+  //     break;
+  //     case 3:
+  //       if(this.kitchen !== undefined && this.kitchen !== null){
+  //         if((this.kitchen * 1) > (this.hostelInfraRow.Kitchen * 1)) {
+  //           this.kitchen = null;
+  //           this.messageService.clear();
+  //           this.messageService.add({
+  //             key: 't-dmsg', severity: ResponseMessage.SEVERITY_ERROR,
+  //             summary: ResponseMessage.SUMMARY_ERROR, detail: 'Number of Kitchen Cannot Be greater than Allotted no of Kitchen - ' + this.hostelInfraRow.Kitchen
+  //           })
+  //         }
+  //       }
+  //       break;
+  //       case 4:
+  //         if(this.bathroom !== undefined && this.bathroom !== null){
+  //           if((this.bathroom * 1) > (this.hostelInfraRow.Bathroom * 1)) {
+  //             this.Bathroom = null;
+  //             this.messageService.clear();
+  //             this.messageService.add({
+  //               key: 't-dmsg', severity: ResponseMessage.SEVERITY_ERROR,
+  //               summary: ResponseMessage.SUMMARY_ERROR, detail: 'Number of Bathroom Cannot Be greater than Allotted no of Bathroom - ' + this.hostelInfraRow.Bathroom
+  //             })
+  //           }
+  //         }
+  //         break;
+  //   }
+     
+  // }
+  onRowSelect(event, selectedRow) {
+    console.log(selectedRow)
+    this.hostelinfraId = selectedRow.Id;
+    this.hostelname = selectedRow.HostelName;
+    this.districtname = selectedRow.Districtname;
+    this.talukname = selectedRow.Talukname;
+    this.TotalArea = selectedRow.TotalArea;
+    this.BuildingArea = selectedRow.TotalArea;
+    this.NoOfFloor = selectedRow.NoOfFloor;
+    // this.NoOfRoom = selectedRow.NoOfRoom;
+    // this.Kitchen = selectedRow.Kitchen;
+    // this.Bathroom = selectedRow.Bathroom;
+    this.HostelId = selectedRow.HostelId;
+    this.disableFields = false;
+  }
 }

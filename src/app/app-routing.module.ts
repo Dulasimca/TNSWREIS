@@ -75,8 +75,8 @@ const routes: Routes = [
   { path: 'openingblnc-report', component:OpeningbalanceReportComponent, canActivate: [AuthGuard]},
 
   { path: 'hostelgo', component:HostelGoComponent, canActivate: [AuthGuard]},
-
   { path: 'hostel-image',component:HostelImageComponent, canActivate: [AuthGuard]},
+  { path: 'opening-balance', component:OpeningBalanceComponent, canActivate: [AuthGuard]},
 
   { path: 'purchase-order', component:PurchaseOrderComponent, canActivate: [AuthGuard]},
   { path: 'purchase-bill-upload', component:PurchaseUploadComponent, canActivate: [AuthGuard]},
@@ -90,7 +90,7 @@ const routes: Routes = [
   { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},  
   { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]},
   { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
-  { path: 'hostelinfrastructure', component:HostelinfrastructureComponent,}, 
+  { path: 'hostelinfrastructure', component:HostelinfrastructureComponent, canActivate: [AuthGuard]}, 
   { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
   { path: 'taluk', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 
@@ -102,17 +102,17 @@ const routes: Routes = [
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent, canActivate: [AuthGuard]},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent, canActivate: [AuthGuard]},
-  { path: 'approvalrequest', component:ApprovalRequestComponent},
-  { path: 'approval', component:ApprovalComponent},
+  { path: 'approvalrequest', component:ApprovalRequestComponent, canActivate: [AuthGuard]},
+  { path: 'approval', component:ApprovalComponent, canActivate: [AuthGuard]},
 
-  { path: 'monthlywiseapproval', component:MonthlywiseintentapprovalComponent},
-  { path: 'hostelinfrareport', component:HostelinfrastructureReportComponent,},
-  { path: 'monthlywisereport', component:MonthlywiseintentReportComponent,},
-  { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent,},
-  { path: 'employeemaster', component:EmployeeMasterComponent},
-  { path: 'employeereport', component:EmployeeReportComponent},
-  { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent},
-  { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent},
+  { path: 'monthlywiseapproval', component:MonthlywiseintentapprovalComponent, canActivate: [AuthGuard]},
+  { path: 'hostelinfrareport', component:HostelinfrastructureReportComponent, canActivate: [AuthGuard]},
+  { path: 'monthlywisereport', component:MonthlywiseintentReportComponent, canActivate: [AuthGuard]},
+  { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent, canActivate: [AuthGuard]},
+  { path: 'employeemaster', component:EmployeeMasterComponent, canActivate: [AuthGuard]},
+  { path: 'employeereport', component:EmployeeReportComponent, canActivate: [AuthGuard]},
+  { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent, canActivate: [AuthGuard]},
 ];
 
 

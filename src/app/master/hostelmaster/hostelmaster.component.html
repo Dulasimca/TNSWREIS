@@ -1,7 +1,7 @@
 <div class="p-grid">
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
-            <p-panel header="HostelMaster">
+            <p-panel header="Hostel Master">
                 <p-card>
                     <form #f="ngForm" name="hostelmasterForm">
                         <div class="p-col-12 p-md-12 p-lg-12 ">
@@ -111,7 +111,7 @@
                                     <div><label for="_nearestphc">Nearest PHC (Primary Health Centre) <span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
-                                    <input class="p-col-12" type="text" name="_nearestphc" [disabled]="disableFields"
+                                    <input class="p-col-12" type="text" name="_nearestphc" 
                                     pInputText  [(ngModel)]="nearestPhc" appInputFormat="noSpecialChars" required />
                                         
                                 </div>
