@@ -139,6 +139,7 @@ export class WardenReportComponent implements OnInit {
             r.HostelJoinedDate = this._datePipe.transform(r.HostelJoinedDate, 'yyyy-MM-dd');
             r.ServiceJoinedDate = this._datePipe.transform(r.ServiceJoinedDate, 'yyyy-MM-dd');
             r.EndDate = (r.EndDate !== null) ? this._datePipe.transform(r.EndDate, 'yyyy-MM-dd') : null;
+            r.disableTransfer = (r.EndDate !== null) ? 'true' : 'false';
           })
           this.wardenDetailsAll = res.Table.slice(0);
           this.wardenDetails = res.Table;
@@ -154,6 +155,7 @@ export class WardenReportComponent implements OnInit {
       })
     }
   }
+
   filterTable() {
     if (this.wardenDetailsAll.length !== 0 && this.status !== undefined && this.status !== null) {
       if (this.status === 1) {
@@ -211,7 +213,8 @@ const params = {
 }
 this._restApiService.post(PathConstants.Warden_post, params).subscribe(res => {
   if (res) {
-    console.log('res',res)
+    console.log('res',res);
+    this.clear();
     this._messageService.clear();
     this._messageService.add({
       key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -265,6 +268,9 @@ this._restApiService.post(PathConstants.Warden_post, params).subscribe(res => {
         })
       }
     })
+  }
+  clear() {
+    this.hostelOptions = [];
   }
 }
 

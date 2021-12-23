@@ -38,7 +38,7 @@
                             </div>
                             <p-table #dt [value]="wardenDetails" [columns]="wardenDetailsCols"
                                 styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                                [rowsPerPageOptions]="[10,20,30,40]" totalR       ecords="totalRecords"
+                                [rowsPerPageOptions]="[10,20,30,40]" totalR ecords="totalRecords"
                                 exportFilename="WARDEN_DETAILS_REPORT">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
@@ -59,8 +59,8 @@
                                         <td><button icon="pi pi-times-circle" pButton type="button"
                                                 pTooltip="Tap to update end date" (click)="onDiscontinue(rowData)">
                                             </button></td>
-                                        <td><button pButton type="button" icon="pi pi-arrow-circle-right" pTooltip="Tap to transfer"
-                                                (click)="onTransfer(rowData)"></button></td>
+                                        <td><button pButton type="button" icon="pi pi-arrow-circle-right"
+                                                pTooltip="Tap to transfer" [disabled]="(rowData.disableTransfer == 'true')" (click)="onTransfer(rowData)"></button></td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -98,7 +98,7 @@
         <div style="text-align: center;">
             <button pButton type="button" label="Submit" (click)="onSubmit()" [disabled]="(!endDate)"></button>
         </div>
-       </p-card>
+    </p-card>
 </p-dialog>
 <!-- warden transfer  -->
 <p-dialog header="Warden Transfer" [(visible)]="showTransfer" [modal]="true" [maximizable]="true"
