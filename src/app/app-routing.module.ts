@@ -91,7 +91,7 @@ const routes: Routes = [
   { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},  
   { path: 'hostelreport', component:HostelReportComponent, canActivate: [AuthGuard]},
   { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
-  { path: 'hostelinfrastructure', component:HostelinfrastructureComponent,}, 
+  { path: 'hostelinfrastructure', component:HostelinfrastructureComponent, canActivate: [AuthGuard]}, 
   { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
   { path: 'taluk', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 

@@ -76,6 +76,7 @@ export class HostelmasterComponent implements OnInit {
      { field: 'Pincode', header: 'Pincode', width: '100px'},
      { field: 'TotalStudent', header: 'TotalStudent', width: '100px'},
      { field: 'Phone', header: 'Phone', width: '100px'},
+     { field: 'NearestPhc', header: 'Nearest PHC', width: '100px'},
     //  { field: 'HostelImage', header: 'HostelImage', width: '100px'},
 
    ];
@@ -243,6 +244,7 @@ export class HostelmasterComponent implements OnInit {
     this.mobileNo = selectedRow.Phone;
     this.policeStationAddress = selectedRow.PoliceStationAddress;
     this.hostelOpeningDate = (selectedRow.HostelOpeningDate !== null) ? new Date(selectedRow.HostelOpeningDate) : null;
+    this.nearestPhc = selectedRow.NearestPhc;
  }
   }
 
