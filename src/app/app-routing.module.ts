@@ -105,17 +105,17 @@ const routes: Routes = [
   
   { path: 'studentfacility', component:StudentfacilityMasterComponent, canActivate: [AuthGuard]},
   { path: 'studentfacilityreport', component:StudentfacilityReportComponent, canActivate: [AuthGuard]},
-  { path: 'approvalrequest', component:ApprovalRequestComponent},
-  { path: 'approval', component:ApprovalComponent},
+  { path: 'approvalrequest', component:ApprovalRequestComponent, canActivate: [AuthGuard]},
+  { path: 'approval', component:ApprovalComponent, canActivate: [AuthGuard]},
 
-  { path: 'monthlywiseapproval', component:MonthlywiseintentapprovalComponent},
-  { path: 'hostelinfrareport', component:HostelinfrastructureReportComponent,},
-  { path: 'monthlywisereport', component:MonthlywiseintentReportComponent,},
-  { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent,},
-  { path: 'employeemaster', component:EmployeeMasterComponent},
-  { path: 'employeereport', component:EmployeeReportComponent},
-  { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent},
-  { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent},
+  { path: 'monthlywiseapproval', component:MonthlywiseintentapprovalComponent, canActivate: [AuthGuard]},
+  { path: 'hostelinfrareport', component:HostelinfrastructureReportComponent, canActivate: [AuthGuard]},
+  { path: 'monthlywisereport', component:MonthlywiseintentReportComponent, canActivate: [AuthGuard]},
+  { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent, canActivate: [AuthGuard]},
+  { path: 'employeemaster', component:EmployeeMasterComponent, canActivate: [AuthGuard]},
+  { path: 'employeereport', component:EmployeeReportComponent, canActivate: [AuthGuard]},
+  { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent, canActivate: [AuthGuard]},
 ];
 
 
