@@ -225,9 +225,7 @@ export class TableConstants {
         { field: 'College', header: 'Amount For College' },
         { field: 'Flag',  header: 'Status'},
 
-
-
-       ]
+      ]
        this.StudentAttendanceTable = [
         { field: 'StudentName', header: 'Student Name' },
         { field: 'remarks', header: 'Remarks' },
