@@ -40,6 +40,7 @@ export class HostelinfrastructureComponent implements OnInit {
   HostelId: any;
   CreatedDate: Date;
   hostelinfraId = 0;
+  floorwiseId = 0;
   floor: any;
   studentStayingRoom: any;
   wardenStayingRoom: any;
@@ -95,11 +96,13 @@ export class HostelinfrastructureComponent implements OnInit {
       { field: 'FloorNo', header: 'Floors' },
       { field: 'StudentRoom', header: 'No of Student Rooms' },
       { field: 'WardenRoom', header: 'No of Warden Rooms' },
+      { field: 'Library', header: 'No of Librarys' },
+      { field: 'Kitchen', header: 'No of Kitchens' },
       { field: 'BathRoomNos', header: 'No of BathRooms' },
       { field: 'ToiletRoomNos', header: 'No of Toilets' },
       { field: 'UrinalNos', header: 'No of Urinal' },
-      { field: 'Kitchen', header: 'No of Kitchens' },
-      { field: 'Library', header: 'No of Librarys' },
+      { field: 'StudyingArea', header: 'Studying Area' },
+
     ]
     this._restApiService.get(PathConstants.FloorWiseDetails_Get).subscribe(floorwisedetails => {
       this.floorwisedetails = floorwisedetails.slice(0);
@@ -214,14 +217,6 @@ export class HostelinfrastructureComponent implements OnInit {
           })
           this.data = res.Table;
           this.hostelinfrastructureId = res.Table[0].Id;
-          console.log("hello")
-          console.log(this.hostelinfrastructureId)
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
-            summary: ResponseMessage.SUMMARY_ALERT, life: 4000,
-            detail: 'Existing Data for ' + this.hostelname
-          })
         } else {
           this._messageService.clear();
           this.disableFields = false;
@@ -234,65 +229,73 @@ export class HostelinfrastructureComponent implements OnInit {
   }
 
   onUpdate() {
-    const params = {
-      'Id': 0,
-      'HostelInfraStructureId': this.hostelinfrastructureId,
-      'Districtcode': this.Districtcode,
-      'Talukid': this.Talukid,
-      'HostelId': this.HostelId,
-      'FloorNo': this.floor,
-      'StudentRoom': this.studentStayingRoom,
-      'WardenRoom': this.wardenStayingRoom,
-      'BathRoomNos': this.bathroom,
-      'ToiletRoomNos': this.toilet,
-      'UrinalNos': this.urinal,
-      'StudyingArea': this.studentStudyingRoom,
-      'Kitchen': this.kitchen,
-      'Library': this.library,
-      'Flag': 1,
-    };
+    var isExist = this.onDataChecking();
+    if (isExist) {
+      const params = {
+        'Id': this.floorwiseId,
+        'HostelInfraStructureId': this.hostelinfrastructureId,
+        'Districtcode': this.Districtcode,
+        'Talukid': this.Talukid,
+        'HostelId': this.HostelId,
+        'FloorNo': this.floor,
+        'StudentRoom': this.studentStayingRoom,
+        'WardenRoom': this.wardenStayingRoom,
+        'BathRoomNos': this.bathroom,
+        'ToiletRoomNos': this.toilet,
+        'UrinalNos': this.urinal,
+        'StudyingArea': this.studentStudyingRoom,
+        'Kitchen': this.kitchen,
+        'Library': this.library,
+        'Flag': 1,
+      };
 
-    console.log(params)
-    this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post, params).subscribe(res => {
-      console.log(res)
-      if (res !== undefined && res !== null) {
-        if (res) {
-          this.blockUI.stop();
-          this.onClear();
-          this.showDialog = false;
-          this.messageService.clear();
-          this.messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-          });
+      console.log(params)
+      this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post, params).subscribe(res => {
+        console.log(res)
+        if (res !== undefined && res !== null) {
+          if (res) {
+            this.blockUI.stop();
+            this.onClear();
+            this.showDialog = false;
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+              summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            });
 
+          } else {
+            this.blockUI.stop();
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            });
+          }
         } else {
-          this.blockUI.stop();
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
           });
         }
-      } else {
-        this.messageService.clear();
-        this.messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        });
-      }
-    }, (err: HttpErrorResponse) => {
-      this.blockUI.stop();
-      if (err.status === 0 || err.status === 400) {
-        this.messageService.clear();
-        this.messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        })
+      }, (err: HttpErrorResponse) => {
+        this.blockUI.stop();
+        if (err.status === 0 || err.status === 400) {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
 
-      }
-    })
-
+        }
+      })
+    } else {
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-dmsg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected floor details is already exist please update'
+      })
+    }
   }
 
 
@@ -317,10 +320,11 @@ export class HostelinfrastructureComponent implements OnInit {
 
   onEdit(data) {
     this.showDialog = true;
+    this.onLoad();
     this.hostelInfraRow = data;
     this.filteredFloorData = this.floorwisedetails.filter(f => {
       return ((f.FloorId * 1) <= (this.hostelInfraRow.NoOfFloor * 1));
-    }) 
+    })
   }
 
   // checkInput(type) {
@@ -394,8 +398,21 @@ export class HostelinfrastructureComponent implements OnInit {
   //         }
   //         break;
   //   }
-     
+
   // }
+
+  onDataChecking(): boolean {
+    var result = false;
+    if (this.floorwisedetaildata.length !== 0) {
+      this.floorwisedetaildata.forEach(i => {
+        if (i.FloorNo === this.NoOfFloor) {
+          result = true;
+        }
+      })
+    }
+    return result;
+  }
+
   onRowSelect(event, selectedRow) {
     console.log(selectedRow)
     this.hostelinfraId = selectedRow.Id;
@@ -410,5 +427,20 @@ export class HostelinfrastructureComponent implements OnInit {
     // this.Bathroom = selectedRow.Bathroom;
     this.HostelId = selectedRow.HostelId;
     this.disableFields = false;
+  }
+
+  onRowSelect1(index, selectedRow) {
+    this.floorwiseId = selectedRow.Id;
+    this.floor = selectedRow.FloorNo;
+    this.floorOptions = [{ label: selectedRow.FloorName, value: selectedRow.floor }];
+    this.studentStayingRoom = selectedRow.StudentRoom;
+    this.wardenStayingRoom = selectedRow.WardenRoom;
+    this.library = selectedRow.Library;
+    this.kitchen = selectedRow.Kitchen;
+    this.bathroom = selectedRow.BathRoomNos;
+    this.toilet = selectedRow.ToiletRoomNos;
+    this.urinal = selectedRow.UrinalNos;
+    this.studentStudyingRoom = selectedRow.StudyingArea;
+    this.floorwisedetaildata.splice(index,1);
   }
 }

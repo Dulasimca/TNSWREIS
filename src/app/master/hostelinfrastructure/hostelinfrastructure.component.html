@@ -121,7 +121,7 @@
                         </label>
                          </div>
                          <p-dropdown name="_floor" [options]="floorOptions"
-                         (onClick)="onSelect('FD')" [(ngModel)]="floor" required>
+                         (onClick)="onSelect('FD')" (onChange)="onDataChecking()" [(ngModel)]="floor" required>
                                 </p-dropdown>
                      </div>
                      <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
@@ -179,7 +179,7 @@
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                                    <tr [pSelectableRow]="rowData" class="cursor-pointer">
+                                    <tr (dblclick)="onRowSelect1(rowIndex, rowData)" [pSelectableRow]="rowData" class="cursor-pointer">
                                         <td>{{rowIndex+1}}</td>
                                         <td *ngFor="let col of columns">
                                             {{rowData[col.field]}}
