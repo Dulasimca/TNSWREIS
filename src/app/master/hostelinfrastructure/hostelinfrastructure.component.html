@@ -64,7 +64,7 @@
                                         <button pButton type="button" label="View" icon="pi pi-eye"
                                             (click)="onview()"></button>&nbsp;
                                         <button pButton type="button" label="Clear" icon="pi pi-trash"
-                                            (click)="onClear()"></button>
+                                            (click)="onClear(1)"></button>
                                     </div>
                                 </div>
                             </div>
@@ -115,6 +115,7 @@
                 <p-dialog #dialog header="Enter Floor-wise Details" [(visible)]="showDialog" [modal]="showDialog"
                 [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
                 <p-toast position="top-center" key="t-dmsg"></p-toast>
+                <form #f="ngForm" name="hostelinfrastructureextent">
                  <div class="p-grid div-main">
                      <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                          <div><label for="_floor">Floor<span class="form-mandatory-field">*</span>
@@ -164,9 +165,12 @@
                          <button pButton type="button" label="Submit" (click)="onUpdate()"
                           class="btn-bg"></button>&nbsp;
                           <button pButton type="button" label="View" icon="pi pi-eye"
-                                            (click)="onLoad()"></button>
+                                            (click)="onLoad()"></button>&nbsp;
+                          <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                            (click)="onClear(2)"></button>
                     </div>
                  </div>
+                </form>
                  <p-table [columns]="floorwisedetail" [value]="floorwisedetaildata" [paginator]="true" [rows]="10"
                                 [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
                                 styleClass="p-datatable-gridlines">
