@@ -448,15 +448,15 @@
                                             </div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
-
                                                     <div #field38 class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_aadharno" pInputText
                                                                 [(ngModel)]="aadharNo" appInputFormat="digitOnly"
-                                                                (input)="maskInput(aadharNo)" minlength="12" maxlength="12" required>
+                                                                (input)="validateAadhaar(aadharNo)" minlength="12" maxlength="12" required>
                                                             <label for="_aadharno">Aadhar No<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
+                                                        <div style="font-size: 13px;color: red;"> {{aadharValidationMsg}}</div>
                                                     </div>
                                                     <div #field39 class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">

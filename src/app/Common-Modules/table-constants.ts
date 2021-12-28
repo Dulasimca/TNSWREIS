@@ -195,11 +195,15 @@ export class TableConstants {
             { field: 'HostelName', header: 'Hostel' },
             { field: 'TotalArea', header: 'Total Area' },
             { field: 'BuildingArea', header: 'Building Area' },
-            { field: 'NoOfFloor', header: 'No Of Floor' },
-            { field: 'NoOfRoom', header: 'No Of Room' }, 
-            { field: 'Kitchen', header: 'Kitchen' },
-            { field: 'Bathroom', header: 'Bathroom' },
-            { field: 'CreatedDate', header: 'Created Date' },
+            { field: 'FloorNo', header: 'Floors' },
+            { field: 'StudentRoom', header: 'No of Student Rooms' },
+            { field: 'WardenRoom', header: 'No of Warden Rooms' },
+            { field: 'Library', header: 'No of Librarys' },
+            { field: 'Kitchen', header: 'No of Kitchens' },
+            { field: 'BathRoomNos', header: 'No of BathRooms' },
+            { field: 'ToiletRoomNos', header: 'No of Toilets' },
+            { field: 'UrinalNos', header: 'No of Urinal' },
+            { field: 'StudyingArea', header: 'Studying Area' },
         ];
 
         this.studentAcademicStatusDetailsColumns = [

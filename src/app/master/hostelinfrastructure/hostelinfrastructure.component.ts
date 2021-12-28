@@ -60,7 +60,7 @@ export class HostelinfrastructureComponent implements OnInit {
   filteredFloorData: any[] = [];
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;   
-  @ViewChild('f', { static: false }) hostelinfrastructureextent: NgForm;
+  @ViewChild('t', { static: false }) hostelinfrastructureextent: NgForm;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private messageService: MessageService, private _authService: AuthService,
     private _restApiService: RestAPIService, private _messageService: MessageService
@@ -234,6 +234,12 @@ export class HostelinfrastructureComponent implements OnInit {
           })
           this.data = res.Table;
           this.hostelinfrastructureId = res.Table[0].Id;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
+            summary: ResponseMessage.SUMMARY_ALERT, life: 4000,
+            detail: 'Existing Data for ' + this.hostelname
+          })
         } else {
           this._messageService.clear();
           this.disableFields = false;
@@ -317,7 +323,7 @@ export class HostelinfrastructureComponent implements OnInit {
     this.BuildingArea = null;
   }
  else {
-   this.hostelinfrastructureextent.reset();
+   //this.hostelinfrastructureextent.reset();
     this.hostelinfrastructureextent.form.markAsUntouched();
     this.hostelinfrastructureextent.form.markAsPristine();
     this.studentStayingRoom = null;
