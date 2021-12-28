@@ -75,6 +75,7 @@ export class MonthlywiseintentComponent implements OnInit {
     ]
   }
   onSelect(type) {
+    this.data =[];
     let unitSelection = [];
     let yearSelection = [];
     let commoditySelection = [];
@@ -124,7 +125,6 @@ onSubmit() {
    console.log(res)
       if (res) {
       this.clearform();
-      //this.onView();
       this.messageService.clear();
       this.messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -169,14 +169,13 @@ onView()
     'Districtcode' : this.Districtcode,
     'Talukid': this.Talukid,
     'HostelId': this.HostelId,  
-    'AccountingId': 4,
+    'AccountingId': this.year,
   };
   this.data =[];
   this.restApiService.getByParameters(PathConstants.MonthlywiseIntent_Get,params).subscribe(res => {
-  console.log(res)
     if (res !== null && res !== undefined && res.length !== 0){
       this.data = res;
-      res.Table.forEach(r => {
+      res.forEach(r => {
         r.MonthwiseDate = this.datepipe.transform(r.date, 'yyyy-MM-dd');
       })
       

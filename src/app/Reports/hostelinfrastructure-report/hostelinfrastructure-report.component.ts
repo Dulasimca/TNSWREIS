@@ -145,18 +145,14 @@ export class HostelinfrastructureReportComponent implements OnInit {
     this.hostelData = [];
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
       this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined) {
-        console.log('hi')
       this.loading = true;
-      const params = {
-        // 'DCode': this.district,
-        // 'TCode': this.taluk,
-        // 'HCode': this.hostel, 
+      const params = { 
         'Districtcode': this.district,
         'Talukid': this.taluk,
         'HostelId': this.hostel,
       }
       console.log(params)
-      this.restApiService.getByParameters(PathConstants.HostelInfraStructure_Get,params).subscribe(res => {
+      this.restApiService.getByParameters(PathConstants.HostelInfraStructureFloor_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
             this.hostelData = res.Table;

@@ -73,6 +73,7 @@ public static readonly FeedingChargesDetail_Get = 'FeedingChargesDetail/Get';
 public static readonly HostelInfraStructure_Post = 'HostelInfraStructure/Post';
 
 public static readonly HostelInfraStructure_Get = 'HostelInfraStructure/Get';
+public static readonly HostelInfraStructureFloor_Get = 'HostelInfraStructureFloor/Get';
 
 public static readonly HostelInfraStructureExtent_Post = 'HostelInfraStructureExtent/Post';
 public static readonly HostelInfraStructureExtent_Get = 'HostelInfraStructureExtent/Get';
