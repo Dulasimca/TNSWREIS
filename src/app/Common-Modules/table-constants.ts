@@ -195,6 +195,7 @@ export class TableConstants {
             { field: 'HostelName', header: 'Hostel' },
             { field: 'TotalArea', header: 'Total Area' },
             { field: 'BuildingArea', header: 'Building Area' },
+            { field: 'NoOfFloor', header: 'Total No Of Floors' },
             { field: 'FloorNo', header: 'Floors' },
             { field: 'StudentRoom', header: 'No of Student Rooms' },
             { field: 'WardenRoom', header: 'No of Warden Rooms' },

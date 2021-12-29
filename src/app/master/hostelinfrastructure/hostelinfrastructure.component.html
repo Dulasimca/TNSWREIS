@@ -109,6 +109,26 @@
                                     </tr>
                                 </ng-template>
                             </p-table>
+                            <p-table [columns]="floorwisedetail" [value]="floorwisedetaildata" [paginator]="true" [rows]="10"
+                            [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                            styleClass="p-datatable-gridlines">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                <tr class="cursor-pointer">
+                                    <td>{{rowIndex+1}}</td>
+                                    <td *ngFor="let col of columns">
+                                        {{rowData[col.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                         </form>
                     </p-card>
                 </p-panel>
