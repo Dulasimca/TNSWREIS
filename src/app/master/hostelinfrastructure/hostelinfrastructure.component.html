@@ -102,9 +102,14 @@
         
                                         </td>
                                         <td>
+                                            <span class="p-column-title">
+                                                Floor-wise Details :
+                                            </span>
+                                            <span>
                                             <button style="height: 1.8rem;" (click)="onEdit(rowData)"
                                             icon="pi pi-plus" pButton type="button">
                                            </button>
+                                        </span>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -121,10 +126,22 @@
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                                <tr class="cursor-pointer">
-                                    <td>{{rowIndex+1}}</td>
-                                    <td *ngFor="let col of columns">
-                                        {{rowData[col.field]}}
+                                <tr>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+    
                                     </td>
                                 </tr>
                             </ng-template>
@@ -204,9 +221,21 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                     <tr (dblclick)="onRowSelect1(rowIndex, rowData)" [pSelectableRow]="rowData" class="cursor-pointer">
-                                        <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns">
-                                            {{rowData[col.field]}}
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+        
                                         </td>
                                     </tr>
                                 </ng-template>

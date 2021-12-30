@@ -61,7 +61,7 @@ export class AttendanceReportComponent implements OnInit {
     ];
 
     this.colsAttendance = [
-      { field: 'Uploaddate', header: 'Date' },
+      { field: 'Uploaddate', header: 'Upload Date' },
       { field: 'CreatedDate', header: 'System Date' },
     ];
   }

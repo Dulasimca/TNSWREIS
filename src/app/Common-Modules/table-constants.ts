@@ -170,6 +170,7 @@ export class TableConstants {
             { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
+            { field: 'WardenName', header: 'Warden Name', width: '100px', align: 'left !important'},
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
             { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
