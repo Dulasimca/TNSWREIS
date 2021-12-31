@@ -98,6 +98,11 @@ public static readonly FundManagementReport_Get = 'FundManagementReport/Get';
 public static readonly  StudentAttendance_Get = 'StudentAttendance/Get';
 public static readonly StudentAttendance_Post = 'StudentAttendance/Post';
 public static readonly StudentAttendance_Put = 'StudentAttendance/Put';
+public static readonly AccHeadType_Get = 'AccHeadType';
+public static readonly GroupHeadType_Get = 'GroupHeadType';
+public static readonly AccHeadFundAllotment_Post = 'AccHeadFundAllotment/Post';
+public static readonly AccHeadFundAllotment_Get = 'AccHeadFundAllotment/Get';
+
 
 
 public static readonly ApprovalList_Get = 'ApprovalList';

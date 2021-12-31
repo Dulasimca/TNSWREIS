@@ -20,6 +20,8 @@ export class TableConstants {
     StudentAttendanceTable: any = [];
     employeeAttendanceReportCols: any = [];
     studentAcademicStatusDetailsColumns: any =[];
+    AccHeadColumns: any = [];
+    DistrictFundColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -233,6 +235,22 @@ export class TableConstants {
         { field: 'remarks', header: 'Remarks' },
 
        ]
+       this.AccHeadColumns = [
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Amount',align: 'right !important'},
+    ];
+     
+    this.DistrictFundColumns = [
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Amount',align: 'right !important'},
+        { field: 'Districtname', header: 'District', align: 'left !important'},
 
+    ]
     }
 }
