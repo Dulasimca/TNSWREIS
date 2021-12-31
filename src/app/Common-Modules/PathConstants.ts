@@ -73,8 +73,11 @@ public static readonly FeedingChargesDetail_Get = 'FeedingChargesDetail/Get';
 public static readonly HostelInfraStructure_Post = 'HostelInfraStructure/Post';
 
 public static readonly HostelInfraStructure_Get = 'HostelInfraStructure/Get';
+public static readonly HostelInfraStructureFloor_Get = 'HostelInfraStructureFloor/Get';
 
 public static readonly HostelInfraStructureExtent_Post = 'HostelInfraStructureExtent/Post';
+public static readonly HostelInfraStructureExtent_Get = 'HostelInfraStructureExtent/Get';
+
 public static readonly FloorWiseDetails_Get = 'FloorWiseDetails';
 
 public static readonly StudentFacility_Post = 'StudentFacility/Post';

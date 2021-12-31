@@ -77,11 +77,22 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                            <tr [pSelectableRow]="rowData" class="cursor-pointer"
+                            <tr [pSelectableRow]="rowData" class="td-border cursor-pointer"
                                 (dblclick)="onRowSelect($event, rowData)">
-                                <td>{{rowIndex+1}}</td>
-                                <td *ngFor="let col of columns">
-                                    {{rowData[col.field]}}
+                                <td class="td-border">
+                                    <span class="p-column-title">
+                                        S.No :
+                                    </span>
+                                    <span>
+                                        {{rowIndex+1}}
+                                    </span>
+                                </td>
+                                <td *ngFor="let col of columns" class="td-border">
+                                    <span class="p-column-title">
+                                        {{col.header}} :
+                                    </span>
+                                    <span> {{rowData[col.field]}}
+                                    </span>
                                 </td>
                             </tr>
                         </ng-template>

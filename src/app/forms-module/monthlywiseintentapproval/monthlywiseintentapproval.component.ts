@@ -6,11 +6,9 @@ import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { textChangeRangeIsUnchanged } from 'typescript';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgForm } from '@angular/forms';
-import { TabView } from 'primeng/tabview';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -47,12 +45,9 @@ export class MonthlywiseintentapprovalComponent implements OnInit {
   showTable: boolean;
   hostelData: any = [];
   totalRecords: number;
-  
   Districtcode: any;
   Talukid: any;
   HostelId: any;
-
-    @ViewChild('tabview', { static: false }) _tabView: TabView;
   @ViewChild('f', { static: false }) monthlywiseintentapproval: NgForm;
  
 

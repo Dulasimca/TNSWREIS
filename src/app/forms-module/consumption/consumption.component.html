@@ -95,9 +95,12 @@
                                                     {{rowData[col.field]}}
                                                 </td>
                                                 <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 1)">
-                                                    <button style="height: 1.8rem;" icon="pi pi-pencil" pButton
+                                                    <i class="pi pi-pencil">
+                                                    <button style="height: 1.8rem;"  pButton
                                                         type="button">
+                                                        <!-- icon="pi pi-pencil" -->
                                                     </button>
+                                                </i>
                                                 </td>
                                                 <td style="width: 120px" (click)="onDelete(rowData, rowIndex, 1)">
                                                     <button style="height: 1.8rem;" icon="pi pi-trash" pButton

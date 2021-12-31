@@ -61,6 +61,7 @@ export class EmployeeMasterComponent implements OnInit {
       { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
       { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
       { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
+      { field: 'EndDate', header: 'Last Date', width: '100px', align: 'centre !important'},
    ];
     this.login_user = this._authService.UserInfo;
     this.genders = this._masterService.getMaster('GD');

@@ -59,6 +59,7 @@ export class RegistrationComponent implements OnInit {
   showDialog: boolean;
   enableScholarship: boolean;
   aadharNo: string;
+  aadharValidationMsg: string;
   maxDate: Date = new Date();
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
@@ -420,27 +421,91 @@ export class RegistrationComponent implements OnInit {
     if (row !== undefined && row !== null) {
       this.obj = null;
       this.showDialog = false;
-      this.registeredDetails.forEach(detail => {
-        this.obj = detail;
-        this.classOptions = [{ label: detail.class, value: detail.classId }];
-        this.casteOptions = [{ label: detail.casteName, value: detail.caste }];
-        this.talukOptions = [{ label: detail.Talukname, value: detail.talukCode }];
-        this.genderOptions = [{ label: detail.genderName, value: detail.gender }];
-        this.districtOptions = [{ label: detail.Districtname, value: detail.distrctCode }];
-        this.religionOptions = [{ label: detail.religionName, value: detail.religion }];
-        this.motherTongueOptions = [{ label: detail.mothertongueName, value: detail.motherTongue }];
-        this.bloodGroupOptions = [{ label: detail.bloodgroupName, value: detail.bloodGroup }];
-        this.mediumOptions = [{ label: detail.mediumName, value: detail.medium }];
-        this.subCasteOptions = [{ label: detail.subcasteName, value: detail.subCaste }];
-        this.obj.dob = new Date(detail.dob);
-        this.ageTxt = this.obj.age + ' Years';
-        this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/' + 'Documents/' + detail.studentFilename;
-        this.maskInput(this.obj.aadharNo);
-      })
+      this.obj = row;
+      this.classOptions = [{ label: row.class, value: row.classId }];
+      this.casteOptions = [{ label: row.casteName, value: row.caste }];
+      this.talukOptions = [{ label: row.Talukname, value: row.talukCode }];
+      this.genderOptions = [{ label: row.genderName, value: row.gender }];
+      this.districtOptions = [{ label: row.Districtname, value: row.distrctCode }];
+      this.religionOptions = [{ label: row.religionName, value: row.religion }];
+      this.motherTongueOptions = [{ label: row.mothertongueName, value: row.motherTongue }];
+      this.bloodGroupOptions = [{ label: row.bloodgroupName, value: row.bloodGroup }];
+      this.mediumOptions = [{ label: row.mediumName, value: row.medium }];
+      this.subCasteOptions = [{ label: row.subcasteName, value: row.subCaste }];
+      this.obj.dob = new Date(row.dob);
+      this.ageTxt = this.obj.age + ' Years';
+      this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/' + 'Documents/' + row.studentFilename;
+      this.maskInput(this.obj.aadharNo);
     }
   }
 
   onDelete(row, index) {
 
+  }
+
+  validateAadhaar(aadhaarString) {
+    // The multiplication table
+    if (aadhaarString.length != 12) {
+      this.aadharValidationMsg = 'Aadhaar numbers should be 12 digits !';
+    } else {
+      this.aadharValidationMsg = '';
+    }
+    if (aadhaarString.match(/[^$,.\d]/)) {
+      this.aadharValidationMsg = 'Aadhaar numbers must contain only numbers !';
+    } else {
+      this.aadharValidationMsg = '';
+    }
+    var aadhaarArray = aadhaarString.split('');
+    var toCheckChecksum = aadhaarArray.pop();
+    if (this.generate(aadhaarArray) == toCheckChecksum) {
+      this.aadharValidationMsg = '';
+      this.maskInput(aadhaarString)
+      return true;
+    } else {
+      this.aadharValidationMsg = 'Invalid Aadhar No!';
+      this._registrationForm.form.controls._aadharno.invalid;
+      if (this.aadharNo.length === 12) {
+        setTimeout(() => {
+          this.aadharNo = null;
+          this.aadharValidationMsg = 'Please enter valid Aadhar No!';
+    }, 300);
+      }
+      return false;
+    }
+  }
+
+  // generates checksum
+  generate(array) {
+    var d = [
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+      [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+      [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+      [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+      [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+      [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+      [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+      [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+      [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    ];
+    // permutation table p
+    var p = [
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+      [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+      [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+      [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+      [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+      [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+      [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+    ];
+    // inverse table inv
+    var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
+    var c = 0;
+    var invertedArray = array.reverse();
+    for (var i = 0; i < invertedArray.length; i++) {
+      c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
+    }
+    return inv[c];
   }
 }

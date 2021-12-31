@@ -171,7 +171,7 @@ onview() {
 
     };
     this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get, params).subscribe(res => {
-        if (res !== null && res !== undefined && res.Table.length !== 0) {
+        if (res !== null && res !== undefined) {
           if (res.length !== 0) {
           res.Table.forEach(i => {
                 i.status = (i.Flag) ? 'Active' : 'Inactive';

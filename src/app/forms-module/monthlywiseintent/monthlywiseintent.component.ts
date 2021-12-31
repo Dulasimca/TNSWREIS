@@ -75,6 +75,7 @@ export class MonthlywiseintentComponent implements OnInit {
     ]
   }
   onSelect(type) {
+    this.data =[];
     let unitSelection = [];
     let yearSelection = [];
     let commoditySelection = [];
@@ -124,7 +125,6 @@ onSubmit() {
    console.log(res)
       if (res) {
       this.clearform();
-      //this.onView();
       this.messageService.clear();
       this.messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -162,27 +162,52 @@ onRowSelect(event, selectedRow) {
 }
   
 
-onView()
-{
+onView() {
+  if (this.year !== null && this.year !== undefined) {
   this.showTable = true;
   const params = {
     'Districtcode' : this.Districtcode,
     'Talukid': this.Talukid,
     'HostelId': this.HostelId,  
-    'AccountingId': 4,
+    'AccountingId': this.year,
   };
   this.data =[];
   this.restApiService.getByParameters(PathConstants.MonthlywiseIntent_Get,params).subscribe(res => {
-  console.log(res)
-    if (res !== null && res !== undefined && res.length !== 0){
+   if (res !== null && res !== undefined) {
+          if (res.length !== 0) {
       this.data = res;
-      res.Table.forEach(r => {
+      res.forEach(r => {
         r.MonthwiseDate = this.datepipe.transform(r.date, 'yyyy-MM-dd');
-      })
-      
+      });
+  }else {
+      this.showTable = false;
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+      });
     }
-  })
+    
+   } else {
+    this.showTable = false;
+    this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+    });
+  }
+})
+}else {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select academic year to view data !'
+    });
+  }
 }
+
+
+
 clearform(){
   this.data = [];
   this.commodityOptions = [];
@@ -190,5 +215,4 @@ clearform(){
   this.unitOptions = [];
   this.quantity = [];
 }
-
 }

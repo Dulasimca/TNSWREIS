@@ -172,6 +172,7 @@ export class TableConstants {
             { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
+            { field: 'WardenName', header: 'Warden Name', width: '100px', align: 'left !important'},
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
             { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
@@ -180,6 +181,7 @@ export class TableConstants {
             { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
             { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
+            { field: 'EndDate', header: 'End Date', width: '100px', align: 'centre !important'},
         ]
         this.OpeningBalanceColumns = [
             { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
@@ -197,11 +199,16 @@ export class TableConstants {
             { field: 'HostelName', header: 'Hostel' },
             { field: 'TotalArea', header: 'Total Area' },
             { field: 'BuildingArea', header: 'Building Area' },
-            { field: 'NoOfFloor', header: 'No Of Floor' },
-            { field: 'NoOfRoom', header: 'No Of Room' }, 
-            { field: 'Kitchen', header: 'Kitchen' },
-            { field: 'Bathroom', header: 'Bathroom' },
-            { field: 'CreatedDate', header: 'Created Date' },
+            { field: 'NoOfFloor', header: 'Total No Of Floors' },
+            { field: 'FloorNo', header: 'Floors' },
+            { field: 'StudentRoom', header: 'No of Student Rooms' },
+            { field: 'WardenRoom', header: 'No of Warden Rooms' },
+            { field: 'Library', header: 'No of Librarys' },
+            { field: 'Kitchen', header: 'No of Kitchens' },
+            { field: 'BathRoomNos', header: 'No of BathRooms' },
+            { field: 'ToiletRoomNos', header: 'No of Toilets' },
+            { field: 'UrinalNos', header: 'No of Urinal' },
+            { field: 'StudyingArea', header: 'Studying Area' },
         ];
 
         this.studentAcademicStatusDetailsColumns = [
@@ -227,9 +234,7 @@ export class TableConstants {
         { field: 'College', header: 'Amount For College' },
         { field: 'Flag',  header: 'Status'},
 
-
-
-       ]
+      ]
        this.StudentAttendanceTable = [
         { field: 'StudentName', header: 'Student Name' },
         { field: 'remarks', header: 'Remarks' },

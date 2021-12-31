@@ -183,7 +183,6 @@ export class StudentDetailsComponent implements OnInit {
     } else {
       this.showDialog = false;
     }
-    this.insertStudentTransferDetails();
   }
 
   onApprove() {
@@ -228,7 +227,7 @@ export class StudentDetailsComponent implements OnInit {
       'EMISNO': this.student.emisno,
       'Remarks': '',
       'AcademicStatus': 1, //approved (default pass)
-      'Flag': 1 // default
+      'Flag': 0 // default(insert)
     })
     this._restApiService.post(PathConstants.StudentTransferDetails_Post, params).subscribe(res => {
       if (res) {
