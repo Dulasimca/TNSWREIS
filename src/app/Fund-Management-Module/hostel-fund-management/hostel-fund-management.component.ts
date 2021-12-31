@@ -4,6 +4,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
@@ -35,18 +36,29 @@ export class HostelFundManagementComponent implements OnInit {
   logged_user: User;
   blncAmount: number;
   totalHostelAmount: number;
+  HostelFundData: any = [];
+  HostelFundCols: any = [];
+  showTable: boolean;
+  accYear: any;
+  groupType: any;
+  accHead: any;
+  budgetAmount: number;
+  districtAmount: number;
+  showTransfer: boolean;
 
   @ViewChild('f', { static: false }) _hostelFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
-    private authService: AuthService) { }
+    private authService: AuthService, private tableConstants: TableConstants) { }
 
   ngOnInit(): void {
     this.logged_user = this.authService.UserInfo;
     this.years = this.masterService.getMaster('AY');
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
+    this.HostelFundCols = this.tableConstants.HostelFundColumns;
+    console.log('enter',this.HostelFundCols)
     this.totalHostelAmount = 0;
 
   }
@@ -62,18 +74,19 @@ export class HostelFundManagementComponent implements OnInit {
         this.yearOptions = yearSelection;
         this.yearOptions.unshift({ label: '-select', value: null });
         break;
-      case 'D':
-        this.districts.forEach(d => {
-          districtSelection.push({ label: d.name, value: d.code });
-        })
-        this.districtOptions = districtSelection;
-        this.districtOptions.unshift({ label: '-select-', value: null });
-        break;
+        case 'D':
+          this.districts.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
+          })
+          this.districtOptions = districtSelection;
+          this.districtOptions.unshift({ label: '-select-', value: null });
+          break;
       case 'T':
         this.taluks.forEach(t => {
           if (t.dcode === this.district) {
             talukSelection.push({ label: t.name, value: t.code });
           }
+          console.log('taluk',this.taluks)
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });
@@ -161,6 +174,31 @@ export class HostelFundManagementComponent implements OnInit {
     }
     this.loadHostelFunds();
     this.selectDistrict();
+  }
+
+  onAdd(rowData) { 
+    this.showTransfer = true;
+
+  }
+
+  onSave() {
+
+  }
+
+  loadTable() {
+    this.showTable = true;
+    const data = {
+      'AccountingYearId': this.year,
+    }
+    this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
+      if (res) {
+        res.forEach(r => {
+          // this.accFundId = r.AccHeadID;
+          // this.totalBudjetAmount = r.BudjetAmount;
+        })
+        this.HostelFundData = res;
+      }
+    })
   }
 
   onSubmit() {
