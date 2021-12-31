@@ -37,7 +37,7 @@
                                         <input type="text" name="_budjetamnt" class="p-col-12" pInputText
                                             [(ngModel)]="budjetAmount" appInputFormat="digitOnly" required />
                                     </div>
-                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                    <div *ngIf="showFields" #row2 class="p-col-12 p-md-12 p-lg-12">
                                         <div class="p-grid">
                                             <div class="p-col-12 p-md-12 p-lg-2">
                                                 <div><label for="_type">Type<span
@@ -50,8 +50,11 @@
                                                 <div><label for="_accHead">Account Head<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <p-dropdown name="_accHead" [options]="accHeadOptions" (onClick)="onSelect('AH')"
-                                                    [(ngModel)]="accountHead" required>
+                                                    [(ngModel)]="accountHead" (onChange)="loadAmount()" required>
                                                 </p-dropdown>
+
+
+                                                
                                             </div>
                                             <div class="p-col-12 p-md-12 p-lg-2">
                                                 <div><label for="_blncamount">Available Budget Amount</label></div>

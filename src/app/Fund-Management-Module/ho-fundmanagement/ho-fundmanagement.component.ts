@@ -31,6 +31,13 @@ export class HOFundmanagementComponent implements OnInit {
   accHeads? : any;
   accHeadOptions: SelectItem[];
   blncAmount: number;
+  showFields: boolean;
+  totalAccHeadAmount: number;
+
+
+
+
+
 
   @BlockUI() blockUI: NgBlockUI;
 
@@ -47,6 +54,7 @@ export class HOFundmanagementComponent implements OnInit {
     this.restApiService.get(PathConstants.GroupHeadType_Get).subscribe(res => {
       this.groupTypes = res;
     });
+    this.totalAccHeadAmount = 0;
   }
 
   onSelect(type) {
@@ -125,6 +133,7 @@ export class HOFundmanagementComponent implements OnInit {
   }
 
   loadData() {
+    this.showFields = false;
     this.blockUI.start();
     const params = {
       'AccountingYearId': this.year
@@ -138,17 +147,42 @@ export class HOFundmanagementComponent implements OnInit {
           this.budjetAmount = res.BudjetAmount;
           this.hoFundId = res.HOFundId;
         this.blockUI.stop();
-
+          this.showFields = true;
         })
       }else {
+        this.showFields = false;
         this.blockUI.stop();
       }
     }else {
+      this.showFields = false;
         this.blockUI.stop();
       }
     })
   }
-
+loadAmount() {
+  const params = {
+    'AccountingYearId': this.year,
+    'Type': 1
+  }
+  this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
+    if (res !== null && res !== undefined) {
+      if (res.length !== 0) {
+        res.forEach(res => {
+          this.totalAccHeadAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
+            ? (res.BalanceBudjetAmount * 1) : 0;
+          this.blockUI.stop();
+        })
+      } else {
+        this.blockUI.stop();
+        this.blncAmount = 0;
+      }
+    } else {
+      this.blockUI.stop();
+      this.blncAmount = 0;
+    }
+    // this.blncAmount = this.headAmount - this.totalAccHeadAmount;
+  });
+}
   checkBudjetAmount() {
     if (this.headAmount !== undefined && this.headAmount !== null &&
       this.blncAmount !== undefined && this.blncAmount !== null &&

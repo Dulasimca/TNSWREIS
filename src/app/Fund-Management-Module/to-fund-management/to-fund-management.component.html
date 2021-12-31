@@ -101,15 +101,20 @@
                                                                 <div><label for="_district">District<span
                                                                             class="form-mandatory-field">*</span></label></div>
                                                                 <p-dropdown name="_district" [options]="districtOptions"
-                                                                    [(ngModel)]="district" (onClick)="onSelect('D')"
+                                                                    [(ngModel)]="district" (onClick)="onSelect('D')" (onChange)="loadAmount()"
                                                                      required>
                                                                 </p-dropdown>
+                                                            </div>
+                                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                                <div><label for="_dfund">Allotted District Fund</label></div>
+                                                                <input type="text" name="_dfund" class="p-col-12" pInputText
+                                                                    [(ngModel)]="districtFund" readonly="true" required />
                                                             </div>
                                                             <div class="p-col-12 p-md-6 p-lg-2">
                                                                 <div><label for="_taluk">Taluk<span
                                                                             class="form-mandatory-field">*</span></label></div>
                                                                 <p-dropdown name="_taluk" [options]="talukOptions"
-                                                                    [(ngModel)]="taluk" (onClick)="onSelect('T')"
+                                                                    [(ngModel)]="taluk" (onClick)="onSelect('T')" (onChange)="loadToFunds()"
                                                                    required>
                                                                 </p-dropdown>
                                                             </div>
