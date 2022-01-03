@@ -70,15 +70,13 @@ export class HostelmasterComponent implements OnInit {
      { field: 'Name', header: 'HType', width: '100px'},
      { field: 'Districtname', header: 'District', width: '100px'},
      { field: 'Talukname', header: 'Taluk', width: '100px'},
-     { field: 'BuildingNo', header: 'BuildingNo', width: '100px'},
-     { field: 'Street', header: 'Street', width: '100px'},
-     { field: 'Landmark', header: 'Landmark', width: '100px'},
+    //  { field: 'BuildingNo', header: 'BuildingNo', width: '100px'},
+     //{ field: 'Street', header: 'Street', width: '100px'},
+    //  { field: 'Landmark', header: 'Landmark', width: '100px'},
      { field: 'Pincode', header: 'Pincode', width: '100px'},
      { field: 'TotalStudent', header: 'TotalStudent', width: '100px'},
      { field: 'Phone', header: 'Phone', width: '100px'},
      { field: 'NearestPhc', header: 'Nearest PHC', width: '100px'},
-    //  { field: 'HostelImage', header: 'HostelImage', width: '100px'},
-
    ];
    this.login_user = this._authService.UserInfo;
     this.Districtcodes = this._masterService.getDistrictAll();
@@ -90,7 +88,7 @@ export class HostelmasterComponent implements OnInit {
     } else {
       this.disableFields = false;
     }
-    
+    this.onView();
   }
 
   onSelect(type) {

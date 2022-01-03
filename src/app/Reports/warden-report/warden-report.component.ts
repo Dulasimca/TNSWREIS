@@ -45,7 +45,9 @@ export class WardenReportComponent implements OnInit {
   talukName: any;
   hostels?: any;
   data: any;
-
+  roleId: number;
+  transferButton: boolean;
+  editButton: boolean;
 
   constructor(private _tableConstants: TableConstants, private _restApiService: RestAPIService,
     private _messageService: MessageService, private _authService: AuthService,
@@ -56,6 +58,9 @@ export class WardenReportComponent implements OnInit {
     this.districts = this._masterService.getMaster('DT');
     this.taluks = this._masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;
+    // this.roleId = (this.logged_user.roleId * 1)
+    this.editButton = (this.logged_user.roleId !== 1 * 1) ? true : false;
+    this.transferButton = (this.logged_user.roleId === 1 * 1) ? true : false;
     this.statusOptions = [
       { label: '-select-', value: null },
       { label: 'All', value: 0 },
@@ -171,7 +176,14 @@ export class WardenReportComponent implements OnInit {
       }
     }
   }
-   
+  onEdit(row) {
+    this.show = true;
+    this.wardenName = row.WardenName;
+    this.joinDate = row.HostelJoinedDate;
+    this.wardenId = row.WardenId;
+    console.log('n', row)
+    
+  }
   onDiscontinue(row) {
     this.show = true;
     this.wardenName = row.WardenName;

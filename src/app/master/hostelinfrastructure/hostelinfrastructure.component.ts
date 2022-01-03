@@ -77,7 +77,7 @@ export class HostelinfrastructureComponent implements OnInit {
     this.HostelId = this.login_user.hostelId;
     this.disableFields = true;
     this.onview();
-    // this.onDataChecking();
+    this.onLoad();
     this.cols = [
       { field: 'Districtname', header: 'District' },
       { field: 'Talukname', header: 'Taluk' },
@@ -131,7 +131,7 @@ export class HostelinfrastructureComponent implements OnInit {
       if (res !== undefined && res !== null) {
         if (res) {
           this.blockUI.stop();
-
+          this.onview();
           this.onClear(1);
           this.messageService.clear();
           this.messageService.add({
@@ -277,6 +277,7 @@ export class HostelinfrastructureComponent implements OnInit {
           if (res) {
             this.blockUI.stop();
             this.onClear(2);
+            this.onLoad();
             this.showDialog = false;
             this.messageService.clear();
             this.messageService.add({

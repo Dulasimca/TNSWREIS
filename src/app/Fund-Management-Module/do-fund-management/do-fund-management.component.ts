@@ -4,6 +4,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 
@@ -16,25 +17,40 @@ export class DOFundManagementComponent implements OnInit {
   yearOptions: SelectItem[];
   year: any;
   years?: any;
-  budjetAmount: number;
+  totalBudjetAmount: number;
   districtOptions: SelectItem[];
   districts?: any;
   district: any;
-  hoAmount: number;
-  doFundId: number;
-  hoFundId: number;
+  // hoAmount: number;
+  // doFundId: number;
+  // hoFundId: number;
   blncAmount: number;
   totalDistrictAmt: number;
+  AccHeadData: any = [];
+  AccHeadCols: any = [];
+  showTable: boolean;
+  accYear: any;
+  groupType: any;
+  accHead: any;
+  budgetAmount: number;
+  districtAmount: number;
+  showTransfer: boolean;
+
   @ViewChild('f', { static: false }) _doFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
+  doFundId: any;
+  accHeadId: any;
 
 
-  constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService) { }
+  constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
+    private tableConstants: TableConstants) { }
 
   ngOnInit(): void {
     this.years = this.masterService.getMaster('AY');
     this.districts = this.masterService.getMaster('DT');
+    this.AccHeadCols = this.tableConstants.AccHeadColumns;
     this.totalDistrictAmt = 0;
+    this.doFundId = 0;
   }
 
   onSelect(type) {
@@ -60,11 +76,10 @@ export class DOFundManagementComponent implements OnInit {
 
   onSave() {
     const params = {
-      'Id': this.doFundId,
-      'HoFundId': this.hoFundId,
-      'AccYear': this.year,
+      'DOFundId': this.doFundId,
+      'AccHeadFundId': this.accHeadId,
       'DCode': this.district,
-      'DOBudjetAmount': this.hoAmount,
+      'DistrictFund': this.districtAmount,
       'Flag': 1
     }
     this.restApiService.post(PathConstants.DOFundAllotment_Post, params).subscribe(res => {
@@ -86,110 +101,187 @@ export class DOFundManagementComponent implements OnInit {
     })
   }
 
-  loadAmount() {
-    this.budjetAmount = 0;
-    if (this.year !== null && this.year !== undefined) {
+
+  // loadAmount() {
+  //   this.budjetAmount = 0;
+  //   if (this.year !== null && this.year !== undefined) {
+  //     this.blockUI.start();
+  //     const params = {
+  //       'AccountingYearId': this.year
+  //     }
+  //     this.restApiService.getByParameters(PathConstants.HOFundAllotment_Get, params).subscribe(res => {
+  //       if (res !== null && res !== undefined) {
+  //         if (res.length !== 0) {
+  //           res.forEach(res => {
+  //             this.budjetAmount = (res.BudjetAmount !== null && res.BudjetAmount !== undefined) ? res.BudjetAmount : 0;
+  //             this.hoFundId = res.HOFundId;
+  //             this.blockUI.stop();
+  //             /// load total district budget amt so far, if any districts have entered their budget
+  //             this.blncAmount = 0;
+  //             this.totalDistrictAmt = 0;
+  //             if (this.blncAmount === 0) {
+  //               this.blockUI.start();
+  //               const data = {
+  //                 'YearId': this.year,
+  //                 'DCode': 0,
+  //                 'Type': 1
+  //               }
+  //               this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
+  //                 if (res !== null && res !== undefined) {
+  //                   if (res.length !== 0) {
+  //                     res.forEach(res => {
+  //                       this.totalDistrictAmt = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
+  //                         ? (res.BalanceBudjetAmount * 1) : 0;
+  //                       this.blockUI.stop();
+  //                     })
+  //                   } else {
+  //                     this.blockUI.stop();
+  //                     this.blncAmount = 0;
+  //                   }
+  //                 } else {
+  //                   this.blockUI.stop();
+  //                   this.blncAmount = 0;
+  //                 }
+  //                 this.blncAmount = this.budjetAmount - this.totalDistrictAmt;
+  //               });
+  //             }
+  //           })
+  //         } else {
+  //           this.blockUI.stop();
+  //         }
+  //       } else {
+  //         this.blockUI.stop();
+  //       }
+  //     });
+  //   }
+  //   this.loadDoFunds();
+  // }
+
+  // loadDoFunds() {
+  //   this.hoAmount = 0;
+  //   if (this.year !== undefined && this.year !== null && this.district !== null && this.district !== undefined) {
+  //     this.blockUI.start();
+  //     const data = {
+  //       'YearId': this.year,
+  //       'DCode': this.district,
+  //       'Type': 2
+  //     }
+  //     this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
+  //       if (res !== null && res !== undefined) {
+  //         if (res.length !== 0) {
+  //           res.forEach(res => {
+  //             this.hoAmount = res.DOBudjetAmount;
+  //             this.blockUI.stop();
+  //           })
+  //         } else {
+  //           this.blockUI.stop();
+  //           this.hoAmount = 0;
+  //         }
+  //       } else {
+  //         this.blockUI.stop();
+  //         this.hoAmount = 0;
+  //       }
+  //     });
+  //   }
+  // }
+  loadTable() {
+    this.showTable = true;
+    const params = {
+      'AccountingYearId': this.year,
+      'Type': 2
+    }
+    this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
+      if (res) {
+        res.forEach(r => {
+          this.accHeadId = r.AccHeadID,
+          this.totalBudjetAmount = r.BudjetAmount
+        })
+        this.AccHeadData = res;
+      }
+    })
+
+  }
+  loadDoFunds() {
+    if (this.accHeadId !== null && this.accHeadId !== undefined && this.district !== null && this.district !== undefined) {
       this.blockUI.start();
       const params = {
-        'AccountingYearId': this.year
-      }
-      this.restApiService.getByParameters(PathConstants.HOFundAllotment_Get, params).subscribe(res => {
-        if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-            res.forEach(res => {
-              this.budjetAmount = (res.BudjetAmount !== null && res.BudjetAmount !== undefined) ? res.BudjetAmount : 0;
-              this.hoFundId = res.HOFundId;
-              this.blockUI.stop();
-              /// load total district budget amt so far, if any districts have entered their budget
-              this.blncAmount = 0;
-              this.totalDistrictAmt = 0;
-              if (this.blncAmount === 0) {
-                this.blockUI.start();
-                const data = {
-                  'YearId': this.year,
-                  'DCode': 0,
-                  'Type': 1
-                }
-                this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
-                  if (res !== null && res !== undefined) {
-                    if (res.length !== 0) {
-                      res.forEach(res => {
-                        this.totalDistrictAmt = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
-                          ? (res.BalanceBudjetAmount * 1) : 0;
-                        this.blockUI.stop();
-                      })
-                    } else {
-                      this.blockUI.stop();
-                      this.blncAmount = 0;
-                    }
-                  } else {
-                    this.blockUI.stop();
-                    this.blncAmount = 0;
-                  }
-                  this.blncAmount = this.budjetAmount - this.totalDistrictAmt;
-                });
-              }
-            })
-          } else {
-            this.blockUI.stop();
-          }
-        } else {
-          this.blockUI.stop();
-        }
-      });
-    }
-    this.loadDoFunds();
-  }
-
-  loadDoFunds() {
-    this.hoAmount = 0;
-    if (this.year !== undefined && this.year !== null && this.district !== null && this.district !== undefined) {
-      this.blockUI.start();
-      const data = {
-        'YearId': this.year,
+        'AccHeadFundId': this.accHeadId,
         'DCode': this.district,
         'Type': 2
       }
-      this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
+      this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, params).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.length !== 0) {
             res.forEach(res => {
-              this.hoAmount = res.DOBudjetAmount;
+              this.doFundId = res.DOFundId;
+              this.districtAmount = res.DistrictAmount;
               this.blockUI.stop();
             })
           } else {
             this.blockUI.stop();
-            this.hoAmount = 0;
+            this.districtAmount = 0;
           }
         } else {
           this.blockUI.stop();
-          this.hoAmount = 0;
+          this.districtAmount = 0;
         }
       });
     }
+
+    // to check available balance        
+
+    const data = {
+      'AccHeadFundId': this.accHeadId,
+      'DCode': 0,
+      'Type': 1
+    }
+    this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
+      if (res !== null && res !== undefined) {
+        if (res.length !== 0) {
+          res.forEach(res => {
+            this.totalDistrictAmt = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
+              ? (res.BalanceBudjetAmount * 1) : 0;
+            this.blockUI.stop();
+          })
+        } else {
+          this.blockUI.stop();
+          this.blncAmount = 0;
+        }
+      } else {
+        this.blockUI.stop();
+        this.blncAmount = 0;
+      }
+      this.blncAmount = this.budgetAmount - this.totalDistrictAmt;
+    });
   }
 
   checkBudjetAmount() {
-    if (this.hoAmount !== undefined && this.hoAmount !== null &&
+    if (this.budgetAmount !== undefined && this.budgetAmount !== null &&
       this.blncAmount !== undefined && this.blncAmount !== null &&
-      this.hoAmount !== NaN && this.blncAmount !== NaN) {
-      if ((this.blncAmount * 1) < (this.hoAmount * 1)) {
+      this.budgetAmount !== NaN && this.blncAmount !== NaN) {
+      if ((this.blncAmount * 1) < (this.budgetAmount * 1)) {
         var msg = 'Entering amount should not be greater than available budjet amount !';
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: msg
         });
-        this.hoAmount = null;
+        this.budgetAmount = null;
       }
     }
   }
-
+  onAdd(rowData) {
+    this.showTransfer = true;
+    this.accYear = rowData.ShortYear;
+    this.groupType = rowData.GroupName;
+    this.accHead = rowData.AccountHeadName;
+    this.budgetAmount = rowData.Amount
+  }
   clearForm() {
-    this._doFundForm.reset();
     this.districtOptions = [];
-    this.yearOptions = [];
+    this.districtAmount = 0;
     this.totalDistrictAmt = 0;
+    this.blncAmount = 0;
   }
 }
 

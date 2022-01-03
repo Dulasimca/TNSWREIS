@@ -162,8 +162,8 @@ onRowSelect(event, selectedRow) {
 }
   
 
-onView()
-{
+onView() {
+  if (this.year !== null && this.year !== undefined) {
   this.showTable = true;
   const params = {
     'Districtcode' : this.Districtcode,
@@ -173,15 +173,41 @@ onView()
   };
   this.data =[];
   this.restApiService.getByParameters(PathConstants.MonthlywiseIntent_Get,params).subscribe(res => {
-    if (res !== null && res !== undefined && res.length !== 0){
+   if (res !== null && res !== undefined) {
+          if (res.length !== 0) {
       this.data = res;
       res.forEach(r => {
         r.MonthwiseDate = this.datepipe.transform(r.date, 'yyyy-MM-dd');
-      })
-      
+      });
+  }else {
+      this.showTable = false;
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+      });
     }
-  })
+    
+   } else {
+    this.showTable = false;
+    this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+    });
+  }
+})
+}else {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select academic year to view data !'
+    });
+  }
 }
+
+
+
 clearform(){
   this.data = [];
   this.commodityOptions = [];
@@ -189,5 +215,4 @@ clearform(){
   this.unitOptions = [];
   this.quantity = [];
 }
-
 }

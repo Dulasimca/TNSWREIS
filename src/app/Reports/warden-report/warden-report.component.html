@@ -46,8 +46,9 @@
                                         <th *ngFor="let col of columns">
                                             {{col.header}}
                                         </th>
-                                        <th>Discontinue</th>
-                                        <th>Transfer</th>
+                                        <th *ngIf="editButton">Edit</th>
+                                        <th *ngIf="transferButton">Discontinue</th>
+                                        <th *ngIf="transferButton">Transfer</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
@@ -56,10 +57,13 @@
                                         <td *ngFor="let col of columns" [style.text-align]="col.align">
                                             {{rowData[col.field]}}
                                         </td>
-                                        <td><button icon="pi pi-times-circle" pButton type="button"
+                                        <td *ngIf="editButton"><button icon="pi pi-pencil" pButton type="button"
+                                            pTooltip="Tap to update end date" (click)="onEdit(rowData)">
+                                        </button></td>
+                                        <td *ngIf="transferButton"><button icon="pi pi-times-circle" pButton type="button"
                                                 pTooltip="Tap to update end date" (click)="onDiscontinue(rowData)">
                                             </button></td>
-                                        <td><button pButton type="button" icon="pi pi-arrow-circle-right"
+                                        <td *ngIf="transferButton"><button pButton type="button" icon="pi pi-arrow-circle-right"
                                                 pTooltip="Tap to transfer" [disabled]="(rowData.disableTransfer == 'true')" (click)="onTransfer(rowData)"></button></td>
                                     </tr>
                                 </ng-template>

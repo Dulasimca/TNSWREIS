@@ -102,13 +102,50 @@
         
                                         </td>
                                         <td>
+                                            <span class="p-column-title">
+                                                Floor-wise Details :
+                                            </span>
+                                            <span>
                                             <button style="height: 1.8rem;" (click)="onEdit(rowData)"
                                             icon="pi pi-plus" pButton type="button">
                                            </button>
+                                        </span>
                                         </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
+                            <p-table [columns]="floorwisedetail" [value]="floorwisedetaildata" [paginator]="true" [rows]="10"
+                            [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                            styleClass="p-datatable-gridlines">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                <tr>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+    
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                         </form>
                     </p-card>
                 </p-panel>
@@ -184,9 +221,21 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
                                     <tr (dblclick)="onRowSelect1(rowIndex, rowData)" [pSelectableRow]="rowData" class="cursor-pointer">
-                                        <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns">
-                                            {{rowData[col.field]}}
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+        
                                         </td>
                                     </tr>
                                 </ng-template>

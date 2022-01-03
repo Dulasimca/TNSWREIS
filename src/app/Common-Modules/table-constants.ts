@@ -20,6 +20,9 @@ export class TableConstants {
     StudentAttendanceTable: any = [];
     employeeAttendanceReportCols: any = [];
     studentAcademicStatusDetailsColumns: any =[];
+    AccHeadColumns: any = [];
+    HostelFundColumns: any = [];
+    DistrictFundColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -170,6 +173,7 @@ export class TableConstants {
             { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
+            { field: 'WardenName', header: 'Warden Name', width: '100px', align: 'left !important'},
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
             { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
@@ -178,6 +182,7 @@ export class TableConstants {
             { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
             { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
+            { field: 'EndDate', header: 'End Date', width: '100px', align: 'centre !important'},
         ]
         this.OpeningBalanceColumns = [
             { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
@@ -195,6 +200,7 @@ export class TableConstants {
             { field: 'HostelName', header: 'Hostel' },
             { field: 'TotalArea', header: 'Total Area' },
             { field: 'BuildingArea', header: 'Building Area' },
+            { field: 'NoOfFloor', header: 'Total No Of Floors' },
             { field: 'FloorNo', header: 'Floors' },
             { field: 'StudentRoom', header: 'No of Student Rooms' },
             { field: 'WardenRoom', header: 'No of Warden Rooms' },
@@ -235,6 +241,30 @@ export class TableConstants {
         { field: 'remarks', header: 'Remarks' },
 
        ]
+       this.AccHeadColumns = [
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Amount',align: 'right !important'},
+    ];
 
+    this.HostelFundColumns = [
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Amount',align: 'right !important'},
+    ];
+     
+    this.DistrictFundColumns = [
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Amount',align: 'right !important'},
+        { field: 'Districtname', header: 'District', align: 'left !important'},
+
+    ]
     }
 }

@@ -51,11 +51,11 @@
                                         <th *ngFor="let col of columns">
                                             {{col.header}}
                                         </th>
+                                        <th style="width: 50px;">Edit/Update</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                                    <tr [pSelectableRow]="rowData" class="tr-border cursor-pointer"
-                                        (dblclick)="onRowSelect($event, rowData)">
+                                    <tr [pSelectableRow]="rowData" class="tr-border">
                                         <td class="td-border">
                                             <span class="p-column-title">
                                                 S.No :
@@ -70,6 +70,11 @@
                                             </span>
                                             <span style="text-align: end;"> {{rowData[col.field]}}
                                             </span>
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">Edit/Update :</span> <span> <button style="height: 1.8rem;" (click)="onRowSelect($event, rowData)"
+                                                icon="pi pi-pencil" pButton type="button">
+                                               </button></span>
                                         </td>
                                     </tr>
                                 </ng-template>
