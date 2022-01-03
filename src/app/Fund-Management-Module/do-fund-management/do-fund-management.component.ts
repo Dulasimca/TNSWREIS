@@ -188,6 +188,7 @@ export class DOFundManagementComponent implements OnInit {
     this.showTable = true;
     const params = {
       'AccountingYearId': this.year,
+      'Type': 2
     }
     this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
       if (res) {

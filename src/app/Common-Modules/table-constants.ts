@@ -21,6 +21,7 @@ export class TableConstants {
     employeeAttendanceReportCols: any = [];
     studentAcademicStatusDetailsColumns: any =[];
     AccHeadColumns: any = [];
+    HostelFundColumns: any = [];
     DistrictFundColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
@@ -241,6 +242,14 @@ export class TableConstants {
 
        ]
        this.AccHeadColumns = [
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Amount',align: 'right !important'},
+    ];
+
+    this.HostelFundColumns = [
         { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
         { field: 'GONumber', header: 'GO Number', align: 'left !important'},
         { field: 'GroupName', header: 'Type', align: 'left !important'},
