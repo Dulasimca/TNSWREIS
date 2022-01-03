@@ -141,7 +141,7 @@
                                                     </div>
                                                     <div class="p-col-12 txt-center">
                                                         <button pButton type="button" label="Save" icon="pi pi-save"
-                                                            (click)="onSave()" [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                                            (click)="onSave()" [disabled]="(!f.valid || !f.dirty || disableSave)"></button>&nbsp;
                                                         <button pButton type="button" label="View" icon="pi pi-eye"
                                                             (click)="onView()"></button>&nbsp;
                                                         <button pButton type="button" label="Clear" icon="pi pi-trash"
@@ -154,7 +154,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="showTable" class="table-format">
+                        <div *ngIf="showTable">
                             <p-table [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
                                 [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
                                 <ng-template pTemplate="header" let-columns>
