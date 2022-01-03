@@ -35,6 +35,7 @@ export class DOFundManagementComponent implements OnInit {
   budgetAmount: number;
   districtAmount: number;
   showTransfer: boolean;
+  accFundId: number;
 
   @ViewChild('f', { static: false }) _doFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
@@ -77,7 +78,7 @@ export class DOFundManagementComponent implements OnInit {
   onSave() {
     const params = {
       'DOFundId': this.doFundId,
-      'AccHeadFundId': this.accHeadId,
+      'AccHeadFundId': this.accFundId,
       'DCode': this.district,
       'DistrictFund': this.districtAmount,
       'Flag': 1
@@ -188,24 +189,46 @@ export class DOFundManagementComponent implements OnInit {
     this.showTable = true;
     const params = {
       'AccountingYearId': this.year,
+      'AccHeadId': 1,
       'Type': 2
     }
     this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
       if (res) {
         res.forEach(r => {
+          this.accFundId = r.Id,
           this.accHeadId = r.AccHeadID,
-          this.totalBudjetAmount = r.BudjetAmount
+            this.totalBudjetAmount = r.BudjetAmount
         })
         this.AccHeadData = res;
       }
     })
-
   }
+    // if (this.year !== null && this.year !== undefined) {
+    //   this.blockUI.start();
+    //   const params = {
+    //     'AccountingYearId': this.year
+    //   }
+    //   this.restApiService.getByParameters(PathConstants.HOFundAllotment_Get, params).subscribe(res => {
+    //     if (res !== null && res !== undefined) {
+    //       if (res.length !== 0) {
+    //         res.forEach(res => {
+    //           this.totalBudjetAmount = (res.BudjetAmount !== null && res.BudjetAmount !== undefined) ? res.BudjetAmount : 0;
+    //           this.
+    //           //  this.hoFundId = res.HOFundId;
+    //           this.blockUI.stop();
+    //         })
+    //       } else {
+    //         this.blockUI.stop();
+    //       }
+    //     } else {
+    //       this.blockUI.stop();
+    //     }
+      // })
   loadDoFunds() {
     if (this.accHeadId !== null && this.accHeadId !== undefined && this.district !== null && this.district !== undefined) {
       this.blockUI.start();
       const params = {
-        'AccHeadFundId': this.accHeadId,
+        'AccHeadFundId': this.accFundId,
         'DCode': this.district,
         'Type': 2
       }
@@ -229,9 +252,8 @@ export class DOFundManagementComponent implements OnInit {
     }
 
     // to check available balance        
-
     const data = {
-      'AccHeadFundId': this.accHeadId,
+      'AccHeadFundId': this.accFundId,
       'DCode': 0,
       'Type': 1
     }
@@ -256,20 +278,21 @@ export class DOFundManagementComponent implements OnInit {
   }
 
   checkBudjetAmount() {
-    if (this.budgetAmount !== undefined && this.budgetAmount !== null &&
+    if (this.districtAmount !== undefined && this.districtAmount !== null &&
       this.blncAmount !== undefined && this.blncAmount !== null &&
-      this.budgetAmount !== NaN && this.blncAmount !== NaN) {
-      if ((this.blncAmount * 1) < (this.budgetAmount * 1)) {
-        var msg = 'Entering amount should not be greater than available budjet amount !';
+      this.districtAmount !== NaN && this.blncAmount !== NaN) {
+      if ((this.blncAmount * 1) < (this.districtAmount * 1)) {
+        var msg = 'Entering amount should not be greater than available budget amount !';
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: msg
         });
-        this.budgetAmount = null;
+        this.districtAmount = null;
       }
     }
   }
+
   onAdd(rowData) {
     this.showTransfer = true;
     this.accYear = rowData.ShortYear;
@@ -277,6 +300,7 @@ export class DOFundManagementComponent implements OnInit {
     this.accHead = rowData.AccountHeadName;
     this.budgetAmount = rowData.Amount
   }
+  
   clearForm() {
     this.districtOptions = [];
     this.districtAmount = 0;
