@@ -59,6 +59,7 @@ export class WardenDetailsComponent implements OnInit {
   disableTaluk: boolean;
   logged_user: User;
   wardenFileName: string;
+  disableSave: boolean;
   public formData = new FormData();
 
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
@@ -79,6 +80,8 @@ export class WardenDetailsComponent implements OnInit {
     // this.hostels = this.masterService.getMaster('HN');
     this.courses = this.masterService.getMaster('CU');
     this.disableTaluk = true;
+    this.wardenId = 0;
+    this.disableSave = ((this.logged_user.roleId * 1) === 4) ? true : false;
   }
 
   onSelect(type) {
@@ -263,6 +266,7 @@ export class WardenDetailsComponent implements OnInit {
 
   onEdit(selectedRow) {
     if (selectedRow !== null && selectedRow !== undefined) {
+      this.disableSave = false;
       this.wardenName = selectedRow.Name;
       this.wardenId = selectedRow.WardenId;
       this.gender = selectedRow.GenderId;
@@ -294,7 +298,10 @@ export class WardenDetailsComponent implements OnInit {
   }
 
   onClear() {
-    this._wardenDetails.reset();
+    this._wardenDetails.form.reset();
+    this._wardenDetails.form.markAsUntouched();
+    this._wardenDetails.form.markAsPristine();
+    this.wardenId = 0;
     this.talukOptions = [];
     this.districtOptions = [];
     this.genderOptions = [];
@@ -302,6 +309,7 @@ export class WardenDetailsComponent implements OnInit {
     this.hostelOptions = [];
     this.nativeDistrictOptions = [];
     this.data = [];
-    this.wardenImage = '';
+    this.wardenImage = null;
+    this.disableSave = ((this.logged_user.roleId * 1) === 4) ? true : false;
   }
 }
