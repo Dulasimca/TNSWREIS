@@ -6,9 +6,9 @@
                     <p-card>
                         <div class="p-col-2"></div>
                         <div class="p-col-12 no-pad-top">
-                              <div style="font-style: italic; font-size: 15px; color: rgb(11, 43, 102);">
+                            <!-- <div style="font-style: italic; font-size: 15px; color: rgb(11, 43, 102);">
                                 * Please select year to load data 
-                              </div>
+                              </div> -->
                             <div class="p-grid">
                                 <div class="p-col-2"></div>
                                 <div #row1 class="p-col-12 p-md-12 p-lg-10">
@@ -19,43 +19,19 @@
                                             <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')"
                                                 [(ngModel)]="year" (onChange)="loadTable()" required>
                                             </p-dropdown>
-                                 <!-- <div style="font-size: smaller">*Note: Please select year to load table</div> -->
+                                            <!-- <div style="font-size: smaller">*Note: Please select year to load table</div> -->
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_totalbudjetamnt">Total Budget Amount<span
-                                                    class="form-mandatory-field">*</span></label></div>
-                                        <input type="text" name="_totalbudjetamnt" class="p-col-12" pInputText
-                                            [(ngModel)]="totalBudjetAmount" appInputFormat="digitOnly" readonly="true"
-                                              required />
-                                    </div>
-                                        <!-- <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_blncamount">Available Budget Amount</label></div>
-                                        <input type="text" name="_blncamount" class="p-col-12" pInputText
-                                            [(ngModel)]="blncAmount" (input)="checkBudjetAmount()" readonly="true"
-                                           required />
-                                    </div> -->
-                                        <!-- <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="_district">District<span
-                                                    class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                            (onClick)="onSelect('D')" (onChange)=" loadDoFunds()" required>
-                                        </p-dropdown>
-                                    </div> -->
-
-                                        <!-- <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_amount">Amount<span
-                                                    class="form-mandatory-field">*</span></label></div>
-                                        <input type="text" name="_amount" class="p-col-12" pInputText
-                                            [(ngModel)]="hoAmount" appInputFormat="digitOnly"
-                                            (input)="checkBudjetAmount()" required />
-                                    </div> -->
+                                            <div><label for="_totalbudjetamnt">Total Budget Amount </label></div>
+                                            <input type="text" name="_totalbudjetamnt" class="p-col-12" pInputText
+                                                [(ngModel)]="totalBudjetAmount" appInputFormat="digitOnly"
+                                                readonly="true" required />
+                                        </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
-
+                        <!-- table  -->
                         <div *ngIf="showTable" class="table-format">
                             <p-table [value]="AccHeadData" [columns]="AccHeadCols" styleClass="p-datatable-gridlines"
                                 [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
@@ -75,7 +51,7 @@
                                             {{rowData[col.field]}}
                                         </td>
                                         <td><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
-                                                pTooltip="Tap to enter">
+                                                pTooltip="Tap to allot fund">
                                             </button></td>
                                     </tr>
                                 </ng-template>
@@ -130,10 +106,11 @@
                                                         [(ngModel)]="blncAmount" readonly="true" required />
                                                 </div>
                                                 <div class="p-col-12 p-md-12 p-lg-2">
-                                                    <div><label for="_damount">District Fund</label></div>
+                                                    <div><label for="_damount">District Fund<span
+                                                                class="form-mandatory-field">*</span></label></div>
                                                     <input type="text" name="_damount" class="p-col-12" pInputText
-                                                        [(ngModel)]="districtAmount" placeholder="Enter amount"
-                                                        required />
+                                                        [(ngModel)]="districtAmount" (input)="checkBudjetAmount()"
+                                                        placeholder="Enter amount" required />
                                                 </div>
                                                 <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                                                     <button pButton type="button" label="Save" icon="pi pi-save"
