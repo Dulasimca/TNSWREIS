@@ -18,6 +18,7 @@
             </div>
             <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
                 <p-menubar [model]="items"></p-menubar>
+                
             </div>
             <div *ngIf="!showMenu" fxFlex fxLayout fxFlexFill fxLayoutAlign="end end">
                 <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()"></button>

@@ -30,7 +30,6 @@ import { OpeningbalanceReportComponent } from './Reports/openingbalance-report/o
 import { PurchaseUploadComponent } from './forms-module/purchase-upload/purchase-upload.component';
 import { FeedingchargestypeComponent } from './master/feedingchargestype/feedingchargestype.component';
 import { HostelinfrastructureComponent } from './master/hostelinfrastructure/hostelinfrastructure.component';
-import { MonthlywiseintentComponent } from './forms-module/monthlywiseintent/monthlywiseintent.component';
 import { DOFundManagementComponent } from './Fund-Management-Module/do-fund-management/do-fund-management.component';
 import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanagement/ho-fundmanagement.component';
 import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
@@ -53,6 +52,7 @@ import { FundmanagementReportComponent } from './Reports/fundmanagement-report/f
 import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 import { StudentAttendanceComponent } from './forms-module/student-attendance/student-attendance.component';
 import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-report/employeeattendance-report.component';
+import { MonthlywiseintentComponent } from './forms-module/monthlywiseintent/monthlywiseintent.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
