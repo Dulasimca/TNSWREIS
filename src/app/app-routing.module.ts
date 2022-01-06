@@ -53,6 +53,7 @@ import { EmployeeattendanceDetailsComponent } from './forms-module/employeeatten
 import { StudentAttendanceComponent } from './forms-module/student-attendance/student-attendance.component';
 import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-report/employeeattendance-report.component';
 import { MonthlywiseintentComponent } from './forms-module/monthlywiseintent/monthlywiseintent.component';
+import { BiometricDevicemappingComponent } from './Biometric/biometric-devicemapping/biometric-devicemapping.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -113,6 +114,8 @@ const routes: Routes = [
   { path: 'employeereport', component:EmployeeReportComponent, canActivate: [AuthGuard]},
   { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent, canActivate: [AuthGuard]},
   { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent, canActivate: [AuthGuard]},
+  { path: 'biometric', component:  BiometricDevicemappingComponent, canActivate: [AuthGuard]},
+
 ];
 
 

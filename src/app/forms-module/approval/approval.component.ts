@@ -21,12 +21,18 @@ export class ApprovalComponent implements OnInit {
   filteredData: any[] = [];
   totalRecords: number;
   tabIndex: number;
+  items: any;
   @BlockUI() blockUI: NgBlockUI;
   constructor(private _authService: AuthService, private _restApiService: RestAPIService
     , private _messageService: MessageService) { }
 
   ngOnInit(): void {  
     this.tabIndex = 0;
+    this.items = [
+      {'header': 'Pending'},
+      {'header': 'Approved'},
+      {'header': 'Disapproved'}
+    ]
     this.cols = [
       { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important' },
       { field: 'Talukname', header: 'Taluk Name', width: '200px', align: 'left !important' },
