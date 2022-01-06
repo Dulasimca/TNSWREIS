@@ -72,13 +72,11 @@
                                         <button pButton type="button" label="Submit" (click)="onSubmit()" icon="pi pi-save" [disabled]="(!f.valid || !f.dirty)"></button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-</p-card>
+
                     
             
     <!-- showtable -->
-    <div class="table-format">
+    <div>
         <p-table [value]="data" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
             [rowsPerPageOptions]="[10,20,30,40]">
             <ng-template pTemplate="header">
@@ -96,22 +94,93 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                <tr>
-                    <td>{{rowIndex+1}}</td>
-                    <td>{{rowData.Role}}</td>
-                    <td>{{rowData.UserName}}</td>
-                    <td>{{rowData.EMailId}}</td>
-                    <td>{{rowData.Pwd}}</td>
-                    <td>{{rowData.Districtname}}</td>
-                    <td>{{rowData.Talukname}}</td>
-                    <td>{{rowData.HostelName}}</td>
-                    <td>{{rowData.status}}</td>
-                    <td><button icon="pi pi-pencil" pButton type="button" pTooltip="Tap to edit" (click)="onEdit(rowData)">
-                        </button></td>
+                <tr class="tr-border">
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            S.No :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowIndex+1}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            Role :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.Role}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            Username :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.UserName}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            Email Id :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.EMailId}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            Password :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.Pwd}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            District :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.Districtname}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            Taluk :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.Talukname}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            Hostel Name :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.HostelName}}
+                        </span>
+                    </td>
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            Status :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowData.status}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="p-column-title">
+                            Edit/Update :
+                        </span>
+                        <span><button icon="pi pi-pencil" pButton type="button" pTooltip="Tap to edit" (click)="onEdit(rowData)">
+                        </button></span></td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
+</div>
+</div>
+</p-card>
+    
 </form>
 </p-panel>
 </div>

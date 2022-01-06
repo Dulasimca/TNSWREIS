@@ -54,23 +54,54 @@
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                                    <tr>
-                                        <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns" [style.text-align]="col.align">
-                                            {{rowData[col.field]}}
+                                    <tr class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
                                         </td>
                                         <td *ngIf="(roleId==2 && !(rowData.districtApproval))"
-                                            (click)="selectForApproval(rowData)"><button label="Approve" pButton
+                                            (click)="selectForApproval(rowData)">
+                                            <span class="p-column-title">
+                                                Approval Status :
+                                            </span>
+                                            <button label="Approve" pButton
                                                 type="button">
                                             </button></td>
                                         <td *ngIf="(roleId==3 && !(rowData.talukApproval))"
-                                            (click)="selectForApproval(rowData)"><button label="Approve" pButton
+                                            (click)="selectForApproval(rowData)">
+                                            <span class="p-column-title">
+                                                Approval Status :
+                                            </span>
+                                            <button label="Approve" pButton
                                                 type="button">
                                             </button></td>
                                         <td style="text-align: left;" *ngIf="((roleId==1 || roleId==4) || (roleId==2 && (rowData.districtApproval)))">
-                                            {{rowData.dstatus}}</td>
+                                            <span class="p-column-title">
+                                                Taluk Approval Status :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowData.dstatus}}
+                                            </span>
+                                        </td>
                                         <td style="text-align: left;" *ngIf="((roleId==1 || roleId==4) || (roleId==3 && (rowData.talukApproval)))">
-                                            {{rowData.tstatus}}</td>
+                                            <span class="p-column-title">
+                                                District Approval Status :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowData.tstatus}}
+                                            </span> 
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
