@@ -182,54 +182,57 @@ export class HOFundmanagementComponent implements OnInit {
       }
       this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
         if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-            res.forEach(res => {
-              this.totalAccHeadAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
-                ? (res.BalanceBudjetAmount * 1) : 0;
-              this.blockUI.stop();
-            })
-
-          }
-          else {
+          if (res.Table.length !== 0) {
+              this.totalAccHeadAmount = (res.Table[0].TotalBudget !== undefined && res.Table[0].TotalBudget !== null)
+              ? (res.Table[0].TotalBudget * 1) : 0;
+            this.blncAmount = this.budjetAmount - this.totalAccHeadAmount;
             this.blockUI.stop();
-            this.blncAmount = 0;
+         } else {
+            this.blncAmount = this.budjetAmount;
           }
+          if (res.Table1.length !== 0) {
+            this.headAmount = (res.Table1[0].AllotedAmount * 1);
+          } else {
+            this.headAmount = 0;
+          }
+          this.blockUI.stop();
         } else {
           this.blockUI.stop();
           this.blncAmount = 0;
         }
-
-        this.blncAmount = this.budjetAmount - this.totalAccHeadAmount;
       });
+    }
+  }
+
       // load total account head budget amt so far, if any account head have entered their budget
-      this.headAmount = 0;
-      this.blockUI.start();
-      if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
-      const data = {
-        'AccountingYearId': this.year,
-        'AccHeadId': this.accountHead,
-        'Type': 2
-      }
-      this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
-        if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-          res.forEach(r => {
-            this.accFundId = r.Id,
-            this.headAmount = r.Amount
-          this.blockUI.stop();
-          })
-        }else{
-          this.blockUI.stop();
-          this.accFundId = 0;
-        }
-      } else {
-        this.blockUI.stop();
-        this.accFundId = 0;
-      }
-      })
-    }
-    }
-    }
+      // this.headAmount = 0;
+      // this.blockUI.start();
+      // if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
+      // const data = {
+      //   'AccountingYearId': this.year,
+      //   'AccHeadId': this.accountHead,
+      //   'Type': 2
+      // }
+      // this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
+      //   if (res !== null && res !== undefined) {
+      //     if (res.length !== 0) {
+      //     res.forEach(r => {
+      //       this.accFundId = r.Id,
+      //       this.headAmount = r.Amount
+      //     this.blockUI.stop();
+      //     })
+        // }else{
+        //   this.blockUI.stop();
+        //   this.accFundId = 0;
+        // }
+    //   } else {
+    //     this.blockUI.stop();
+    //     this.accFundId = 0;
+    //   }
+    //   })
+    // }
+    // }
+    // }
     
     
   
