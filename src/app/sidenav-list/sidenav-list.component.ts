@@ -11,17 +11,31 @@ export class SidenavListComponent implements OnInit {
   @Output() sidenavClose = new EventEmitter();
   items: MenuItem[] = [];
 
-  constructor(private _authService: AuthService) { 
+  constructor(private _authService: AuthService) {
     this._authService.isLoggedIn.subscribe(value => {
-      if(value) {
+      if (value) {
         this.items = this._authService.menu;
+        this.items.forEach(i => {
+          if (i.routerLink !== null && i.routerLink !== '' && i.label !== 'Logout') {
+            i.command = () => { this.onSidenavClose(); };
+          } else if (i.items !== undefined) {
+            if (i.items.length !== 0) {
+              i.items.forEach(j => {
+                if (j.routerLink !== null && j.routerLink !== '') {
+                  j.command = () => { this.onSidenavClose(); };
+                }
+              });
+            }
+          }
+        })
+
       }
     });
   }
+
   ngOnInit() { }
- 
+
   public onSidenavClose = () => {
     this.sidenavClose.emit();
   }
-
 }
