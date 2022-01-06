@@ -45,9 +45,14 @@ export class HostelFundManagementComponent implements OnInit {
   budgetAmount: number;
   districtAmount: number;
   showTransfer: boolean;
+  talukFund: number;
+  dstrct: any;
+  SelectTaluk: any;
 
   @ViewChild('f', { static: false }) _hostelFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
+  accFundId: any;
+  totalBudget: any;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
     private authService: AuthService, private tableConstants: TableConstants) { }
@@ -60,8 +65,8 @@ export class HostelFundManagementComponent implements OnInit {
     this.HostelFundCols = this.tableConstants.HostelFundColumns;
     console.log('enter',this.HostelFundCols)
     this.totalHostelAmount = 0;
-
   }
+
   onSelect(type) {
     let districtSelection = [];
     let talukSelection = [];
@@ -78,14 +83,15 @@ export class HostelFundManagementComponent implements OnInit {
           this.districts.forEach(d => {
             districtSelection.push({ label: d.name, value: d.code });
           })
+          console.log('d',this.districts)
           this.districtOptions = districtSelection;
           this.districtOptions.unshift({ label: '-select-', value: null });
           break;
       case 'T':
         this.taluks.forEach(t => {
-          if (t.dcode === this.district) {
+          // if (t.dcode === this.district) {
             talukSelection.push({ label: t.name, value: t.code });
-          }
+          // }
           console.log('taluk',this.taluks)
         })
         this.talukOptions = talukSelection;
@@ -106,6 +112,7 @@ export class HostelFundManagementComponent implements OnInit {
         this.logged_user.hostelId : 0,
     }
     if (this.district !== null && this.district !== undefined) {
+    
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
@@ -114,102 +121,137 @@ export class HostelFundManagementComponent implements OnInit {
           })
           this.hostelOptions = hostelSelection;
           this.hostelOptions.unshift({ label: '-select', value: null });
-        };
+        } 
       })
     }
+    // this.loadAmount();
+  }
+  load() {
+    
+    const params = {
+      'AccountingYearId': this.year,
+      'AccHeadId': 0,
+      'Type': 2
+    }
+    this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
+      if (res) {
+        res.Table.forEach(r => {
+          this.accFundId = r.Id,
+            // this.accHeadId = r.AccHeadID,
+            this.totalBudget = r.BudjetAmount
+        })
+        // this.AccHeadData = res;
+      }
+    })
+  }
+  loadTable() {
+    this.showTable = true;
   }
   // to load taluk amount
   loadAmount() {
+     this.showTable = true;
     this.hostelName = null;
     this.talukAmount = 0;
-    if (this.year !== null && this.year !== undefined && this.taluk !== null && this.taluk !== undefined) {
+    // if (this.accFundId !== null && this.accFundId !== undefined && this.taluk !== null && this.taluk !== undefined) {
       this.blockUI.start();
       const params = {
-        'YearId': this.year,
-        'TCode': this.taluk
+        'AccHeadFundId': 29,
+        'TCode':this.taluk,
+        'Type': 2
       }
       this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, params).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.length !== 0) {
             res.forEach(r => {
-              this.talukAmount = (r.TOBudjetAmount !== undefined && r.TOBudjetAmount !== null) ? r.TOBudjetAmount : 0;
+              this.talukFund = (r.TalukAmount !== undefined && r.TalukAmount !== null) ? r.TalukAmount : 0;
               this.toFundId = r.TOFundId;
+              // this.district = r.Districtname;
               this.blockUI.stop();
             })
-            this.blncAmount = 0;
-            this.totalHostelAmount = 0;
-            if (this.blncAmount === 0) {
-              this.blockUI.start();
-              const data = {
-                'YearId': this.year,
-                'HCode': this.taluk,
-                'Type': 1
-              }
-              this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
-                if (res !== null && res !== undefined) {
-                  if (res.length !== 0) {
-                    res.forEach(res => {
-                      this.totalHostelAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
-                        ? (res.BalanceBudjetAmount * 1) : 0;
-                      this.blockUI.stop();
-                    })
-                  } else {
-                    this.blockUI.stop();
-                    this.blncAmount = 0;
-                  }
-                } else {
-                  this.blockUI.stop();
-                  this.blncAmount = 0;
-                }
-                this.blncAmount = this.talukAmount - this.totalHostelAmount;
-              })
-            }
-          } else {
-            this.blockUI.stop();
+            this.HostelFundData = res;
           }
-        } else {
-          this.blockUI.stop();
         }
       })
-    }
-    this.loadHostelFunds();
-    this.selectDistrict();
+        
+    //         this.blncAmount = 0;
+    //         this.totalHostelAmount = 0;
+    //         if (this.blncAmount === 0) {
+    //           this.blockUI.start();
+    //           const data = {
+    //             'YearId': this.year,
+    //             'HCode': this.taluk,
+    //             'Type': 1
+    //           }
+    //           this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
+    //             if (res !== null && res !== undefined) {
+    //               if (res.length !== 0) {
+    //                 res.forEach(res => {
+    //                   this.totalHostelAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
+    //                     ? (res.BalanceBudjetAmount * 1) : 0;
+    //                   this.blockUI.stop();
+    //                 })
+    //               } else {
+    //                 this.blockUI.stop();
+    //                 this.blncAmount = 0;
+    //               }
+    //             } else {
+    //               this.blockUI.stop();
+    //               this.blncAmount = 0;
+    //             }
+    //             this.blncAmount = this.talukAmount - this.totalHostelAmount;
+    //           })
+    //         }
+    //       } else {
+    //         this.blockUI.stop();
+    //       }
+    //     } else {
+    //       this.blockUI.stop();
+    //     }
+    //   })
+    // }
+    // this.loadHostelFunds();
+    // this.selectDistrict();
+     
+  
   }
-
   onAdd(rowData) { 
     this.showTransfer = true;
+      this.accYear = rowData.ShortYear;
+      this.groupType = rowData.GroupName;
+      this.accHead = rowData.AccountHeadName;
+      this.budgetAmount = rowData.Amount
+    }
+  
 
-  }
+   
 
-  onSave() {
-
-  }
-
-  loadTable() {
-    this.showTable = true;
+  loadamount() {
+    
     const data = {
       'AccountingYearId': this.year,
+      'AccHeadId': 1,
+      'Type': 2
     }
     this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
       if (res) {
         res.forEach(r => {
-          // this.accFundId = r.AccHeadID;
-          // this.totalBudjetAmount = r.BudjetAmount;
+          this.accFundId = r.Id;
+          this.totalBudget = r.BudjetAmount;
         })
         this.HostelFundData = res;
       }
     })
   }
 
-  onSubmit() {
+  onSave() {
     const params = {
-      'Id': this.hostelFundId,
+      'HosteFundId': this.hostelFundId,
       'ToFundId': this.toFundId,
-      'AccYear': this.year,
+      'AccHeadFundId': this.accFundId,
       'DCode': this.district,
       'TCode': this.taluk,
       'HCode': this.hostelName,
-      'HostelBudjetAmount': this.hostelAmount,
+      'HostelAmount': this.hostelAmount,
       'Flag': 1
     }
     this.restApiService.post(PathConstants.HostelFundAllotment_Post, params).subscribe(res => {

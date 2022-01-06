@@ -39,7 +39,7 @@ export class TOFundManagementComponent implements OnInit {
   DistrictFundCols: any = [];
   showTable: boolean;
   districtFund: number;
-  districtname: any;
+  districtName: any;
 
 
 
@@ -93,97 +93,56 @@ export class TOFundManagementComponent implements OnInit {
     }
 
   }
-  loadTable() {
-    // this.districtname = this.selectDistrict;
-    const data = {
+  load() {
+    this.showTable = true;
+    const params = {
       'AccountingYearId': this.year,
-      'AccHeadId': 1,
+      'AccHeadId': 0,
       'Type': 2
     }
-    this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
+    this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
       if (res) {
-        res.forEach(r => {
-          this.accFundId = r.AccHeadID;
-          this.totalBudjetAmount = r.BudjetAmount;
+        res.Table.forEach(r => {
+          this.accFundId = r.Id,
+            // this.accHeadId = r.AccHeadID,
+            this.totalBudjetAmount = r.BudjetAmount
         })
-        this.DistrictFundData = res;
+        // this.AccHeadData = res;
       }
     })
   }
-  load() {
-    this.showTable = true;
-  //   const params = {
-  //     'AccHeadFundId': this.accFundId,
-  //     'DCode': this.selectDistrict,
-  //     'Type': 2
-    }
-  //   this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, params).subscribe(res => {
-  //     if (res) {
-  //       res.forEach(r => {
-  //         this.doFundId = r.DOFundId
-  //       })
-        // this.DistrictFundData = res;
-  //     }
-  //   })
-  // }
-
+   
   // to load district amount
   loadAmount() {
+    console.log('amnt')
+    this.showTable = true;
     this.taluk = null;
     this.districtFund = 0;
-    if (this.accFundId !== null && this.accFundId !== undefined && this.district !== null && this.district !== undefined) {
+    if (this.year !== null && this.year !== undefined && this.district !== null && this.district !== undefined) {
       this.blockUI.start();
       const params = {
-        'AccHeadFundId': this.accFundId,
+        'AccHeadFundId': 29,
         'DCode': this.district,
+        'YearId': this.year,
         'Type': 2
       }
       this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, params).subscribe(res => {
         if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-            res.forEach(r => {
-              this.districtFund = (r.DistrictAmount !== undefined && r.DistrictAmount !== null) ? r.DistrictAmount : 0;
-              this.doFundId = r.DOFundId;
-              this.blockUI.stop();
+          if (res.Table.length !== 0) {
+            res.Table.forEach(res => {
+            this.doFundId = res.DOFundId;
             })
+            this.DistrictFundData = res.Table;
+            this.blockUI.stop();
+          } else {
+            this.blockUI.stop();
+          }
+        } else {
+          this.blockUI.stop();
+        }
 
-            //           this.blncAmount = 0;
-            //           this.totalTalukAmount = 0;
-            //           if (this.blncAmount === 0) {
-            //             this.blockUI.start();
-            //             const data = {
-            //               'AccHeadFundId': this.accFundId,
-            //               'DCode': this.district,
-            //               'Type': 1
-            //             }
-            //             this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
-            //               if (res !== null && res !== undefined) {
-            //                 if (res.length !== 0) {
-            //                   res.forEach(res => {
-            //                     this.totalTalukAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
-            //                       ? (res.BalanceBudjetAmount * 1) : 0;
-            //                     this.blockUI.stop();
-            //                   })
-            //                 } else {
-            //                   this.blockUI.stop();
-            //                   this.blncAmount = 0;
-            //                 }
-            //               } else {
-            //                 this.blockUI.stop();
-            //                 this.blncAmount = 0;
-            //               }
-            //               this.blncAmount = this.districtFund - this.totalTalukAmount;
-            //             });
-            //           }
-                    } else {
-                      this.blockUI.stop();
-                    }
-                  } else {
-                    this.blockUI.stop();
-                  }
 
-          
-          
+
       })
 
     }
@@ -209,7 +168,7 @@ export class TOFundManagementComponent implements OnInit {
     this.restApiService.post(PathConstants.TOFundAllotment_Post, params).subscribe(res => {
       if (res) {
         var message = (this.toFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
-        // this.clearForm();
+        this.clearForm();
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -232,63 +191,34 @@ export class TOFundManagementComponent implements OnInit {
       const data = {
         'AccHeadFundId': this.accFundId,
         'TCode': this.taluk,
-        'Type': 2
+        'Type': 1
       }
       this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.length !== 0) {
-            res.forEach(res => {
-              this.talukAmount = res.TalukAmount;
-              this.blockUI.stop();
-            })
-          } else {
+            this.totalTalukAmount = (res.Table[0].TotalTalukAmount !== undefined && res.Table[0].TotalTalukAmount !== null)
+              ? (res.Table[0].TotalTalukAmount * 1) : 0;
+            this.blncAmount = this.districtFund - this.totalTalukAmount;
             this.blockUI.stop();
+         } else {
+            this.blncAmount = this.districtFund;
+          }
+          if (res.Table1.length !== 0) {
+            this.talukAmount = (res.Table1[0].AllotedAmount * 1);
+          } else {
             this.talukAmount = 0;
           }
+          this.blockUI.stop();
         } else {
           this.blockUI.stop();
-          this.talukAmount = 0;
-
+          this.blncAmount = 0;
         }
       });
-
-      this.blncAmount = 0;
-      this.totalTalukAmount = 0;
-      if (this.blncAmount === 0) {
-        this.blockUI.start();
-        const data = {
-          'AccHeadFundId': this.accFundId,
-          'TCode': this.district,
-          'Type': 1
-        }
-        this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
-          if (res !== null && res !== undefined) {
-            if (res.length !== 0) {
-              res.forEach(res => {
-                this.totalTalukAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
-                  ? (res.BalanceBudjetAmount * 1) : 0;
-                this.blockUI.stop();
-              })
-            } else {
-              this.blockUI.stop();
-              this.blncAmount = 0;
-            }
-          } else {
-            this.blockUI.stop();
-            this.blncAmount = 0;
-          }
-          this.blncAmount = this.districtFund - this.totalTalukAmount;
-        });
-      }
-      else {
-        this.blockUI.stop();
-      }
-    } else {
-      this.blockUI.stop();
     }
-
-
   }
+
+
+  
 
 
   checkBudjetAmount() {
@@ -312,14 +242,15 @@ export class TOFundManagementComponent implements OnInit {
     this.groupType = rowData.GroupName;
     this.accHead = rowData.AccountHeadName;
     this.budgetAmount = rowData.Amount;
-    this.district = rowData.Districtname;
+    this.districtName = rowData.Districtname;
+    this.districtFund = rowData.DistrictAmount;
   }
 
   clearForm() {
-    this._toFundForm.reset();
-    this.districtOptions = [];
+    // this._toFundForm.reset();
     this.talukOptions = [];
-    this.yearOptions = [];
     this.totalTalukAmount = 0;
+    this.talukAmount = 0;
+    this.blncAmount = 0;
   }
 }

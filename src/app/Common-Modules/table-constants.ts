@@ -262,8 +262,8 @@ export class TableConstants {
         { field: 'GONumber', header: 'GO Number', align: 'left !important'},
         { field: 'GroupName', header: 'Type', align: 'left !important'},
         { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
-        { field: 'Amount', header: 'Amount',align: 'right !important'},
         { field: 'Districtname', header: 'District', align: 'left !important'},
+        { field: 'DistrictAmount', header: 'Amount',align: 'right !important'},
 
     ]
     }
