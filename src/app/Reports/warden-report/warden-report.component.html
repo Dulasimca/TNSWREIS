@@ -52,19 +52,40 @@
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                                    <tr>
-                                        <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns" [style.text-align]="col.align">
-                                            {{rowData[col.field]}}
+                                    <tr class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
                                         </td>
-                                        <td *ngIf="editButton"><button icon="pi pi-pencil" pButton type="button"
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+                                        </td>
+                                        <td *ngIf="editButton">
+                                            <span class="p-column-title">
+                                                Edit :
+                                            </span><span><button icon="pi pi-pencil" pButton type="button"
                                             pTooltip="Tap to update end date" (click)="onEdit(rowData)">
-                                        </button></td>
-                                        <td *ngIf="transferButton"><button icon="pi pi-times-circle" pButton type="button"
+                                        </button></span></td>
+                                        <td *ngIf="transferButton">
+                                            <span class="p-column-title">
+                                                Discontinue :
+                                            </span><span><button icon="pi pi-times-circle" pButton type="button"
                                                 pTooltip="Tap to update end date" (click)="onDiscontinue(rowData)">
-                                            </button></td>
-                                        <td *ngIf="transferButton"><button pButton type="button" icon="pi pi-arrow-circle-right"
-                                                pTooltip="Tap to transfer" [disabled]="(rowData.disableTransfer == 'true')" (click)="onTransfer(rowData)"></button></td>
+                                            </button></span></td>
+                                        <td *ngIf="transferButton">
+                                            <span class="p-column-title">
+                                                Transfer :
+                                            </span><span><button pButton type="button" icon="pi pi-arrow-circle-right"
+                                                pTooltip="Tap to transfer" [disabled]="(rowData.disableTransfer == 'true')" (click)="onTransfer(rowData)"></button>
+                                            </span></td>
                                     </tr>
                                 </ng-template>
                             </p-table>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -6,7 +6,6 @@ import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { textChangeRangeIsUnchanged } from 'typescript';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgForm } from '@angular/forms';

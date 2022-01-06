@@ -39,6 +39,7 @@ export class MasterService {
     }
 
     getDistrictAll() {
+        this.districtData = [];
         if (this.data.Table !== undefined && this.data.Table !== null) {
             this.data.Table.forEach(d => {
                 this.districtData.push({ name: d.DistrictName, code: d.Districtcode });
@@ -50,6 +51,7 @@ export class MasterService {
     }
 
     getTalukAll() {
+        this.talukData = [];
         if (this.data.Table1 !== undefined && this.data.Table1 !== null) {
             this.data.Table1.forEach(t => {
                 this.talukData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });

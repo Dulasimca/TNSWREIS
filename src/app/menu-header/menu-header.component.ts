@@ -30,22 +30,12 @@ export class MenuHeaderComponent implements OnInit {
         this.items = this._authService.menu;
         if (this.items.length !== 0) {
           this.items.forEach(i => {
-            if (i.routerLink !== null && i.routerLink !== '' && i.label !== 'Logout') {
-              i.command = () => { this.onToggleSidenav(); };
-            } else if(i.label === 'Logout') {
+             if(i.label === 'Logout') {
               i.command = () => { this.onLogout(); };
-            }
-              else if (i.items.length !== 0) {
-              i.items.forEach(j => {
-                if (j.routerLink !== null && j.routerLink !== '') {
-                  j.command = () => { this.onToggleSidenav(); };
-                }
-              });
             }
           })
         }
       }
-      console.log('menu', this.items);
     });
   }
 
@@ -53,7 +43,6 @@ export class MenuHeaderComponent implements OnInit {
 
   onLogout() {
     this._authService.logout();
-    this.onToggleSidenav();
   }
 
   onSignIn() {
@@ -61,7 +50,6 @@ export class MenuHeaderComponent implements OnInit {
   }
 
   public onToggleSidenav = () => {
-    console.log('emit')
     this.sidenavToggle.emit();
   }
 
