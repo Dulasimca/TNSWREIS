@@ -111,7 +111,7 @@ export class TOFundManagementComponent implements OnInit {
       }
     })
   }
-   
+
   // to load district amount
   loadAmount() {
     console.log('amnt')
@@ -130,7 +130,7 @@ export class TOFundManagementComponent implements OnInit {
         if (res !== null && res !== undefined) {
           if (res.Table.length !== 0) {
             res.Table.forEach(res => {
-            this.doFundId = res.DOFundId;
+              this.doFundId = res.DOFundId;
             })
             this.DistrictFundData = res.Table;
             this.blockUI.stop();
@@ -163,6 +163,7 @@ export class TOFundManagementComponent implements OnInit {
       'DCode': this.district,
       'TCode': this.taluk,
       'TalukAmount': this.talukAmount,
+      'YearId': this.year,
       'Flag': 1
     }
     this.restApiService.post(PathConstants.TOFundAllotment_Post, params).subscribe(res => {
@@ -200,7 +201,7 @@ export class TOFundManagementComponent implements OnInit {
               ? (res.Table[0].TotalTalukAmount * 1) : 0;
             this.blncAmount = this.districtFund - this.totalTalukAmount;
             this.blockUI.stop();
-         } else {
+          } else {
             this.blncAmount = this.districtFund;
           }
           if (res.Table1.length !== 0) {
@@ -218,7 +219,7 @@ export class TOFundManagementComponent implements OnInit {
   }
 
 
-  
+
 
 
   checkBudjetAmount() {

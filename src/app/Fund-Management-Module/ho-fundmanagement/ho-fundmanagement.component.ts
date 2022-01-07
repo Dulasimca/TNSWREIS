@@ -84,62 +84,62 @@ export class HOFundmanagementComponent implements OnInit {
   }
 
   onSave() {
-    if(this.accountHead === null && this.accountHead === undefined){
-    const parameter = {
-      'Id': this.hoFundId,
-      'AccYear': this.year,
-      'GoNumber': this.goNumber,
-      'GoDate': this._datePipe.transform(this.Date, 'dd-MM-yyyy'),
-      'BudjetAmount': this.budjetAmount,
-      'Flag': 1
-    }
-    this.restApiService.post(PathConstants.HOFundAllotment_Post, parameter).subscribe(res => {
-      if (res) {
-        var message = (this.hoFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
-        this.clearForm();
-        this.messageService.clear();
-        this.messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          summary: ResponseMessage.SUMMARY_SUCCESS, detail: message
-        });
-      } else {
-        this.messageService.clear();
-        this.messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        });
+    if (this.accountHead === null && this.accountHead === undefined) {
+      const parameter = {
+        'Id': this.hoFundId,
+        'AccYear': this.year,
+        'GoNumber': this.goNumber,
+        'GoDate': this._datePipe.transform(this.Date, 'dd-MM-yyyy'),
+        'BudjetAmount': this.budjetAmount,
+        'Flag': 1
       }
-    })
-  }
-    if(this.accountHead !== null && this.accountHead !== undefined){
-    const params = {
-      'Id': this.accFundId,
-      'HoFundId': this.hoFundId,
-      'AccYear': this.year,
-      'GroupTypeId': this.groupType,
-      'AccHeadId': this.accountHead,
-      'Amount': this.headAmount,
-      'Flag': 1
+      this.restApiService.post(PathConstants.HOFundAllotment_Post, parameter).subscribe(res => {
+        if (res) {
+          var message = (this.hoFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
+          this.clearForm();
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: message
+          });
+        } else {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+      })
     }
-    this.restApiService.post(PathConstants.AccHeadFundAllotment_Post, params).subscribe(res => {
-      if (res) {
-        var message = (this.accFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
-        // this.refreshFields();
-        this.messageService.clear();
-        this.messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-          summary: ResponseMessage.SUMMARY_SUCCESS, detail: message
-        });
-      }else{
-      this.messageService.clear();
-        this.messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        });
+    if (this.accountHead !== null && this.accountHead !== undefined) {
+      const params = {
+        'Id': this.accFundId,
+        'HoFundId': this.hoFundId,
+        'AccYear': this.year,
+        'GroupTypeId': this.groupType,
+        'AccHeadId': this.accountHead,
+        'Amount': this.headAmount,
+        'Flag': 1
       }
-    })
+      this.restApiService.post(PathConstants.AccHeadFundAllotment_Post, params).subscribe(res => {
+        if (res) {
+          var message = (this.accFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
+          // this.refreshFields();
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: message
+          });
+        } else {
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+      })
+    }
   }
-}
 
   loadData() {
     this.showFields = false;
@@ -183,11 +183,11 @@ export class HOFundmanagementComponent implements OnInit {
       this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.Table.length !== 0) {
-              this.totalAccHeadAmount = (res.Table[0].TotalBudget !== undefined && res.Table[0].TotalBudget !== null)
+            this.totalAccHeadAmount = (res.Table[0].TotalBudget !== undefined && res.Table[0].TotalBudget !== null)
               ? (res.Table[0].TotalBudget * 1) : 0;
             this.blncAmount = this.budjetAmount - this.totalAccHeadAmount;
             this.blockUI.stop();
-         } else {
+          } else {
             this.blncAmount = this.budjetAmount;
           }
           if (res.Table1.length !== 0) {
@@ -204,38 +204,38 @@ export class HOFundmanagementComponent implements OnInit {
     }
   }
 
-      // load total account head budget amt so far, if any account head have entered their budget
-      // this.headAmount = 0;
-      // this.blockUI.start();
-      // if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
-      // const data = {
-      //   'AccountingYearId': this.year,
-      //   'AccHeadId': this.accountHead,
-      //   'Type': 2
-      // }
-      // this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
-      //   if (res !== null && res !== undefined) {
-      //     if (res.length !== 0) {
-      //     res.forEach(r => {
-      //       this.accFundId = r.Id,
-      //       this.headAmount = r.Amount
-      //     this.blockUI.stop();
-      //     })
-        // }else{
-        //   this.blockUI.stop();
-        //   this.accFundId = 0;
-        // }
-    //   } else {
-    //     this.blockUI.stop();
-    //     this.accFundId = 0;
-    //   }
-    //   })
-    // }
-    // }
-    // }
-    
-    
-  
+  // load total account head budget amt so far, if any account head have entered their budget
+  // this.headAmount = 0;
+  // this.blockUI.start();
+  // if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
+  // const data = {
+  //   'AccountingYearId': this.year,
+  //   'AccHeadId': this.accountHead,
+  //   'Type': 2
+  // }
+  // this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
+  //   if (res !== null && res !== undefined) {
+  //     if (res.length !== 0) {
+  //     res.forEach(r => {
+  //       this.accFundId = r.Id,
+  //       this.headAmount = r.Amount
+  //     this.blockUI.stop();
+  //     })
+  // }else{
+  //   this.blockUI.stop();
+  //   this.accFundId = 0;
+  // }
+  //   } else {
+  //     this.blockUI.stop();
+  //     this.accFundId = 0;
+  //   }
+  //   })
+  // }
+  // }
+  // }
+
+
+
   checkBudjetAmount() {
     if (this.headAmount !== undefined && this.headAmount !== null &&
       this.blncAmount !== undefined && this.blncAmount !== null &&
@@ -251,11 +251,11 @@ export class HOFundmanagementComponent implements OnInit {
       }
     }
   }
-// to refresh first row fields on loading data where data is empty
+  // to refresh first row fields on loading data where data is empty
   refresh() {
     this.goNumber = null;
     this.Date = null;
-    this.budjetAmount = null; 
+    this.budjetAmount = null;
   }
   // to refresh second row fields after save 
   // refreshFields() {

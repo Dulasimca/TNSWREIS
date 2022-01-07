@@ -1,46 +1,43 @@
-<block-ui> 
-<div class="p-grid">
-    <div class="p-col-12 p-md-12 p-lg-12">
-        <p-toast position="top-center" key="t-msg"></p-toast>
-        <p-panel header="Hostel Fund Management">
-            <form #f="ngForm" name="hostelFundForm">
-                <p-card>
-                    <div class="p-col-12 no-pad-top">
-                        <div class="p-grid">
-                            <div class="p-col-2"></div>
-                            <div #row1 class="p-col-12 p-md-12 p-lg-10">
-                                <div class="p-grid">
-                                    <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_year">Accounting Year<span
-                                                    class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')"
-                                            [(ngModel)]="year" (onChange)="loadamount()" required>
-                                        </p-dropdown>
-                                    </div>
-                                    <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_totalbudget">Total Budget Amount<span
-                                                    class="form-mandatory-field">*</span></label></div>
-                                        <input type="text" name="_totalbudget" class="p-col-12" pInputText
-                                            [(ngModel)]="totalBudget" placeholder="From Taluk"
-                                            readonly="true"
-                                            required />
-                                    </div>
-                                    <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="_dstrct">District<span
-                                                    class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="_dstrct" [options]="districtOptions" [(ngModel)]="district"
-                                       (onClick)="onSelect('D')" required>
-                                        </p-dropdown>
-                                    </div>
-                                    <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="_selectTaluk">Taluk<span
-                                                    class="form-mandatory-field">*</span></label></div>
-                                                    <p-dropdown name="_selectTaluk" [options]="talukOptions"
-                                                    [(ngModel)]="taluk" (onClick)="onSelect('T')" (onChange)="loadAmount()"
-                                                   required>
-                                                </p-dropdown>
-                                    </div>  
-                                            <!-- <div class="p-col-12 p-md-6 p-lg-2">
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-panel header="Hostel Fund Management">
+                <form #f="ngForm" name="hostelFundForm">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top">
+                            <div class="p-grid">
+                                <div class="p-col-2"></div>
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-12 p-lg-2">
+                                            <div><label for="_year">Accounting Year<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')"
+                                                [(ngModel)]="year" (onChange)="load()" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2">
+                                            <div><label for="_totalbudget">Total Budget Amount<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <input type="text" name="_totalbudget" class="p-col-12" pInputText
+                                                [(ngModel)]="totalBudget" placeholder="From Taluk" readonly="true"
+                                                required />
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <div><label for="_dstrct">District<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_dstrct" [options]="districtOptions"
+                                                [(ngModel)]="district" (onClick)="onSelect('D')" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <div><label for="_selectTaluk">Taluk<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_selectTaluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                                (onClick)="onSelect('T')" (onChange)="loadAmount()" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <!-- <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_hostel">Hostel<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <p-dropdown name="_hostel" [options]="hostelOptions"
@@ -54,94 +51,85 @@
                                                     [(ngModel)]="hostelAmount" appInputFormat="digitOnly"
                                                     (input)="checkBudjetAmount()" required />
                                             </div> -->
-                                        </div>
                                     </div>
                                 </div>
-                                
-                        <div *ngIf="showTable" class="table-format">
-                            <p-table [value]="HostelFundData" [columns]="HostelFundCols" styleClass="p-datatable-gridlines"
-                                [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
-                                <ng-template pTemplate="header" let-columns>
-                                    <tr>
-                                        <th style="width: 50px;">S.No</th>
-                                        <th *ngFor="let col of columns">
-                                            {{col.header}}
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                                    <tr>
-                                        <td>{{rowIndex+1}}</td>
-                                        <td *ngFor="let col of columns" [style.text-align]="col.align">
-                                            {{rowData[col.field]}}
-                                        </td>
-                                        <td><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
-                                                pTooltip="Tap to enter">
-                                            </button></td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
                             </div>
-                        </p-card>
-                              <!-- --dialog -->
-                              <p-dialog header="Hostel Wise - Fund Allotment" [(visible)]="showTransfer" [modal]="true"
-                              [maximizable]="true" [style]="{width: '80vw', height: '30vw'}">
-                              <p-toast position="top-center" key="t-msg"></p-toast>
-                              <p-card>
-                                  <div class="p-col-12 no-pad-top">
-                                      <div class="p-grid">
-                                          <div class="p-col-2"></div>
-                                          <div #row1 class="p-col-12 p-md-12 p-lg-12">
-                                              <div class="p-grid">
-                                                  <div class="p-col-12 p-md-12 p-lg-2">
-                                                      <div><label for="_accYear">Accounting Year</label></div>
-                                                      <input type="text" name="_accYear" class="p-col-12" pInputText
-                                                          [(ngModel)]="accYear" readonly="true" required />
-                                                  </div>
-  
-                                                  <div class="p-col-12 p-md-12 p-lg-2">
-                                                      <div><label for="_type">Type</label></div>
-                                                      <input type="text" name="_type" class="p-col-12" pInputText
-                                                          [(ngModel)]="groupType" readonly="true" required />
-                                                  </div>
-                                                  <div class="p-col-12 p-md-12 p-lg-2">
-                                                      <div><label for="_accHead">Account Head</label></div>
-                                                      <input type="text" name="_accHead" class="p-col-12" pInputText
-                                                          [(ngModel)]="accHead" readonly="true" required />
-                                                  </div>
-                                                  <div class="p-col-12 p-md-12 p-lg-2">
-                                                      <div><label for="_budgetamount">Budget Amount</label></div>
-                                                      <input type="text" name="_budgetamount" class="p-col-12" pInputText
-                                                          [(ngModel)]="budgetAmount" required />
-                                                  </div>
-                                                  <div class="p-col-12 p-md-6 p-lg-2">
-                                                    <div><label for="_district">District<span
-                                                                class="form-mandatory-field">*</span></label></div>
-                                                    <input type="text"  
-                                                    name="_district" class="p-col-12" pInputText
+                            <div *ngIf="showTable" class="table-format">
+                                <p-table [value]="HostelFundData" [columns]="HostelFundCols"
+                                    styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
+                                    [rowsPerPageOptions]="[10,20,30,40]">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 50px;">S.No</th>
+                                            <th *ngFor="let col of columns">
+                                                {{col.header}}
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex"
+                                        let-columns="columns">
+                                        <tr>
+                                            <td>{{rowIndex+1}}</td>
+                                            <td *ngFor="let col of columns" [style.text-align]="col.align">
+                                                {{rowData[col.field]}}
+                                            </td>
+                                            <td><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
+                                                    pTooltip="Tap to enter hostel fund">
+                                                </button></td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-card>
+                    <!-- --dialog -->
+                    <p-dialog header="Hostel Wise - Fund Allotment" [(visible)]="showTransfer" [modal]="true"
+                        [maximizable]="true" [style]="{width: '80vw', height: '30vw'}">
+                        <p-toast position="top-center" key="t-msg"></p-toast>
+                        <p-card>
+                            <div class="p-col-12 no-pad-top">
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div><label for="_accYear">Accounting Year</label></div>
+                                                <input type="text" name="_accYear" class="p-col-12" pInputText
+                                                    [(ngModel)]="accYear" readonly="true" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div><label for="_type">Group Type</label></div>
+                                                <input type="text" name="_type" class="p-col-12" pInputText
+                                                    [(ngModel)]="groupType" readonly="true" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div><label for="_accHead">Account Head</label></div>
+                                                <input type="text" name="_accHead" class="p-col-12" pInputText
+                                                    [(ngModel)]="accHead" readonly="true" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_district">District<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="text" name="_district" class="p-col-12" pInputText
                                                     [(ngModel)]="dstrct" readonly="true" required />
-                                                </div>
-                                              </div>
-                                          </div>
-                                          <div #row1 class="p-col-12 p-md-12 p-lg-12">
-                                              <div class="p-grid">
-                                                  
-                                                  <div class="p-col-12 p-md-6 p-lg-2">
-                                                    <div><label for="_taluk">Taluk<span
-                                                                class="form-mandatory-field">*</span></label></div>
-                                                    <p-dropdown name="_taluk" [options]="talukOptions"
-                                                        [(ngModel)]="SelectTaluk" (onClick)="onSelect('T')"  
-                                                       required>
-                                                    </p-dropdown>
-                                                </div>
-                                                  <div class="p-col-12 p-md-12 p-lg-2">
-                                                      <div><label for="_talukfund">Allotted Taluk Fund</label></div>
-                                                      <input type="text" name="_talukfund" class="p-col-12" pInputText
-                                                          [(ngModel)]="talukFund" readonly="true" required />
-                                                  </div>
-                                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_taluk">Taluk<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="text" name="_taluk" class="p-col-12" pInputText
+                                                    [(ngModel)]="SelectTaluk" readonly="true" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div><label for="_talukfund">Allotted Taluk Fund</label></div>
+                                                <input type="text" name="_talukfund" class="p-col-12" pInputText
+                                                    [(ngModel)]="talukFund" readonly="true" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
                                                 <div><label for="_hostel">Hostel<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <p-dropdown name="_hostel" [options]="hostelOptions"
@@ -153,24 +141,23 @@
                                                 <input type="text" name="_blncamount" class="p-col-12" pInputText
                                                     [(ngModel)]="blncAmount" readonly="true" required />
                                             </div>
-                                                  <div class="p-col-12 p-md-12 p-lg-2">
-                                                      <div><label for="_damount">District Fund</label></div>
-                                                      <input type="text" name="_damount" class="p-col-12" pInputText
-                                                          [(ngModel)]="districtAmount" placeholder="Enter amount"
-                                                          required />
-                                                  </div>
-                                                  <div class="p-col-12 p-md-12 p-lg-12 txt-center">
-                                                      <button pButton type="button" label="Save" icon="pi pi-save"
-                                                          (click)="onSave()"></button>&nbsp;
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </p-card>
-                          </p-dialog>
-            </form>
-        </p-panel>
+                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div><label for="_hFund">Hostel Fund</label></div>
+                                                <input type="text" name="_hFund" class="p-col-12" pInputText
+                                                    [(ngModel)]="hostelAmount" placeholder="Enter amount" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                                <button pButton type="button" label="Save" icon="pi pi-save"
+                                                    (click)="onSave()"></button>&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-card>
+                    </p-dialog>
+                </form>
+            </p-panel>
+        </div>
     </div>
-</div>
 </block-ui>

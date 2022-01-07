@@ -237,7 +237,7 @@ export class DOFundManagementComponent implements OnInit {
       this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.Table.length !== 0) {
-        //    this.doFundId = res[0].DOFundId;
+            //    this.doFundId = res[0].DOFundId;
             this.totalDistrictAmt = (res.Table[0].TotalDOBudjetAmount !== undefined && res.Table[0].TotalDOBudjetAmount !== null)
               ? (res.Table[0].TotalDOBudjetAmount * 1) : 0;
             this.blncAmount = this.budgetAmount - this.totalDistrictAmt;
