@@ -348,7 +348,7 @@ export class HostelinfrastructureComponent implements OnInit {
     this.onLoad();
     this.hostelInfraRow = data;
     this.filteredFloorData = this.floorwisedetails.filter(f => {
-      return ((f.FloorId * 1) <= (this.hostelInfraRow.NoOfFloor * 1));
+      return (((f.FloorId * 1) - 1) <= (this.hostelInfraRow.NoOfFloor * 1));
     })
   }
 
