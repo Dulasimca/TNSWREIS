@@ -6,7 +6,6 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
-import { BooleanLiteral } from 'typescript';
 
 @Component({
   selector: 'app-commodity-master',
