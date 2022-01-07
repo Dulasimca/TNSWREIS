@@ -106,6 +106,7 @@ import { StudentTransferFormComponent } from './forms-module/student-transfer-fo
 import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 import { StudentAttendanceComponent } from './forms-module/student-attendance/student-attendance.component';
 import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-report/employeeattendance-report.component';
+import { BiometricDevicemappingComponent } from './Biometric/biometric-devicemapping/biometric-devicemapping.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,6 +166,7 @@ import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-
     EmployeeattendanceDetailsComponent,
     StudentAttendanceComponent,
     EmployeeattendanceReportComponent,
+    BiometricDevicemappingComponent,
     
   ],
   imports: [

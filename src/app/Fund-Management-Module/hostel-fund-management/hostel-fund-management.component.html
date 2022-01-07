@@ -14,29 +14,29 @@
                                         <div><label for="_year">Accounting Year<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')"
-                                            [(ngModel)]="year" required>
+                                            [(ngModel)]="year" (onChange)="loadamount()" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_damnt">Total Budget Amount<span
+                                        <div><label for="_totalbudget">Total Budget Amount<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <input type="text" name="_damnt" class="p-col-12" pInputText
-                                            [(ngModel)]="talukAmount" placeholder="From Taluk"
+                                        <input type="text" name="_totalbudget" class="p-col-12" pInputText
+                                            [(ngModel)]="totalBudget" placeholder="From Taluk"
                                             readonly="true"
                                             required />
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="_district">District<span
+                                        <div><label for="_dstrct">District<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                        (onChange)="loadTable()" (onClick)="onSelect('D')" required>
+                                        <p-dropdown name="_dstrct" [options]="districtOptions" [(ngModel)]="district"
+                                       (onClick)="onSelect('D')" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
-                                        <div><label for="_taluk">Taluk<span
+                                        <div><label for="_selectTaluk">Taluk<span
                                                     class="form-mandatory-field">*</span></label></div>
-                                                    <p-dropdown name="_taluk" [options]="talukOptions"
-                                                    [(ngModel)]="taluk" (onClick)="onSelect('T')" (onChange)="loadTable()"
+                                                    <p-dropdown name="_selectTaluk" [options]="talukOptions"
+                                                    [(ngModel)]="taluk" (onClick)="onSelect('T')" (onChange)="loadAmount()"
                                                    required>
                                                 </p-dropdown>
                                     </div>  
@@ -116,31 +116,43 @@
                                                       <input type="text" name="_budgetamount" class="p-col-12" pInputText
                                                           [(ngModel)]="budgetAmount" required />
                                                   </div>
+                                                  <div class="p-col-12 p-md-6 p-lg-2">
+                                                    <div><label for="_district">District<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text"  
+                                                    name="_district" class="p-col-12" pInputText
+                                                    [(ngModel)]="dstrct" readonly="true" required />
+                                                </div>
                                               </div>
                                           </div>
                                           <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                               <div class="p-grid">
-                                                  <div class="p-col-12 p-md-6 p-lg-2">
-                                                      <div><label for="_district">District<span
-                                                                  class="form-mandatory-field">*</span></label></div>
-                                                      <p-dropdown name="_district" [options]="districtOptions"
-                                                          [(ngModel)]="district" (onClick)="onSelect('D')"
-                                                           required>
-                                                      </p-dropdown>
-                                                  </div>
+                                                  
                                                   <div class="p-col-12 p-md-6 p-lg-2">
                                                     <div><label for="_taluk">Taluk<span
                                                                 class="form-mandatory-field">*</span></label></div>
                                                     <p-dropdown name="_taluk" [options]="talukOptions"
-                                                        [(ngModel)]="taluk" (onClick)="onSelect('T')"
+                                                        [(ngModel)]="SelectTaluk" (onClick)="onSelect('T')"  
                                                        required>
                                                     </p-dropdown>
                                                 </div>
                                                   <div class="p-col-12 p-md-12 p-lg-2">
-                                                      <div><label for="_blncamount">Available Budget Amount</label></div>
-                                                      <input type="text" name="_blncamount" class="p-col-12" pInputText
-                                                          [(ngModel)]="blncAmount" readonly="true" required />
+                                                      <div><label for="_talukfund">Allotted Taluk Fund</label></div>
+                                                      <input type="text" name="_talukfund" class="p-col-12" pInputText
+                                                          [(ngModel)]="talukFund" readonly="true" required />
                                                   </div>
+                                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_hostel">Hostel<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <p-dropdown name="_hostel" [options]="hostelOptions"
+                                                    [(ngModel)]="hostelName" (onChange)="loadHostelFunds()" required>
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div><label for="_blncamount">Available Budget Amount</label></div>
+                                                <input type="text" name="_blncamount" class="p-col-12" pInputText
+                                                    [(ngModel)]="blncAmount" readonly="true" required />
+                                            </div>
                                                   <div class="p-col-12 p-md-12 p-lg-2">
                                                       <div><label for="_damount">District Fund</label></div>
                                                       <input type="text" name="_damount" class="p-col-12" pInputText

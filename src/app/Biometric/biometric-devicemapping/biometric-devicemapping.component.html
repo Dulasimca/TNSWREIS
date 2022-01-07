@@ -1,0 +1,52 @@
+<block-ui>
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Biometric">
+            <form #f="ngForm" name="biometricForm">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-card>
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_district">District<span
+                                                        class="form-mandatory-field">*</span></label>
+                                                <p-dropdown name="_district" [options]="districtOptions"
+                                                    [(ngModel)]="district" (onClick)="onSelect('D')"
+                                                    (onChange)="selectDistrict()" required>
+                                                </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_hostel" [options]="hostelOptions" (click)="onSelect('HN')"
+                                     [(ngModel)]="hostel" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_biometric">Biometric deviceID<span class="form-mandatory-field">*</span></label>
+                                    <input type="text" name="_biometric" pInputText
+                                     [(ngModel)]="bioMetric" required />
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-2" style="margin-top: 23px;">
+                                    <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>&nbsp;
+                                    <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                    <button pButton type="button" label="Submit" (click)="onSubmit()"
+                                    [disabled]="(!f.valid)" class="btn-bg"></button>&nbsp;
+                                        <button pButton type="button" label="View" (click)="onView()"
+                                        class="btn-bg"></button>&nbsp;
+                                        <button pButton type="button" label="Clear" 
+                                        icon="pi pi-times-circle" (click)="onClear()"></button>
+                                </div>
+                            </div>
+                        </p-card>
+                    </div>
+                </div>
+                </form> 
+        </p-panel>
+    </div>
+</block-ui>
