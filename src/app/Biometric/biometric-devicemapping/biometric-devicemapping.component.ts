@@ -25,21 +25,29 @@ export class BiometricDevicemappingComponent implements OnInit {
   hostels?: any;
   districts?: any;
   nativeDistricts?: any;
-
+  data:any;
+  cols:any;
+  biometricForm:any;
+  DeviceId:any;
+  HostelId:any;
 
   constructor(private _masterService: MasterService,private _restApiService: RestAPIService,private _messageService: MessageService,private _authService: AuthService) { }
 
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
     this.districts = this._masterService.getDistrictAll();
+    this.cols = [
 
+      {field:'DCode',header: 'District' },
+      {field:'HostelId',header: 'Hostel Name'},
+      {field:'DeviceId',header: 'Biometric Device Id'},
+      {field:'Flag',header: 'Status'}
+
+    ];
 
   }
 
-  onView() {
-
-  }
-
+ 
   selectDistrict() {
     this.hostel = null;
     this.hostelOptions = [];
@@ -94,7 +102,7 @@ export class BiometricDevicemappingComponent implements OnInit {
         if (res) {
           // this.blockUI.stop();
            this.onClear();
-           this.onView();
+          // this.onView();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -130,7 +138,32 @@ export class BiometricDevicemappingComponent implements OnInit {
 
   }
 
-  onClear() {
+  onView(){
+    this._restApiService.get(PathConstants.BioMetric_Get).subscribe(res => {
+      if(res !== null && res !== undefined && res.length !==0) {
+        this.data = res.Table;
+        this.data.forEach(i => {
+         i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+       })
+       
+      } 
+      
+    });
 
   }
+  
+
+
+
+  onClear() {
+    this.biometricForm.reset();
+    this.DeviceId = '',
+    this.HostelId = ''
+  }
+
+  onRowSelect(event, selectedRow) {
+    this.bioMetric = selectedRow.DeviceId;
+    this.hostel = selectedRow.HostelId;
+}
+
 }

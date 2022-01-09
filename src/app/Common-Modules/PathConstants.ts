@@ -129,6 +129,7 @@ public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get'
 public static readonly StudentTransferDetails_Put = 'StudentTransferDetails/Put';
 
 public static readonly BioMetric_Post = 'BioMetric/Post';
+public static readonly BioMetric_Get = 'BioMetric/Get';
 
 
 }
