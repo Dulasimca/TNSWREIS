@@ -30,7 +30,6 @@ export class HostelFundManagementComponent implements OnInit {
   hostels?: any;
   hostelOptions: SelectItem[];
   talukAmount: any;
-  hostelAmount: any;
   toFundId: number;
   hostelFundId: number;
   logged_user: User;
@@ -48,6 +47,7 @@ export class HostelFundManagementComponent implements OnInit {
   talukFund: number;
   dstrct: any;
   SelectTaluk: any;
+  hostelAmount: number;
 
   @ViewChild('f', { static: false }) _hostelFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
@@ -63,8 +63,9 @@ export class HostelFundManagementComponent implements OnInit {
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.HostelFundCols = this.tableConstants.HostelFundColumns;
-    console.log('enter',this.HostelFundCols)
+    console.log('enter', this.HostelFundCols)
     this.totalHostelAmount = 0;
+    this.hostelFundId = 0;
   }
 
   onSelect(type) {
@@ -79,20 +80,20 @@ export class HostelFundManagementComponent implements OnInit {
         this.yearOptions = yearSelection;
         this.yearOptions.unshift({ label: '-select', value: null });
         break;
-        case 'D':
-          this.districts.forEach(d => {
-            districtSelection.push({ label: d.name, value: d.code });
-          })
-          console.log('d',this.districts)
-          this.districtOptions = districtSelection;
-          this.districtOptions.unshift({ label: '-select-', value: null });
-          break;
+      case 'D':
+        this.districts.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
+        })
+        console.log('d', this.districts)
+        this.districtOptions = districtSelection;
+        this.districtOptions.unshift({ label: '-select-', value: null });
+        break;
       case 'T':
         this.taluks.forEach(t => {
           // if (t.dcode === this.district) {
-            talukSelection.push({ label: t.name, value: t.code });
+          talukSelection.push({ label: t.name, value: t.code });
           // }
-          console.log('taluk',this.taluks)
+          console.log('taluk', this.taluks)
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });
@@ -112,7 +113,7 @@ export class HostelFundManagementComponent implements OnInit {
         this.logged_user.hostelId : 0,
     }
     if (this.district !== null && this.district !== undefined) {
-    
+
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
@@ -121,13 +122,13 @@ export class HostelFundManagementComponent implements OnInit {
           })
           this.hostelOptions = hostelSelection;
           this.hostelOptions.unshift({ label: '-select', value: null });
-        } 
+        }
       })
     }
     // this.loadAmount();
   }
   load() {
-    
+    // this.showTable = true;
     const params = {
       'AccountingYearId': this.year,
       'AccHeadId': 0,
@@ -143,105 +144,56 @@ export class HostelFundManagementComponent implements OnInit {
         // this.AccHeadData = res;
       }
     })
+
   }
-  loadTable() {
-    this.showTable = true;
-  }
+
   // to load taluk amount
   loadAmount() {
-     this.showTable = true;
+    this.showTable = true;
     this.hostelName = null;
     this.talukAmount = 0;
     // if (this.accFundId !== null && this.accFundId !== undefined && this.taluk !== null && this.taluk !== undefined) {
-      this.blockUI.start();
-      const params = {
-        'AccHeadFundId': 29,
-        'TCode':this.taluk,
-        'Type': 2
-      }
-      this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, params).subscribe(res => {
-        if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-            res.forEach(r => {
-              this.talukFund = (r.TalukAmount !== undefined && r.TalukAmount !== null) ? r.TalukAmount : 0;
-              this.toFundId = r.TOFundId;
-              // this.district = r.Districtname;
-              this.blockUI.stop();
-            })
-            this.HostelFundData = res;
-          }
-        }
-      })
-        
-    //         this.blncAmount = 0;
-    //         this.totalHostelAmount = 0;
-    //         if (this.blncAmount === 0) {
-    //           this.blockUI.start();
-    //           const data = {
-    //             'YearId': this.year,
-    //             'HCode': this.taluk,
-    //             'Type': 1
-    //           }
-    //           this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
-    //             if (res !== null && res !== undefined) {
-    //               if (res.length !== 0) {
-    //                 res.forEach(res => {
-    //                   this.totalHostelAmount = (res.BalanceBudjetAmount !== undefined && res.BalanceBudjetAmount !== null)
-    //                     ? (res.BalanceBudjetAmount * 1) : 0;
-    //                   this.blockUI.stop();
-    //                 })
-    //               } else {
-    //                 this.blockUI.stop();
-    //                 this.blncAmount = 0;
-    //               }
-    //             } else {
-    //               this.blockUI.stop();
-    //               this.blncAmount = 0;
-    //             }
-    //             this.blncAmount = this.talukAmount - this.totalHostelAmount;
-    //           })
-    //         }
-    //       } else {
-    //         this.blockUI.stop();
-    //       }
-    //     } else {
-    //       this.blockUI.stop();
-    //     }
-    //   })
-    // }
-    // this.loadHostelFunds();
-    // this.selectDistrict();
-     
-  
-  }
-  onAdd(rowData) { 
-    this.showTransfer = true;
-      this.accYear = rowData.ShortYear;
-      this.groupType = rowData.GroupName;
-      this.accHead = rowData.AccountHeadName;
-      this.budgetAmount = rowData.Amount
-    }
-  
-
-   
-
-  loadamount() {
-    
-    const data = {
-      'AccountingYearId': this.year,
-      'AccHeadId': 1,
+    this.blockUI.start();
+    const params = {
+      'AccHeadFundId': this.accFundId,
+      'TCode': this.taluk,
       'Type': 2
     }
-    this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
-      if (res) {
-        res.forEach(r => {
-          this.accFundId = r.Id;
-          this.totalBudget = r.BudjetAmount;
-        })
-        this.HostelFundData = res;
+    this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined) {
+        if (res.Table.length !== 0) {
+          res.Table.forEach(r => {
+            // this.talukFund = (r.TalukAmount !== undefined && r.TalukAmount !== null) ? r.TalukAmount : 0;
+            this.toFundId = r.TOFundId;
+            // this.district = r.Districtname;
+            this.blockUI.stop();
+          })
+          this.HostelFundData = res.Table;
+        }
       }
     })
+
+
+    // this.loadHostelFunds();
+    this.selectDistrict();
+
+
   }
+  onAdd(rowData) {
+    this.showTransfer = true;
+    this.accYear = rowData.ShortYear;
+    this.groupType = rowData.GroupName;
+    this.accHead = rowData.AccountHeadName;
+    this.budgetAmount = rowData.Amount;
+    this.dstrct = rowData.Districtname;
+    this.SelectTaluk = rowData.Talukname;
+    this.talukFund = rowData.TalukAmount;
+  }
+
+
+
+
+
 
   onSave() {
     const params = {
@@ -276,27 +228,31 @@ export class HostelFundManagementComponent implements OnInit {
   loadHostelFunds() {
     this.hostelAmount = null;
     if (this.year !== undefined && this.year !== null && this.hostelName !== null && this.hostelName !== undefined) {
-      this.blockUI.start();
+      // this.blockUI.start();
       const data = {
-        'YearId': this.year,
+        'AccHeadFundId': this.accFundId,
         'HCode': this.hostelName,
-        'Type': 2
+        'Type': 1
       }
       this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
           if (res.length !== 0) {
-            res.forEach(res => {
-              this.hostelAmount = res.HostelBudjetAmount;
-              this.blockUI.stop();
-            })
-          } else {
+            this.totalHostelAmount = (res.Table[0].TotalHostelFund !== undefined && res.Table[0].TotalHostelFund !== null)
+              ? (res.Table[0].TotalHostelFund * 1) : 0;
+            this.blncAmount = this.talukFund - this.totalHostelAmount;
             this.blockUI.stop();
+          } else {
+            this.blncAmount = this.talukFund;
+          }
+          if (res.Table1.length !== 0) {
+            this.hostelAmount = (res.Table1[0].AllotedAmount * 1);
+          } else {
             this.hostelAmount = 0;
           }
+          this.blockUI.stop();
         } else {
           this.blockUI.stop();
-          this.hostelAmount = 0;
-
+          this.blncAmount = 0;
         }
       });
     }
@@ -304,9 +260,9 @@ export class HostelFundManagementComponent implements OnInit {
 
   checkBudjetAmount() {
     if (this.hostelAmount !== undefined && this.hostelAmount !== null &&
-      this.talukAmount !== undefined && this.talukAmount !== null &&
-      this.hostelAmount !== NaN && this.talukAmount !== NaN) {
-      if ((this.talukAmount * 1) < (this.hostelAmount * 1)) {
+      this.blncAmount !== undefined && this.blncAmount !== null &&
+      this.hostelAmount !== NaN && this.blncAmount !== NaN) {
+      if ((this.blncAmount * 1) < (this.hostelAmount * 1)) {
         var msg = 'Entering amount should not be greater than budjet amount !';
         this.messageService.clear();
         this.messageService.add({
@@ -319,12 +275,10 @@ export class HostelFundManagementComponent implements OnInit {
   }
 
   clearForm() {
-    this._hostelFundForm.reset();
-    this.yearOptions = [];
-    this.districtOptions = [];
-    this.talukOptions = [];
-    this.hostelOptions = [];
+    // this.hostelOptions = [];
     this.totalHostelAmount = 0;
+    this.hostelAmount = 0;
+    this.blncAmount = 0;
   }
 }
 
