@@ -44,7 +44,7 @@
                                                     <div><label for="_type">Group Type<span
                                                                 class="form-mandatory-field">*</span></label></div>
                                                     <p-dropdown name="_type" [options]="groupTypeOptions"
-                                                        [(ngModel)]="groupType" (onClick)="onSelect('GT')" required>
+                                                        [(ngModel)]="groupType" (onClick)="onSelect('GT')" (onChange)="loadAmount()" required>
                                                     </p-dropdown>
                                                 </div>
                                                 <div class="p-col-12 p-md-12 p-lg-2">

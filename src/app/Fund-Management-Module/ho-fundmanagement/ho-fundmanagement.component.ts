@@ -174,10 +174,12 @@ export class HOFundmanagementComponent implements OnInit {
     this.blncAmount = 0;
     this.totalAccHeadAmount = 0;
     if (this.blncAmount === 0) {
+      if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
       this.blockUI.start();
       const params = {
         'AccountingYearId': this.year,
         'AccHeadId': this.accountHead,
+        'GroupTypeId': this.groupType,
         'Type': 1
       }
       this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
@@ -187,7 +189,9 @@ export class HOFundmanagementComponent implements OnInit {
               ? (res.Table[0].TotalBudget * 1) : 0;
             this.blncAmount = this.budjetAmount - this.totalAccHeadAmount;
             this.blockUI.stop();
-          } else {
+            
+          } 
+          else {
             this.blncAmount = this.budjetAmount;
           }
           if (res.Table1.length !== 0) {
@@ -203,6 +207,7 @@ export class HOFundmanagementComponent implements OnInit {
       });
     }
   }
+}
 
   // load total account head budget amt so far, if any account head have entered their budget
   // this.headAmount = 0;
