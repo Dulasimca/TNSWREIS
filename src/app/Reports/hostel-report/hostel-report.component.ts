@@ -64,7 +64,7 @@ export class HostelReportComponent implements OnInit {
     private _messageService: MessageService, private tableConstants: TableConstants) { }
 
   ngOnInit(): void {
-    this.hostelCols = this.tableConstants.hostelReportCols
+    this.hostelCols = this.tableConstants.hostelReportCols;
     this.Slno = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');

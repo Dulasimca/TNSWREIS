@@ -75,7 +75,7 @@ export class HOFundmanagementComponent implements OnInit {
         break;
       case 'GT':
         this.groupTypes.forEach(g => {
-          groupSelection.push({ label: g.GroupName, value: g.Id });
+          groupSelection.push({ label: g.Column1, value: g.Id });
         })
         this.groupTypeOptions = groupSelection;
         this.groupTypeOptions.unshift({ label: '-select', value: null });
