@@ -105,6 +105,7 @@ export class TableConstants {
 
         this.studentDetailsColumns = [
             { field: 'studentName', header: 'Name', align: 'left !important'},
+            { field: 'AttendanceId', header: 'Attendance Id', align: 'right !important'},
             { field: 'Districtname', header: 'District', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
@@ -138,6 +139,7 @@ export class TableConstants {
         ]
 
         this.hostelReportCols = [
+            { field: 'HostelCode', header: 'Hostel Code', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
             { field: 'HostelOpeningDate', header: 'Hostel Opening Date', width: '100px'},
