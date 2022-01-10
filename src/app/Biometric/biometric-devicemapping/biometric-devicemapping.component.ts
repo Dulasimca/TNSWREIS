@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -7,6 +7,8 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-biometric-devicemapping',
@@ -30,6 +32,10 @@ export class BiometricDevicemappingComponent implements OnInit {
   biometricForm:any;
   DeviceId:any;
   HostelId:any;
+  RowId: number;
+
+  @ViewChild('f', { static: false }) _biometric: NgForm;
+  @BlockUI() blockUI: NgBlockUI;
 
   constructor(private _masterService: MasterService,private _restApiService: RestAPIService,private _messageService: MessageService,private _authService: AuthService) { }
 
@@ -37,17 +43,14 @@ export class BiometricDevicemappingComponent implements OnInit {
     this.login_user = this._authService.UserInfo;
     this.districts = this._masterService.getDistrictAll();
     this.cols = [
-
-      {field:'DCode',header: 'District' },
-      {field:'HostelId',header: 'Hostel Name'},
+      
+      {field:'Districtname',header:'District Name'},
+      {field:'HostelName',header: 'Hostel Name'},
       {field:'DeviceId',header: 'Biometric Device Id'},
       {field:'Flag',header: 'Status'}
-
     ];
-
   }
 
- 
   selectDistrict() {
     this.hostel = null;
     this.hostelOptions = [];
@@ -92,7 +95,7 @@ export class BiometricDevicemappingComponent implements OnInit {
 
   onSubmit() {
     const params = {
-      'Slno':0,
+      'Slno':this.RowId,
       'DeviceId': this.bioMetric,
       'HostelId': this.hostel,
       'Flag': (this.selectedType * 1),
@@ -100,9 +103,9 @@ export class BiometricDevicemappingComponent implements OnInit {
     this._restApiService.post(PathConstants.BioMetric_Post,params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
-          // this.blockUI.stop();
+          //  this.blockUI.stop();
            this.onClear();
-          // this.onView();
+           this.onView();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -144,6 +147,7 @@ export class BiometricDevicemappingComponent implements OnInit {
         this.data = res.Table;
         this.data.forEach(i => {
          i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+         this.bioMetric = i.DeviceId;
        })
        
       } 
@@ -151,19 +155,23 @@ export class BiometricDevicemappingComponent implements OnInit {
     });
 
   }
-  
-
-
 
   onClear() {
-    this.biometricForm.reset();
-    this.DeviceId = '',
-    this.HostelId = ''
+    this._biometric.reset();
+    this._biometric.form.markAsUntouched();
+    this._biometric.form.markAsPristine();
+    this.bioMetric = null;
+    this.hostel = null;
+    this.hostelOptions = [];
+    this.RowId = 0;
   }
 
   onRowSelect(event, selectedRow) {
+    this.RowId = selectedRow.Slno;
     this.bioMetric = selectedRow.DeviceId;
     this.hostel = selectedRow.HostelId;
+    this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelId}];
+    this.selectedType = selectedRow.Flag;
 }
 
 }
