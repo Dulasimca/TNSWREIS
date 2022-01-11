@@ -171,6 +171,8 @@ export class HOFundmanagementComponent implements OnInit {
       }
     })
   }
+
+  // load total account head budget amt so far, if any account head have entered their budget
   loadAmount() {
     this.blncAmount = 0;
     this.totalAccHeadAmount = 0;
@@ -210,38 +212,6 @@ export class HOFundmanagementComponent implements OnInit {
     }
   }
 }
-
-  // load total account head budget amt so far, if any account head have entered their budget
-  // this.headAmount = 0;
-  // this.blockUI.start();
-  // if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
-  // const data = {
-  //   'AccountingYearId': this.year,
-  //   'AccHeadId': this.accountHead,
-  //   'Type': 2
-  // }
-  // this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
-  //   if (res !== null && res !== undefined) {
-  //     if (res.length !== 0) {
-  //     res.forEach(r => {
-  //       this.accFundId = r.Id,
-  //       this.headAmount = r.Amount
-  //     this.blockUI.stop();
-  //     })
-  // }else{
-  //   this.blockUI.stop();
-  //   this.accFundId = 0;
-  // }
-  //   } else {
-  //     this.blockUI.stop();
-  //     this.accFundId = 0;
-  //   }
-  //   })
-  // }
-  // }
-  // }
-
-
 
   checkBudjetAmount() {
     if (this.headAmount !== undefined && this.headAmount !== null &&
