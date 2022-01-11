@@ -52,7 +52,6 @@ export class HOFundmanagementComponent implements OnInit {
     });
     this.totalAccHeadAmount = 0;
     this.accFundId = 0;
-    this.hoFundId = 0;
   }
 
   onSelect(type) {
@@ -86,7 +85,9 @@ export class HOFundmanagementComponent implements OnInit {
   onSave() {
     if (this.accountHead === null && this.accountHead === undefined) {
       const parameter = {
-        'Id': this.hoFundId,
+
+        'Id': this.accFundId,
+        'HoFundId': this.hoFundId,
         'AccYear': this.year,
         'GoNumber': this.goNumber,
         'GoDate': this._datePipe.transform(this.Date, 'dd-MM-yyyy'),
@@ -96,7 +97,7 @@ export class HOFundmanagementComponent implements OnInit {
       this.restApiService.post(PathConstants.HOFundAllotment_Post, parameter).subscribe(res => {
         if (res) {
           var message = (this.hoFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
-          this.clearForm();
+          this.refresh();
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -124,7 +125,7 @@ export class HOFundmanagementComponent implements OnInit {
       this.restApiService.post(PathConstants.AccHeadFundAllotment_Post, params).subscribe(res => {
         if (res) {
           var message = (this.accFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
-          // this.refreshFields();
+          this.refreshFields();
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -170,11 +171,13 @@ export class HOFundmanagementComponent implements OnInit {
       }
     })
   }
+
+  // load total account head budget amt so far, if any account head have entered their budget
   loadAmount() {
     this.blncAmount = 0;
     this.totalAccHeadAmount = 0;
     if (this.blncAmount === 0) {
-      if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
+      if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined && this.groupType !== null && this.groupType !== undefined){
       this.blockUI.start();
       const params = {
         'AccountingYearId': this.year,
@@ -196,6 +199,7 @@ export class HOFundmanagementComponent implements OnInit {
           }
           if (res.Table1.length !== 0) {
             this.headAmount = (res.Table1[0].AllotedAmount * 1);
+            this.accFundId = (res.Table1[0].Id * 1);
           } else {
             this.headAmount = 0;
           }
@@ -208,38 +212,6 @@ export class HOFundmanagementComponent implements OnInit {
     }
   }
 }
-
-  // load total account head budget amt so far, if any account head have entered their budget
-  // this.headAmount = 0;
-  // this.blockUI.start();
-  // if(this.accountHead !== null && this.accountHead !== undefined && this.year !== null && this.year !== undefined){
-  // const data = {
-  //   'AccountingYearId': this.year,
-  //   'AccHeadId': this.accountHead,
-  //   'Type': 2
-  // }
-  // this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, data).subscribe(res => {
-  //   if (res !== null && res !== undefined) {
-  //     if (res.length !== 0) {
-  //     res.forEach(r => {
-  //       this.accFundId = r.Id,
-  //       this.headAmount = r.Amount
-  //     this.blockUI.stop();
-  //     })
-  // }else{
-  //   this.blockUI.stop();
-  //   this.accFundId = 0;
-  // }
-  //   } else {
-  //     this.blockUI.stop();
-  //     this.accFundId = 0;
-  //   }
-  //   })
-  // }
-  // }
-  // }
-
-
 
   checkBudjetAmount() {
     if (this.headAmount !== undefined && this.headAmount !== null &&
@@ -263,15 +235,12 @@ export class HOFundmanagementComponent implements OnInit {
     this.budjetAmount = null;
   }
   // to refresh second row fields after save 
-  // refreshFields() {
-  //   this.groupTypeOptions = [];
-  //   this.accHeadOptions = [];
-  //   this.blncAmount = 0;
-  //   this.headAmount = null;
-  // }
-
-  clearForm() {
-    this._hoFundForm.reset();
-    this.yearOptions = [];
+  refreshFields() {
+    this.groupTypeOptions = [];
+    this.accHeadOptions = [];
+    this.blncAmount = 0;
+    this.headAmount = 0;
   }
+
+   
 }

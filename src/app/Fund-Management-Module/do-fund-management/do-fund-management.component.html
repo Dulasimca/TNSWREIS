@@ -1,6 +1,7 @@
 <block-ui>
     <div class="p-grid">
         <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="msg"></p-toast>
             <p-panel header="DO-Fund Management">
                 <form #f="ngForm" name="doFundForm">
                     <p-card>
@@ -58,7 +59,7 @@
                             </p-table>
                         </div>
                         <!-- --dialog -->
-                        <p-dialog header="District Wise - Fund Allotment" [(visible)]="showTransfer" [modal]="true"
+                        <p-dialog header="District Wise - Fund Allotment" [(visible)]="showDialog" [modal]="true"
                             [maximizable]="true" [style]="{width: '80vw', height: '30vw'}">
                             <p-toast position="top-center" key="t-msg"></p-toast>
                             <p-card>
