@@ -70,7 +70,8 @@
                                             <span style="text-align: end;"> {{rowData[col.field]}}
                                             </span>
                                         </td>
-                                        <td *ngIf="(roleId==2 && !(rowData.districtApproval))"
+                                       
+                                        <td *ngIf="(roleId==3 && !(rowData.talukApproval))"
                                             (click)="selectForApproval(rowData)">
                                             <span class="p-column-title">
                                                 Approval Status :
@@ -78,7 +79,7 @@
                                             <button label="Approve" pButton
                                                 type="button">
                                             </button></td>
-                                        <td *ngIf="(roleId==3 && !(rowData.talukApproval))"
+                                            <td *ngIf="(roleId==2 && !(rowData.districtApproval))"
                                             (click)="selectForApproval(rowData)">
                                             <span class="p-column-title">
                                                 Approval Status :
