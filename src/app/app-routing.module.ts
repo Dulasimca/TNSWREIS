@@ -55,6 +55,7 @@ import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-
 import { MonthlywiseintentComponent } from './forms-module/monthlywiseintent/monthlywiseintent.component';
 import { BiometricDevicemappingComponent } from './Biometric/biometric-devicemapping/biometric-devicemapping.component';
 import { FoodEntitlementComponent } from './master/food-entitlement/food-entitlement.component';
+import { FoodentitlementReportComponent } from './Reports/foodentitlement-report/foodentitlement-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -117,6 +118,8 @@ const routes: Routes = [
   { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'biometric', component:  BiometricDevicemappingComponent, canActivate: [AuthGuard]},
   { path: 'foodentitlement', component:  FoodEntitlementComponent, canActivate: [AuthGuard]},
+  { path: 'foodentitlementreport', component:  FoodentitlementReportComponent, canActivate: [AuthGuard]},
+
 ];
 
 
