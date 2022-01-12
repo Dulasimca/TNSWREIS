@@ -93,7 +93,6 @@ export class HostelFundManagementComponent implements OnInit {
           // if (t.dcode === this.district) {
           talukSelection.push({ label: t.name, value: t.code });
           // }
-          console.log('taluk', this.taluks)
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });
@@ -128,23 +127,23 @@ export class HostelFundManagementComponent implements OnInit {
     // this.loadAmount();
   }
   load() {
-    // this.showTable = true;
     const params = {
       'AccountingYearId': this.year,
-      'AccHeadId': 0,
       'Type': 2
     }
     this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
-      if (res) {
+      if (res !== null && res !==undefined) {
+        if(res.Table.length !==0){
         res.Table.forEach(r => {
-          this.accFundId = r.Id,
-            // this.accHeadId = r.AccHeadID,
             this.totalBudget = r.BudjetAmount
         })
-        // this.AccHeadData = res;
+      }else {
+        this.totalBudget = 0;
       }
+    }else {
+      this.totalBudget = 0;
+    }
     })
-
   }
 
   // to load taluk amount
@@ -152,11 +151,12 @@ export class HostelFundManagementComponent implements OnInit {
     this.showTable = true;
     this.hostelName = null;
     this.talukAmount = 0;
-    // if (this.accFundId !== null && this.accFundId !== undefined && this.taluk !== null && this.taluk !== undefined) {
-    this.blockUI.start();
+    if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined) {
+    // this.blockUI.start();
     const params = {
-      'AccHeadFundId': this.accFundId,
+      'DCode': this.district,
       'TCode': this.taluk,
+      'AccYearId': this.year,
       'Type': 2
     }
     this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, params).subscribe(res => {
@@ -165,20 +165,35 @@ export class HostelFundManagementComponent implements OnInit {
           res.Table.forEach(r => {
             // this.talukFund = (r.TalukAmount !== undefined && r.TalukAmount !== null) ? r.TalukAmount : 0;
             this.toFundId = r.TOFundId;
+            this.accFundId =r.AccHeadFundId;
             // this.district = r.Districtname;
             this.blockUI.stop();
           })
           this.HostelFundData = res.Table;
+        }else {
+          this.blockUI.stop();
+          this.HostelFundData = [];
+          this.messageService.clear();
+          this.messageService.add({
+            key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          })
         }
       }
+        else {
+          this.blockUI.stop();
+          this.HostelFundData = [];
+          this.messageService.clear();
+          this.messageService.add({
+            key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          })
+        }
     })
-
-
-    // this.loadHostelFunds();
-    this.selectDistrict();
-
-
   }
+    this.selectDistrict();
+  }
+
   onAdd(rowData) {
     this.showTransfer = true;
     this.accYear = rowData.ShortYear;
@@ -189,11 +204,6 @@ export class HostelFundManagementComponent implements OnInit {
     this.SelectTaluk = rowData.Talukname;
     this.talukFund = rowData.TalukAmount;
   }
-
-
-
-
-
 
   onSave() {
     const params = {
@@ -208,7 +218,7 @@ export class HostelFundManagementComponent implements OnInit {
     }
     this.restApiService.post(PathConstants.HostelFundAllotment_Post, params).subscribe(res => {
       if (res) {
-        var message = (this.toFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
+        var message = (this.hostelFundId === 0) ? ResponseMessage.SuccessMessage : ResponseMessage.UpdateMsg;
         this.clearForm();
         this.messageService.clear();
         this.messageService.add({
@@ -236,7 +246,7 @@ export class HostelFundManagementComponent implements OnInit {
       }
       this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
+          if (res.Table.length !== 0) {
             this.totalHostelAmount = (res.Table[0].TotalHostelFund !== undefined && res.Table[0].TotalHostelFund !== null)
               ? (res.Table[0].TotalHostelFund * 1) : 0;
             this.blncAmount = this.talukFund - this.totalHostelAmount;
@@ -246,8 +256,10 @@ export class HostelFundManagementComponent implements OnInit {
           }
           if (res.Table1.length !== 0) {
             this.hostelAmount = (res.Table1[0].AllotedAmount * 1);
+            this.hostelFundId = (res.Table1[0].HostelFundId * 1);
           } else {
             this.hostelAmount = 0;
+            this.hostelFundId = 0;
           }
           this.blockUI.stop();
         } else {

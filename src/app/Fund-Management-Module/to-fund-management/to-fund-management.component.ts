@@ -85,7 +85,6 @@ export class TOFundManagementComponent implements OnInit {
           if (t.dcode === this.district) {
             talukSelection.push({ label: t.name, value: t.code });
           }
-          console.log('rs', this.taluks)
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });
@@ -94,34 +93,35 @@ export class TOFundManagementComponent implements OnInit {
 
   }
   load() {
-    this.showTable = true;
     const params = {
       'AccountingYearId': this.year,
-      'AccHeadId': 0,
       'Type': 2
     }
     this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
-      if (res) {
-        res.Table.forEach(r => {
-          this.accFundId = r.Id,
-            // this.accHeadId = r.AccHeadID,
+      if (res !== null && res !== undefined) {
+        if (res.Table.length !== 0) {
+          res.Table.forEach(r => {
+            // this.accFundId = r.Id,
             this.totalBudjetAmount = r.BudjetAmount
-        })
-        // this.AccHeadData = res;
+          })
+        } else {
+          this.totalBudjetAmount = 0;
+        }
+      }
+      else {
+        this.totalBudjetAmount = 0;
       }
     })
   }
 
   // to load district amount
   loadAmount() {
-    console.log('amnt')
     this.showTable = true;
     this.taluk = null;
     this.districtFund = 0;
     if (this.year !== null && this.year !== undefined && this.district !== null && this.district !== undefined) {
       this.blockUI.start();
       const params = {
-        'AccHeadFundId': 29,
         'DCode': this.district,
         'YearId': this.year,
         'Type': 2
@@ -131,29 +131,31 @@ export class TOFundManagementComponent implements OnInit {
           if (res.Table.length !== 0) {
             res.Table.forEach(res => {
               this.doFundId = res.DOFundId;
+              this.accFundId = res.AccHeadFundId;
             })
             this.DistrictFundData = res.Table;
             this.blockUI.stop();
           } else {
             this.blockUI.stop();
+            this.DistrictFundData = [];
+            this.messageService.clear();
+            this.messageService.add({
+              key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            })
           }
         } else {
           this.blockUI.stop();
+          this.DistrictFundData = [];
+          this.messageService.clear();
+          this.messageService.add({
+            key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          })
         }
-
-
-
       })
-
     }
-    //   this.loadToFunds();
-
   }
-
-
-
-
-
 
   onSave() {
     const params = {
@@ -196,18 +198,24 @@ export class TOFundManagementComponent implements OnInit {
       }
       this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, data).subscribe(res => {
         if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
+          if (res.Table.length !== 0) {
             this.totalTalukAmount = (res.Table[0].TotalTalukAmount !== undefined && res.Table[0].TotalTalukAmount !== null)
               ? (res.Table[0].TotalTalukAmount * 1) : 0;
             this.blncAmount = this.districtFund - this.totalTalukAmount;
             this.blockUI.stop();
           } else {
             this.blncAmount = this.districtFund;
+            this.blockUI.stop();
+
           }
           if (res.Table1.length !== 0) {
             this.talukAmount = (res.Table1[0].AllotedAmount * 1);
+            this.toFundId = (res.Table1[0].TOFundId * 1);
           } else {
             this.talukAmount = 0;
+            this.toFundId = 0;
+            this.blockUI.stop();
+
           }
           this.blockUI.stop();
         } else {
@@ -217,10 +225,6 @@ export class TOFundManagementComponent implements OnInit {
       });
     }
   }
-
-
-
-
 
   checkBudjetAmount() {
     if (this.blncAmount !== undefined && this.blncAmount !== null &&

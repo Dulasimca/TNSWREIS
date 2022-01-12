@@ -147,7 +147,6 @@ export class BiometricDevicemappingComponent implements OnInit {
         this.data = res.Table;
         this.data.forEach(i => {
          i.Flag = (i.Flag) ? 'Active' : 'Inactive';
-         this.bioMetric = i.DeviceId;
        })
        
       } 
@@ -164,6 +163,8 @@ export class BiometricDevicemappingComponent implements OnInit {
     this.hostel = null;
     this.hostelOptions = [];
     this.RowId = 0;
+    this.district = null;
+    this.districtOptions = [];
   }
 
   onRowSelect(event, selectedRow) {
@@ -172,6 +173,8 @@ export class BiometricDevicemappingComponent implements OnInit {
     this.hostel = selectedRow.HostelId;
     this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelId}];
     this.selectedType = selectedRow.Flag;
+    this.district = selectedRow.Districtcode;
+    this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode}];
 }
 
 }

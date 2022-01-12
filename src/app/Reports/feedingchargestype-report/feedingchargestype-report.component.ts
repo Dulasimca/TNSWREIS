@@ -51,12 +51,10 @@ export class FeedingchargestypeReportComponent implements OnInit {
 
     switch (type) {
       case 'AY':
-
         this.Accountingyears.forEach(y => {
           yearSelection.push({ label: y.name, value: y.code });
         })
         this.AccountingyearOptions = yearSelection;
-        this.AccountingyearOptions.unshift({ label: 'All', value: 0 });
         this.AccountingyearOptions.unshift({ label: '-select', value: null });
         break;
       }
