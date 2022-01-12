@@ -235,7 +235,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
-                                                    <div #field20 *ngIf="institutionType=='1'"
+                                                    <!-- <div #field20  
                                                         class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
                                                             <p-dropdown name="_schoolmedium" [options]="mediumOptions"
@@ -243,7 +243,7 @@
                                                             </p-dropdown>
                                                             <label for="_schoolmedium">Medium</label>
                                                         </span>
-                                                    </div>
+                                                    </div> -->
                                                     <div #field21 *ngIf="institutionType=='0'"
                                                         class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
@@ -274,6 +274,15 @@
                                                             <input type="text" name="_coursetitle" pInputText
                                                                 [(ngModel)]="obj.courseTitle">
                                                             <label for="_coursetitle">Course Title</label>
+                                                        </span>
+                                                    </div>
+                                                     <div #field20  
+                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <p-dropdown name="_schoolmedium" [options]="mediumOptions"
+                                                                (onClick)="onSelect('MD')" [(ngModel)]="obj.medium">
+                                                            </p-dropdown>
+                                                            <label for="_schoolmedium">Medium</label>
                                                         </span>
                                                     </div>
                                                     <div #field24 *ngIf="enableScholarship"
