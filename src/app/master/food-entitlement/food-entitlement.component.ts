@@ -30,7 +30,6 @@ export class FoodEntitlementComponent implements OnInit {
   yearOptions: SelectItem[];
   year: any;
   years?: any;
-  showTable: boolean;
 
   @ViewChild('f', { static: false }) _foodentitlement: NgForm;
   constructor(private _masterService: MasterService,private _restApiService: RestAPIService,private _messageService: MessageService,private _authService: AuthService) { }
@@ -40,7 +39,6 @@ export class FoodEntitlementComponent implements OnInit {
     this.commodities = this._masterService.getMaster('CM');
     this.years = this._masterService.getMaster('AY');
     this.logged_user = this._authService.UserInfo;
-
     this.cols = [
       {field:'AccountingYear',header:'Accounting Year'},
       {field:'FunctioningName',header:'Hostel Type'},
@@ -51,7 +49,6 @@ export class FoodEntitlementComponent implements OnInit {
   }
 
   onSelect(type) {
-    this.data = [];
     let hostelfunctionSelection = [];
     let commoditySelection = [];
     let yearSelection = [];
@@ -133,44 +130,14 @@ export class FoodEntitlementComponent implements OnInit {
 
 
   onView() {
-    if (this.year !== null && this.year !== undefined) {
-      const params = {
-        'AccountingYearId': this.year      
-      };
-      this._restApiService.getByParameters(PathConstants.FoodEntitlement_Get, params).subscribe(res => {
-        if (res !== null && res !== undefined) {
-          if (res.length !== 0) {
-          res.Table.forEach(i => {
-                i.Flag = (i.Flag) ? 'Active' : 'Inactive';
-                })
-          this.showTable = true;
-          this.data = res.Table;
-          }
-          
-         else {
-          this.showTable = false;
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-          });
-        }
-      } else {
-        this.showTable = false;
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-        });
+    this._restApiService.get(PathConstants.FoodEntitlement_Get).subscribe(res => {
+      if (res !== null && res !== undefined && res.Table.length !== 0) {
+        res.Table.forEach(i => {
+          i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+        })
+        this.data = res.Table;
       }
     })
-  } else {
-    this._messageService.clear();
-    this._messageService.add({
-      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-      summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select accounting year to view data !'
-    });
-  }
 }
 
 
