@@ -110,6 +110,7 @@ import { BiometricDevicemappingComponent } from './Biometric/biometric-devicemap
 import { FoodEntitlementComponent } from './master/food-entitlement/food-entitlement.component';
 
 import { BiometricattendanceComponent } from './Biometric/biometricattendance/biometricattendance.component';
+import { FoodentitlementReportComponent } from './Reports/foodentitlement-report/foodentitlement-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -173,6 +174,7 @@ import { BiometricattendanceComponent } from './Biometric/biometricattendance/bi
     FoodEntitlementComponent,
    
     BiometricattendanceComponent,
+    FoodentitlementReportComponent,
     
   ],
   imports: [

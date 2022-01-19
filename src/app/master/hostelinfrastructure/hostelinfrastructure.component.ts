@@ -348,7 +348,8 @@ export class HostelinfrastructureComponent implements OnInit {
     this.onLoad();
     this.hostelInfraRow = data;
     this.filteredFloorData = this.floorwisedetails.filter(f => {
-      return (((f.FloorId * 1) - 1) <= (this.hostelInfraRow.NoOfFloor * 1));
+      console.log('f', f.FloorId, this.hostelInfraRow.NoOfFloor)
+      return (((f.FloorId * 1) - 1) < (this.hostelInfraRow.NoOfFloor * 1));
     })
   }
 
@@ -433,11 +434,8 @@ export class HostelinfrastructureComponent implements OnInit {
     this.districtname = selectedRow.Districtname;
     this.talukname = selectedRow.Talukname;
     this.TotalArea = selectedRow.TotalArea;
-    this.BuildingArea = selectedRow.TotalArea;
+    this.BuildingArea = selectedRow.BuildingArea;
     this.NoOfFloor = selectedRow.NoOfFloor;
-    // this.NoOfRoom = selectedRow.NoOfRoom;
-    // this.Kitchen = selectedRow.Kitchen;
-    // this.Bathroom = selectedRow.Bathroom;
     this.HostelId = selectedRow.HostelId;
     this.disableFields = false;
   }
