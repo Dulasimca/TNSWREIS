@@ -433,7 +433,7 @@ export class HostelinfrastructureComponent implements OnInit {
     this.districtname = selectedRow.Districtname;
     this.talukname = selectedRow.Talukname;
     this.TotalArea = selectedRow.TotalArea;
-    this.BuildingArea = selectedRow.TotalArea;
+    this.BuildingArea = selectedRow.BuildingArea;
     this.NoOfFloor = selectedRow.NoOfFloor;
     // this.NoOfRoom = selectedRow.NoOfRoom;
     // this.Kitchen = selectedRow.Kitchen;
