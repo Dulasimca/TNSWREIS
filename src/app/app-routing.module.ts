@@ -55,6 +55,7 @@ import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-
 import { MonthlywiseintentComponent } from './forms-module/monthlywiseintent/monthlywiseintent.component';
 import { BiometricDevicemappingComponent } from './Biometric/biometric-devicemapping/biometric-devicemapping.component';
 import { FoodEntitlementComponent } from './master/food-entitlement/food-entitlement.component';
+import { BiometricattendanceComponent } from './Biometric/biometricattendance/biometricattendance.component';
 import { FoodentitlementReportComponent } from './Reports/foodentitlement-report/foodentitlement-report.component';
 import { BiometricAttendanceComponent } from './Biometric/biometric-attendance/biometric-attendance.component';
 
@@ -112,13 +113,14 @@ const routes: Routes = [
   { path: 'monthlywiseapproval', component:MonthlywiseintentapprovalComponent, canActivate: [AuthGuard]},
   { path: 'hostelinfrareport', component:HostelinfrastructureReportComponent, canActivate: [AuthGuard]},
   { path: 'monthlywisereport', component:MonthlywiseintentReportComponent, canActivate: [AuthGuard]},
-  { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent, canActivate: [AuthGuard]},
+  { path: 'feedingchargetypereport', component: FeedingchargestypeReportComponent, canActivate: [AuthGuard]},
   { path: 'employeemaster', component:EmployeeMasterComponent, canActivate: [AuthGuard]},
   { path: 'employeereport', component:EmployeeReportComponent, canActivate: [AuthGuard]},
   { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent, canActivate: [AuthGuard]},
   { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'biometric', component:  BiometricDevicemappingComponent, canActivate: [AuthGuard]},
   { path: 'foodentitlement', component:  FoodEntitlementComponent, canActivate: [AuthGuard]},
+  { path: 'biometricattendance', component: BiometricattendanceComponent, canActivate: [AuthGuard]},
   { path: 'foodentitlementreport', component:  FoodentitlementReportComponent, canActivate: [AuthGuard]},
   { path: 'BiometricAttendance', component:  BiometricAttendanceComponent, canActivate: [AuthGuard]},
  

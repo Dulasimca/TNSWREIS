@@ -38,20 +38,6 @@
                                                 (onClick)="onSelect('T')" (onChange)="loadAmount()" required>
                                             </p-dropdown>
                                         </div>
-                                        <!-- <div class="p-col-12 p-md-6 p-lg-2">
-                                                <div><label for="_hostel">Hostel<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <p-dropdown name="_hostel" [options]="hostelOptions"
-                                                    [(ngModel)]="hostelName" (onChange)="loadHostelFunds()" required>
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="p-col-12 p-md-12 p-lg-2">
-                                                <div><label for="_hamnt">Amount<span
-                                                            class="form-mandatory-field">*</span></label></div>
-                                                <input type="text" name="_hamnt" class="p-col-12" pInputText
-                                                    [(ngModel)]="hostelAmount" appInputFormat="digitOnly"
-                                                    (input)="checkBudjetAmount()" required />
-                                            </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +131,8 @@
                                             <div class="p-col-12 p-md-12 p-lg-2">
                                                 <div><label for="_hFund">Hostel Fund</label></div>
                                                 <input type="text" name="_hFund" class="p-col-12" pInputText
-                                                    [(ngModel)]="hostelAmount" placeholder="Enter amount" (input)="checkBudjetAmount()" required />
+                                                    [(ngModel)]="hostelAmount" placeholder="Enter amount"
+                                                    (input)="checkBudjetAmount()" required />
                                             </div>
                                             <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                                                 <button pButton type="button" label="Save" icon="pi pi-save"

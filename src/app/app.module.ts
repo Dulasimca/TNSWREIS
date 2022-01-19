@@ -108,6 +108,8 @@ import { StudentAttendanceComponent } from './forms-module/student-attendance/st
 import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-report/employeeattendance-report.component';
 import { BiometricDevicemappingComponent } from './Biometric/biometric-devicemapping/biometric-devicemapping.component';
 import { FoodEntitlementComponent } from './master/food-entitlement/food-entitlement.component';
+
+import { BiometricattendanceComponent } from './Biometric/biometricattendance/biometricattendance.component';
 import { FoodentitlementReportComponent } from './Reports/foodentitlement-report/foodentitlement-report.component';
 import { BiometricAttendanceComponent } from './Biometric/biometric-attendance/biometric-attendance.component';
 @NgModule({
@@ -171,6 +173,8 @@ import { BiometricAttendanceComponent } from './Biometric/biometric-attendance/b
     EmployeeattendanceReportComponent,
     BiometricDevicemappingComponent,
     FoodEntitlementComponent,
+   
+    BiometricattendanceComponent,
     FoodentitlementReportComponent,
     BiometricAttendanceComponent,
     

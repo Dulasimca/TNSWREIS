@@ -36,10 +36,10 @@
                                                                 </span>
                                                             </div>
                                                             <div #field3 class="p-field p-col-12 p-md-12 p-lg-2">
-                                                                <span class="p-float-label">
-                                                                    <p-calendar dateFormat="dd/mm/yy"
+                                                                <span #cal class="p-float-label">
+                                                                    <p-calendar dateFormat="dd/mm/yy" [appendTo]="field3"
                                                                         [showOtherMonths]="false" [(ngModel)]="obj.dob"
-                                                                        name="_dob" [monthNavigator]="true"
+                                                                        name="_dob" [monthNavigator]="true" [readonlyInput]="true"
                                                                         [yearNavigator]="true" yearRange="{{yearRange}}"
                                                                         inputId="dateofbirth" [showIcon]="true"
                                                                         (onSelect)="calculateAge()" required>
