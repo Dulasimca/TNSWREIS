@@ -132,17 +132,17 @@ export class HostelFundManagementComponent implements OnInit {
       'Type': 2
     }
     this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
-      if (res !== null && res !==undefined) {
-        if(res.Table.length !==0){
-        res.Table.forEach(r => {
+      if (res !== null && res !== undefined) {
+        if (res.Table.length !== 0) {
+          res.Table.forEach(r => {
             this.totalBudget = r.BudjetAmount
-        })
-      }else {
+          })
+        } else {
+          this.totalBudget = 0;
+        }
+      } else {
         this.totalBudget = 0;
       }
-    }else {
-      this.totalBudget = 0;
-    }
     })
   }
 
@@ -152,34 +152,34 @@ export class HostelFundManagementComponent implements OnInit {
     this.hostelName = null;
     this.talukAmount = 0;
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined) {
-    // this.blockUI.start();
-    const params = {
-      'DCode': this.district,
-      'TCode': this.taluk,
-      'AccYearId': this.year,
-      'Type': 2
-    }
-    this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, params).subscribe(res => {
-      if (res !== null && res !== undefined) {
-        if (res.Table.length !== 0) {
-          res.Table.forEach(r => {
-            // this.talukFund = (r.TalukAmount !== undefined && r.TalukAmount !== null) ? r.TalukAmount : 0;
-            this.toFundId = r.TOFundId;
-            this.accFundId =r.AccHeadFundId;
-            // this.district = r.Districtname;
-            this.blockUI.stop();
-          })
-          this.HostelFundData = res.Table;
-        }else {
-          this.blockUI.stop();
-          this.HostelFundData = [];
-          this.messageService.clear();
-          this.messageService.add({
-            key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-          })
-        }
+      // this.blockUI.start();
+      const params = {
+        'DCode': this.district,
+        'TCode': this.taluk,
+        'AccYearId': this.year,
+        'Type': 2
       }
+      this.restApiService.getByParameters(PathConstants.TOFundAllotment_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined) {
+          if (res.Table.length !== 0) {
+            res.Table.forEach(r => {
+              // this.talukFund = (r.TalukAmount !== undefined && r.TalukAmount !== null) ? r.TalukAmount : 0;
+              this.toFundId = r.TOFundId;
+              this.accFundId = r.AccHeadFundId;
+              // this.district = r.Districtname;
+              this.blockUI.stop();
+            })
+            this.HostelFundData = res.Table;
+          } else {
+            this.blockUI.stop();
+            this.HostelFundData = [];
+            this.messageService.clear();
+            this.messageService.add({
+              key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            })
+          }
+        }
         else {
           this.blockUI.stop();
           this.HostelFundData = [];
@@ -189,8 +189,8 @@ export class HostelFundManagementComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
         }
-    })
-  }
+      })
+    }
     this.selectDistrict();
   }
 

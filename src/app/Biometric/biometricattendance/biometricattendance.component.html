@@ -1,0 +1,42 @@
+<div class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-panel header="Biometric Attendance">
+        <p-card>
+            <div class="p-grid">
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-6 p-lg-1"></div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_district">District</label>
+                            </div>
+                            <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                (onClick)="onSelect('D')" (ngModelChange)="refreshFields('D')" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_taluk">Taluk</label>
+                            </div>
+                            <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                (onClick)="onSelect('T')" (onChange)="refreshFields('T')" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_hostel">Hostel Name</label>
+                            </div>
+                            <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="monthpicker">Month/Year</label></div>
+                            <p-calendar [(ngModel)]="MonthYear" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+                                inputId="monthpicker"></p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
+                            <button pButton type="button" label="View" icon="pi pi-eye" (click)="onview()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </p-panel>
+</div>
