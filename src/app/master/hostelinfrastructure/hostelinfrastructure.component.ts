@@ -202,6 +202,7 @@ export class HostelinfrastructureComponent implements OnInit {
   }
 
   onDataChecking() {
+    console.log('enter',this.floorwisedetaildata)
     if(this.floorwisedetaildata.length !== 0) {
       for(let i = 0; i < this.floorwisedetaildata.length; i ++) {
         if((this.floorwisedetaildata[i].FloorNo * 1) === (this.floor * 1)) {
