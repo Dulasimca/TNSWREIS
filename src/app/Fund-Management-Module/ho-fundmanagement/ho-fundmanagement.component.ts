@@ -67,7 +67,7 @@ export class HOFundmanagementComponent implements OnInit {
         this.yearOptions.unshift({ label: '-select', value: null });
       case 'AH':
         this.accHeads.forEach(a => {
-          accSelection.push({ label: a.AccountHeadName, value: a.Id });
+          accSelection.push({ label: a.ACCHEAD, value: a.Id });
         })
         this.accHeadOptions = accSelection;
         this.accHeadOptions.unshift({ label: '-select', value: null });
