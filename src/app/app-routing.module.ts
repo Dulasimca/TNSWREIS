@@ -119,7 +119,7 @@ const routes: Routes = [
   { path: 'employeeattendancereport', component:EmployeeattendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'biometric', component:  BiometricDevicemappingComponent, canActivate: [AuthGuard]},
   { path: 'foodentitlement', component:  FoodEntitlementComponent, canActivate: [AuthGuard]},
-  { path: 'biometricattendance', component: BiometricattendanceComponent, canActivate: [AuthGuard]},
+  { path: 'biometricatt-2', component: BiometricattendanceComponent, canActivate: [AuthGuard]},
   { path: 'foodentitlementreport', component:  FoodentitlementReportComponent, canActivate: [AuthGuard]},
 
 ];
