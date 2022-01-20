@@ -185,6 +185,7 @@ export class DOFundManagementComponent implements OnInit {
 
   //dialog data
   onAdd(rowData) {
+    this.showTable = false;
     this.showDialog = true;
     this.accYear = rowData.ShortYear;
     this.groupType = rowData.GroupName;

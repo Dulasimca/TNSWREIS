@@ -112,7 +112,7 @@ const routes: Routes = [
   { path: 'monthlywiseapproval', component:MonthlywiseintentapprovalComponent, canActivate: [AuthGuard]},
   { path: 'hostelinfrareport', component:HostelinfrastructureReportComponent, canActivate: [AuthGuard]},
   { path: 'monthlywisereport', component:MonthlywiseintentReportComponent, canActivate: [AuthGuard]},
-  { path: 'feedingchargetypereport', component: FeedingchargestypeReportComponent, canActivate: [AuthGuard]},
+  { path: 'feedingchargetypereport', component:FeedingchargestypeReportComponent, canActivate: [AuthGuard]},
   { path: 'employeemaster', component:EmployeeMasterComponent, canActivate: [AuthGuard]},
   { path: 'employeereport', component:EmployeeReportComponent, canActivate: [AuthGuard]},
   { path: 'employeeattendance', component:EmployeeattendanceDetailsComponent, canActivate: [AuthGuard]},
