@@ -45,6 +45,8 @@ export class BiometricattendanceComponent implements OnInit {
   cols: any[];
   hostelId: any;
 
+   
+
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
 
@@ -163,6 +165,10 @@ onRowSelect(event, selectedRow) {
 }
 }
 
+
+
 function params(Hostel_Get: string, params: any) {
   throw new Error('Function not implemented.');
 }
+
+

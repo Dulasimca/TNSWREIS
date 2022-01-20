@@ -38,7 +38,8 @@
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-12">
                     <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
-                      [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" styleClass="p-datatable-gridlines">
+                      [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" 
+                      styleClass="p-datatable-gridlines">
                       <ng-template pTemplate="header" let-columns>
                         <tr>
                           <th>S.No</th>
@@ -66,6 +67,18 @@
                             </span>
   
                           </td>
+
+                          <td>
+                            <span class="p-column-title">
+                                Students Details :
+                            </span>
+                            <span>
+                            <button style="height: 1.8rem;" 
+                            icon="pi pi-plus" pButton type="button">
+                           </button>
+                        </span>
+                        </td>
+
                         </tr>
                       </ng-template>
                     </p-table>
