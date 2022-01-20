@@ -26,13 +26,15 @@
                                         <div><label for="_hostel">Hostel Name</label>
                                         </div>
                                         <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
-                                         (onChange)="loadTable()" required>
+                                          required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-3">
                                         <div><label >Attendance Date</label>
                                         </div>
-                                       
+                                        <p-calendar [showOtherMonths]="false" [maxDate]="maxDate" [(ngModel)]="Adate"
+                                        name="_date" (onSelect)="loadTable()" [showIcon]="true" required>
+                                    </p-calendar>
                                     </div>
                                 </div>
                             </div>

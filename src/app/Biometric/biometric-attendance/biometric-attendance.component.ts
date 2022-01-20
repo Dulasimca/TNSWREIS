@@ -8,6 +8,7 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-biometric-attendance',
   templateUrl: './biometric-attendance.component.html',
@@ -59,9 +60,12 @@ export class BiometricAttendanceComponent implements OnInit {
   BMAttendanceReportCols: any;
   BMAttendanceData: any = [];
   loading: boolean;
+  Adate: Date = new Date();
+  maxDate: Date = new Date();
+
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
-    private _messageService: MessageService, private tableConstants: TableConstants) { }
+    private _messageService: MessageService, private tableConstants: TableConstants,private datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.BMAttendanceReportCols = this.tableConstants.BMAttendanceReportCols
@@ -149,7 +153,7 @@ export class BiometricAttendanceComponent implements OnInit {
         // 'DCode': this.district,
         // 'TCode': this.taluk,
         // 'HostelId': this.hostel,
-        'Adate' : '01/20/2022',
+        'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
         'Biometricid':'19'
         
       }
