@@ -134,4 +134,6 @@ public static readonly BioMetricAttendance_Get = 'AttendanceBM/Get';
 
 public static readonly FoodEntitlement_Post = 'FoodEntitlement/Post';
 public static readonly FoodEntitlement_Get = 'FoodEntitlement/Get';
+
+public static readonly GetBDAttendancecount_Get = 'GetBDAttendancecount/Get';
 }

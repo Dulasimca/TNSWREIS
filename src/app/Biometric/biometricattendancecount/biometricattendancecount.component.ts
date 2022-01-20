@@ -8,12 +8,15 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+
 @Component({
-  selector: 'app-biometric-attendance',
-  templateUrl: './biometric-attendance.component.html',
-  styleUrls: ['./biometric-attendance.component.css']
+  selector: 'app-biometricattendancecount',
+  templateUrl: './biometricattendancecount.component.html',
+  styleUrls: ['./biometricattendancecount.component.css']
 })
-export class BiometricAttendanceComponent implements OnInit {
+
+
+export class BiometricattendancecountComponent implements OnInit {
 
   hostel: any;
   district: any;
@@ -153,7 +156,7 @@ export class BiometricAttendanceComponent implements OnInit {
         'Biometricid':'19'
         
       }
-      this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
+      this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
             this.BMAttendanceData = res.Table;
