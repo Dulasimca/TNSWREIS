@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <!-- table  -->
-                        <div *ngIf="showTable" class="table-format">
+                        <div *ngIf="showTable">
                             <p-table [value]="AccHeadData" [columns]="AccHeadCols" styleClass="p-datatable-gridlines"
                                 [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
                                 <ng-template pTemplate="header" let-columns>
