@@ -23,6 +23,7 @@ export class TableConstants {
     AccHeadColumns: any = [];
     HostelFundColumns: any = [];
     DistrictFundColumns: any = [];
+    BMAttendanceReportCols: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -269,6 +270,14 @@ export class TableConstants {
         { field: 'Districtname', header: 'District', align: 'left !important'},
         { field: 'DistrictAmount', header: 'Amount',align: 'right !important'},
 
+    ]
+    this.BMAttendanceReportCols = [
+        { field: 'DeviceId', header: 'Device No', width: '100px', align: 'center !important'},
+        { field: 'StudentName', header: 'Name', width: '100px', align: 'center !important'},
+        { field: 'UserId', header: 'ID', width: '100px', align: 'center !important'},
+        { field: 'LogDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
+        { field: 'DownloadDate', header: 'Download Date', width: '100px', align: 'center !important'},
+       
     ]
     }
 }

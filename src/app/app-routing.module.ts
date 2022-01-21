@@ -57,6 +57,7 @@ import { BiometricDevicemappingComponent } from './Biometric/biometric-devicemap
 import { FoodEntitlementComponent } from './master/food-entitlement/food-entitlement.component';
 import { BiometricattendanceComponent } from './Biometric/biometricattendance/biometricattendance.component';
 import { FoodentitlementReportComponent } from './Reports/foodentitlement-report/foodentitlement-report.component';
+import { BiometricAttendanceComponent } from './Biometric/biometric-attendance/biometric-attendance.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -121,7 +122,8 @@ const routes: Routes = [
   { path: 'foodentitlement', component:  FoodEntitlementComponent, canActivate: [AuthGuard]},
   { path: 'biometricatt-2', component: BiometricattendanceComponent, canActivate: [AuthGuard]},
   { path: 'foodentitlementreport', component:  FoodentitlementReportComponent, canActivate: [AuthGuard]},
-
+  { path: 'BiometricAttendance', component:  BiometricAttendanceComponent, canActivate: [AuthGuard]},
+ 
 ];
 
 
