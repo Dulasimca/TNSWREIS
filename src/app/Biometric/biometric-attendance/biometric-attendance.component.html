@@ -2,6 +2,7 @@
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
             <p-panel header="Biometric Attendance Report">
+                <form #f="ngForm" name="biometricattendance">
                 <p-card>
                     <div class="p-col-12 no-pad-top">
                         <div class="p-grid">
@@ -29,15 +30,21 @@
                                           required>
                                         </p-dropdown>
                                     </div>
-                                    <div class="p-col-12 p-md-6 p-lg-3">
+                                    <div class="p-col-12 p-md-6 p-lg-2">
                                         <div><label >Attendance Date</label>
                                         </div>
                                         <p-calendar [showOtherMonths]="false" [maxDate]="maxDate" [(ngModel)]="Adate"
-                                        name="_date" (onSelect)="loadTable()" [showIcon]="true" required>
+                                        name="_date"  [showIcon]="true" required>
                                     </p-calendar>
                                     </div>
+                                  
                                 </div>
+
                             </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="View" [disabled]='(!f.valid || !f.dirty)' (click)="loadTable()"
+                                          class="btn-bg"></button>
+                              </div>
                         </div>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12">
@@ -79,6 +86,7 @@
                         </p-table>
                     </div>
                 </p-card>
+                </form>
             </p-panel>
         </div>
     </div>
