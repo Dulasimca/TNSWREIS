@@ -98,9 +98,7 @@ export class BiometricattendanceComponent implements OnInit {
     }
   }
  
-  clear() {
-    throw new Error('Method not implemented.');
-  }
+
 
   refreshFields(value) {
     if(value === 'D') {

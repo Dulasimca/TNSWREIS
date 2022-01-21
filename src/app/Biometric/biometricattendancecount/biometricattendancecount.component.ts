@@ -63,11 +63,13 @@ export class BiometricattendancecountComponent implements OnInit {
   biometricattendancecountData: any = [];
   loading: boolean;
   datepipe: any;
-  MonthYear: Date = new Date();
+  //MonthYear: Date = new Date();
   // maxDate: Date = new Date();
   // AttendancePeriod:any;
   // yearRange:string;
   // maxDate:Date;
+  // Adate: Date = new Date();
+  // maxDate: Date = new Date();
   
   
 
@@ -160,7 +162,6 @@ export class BiometricattendancecountComponent implements OnInit {
   }
 
   loadTable() {
-   console.log('enter',this.biometricattendancecountData)
     this.biometricattendancecountData = [];
       this.loading = true;
       const params = {
@@ -170,16 +171,16 @@ export class BiometricattendancecountComponent implements OnInit {
          //'MonthYear' : this.datepipe.transform(this.MonthYear, 'mm/yy'),
         //adate: this.datePipe.transform(this.Date, 'MM/dd/yyyy'),
        
+        //'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
+
         'serialno':'BJ2C192661709',
-         'month': '1',
-         'year': '2022',
+         'month': '01',
+         'year': '2022'
         
         
         
       }
-    console.log('true1')
       this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
-        console.log('true')
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
             this.biometricattendancecountData = res.Table;
