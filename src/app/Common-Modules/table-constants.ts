@@ -24,6 +24,7 @@ export class TableConstants {
     HostelFundColumns: any = [];
     DistrictFundColumns: any = [];
     BMAttendanceReportCols: any = [];
+    AccountHeadTable: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -278,6 +279,13 @@ export class TableConstants {
         { field: 'LogDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
         { field: 'DownloadDate', header: 'Download Date', width: '100px', align: 'center !important'},
        
+    ]
+    this.AccountHeadTable = [ 
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Group Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Alloted Amount',align: 'right !important'},
     ]
     }
 }
