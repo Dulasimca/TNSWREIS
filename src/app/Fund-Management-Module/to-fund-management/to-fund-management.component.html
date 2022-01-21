@@ -57,10 +57,8 @@
                                         <td>{{rowIndex+1}}</td>
                                         <td *ngFor="let col of columns" [style.text-align]="col.align">
                                             {{rowData[col.field]}}
-                                            <!-- <td> {{district}}</td> -->
-                                            <!-- <td>{{districtname}}</td> -->
-                                        <td><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
-                                                pTooltip="Tap to allot fund">
+                                        <td style="width: 130px;"><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
+                                                pTooltip="Tap to allot taluk fund">
                                             </button></td>
                                     </tr>
                                 </ng-template>
