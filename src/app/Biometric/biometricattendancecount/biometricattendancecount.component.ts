@@ -59,15 +59,24 @@ export class BiometricattendancecountComponent implements OnInit {
   isDistrict: boolean;
   isTaluk: boolean;
   isHostel: boolean;
-  BMAttendanceReportCols: any;
-  BMAttendanceData: any = [];
+  biometricattendancecountCols: any;
+  biometricattendancecountData: any = [];
   loading: boolean;
+  datepipe: any;
+  MonthYear: Date = new Date();
+  // maxDate: Date = new Date();
+  // AttendancePeriod:any;
+  // yearRange:string;
+  // maxDate:Date;
+  
+  
+
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
     private _messageService: MessageService, private tableConstants: TableConstants) { }
 
   ngOnInit(): void {
-    this.BMAttendanceReportCols = this.tableConstants.BMAttendanceReportCols
+    this.biometricattendancecountCols = this.tableConstants.biometricattendancecountColumns
     this.Slno = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
@@ -76,6 +85,11 @@ export class BiometricattendancecountComponent implements OnInit {
     //  this.talukname = this.login_user.talukName;
     //  this.hostelname=this.login_user.hostelName;
     // this.role=this.login_user.roleId;
+
+    // this.maxDate = new Date();
+    // this.yearRange = (this.maxDate.getFullYear() - 10) + ':' + this.maxDate.getFullYear();
+    // this.AttendancePeriod = new Date();
+    
 
   }
 
@@ -146,20 +160,29 @@ export class BiometricattendancecountComponent implements OnInit {
   }
 
   loadTable() {
-    this.BMAttendanceData = [];
+   console.log('enter',this.biometricattendancecountData)
+    this.biometricattendancecountData = [];
       this.loading = true;
       const params = {
         // 'DCode': this.district,
         // 'TCode': this.taluk,
         // 'HostelId': this.hostel,
-        'Adate' : '01/20/2022',
-        'Biometricid':'19'
+         //'MonthYear' : this.datepipe.transform(this.MonthYear, 'mm/yy'),
+        //adate: this.datePipe.transform(this.Date, 'MM/dd/yyyy'),
+       
+        'serialno':'BJ2C192661709',
+         'month': '1',
+         'year': '2022',
+        
+        
         
       }
+    console.log('true1')
       this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
+        console.log('true')
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
-            this.BMAttendanceData = res.Table;
+            this.biometricattendancecountData = res.Table;
             this.loading = false;
           } else {
             this.loading = false;
@@ -180,5 +203,6 @@ export class BiometricattendancecountComponent implements OnInit {
       })
     
   }
+  
 }
 

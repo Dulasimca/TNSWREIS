@@ -24,6 +24,8 @@ export class TableConstants {
     HostelFundColumns: any = [];
     DistrictFundColumns: any = [];
     BMAttendanceReportCols: any = [];
+    biometricattendancecountColumns: any = [];
+    
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -278,6 +280,11 @@ export class TableConstants {
         { field: 'LogDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
         { field: 'DownloadDate', header: 'Download Date', width: '100px', align: 'center !important'},
        
+    ]
+    this.biometricattendancecountColumns = [
+        { field: 'SerialNumber', header: 'Serial No', width: '100px', align: 'center !important'},
+        { field: 'AttendanceDate', header: 'Month', width: '100px', align: 'center !important'},
+        { field: 'StudentCount', header: 'Year', width: '100px', align: 'center !important'},
     ]
     }
 }

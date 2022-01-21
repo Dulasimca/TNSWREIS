@@ -1,7 +1,7 @@
 <div class="p-grid">
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
-            <p-panel header="Biometric Attendance Report">
+            <p-panel header="Biometric Attendance Count">
                 <p-card>
                     <div class="p-col-12 no-pad-top">
                         <div class="p-grid">
@@ -26,14 +26,32 @@
                                         <div><label for="_hostel">Hostel Name</label>
                                         </div>
                                         <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
-                                         (onChange)="loadTable()" required>
+                                          required>
                                         </p-dropdown>
                                     </div>
-                                    <div class="p-col-12 p-md-6 p-lg-3">
+                                    <!-- <div class="p-col-12 p-md-6 p-lg-3">
                                         <div><label >Attendance Date</label>
                                         </div>
-                                       
-                                    </div>
+                                        <p-calendar [showOtherMonths]="false" [maxDate]="maxDate" [(ngModel)]="Adate"
+                                        name="_date" (onSelect)="loadTable()" [showIcon]="true" required>
+                                    </p-calendar>
+                                    </div> -->
+                                    <!-- <div class="p-col-12 p-md-6 p-lg-3">
+                                        <div><label for="monthpicker">Month/Year</label></div>
+                                        <p-calendar [(ngModel)]="MonthYear" view="month" dateFormat="mm/yy" 
+                                        (onSelect)="loadTable()" [readonlyInput]="true"
+                                            inputId="monthpicker"></p-calendar>
+                                    </div> -->
+                                    <!-- <div class="p-col-12 p-md-6 p-lg-3">
+
+                                       <div> <label for="AttendancePeriod">Month/Year</label></div>
+                              
+                                        <p-calendar name="AttendancePeriod" [(ngModel)]="AttendancePeriod" view="month" dateFormat="mm/yy"
+                              
+                                          [yearNavigator]="true" yearRange={{yearRange}} inputId="AttendancePeriod"></p-calendar>
+                              
+                                      </div> -->
+
                                 </div>
                             </div>
                         </div>
@@ -44,9 +62,9 @@
                                 style="color: yellowgreen;" (click)="dt.exportCSV()"
                                 pTooltip="Excel-File download"></button>
                         </div>
-                        <p-table #dt [columns]="BMAttendanceReportCols" [value]="BMAttendanceData" [paginator]="true" [rows]="100"
-                            [rowsPerPageOptions]="[10,30,50,100]" styleClass="p-datatable-gridlines" 
-                            exportFilename="BMAttendance">
+                        <p-table #dt [columns]="biometricattendancecountCols" [value]="biometricattendancecountData" [paginator]="true" [rows]="100"
+                            [rowsPerPageOptions]="[5,10,30,50,100]" styleClass="p-datatable-gridlines" 
+                            exportFilename="Biometricattendancecount">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width: 45px;">S.No</th>

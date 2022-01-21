@@ -1,6 +1,6 @@
 <div class="p-col-12 p-md-12 p-lg-12">
     <p-toast position="top-center" key="t-msg"></p-toast>
-    <p-panel header="Biometric Attendance">
+    <p-panel header="Biometric Attendance Details">
         <p-card>
             <div class="p-grid">
                 <div class="p-col-12 p-md-12 p-lg-12">
@@ -46,6 +46,7 @@
                           <th *ngFor="let col of columns">
                             {{col.header}}
                           </th>
+                          <th> Students Details </th>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
@@ -67,14 +68,15 @@
                             </span>
   
                           </td>
-
+                       
+                          
                           <td>
                             <span class="p-column-title">
                                 Students Details :
                             </span>
                             <span>
                             <button style="height: 1.8rem;" 
-                            icon="pi pi-plus" pButton type="button">
+                            icon="pi pi-plus" (click)="onEdit()" pButton type="button">
                            </button>
                         </span>
                         </td>
