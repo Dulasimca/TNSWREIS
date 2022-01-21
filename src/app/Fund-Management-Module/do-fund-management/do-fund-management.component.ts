@@ -35,6 +35,10 @@ export class DOFundManagementComponent implements OnInit {
   doFundId: number;
   accHeadId: number;
   showDialog: boolean;
+  loading: boolean;
+  accountHeadId: number;
+  groupStart: number;
+
   @ViewChild('f', { static: false }) _doFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
 
@@ -74,6 +78,8 @@ export class DOFundManagementComponent implements OnInit {
     const params = {
       'DOFundId': this.doFundId,
       'AccHeadFundId': this.accFundId,
+      'AccHeadId': this.accountHeadId,
+      'GroupTypeId': this.groupStart,
       'DCode': this.district,
       'DistrictFund': this.districtAmount,
       'AccYearId': this.year,
@@ -111,7 +117,9 @@ export class DOFundManagementComponent implements OnInit {
           res.Table.forEach(r => {
             this.accFundId = r.Id,
               this.accHeadId = r.AccHeadID,
-              this.totalBudjetAmount = r.BudjetAmount
+              this.totalBudjetAmount = r.BudjetAmount,
+              this.accountHeadId = r.AccountHeadID,
+              this.groupStart = r.GroupStart
           })
           this.AccHeadData = res.Table;
         } else {
@@ -185,7 +193,7 @@ export class DOFundManagementComponent implements OnInit {
 
   //dialog data
   onAdd(rowData) {
-    this.showTable = false;
+    // this.showTable = false;
     this.showDialog = true;
     this.accYear = rowData.ShortYear;
     this.groupType = rowData.GroupName;
@@ -193,7 +201,9 @@ export class DOFundManagementComponent implements OnInit {
     this.budgetAmount = rowData.Amount;
     this.accFundId = rowData.Id;  //fund id from rowdata
   }
-
+//  onClose() {
+//    this.loading = false;
+//  }
   clearForm() {
     this.districtOptions = [];
     this.districtAmount = 0;
