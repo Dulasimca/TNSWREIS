@@ -5,6 +5,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 
@@ -34,13 +35,17 @@ export class HOFundmanagementComponent implements OnInit {
   showFields: boolean;
   totalAccHeadAmount: number;
   accFundId: number;
+  AccountHeadData: any = [];
+  AccountHeadCols: any = [];
+  showTable: boolean;
+  loading: boolean;
 
   @BlockUI() blockUI: NgBlockUI;
 
   @ViewChild('f', { static: false }) _hoFundForm: NgForm;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
-    private _datePipe: DatePipe) { }
+    private _datePipe: DatePipe, private tableConstants: TableConstants) { }
 
   ngOnInit(): void {
     this.years = this.masterService.getMaster('AY');
@@ -52,6 +57,7 @@ export class HOFundmanagementComponent implements OnInit {
     });
     this.totalAccHeadAmount = 0;
     this.accFundId = 0;
+    this.AccountHeadCols = this.tableConstants.AccountHeadTable;
   }
 
   onSelect(type) {
@@ -67,7 +73,7 @@ export class HOFundmanagementComponent implements OnInit {
         this.yearOptions.unshift({ label: '-select', value: null });
       case 'AH':
         this.accHeads.forEach(a => {
-          accSelection.push({ label: a.ACCHEAD, value: a.Id });
+          accSelection.push({ label: a.Column1, value: a.Id });
         })
         this.accHeadOptions = accSelection;
         this.accHeadOptions.unshift({ label: '-select', value: null });
@@ -85,7 +91,6 @@ export class HOFundmanagementComponent implements OnInit {
   onSave() {
     if (this.accountHead === null && this.accountHead === undefined) {
       const parameter = {
-
         'Id': this.accFundId,
         'HoFundId': this.hoFundId,
         'AccYear': this.year,
@@ -145,6 +150,7 @@ export class HOFundmanagementComponent implements OnInit {
   loadData() {
     this.showFields = false;
     this.blockUI.start();
+    if(this.year !== undefined && this.year !== null){
     const params = {
       'AccountingYearId': this.year
     }
@@ -158,6 +164,7 @@ export class HOFundmanagementComponent implements OnInit {
             this.hoFundId = res.HOFundId;
             this.blockUI.stop();
             this.showFields = true;
+            this.refreshFields();
           })
         } else {
           this.showFields = false;
@@ -170,10 +177,12 @@ export class HOFundmanagementComponent implements OnInit {
         this.refresh();
       }
     })
+  } 
   }
 
   // load total account head budget amt so far, if any account head have entered their budget
   loadAmount() {
+    this.showTable = true;
     this.blncAmount = 0;
     this.totalAccHeadAmount = 0;
     if (this.blncAmount === 0) {
@@ -192,7 +201,6 @@ export class HOFundmanagementComponent implements OnInit {
               ? (res.Table[0].TotalBudget * 1) : 0;
             this.blncAmount = this.budjetAmount - this.totalAccHeadAmount;
             this.blockUI.stop();
-            
           } 
           else {
             this.blncAmount = this.budjetAmount;
@@ -202,6 +210,7 @@ export class HOFundmanagementComponent implements OnInit {
             this.accFundId = (res.Table1[0].Id * 1);
           } else {
             this.headAmount = 0;
+            this.accFundId = 0;
           }
           this.blockUI.stop();
         } else {
@@ -210,6 +219,37 @@ export class HOFundmanagementComponent implements OnInit {
         }
       });
     }
+  }
+  if(this.year !== undefined && this.year !== null){
+    this.loading = true;
+  const params = {
+    'AccountingYearId': this.year,
+    'Type': 2
+  }
+  this.restApiService.getByParameters(PathConstants.AccHeadFundAllotment_Get, params).subscribe(res => {
+    if (res !== null && res !== undefined) {
+      if (res.Table.length !== 0) {
+        this.AccountHeadData = res.Table;
+        this.loading =false;
+      } else {
+        this.loading = false;
+        this.AccountHeadData = [];
+        this.messageService.clear();
+        this.messageService.add({
+          key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+        })
+      }
+    } else {
+      this.loading =false;
+      this.messageService.clear();
+      this.messageService.add({
+        key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+      })
+    }
+ 
+})
   }
 }
 

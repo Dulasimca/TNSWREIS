@@ -26,6 +26,7 @@ export class TableConstants {
     BMAttendanceReportCols: any = [];
     biometricattendancecountColumns: any = [];
     
+    AccountHeadTable: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -276,7 +277,7 @@ export class TableConstants {
     this.BMAttendanceReportCols = [
         { field: 'DeviceId', header: 'Device No', width: '100px', align: 'center !important'},
         { field: 'StudentName', header: 'Name', width: '100px', align: 'center !important'},
-        { field: 'UserId', header: 'ID', width: '100px', align: 'center !important'},
+        { field: 'UserId', header: 'User ID', width: '100px', align: 'center !important'},
         { field: 'LogDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
         { field: 'DownloadDate', header: 'Download Date', width: '100px', align: 'center !important'},
        
@@ -285,6 +286,13 @@ export class TableConstants {
         { field: 'SerialNumber', header: 'Serial No', width: '100px', align: 'center !important'},
         { field: 'AttendanceDate', header: 'Month', width: '100px', align: 'center !important'},
         { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
+    ]
+    this.AccountHeadTable = [ 
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Group Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Amount', header: 'Alloted Amount',align: 'right !important'},
     ]
     }
 }

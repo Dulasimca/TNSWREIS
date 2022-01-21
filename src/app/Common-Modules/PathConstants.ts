@@ -136,4 +136,5 @@ public static readonly FoodEntitlement_Post = 'FoodEntitlement/Post';
 public static readonly FoodEntitlement_Get = 'FoodEntitlement/Get';
 
 public static readonly GetBDAttendancecount_Get = 'AttendanceCount/Get';
+public static readonly FoodEntitlementReport_Get = 'FoodEntitlementReport/Get';
 }

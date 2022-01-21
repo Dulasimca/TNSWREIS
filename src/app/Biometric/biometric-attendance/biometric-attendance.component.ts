@@ -62,6 +62,7 @@ export class BiometricAttendanceComponent implements OnInit {
   loading: boolean;
   Adate: Date = new Date();
   maxDate: Date = new Date();
+  
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
