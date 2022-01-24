@@ -8,6 +8,9 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-biometricattendancecount',
@@ -63,19 +66,16 @@ export class BiometricattendancecountComponent implements OnInit {
   biometricattendancecountData: any = [];
   loading: boolean;
   datepipe: any;
-  //MonthYear: Date = new Date();
-  // maxDate: Date = new Date();
-  // AttendancePeriod:any;
-  // yearRange:string;
-  // maxDate:Date;
-  // Adate: Date = new Date();
-  // maxDate: Date = new Date();
   
-  
+    MonthYear:any;
+    Mmonth : any;
+    Myear : any;
+
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
-    private _messageService: MessageService, private tableConstants: TableConstants) { }
+    private _messageService: MessageService, private tableConstants: TableConstants, 
+    private _datePipe: DatePipe, private _router: Router ) { }
 
   ngOnInit(): void {
     this.biometricattendancecountCols = this.tableConstants.biometricattendancecountColumns
@@ -83,16 +83,6 @@ export class BiometricattendancecountComponent implements OnInit {
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-    //  this.districtname = this.login_user.districtName;
-    //  this.talukname = this.login_user.talukName;
-    //  this.hostelname=this.login_user.hostelName;
-    // this.role=this.login_user.roleId;
-
-    // this.maxDate = new Date();
-    // this.yearRange = (this.maxDate.getFullYear() - 10) + ':' + this.maxDate.getFullYear();
-    // this.AttendancePeriod = new Date();
-    
-
   }
 
   onSelect(type) {
@@ -164,21 +154,13 @@ export class BiometricattendancecountComponent implements OnInit {
   loadTable() {
     this.biometricattendancecountData = [];
       this.loading = true;
+      this.Mmonth = this._datePipe.transform(this.MonthYear, 'MM');
+      this.Myear = this._datePipe.transform(this.MonthYear, 'yyyy');
+      console.log(this.Myear,this.Mmonth)
       const params = {
-        // 'DCode': this.district,
-        // 'TCode': this.taluk,
-        // 'HostelId': this.hostel,
-         //'MonthYear' : this.datepipe.transform(this.MonthYear, 'mm/yy'),
-        //adate: this.datePipe.transform(this.Date, 'MM/dd/yyyy'),
-       
-        //'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
-
-        'serialno':'BJ2C192661709',
-         'month': '01',
-         'year': '2022'
-        
-        
-        
+          'serialno':'BJ2C192661709',
+          'month': this.Mmonth,
+          'year':  this.Myear
       }
       this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
@@ -203,6 +185,13 @@ export class BiometricattendancecountComponent implements OnInit {
         }
       })
     
+  }
+  
+  onEdit(){
+    this._router.navigate(['/BiometricAttendance'])
+  }
+  onRowSelect(event, selectedRow) {
+
   }
   
 }

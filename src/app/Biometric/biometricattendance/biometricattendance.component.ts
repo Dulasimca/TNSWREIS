@@ -36,7 +36,7 @@ export class BiometricattendanceComponent implements OnInit {
   toDate: any;
   fromDate: any;
 
-  MonthYear:any;
+  // MonthYear:any;
   data: any;
   hostelRowId: any;
   Hostelname: any;
@@ -57,7 +57,7 @@ export class BiometricattendanceComponent implements OnInit {
      { field: 'Talukname', header: 'Taluk', width: '100px'},
      { field: 'HostelName', header: 'Hostel Name', width: '100px'},
      { field: 'TotalStudent', header: 'Total Student', width: '100px'},
-     { field: 'MonthYear', header: 'Month/Year', width: '100px'},
+     //{ field: 'MonthYear', header: 'Month/Year', width: '100px'},
     ];
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
