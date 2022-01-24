@@ -237,7 +237,7 @@ export class StudentTransferFormComponent implements OnInit {
         if (res) {
           console.log('student data is inserted successfully');
           this.blockUI.stop();
-          this.selectedStudentList = [];
+          this.selectedStudentList = []; 
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,

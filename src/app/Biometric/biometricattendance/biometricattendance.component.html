@@ -1,6 +1,6 @@
 <div class="p-col-12 p-md-12 p-lg-12">
     <p-toast position="top-center" key="t-msg"></p-toast>
-    <p-panel header="Biometric Attendance">
+    <p-panel header="Biometric Attendance Details">
         <p-card>
             <div class="p-grid">
                 <div class="p-col-12 p-md-12 p-lg-12">
@@ -26,11 +26,11 @@
                             <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName" required>
                             </p-dropdown>
                         </div>
-                        <div class="p-col-12 p-md-6 p-lg-2">
+                        <!-- <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="monthpicker">Month/Year</label></div>
                             <p-calendar [(ngModel)]="MonthYear" view="month" dateFormat="mm/yy" [readonlyInput]="true"
                                 inputId="monthpicker"></p-calendar>
-                        </div>
+                        </div> -->
                         <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
                             <button pButton type="button" label="View" icon="pi pi-eye" (click)="onview()"></button>
                         </div>
@@ -38,13 +38,15 @@
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-12">
                     <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
-                      [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" styleClass="p-datatable-gridlines">
+                      [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" 
+                      styleClass="p-datatable-gridlines">
                       <ng-template pTemplate="header" let-columns>
                         <tr>
                           <th>S.No</th>
                           <th *ngFor="let col of columns">
                             {{col.header}}
                           </th>
+                          <th> Students Details </th>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
@@ -66,6 +68,19 @@
                             </span>
   
                           </td>
+                       
+                          
+                          <td>
+                            <span class="p-column-title">
+                                Students Details :
+                            </span>
+                            <span>
+                            <button style="height: 1.8rem;" 
+                            icon="pi pi-plus" (click)="onEdit()" pButton type="button">
+                           </button>
+                        </span>
+                        </td>
+
                         </tr>
                       </ng-template>
                     </p-table>
