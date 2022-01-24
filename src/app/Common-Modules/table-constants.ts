@@ -283,9 +283,10 @@ export class TableConstants {
        
     ]
     this.biometricattendancecountColumns = [
-        { field: 'SerialNumber', header: 'Serial No', width: '100px', align: 'center !important'},
-        { field: 'AttendanceDate', header: 'Month', width: '100px', align: 'center !important'},
+        { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
+        { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},
         { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
+        
     ]
     this.AccountHeadTable = [ 
         { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
