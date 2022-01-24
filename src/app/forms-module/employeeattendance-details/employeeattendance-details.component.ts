@@ -182,7 +182,6 @@ export class EmployeeattendanceDetailsComponent implements OnInit {
           this.remarks = rowData.Remarks;
         },
         reject: () => {
-          console.log('emp', this.empId)
           this.data.forEach(e => {
             if (this.empId === e.Id) {
               
@@ -191,8 +190,6 @@ export class EmployeeattendanceDetailsComponent implements OnInit {
             }
           })
           this.table.value = this.data;
-          console.log('table', this.data, this.table.value)
-          console.log('chck', this.checkbox)
         }
       });
     } else {
