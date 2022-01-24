@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -35,15 +37,30 @@ export class BiometricattendanceComponent implements OnInit {
   fromDate: any;
 
   MonthYear:any;
+  data: any;
+  hostelRowId: any;
+  Hostelname: any;
+  Districtcode: any;
+  TalukId: any;
+  Totalstudent: any;
+  cols: any[];
+  hostelId: any;
+
+   
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
-    private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
+    private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe,private _router: Router) { }
 
   ngOnInit(): void {
-
+    this.cols = [
+      { field: 'Districtname', header: 'District', width: '100px'},
+     { field: 'Talukname', header: 'Taluk', width: '100px'},
+     { field: 'HostelName', header: 'Hostel Name', width: '100px'},
+     { field: 'TotalStudent', header: 'Total Student', width: '100px'},
+     { field: 'MonthYear', header: 'Month/Year', width: '100px'},
+    ];
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-
     this.logged_user = this._authService.UserInfo;
  
 
@@ -80,6 +97,8 @@ export class BiometricattendanceComponent implements OnInit {
       }
     }
   }
+ 
+
 
   refreshFields(value) {
     if(value === 'D') {
@@ -118,7 +137,39 @@ export class BiometricattendanceComponent implements OnInit {
 
 
   onview()
-  {
-
-  }
+  { 
+    this.data = [];
+    const params = {
+      'Type':'0',
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
+      this.logged_user.hostelId : 0,
+    }
+    this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.data = res.Table;
+      }  else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        })
+      }
+    });
 }
+
+onRowSelect(event, selectedRow) {
+
+}
+
+onEdit() {
+  this._router.navigate(['/Biometricattendancecount'])
+}
+}
+
+
+
+
+
+

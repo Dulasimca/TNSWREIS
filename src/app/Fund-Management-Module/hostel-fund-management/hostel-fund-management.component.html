@@ -41,7 +41,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="showTable" class="table-format">
+                            <!-- table -->
+                            <div *ngIf="showTable">
                                 <p-table [value]="HostelFundData" [columns]="HostelFundCols"
                                     styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
                                     [rowsPerPageOptions]="[10,20,30,40]">
@@ -61,7 +62,7 @@
                                             <td *ngFor="let col of columns" [style.text-align]="col.align">
                                                 {{rowData[col.field]}}
                                             </td>
-                                            <td><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
+                                            <td style="width: 130px;"><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
                                                     pTooltip="Tap to enter hostel fund">
                                                 </button></td>
                                         </tr>

@@ -40,8 +40,8 @@ export class TOFundManagementComponent implements OnInit {
   showTable: boolean;
   districtFund: number;
   districtName: any;
-
-
+  accountHeadId: number;
+  groupStart: number;
 
   @ViewChild('f', { static: false }) _toFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
@@ -102,7 +102,9 @@ export class TOFundManagementComponent implements OnInit {
         if (res.Table.length !== 0) {
           res.Table.forEach(r => {
             // this.accFundId = r.Id,
-            this.totalBudjetAmount = r.BudjetAmount
+            this.totalBudjetAmount = r.BudjetAmount,
+            this.accountHeadId = r.AccountHeadID,
+            this.groupStart = r.GroupStart
           })
         } else {
           this.totalBudjetAmount = 0;
@@ -162,6 +164,8 @@ export class TOFundManagementComponent implements OnInit {
       'ToFundId': this.toFundId,
       'DoFundId': this.doFundId,
       'AccHeadFundId': this.accFundId,
+      'AccHeadId': this.accountHeadId,
+      'GroupTypeId': this.groupStart,
       'DCode': this.district,
       'TCode': this.taluk,
       'TalukAmount': this.talukAmount,

@@ -10,14 +10,14 @@
                     <div class="p-col-12 p-md-6 p-lg-2">
                         <div><label for="_hosteltype">Hostel Type</label></div>
                         <p-dropdown name="_hosteltype" [options]="hosteltypeOptions"
-                            [(ngModel)]="hostelType" (onClick)="onSelect('HF')" required>
+                            [(ngModel)]="hostelType" (onChange)="onLoad()" (onClick)="onSelect('HF')" required>
                         </p-dropdown>
                           </div>
                     <div class="p-col-12 p-md-6 p-lg-2">
                             <div><label for="_year">Accounting Year<span
                                 class="form-mandatory-field">*</span></label></div>
                     <p-dropdown name="_year" [options]="yearOptions" (onChange)="onLoad()" (onClick)="onSelect('AY')"
-                        [(ngModel)]="year">
+                        [(ngModel)]="year" required>
                     </p-dropdown>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-12">

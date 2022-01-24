@@ -22,6 +22,7 @@ export class FoodentitlementReportComponent implements OnInit {
   logged_user: User;
   data:any;
   cols:any;
+  showTable: boolean;
 
   constructor(private restApiService: RestAPIService, 
     private masterService: MasterService, private _messageService: MessageService,private _authService: AuthService) { }
@@ -49,6 +50,9 @@ export class FoodentitlementReportComponent implements OnInit {
           hostelfunctionSelection.push({ label: f.name, value: f.code });
         })
         this.hosteltypeOptions = hostelfunctionSelection;
+        if ((this.logged_user.roleId * 1) === 4 || (this.logged_user.roleId * 1) === 1) {
+          this.hosteltypeOptions.unshift({ label: 'All', value: 0 });
+        }
         this.hosteltypeOptions.unshift({ label: '-select-', value: null });
         break; 
         case 'AY':
@@ -56,23 +60,30 @@ export class FoodentitlementReportComponent implements OnInit {
             yearSelection.push({ label: y.name, value: y.code });
           })
           this.yearOptions = yearSelection;
+         
           this.yearOptions.unshift({ label: '-select', value: null });
         break;   
       }
 }
 
+
 onLoad() {
+  this.data =[];
+  if (this.hostelType !== null && this.hostelType !== undefined && this.year !== null && this.year !== undefined) {
     const params = {
       'AccountingYearId' : this.year,
+      'HostelType': this.hostelType
     };
-    this.restApiService.getByParameters(PathConstants.FoodEntitlement_Get,params).subscribe(res => {
+    this.restApiService.getByParameters(PathConstants.FoodEntitlementReport_Get,params).subscribe(res => {
       if (res !== null && res !== undefined && res.Table.length !== 0) {
+        // this.showTable = true;
         this.data = res.Table;
         this.data.forEach(i => {
           i.Flag = (i.Flag) ? 'Active' : 'Inactive';
         })
         
       }else{
+        // this.showTable = false;
       this._messageService.clear();
       this._messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
@@ -80,5 +91,6 @@ onLoad() {
       })
     }
     });
+}
 }
 }

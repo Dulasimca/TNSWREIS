@@ -48,6 +48,8 @@ export class HostelFundManagementComponent implements OnInit {
   dstrct: any;
   SelectTaluk: any;
   hostelAmount: number;
+  accountHeadId: number;
+  groupStart: number;
 
   @ViewChild('f', { static: false }) _hostelFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
@@ -90,9 +92,9 @@ export class HostelFundManagementComponent implements OnInit {
         break;
       case 'T':
         this.taluks.forEach(t => {
-          // if (t.dcode === this.district) {
+           if (t.dcode === this.district) {
           talukSelection.push({ label: t.name, value: t.code });
-          // }
+           }
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });
@@ -135,7 +137,9 @@ export class HostelFundManagementComponent implements OnInit {
       if (res !== null && res !== undefined) {
         if (res.Table.length !== 0) {
           res.Table.forEach(r => {
-            this.totalBudget = r.BudjetAmount
+            this.totalBudget = r.BudjetAmount,
+            this.accountHeadId = r.AccountHeadID,
+            this.groupStart = r.GroupStart
           })
         } else {
           this.totalBudget = 0;
@@ -210,6 +214,8 @@ export class HostelFundManagementComponent implements OnInit {
       'HosteFundId': this.hostelFundId,
       'ToFundId': this.toFundId,
       'AccHeadFundId': this.accFundId,
+      'AccHeadId': this.accountHeadId,
+      'GroupTypeId': this.groupStart,
       'DCode': this.district,
       'TCode': this.taluk,
       'HCode': this.hostelName,

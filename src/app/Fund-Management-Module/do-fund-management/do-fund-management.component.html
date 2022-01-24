@@ -33,9 +33,9 @@
                             </div>
                         </div>
                         <!-- table  -->
-                        <div *ngIf="showTable" class="table-format">
+                        <div *ngIf="showTable">
                             <p-table [value]="AccHeadData" [columns]="AccHeadCols" styleClass="p-datatable-gridlines"
-                                [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
+                                [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]" [loading]="loading">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 50px;">S.No</th>
@@ -51,8 +51,8 @@
                                         <td *ngFor="let col of columns" [style.text-align]="col.align">
                                             {{rowData[col.field]}}
                                         </td>
-                                        <td><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
-                                                pTooltip="Tap to allot fund">
+                                        <td style="width: 130px;"><button icon="pi pi-plus" pButton type="button" (click)="onAdd(rowData)"
+                                                pTooltip="Tap to allot district fund">
                                             </button></td>
                                     </tr>
                                 </ng-template>
@@ -60,8 +60,8 @@
                         </div>
                         <!-- --dialog -->
                         <p-dialog header="District Wise - Fund Allotment" [(visible)]="showDialog" [modal]="true"
-                            [maximizable]="true" [style]="{width: '80vw', height: '30vw'}">
-                            <p-toast position="top-center" key="t-msg"></p-toast>
+                            [maximizable]="true" [style]="{width: '80vw', height: '30vw'}"  >
+                            <p-toast position="top-center" key="t-msg"></p-toast>  
                             <p-card>
                                 <div class="p-col-12 no-pad-top">
                                     <div class="p-grid">
@@ -73,12 +73,12 @@
                                                     <input type="text" name="_accYear" class="p-col-12" pInputText
                                                         [(ngModel)]="accYear" readonly="true" required />
                                                 </div>
-                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div class="p-col-12 p-md-12 p-lg-3">
                                                     <div><label for="_type">Group Type</label></div>
                                                     <input type="text" name="_type" class="p-col-12" pInputText
                                                         [(ngModel)]="groupType" readonly="true" required />
                                                 </div>
-                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                <div class="p-col-12 p-md-12 p-lg-3">
                                                     <div><label for="_accHead">Account Head</label></div>
                                                     <input type="text" name="_accHead" class="p-col-12" pInputText
                                                         [(ngModel)]="accHead" readonly="true" required />

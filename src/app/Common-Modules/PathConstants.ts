@@ -130,9 +130,13 @@ public static readonly StudentTransferDetails_Put = 'StudentTransferDetails/Put'
 
 public static readonly BioMetric_Post = 'BioMetric/Post';
 public static readonly BioMetric_Get = 'BioMetric/Get';
+public static readonly BioMetricAttendance_Get = 'AttendanceBM/Get';
 
 public static readonly StudentBiometricDetails_Get = 'StudentBiometricDetails/Get';
 
 public static readonly FoodEntitlement_Post = 'FoodEntitlement/Post';
 public static readonly FoodEntitlement_Get = 'FoodEntitlement/Get';
+
+public static readonly GetBDAttendancecount_Get = 'AttendanceCount/Get';
+public static readonly FoodEntitlementReport_Get = 'FoodEntitlementReport/Get';
 }
