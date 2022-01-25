@@ -16,9 +16,13 @@
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_district">District</label></div>
+                                    <!-- <div><label for="_district">District</label></div>
                                     <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
                                         (onClick)="onSelect('D')" (onChange)="loadTable()" required>
+                                    </p-dropdown> -->
+                                    <div><label for="_acchead">Account Head</label></div>
+                                    <p-dropdown name="_acchead" [options]="accHeadOptions" [(ngModel)]="accHead"
+                                        (onClick)="onSelect('A')" (onChange)="loadTable()" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-2">

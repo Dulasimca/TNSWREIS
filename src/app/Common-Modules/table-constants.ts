@@ -27,6 +27,7 @@ export class TableConstants {
     biometricattendancecountColumns: any = [];
     
     AccountHeadTable: any = [];
+    HostelFundtable: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -294,6 +295,20 @@ export class TableConstants {
         { field: 'GroupName', header: 'Group Type', align: 'left !important'},
         { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
         { field: 'Amount', header: 'Alloted Amount',align: 'right !important'},
+    ]
+
+    this.HostelFundtable = [
+        { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
+        { field: 'GONumber', header: 'GO Number', align: 'left !important'},
+        { field: 'GroupName', header: 'Group Type', align: 'left !important'},
+        { field: 'AccountHeadName', header: 'Account Head', align: 'center !important'},
+        { field: 'Districtname', header: 'District', align: 'left !important'},
+        { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+        { field: 'TalukAmount', header: 'Taluk Fund',align: 'right !important'},
+        { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+        { field: 'HostelFund', header: 'Hostel Fund',align: 'right !important'},
+
+
     ]
     }
 }
