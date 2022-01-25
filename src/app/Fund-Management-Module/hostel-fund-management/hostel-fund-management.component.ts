@@ -50,11 +50,15 @@ export class HostelFundManagementComponent implements OnInit {
   hostelAmount: number;
   accountHeadId: number;
   groupStart: number;
+  HstlFundCols: any = [];
+  HstlFundData: any = [];
+  loading: boolean;
 
   @ViewChild('f', { static: false }) _hostelFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
   accFundId: any;
   totalBudget: any;
+  table: boolean;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
     private authService: AuthService, private tableConstants: TableConstants) { }
@@ -65,6 +69,7 @@ export class HostelFundManagementComponent implements OnInit {
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.HostelFundCols = this.tableConstants.HostelFundColumns;
+    this.HstlFundCols = this.tableConstants.HostelFundtable;
     console.log('enter', this.HostelFundCols)
     this.totalHostelAmount = 0;
     this.hostelFundId = 0;
@@ -126,7 +131,6 @@ export class HostelFundManagementComponent implements OnInit {
         }
       })
     }
-    // this.loadAmount();
   }
   load() {
     const params = {
@@ -220,6 +224,7 @@ export class HostelFundManagementComponent implements OnInit {
       'TCode': this.taluk,
       'HCode': this.hostelName,
       'HostelAmount': this.hostelAmount,
+      'AccYear': this.year,
       'Flag': 1
     }
     this.restApiService.post(PathConstants.HostelFundAllotment_Post, params).subscribe(res => {
@@ -273,6 +278,33 @@ export class HostelFundManagementComponent implements OnInit {
           this.blncAmount = 0;
         }
       });
+    }
+    this.table = true;
+    if (this.year !== null && this.year !== undefined && this.district !== null && this.district !== undefined) {
+      this.blockUI.start();
+      const params = {
+        'AccHeadFundId':this.accFundId,
+        'DCode': this.district,
+        'TCode': this.taluk,
+        'Type': 2
+      }
+      this.restApiService.getByParameters(PathConstants.HostelFundAllotment_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined) {
+          if (res.Table.length !== 0) {
+            console.log('j',res)
+            this.HstlFundData = res.Table;
+            this.blockUI.stop();
+          } else {
+            this.blockUI.stop();
+            this.HstlFundData = [];
+            this.messageService.clear();
+            this.messageService.add({
+              key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            })
+          }
+        }
+      })
     }
   }
 
