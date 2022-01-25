@@ -64,14 +64,49 @@
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                <tr>
-                                    <td>{{rowIndex+1}}</td>
-                                    <td>{{rowData.AttendanceDate}}</td>
-                                    <td>{{rowData.MealName}}</td>
-                                    <td>{{rowData.StudentName}}</td>
-                                    <td><img [src]="rowData.url" [alt]="rowData.studentName" width="60px" height="70px"
-                                            class="p-shadow-4" /></td>
-                                    <td>
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            Date :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowData.AttendanceDate}}
+                                        </span>
+                                    </td>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            Meal Type :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowData.MealName}}
+                                        </span>
+                                    </td>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            Student Name :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowData.StudentName}}
+                                        </span>
+                                    </td>
+                                    <td  class="td-border">
+                                        <span class="p-column-title">
+                                            Student Image :
+                                        </span><span><img [src]="rowData.url" [alt]="rowData.studentName" width="60px" height="70px"
+                                            class="p-shadow-4" /></span></td>
+                                    <td  class="td-border">
+                                        <span class="p-column-title">
+                                            Present/Absent :
+                                        </span>
+                                        <span>
                                         <button icon="pi pi-check" *ngIf="(rowData.isPresent == 'true' && rowData.canEdit == 'true')" pButton
                                             type="button" label="P" pTooltip="Present"
                                             style="background: green !important;" (click)="onClick(rowData, 1)">
@@ -89,6 +124,7 @@
                                             type="button" label="A" pTooltip="Absent"
                                             style=" background: rgb(215 11 11) !important;" [disabled]="true">
                                         </button>
+                                    </span>
                                     </td>
                                 </tr>
                             </ng-template>
