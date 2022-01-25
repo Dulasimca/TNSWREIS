@@ -38,9 +38,12 @@ export class DOFundManagementComponent implements OnInit {
   loading: boolean;
   accountHeadId: number;
   groupStart: number;
+  DistrictFundData: any = [];
+  DistrcitFundCols: any = [];
 
   @ViewChild('f', { static: false }) _doFundForm: NgForm;
   @BlockUI() blockUI: NgBlockUI;
+  table: boolean;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
     private tableConstants: TableConstants) { }
@@ -49,6 +52,7 @@ export class DOFundManagementComponent implements OnInit {
     this.years = this.masterService.getMaster('AY');
     this.districts = this.masterService.getMaster('DT');
     this.AccHeadCols = this.tableConstants.AccHeadColumns;
+    // this.DistrcitFundCols = this.tableConstants.DistrictFundColumns;
     this.totalDistrictAmt = 0;
     this.doFundId = 0;
   }
@@ -172,6 +176,32 @@ export class DOFundManagementComponent implements OnInit {
         }
       });
     }
+    // this.table = true;
+    // if (this.year !== null && this.year !== undefined && this.district !== null && this.district !== undefined) {
+    //   this.blockUI.start();
+    //   const params = {
+    //     'AccHeadId':this.accFundId,
+    //     'YearId': this.year,
+    //     'Type': 0
+    //   }
+    //   this.restApiService.getByParameters(PathConstants.DOFundAllotment_Get, params).subscribe(res => {
+    //     if (res !== null && res !== undefined) {
+    //       if (res.Table.length !== 0) {
+    //         console.log('j',res)
+    //         this.DistrictFundData = res.Table;
+    //         this.blockUI.stop();
+    //       } else {
+    //         this.blockUI.stop();
+    //         this.DistrictFundData = [];
+    //         this.messageService.clear();
+    //         this.messageService.add({
+    //           key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
+    //           summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
   }
 
   //budget validation

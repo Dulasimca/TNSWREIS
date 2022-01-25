@@ -138,7 +138,7 @@ export class FoodEntitlementComponent implements OnInit {
         this.data = res.Table;
       }
     })
-}
+  }
 
 
   onClear() {
