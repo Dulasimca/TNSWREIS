@@ -244,7 +244,7 @@ export class FundmanagementReportComponent implements OnInit {
     var colorCode: string;
     if (name === 'TALUK') {
       colorCode = "#e3f2fd"
-    } else if (name === 'HOSTEL' || name === 'DISTRICT') {
+    } else if (name === 'HOSTEL') {
       colorCode = "#d2d4d7";
     } else {
       colorCode = "white";
