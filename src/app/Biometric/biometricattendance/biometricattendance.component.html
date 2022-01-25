@@ -33,7 +33,7 @@
                                 inputId="monthpicker"></p-calendar>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
-                            <button pButton type="button" label="View" icon="pi pi-eye"  (click)="onview()"></button>
+                            <button pButton type="button" label="View" icon="pi pi-eye"  [disabled]='(!f.valid || !f.dirty)' (click)="onview()"></button>
                         </div>
                     </div>
                 </div>
