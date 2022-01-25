@@ -46,23 +46,44 @@ export class BiometricattendanceComponent implements OnInit {
   cols: any[];
   hostelId: any;
 
-   
+  Studentdetails?: any = [];
+  Studentsdetail: any;
+  Studentsdetaildata: any[] = [];
+
+  biometricattendancecountCols: any;
+  biometricattendancecountData: any = [];
+  loading: boolean;
+  datepipe: any;
+  
+    MonthYear:any;
+    Mmonth : any;
+    Myear : any;
+  
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe,private _router: Router) { }
 
   ngOnInit(): void {
+    this.biometricattendancecountCols = this._tableConstants.biometricattendancecountColumns
     this.cols = [
       { field: 'Districtname', header: 'District', width: '100px'},
      { field: 'Talukname', header: 'Taluk', width: '100px'},
      { field: 'HostelName', header: 'Hostel Name', width: '100px'},
      { field: 'TotalStudent', header: 'Total Student', width: '100px'},
-     //{ field: 'MonthYear', header: 'Month/Year', width: '100px'},
+     { field: 'monyr', header: 'Month/Year', width: '100px'},
     ];
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;
- 
+     
+    // this.biometricattendancecountCols = [
+    
+    //   { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
+    //   { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},
+    //   { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
+
+
+    // ]
 
   }
 
@@ -164,8 +185,48 @@ onRowSelect(event, selectedRow) {
 }
 
 onEdit() {
-  this._router.navigate(['/Biometricattendancecount'])
+   this._router.navigate(['/BiometricAttendance'])
+  
+  
 }
+loadTable() {
+  this.biometricattendancecountData = [];
+    this.loading = true;
+    this.Mmonth = this._datePipe.transform(this.MonthYear, 'MM');
+    this.Myear = this._datePipe.transform(this.MonthYear, 'yyyy');
+    console.log(this.Myear,this.Mmonth)
+    const params = {
+        'serialno':'BJ2C192661709',
+        'month': this.Mmonth,
+        'year':  this.Myear
+    }
+    this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
+      if (res.Table !== undefined && res.Table !== null) {
+        if (res.Table.length !== 0) {
+          this.biometricattendancecountData = res.Table;
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          })
+        }
+      } else {
+        this.loading = false;
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+        })
+      }
+    })
+  
+}
+
+
+
 }
 
 
