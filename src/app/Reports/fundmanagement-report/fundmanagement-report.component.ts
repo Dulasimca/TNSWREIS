@@ -21,6 +21,9 @@ export class FundmanagementReportComponent implements OnInit {
   fundData: any[] = [];
   treeData: TreeNode[] = [];
   cols: any = [];
+  accHead: any;
+  accHeadOptions: SelectItem[];
+  accHeads?: any;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService) { }
 
@@ -33,12 +36,16 @@ export class FundmanagementReportComponent implements OnInit {
       { field: 'amount', header: 'Budjet Amount' },
       //   { field: 'type', header: 'Budjet Amount' }
     ];
+    this.restApiService.get(PathConstants.AccHeadType_Get).subscribe(res => {
+      this.accHeads = res;
+    });
   }
 
 
   onSelect(type) {
     let yearSelection = [];
     let districtSelection = [];
+    let accSelection = [];
     switch (type) {
       case 'Y':
         this.years.forEach(y => {
@@ -54,6 +61,14 @@ export class FundmanagementReportComponent implements OnInit {
         this.districtOptions = districtSelection;
         this.districtOptions.unshift({ label: 'All', value: 0 });
         this.districtOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'A':
+        this.accHeads.forEach(a => {
+          accSelection.push({ label: a.Column1, value: a.Id });
+        })
+        this.accHeadOptions = accSelection;
+        this.accHeadOptions.unshift({ label: 'All', value: 0 });
+        this.accHeadOptions.unshift({ label: '-select', value: null });
         break;
     }
   }
@@ -81,9 +96,11 @@ export class FundmanagementReportComponent implements OnInit {
   }
 
   loadTable() {
-    if (this.district !== null && this.district !== undefined && this.accYear !== null && this.accYear !== undefined) {
+    // this.district !== null && this.district !== undefined
+    if (this.accHead !== undefined && this.accHead !== null && this.accYear !== null && this.accYear !== undefined) {
       const params = {
-        'DCode': this.district,
+        //'DCode': this.district,
+        'AccHead': this.accHead,
         'AccountingYear': this.accYear
       }
       this.restApiService.getByParameters(PathConstants.FundManagementReport_Get, params).subscribe(res => {
@@ -102,6 +119,8 @@ export class FundmanagementReportComponent implements OnInit {
   constructTreeData() {
     if (this.fundData.length !== 0) {
       ///extracting unique data (district, taluk, hostel)
+      var acchead_hash = Object.create(null),
+        accHead = [];
       var district_hash = Object.create(null),
         district = [];
       var taluk_hash = Object.create(null),
@@ -110,12 +129,26 @@ export class FundmanagementReportComponent implements OnInit {
         hostel = [];
       this.fundData.forEach(function (o) {
         /// match and bind unique values
+        var akey = ['AccHeadFundId'].map(function (a) { return o[a]; }).join('|');
         var key = ['TOFundId', 'HOFundId', 'DOFundId'].map(function (k) { return o[k]; }).join('|');
-        var dkey = ['DOFundId'].map(function (d) { return o[d]; }).join('|');
+        var dkey = ['DOFundId', 'AccHeadFundId'].map(function (d) { return o[d]; }).join('|');
+        if (!acchead_hash[akey]) {
+          acchead_hash[akey] = {
+            name: o.AccHeadName,
+            amount: o.Amount,
+            accHeadId: o.AccHeadFundId,
+            talukFundId: o.TOFundId,
+            hostelFundId: o.HostelFundId,
+            districtFundId: o.DOFundId,
+            hashType: 'ACCOUNTHEAD'
+          };
+          accHead.push(acchead_hash[akey]);
+        }
         if (!district_hash[dkey]) {
           district_hash[dkey] = {
             name: o.Districtname,
-            amount: o.DOBudjetAmount,
+            amount: o.DistrictAmount,
+            accHeadId: o.AccHeadFundId,
             talukFundId: o.TOFundId,
             hostelFundId: o.HostelFundId,
             districtFundId: o.DOFundId,
@@ -126,7 +159,8 @@ export class FundmanagementReportComponent implements OnInit {
         if (!taluk_hash[key] && o.TOFundId !== null) {
           taluk_hash[key] = {
             name: o.Talukname,
-            amount: o.TOBudjetAmount,
+            amount: o.TalukAmount,
+            accHeadId: o.AccHeadFundId,
             talukFundId: o.TOFundId,
             hostelFundId: o.HostelFundId,
             districtFundId: o.DOFundId,
@@ -137,7 +171,8 @@ export class FundmanagementReportComponent implements OnInit {
         if (!hostel_hash[key] && o.HostelFundId !== null) {
           hostel_hash[key] = {
             name: o.HostelName,
-            amount: o.HostelBudjetAmount,
+            amount: o.HostelFund,
+            accHeadId: o.AccHeadFundId,
             talukFundId: o.TOFundId,
             hostelFundId: o.HostelFundId,
             districtFundId: o.DOFundId,
@@ -148,11 +183,12 @@ export class FundmanagementReportComponent implements OnInit {
       })
       ///creating a treenode and adding parent and child to it
       var treeNode = [];
-      let d_sno = 0;
       // pushing children based on each row in parent data
-      for (let d = 0; d < district.length; d++) {
-        d_sno = d_sno + 1;
-        district[d].slno = d_sno;
+      let a_sno = 0;
+      for (let a = 0; a < accHead.length; a++) {
+        a_sno = a_sno + 1;
+        accHead[a].slno = a_sno;
+        var districtChild = [];
         var talukChild = [];
         var hostelChild = [];
         let h_sno = 0;
@@ -161,7 +197,7 @@ export class FundmanagementReportComponent implements OnInit {
             h_sno = h_sno + 1;
             hostel[h].slno = h_sno;
             hostelChild.push({
-              "data": hostel[h] //children (treenode-3)
+              "data": hostel[h] //children (treenode-4)
             })
           } else {
             continue;
@@ -169,20 +205,35 @@ export class FundmanagementReportComponent implements OnInit {
         }
         let t_sno = 0;
         for (let t = 0; t < taluk.length; t++) {
-          if (taluk[t].districtFundId === district[d].districtFundId) {
+          if (taluk[t].districtFundId === accHead[a].districtFundId) {
             t_sno = t_sno + 1;
             taluk[t].slno = t_sno;
             talukChild.push({
-              "data": taluk[t], //children to district(parent)/parent to hostel(children) (treenode-2)
+              "data": taluk[t], //children to district(parent)/parent to hostel(children) (treenode-3)
               "children": hostelChild //inner children to taluk
             })
           } else {
             continue;
           }
         }
+        let d_sno = 0;
+        for (let d = 0; d < district.length; d++) {
+          if (district[d].accHeadId === accHead[a].accHeadId) {
+            d_sno = d_sno + 1;
+            district[d].slno = d_sno;
+            districtChild.push({
+              "data": district[d], //children to account head(parent)/parent to taluk(children) (treenode-2)
+              "children": talukChild //inner children to district
+            })
+          } else {
+            continue;
+          }
+        }
+        console.log('data', accHead, district, taluk, hostel)
+
         treeNode.push({
-          "data": district[d], //parent (treenode-1)
-          "children": talukChild //children with inner children
+          "data": accHead[a], //parent (treenode-1)
+          "children": districtChild //children with inner children
         })
       }
       this.treeData = treeNode; //assigning treenode to tree table data
@@ -193,7 +244,7 @@ export class FundmanagementReportComponent implements OnInit {
     var colorCode: string;
     if (name === 'TALUK') {
       colorCode = "#e3f2fd"
-    } else if (name === 'HOSTEL') {
+    } else if (name === 'HOSTEL' || name === 'DISTRICT') {
       colorCode = "#d2d4d7";
     } else {
       colorCode = "white";
