@@ -29,7 +29,7 @@
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-dropdown name="_commodity" [options]="commodityOptions"
                                                 (onClick)="onSelect('CM')" [(ngModel)]="commodity" optionLabel="label"
-                                                required>
+                                                (ngModelChange)="loadOB()" required>
                                             </p-dropdown>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-1 no-pad-left">
@@ -46,7 +46,7 @@
                                                     <div><label for="_openingbalance">Opening Balance<span
                                                                 class="form-mandatory-field">*</span></label></div>
                                                     <input type="text" name="_openingbalance" pInputText
-                                                        [(ngModel)]="openingBalance" required>
+                                                        [(ngModel)]="openingBalance" readonly="disableOB" required>
                                                         <!-- readonly="true" -->
                                                 </div>
                                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">

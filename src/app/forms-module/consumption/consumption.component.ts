@@ -43,6 +43,8 @@ export class ConsumptionComponent implements OnInit {
   // showAlertBox: boolean;
   maxDate: Date = new Date();
   logged_user: User;
+  biometricId: any;
+  disableOB: boolean;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
@@ -57,6 +59,20 @@ export class ConsumptionComponent implements OnInit {
     this.commodities = this._masterService.getMaster('CM');
     this.units = this._masterService.getMaster('UN');
     this.logged_user = this._authService.UserInfo;
+    this.disableOB = false;
+    const params = {
+      'HostelId': this.logged_user.hostelId,
+      'FromDate': '',
+      'ToDate': '',
+      'Type': 1
+    }
+    this._restApiService.getByParameters(PathConstants.Consumption_Get, params).subscribe(res => {
+      if (res) {
+        this.biometricId = res[0].DeviceId;
+      } else {
+        console.log('No Device Id found for this hostel');
+      }
+    })
   }
 
   onSelect(id) {
@@ -94,7 +110,50 @@ export class ConsumptionComponent implements OnInit {
     }
   }
 
-  loadOB() { }
+  loadOB() {
+    this.blockUI.start();
+    let Qty = 0;
+    this.openingBalance = 0;
+    const params = {
+      'Commodity': this.commodity.value,
+      'AccountingYear': 4
+    }
+    this._restApiService.getByParameters(PathConstants.QuantityForConsumption_Get, params).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        if (res.length !== 0) {
+          this.blockUI.stop();
+          Qty = res[0].Quantity;
+          this.disableOB = true;
+        } else {
+          this.blockUI.stop();
+          this.disableOB = false;
+        }
+      } else {
+        this.blockUI.stop();
+        this.disableOB = false;
+      }
+    })
+
+    const BM_params = {
+      'Code': this.biometricId,
+      'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy')
+    }
+    this.blockUI.start();
+    this._restApiService.getByParameters(PathConstants.BioMetricsForConsumption_Get, BM_params).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        if (res.length !== 0) {
+          this.blockUI.stop();
+          let Count = res[0].StudentCount;
+          this.openingBalance = (Qty * Count);
+        } else {
+          this.blockUI.stop();
+        }
+      } else {
+        this.blockUI.stop();
+      }
+    })
+
+  }
 
   onEnter() {
     this.consumptionData.push({
@@ -121,18 +180,19 @@ export class ConsumptionComponent implements OnInit {
       this.requiredQty !== undefined && this.requiredQty !== null) {
       const entered_qty = (this.requiredQty * 1);
       const opening_bal = (this.openingBalance * 1);
-      this.closingBalance = (opening_bal - entered_qty).toFixed(3);
       var msg = '';
       if (entered_qty > opening_bal) {
         msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than OB : ' + opening_bal;
         this._consumptionForm.controls._requiredqty.reset();
         this.requiredQty = null;
+        this.closingBalance = 0;
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: msg
         });
       } else {
+        this.closingBalance = (opening_bal - entered_qty).toFixed(3);
         msg = '';
         this._messageService.clear();
       }
@@ -231,7 +291,8 @@ export class ConsumptionComponent implements OnInit {
       const params = {
         'FromDate': this._datePipe.transform(this.fromDate, 'yyyy-MM-dd'),
         'ToDate': this._datePipe.transform(this.toDate, 'yyyy-MM-dd'),
-        'HostelId': this.logged_user.hostelId
+        'HostelId': this.logged_user.hostelId,
+        'Type': 2
       }
       this._restApiService.getByParameters(PathConstants.Consumption_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {

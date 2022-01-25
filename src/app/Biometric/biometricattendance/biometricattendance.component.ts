@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -35,7 +36,7 @@ export class BiometricattendanceComponent implements OnInit {
   toDate: any;
   fromDate: any;
 
-  MonthYear:any;
+  // MonthYear:any;
   data: any;
   hostelRowId: any;
   Hostelname: any;
@@ -45,8 +46,10 @@ export class BiometricattendanceComponent implements OnInit {
   cols: any[];
   hostelId: any;
 
+   
+
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
-    private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
+    private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe,private _router: Router) { }
 
   ngOnInit(): void {
     this.cols = [
@@ -54,7 +57,7 @@ export class BiometricattendanceComponent implements OnInit {
      { field: 'Talukname', header: 'Taluk', width: '100px'},
      { field: 'HostelName', header: 'Hostel Name', width: '100px'},
      { field: 'TotalStudent', header: 'Total Student', width: '100px'},
-     { field: 'MonthYear', header: 'Month/Year', width: '100px'},
+     //{ field: 'MonthYear', header: 'Month/Year', width: '100px'},
     ];
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
@@ -95,9 +98,7 @@ export class BiometricattendanceComponent implements OnInit {
     }
   }
  
-  clear() {
-    throw new Error('Method not implemented.');
-  }
+
 
   refreshFields(value) {
     if(value === 'D') {
@@ -161,8 +162,14 @@ export class BiometricattendanceComponent implements OnInit {
 onRowSelect(event, selectedRow) {
 
 }
+
+onEdit() {
+  this._router.navigate(['/Biometricattendancecount'])
+}
 }
 
-function params(Hostel_Get: string, params: any) {
-  throw new Error('Function not implemented.');
-}
+
+
+
+
+

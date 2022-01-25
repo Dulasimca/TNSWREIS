@@ -24,6 +24,8 @@ export class TableConstants {
     HostelFundColumns: any = [];
     DistrictFundColumns: any = [];
     BMAttendanceReportCols: any = [];
+    biometricattendancecountColumns: any = [];
+    
     AccountHeadTable: any = [];
     HostelFundtable: any = [];
     constructor() {
@@ -280,6 +282,12 @@ export class TableConstants {
         { field: 'LogDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
         { field: 'DownloadDate', header: 'Download Date', width: '100px', align: 'center !important'},
        
+    ]
+    this.biometricattendancecountColumns = [
+        { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
+        { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},
+        { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
+        
     ]
     this.AccountHeadTable = [ 
         { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
