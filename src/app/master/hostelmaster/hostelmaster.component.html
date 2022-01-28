@@ -119,8 +119,8 @@
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 
                                     [disabled]="((disableFields && (!f.dirty || !f.valid)) || (!disableFields && !f.valid))"  class="btn-bg"></button>&nbsp;
-                                        <button pButton type="button" label="View" (click)="onView()" 
-                                        class="btn-bg"></button>
+                                        <!-- <button pButton type="button" label="View" (click)="onView()" 
+                                        class="btn-bg"></button> -->
                                 </div>
                           <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                           [rowsPerPageOptions]="[5,10,15,20]"  totalRecords="totalRecords" pageLinks="3"
