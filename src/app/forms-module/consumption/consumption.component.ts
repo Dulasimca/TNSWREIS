@@ -116,21 +116,20 @@ export class ConsumptionComponent implements OnInit {
     this.openingBalance = 0;
     const params = {
       'Commodity': this.commodity.value,
-      'AccountingYear': 4
+      'AccountingYear': 4,
+      'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy')
     }
     this._restApiService.getByParameters(PathConstants.QuantityForConsumption_Get, params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res.length !== 0) {
           this.blockUI.stop();
           Qty = res[0].Quantity;
-          this.disableOB = true;
+          console.log('qty', Qty)
         } else {
           this.blockUI.stop();
-          this.disableOB = false;
         }
       } else {
         this.blockUI.stop();
-        this.disableOB = false;
       }
     })
 
@@ -145,6 +144,8 @@ export class ConsumptionComponent implements OnInit {
           this.blockUI.stop();
           let Count = res[0].StudentCount;
           this.openingBalance = (Qty * Count);
+          this.disableOB = ((this.openingBalance * 1) === 0) ? false : true;
+          console.log('Count', Count)
         } else {
           this.blockUI.stop();
         }

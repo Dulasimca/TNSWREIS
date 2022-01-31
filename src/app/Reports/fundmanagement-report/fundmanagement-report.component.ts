@@ -24,6 +24,7 @@ export class FundmanagementReportComponent implements OnInit {
   accHead: any;
   accHeadOptions: SelectItem[];
   accHeads?: any;
+  loading: boolean;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService) { }
 
@@ -97,6 +98,9 @@ export class FundmanagementReportComponent implements OnInit {
 
   loadTable() {
     // this.district !== null && this.district !== undefined
+    this.loading = true;
+    this.fundData = [];
+    this.treeData = [];
     if (this.accHead !== undefined && this.accHead !== null && this.accYear !== null && this.accYear !== undefined) {
       const params = {
         //'DCode': this.district,
@@ -105,18 +109,19 @@ export class FundmanagementReportComponent implements OnInit {
       }
       this.restApiService.getByParameters(PathConstants.FundManagementReport_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
+          this.loading = false;
           this.fundData = res;
           this.constructTreeData()
+        } else {
+          this.loading = false;
         }
       })
     }
   }
 
-  populateDummyData() {
-
-  }
-
   constructTreeData() {
+    this.loading = true;
+    this.treeData = [];
     if (this.fundData.length !== 0) {
       ///extracting unique data (district, taluk, hostel)
       var acchead_hash = Object.create(null),
@@ -229,14 +234,15 @@ export class FundmanagementReportComponent implements OnInit {
             continue;
           }
         }
-        console.log('data', accHead, district, taluk, hostel)
-
         treeNode.push({
           "data": accHead[a], //parent (treenode-1)
           "children": districtChild //children with inner children
         })
       }
       this.treeData = treeNode; //assigning treenode to tree table data
+      this.loading = false;
+    } else {
+      this.loading = false;
     }
   }
 
