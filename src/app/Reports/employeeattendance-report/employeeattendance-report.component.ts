@@ -61,8 +61,8 @@ export class EmployeeattendanceReportComponent implements OnInit {
   hostelData: any = [];
   loading: boolean;
   attendanceDate: Date = new Date();
-  fromdate: Date = new Date();
-  todate: Date = new Date();
+  fromdate: any;
+  todate: any;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
     private _messageService: MessageService, private tableConstants: TableConstants,private _datepipe: DatePipe) { }
@@ -149,28 +149,22 @@ export class EmployeeattendanceReportComponent implements OnInit {
   loadTable() {
     this.hostelData = [];
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
-      this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined) {
+      this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined&& this.fromdate !== null && this.todate !== undefined) {
       this.loading = true;
       const params = {
         'DCode': this.district,
         'TCode': this.taluk,
         'HostelId': this.hostel,
-        'FromDate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy'),
-        'Todate': this._datepipe.transform(this.attendanceDate, 'MM/dd/yyyy')
+        'FromDate': this._datepipe.transform(this.fromdate, 'yyyy-MM-dd'),
+        'Todate': this._datepipe.transform(this.todate, 'yyyy-MM-dd')
       }
       this.restApiService.getByParameters(PathConstants.EmployeeAttendance_Get,params).subscribe(res => {
-        if (res.Table !== undefined && res.Table !== null) {
-          if (res.Table.length !== 0) {
-            this.hostelData = res.Table;
-            this.loading = false;
-          } else {
-            this.loading = false;
-            this._messageService.clear();
-            this._messageService.add({
-              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-            })
-          }
+        if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
+          res.Table.forEach(r => {
+            r.AttendanceDate = this._datepipe.transform(r.AttendanceDate, 'dd/MM/yyyy');
+          })
+          this.hostelData = res.Table;
+          this.loading = false;
         } else {
           this.loading = false;
           this._messageService.clear();
@@ -179,8 +173,9 @@ export class EmployeeattendanceReportComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
         }
-      })
+       })
+      }
     }
   }
-}
+
 

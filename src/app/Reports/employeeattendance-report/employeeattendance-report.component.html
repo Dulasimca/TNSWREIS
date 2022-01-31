@@ -31,13 +31,13 @@
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div class="no-pad-top"><label>From Date</label> </div>
-                            <p-calendar [showOtherMonths]="false" [(ngModel)]="fromdate" (onSelect)="loadTable()" 
+                            <p-calendar [showOtherMonths]="false" dateFormat="dd/mm/yy" [(ngModel)]="fromdate" (onSelect)="loadTable()" 
                             [showIcon]="true" name="_fromdate" required>
                             </p-calendar>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2">
                                         <div class="no-pad-top"><label>To Date</label> </div>
-                            <p-calendar [showOtherMonths]="false" [(ngModel)]="todate" (onSelect)="loadTable()"
+                            <p-calendar [showOtherMonths]="false" dateFormat="dd/mm/yy" [(ngModel)]="todate" (onSelect)="loadTable()"
                              [showIcon]="true" name="_todate" required>
                             </p-calendar>
                                     </div>

@@ -173,7 +173,7 @@ export class TableConstants {
             { field: 'HostelName', header: 'HostelName', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'Employee Name', width: '100px', align: 'left !important' },
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
-            { field: 'CreatedDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
+            { field: 'AttendanceDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
             { field: 'Remarks', header: 'Remarks', width: '100px', align: 'left !important' },
         ]
         this.employeeReportCols = [
