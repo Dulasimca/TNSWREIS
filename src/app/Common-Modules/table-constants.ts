@@ -276,7 +276,7 @@ export class TableConstants {
 
     ]
     this.BMAttendanceReportCols = [
-        { field: 'DeviceId', header: 'Device No', width: '100px', align: 'center !important'},
+        { field: 'SerialNumber', header: 'Serial Numbernpm serv', width: '100px', align: 'center !important'},
         { field: 'StudentName', header: 'Name', width: '100px', align: 'center !important'},
         { field: 'UserId', header: 'User ID', width: '100px', align: 'center !important'},
         { field: 'LogDate', header: 'Attendance Date', width: '100px', align: 'center !important'},

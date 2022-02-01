@@ -155,8 +155,7 @@ export class BiometricAttendanceComponent implements OnInit {
         // 'TCode': this.taluk,
         // 'HostelId': this.hostel,
         'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
-        'Biometricid':'19'
-        
+        'Biometricid':'BJ2C192661709'        
       }
       this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
