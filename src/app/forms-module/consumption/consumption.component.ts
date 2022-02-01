@@ -44,8 +44,9 @@ export class ConsumptionComponent implements OnInit {
   maxDate: Date = new Date();
   logged_user: User;
   biometricId: any;
-  disableOB: boolean;
+  disableReqQty: boolean;
   studentCount: any;
+  remainingBalance: number;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
@@ -60,7 +61,7 @@ export class ConsumptionComponent implements OnInit {
     this.commodities = this._masterService.getMaster('CM');
     this.units = this._masterService.getMaster('UN');
     this.logged_user = this._authService.UserInfo;
-    this.disableOB = false;
+    this.disableReqQty = false;
     const params = {
       'HostelId': this.logged_user.hostelId,
       'FromDate': '',
@@ -111,42 +112,20 @@ export class ConsumptionComponent implements OnInit {
     }
   }
 
-  loadOB() {
+  loadStudentCount() {
+    ///Get student biometric present count
     this.blockUI.start();
-    let Qty = 0;
-    this.openingBalance = 0;
-    const params = {
-      'Commodity': (this.commodity.value !== null && this.commodity.value !== undefined) ? this.commodity.value : 0,
-      'AccountingYear': 4,
-      'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy')
-    }
-    this._restApiService.getByParameters(PathConstants.QuantityForConsumption_Get, params).subscribe(res => {
-      if (res !== undefined && res !== null) {
-        if (res.length !== 0) {
-          this.blockUI.stop();
-          Qty = res[0].Quantity;
-        } else {
-          this.blockUI.stop();
-        }
-      } else {
-        this.blockUI.stop();
-      }
-    })
-
     const BM_params = {
       'Code': this.biometricId,
-      'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy')
+      'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy'),
+      'Type': 2
     }
     this.studentCount = 0;
-    this.blockUI.start();
     this._restApiService.getByParameters(PathConstants.BioMetricsForConsumption_Get, BM_params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res.length !== 0) {
           this.blockUI.stop();
-          let Count = res[0].StudentCount;
-          this.studentCount = Count;
-          this.openingBalance = (Qty * Count);
-          this.disableOB = ((this.openingBalance * 1) === 0) ? false : true;
+          this.studentCount = (res[0].StudentCount !== undefined && res[0].StudentCount !== null) ? (res[0].StudentCount * 1) : 0;
         } else {
           this.studentCount = 0;
           this.blockUI.stop();
@@ -156,42 +135,95 @@ export class ConsumptionComponent implements OnInit {
         this.blockUI.stop();
       }
     })
+  }
+
+  loadOB() {
+    let Qty = 0;
+    this.openingBalance = 0;
+    this.requiredQty = 0;
+    this.closingBalance = 0;
+    ///Get OB for consumption(calculated[(OB + Purchase) - Consumption])
+    this.blockUI.start();
+    const OB_params = {
+      'Commodity': (this.commodity.value !== null && this.commodity.value !== undefined) ? this.commodity.value : 0,
+      'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy'),
+      'Code': this.logged_user.hostelId,
+      'Type': 1
+    }
+    this._restApiService.getByParameters(PathConstants.QuantityForConsumption_Get, OB_params).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        if (res.length !== 0) {
+          var OB = (res[0].OBQty !== undefined && res[0].OBQty !== null) ? (res[0].OBQty * 1) : 0;
+          var Purchase = (res[0].PurchaseQty !== undefined && res[0].PurchaseQty !== null) ? (res[0].PurchaseQty * 1) : 0;
+          var Consumption = (res[0].ConsumptionQty !== undefined && res[0].ConsumptionQty !== null) ? (res[0].ConsumptionQty * 1) : 0;
+          this.openingBalance = ((OB + Purchase) - Consumption).toFixed(3);
+          this.openingBalance = (this.openingBalance * 1);
+          console.log('ob', this.openingBalance)
+        } else {
+          this.blockUI.stop();
+        }
+      } else {
+        this.blockUI.stop();
+      }
+      /// Get the required qty calculation(from FoodEntitlement -> QTY/Student * no.of student present)
+      const params = {
+        'Commodity': (this.commodity.value !== null && this.commodity.value !== undefined) ? this.commodity.value : 0,
+        'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy')
+      }
+      this._restApiService.getByParameters(PathConstants.QuantityForConsumption_Get, params).subscribe(res => {
+        if (res !== undefined && res !== null) {
+          if (res.length !== 0) {
+            this.blockUI.stop();
+            Qty = (res[0].Quantity !== undefined && res[0].Quantity !== null) ? (res[0].Quantity * 1) : 0;
+            this.requiredQty = (Qty * this.studentCount);
+            this.closingBalance = (this.openingBalance - (this.requiredQty * 1)).toFixed(3);
+            this.disableReqQty = ((this.requiredQty * 1) === 0 && this.openingBalance !== 0) ? false : true;
+          } else {
+            this.blockUI.stop();
+          }
+        } else {
+          this.blockUI.stop();
+        }
+      })
+    })
 
   }
 
   onEnter() {
-    this.consumptionData.push({
-      'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
-      'ConsumptionType': this.consumption.value,
-      'ConsumptionDate': this._datePipe.transform(this.date, 'yyyy-MM-dd'),
-      'Consumption': this.consumption.label,
-      'CommodityId': this.commodity.value,
-      'Commodity': this.commodity.label,
-      'UnitId': this.unit.value,
-      'Unit': this.unit.label,
-      'OB': this.openingBalance,
-      'QTY': this.requiredQty,
-      'CB': this.closingBalance,
-      'HostelId': this.logged_user.hostelId,
-      'TalukCode': this.logged_user.talukId,
-      'DistrictCode': this.logged_user.districtCode
-    })
-  //  this.clearForm();
-  // this._consumptionForm.form.controls._consumption.reset();
-  // this._consumptionForm.form.controls._commodity.reset();
-  // this._consumptionForm.form.controls._unit.reset();
-  this.date = null;
- this.commodity = null;
- this.commodityOptions = [];
- this.unit = null;
- this.unitOptions = [];
- this.consumption = null;
- this.consumptionOptions = [];
-  this.openingBalance = 0;
-  this.studentCount = 0;
-  this.requiredQty = 0;
-  this.closingBalance = 0;
-  
+    this.calculateBalance();
+    if ((this.remainingBalance * 1) >= 0) {
+      this.consumptionData.push({
+        'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
+        'ConsumptionType': this.consumption.value,
+        'ConsumptionDate': this._datePipe.transform(this.date, 'yyyy-MM-dd'),
+        'Consumption': this.consumption.label,
+        'CommodityId': this.commodity.value,
+        'Commodity': this.commodity.label,
+        'UnitId': this.unit.value,
+        'Unit': this.unit.label,
+        'OB': this.openingBalance,
+        'QTY': this.requiredQty,
+        'CB': this.closingBalance,
+        'HostelId': this.logged_user.hostelId,
+        'TalukCode': this.logged_user.talukId,
+        'DistrictCode': this.logged_user.districtCode
+      })
+      //  this.clearForm();
+      // this._consumptionForm.form.controls._consumption.reset();
+      // this._consumptionForm.form.controls._commodity.reset();
+      // this._consumptionForm.form.controls._unit.reset();
+      this.date = null;
+      this.commodity = null;
+      this.commodityOptions = [];
+      this.unit = null;
+      this.unitOptions = [];
+      this.consumption = null;
+      this.consumptionOptions = [];
+      this.openingBalance = 0;
+      this.studentCount = 0;
+      this.requiredQty = 0;
+      this.closingBalance = 0;
+    }
   }
 
   calculateBalance() {
@@ -200,30 +232,30 @@ export class ConsumptionComponent implements OnInit {
       const entered_qty = (this.requiredQty * 1);
       const opening_bal = (this.openingBalance * 1);
       let remaining_bal = 0;
-      if(this.consumptionData.length !== 0) {
+      if (this.consumptionData.length !== 0) {
         this.consumptionData.forEach(c => {
-          if(c.CommodityId === this.commodity.value) {
-          remaining_bal += c.QTY
+          if (c.CommodityId === this.commodity.value) {
+            remaining_bal += c.QTY
           }
         })
         remaining_bal = opening_bal - remaining_bal;
+        this.remainingBalance = (remaining_bal - entered_qty);
       } else {
         remaining_bal = opening_bal;
+        this.remainingBalance = opening_bal;
       }
-      this.closingBalance = (remaining_bal - entered_qty).toFixed(3);
+      this.closingBalance = remaining_bal.toFixed(3);
       var msg = '';
       if (entered_qty > remaining_bal) {
-        msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than OB : ' + remaining_bal;
+        msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than available balance : ' + remaining_bal;
         this._consumptionForm.controls._requiredqty.reset();
-        this.requiredQty = null;
-        this.closingBalance = 0;
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: msg
         });
       } else {
-       // this.closingBalance = (remaining_bal - entered_qty).toFixed(3);
+        // this.closingBalance = (remaining_bal - entered_qty).toFixed(3);
         msg = '';
         this._messageService.clear();
       }
@@ -425,7 +457,7 @@ export class ConsumptionComponent implements OnInit {
 
   onClearAll() {
     this.consumptionId = 0;
- //   this._consumptionForm.reset();
+    //   this._consumptionForm.reset();
     this.openingBalance = 0;
     this.closingBalance = 0;
     this.requiredQty = 0;
