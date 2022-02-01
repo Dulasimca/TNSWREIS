@@ -276,6 +276,7 @@ export class TableConstants {
 
     ]
     this.BMAttendanceReportCols = [
+        { field: 'SerialNumber', header: 'Serial Numbernpm serv', width: '100px', align: 'center !important'},
         { field: 'Districtname', header: 'District Name', width: '100px', align: 'center !important'},
         { field: 'Talukname', header: 'Taluk', align: 'left !important'},
         { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},

@@ -103,7 +103,7 @@ export class BiometricDevicemappingComponent implements OnInit {
     this._restApiService.post(PathConstants.BioMetric_Post,params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
-          //  this.blockUI.stop();
+          this.blockUI.stop();
            this.onClear();
            this.onView();
           this._messageService.clear();
@@ -113,7 +113,7 @@ export class BiometricDevicemappingComponent implements OnInit {
           });
 
         } else {
-          // this.blockUI.stop();
+          this.blockUI.stop();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -128,7 +128,7 @@ export class BiometricDevicemappingComponent implements OnInit {
         });
       }
     }, (err: HttpErrorResponse) => {
-      // this.blockUI.stop();
+      this.blockUI.stop();
       if (err.status === 0 || err.status === 400) {
         this._messageService.clear();
         this._messageService.add({
@@ -167,7 +167,7 @@ export class BiometricDevicemappingComponent implements OnInit {
     this.districtOptions = [];
   }
 
-  onRowSelect(event, selectedRow) {
+  onRowSelect(selectedRow) {
     this.RowId = selectedRow.Slno;
     this.bioMetric = selectedRow.DeviceId;
     this.hostel = selectedRow.HostelId;
