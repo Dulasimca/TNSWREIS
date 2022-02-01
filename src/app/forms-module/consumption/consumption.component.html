@@ -33,9 +33,9 @@
                                             </p-dropdown>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-1 no-pad-left">
-                                            <div><label for="_openingbalance">Unit<span
+                                            <div><label for="_unit">Unit<span
                                                         class="form-mandatory-field">*</span></label></div>
-                                            <p-dropdown name="_openingbalance" [options]="unitOptions"
+                                            <p-dropdown name="_unit" [options]="unitOptions"
                                                 (onClick)="onSelect('UN')" [(ngModel)]="unit" optionLabel="label"
                                                 required>
                                             </p-dropdown>
@@ -43,10 +43,17 @@
                                         <div #row2 class="p-col-12 p-md-12 p-lg-12">
                                             <div class="p-grid">
                                                 <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_noofstudentpresent">No.Of Students Present<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text" name="_noofstudentpresent" pInputText
+                                                        [(ngModel)]="studentCount" [readonly]="true">
+                                                        <!-- readonly="true" -->
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                                     <div><label for="_openingbalance">Opening Balance<span
                                                                 class="form-mandatory-field">*</span></label></div>
                                                     <input type="text" name="_openingbalance" pInputText
-                                                        [(ngModel)]="openingBalance" readonly="disableOB" required>
+                                                        [(ngModel)]="openingBalance" [readonly]="disableOB" required>
                                                         <!-- readonly="true" -->
                                                 </div>
                                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
@@ -95,12 +102,9 @@
                                                     {{rowData[col.field]}}
                                                 </td>
                                                 <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 1)">
-                                                    <i class="pi pi-pencil">
                                                     <button style="height: 1.8rem;"  pButton
-                                                        type="button">
-                                                        <!-- icon="pi pi-pencil" -->
+                                                        type="button" icon="pi pi-pencil">
                                                     </button>
-                                                </i>
                                                 </td>
                                                 <td style="width: 120px" (click)="onDelete(rowData, rowIndex, 1)">
                                                     <button style="height: 1.8rem;" icon="pi pi-trash" pButton

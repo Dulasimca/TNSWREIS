@@ -45,6 +45,7 @@ export class ConsumptionComponent implements OnInit {
   logged_user: User;
   biometricId: any;
   disableOB: boolean;
+  studentCount: any;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
@@ -115,22 +116,20 @@ export class ConsumptionComponent implements OnInit {
     let Qty = 0;
     this.openingBalance = 0;
     const params = {
-      'Commodity': this.commodity.value,
-      'AccountingYear': 4
+      'Commodity': (this.commodity.value !== null && this.commodity.value !== undefined) ? this.commodity.value : 0,
+      'AccountingYear': 4,
+      'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy')
     }
     this._restApiService.getByParameters(PathConstants.QuantityForConsumption_Get, params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res.length !== 0) {
           this.blockUI.stop();
           Qty = res[0].Quantity;
-          this.disableOB = true;
         } else {
           this.blockUI.stop();
-          this.disableOB = false;
         }
       } else {
         this.blockUI.stop();
-        this.disableOB = false;
       }
     })
 
@@ -138,17 +137,22 @@ export class ConsumptionComponent implements OnInit {
       'Code': this.biometricId,
       'Date': this._datePipe.transform(this.date, 'MM/dd/yyyy')
     }
+    this.studentCount = 0;
     this.blockUI.start();
     this._restApiService.getByParameters(PathConstants.BioMetricsForConsumption_Get, BM_params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res.length !== 0) {
           this.blockUI.stop();
           let Count = res[0].StudentCount;
+          this.studentCount = Count;
           this.openingBalance = (Qty * Count);
+          this.disableOB = ((this.openingBalance * 1) === 0) ? false : true;
         } else {
+          this.studentCount = 0;
           this.blockUI.stop();
         }
       } else {
+        this.studentCount = 0;
         this.blockUI.stop();
       }
     })
@@ -172,7 +176,22 @@ export class ConsumptionComponent implements OnInit {
       'TalukCode': this.logged_user.talukId,
       'DistrictCode': this.logged_user.districtCode
     })
-    this.clearForm();
+  //  this.clearForm();
+  // this._consumptionForm.form.controls._consumption.reset();
+  // this._consumptionForm.form.controls._commodity.reset();
+  // this._consumptionForm.form.controls._unit.reset();
+  this.date = null;
+ this.commodity = null;
+ this.commodityOptions = [];
+ this.unit = null;
+ this.unitOptions = [];
+ this.consumption = null;
+ this.consumptionOptions = [];
+  this.openingBalance = 0;
+  this.studentCount = 0;
+  this.requiredQty = 0;
+  this.closingBalance = 0;
+  
   }
 
   calculateBalance() {
@@ -180,9 +199,21 @@ export class ConsumptionComponent implements OnInit {
       this.requiredQty !== undefined && this.requiredQty !== null) {
       const entered_qty = (this.requiredQty * 1);
       const opening_bal = (this.openingBalance * 1);
+      let remaining_bal = 0;
+      if(this.consumptionData.length !== 0) {
+        this.consumptionData.forEach(c => {
+          if(c.CommodityId === this.commodity.value) {
+          remaining_bal += c.QTY
+          }
+        })
+        remaining_bal = opening_bal - remaining_bal;
+      } else {
+        remaining_bal = opening_bal;
+      }
+      this.closingBalance = (remaining_bal - entered_qty).toFixed(3);
       var msg = '';
-      if (entered_qty > opening_bal) {
-        msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than OB : ' + opening_bal;
+      if (entered_qty > remaining_bal) {
+        msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than OB : ' + remaining_bal;
         this._consumptionForm.controls._requiredqty.reset();
         this.requiredQty = null;
         this.closingBalance = 0;
@@ -192,7 +223,7 @@ export class ConsumptionComponent implements OnInit {
           summary: ResponseMessage.SUMMARY_ERROR, detail: msg
         });
       } else {
-        this.closingBalance = (opening_bal - entered_qty).toFixed(3);
+       // this.closingBalance = (remaining_bal - entered_qty).toFixed(3);
         msg = '';
         this._messageService.clear();
       }
@@ -394,7 +425,10 @@ export class ConsumptionComponent implements OnInit {
 
   onClearAll() {
     this.consumptionId = 0;
-    this._consumptionForm.reset();
+ //   this._consumptionForm.reset();
+    this.openingBalance = 0;
+    this.closingBalance = 0;
+    this.requiredQty = 0;
     this._consumptionForm.form.markAsUntouched();
     this._consumptionForm.form.markAsPristine();
     this.consumptionData = [];
