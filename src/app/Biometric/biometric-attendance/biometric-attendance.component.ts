@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./biometric-attendance.component.css']
 })
 export class BiometricAttendanceComponent implements OnInit {
-
+  Biometricid:any;
   hostel: any;
   district: any;
   taluk: any;
@@ -62,6 +62,7 @@ export class BiometricAttendanceComponent implements OnInit {
   loading: boolean;
   Adate: Date = new Date();
   maxDate: Date = new Date();
+  MSerialNumber:any;
   
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
@@ -150,13 +151,12 @@ export class BiometricAttendanceComponent implements OnInit {
   loadTable() {
     this.BMAttendanceData = [];
       this.loading = true;
-      const params = {
-        // 'DCode': this.district,
-        // 'TCode': this.taluk,
-        // 'HostelId': this.hostel,
-        'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
-        'Biometricid':'BJ2C192661709'        
+      this.Biometricid='BJ2C192661709'
+      const params = {     
+        'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),      
+        'Biometricid': this.MSerialNumber       
       }
+      console.log(true);
       this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
