@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./biometric-attendance.component.css']
 })
 export class BiometricAttendanceComponent implements OnInit {
-
+  Biometricid:any;
   hostel: any;
   district: any;
   taluk: any;
@@ -154,7 +154,7 @@ export class BiometricAttendanceComponent implements OnInit {
       const params = {
         'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
         'HostelId' : this.HostelId,
-        
+
       }
       console.log(this.loadTable());
       this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get, params).subscribe(res => {
