@@ -14,7 +14,7 @@
                                             <div><label for="_date">Date<span
                                                         class="form-mandatory-field">*</span></label></div>
                                             <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true"
-                                                name="_date" [maxDate]="maxDate"></p-calendar>
+                                                name="_date" (ngModelChange)="loadStudentCount()" [maxDate]="maxDate"></p-calendar>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-3 no-pad-left">
                                             <div><label for="_consumption">Consumption For<span
@@ -53,14 +53,15 @@
                                                     <div><label for="_openingbalance">Opening Balance<span
                                                                 class="form-mandatory-field">*</span></label></div>
                                                     <input type="text" name="_openingbalance" pInputText
-                                                        [(ngModel)]="openingBalance" [readonly]="disableOB" required>
+                                                        [(ngModel)]="openingBalance" readonly="true" required>
                                                         <!-- readonly="true" -->
                                                 </div>
                                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                                     <label for="_requiredqty">Required Quantity<span
                                                             class="form-mandatory-field">*</span></label>
                                                     <input type="text" name="_requiredqty" pInputText
-                                                        (input)="calculateBalance()" [(ngModel)]="requiredQty" required>
+                                                        (input)="calculateBalance()" [(ngModel)]="requiredQty"
+                                                        [readonly]="disableReqQty" required>
                                                 </div>
                                                 <div class="p-col-12 p-md-6 p-lg-2">
                                                     <div><label for="_closingbalance">Closing Balance</label></div>

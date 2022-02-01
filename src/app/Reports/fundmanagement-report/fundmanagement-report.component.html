@@ -44,6 +44,8 @@
                                         <th style="width: 120px;">S.No.</th>
                                         <th>Name</th>
                                         <th>Amount</th>
+                                        <th>Expenditure</th>
+                                        <th>Balance</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-rowIndex="rowIndex">
@@ -56,6 +58,8 @@
                                             {{rowData.name}}
                                         </td>
                                         <td style="text-align: right !important;">{{rowData.amount}}</td>
+                                        <td style="text-align: right !important;">0</td>
+                                        <td style="text-align: right !important;">0</td>
                                     </tr>
                                 </ng-template>
                             </p-treeTable>
