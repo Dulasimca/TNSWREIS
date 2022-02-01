@@ -36,7 +36,7 @@ export class FoodentitlementReportComponent implements OnInit {
       {field:'AccountingYear',header:'Accounting Year'},
       {field:'FunctioningName',header:'Hostel Type'},
       {field:'CommodityName',header: 'Commodity'},
-      {field:'Quantity',header: 'Quantity'},
+      {field:'Quantity',header: 'Quantity(grams & Nos)'},
       {field:'Flag',header: 'Status'}
     ];
   }
