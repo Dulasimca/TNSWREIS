@@ -62,6 +62,7 @@ export class BiometricAttendanceComponent implements OnInit {
   loading: boolean;
   Adate: Date = new Date();
   maxDate: Date = new Date();
+  MSerialNumber:any;
   
 
   constructor(private http: HttpClient, private restApiService: RestAPIService,
@@ -155,9 +156,10 @@ export class BiometricAttendanceComponent implements OnInit {
         // 'TCode': this.taluk,
         // 'HostelId': this.hostel,
         'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
-        'Biometricid':'19'
+        'Biometricid': this.MSerialNumber,
         
       }
+      console.log(true);
       this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {

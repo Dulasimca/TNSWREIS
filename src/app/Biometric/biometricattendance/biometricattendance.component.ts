@@ -58,6 +58,10 @@ export class BiometricattendanceComponent implements OnInit {
     MonthYear:any;
     Mmonth : any;
     Myear : any;
+
+    BMAttendanceReportCols: any;
+   BMAttendanceData: any = [];
+   showDialog: boolean;
   
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
@@ -65,6 +69,7 @@ export class BiometricattendanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.biometricattendancecountCols = this._tableConstants.biometricattendancecountColumns
+    this.BMAttendanceReportCols = this._tableConstants.BMAttendanceReportCols
     this.cols = [
       { field: 'Districtname', header: 'District', width: '100px'},
      { field: 'Talukname', header: 'Taluk', width: '100px'},
@@ -185,10 +190,35 @@ onRowSelect(event, selectedRow) {
 }
 
 onEdit() {
-   this._router.navigate(['/BiometricAttendance'])
-  
-  
+   //this._router.navigate(['/BiometricAttendance'])
+  this.showDialog=true;
+  this.restApiService.get(PathConstants.BioMetricAttendance_Get).subscribe(res => {
+    if (res.Table !== undefined && res.Table !== null) {
+      if (res.Table.length !== 0) {
+        this.BMAttendanceData = res.Table;
+        this.loading = false;
+      } else {
+        this.loading = false;
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+        })
+      }
+    } else {
+      this.loading = false;
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+      })
+    }
+  })
+
 }
+  
+  
+
 loadTable() {
   this.biometricattendancecountData = [];
     this.loading = true;
@@ -226,10 +256,42 @@ loadTable() {
 }
 
 
+// getbmserialnumber() {
+//   this.biometricattendancecountData = [];
+    
+   
+//     const params = {
+//         'hostelid':this.hostelOptions.values
+       
+//     }
+//     this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
+//       if (res.Table !== undefined && res.Table !== null) {
+//         if (res.Table.length !== 0) {
+//           this.biometricattendancecountData = res.Table;
+//           this.loading = false;
+//         } else {
+//           this.loading = false;
+//           this._messageService.clear();
+//           this._messageService.add({
+//             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+//             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+//           })
+//         }
+//       } else {
+//         this.loading = false;
+//         this._messageService.clear();
+//         this._messageService.add({
+//           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+//           summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+//         })
+//       }
+//     })
+  
+
+
+// }
 
 }
-
-
 
 
 
