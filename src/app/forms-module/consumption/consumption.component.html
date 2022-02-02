@@ -27,9 +27,19 @@
                                         <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
                                             <div><label for="_commodity">Commodity<span
                                                         class="form-mandatory-field">*</span></label></div>
-                                            <p-dropdown name="_commodity" [options]="commodityOptions"
-                                                (onClick)="onSelect('CM')" [(ngModel)]="commodity" optionLabel="label"
+                                            <p-dropdown name="_commodity" [filter]="true" filterBy="label" [showClear]="true"
+                                             [options]="commodityOptions" (onClick)="onSelect('CM')" [(ngModel)]="commodity" optionLabel="label"
                                                 (ngModelChange)="loadOB()" required>
+                                                <ng-template pTemplate="selectedItem">
+                                                    <div class="country-item country-item-value"  *ngIf="commodity">
+                                                        <div>{{commodity.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="commodity-item">
+                                                        <div>{{item.label}}</div>
+                                                    </div>
+                                                </ng-template>
                                             </p-dropdown>
                                         </div>
                                         <div class="p-col-12 p-md-12 p-lg-1 no-pad-left">
@@ -50,7 +60,7 @@
                                                         <!-- readonly="true" -->
                                                 </div>
                                                 <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
-                                                    <div><label for="_openingbalance">Opening Balance<span
+                                                    <div><label for="_openingbalance">Opening Balance(Today)<span
                                                                 class="form-mandatory-field">*</span></label></div>
                                                     <input type="text" name="_openingbalance" pInputText
                                                         [(ngModel)]="openingBalance" readonly="true" required>

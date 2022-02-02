@@ -20,7 +20,7 @@
                                         <div #field2 class="p-field p-col-12 p-md-6 p-lg-2">
                                             <span class="p-float-label">
                                                 <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="billDate"
-                                                    name="_billdate" [showIcon]="true" required>
+                                                    name="_billdate" [showIcon]="true"  [maxDate]="maxDate" required>
                                                 </p-calendar>
                                                 <label for="_billdate">Bill Date</label>
                                             </span>
