@@ -103,8 +103,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                  <tr [pSelectableRow]="rowData" class=" tr-border cursor-pointer"
-                    (dblclick)="onRowSelect($event, rowData)">
+                  <tr [pSelectableRow]="rowData" class=" tr-border ">
                     <td class="td-border">
                       <span class="p-column-title">
                         S.No :

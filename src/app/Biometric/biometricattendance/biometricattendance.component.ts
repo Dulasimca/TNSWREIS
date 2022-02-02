@@ -267,40 +267,7 @@ loadTable() {
 }
 
 
-// getbmserialnumber() {
-//   this.biometricattendancecountData = [];
-    
-   
-//     const params = {
-//         'hostelid':this.hostelOptions.values
-       
-//     }
-//     this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
-//       if (res.Table !== undefined && res.Table !== null) {
-//         if (res.Table.length !== 0) {
-//           this.biometricattendancecountData = res.Table;
-//           this.loading = false;
-//         } else {
-//           this.loading = false;
-//           this._messageService.clear();
-//           this._messageService.add({
-//             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-//             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-//           })
-//         }
-//       } else {
-//         this.loading = false;
-//         this._messageService.clear();
-//         this._messageService.add({
-//           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-//           summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-//         })
-//       }
-//     })
-  
 
-
-// }
 
 }
 
