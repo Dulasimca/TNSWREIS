@@ -47,6 +47,7 @@ export class ConsumptionComponent implements OnInit {
   disableReqQty: boolean;
   studentCount: any;
   remainingBalance: number;
+  allUnits: any[] = [];
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _consumptionForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
@@ -106,9 +107,27 @@ export class ConsumptionComponent implements OnInit {
             unitSelection.push({ label: u.name, value: u.code });
           })
         }
-        this.unitOptions = unitSelection;
-        this.unitOptions.unshift({ label: '-select-', value: null });
-        break;
+        this.allUnits = unitSelection.slice(0);
+          ///commodity - unit restriction
+    if(this.commodity !== undefined && this.commodity !== null) {
+      if(this.commodity.value !== undefined && this.commodity.value !== null) {
+        var filteredData = [];
+        if((this.commodity.value * 1) === 18) {
+          filteredData = this.allUnits.filter(f => {
+            return (f.value * 1) === 3
+          })
+        } else if((this.commodity.value * 1) === 13) {
+          filteredData = this.allUnits.filter(f => {
+            return (f.value * 1) === 4
+          })
+        } else {
+          filteredData = this.allUnits;
+        }
+      }
+    }
+    this.unitOptions = filteredData;
+    this.unitOptions.unshift({ label: '-select-', value: null });
+    break;
     }
   }
 
@@ -142,6 +161,8 @@ export class ConsumptionComponent implements OnInit {
     this.openingBalance = 0;
     this.requiredQty = 0;
     this.closingBalance = 0;
+    this.unitOptions = [];
+    this.unit = null;
     ///Get OB for consumption(calculated[(OB + Purchase) - Consumption])
     this.blockUI.start();
     const OB_params = {

@@ -30,9 +30,7 @@ export class BiometricattendanceComponent implements OnInit {
   districts?: any;
   taluks?: any;
   hostels?: any;
-
   logged_user: User;
-
   toDate: any;
   fromDate: any;
 
@@ -52,14 +50,16 @@ export class BiometricattendanceComponent implements OnInit {
 
   biometricattendancecountCols: any;
   biometricattendancecountData: any = [];
+  biometricserilanoData: any = [];
   loading: boolean;
   datepipe: any;
   
     MonthYear:any;
     Mmonth : any;
     Myear : any;
-
-  BMAttendanceReportCols: any;
+    MDeviceNo:string;
+    serialno:string;
+   BMAttendanceReportCols: any;
    BMAttendanceData: any = [];
    showDialog: boolean;
   
@@ -79,198 +79,199 @@ export class BiometricattendanceComponent implements OnInit {
     ];
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-    this.logged_user = this._authService.UserInfo;
-     
-    // this.biometricattendancecountCols = [
-    
-    //   { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
-    //   { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},
-    //   { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
+    this.logged_user = this._authService.UserInfo;    }
 
-
-    // ]
-
-  }
-
-  onSelect(value) {
-    let districtSelection = [];
-    let talukSelection = [];
-    if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
-      switch (value) {
-        case 'D':
-          this.districts.forEach(d => {
-            districtSelection.push({ label: d.name, value: d.code });
-          })
-          this.districtOptions = districtSelection;
-          if ((this.logged_user.roleId * 1) === 1) {
-            this.districtOptions.unshift({ label: 'All', value: 0 });
-          }
-          this.districtOptions.unshift({ label: '-select-', value: 'null' });
-          break;
-        case 'T':
-            this.taluks.forEach(t => {
-              if (t.dcode === this.district) {
-                talukSelection.push({ label: t.name, value: t.code });
-              }
-            })
-            this.talukOptions = talukSelection;
-            if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
-              this.talukOptions.unshift({ label: 'All', value: 0 });
+        onSelect(value) {
+          let districtSelection = [];
+          let talukSelection = [];
+          if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
+            switch (value) {
+              case 'D':
+                this.districts.forEach(d => {
+                  districtSelection.push({ label: d.name, value: d.code });
+                })
+                this.districtOptions = districtSelection;
+                if ((this.logged_user.roleId * 1) === 1) {
+                  this.districtOptions.unshift({ label: 'All', value: 0 });
+                }
+                this.districtOptions.unshift({ label: '-select-', value: 'null' });
+                break;
+              case 'T':
+                  this.taluks.forEach(t => {
+                    if (t.dcode === this.district) {
+                      talukSelection.push({ label: t.name, value: t.code });
+                    }
+                  })
+                  this.talukOptions = talukSelection;
+                  if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
+                    this.talukOptions.unshift({ label: 'All', value: 0 });
+                  }
+                  this.talukOptions.unshift({ label: '-select-', value: 'null' });
+                break;
+              
             }
-            this.talukOptions.unshift({ label: '-select-', value: 'null' });
-          break;
-         
-      }
-    }
-  }
+          }
+        }
  
 
 
-  refreshFields(value) {
-    if(value === 'D') {
-      this.taluk = null;
-      this.talukOptions = [];
-    }
-      this.loadHostelList();
-  }
-  loadHostelList() {
-    this.hostel = null;
-    this.hostelOptions = [];
-    let hostelSelection = [];
-    const params = {
-      'DCode': this.district,
-      'TCode': this.taluk,
-      // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
-      // this.logged_user.hostelId : 0,
-    }
-    if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
-    this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
-      this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-        if (res !== null && res !== undefined && res.length !== 0) {
-          this.hostels = res.Table;
-          this.hostels.forEach(h => {
-            hostelSelection.push({ label: h.HostelName, value: h.Slno });
-          })
+          refreshFields(value) {
+            if(value === 'D') {
+              this.taluk = null;
+              this.talukOptions = [];
+            }
+              this.loadHostelList();
+          }
+        loadHostelList() {
+          this.hostel = null;
+          this.hostelOptions = [];
+          let hostelSelection = [];
+          const params = {
+            'DCode': this.district,
+            'TCode': this.taluk,
+            // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
+            // this.logged_user.hostelId : 0,
+          }
+          if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
+          this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
+            this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+              if (res !== null && res !== undefined && res.length !== 0) {
+                this.hostels = res.Table;
+                this.hostels.forEach(h => {
+                  hostelSelection.push({ label: h.HostelName, value: h.Slno });
+                })
+              }
+            })
+          }
+          this.hostelOptions = hostelSelection;
+          if((this.logged_user.roleId * 1) !== 4) {
+            this.hostelOptions.unshift({ label: 'All', value: 0 });
+          }
+          this.hostelOptions.unshift({ label: '-select-', value: null });
         }
-      })
-    }
-    this.hostelOptions = hostelSelection;
-    if((this.logged_user.roleId * 1) !== 4) {
-      this.hostelOptions.unshift({ label: 'All', value: 0 });
-    }
-    this.hostelOptions.unshift({ label: '-select-', value: null });
-  }
 
 
-  onview()
-  { 
-    this.data = [];
+            onview()
+            { 
+              this.data = [];
 
-    const params = {
-      'Type':'0',
-      'DCode': this.district,
-      'TCode': this.taluk,
-      
-      // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
-      // this.logged_user.hostelId : 0,
-    }
-  
-    this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
-        this.data = res.Table;
-      }  else {
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
-        })
-      }
-    });
+              const params = {
+                'Type':'0',
+                'DCode': this.district,
+                'TCode': this.taluk,
+                
+                // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
+                // this.logged_user.hostelId : 0,
+              }
+            
+              this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+                if (res !== null && res !== undefined && res.length !== 0) {
+                  this.data = res.Table;
+                }  else {
+                  this._messageService.clear();
+                  this._messageService.add({
+                    key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+                    summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+                  })
+                }
+              });
+          }
+
+          onRowSelect(event, selectedRow) {
+            
+            this.Mdate = this._datePipe.transform(selectedRow.AttendanceDate, 'yyyy/MM/dd');
+            this.onEdit(this.Mdate);
+          }
+
+
+          onEdit(madate) {
+            //this._router.navigate(['/BiometricAttendance'])
+          this.getbmserialnumber();
+
+            this.BMAttendanceData = [];
+            this.showDialog=true; 
+            
+            const params = {
+                'Adate':madate,
+                'HostelId':this.hostelName
+            }
+            //this.restApiService.get(PathConstants.BioMetricAttendance_Get).subscribe(res => {old
+              this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
+              if (res.Table !== undefined && res.Table !== null) {
+                if (res.Table.length !== 0) {
+                  this.BMAttendanceData = res.Table;
+                  this.loading = false;
+                } else {
+                  this.loading = false;
+                  this._messageService.clear();
+                  this._messageService.add({
+                    key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+                    summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+                  })
+                }
+              } else {
+                this.loading = false;
+                this._messageService.clear();
+                this._messageService.add({
+                  key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+                  summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+                })
+              }
+            })
+
+          }   
+
+          loadTable() {
+              this.biometricattendancecountData = [];
+              this.loading = true;
+              this.Mmonth = this._datePipe.transform(this.MonthYear, 'MM');
+              this.Myear = this._datePipe.transform(this.MonthYear, 'yyyy');
+              const params = {
+                  'serialno':'BJ2C192661709',
+                // 'serialno':this.MDeviceNo,        
+                  'month': parseInt(this.Mmonth),
+                  'year':  this.Myear
+              }
+              this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
+                if (res.Table !== undefined && res.Table !== null) {
+                  if (res.Table.length !== 0) {
+                    this.biometricattendancecountData = res.Table;
+                    this.loading = false;
+                  } else {
+                    this.loading = false;
+                    this._messageService.clear();
+                    this._messageService.add({
+                      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+                      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+                    })
+                  }
+                } else {
+                  this.loading = false;
+                  this._messageService.clear();
+                  this._messageService.add({
+                    key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+                    summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+                  })
+                }
+              })
+            
+          }
+
+            getbmserialnumber() {  
+              console.log('OK')
+              this.biometricserilanoData = [];
+                    this.restApiService.get(PathConstants.GetBiometricDevice_Get).subscribe(res => {
+                            if (res.Table !== undefined && res.Table !== null) {
+                                  if (res.Table.length !== 0) {
+                                          this.biometricserilanoData = res.Table;          
+                                  } 
+                                    this.biometricserilanoData.forEach(t => {
+                                      if (t.HostelId === this.hostelName) {
+                                        this.MDeviceNo = t.DeviceId;
+                                        console.log(this.MDeviceNo)
+                                      }        
+                                    });
+                            }
+                      });
+                      }
 }
-
-onRowSelect(event, selectedRow) {
-  
-  this.Mdate = this._datePipe.transform(selectedRow.AttendanceDate, 'yyyy/MM/dd');
-  this.onEdit(this.Mdate);
-}
-
-onEdit(madate) {
-   //this._router.navigate(['/BiometricAttendance'])
-   this.BMAttendanceData = [];
-  this.showDialog=true; 
-  console.log(madate)
-  const params = {
-      'Adate':madate,
-      'HostelId':this.hostelName
-  }
-  //this.restApiService.get(PathConstants.BioMetricAttendance_Get).subscribe(res => {old
-    this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
-    if (res.Table !== undefined && res.Table !== null) {
-      if (res.Table.length !== 0) {
-        this.BMAttendanceData = res.Table;
-        this.loading = false;
-      } else {
-        this.loading = false;
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-        })
-      }
-    } else {
-      this.loading = false;
-      this._messageService.clear();
-      this._messageService.add({
-        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-        summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-      })
-    }
-  })
-
-}
-  
-  
-
-loadTable() {
-  this.biometricattendancecountData = [];
-    this.loading = true;
-    this.Mmonth = this._datePipe.transform(this.MonthYear, 'MM');
-    this.Myear = this._datePipe.transform(this.MonthYear, 'yyyy');
-    const params = {
-        'serialno':'BJ2C192661709',
-        'month': parseInt(this.Mmonth),
-        'year':  this.Myear
-    }
-    this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
-      if (res.Table !== undefined && res.Table !== null) {
-        if (res.Table.length !== 0) {
-          this.biometricattendancecountData = res.Table;
-          this.loading = false;
-        } else {
-          this.loading = false;
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-          })
-        }
-      } else {
-        this.loading = false;
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-        })
-      }
-    })
-  
-}
-
-
-
-
-}
-
-
-
-
