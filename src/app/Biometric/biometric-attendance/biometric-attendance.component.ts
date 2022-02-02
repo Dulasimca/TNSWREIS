@@ -153,10 +153,11 @@ export class BiometricAttendanceComponent implements OnInit {
       this.loading = true;
       const params = {
         'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
-        'HostelId' : this.HostelId,
-
+        'HostelId' :  (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? 
+        this.login_user.hostelId : 0,
       }
-      console.log(this.loadTable());
+     
+      console.log(true);
       this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get, params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {

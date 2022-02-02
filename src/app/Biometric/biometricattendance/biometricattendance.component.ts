@@ -22,7 +22,7 @@ export class BiometricattendanceComponent implements OnInit {
   taluk: any;
   hostelName: any;
   hostel: any;
-  
+  Mdate: any;
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
   hostelOptions: SelectItem[];
@@ -59,7 +59,7 @@ export class BiometricattendanceComponent implements OnInit {
     Mmonth : any;
     Myear : any;
 
-    BMAttendanceReportCols: any;
+  BMAttendanceReportCols: any;
    BMAttendanceData: any = [];
    showDialog: boolean;
   
@@ -140,8 +140,8 @@ export class BiometricattendanceComponent implements OnInit {
     const params = {
       'DCode': this.district,
       'TCode': this.taluk,
-      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
-      this.logged_user.hostelId : 0,
+      // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
+      // this.logged_user.hostelId : 0,
     }
     if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
     this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
@@ -165,13 +165,16 @@ export class BiometricattendanceComponent implements OnInit {
   onview()
   { 
     this.data = [];
+
     const params = {
       'Type':'0',
       'DCode': this.district,
       'TCode': this.taluk,
-      'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
-      this.logged_user.hostelId : 0,
+      
+      // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
+      // this.logged_user.hostelId : 0,
     }
+  
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         this.data = res.Table;
@@ -186,13 +189,22 @@ export class BiometricattendanceComponent implements OnInit {
 }
 
 onRowSelect(event, selectedRow) {
-
+  
+  this.Mdate = this._datePipe.transform(selectedRow.AttendanceDate, 'yyyy/MM/dd');
+  this.onEdit(this.Mdate);
 }
 
-onEdit() {
+onEdit(madate) {
    //this._router.navigate(['/BiometricAttendance'])
-  this.showDialog=true;
-  this.restApiService.get(PathConstants.BioMetricAttendance_Get).subscribe(res => {
+   this.BMAttendanceData = [];
+  this.showDialog=true; 
+  console.log(madate)
+  const params = {
+      'Adate':madate,
+      'HostelId':this.hostelName
+  }
+  //this.restApiService.get(PathConstants.BioMetricAttendance_Get).subscribe(res => {old
+    this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
     if (res.Table !== undefined && res.Table !== null) {
       if (res.Table.length !== 0) {
         this.BMAttendanceData = res.Table;
@@ -224,10 +236,9 @@ loadTable() {
     this.loading = true;
     this.Mmonth = this._datePipe.transform(this.MonthYear, 'MM');
     this.Myear = this._datePipe.transform(this.MonthYear, 'yyyy');
-    console.log(this.Myear,this.Mmonth)
     const params = {
         'serialno':'BJ2C192661709',
-        'month': this.Mmonth,
+        'month': parseInt(this.Mmonth),
         'year':  this.Myear
     }
     this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
