@@ -22,7 +22,7 @@ export class BiometricattendanceComponent implements OnInit {
   taluk: any;
   hostelName: any;
   hostel: any;
-  
+  Mdate: any;
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
   hostelOptions: SelectItem[];
@@ -59,7 +59,7 @@ export class BiometricattendanceComponent implements OnInit {
     Mmonth : any;
     Myear : any;
 
-    BMAttendanceReportCols: any;
+  BMAttendanceReportCols: any;
    BMAttendanceData: any = [];
    showDialog: boolean;
   
@@ -165,13 +165,16 @@ export class BiometricattendanceComponent implements OnInit {
   onview()
   { 
     this.data = [];
+
     const params = {
       'Type':'0',
       'DCode': this.district,
       'TCode': this.taluk,
+      
       // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
       // this.logged_user.hostelId : 0,
     }
+  
     this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         this.data = res.Table;
@@ -186,16 +189,19 @@ export class BiometricattendanceComponent implements OnInit {
 }
 
 onRowSelect(event, selectedRow) {
-
+  
+  this.Mdate = this._datePipe.transform(selectedRow.AttendanceDate, 'yyyy/MM/dd');
+  this.onEdit(this.Mdate);
 }
 
-onEdit() {
+onEdit(madate) {
    //this._router.navigate(['/BiometricAttendance'])
-  this.showDialog=true;
- 
+   this.BMAttendanceData = [];
+  this.showDialog=true; 
+  console.log(madate)
   const params = {
-      'Adate':'01/31/2022',
-      'HostelId':'55'
+      'Adate':madate,
+      'HostelId':this.hostelName
   }
   //this.restApiService.get(PathConstants.BioMetricAttendance_Get).subscribe(res => {old
     this.restApiService.getByParameters(PathConstants.BioMetricAttendance_Get,params).subscribe(res => {
