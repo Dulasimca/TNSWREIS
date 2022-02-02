@@ -140,4 +140,5 @@ public static readonly FoodEntitlement_Get = 'FoodEntitlement/Get';
 
 public static readonly GetBDAttendancecount_Get = 'AttendanceCount/Get';
 public static readonly FoodEntitlementReport_Get = 'FoodEntitlementReport/Get';
+public static readonly GetBiometricDevice_Get = 'BioMetric/Get';
 }
