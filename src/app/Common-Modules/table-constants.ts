@@ -276,13 +276,13 @@ export class TableConstants {
 
     ]
     this.BMAttendanceReportCols = [
-        { field: 'SerialNumber', header: 'Serial Numbernpm serv', width: '100px', align: 'center !important'},
+        { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
         { field: 'Districtname', header: 'District Name', width: '100px', align: 'center !important'},
         { field: 'Talukname', header: 'Taluk', align: 'left !important'},
         { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
-        { field: 'DeviceId', header: 'Device No', width: '100px', align: 'center !important'},
-        { field: 'StudentName', header: 'Name', width: '100px', align: 'center !important'},
-        { field: 'StudentName', header: 'Standard/Course', width: '100px', align: 'center !important'},
+       // { field: 'DeviceId', header: 'Device No', width: '100px', align: 'center !important'},
+        { field: 'StudentName', header: 'Stuent Name', width: '100px', align: 'center !important'},
+        { field: 'Name', header: 'Standard/Course', width: '100px', align: 'center !important'},
         { field: 'UserId', header: 'Attendance ID', width: '100px', align: 'center !important'},
         { field: 'LogDate', header: 'Attendance Date', width: '100px', align: 'center !important'},
         //{ field: 'DownloadDate', header: 'Download Date', width: '100px', align: 'center !important'},
@@ -291,8 +291,9 @@ export class TableConstants {
     this.biometricattendancecountColumns = [
         { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
         { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},
-        { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
         { field: 'monyr', header: 'Month/Year', width: '100px'},
+        { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
+        
     ]
     this.AccountHeadTable = [ 
         { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
