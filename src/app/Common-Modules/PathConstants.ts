@@ -132,6 +132,8 @@ public static readonly BioMetric_Post = 'BioMetric/Post';
 public static readonly BioMetric_Get = 'BioMetric/Get';
 public static readonly BioMetricAttendance_Get = 'AttendanceBM/Get';
 
+public static readonly AttendanceBMName_Get = 'AttendanceBMName/Get';
+
 public static readonly BioMetricsForConsumption_Get = 'BioMetricsForConsumption/Get';
 public static readonly QuantityForConsumption_Get = 'QuantityForConsumption/Get';
 
