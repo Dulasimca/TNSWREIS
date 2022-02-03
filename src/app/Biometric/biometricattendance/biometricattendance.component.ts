@@ -186,8 +186,7 @@ export class BiometricattendanceComponent implements OnInit {
 
           onEdit(madate) {
             //this._router.navigate(['/BiometricAttendance'])
-          this.getbmserialnumber();
-
+         
             this.BMAttendanceData = [];
             this.showDialog=true; 
             
@@ -223,12 +222,14 @@ export class BiometricattendanceComponent implements OnInit {
 
           loadTable() {
               this.biometricattendancecountData = [];
+              this.getbmserialnumber();
+              console.log('ok1')
               this.loading = true;
               this.Mmonth = this._datePipe.transform(this.MonthYear, 'MM');
               this.Myear = this._datePipe.transform(this.MonthYear, 'yyyy');
               const params = {
-                  'serialno':'BJ2C192661709',
-                // 'serialno':this.MDeviceNo,        
+                //'serialno':'BJ2C192661709',
+                 'serialno':this.MDeviceNo,        
                   'month': parseInt(this.Mmonth),
                   'year':  this.Myear
               }
