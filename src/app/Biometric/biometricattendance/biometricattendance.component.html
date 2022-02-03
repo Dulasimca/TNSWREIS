@@ -33,12 +33,13 @@
                                 inputId="monthpicker"></p-calendar>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
-                            <button pButton type="button" label="View" icon="pi pi-eye"  [disabled]='(!f.valid || !f.dirty)' (click)="onview()"></button>
+                            <button pButton type="button" label="View" icon="pi pi-eye"  [disabled]='(!f.valid || !f.dirty)' 
+                            (click)="onview()"></button>
                         </div>
                     </div>
                 </div>
-                <div class="p-col-12 p-md-6 p-lg-12">
-                    <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                <!-- <div class="p-col-12 p-md-6 p-lg-12"> -->
+                    <!-- <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                       [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" 
                       styleClass="p-datatable-gridlines">
                       <ng-template pTemplate="header" let-columns>
@@ -82,14 +83,18 @@
 
                         </tr>
                       </ng-template>
-                    </p-table>
+                    </p-table> -->
                    
-                <div class="p-col-12 p-md-12 p-lg-12">
-                  <div style="text-align: right;">
-                      <button pButton type="button" icon="pi pi-file-excel" label="Export"
-                          style="color: yellowgreen;" (click)="dt.exportCSV()"
+                <div class="p-col-12 p-md-6 p-lg-12">
+                  <div style="text-align: right;"> 
+                    <label style="color: yellowgreen;" label="Total Student 490" 
+                    pButton type="label"></label>&nbsp;
+                  <!-- <div style="text-align: right;">  -->
+                      <button pButton type="button" icon="pi pi-file-excel" label="Export" style="text-align: right;"
+                          style= "color: yellowgreen;"(click)="dt.exportCSV()"
                           pTooltip="Excel-File download"></button>
-                  </div>
+                  <!-- </div>  -->
+                </div>
                 <p-table #dt [columns]="biometricattendancecountCols" [value]="biometricattendancecountData" [paginator]="true" [rows]="100"
                 [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" 
                 styleClass="p-datatable-gridlines">
@@ -136,13 +141,19 @@
                 </ng-template>
               </p-table> 
                 </div> 
-              </div>
+              <!-- </div> -->
             </div>
           </form>
         </p-card>
     </p-panel>
     <p-dialog #dialog header="Biometric Attendance Report" [(visible)]="showDialog" [modal]="showDialog"
                [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+
+               <div style="text-align: right;">
+                <button pButton type="button" icon="pi pi-file-excel" label="Export"
+                    style="color: yellowgreen;" (click)="dt.exportCSV()"
+                    pTooltip="Excel-File download"></button>
+            </div>
 
                <p-table #dt [columns]="BMAttendanceReportCols" [value]="BMAttendanceData" [paginator]="true" [rows]="100"
                [rowsPerPageOptions]="[10,30,50,100]" styleClass="p-datatable-gridlines" 
@@ -175,7 +186,7 @@
                    </tr>
                </ng-template>
            </p-table>
-
-
     </p-dialog>
-</div>
+    </div>
+  
+

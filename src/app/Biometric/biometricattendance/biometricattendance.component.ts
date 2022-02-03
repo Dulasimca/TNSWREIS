@@ -71,9 +71,9 @@ export class BiometricattendanceComponent implements OnInit {
     this.biometricattendancecountCols = this._tableConstants.biometricattendancecountColumns
     this.BMAttendanceReportCols = this._tableConstants.BMAttendanceReportCols
     this.cols = [
-      { field: 'Districtname', header: 'District', width: '100px'},
-     { field: 'Talukname', header: 'Taluk', width: '100px'},
-     { field: 'HostelName', header: 'Hostel Name', width: '100px'},
+       { field: 'Districtname', header: 'District', width: '100px'},
+      { field: 'Talukname', header: 'Taluk', width: '100px'},
+      { field: 'HostelName', header: 'Hostel Name', width: '100px'},
      { field: 'TotalStudent', header: 'Total Student', width: '100px'},
      { field: 'monyr', header: 'Month/Year', width: '100px'},
     ];
@@ -154,7 +154,6 @@ export class BiometricattendanceComponent implements OnInit {
             onview()
             { 
               this.data = [];
-
               const params = {
                 'Type':'0',
                 'DCode': this.district,
@@ -175,6 +174,7 @@ export class BiometricattendanceComponent implements OnInit {
                   })
                 }
               });
+              this.loadTable();
           }
 
           onRowSelect(event, selectedRow) {
@@ -223,7 +223,7 @@ export class BiometricattendanceComponent implements OnInit {
           loadTable() {
               this.biometricattendancecountData = [];
               this.getbmserialnumber();
-              console.log('ok1')
+              //console.log('ok1')
               this.loading = true;
               this.Mmonth = this._datePipe.transform(this.MonthYear, 'MM');
               this.Myear = this._datePipe.transform(this.MonthYear, 'yyyy');
