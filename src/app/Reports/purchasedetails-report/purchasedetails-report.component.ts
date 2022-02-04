@@ -9,13 +9,13 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { DatePipe } from '@angular/common';
+
 @Component({
-  selector: 'app-biometric-attendance',
-  templateUrl: './biometric-attendance.component.html',
-  styleUrls: ['./biometric-attendance.component.css']
+  selector: 'app-purchasedetails-report',
+  templateUrl: './purchasedetails-report.component.html',
+  styleUrls: ['./purchasedetails-report.component.css']
 })
-export class BiometricAttendanceComponent implements OnInit {
-  Biometricid:any;
+export class PurchasedetailsReportComponent implements OnInit {
   hostel: any;
   district: any;
   taluk: any;
@@ -57,28 +57,24 @@ export class BiometricAttendanceComponent implements OnInit {
   isDistrict: boolean;
   isTaluk: boolean;
   isHostel: boolean;
-  BMAttendanceReportCols: any;
-  BMAttendanceData: any = [];
+  hostelCols: any;
+  hostelData: any = [];
   loading: boolean;
-  Adate: Date = new Date();
-  maxDate: Date = new Date();
-  MSerialNumber:any;
-  
-
+  attendanceDate: Date = new Date();
+  fromdate: any;
+  todate: any;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
-    private _messageService: MessageService, private tableConstants: TableConstants,private datepipe: DatePipe) { }
+    private _messageService: MessageService, private tableConstants: TableConstants,private _datepipe: DatePipe) { }
+
 
   ngOnInit(): void {
-    this.BMAttendanceReportCols = this.tableConstants.BMAttendanceReportCols
+    this.hostelCols = this.tableConstants.purchasedetailsReportCols
     this.Slno = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-    this.TalukIds = this.masterService.getTalukAll();
-
   }
-
   onSelect(type) {
     let districtSelection = [];
     let talukSelection = [];
@@ -97,9 +93,7 @@ export class BiometricAttendanceComponent implements OnInit {
           break;
         case 'T':
           this.taluks.forEach(t => {
-            if (t.dcode === this.district) {
             talukSelection.push({ label: t.name, value: t.code });
-            }
           })
           this.talukOptions = talukSelection;
           if ((this.login_user.roleId * 1) === 1 || (this.login_user.roleId * 1) === 2) {
@@ -141,35 +135,31 @@ export class BiometricAttendanceComponent implements OnInit {
       })
     }
     this.hostelOptions = hostelSelection;
-    if((this.login_user.roleId * 1) !== 4 || (this.login_user.roleId * 1) === 2) {
+    if((this.login_user.roleId * 1) !== 4) {
       this.hostelOptions.unshift({ label: 'All', value: 0 });
     }
     this.hostelOptions.unshift({ label: '-select-', value: null });
   }
 
   loadTable() {
-    this.BMAttendanceData = [];
+    this.hostelData = [];
+    if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
+      this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined&& this.fromdate !== null && this.todate !== undefined) {
       this.loading = true;
       const params = {
-        'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
-        'HostelId' :  (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? 
-        this.login_user.hostelId : 0,
+        'DCode': this.district,
+        'TCode': this.taluk,
+        'HostelId': this.hostel,
+        'FDate': this._datepipe.transform(this.fromdate, 'yyyy-MM-dd'),
+        'TDate': this._datepipe.transform(this.todate, 'yyyy-MM-dd')
       }
-     
-      console.log(true);
-      this.restApiService.getByParameters(PathConstants.AttendanceBMName_Get, params).subscribe(res => {
-        if (res.Table !== undefined && res.Table !== null) {
-          if (res.Table.length !== 0) {
-            this.BMAttendanceData = res.Table;
-            this.loading = false;
-          } else {
-            this.loading = false;
-            this._messageService.clear();
-            this._messageService.add({
-              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-            })
-          }
+      this.restApiService.getByParameters(PathConstants.PurchaseDetailsReport_Get ,params).subscribe(res => {
+        if (res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
+          res.Table.forEach(r => {
+            r.BillDate = this._datepipe.transform(r.BillDate, 'dd/MM/yyyy');
+          })
+          this.hostelData = res.Table;
+          this.loading = false;
         } else {
           this.loading = false;
           this._messageService.clear();
@@ -178,8 +168,10 @@ export class BiometricAttendanceComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
         }
-      })
-    
+       })
+      }
+    }
   }
-}
+
+
 
