@@ -96,7 +96,7 @@ export class BiometricAttendanceComponent implements OnInit {
           this.districtOptions.unshift({ label: '-select-', value: null });
           break;
         case 'T':
-          this.TalukIds.forEach(t => {
+          this.taluks.forEach(t => {
             if (t.dcode === this.district) {
             talukSelection.push({ label: t.name, value: t.code });
             }
