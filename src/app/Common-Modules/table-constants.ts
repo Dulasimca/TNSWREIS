@@ -225,15 +225,14 @@ export class TableConstants {
         ];
 
        this.monthlywiseintentReportCols = [
- 
         { field: 'ShortYear', header: 'Accounting Year' },
         { field: 'CommodityName', header: 'Commodity Name' },
         { field: 'UnitName', header: 'Unit' },
         { field: 'Qty', header: 'Quantity' },
         { field: 'MonthwiseDate',  header: 'Month'},
         { field: 'ApprovalStatusName', header: 'Approval Status'},
-
        ]
+       
        this.feedingchargetypeReportCols = [
         
         { field: 'AccountingYear', header: 'Accounting Year' },
