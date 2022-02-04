@@ -25,6 +25,7 @@ export class TableConstants {
     DistrictFundColumns: any = [];
     BMAttendanceReportCols: any = [];
     biometricattendancecountColumns: any = [];
+    purchasedetailsReportCols: any = [];
     
     AccountHeadTable: any = [];
     HostelFundtable: any = [];
@@ -131,6 +132,18 @@ export class TableConstants {
             { field: 'Talukname', header: 'Taluk', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
         ];
+
+        this.purchasedetailsReportCols = [
+            { field: 'BillNo', header: 'Bill No.', align: 'left !important'},
+            { field: 'BillDate', header: 'Bill Date', align: 'center !important'},
+            { field: 'Commname', header: 'Commodity', align: 'center !important'},
+            { field: 'Qty', header: 'Quantity', align: 'left !important'},
+            { field: 'UnitId', header: 'Unit Id', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            
+        ];
          
         this.openingBalanceReportColumns = [
             { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
@@ -225,15 +238,14 @@ export class TableConstants {
         ];
 
        this.monthlywiseintentReportCols = [
- 
         { field: 'ShortYear', header: 'Accounting Year' },
         { field: 'CommodityName', header: 'Commodity Name' },
         { field: 'UnitName', header: 'Unit' },
         { field: 'Qty', header: 'Quantity' },
         { field: 'MonthwiseDate',  header: 'Month'},
         { field: 'ApprovalStatusName', header: 'Approval Status'},
-
        ]
+       
        this.feedingchargetypeReportCols = [
         
         { field: 'AccountingYear', header: 'Accounting Year' },

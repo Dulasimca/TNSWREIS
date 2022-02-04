@@ -52,6 +52,8 @@ public static readonly PurchaseOrder_Post = 'PurchaseOrder/Post';
 public static readonly PurchaseOrder_Get = 'PurchaseOrder/Get';
 public static readonly PurchaseOrder_Delete = 'PurchaseOrder/Put';
 
+public static readonly PurchaseDetailsReport_Get = 'PurchaseDetailsReport/Get';
+
 public static readonly PurchaseDocumentUpload_Get = 'PurchaseDocumentUpload/Get';
 public static readonly PurchaseDocumentUpload_Post = 'PurchaseDocumentUpload/Post';
 

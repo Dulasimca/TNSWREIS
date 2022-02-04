@@ -133,6 +133,8 @@ export class ConsumptionComponent implements OnInit {
 
   loadStudentCount() {
     ///Get student biometric present count
+    this.loadOB();
+    this.closingBalance = 0;
     this.blockUI.start();
     const BM_params = {
       'Code': this.biometricId,
@@ -164,7 +166,7 @@ export class ConsumptionComponent implements OnInit {
     this.unitOptions = [];
     this.unit = null;
     ///Get OB for consumption(calculated[(OB + Purchase) - Consumption])
-    if(this.commodity !== undefined && this.commodity !== null) {
+    if(this.commodity !== undefined && this.commodity !== null && this.date !== undefined && this.date !== null) {
     this.blockUI.start();
     const OB_params = {
       'Commodity': (this.commodity.value !== null && this.commodity.value !== undefined) ? this.commodity.value : 0,
@@ -197,7 +199,7 @@ export class ConsumptionComponent implements OnInit {
           if (res.length !== 0) {
             this.blockUI.stop();
             Qty = (res[0].Quantity !== undefined && res[0].Quantity !== null) ? (res[0].Quantity * 1) : 0;
-            this.requiredQty = (Qty * this.studentCount);
+            this.requiredQty = (this.openingBalance !== 0) ? (Qty * this.studentCount) : 0;
             this.closingBalance = (this.openingBalance - (this.requiredQty * 1)).toFixed(3);
             this.disableReqQty = ((this.requiredQty * 1) === 0 && this.openingBalance !== 0) ? false : true;
           } else {
