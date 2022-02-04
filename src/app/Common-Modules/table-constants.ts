@@ -25,6 +25,7 @@ export class TableConstants {
     DistrictFundColumns: any = [];
     BMAttendanceReportCols: any = [];
     biometricattendancecountColumns: any = [];
+    purchasedetailsReportCols: any = [];
     
     AccountHeadTable: any = [];
     HostelFundtable: any = [];
@@ -130,6 +131,19 @@ export class TableConstants {
             { field: 'Districtname', header: 'District', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+        ];
+
+        this.purchasedetailsReportCols = [
+            { field: 'BillNo', header: 'Bill No.', align: 'left !important'},
+            { field: 'BillDate', header: 'Bill Date', align: 'center !important'},
+            { field: 'BillAmount', header: 'Bill Amount',align: 'right !important'},
+            { field: 'ShopName', header: 'ShopName', align: 'left !important'},
+            { field: 'GstNo', header: 'Gst Number', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'Qty', header: 'Quantity', align: 'left !important'},
+            { field: 'UnitId', header: 'Unit Id', align: 'left !important'},
         ];
          
         this.openingBalanceReportColumns = [
