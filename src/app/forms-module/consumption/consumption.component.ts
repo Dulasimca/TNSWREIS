@@ -164,6 +164,7 @@ export class ConsumptionComponent implements OnInit {
     this.unitOptions = [];
     this.unit = null;
     ///Get OB for consumption(calculated[(OB + Purchase) - Consumption])
+    if(this.commodity !== undefined && this.commodity !== null) {
     this.blockUI.start();
     const OB_params = {
       'Commodity': (this.commodity.value !== null && this.commodity.value !== undefined) ? this.commodity.value : 0,
@@ -207,6 +208,7 @@ export class ConsumptionComponent implements OnInit {
         }
       })
     })
+  }
 
   }
 

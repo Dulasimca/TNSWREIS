@@ -422,6 +422,18 @@ height: 25px !important;
 .p-dropdown .p-dropdown-panel {
     z-index: 999 !important;
 }
+.p-dropdown-panel .p-dropdown-header {
+    padding: 0.5rem !important;
+    border-bottom: 0;
+    color: #495057;
+    background: #f8f9fa;
+    margin: 0;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+    margin-right: 0 !important;
+}
 .p-button.p-button-icon-only {
     width: 2.357rem;
     padding: 0 !important;
