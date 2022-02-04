@@ -200,8 +200,15 @@ export class HostelFundManagementComponent implements OnInit {
       })
     }
     this.selectDistrict();
+   
   }
-
+  refreshFields(value) {
+    if(value === 'D') {
+      this.taluk = null;
+      this.talukOptions = [];
+    } 
+    
+  }
   onAdd(rowData) {
     this.showTransfer = true;
     this.accYear = rowData.ShortYear;
@@ -248,7 +255,7 @@ export class HostelFundManagementComponent implements OnInit {
 
   loadHostelFunds() {
     this.hostelAmount = null;
-    if (this.year !== undefined && this.year !== null && this.hostelName !== null && this.hostelName !== undefined) {
+    if (this.accFundId !== undefined && this.accFundId !== null && this.hostelName !== null && this.hostelName !== undefined) {
       // this.blockUI.start();
       const data = {
         'AccHeadFundId': this.accFundId,
@@ -280,7 +287,8 @@ export class HostelFundManagementComponent implements OnInit {
       });
     }
     this.table = true;
-    if (this.year !== null && this.year !== undefined && this.district !== null && this.district !== undefined) {
+    if (this.accFundId !== null && this.accFundId !== undefined && this.district !== null && this.district !== undefined 
+      && this.taluk !== null && this.taluk !== undefined) {
       this.blockUI.start();
       const params = {
         'AccHeadFundId':this.accFundId,
