@@ -151,6 +151,8 @@ export class BiometricAttendanceComponent implements OnInit {
     this.BMAttendanceData = [];
       this.loading = true;
       const params = {
+        'DCode': this.district,
+        'TCode': this.taluk,
         'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
         'HostelId' :  (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? 
         this.login_user.hostelId : 0,
