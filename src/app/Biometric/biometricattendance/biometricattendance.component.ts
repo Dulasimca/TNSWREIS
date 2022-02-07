@@ -82,6 +82,7 @@ export class BiometricattendanceComponent implements OnInit {
     this.logged_user = this._authService.UserInfo;    }
 
         onSelect(value) {
+          this.data = [];
           let districtSelection = [];
           let talukSelection = [];
           if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
@@ -223,6 +224,7 @@ export class BiometricattendanceComponent implements OnInit {
           }   
 
           loadTable() {
+           
               this.biometricattendancecountData = [];
               this.getbmserialnumber();
               //console.log('ok1')
