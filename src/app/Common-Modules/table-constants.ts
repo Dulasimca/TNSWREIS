@@ -301,11 +301,13 @@ export class TableConstants {
        
     ]
     this.biometricattendancecountColumns = [
+        { field: 'Slno', header: 'Hostelid', width: '100px', align: 'center !important'},
+        { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'center !important'},
         { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
         { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},
         { field: 'monyr', header: 'Month/Year', width: '100px'},
         { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
-        
+     
     ]
     this.AccountHeadTable = [ 
         { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
