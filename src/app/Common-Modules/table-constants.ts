@@ -197,7 +197,7 @@ export class TableConstants {
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
             { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
-            { field: 'Doj', header: 'Doj', width: '100px', align: 'left !important'},
+            { field: 'Doj', header: 'Doj', width: '100px', align: 'center !important'},
             { field: 'GenderName', header: 'Gender', width: '100px', align: 'left !important'},
             { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
