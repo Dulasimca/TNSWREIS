@@ -19,6 +19,8 @@ export class MenuHeaderComponent implements OnInit {
   place: string;
   logged_user: User;
   roleId: number;
+  officeType: string;
+  placeType: string;
   constructor(private _authService: AuthService, private _router: Router) {
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -44,8 +46,25 @@ export class MenuHeaderComponent implements OnInit {
       }
       this.username = this.logged_user.username;
       this.roleId = (this.logged_user.roleId * 1);
-      this.place = ((this.logged_user.roleId * 1) === 3 || (this.logged_user.roleId * 1) === 4) ? this.logged_user.talukName :
-       ((this.logged_user.roleId * 1) === 2) ? this.logged_user.districtName : '';
+      if(this.roleId === 1) {
+        this.officeType = 'Head Office';
+        this.place = '';
+        this.placeType = '';
+      } else if(this.roleId === 2) {
+        this.officeType = 'District Office';
+        this.place = this.logged_user.districtName;
+        this.placeType = 'District';
+      } else if(this.roleId === 3) {
+        this.officeType = 'Taluk Office';
+        this.place = this.logged_user.talukName;
+        this.placeType = 'Taluk';
+      } else {
+        this.officeType = 'Hostel';
+        var str: any = (this.logged_user.hostelName).toString();
+        str = str.split(',');
+        this.place = str[0];
+        this.placeType = 'Hostel';
+      }
     });
   }
 

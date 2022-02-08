@@ -38,9 +38,9 @@
         </mat-toolbar>
         <p-overlayPanel #op>
             <ng-template pTemplate>
+                <div style="text-align: center !important; text-shadow: 0.5px 0.5px #5dddd8 !important; color: #48aeb5;">{{officeType}}</div>
                 <span style="font-size: 13px;">Username: <span style="color: #08747b; font-size: 14px !important;">{{username}} </span></span><br/>
-                <span *ngIf="roleId === 2" style="font-size: 13px;">District: <span style="color: #08747b; font-size: 14px !important;">{{place}}</span></span>
-                <span *ngIf="(roleId === 3 || roleId === 4)" style="font-size: 13px;">Taluk: <span style="color: #08747b; font-size: 14px !important;">{{place}}</span></span>
+                <span *ngIf="roleId != 1" style="font-size: 13px;">{{placeType}}: <span style="color: #08747b; font-size: 14px !important;">{{place}}</span></span>
             </ng-template>
         </p-overlayPanel>
     </div>
