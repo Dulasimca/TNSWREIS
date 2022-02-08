@@ -136,14 +136,13 @@ export class TableConstants {
         this.purchasedetailsReportCols = [
             { field: 'BillNo', header: 'Bill No.', align: 'left !important'},
             { field: 'BillDate', header: 'Bill Date', align: 'center !important'},
-            { field: 'BillAmount', header: 'Bill Amount',align: 'right !important'},
-            { field: 'ShopName', header: 'ShopName', align: 'left !important'},
-            { field: 'GstNo', header: 'Gst Number', align: 'left !important'},
-            { field: 'Districtname', header: 'District', align: 'left !important'},
-            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
-            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'Commname', header: 'Commodity', align: 'center !important'},
             { field: 'Qty', header: 'Quantity', align: 'left !important'},
             { field: 'UnitId', header: 'Unit Id', align: 'left !important'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
+            { field: 'Districtname', header: 'District', align: 'left !important'},
+            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            
         ];
          
         this.openingBalanceReportColumns = [
@@ -198,7 +197,7 @@ export class TableConstants {
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
             { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
-            { field: 'Doj', header: 'Doj', width: '100px', align: 'left !important'},
+            { field: 'Doj', header: 'Doj', width: '100px', align: 'center !important'},
             { field: 'GenderName', header: 'Gender', width: '100px', align: 'left !important'},
             { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
@@ -302,11 +301,13 @@ export class TableConstants {
        
     ]
     this.biometricattendancecountColumns = [
+       // { field: 'Slno', header: 'Hostelid', width: '100px', align: 'center !important'},
+        { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'center !important'},
         { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
         { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},
         { field: 'monyr', header: 'Month/Year', width: '100px'},
         { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'center !important'},
-        
+     
     ]
     this.AccountHeadTable = [ 
         { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
