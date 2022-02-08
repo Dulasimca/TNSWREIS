@@ -114,6 +114,7 @@ import { FoodentitlementReportComponent } from './Reports/foodentitlement-report
 import { BiometricAttendanceComponent } from './Biometric/biometric-attendance/biometric-attendance.component';
 import { BiometricattendancecountComponent } from './Biometric/biometricattendancecount/biometricattendancecount.component';
 import { PurchasedetailsReportComponent } from './Reports/purchasedetails-report/purchasedetails-report.component';
+import { DevicemappingReportComponent } from './Reports/devicemapping-report/devicemapping-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -181,6 +182,7 @@ import { PurchasedetailsReportComponent } from './Reports/purchasedetails-report
     BiometricAttendanceComponent,
     BiometricattendancecountComponent,
     PurchasedetailsReportComponent,
+    DevicemappingReportComponent,
     
   ],
   imports: [

@@ -26,9 +26,11 @@ export class TableConstants {
     BMAttendanceReportCols: any = [];
     biometricattendancecountColumns: any = [];
     purchasedetailsReportCols: any = [];
+
     
     AccountHeadTable: any = [];
     HostelFundtable: any = [];
+    DeviceMappingReportCols: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -48,7 +50,7 @@ export class TableConstants {
             { field: 'Commodity', header: 'Commodity', align: 'left !important'  },
             { field: 'Unit', header: 'Unit', align: 'left !important'  },
             { field: 'OB', header: 'Opening Balance', align: 'right !important'  },
-            { field: 'QTY', header: 'Required Quantity', align: 'right !important'  },
+            { field: 'QTY', header: 'Consumed Quantity', align: 'right !important'  },
             { field: 'CB', header: 'Closing Balance', align: 'right !important'  },
         ];
 
@@ -203,6 +205,12 @@ export class TableConstants {
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
             { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
             { field: 'EndDate', header: 'End Date', width: '100px', align: 'centre !important'},
+        ]
+        this.DeviceMappingReportCols = [
+            {field:'Districtname',header:'District Name'},
+            {field:'HostelName',header: 'Hostel Name'},
+            {field:'DeviceId',header: 'Biometric Device Id'},
+            {field:'Flag',header: 'Status'}
         ]
         this.OpeningBalanceColumns = [
             { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
