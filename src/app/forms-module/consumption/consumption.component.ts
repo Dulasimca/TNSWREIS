@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-consumption',
@@ -215,17 +216,38 @@ export class ConsumptionComponent implements OnInit {
   }
 
   onEnter() {
+    var canEnter = false;
+    if(this.consumptionData.length !== 0) {
+      for(let c = 0; c < this.consumptionData.length; c++) {
+      if(this.consumptionData[c].CommodityId === this.commodity.value && this.consumptionData[c].ConsumptionType === this.consumption.value) {
+        canEnter = false;
+        this._messageService.clear();
+                this._messageService.add({
+                  key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+                  summary: ResponseMessage.SUMMARY_INVALID, detail: 'Cannot enter duplicate record !'
+                });
+        break;
+      } else {
+        continue;
+      }
+    }
+  } else {
+    canEnter = true;
+  }
+  if(canEnter) {
     this.calculateBalance();
     if ((this.remainingBalance * 1) >= 0) {
       this.consumptionData.push({
         'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
         'ConsumptionType': this.consumption.value,
-        'ConsumptionDate': this._datePipe.transform(this.date, 'yyyy-MM-dd'),
+        'cDate': this._datePipe.transform(this.date, 'yyyy-MM-dd'),
+        'ConsumptionDate': this.date,
         'Consumption': this.consumption.label,
         'CommodityId': this.commodity.value,
         'Commodity': this.commodity.label,
         'UnitId': this.unit.value,
         'Unit': this.unit.label,
+        'StudentCount': this.studentCount,
         'OB': this.openingBalance,
         'QTY': this.requiredQty,
         'CB': this.closingBalance,
@@ -250,6 +272,7 @@ export class ConsumptionComponent implements OnInit {
       this.closingBalance = 0;
     }
   }
+  }
 
   calculateBalance() {
     if (this.openingBalance !== undefined && this.openingBalance !== null &&
@@ -269,7 +292,7 @@ export class ConsumptionComponent implements OnInit {
         remaining_bal = opening_bal;
         this.remainingBalance = opening_bal;
       }
-      this.closingBalance = remaining_bal.toFixed(3);
+      this.closingBalance = (remaining_bal - entered_qty).toFixed(3);
       var msg = '';
       if (entered_qty > remaining_bal) {
         msg = 'Quantity entered : ' + entered_qty + ' cannot be greater than available balance : ' + remaining_bal;
@@ -306,6 +329,7 @@ export class ConsumptionComponent implements OnInit {
       this.commodityOptions = [{ label: row.Commodity, value: row.CommodityId }];
       this.unit = { label: row.Unit, value: row.UnitId };
       this.unitOptions = [{ label: row.Unit, value: row.UnitId }];
+      this.studentCount = (row.StudentCount * 1);
       this.consumptionId = row.Id;
       this.openingBalance = (row.OB * 1).toFixed(3);
       this.requiredQty = (row.QTY * 1).toFixed(3);

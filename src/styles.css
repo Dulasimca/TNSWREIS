@@ -636,3 +636,6 @@ main {
     white-space: pre !important;
     color: #0288d1 !important;
 }
+.p-overlaypanel .p-overlaypanel-content {
+    background: #fdf8ef !important;
+}

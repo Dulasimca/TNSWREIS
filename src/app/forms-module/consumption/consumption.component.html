@@ -80,7 +80,7 @@
                                                 </div>
                                                 <div class="p-col-12 p-md-7 p-lg-1" [ngClass.xs]="'txt-center'" [ngClass.lt-sm]="'txt-center'" 
                                                 [ngClass.lt-md]="'txt-end'" style="margin-top: 1.5rem">
-                                                    <button pButton type="button" label="Enter" [disabled]="(!f.valid)"
+                                                    <button pButton type="button" label="Enter" [disabled]="(!f.valid || openingBalance==0)"
                                                         (click)="onEnter()"></button>
                                                 </div>
                                             </div>

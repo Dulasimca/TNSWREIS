@@ -18,11 +18,30 @@
             </div>
             <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
                 <p-menubar [model]="items"></p-menubar>
-                
+                <!-- <div style="color: whitesmoke; text-align: center !important;">
+                    <i class="fa fa-user-circle-o" style="font-size:2rem;"></i><br/>
+                    <span style="font-size: 14px;">{{username}}</span><br/>
+                    <span style="font-size: 14px;">{{place}}</span>
+                </div> -->
             </div>
             <div *ngIf="!showMenu" fxFlex fxLayout fxFlexFill fxLayoutAlign="end end">
                 <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()"></button>
             </div>
+            <!-- <div style="color: whitesmoke; text-align: center !important;">
+                <span style="font-size: 14px;">Welcome {{username}} </span><br/>
+                <span style="font-size: 14px;">{{place}}</span>
+            </div> -->
+            <div *ngIf="showMenu" style="color: whitesmoke; text-align: center !important; margin-left: 5px;"
+            pTooltip="user info" tooltipPosition="top">
+                <i class="fa fa-user-circle-o" style="font-size:2.5rem;" (click)="op.toggle($event)"></i><br/>
+            </div>
         </mat-toolbar>
+        <p-overlayPanel #op>
+            <ng-template pTemplate>
+                <span style="font-size: 13px;">Username: <span style="color: #08747b; font-size: 14px !important;">{{username}} </span></span><br/>
+                <span *ngIf="roleId === 2" style="font-size: 13px;">District: <span style="color: #08747b; font-size: 14px !important;">{{place}}</span></span>
+                <span *ngIf="(roleId === 3 || roleId === 4)" style="font-size: 13px;">Taluk: <span style="color: #08747b; font-size: 14px !important;">{{place}}</span></span>
+            </ng-template>
+        </p-overlayPanel>
     </div>
 </div>
