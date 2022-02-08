@@ -33,6 +33,8 @@ import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
 import {TreeTableModule} from 'primeng/treetable';
 import {ToggleButtonModule} from 'primeng/togglebutton';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PasswordModule } from "primeng/password";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -61,7 +63,6 @@ import { ConsumptionComponent } from './forms-module/consumption/consumption.com
 import { TableConstants } from './Common-Modules/table-constants';
 import { HostelGoComponent } from './master/hostel-go/hostel-go.component';
 import { ChangePasswordComponent } from './master/change-password/change-password.component';
-import { PasswordModule } from "primeng/password";
 import { IdCardInfoComponent } from './id-card-info/id-card-info.component';
 
 import { LocationService } from './services/location.service';
@@ -220,6 +221,7 @@ import { DevicemappingReportComponent } from './Reports/devicemapping-report/dev
     GalleriaModule,
     TreeTableModule,
     ToggleButtonModule,
+    OverlayPanelModule,
     BlockUIModule.forRoot(),
   ],
 
