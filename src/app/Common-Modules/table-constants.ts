@@ -301,7 +301,7 @@ export class TableConstants {
        
     ]
     this.biometricattendancecountColumns = [
-        { field: 'Slno', header: 'Hostelid', width: '100px', align: 'center !important'},
+       // { field: 'Slno', header: 'Hostelid', width: '100px', align: 'center !important'},
         { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'center !important'},
         { field: 'SerialNumber', header: 'Machine Serial No', width: '100px', align: 'center !important'},
         { field: 'AttendanceDate', header: 'Date', width: '100px', align: 'center !important'},

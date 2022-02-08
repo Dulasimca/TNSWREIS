@@ -63,7 +63,7 @@ export class BiometricattendanceComponent implements OnInit {
    BMAttendanceData: any = [];
    showDialog: boolean;
    Mhostelid: any;
-
+   Hcode: any;
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe,private _router: Router) { }
 
@@ -82,6 +82,7 @@ export class BiometricattendanceComponent implements OnInit {
     this.logged_user = this._authService.UserInfo;    }
 
         onSelect(value) {
+          this.data = [];
           let districtSelection = [];
           let talukSelection = [];
           if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
@@ -148,6 +149,7 @@ export class BiometricattendanceComponent implements OnInit {
             this.hostelOptions.unshift({ label: 'All', value: 0 });
           }
           this.hostelOptions.unshift({ label: '-select-', value: null });
+          
         }
 
 
@@ -162,7 +164,7 @@ export class BiometricattendanceComponent implements OnInit {
                 // 'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? 
                 // this.logged_user.hostelId : 0,
               }
-              console.log
+              
               this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
                 if (res !== null && res !== undefined && res.length !== 0) {
                   this.data = res.Table;
@@ -222,6 +224,7 @@ export class BiometricattendanceComponent implements OnInit {
           }   
 
           loadTable() {
+           
               this.biometricattendancecountData = [];
               this.getbmserialnumber();
               //console.log('ok1')
@@ -232,7 +235,9 @@ export class BiometricattendanceComponent implements OnInit {
                 //'serialno':'BJ2C192661709',
                   'serialno':this.MDeviceNo,        
                   'month': parseInt(this.Mmonth),
-                  'year':  this.Myear
+                  'year':  this.Myear,
+                  'Hcode': this.hostelName
+                  
               }
               this.restApiService.getByParameters(PathConstants.GetBDAttendancecount_Get,params).subscribe(res => {
                 if (res.Table !== undefined && res.Table !== null) {
@@ -270,13 +275,12 @@ export class BiometricattendanceComponent implements OnInit {
                                     this.biometricserilanoData.forEach(t => {
                                       if (t.HostelId === this.hostelName) {
                                         this.MDeviceNo = t.DeviceId;
-                                       
                                       }        
                                     });
-                                    console.log(this.MDeviceNo)
+                                    
                             }else{
                               this.MDeviceNo = '0';
-                              console.log(this.MDeviceNo)
+                              
                             }
                       });
                       }
