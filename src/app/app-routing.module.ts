@@ -62,6 +62,7 @@ import { BiometricattendancecountComponent } from './Biometric/biometricattendan
 import { PurchasedetailsReportComponent } from './Reports/purchasedetails-report/purchasedetails-report.component';
 import { DevicemappingReportComponent } from './Reports/devicemapping-report/devicemapping-report.component';
 import { FeedbackComponent } from './Student/feedback/feedback.component';
+import { StudentFeedbackRegistrationComponent } from './student-feedback-registration/student-feedback-registration.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -93,7 +94,7 @@ const routes: Routes = [
   { path: 'district', component:DistrictComponent, canActivate: [AuthGuard]},
   { path: 'taluk', component:TalukComponent, canActivate: [AuthGuard]},
   { path: 'attendance', component:AuditComponent, canActivate: [AuthGuard]},
-  { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
+  // { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
 
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},  
@@ -131,6 +132,7 @@ const routes: Routes = [
   { path: 'purchasedetailsreport', component:PurchasedetailsReportComponent, canActivate: [AuthGuard]},
   { path: 'devicemappingreport', component:DevicemappingReportComponent, canActivate: [AuthGuard]},
   { path: 'feedback', component:FeedbackComponent, canActivate: [AuthGuard]},
+  { path: 'studentfeedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
   
 ];
 
