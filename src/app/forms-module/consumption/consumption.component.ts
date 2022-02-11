@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { ThisReceiver } from '@angular/compiler';
+import { ThisReceiver, ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-consumption',
@@ -241,7 +241,8 @@ export class ConsumptionComponent implements OnInit {
         'Id': (this.consumptionId !== undefined && this.consumptionId !== null) ? this.consumptionId : 0,
         'ConsumptionType': this.consumption.value,
         'cDate': this._datePipe.transform(this.date, 'yyyy-MM-dd'),
-        'ConsumptionDate': this.date,
+        'ConsumptionDate': this._datePipe.transform(this.date, 'MM/dd/yyyy'),
+        'cdateToEdit': this.date,
         'Consumption': this.consumption.label,
         'CommodityId': this.commodity.value,
         'Commodity': this.commodity.label,
@@ -322,7 +323,7 @@ export class ConsumptionComponent implements OnInit {
       } else {
         this.consumptionId = 0;
       }
-      this.date = new Date(row.ConsumptionDate);
+      this.date = new Date(row.cdateToEdit);
       this.consumption = { label: row.Consumption, value: row.ConsumptionType };
       this.consumptionOptions = [{ label: row.Consumption, value: row.ConsumptionType }];
       this.commodity = { label: row.Commodity, value: row.CommodityId };
@@ -460,6 +461,9 @@ export class ConsumptionComponent implements OnInit {
 
   onSave() {
     this.blockUI.start();
+    // this.consumptionData.forEach(c => {
+    //   c.ConsumptionDate = this._datePipe.transform(c.ConsumptionDate, 'MM/dd/yyyy');
+    // })
     this._restApiService.post(PathConstants.Consumption_Post, this.consumptionData).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
