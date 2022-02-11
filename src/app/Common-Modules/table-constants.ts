@@ -257,7 +257,7 @@ export class TableConstants {
        this.feedingchargetypeReportCols = [
         
         { field: 'AccountingYear', header: 'Accounting Year' },
-        { field: 'FeedingChargeName', header: 'FeedingChargesType' },
+        { field: 'FeedingChargeName', header: 'Feeding Charges Type' },
         { field: 'School', header: 'Amount For School' },
         { field: 'College', header: 'Amount For College' },
         { field: 'Flag',  header: 'Status'},
