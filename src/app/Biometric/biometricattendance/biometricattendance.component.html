@@ -38,62 +38,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="p-col-12 p-md-6 p-lg-12"> -->
-                    <!-- <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
-                      [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" 
-                      styleClass="p-datatable-gridlines">
-                      <ng-template pTemplate="header" let-columns>
-                        <tr>
-                          <th>S.No</th>
-                          <th *ngFor="let col of columns">
-                            {{col.header}}
-                          </th>
-                          <th> Students Details </th>
-                        </tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
-                        <tr [pSelectableRow]="rowData" class=" tr-border cursor-pointer"
-                          (dblclick)="onRowSelect($event, rowData)">
-                          <td class="td-border">
-                            <span class="p-column-title">
-                              S.No :
-                            </span>
-                            <span style="text-align: end;">
-                              {{rowIndex+1}}
-                            </span>
-                          </td>
-                          <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
-                            <span class="p-column-title">
-                              {{col.header}} :
-                            </span>
-                            <span style="text-align: end;"> {{rowData[col.field]}}
-                            </span>
-                          </td>        
-                          <td>
-                            <span class="p-column-title">
-                                Students Details :
-                            </span>
-                            <span>
-                            <button style="height: 1.8rem;" 
-                            icon="pi pi-plus" (click)="loadTable()" pButton type="button">
-                             
-                           </button>
-                        </span>
-                        </td>
-
-                        </tr>
-                      </ng-template>
-                    </p-table> -->
-                   
+                
                 <div class="p-col-12 p-md-6 p-lg-12">
                   <div style="text-align: right;"> 
                     <label style="color: yellowgreen;" label="Total Student 490" 
                     pButton type="label"></label>&nbsp;
-                  <!-- <div style="text-align: right;">  -->
+                 
                       <button pButton type="button" icon="pi pi-file-excel" label="Export" style="text-align: right;"
                           style= "color: yellowgreen;"(click)="dt.exportCSV()"
                           pTooltip="Excel-File download"></button>
-                  <!-- </div>  -->
+                  
                 </div>
                 <p-table #dt [columns]="biometricattendancecountCols" [value]="biometricattendancecountData" [paginator]="true" [rows]="100"
                 [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" 
@@ -141,7 +95,6 @@
                 </ng-template>
               </p-table> 
                 </div> 
-              <!-- </div> -->
             </div>
           </form>
         </p-card>
