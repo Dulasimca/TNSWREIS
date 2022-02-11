@@ -55,9 +55,9 @@ export class WardenReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.wardenDetailsCols = this._tableConstants.wardenDetailsReportColumns;
-    this.districts = this._masterService.getMaster('DT');
-    this.taluks = this._masterService.getMaster('TK');
-    this.logged_user = this._authService.UserInfo;
+      this.districts = this._masterService.getMaster('DT');
+      this.taluks = this._masterService.getMaster('TK');
+    this.logged_user = this._authService.UserInfo;  
     // this.roleId = (this.logged_user.roleId * 1)
     this.editButton = (this.logged_user.roleId !== 1 * 1) ? true : false;
     this.transferButton = (this.logged_user.roleId === 1 * 1) ? true : false;
