@@ -27,6 +27,7 @@ export class OpeningBalanceComponent implements OnInit {
   district: any;
   unitOptions: SelectItem[];
   quantity: any;
+  OBCommData: any = [];
   openingBlncData: any = [];
   openingBlncCols: any;
   showTable: boolean;
@@ -35,6 +36,7 @@ export class OpeningBalanceComponent implements OnInit {
   units?: any;
   years?: any;
   commodities?: any;
+  isDisabled: boolean;
   @ViewChild('f', { static: false }) _openingBalance: NgForm;
 
 
@@ -49,7 +51,8 @@ export class OpeningBalanceComponent implements OnInit {
     this.district = this.logged_user.districtName;
     this.taluk = this.logged_user.talukName;
     this.hostelName = this.logged_user.hostelName;
-    this.openingBlncCols = this.tableConstants.OpeningBalanceColumns
+    this.openingBlncCols = this.tableConstants.OpeningBalanceColumns;
+    this.isDisabled = false
   }
 
   onSelect(type) {
@@ -77,7 +80,9 @@ export class OpeningBalanceComponent implements OnInit {
         })
         this.commodityOptions = commoditySelection;
         this.commodityOptions.unshift({ label: '-select', value: null });
+        this.quantity='';
         break;
+       
     }
   }
 
@@ -133,6 +138,63 @@ export class OpeningBalanceComponent implements OnInit {
     }
   }
 
+  onViewcheck() {
+    this.isDisabled=false;
+    if (this.year !== null && this.year !== undefined) {
+      const params = {
+        'Districtcode': this.logged_user.districtCode,
+        'Talukid': this.logged_user.talukId,
+        'HostelId': this.logged_user.hostelId,
+        'AccountingId': this.year
+      };
+      this.restApiService.getByParameters(PathConstants.OpeningBalance_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined) {
+          if (res.length !== 0) {
+            this.OBCommData = res;            
+           this.OBCommData.forEach(d => {
+            if ((this.commodityName) ===  d.CommodityId ) {  
+              this.isDisabled=true; 
+              this.messageService.clear();
+              this.messageService.add({
+                key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+                summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.ExistingdataMessage
+              });
+            }
+          })           
+          } else {
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            });
+          }
+        } else {
+          this.showTable = false;
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+          });
+        }
+      })
+    } else {
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select academic year to view data !'
+      });
+    }
+  }
+
+  clearform() {
+    this.commodityOptions = [];
+    this.yearOptions = [];
+    this.unitOptions = [];
+    this.quantity = [];
+  }
+
+
+
   onView() {
     if (this.year !== null && this.year !== undefined) {
       const params = {
@@ -170,12 +232,5 @@ export class OpeningBalanceComponent implements OnInit {
         summary: ResponseMessage.SUMMARY_WARNING, detail: 'Please select academic year to view data !'
       });
     }
-  }
-
-  clearform() {
-    this.commodityOptions = [];
-    this.yearOptions = [];
-    this.unitOptions = [];
-    this.quantity = [];
   }
 }

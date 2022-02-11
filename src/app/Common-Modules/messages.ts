@@ -45,5 +45,6 @@ export class ResponseMessage {
     public static readonly SelectHostelType = 'Please select Hostel Type';
     public static readonly TalukSelectionMsg = 'Please select district to select taluk !';
     public static readonly AttendanceimageRestrict = 'You can upload only five image in a day';
+    public static readonly ExistingdataMessage = 'OB Data Available. Use Edit Option';
     
 }

@@ -41,7 +41,9 @@
                                                 <label for="_commodityName">Commodity Name<span
                                                         class="form-mandatory-field">*</span></label>
                                                 <p-dropdown name="_commodityName" [options]="commodityOptions"
-                                                    [(ngModel)]="commodityName" (onClick)="onSelect('CN')" required>
+                                                    [(ngModel)]="commodityName" (onClick)="onSelect('CN')"
+                                                    (onChange)="onViewcheck();"
+                                                    required>
                                                 </p-dropdown>
                                             </div>
                                             <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
@@ -55,7 +57,8 @@
                                                 <div><label for="_quantity">Quantity<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <input type="text" class="p-col-12" name="_quantity" pInputText
-                                                    [(ngModel)]="quantity" />
+                                                    [(ngModel)]="quantity"
+                                                    [disabled]="isDisabled" />
                                             </div>
                                         </div>
                                     </div>
