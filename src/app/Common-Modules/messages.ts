@@ -40,6 +40,8 @@ export class ResponseMessage {
     public static readonly SelectUploadDate = 'Please select upload date';
     public static readonly UpdateMsg = 'Updated Successfully!';
     public static readonly EndDateMsg = 'End Date Updated Successfully!';
+    public static readonly AadharMsg = 'Please enter valid aadhar number!';
+
 
 
     public static readonly SelectHostelType = 'Please select Hostel Type';
