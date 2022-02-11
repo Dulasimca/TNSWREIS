@@ -27,31 +27,25 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.images = [
       {
-        "previewImageSrc": 'assets/layout/images/Hostel_Visit.png',
+        "previewImageSrc": 'assets/layout/images/TN_ADW_Hostel_Visit.png',
         "alt": "Description for Image 1",
         "title": "Title 0"
     },
       {
-          "previewImageSrc": 'assets/layout/images/Hostel_Image.png',
+          "previewImageSrc": 'assets/layout/images/TN_ADW_Hostel_Image.png',
           "alt": "Description for Image 2",
           "title": "Title 1"
       },
       {
-          "previewImageSrc": 'assets/layout/images/Hostel_Inspection.png',
+          "previewImageSrc": 'assets/layout/images/TN_ADW_Food_Inspection.png',
           "alt": "Description for Image 3",
           "title": "Title 2"
       },
       {
-          "previewImageSrc": 'assets/layout/images/TN_ADW_HostelGround.png',
+          "previewImageSrc": 'assets/layout/images/TN_ADW_Hostel_Ground.png',
           "alt": "Description for Image 4",
           "title": "Title 3"
       },
-      {
-          "previewImageSrc": 'assets/layout/images/TN_ADW_Hostel Ground.png',
-          "alt": "Description for Image 5",
-          "title": "Title 4"
-      },
-      
     ];
   }
 
