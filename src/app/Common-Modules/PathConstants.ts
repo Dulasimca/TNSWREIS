@@ -147,4 +147,7 @@ public static readonly FoodEntitlementReport_Get = 'FoodEntitlementReport/Get';
 public static readonly GetBiometricDevice_Get = 'BioMetric/Get';
 
 public static readonly DeviceMappingReport_Get = 'DeviceMappingReport/Get';
+
+public static readonly FeedBack_Post = 'FeedBack/Post';
+
 }
