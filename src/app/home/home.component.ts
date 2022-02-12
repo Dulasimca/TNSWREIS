@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
           "title": "Title 2"
       },
       {
-          "previewImageSrc": 'assets/layout/images/TN_ADW_Hostel_Ground.png',
+          "previewImageSrc": 'assets/layout/images/TN_ADW_Hostel_Visit.png',
           "alt": "Description for Image 4",
           "title": "Title 3"
       },

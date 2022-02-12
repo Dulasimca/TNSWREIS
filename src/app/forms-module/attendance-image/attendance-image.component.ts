@@ -58,7 +58,9 @@ export class AttendanceImageComponent implements OnInit {
       { field: 'DistrictName', header: 'District', width: '100px' },
       { field: 'TalukName', header: 'Taluk', width: '100px' },
       { field: 'HostelName', header: 'Hostel', width: '100px' },
-      { field: 'Uploaddate', header: 'Date', width: '100px' },
+      { field: 'CreatedDate', header: 'Date', width: '100px' },
+      { field: 'Latitude', header: 'Latitude', width: '100px' },
+      { field: 'Longitude', header: 'Longitude', width: '100px' },
       { field: 'Remarks', header: 'Remarks', width: '100px' },
     ];
     this.Slno = 0;
