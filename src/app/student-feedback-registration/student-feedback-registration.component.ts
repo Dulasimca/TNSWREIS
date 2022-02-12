@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -32,6 +33,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   hostels?: any;
   StudentsData: any = [];
   logged_user: User;
+  StudentId: any;
   @ViewChild('f', { static: false }) _studentFeedback: NgForm;
   enableField: boolean;
 
@@ -45,6 +47,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
     this.logged_user = this._authService.UserInfo;
     this.districts = this._masterService.getMaster('DT');
     this.taluks = this._masterService.getMaster('TK');
+    this.StudentId = 0;
 
   }
 
@@ -71,8 +74,42 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
     }
   }
   onSubmit() {
-
+    const params = {
+      'Id': this.StudentId,
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HCode': this.hostel,
+      'Aadharno': this.aadharNo,
+      'Name': this.studentName,
+      'EmailId': this.email,
+      'Flag': 1
+    }
+    this._restApiService.post(PathConstants.StudentRegistration_Post, params).subscribe(res => {
+      if (res) {
+        // this.clearform();
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+        });
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    })
   }
+  
 
   selectHostel() {
     this.hostel = null;
