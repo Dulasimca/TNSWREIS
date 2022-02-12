@@ -13,14 +13,14 @@
                                         <label for="_district">District<span class="form-mandatory-field">*</span>
                                         </label>
                                         <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                            (onClick)="onSelect('D')" required>
+                                            (onClick)="onSelect('D')"  (onChange)="refreshFields('D')" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                         <label for="_taluk">Taluk<span class="form-mandatory-field">*</span>
                                         </label>
                                         <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
-                                            (onClick)="onSelect('T')" (onChange)="selectHostel()" required>
+                                            (onClick)="onSelect('T')" (onChange)="refreshFields('T')" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
@@ -52,8 +52,11 @@
                                             <div *ngIf="enableField" class="p-col-12 p-md-6 p-lg-3 no-pad-left">
                                                 <label for="_email">Email Id<span
                                                         class="form-mandatory-field">*</span></label>
-                                                <input type="email" class="p-col-12" name="_email" pInputText
+                                                        <span class="p-input-icon-right">
+                                                            <i *ngIf="checkEmail" class="pi pi-spin pi-spinner"></i>
+                                                <input type="email" class="p-col-12" name="_email" (input)="checkIfEmailExists()" pInputText
                                                     [(ngModel)]="email" />
+                                                    </span>
                                             </div>
                                         </div>
                                     </div>

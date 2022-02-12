@@ -36,6 +36,9 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   StudentId: any;
   @ViewChild('f', { static: false }) _studentFeedback: NgForm;
   enableField: boolean;
+  userMasterId: string;
+  userData: any = [];
+  checkEmail: boolean;
 
   constructor(private _authService: AuthService, private _restApiService: RestAPIService, private _masterService: MasterService,
     private _messageService: MessageService) { }
@@ -45,8 +48,8 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
     const start_year_range = current_year - 30;
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
-    this.districts = this._masterService.getMaster('DT');
-    this.taluks = this._masterService.getMaster('TK');
+    this.districts = this._masterService.getDistrictAll();
+    this.taluks = this._masterService.getTalukAll();
     this.StudentId = 0;
 
   }
@@ -73,6 +76,34 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         break;
     }
   }
+
+  selectHostel() {
+    this.hostel = null;
+    this.hostelOptions = [];
+    let hostelSelection = [];
+    if (this.district !== undefined && this.district !== null && this.taluk !== undefined && this.taluk !== null) {
+      const params = {
+        'Type': 1,
+        'DCode': this.district,
+        'TCode': this.taluk,
+        'HostelId': 0
+        
+      }
+      if (this.district !== null && this.district !== undefined) {
+        this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+          if (res !== null && res !== undefined && res.length !== 0) {
+            this.hostels = res.Table;
+            this.hostels.forEach(h => {
+              hostelSelection.push({ label: h.HostelName, value: h.Slno });
+            })
+            this.hostelOptions = hostelSelection;
+            this.hostelOptions.unshift({ label: '-select', value: null });
+          };
+        })
+      }
+    }
+  }
+
   onSubmit() {
     const params = {
       'Id': this.StudentId,
@@ -87,6 +118,41 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
     this._restApiService.post(PathConstants.StudentRegistration_Post, params).subscribe(res => {
       if (res) {
         // this.clearform();
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SubmitMessage
+        });
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    })
+    const parameter = {
+      'Id': this.userMasterId,
+      'Districtcode': this.district,
+      'HostelID': this.hostel,
+      'Talukid': this.taluk,
+      'UserName': this.studentName,
+      'EMailId': this.email,
+      'RoleId': 5,
+      'Pwd': 12345,
+      'Flag': 1,
+    }
+    this._restApiService.post(PathConstants.UserMaster_Post, parameter).subscribe(res => {
+      if (res) {
+        this.clearForm();
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -109,33 +175,13 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
       }
     })
   }
-  
 
-  selectHostel() {
-    this.hostel = null;
-    this.hostelOptions = [];
-    let hostelSelection = [];
-    if (this.district !== undefined && this.district !== null && this.taluk !== undefined && this.taluk !== null) {
-      const params = {
-        'Type': 1,
-        'DCode': this.district,
-        'TCode': this.taluk,
-        'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
-          this.logged_user.hostelId : 0,
-      }
-      if (this.district !== null && this.district !== undefined) {
-        this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-          if (res !== null && res !== undefined && res.length !== 0) {
-            this.hostels = res.Table;
-            this.hostels.forEach(h => {
-              hostelSelection.push({ label: h.HostelName, value: h.Slno });
-            })
-            this.hostelOptions = hostelSelection;
-            this.hostelOptions.unshift({ label: '-select', value: null });
-          };
-        })
-      }
+  refreshFields(value) {
+    if (value === 'D') {
+      this.taluk = null;
+      this.talukOptions = [];
     }
+    this.selectHostel();
   }
 
   loadStudentsData() {
@@ -156,6 +202,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         })
       }
     })
+    this.onView();
   }
 
   onAadharChange() {
@@ -189,6 +236,47 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         }
       }
     }
+  }
+
+  onView() {
+    this._restApiService.get(PathConstants.UserMaster_Get).subscribe(res => {
+      if (res !== null && res !== undefined && res.Table.length !== 0) {
+        this.userData = res.Table;
+      }
+    })
+  }
+
+  checkIfEmailExists() {
+    if (this.email !== undefined && this.email !== null && this.email.trim() !== '' &&
+      this.userData.length !== 0) {
+      this.checkEmail = true;
+      const entered_email: string = this.email.trim();
+      const substr = entered_email.split('@');
+      if (substr !== undefined && substr.length > 1) {
+        const last_str = substr[1].split('.');
+        if (last_str !== undefined && last_str.length > 1) {
+          if (last_str[1].toLowerCase() === 'com' || last_str[1].toLowerCase() === 'in') {
+            this.userData.forEach(i => {
+              const email: string = i.EMailId;
+              if (email.trim() === entered_email) {
+                this._messageService.clear();
+                this._messageService.add({
+                  key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 2000,
+                  summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.EmailAlreadyExists
+                })
+                this.checkEmail = false;
+                this.email = '';
+              } else {
+                this.checkEmail = false;
+              }
+            })
+          }
+        }
+      }
+    }
+  }
+  clearForm() {
+    this._studentFeedback.reset();
   }
 }
 
