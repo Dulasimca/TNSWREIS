@@ -39,6 +39,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   userMasterId: string;
   userData: any = [];
   checkEmail: boolean;
+  feedbackRegData: any = [];
 
   constructor(private _authService: AuthService, private _restApiService: RestAPIService, private _masterService: MasterService,
     private _messageService: MessageService) { }
@@ -220,7 +221,6 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
             this.enableField = true;
             isExists = true;
             this.studentName = this.StudentsData[i].studentName;
-            console.log('gh')
             break; //break the loop
           } else {
             isExists = false;
@@ -236,12 +236,45 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         }
       }
     }
+    this.checkRegistrationExists();
+  }
+
+  checkRegistrationExists() {
+    var isExists = false;
+    if (this.feedbackRegData.length !== 0) {
+      if (this.aadharNo.length > 11) {
+        //forloop
+        for (let i = 0; i < this.feedbackRegData.length; i++) {
+          if (this.feedbackRegData[i].aadharNo === this.aadharNo) {
+            isExists = true;
+            this.studentName = this.feedbackRegData[i].studentName;
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.SuccessMessage
+            })
+            break; //break the loop
+          } else {
+            isExists = false;
+            continue;  //continuing the loop
+          }
+        }
+      }
+    }
   }
 
   onView() {
     this._restApiService.get(PathConstants.UserMaster_Get).subscribe(res => {
       if (res !== null && res !== undefined && res.Table.length !== 0) {
         this.userData = res.Table;
+      }
+    })
+    this.do();
+  }
+  do(){
+    this._restApiService.get(PathConstants.StudentRegistration_Get).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.feedbackRegData = res;
       }
     })
   }

@@ -94,7 +94,7 @@ const routes: Routes = [
   { path: 'district', component:DistrictComponent, canActivate: [AuthGuard]},
   { path: 'taluk', component:TalukComponent, canActivate: [AuthGuard]},
   { path: 'attendance', component:AuditComponent, canActivate: [AuthGuard]},
-  { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
+  // { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
 
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},  
@@ -132,7 +132,7 @@ const routes: Routes = [
   { path: 'purchasedetailsreport', component:PurchasedetailsReportComponent, canActivate: [AuthGuard]},
   { path: 'devicemappingreport', component:DevicemappingReportComponent, canActivate: [AuthGuard]},
   { path: 'feedback', component:FeedbackComponent, canActivate: [AuthGuard]},
-  { path: 'feedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
+  { path: 'changepassword', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
   
 ];
 
