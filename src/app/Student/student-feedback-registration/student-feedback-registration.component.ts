@@ -3,12 +3,12 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
-import { ResponseMessage } from '../Common-Modules/messages';
-import { PathConstants } from '../Common-Modules/PathConstants';
-import { User } from '../interfaces/user';
-import { AuthService } from '../services/auth.service';
-import { MasterService } from '../services/master-data.service';
-import { RestAPIService } from '../services/restAPI.service';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { MasterService } from 'src/app/services/master-data.service';
+import { RestAPIService } from 'src/app/services/restAPI.service';
 
 @Component({
   selector: 'app-student-feedback-registration',
