@@ -269,14 +269,11 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         this.userData = res.Table;
       }
     })
-    this.do();
-  }
-  do(){
-    this._restApiService.get(PathConstants.StudentRegistration_Get).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
-        this.feedbackRegData = res;
-      }
-    })
+    // this._restApiService.get(PathConstants.StudentRegistration_Get).subscribe(r => {
+    //   if (r) {
+    //     this.feedbackRegData = r;
+    //   }
+    // })
   }
 
   checkIfEmailExists() {

@@ -78,7 +78,8 @@ export class WardenDetailsComponent implements OnInit {
     this.nativeDistricts = this.masterService.getDistrictAll();
     this.taluks = this.masterService.getTalukAll();
     // this.hostels = this.masterService.getMaster('HN');
-    this.courses = this.masterService.getMaster('CU');
+    // this.courses = this.masterService.getMaster('CU');
+    this.courses = this.masterService.getMaster('CL');
     this.disableTaluk = true;
     this.wardenId = 0;
     this.disableSave = ((this.logged_user.roleId * 1) === 4) ? true : false;
@@ -126,7 +127,11 @@ export class WardenDetailsComponent implements OnInit {
         this.talukOptions.unshift({ label: '-select-', value: null });
         break;
       case 'CU':
-        this.courses.forEach(q => {
+        var filtered_data = [];
+        filtered_data = this.courses.filter(f => {
+          return f.type === 2;
+        })
+        filtered_data.forEach(q => {
           courseSelection.push({ label: q.name, value: q.code });
         })
         this.qualificationOptions = courseSelection;
