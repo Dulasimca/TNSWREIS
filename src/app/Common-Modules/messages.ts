@@ -31,7 +31,7 @@ export class ResponseMessage {
     public static readonly MeetingSuccess = 'Meeting created successfully!';
     public static readonly DeleteSuccessMsg = 'Deleted successfully !';
     public static readonly DeleteFailMsg = 'Record is not deleted !';
-    public static readonly EmailAlreadyExists = 'User email already exists !';
+    public static readonly EmailAlreadyExists = 'User email already exists ! Please try a different email address.';
     public static readonly PasswordChangeSuccess = 'Password has been changed successfully !';
     public static readonly MenuDataError = 'Error occurred in loading menu !';
     public static readonly ApprovalSuccess = 'Approved !';
@@ -40,6 +40,9 @@ export class ResponseMessage {
     public static readonly SelectUploadDate = 'Please select upload date';
     public static readonly UpdateMsg = 'Updated Successfully!';
     public static readonly EndDateMsg = 'End Date Updated Successfully!';
+    public static readonly AadharMsg = 'Please enter valid aadhar number!';
+
+
 
 
     public static readonly SelectHostelType = 'Please select Hostel Type';

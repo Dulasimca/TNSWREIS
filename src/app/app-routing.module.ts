@@ -63,6 +63,7 @@ import { PurchasedetailsReportComponent } from './Reports/purchasedetails-report
 import { DevicemappingReportComponent } from './Reports/devicemapping-report/devicemapping-report.component';
 import { FeedbackComponent } from './Student/feedback/feedback.component';
 import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
+import { StudentFeedbackRegistrationComponent } from './Student/student-feedback-registration/student-feedback-registration.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -133,6 +134,7 @@ const routes: Routes = [
   { path: 'devicemappingreport', component:DevicemappingReportComponent, canActivate: [AuthGuard]},
   { path: 'feedback', component:FeedbackComponent, canActivate: [AuthGuard]},
   { path: 'studentfeedback', component:StudentFeedbackComponent, canActivate: [AuthGuard]},
+  { path: 'feedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
   
 ];
 

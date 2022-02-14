@@ -11,6 +11,7 @@ import { MasterService } from 'src/app/services/master-data.service';
 import { DatePipe } from '@angular/common';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { NgForm } from '@angular/forms';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 
 @Component({
@@ -37,8 +38,8 @@ export class AttendanceImageComponent implements OnInit {
   hostelName: any;
   Districtcode: any;
   data: any;
-  NoOfStudent: number;
-  AttendanceId: number;
+  noOfStudent: number;
+  attendanceId: number;
   uploadimage: any;
   Slno: any;
   cols: any;
@@ -47,6 +48,7 @@ export class AttendanceImageComponent implements OnInit {
   imagecount: number;
   yearRange: string;
   disableCapture: boolean;
+  @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) attendanceimageForm: NgForm;
   constructor(private _locationService: LocationService, private restApiService: RestAPIService, private _authService: AuthService, private masterService: MasterService, private datepipe: DatePipe
     , private _messageService: MessageService) { }
@@ -56,12 +58,14 @@ export class AttendanceImageComponent implements OnInit {
       { field: 'DistrictName', header: 'District', width: '100px' },
       { field: 'TalukName', header: 'Taluk', width: '100px' },
       { field: 'HostelName', header: 'Hostel', width: '100px' },
-      { field: 'Uploaddate', header: 'Date', width: '100px' },
+      { field: 'CreatedDate', header: 'Date', width: '100px' },
+      { field: 'Latitude', header: 'Latitude', width: '100px' },
+      { field: 'Longitude', header: 'Longitude', width: '100px' },
       { field: 'Remarks', header: 'Remarks', width: '100px' },
     ];
     this.Slno = 0;
     this.imagecount = 0;
-    this.NoOfStudent = 0;
+    this.noOfStudent = 0;
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
@@ -103,7 +107,7 @@ export class AttendanceImageComponent implements OnInit {
         'Districtcode': this.DistrictId,
         'Talukid': this.TalukId,
         'HostelID': this.HostelId,
-        'AttendanceId': this.AttendanceId,
+        'AttendanceId': this.attendanceId,
         'Remarks': this.remarks,
         'Latitute': this.location.lat,
         'Longitude': this.location.lng,
@@ -133,27 +137,67 @@ export class AttendanceImageComponent implements OnInit {
   }
 
   GetAttendanceInfo() {
-    this.NoOfStudent = 0;
-    const params = {
-      'HostelID': this.HostelId != undefined && this.HostelId != null ? this.HostelId : 0,
-      'Districtcode': this.DistrictId != undefined && this.DistrictId != null ? this.DistrictId : 0,
-      'Talukid': this.TalukId != undefined && this.TalukId != null ? this.TalukId : 0,
-      'FromDate': this.datepipe.transform(this.date, 'MM/dd/yyyy'),
-      'Todate': this.datepipe.transform(this.date, 'MM/dd/yyyy')
+    var hasBiomteric = this.login_user.hasBiometric;
+    let biometricId = null;
+    this.noOfStudent = 0;
+    this.blockUI.start();
+    if (hasBiomteric) {
+      const params = {
+        'HostelId': this.login_user.hostelId,
+        'FromDate': '',
+        'ToDate': '',
+        'Type': 1
+      }
+      this.restApiService.getByParameters(PathConstants.Consumption_Get, params).subscribe(res => {
+        if (res) {
+          biometricId = res[0].DeviceId;
+        } else {
+          biometricId = null;
+        }
+        const BM_params = {
+          'Code': biometricId,
+          'Date': this.datepipe.transform(this.date, 'MM/dd/yyyy'),
+          'Type': 2
+        }
+        this.restApiService.getByParameters(PathConstants.BioMetricsForConsumption_Get, BM_params).subscribe(res => {
+          if (res !== undefined && res !== null) {
+            if (res.length !== 0) {
+              this.blockUI.stop();
+              this.noOfStudent = (res[0].StudentCount !== undefined && res[0].StudentCount !== null) ? (res[0].StudentCount * 1) : 0;
+            } else {
+              this.noOfStudent = 0;
+              this.blockUI.stop();
+            }
+          } else {
+            this.noOfStudent = 0;
+            this.blockUI.stop();
+          }
+        })
+      })
+    } else {
+      const params = {
+        'HostelID': (this.login_user.hostelId != undefined && this.login_user.hostelId != null) ? this.login_user.hostelId : 0,
+        'Districtcode': (this.login_user.districtCode != undefined && this.login_user.districtCode != null) ? this.login_user.districtCode : 0,
+        'Talukid': (this.login_user.talukId != undefined && this.login_user.talukId != null) ? this.login_user.talukId : 0,
+        'FromDate': this.datepipe.transform(this.date, 'MM/dd/yyyy'),
+        'Todate': this.datepipe.transform(this.date, 'MM/dd/yyyy')
+      }
+      this.restApiService.getByParameters(PathConstants.Attendance_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          res.Table.forEach(element => {
+            this.noOfStudent = element.NOOfStudent;
+            this.attendanceId = element.Id
+            this.blockUI.stop();
+          });;
+        }
+        else {
+          this.blockUI.stop();
+          this.noOfStudent = 0;
+          this.attendanceId = 0;
+        }
+      });
     }
-    this.restApiService.getByParameters(PathConstants.Attendance_Get, params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
-        res.Table.forEach(element => {
-          this.NoOfStudent = element.NOOfStudent;
-          this.AttendanceId = element.Id
-        });;
-      }
-      else {
-        this.NoOfStudent = 0;
-        this.AttendanceId = 0;
-      }
 
-    });
   }
 
   onView() {
