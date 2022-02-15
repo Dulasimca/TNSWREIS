@@ -13,6 +13,9 @@ export class DashboardComponent implements OnInit {
   hostelCount: number;
   wardenCount: number;
   studentCount: number;
+  totalStudent: number;
+  totalPresent: number;
+  totalDevice: number;
   chartOptions: any;
   consumptionData: any;
   expensesToday: any;
@@ -43,13 +46,25 @@ export class DashboardComponent implements OnInit {
     this._restApiService.getByParameters(PathConstants.Dashboard_Get, params).subscribe(res => {
       if(res !== undefined && res !== null) {
         if(res.Table1 !== undefined && res.Table1 !== null && res.Table1.length !== 0) {
-          this.hostelCount = res.Table1[0].hostelcount;
-        }
+          if((this.login_user.roleId * 1) === 1) {
+            this.hostelCount = res.Table1[0].hostelcount;
+          } else {
+            this.totalStudent = res.Table1[0].totalStudent;
+          }
+          }
         if(res.Table2 !== undefined && res.Table2 !== null && res.Table2.length !== 0) {
-          this.wardenCount = res.Table2[0].wardencount;
+          if((this.login_user.roleId * 1) === 1) {
+            this.wardenCount = res.Table2[0].wardencount; 
+          } else {
+            this.totalDevice = res.Table2[0].totalDevice;
+          }
         }
         if(res.Table3 !== undefined && res.Table3 !== null && res.Table3.length !== 0) {
-          this.studentCount = res.Table3[0].studentcount;
+          if((this.login_user.roleId * 1) === 1) {
+            this.studentCount = res.Table3[0].studentcount; 
+          } else {
+            this.totalPresent = res.Table3[0].totalPresent;
+          }
         }
       }
     })
