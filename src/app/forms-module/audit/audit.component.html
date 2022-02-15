@@ -33,7 +33,7 @@
                                 <label for="_noofstud">Number of Student<span
                                     class="form-mandatory-field">*</span></label>
                                 <input type="text" name="_noofstud" [(ngModel)]="noOfStudent" pInputText
-                                   [readonly]="disableFields" required />
+                                   [readonly]="disableFields" (click)="Displaymessage()" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_Remarks">Remarks</label>

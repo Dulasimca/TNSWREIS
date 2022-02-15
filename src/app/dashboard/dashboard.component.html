@@ -68,7 +68,7 @@
                                     <span style="color: whitesmoke;">(total no.of students)</span>
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-12 no-padding">
-                                    <span class="dsh-tab-value">{{studentCount | number:'1.0':'en-US'}}</span>
+                                    <span class="dsh-tab-value">{{totalStudent | number:'1.0':'en-US'}}</span>
                                 </div>
                             </div>
                             <div #el5 *ngIf="roleId==4"
@@ -78,7 +78,7 @@
                                     <span style="color: whitesmoke;">(no.of students present)</span>
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-12 no-padding">
-                                    <span class="dsh-tab-value">{{studentCount | number:'1.0':'en-US'}}</span>
+                                    <span class="dsh-tab-value">{{totalPresent | number:'1.0':'en-US'}}</span>
                                 </div>
                             </div>
                             <div #el5 *ngIf="roleId==4"
@@ -88,7 +88,7 @@
                                     <span style="color: whitesmoke;">(no.of device available)</span>
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-12 no-padding">
-                                    <span class="dsh-tab-value">{{studentCount | number:'1.0':'en-US'}}</span>
+                                    <span class="dsh-tab-value">{{totalDevice | number:'1.0':'en-US'}}</span>
                                 </div>
                             </div>
                             <!-- <div [ngClass]="(roleId==5) ? 'p-col-1 p-md-1 p-lg-4' : 'p-col-1 p-md-1 p-lg-2'"></div> -->

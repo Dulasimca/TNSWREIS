@@ -37,9 +37,25 @@ export class AuditComponent implements OnInit {
     this.districtName = this.login_user.districtName;
     this.talukName = this.login_user.talukName;
     this.hostelName = this.login_user.hostelName;
-    this.GetAttendanceInfo();
+    var hasBiomteric = this.login_user.hasBiometric;
+    if (hasBiomteric) {
+      this.disableFields = true;    
+    }
   }
-
+  Displaymessage(){
+    var hasBiomteric = this.login_user.hasBiometric;
+    if (hasBiomteric) {
+      this.disableFields = true;
+      this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
+            summary: ResponseMessage.SUMMARY_REJECTED, detail: ResponseMessage.Biometricvalidate
+          });
+    }else{
+      this.GetAttendanceInfo();
+    }
+    
+  }
   onSubmit() {
     this.blockUI.start();
     const params = {

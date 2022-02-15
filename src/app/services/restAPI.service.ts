@@ -7,7 +7,7 @@ import { delay, timeout, retry, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-
+  
 export class RestAPIService {
   // BASEURL = 'http://180.179.49.72:8084/TNSWREISAPI/api/';
   // BASEURL = 'https://adatwdapi.tessolve.com/api/';
