@@ -118,6 +118,7 @@ import { PurchasedetailsReportComponent } from './Reports/purchasedetails-report
 import { DevicemappingReportComponent } from './Reports/devicemapping-report/devicemapping-report.component';
 import { FeedbackComponent } from './Student/feedback/feedback.component';
 import { StudentFeedbackRegistrationComponent } from './Student/student-feedback-registration/student-feedback-registration.component';
+import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -188,6 +189,7 @@ import { StudentFeedbackRegistrationComponent } from './Student/student-feedback
     DevicemappingReportComponent,
     FeedbackComponent,
     StudentFeedbackRegistrationComponent,
+    StudentFeedbackComponent,
     
   ],
   imports: [

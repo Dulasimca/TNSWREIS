@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-feedback',
@@ -24,11 +25,23 @@ export class FeedbackComponent implements OnInit {
   Hostelid: number;
   TalukId: number;
   studentid: number;
+  feedBackFileName: string;
+  public formData = new FormData();
+  feedBackImage: any = '';
+  @ViewChild('f', { static: false }) feedbackForm: NgForm;
 
   constructor(private _authService: AuthService,private _restApiService: RestAPIService,private _messageService: MessageService
-    ,private http: HttpClient) { }
+    ,private http: HttpClient, private _d: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.cols = [
+      { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important'},
+      { field: 'HostelName', header: 'Hostel Name', width: '200px', align: 'left !important'},
+      { field: 'StudentName', header: 'Student Name', width: '200px', align: 'left !important'},
+      { field: 'FBMessage', header: 'Feedback', width: '200px', align: 'left !important'},
+      { field: 'ReplyMessage', header: 'Reply Message', width: '200px', align: 'left !important'},
+    ];
+    this.onView();
     this.login_user = this._authService.UserInfo;
     this.hostelName = this.login_user.hostelName;
     this.studentName = this.login_user.username
@@ -37,22 +50,22 @@ export class FeedbackComponent implements OnInit {
     this.TalukId = this.login_user.talukId;
     this.studentid = this.login_user.userID;
   }
-  public uploadFile = (files) => {
-    if (files.length === 0) {
-      return;
+  public uploadFile = (event) => {
+    const selectedFile = event.target.files[0];
+    {
+      const url = window.URL.createObjectURL(selectedFile);
+      this.feedBackImage = this._d.bypassSecurityTrustUrl(url);
     }
-    var formData = new FormData()
-    let fileToUpload: any = <File>files[0];
-    let actualFilename = '';
+    this.formData = new FormData()
+    let fileToUpload: any = <File>event.target.files[0];
     const folderName = this.login_user.hostelId + '/' + 'Documents';
     const filename = fileToUpload.name + '^' + folderName;
-    formData.append('file', fileToUpload, filename);
-    actualFilename = fileToUpload.name;
-    this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
-      .subscribe((event: any) => {
+    this.formData.append('file', fileToUpload, filename);
+    this.feedBackFileName = fileToUpload.name;
+    this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, this.formData)
+      .subscribe(event => {
       }
       );
-    return actualFilename;
   }
 
   onSubmit() {
@@ -61,11 +74,9 @@ export class FeedbackComponent implements OnInit {
       'HostelId': this.Hostelid,
       'DistrictId': this.Districtid,
       'TalukId': this.TalukId,
-      'StudentId': 215,
+      'StudentId': 216,
       'FBMessage': this.feedBack,
-      'ImgFileName':'img.jpg',
-      // 'ReplyMessage': ,
-      // 'ActionDate':,
+      'ImgFileName': this.feedBackFileName,
       'Flag': 1,
     };
     this._restApiService.post(PathConstants.FeedBack_Post,params).subscribe(res => {
@@ -73,6 +84,7 @@ export class FeedbackComponent implements OnInit {
         if (res) {
           // this.blockUI.stop();
            this.onClear();
+           this.onView();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -111,7 +123,22 @@ export class FeedbackComponent implements OnInit {
 
 
   onClear() {
-
+    this.feedbackForm.form.markAsUntouched();
+    this.feedbackForm.form.markAsPristine();
+    this.feedBack = null;
+    this.feedBackFileName = null;
   }
 
+  onView() {
+    const params = {
+      'StudentId' : 216,
+       }
+    this._restApiService.getByParameters(PathConstants.FeedBack_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined && res.Table.length !== 0) {
+        this.data = res.Table;
+      }
+    })
+  }
 }
+
+
