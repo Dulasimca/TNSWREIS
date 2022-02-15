@@ -196,6 +196,8 @@ export class AttendanceImageComponent implements OnInit {
           this.attendanceId = 0;
         }
       });
+      //new line added
+      this.blockUI.stop();
     }
 
   }
