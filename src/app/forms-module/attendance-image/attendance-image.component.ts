@@ -113,6 +113,7 @@ export class AttendanceImageComponent implements OnInit {
         'Longitude': this.location.lng,
         'uploadImage': this.webcamImage,
         'Flag': 1,
+        'isMobile' : 0
       }
       this.restApiService.post(PathConstants.AttendanceImage_Post, params).subscribe(res => {
         if (res.Item1) {
