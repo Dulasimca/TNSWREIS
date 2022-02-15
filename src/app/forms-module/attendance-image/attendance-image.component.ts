@@ -63,7 +63,7 @@ export class AttendanceImageComponent implements OnInit {
       { field: 'Longitude', header: 'Longitude', width: '100px' },
       { field: 'Remarks', header: 'Remarks', width: '100px' },
     ];
-    this.Slno = 0;++
+    this.Slno = 0;
     this.imagecount = 0;
     this.noOfStudent = 0;
     this.login_user = this._authService.UserInfo;
