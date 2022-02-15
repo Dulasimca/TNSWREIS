@@ -3,12 +3,12 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
-import { ResponseMessage } from '../Common-Modules/messages';
-import { PathConstants } from '../Common-Modules/PathConstants';
-import { User } from '../interfaces/user';
-import { AuthService } from '../services/auth.service';
-import { MasterService } from '../services/master-data.service';
-import { RestAPIService } from '../services/restAPI.service';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { MasterService } from 'src/app/services/master-data.service';
+import { RestAPIService } from 'src/app/services/restAPI.service';
 
 @Component({
   selector: 'app-student-feedback-registration',
@@ -39,6 +39,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   userMasterId: string;
   userData: any = [];
   checkEmail: boolean;
+  feedbackRegData: any = [];
 
   constructor(private _authService: AuthService, private _restApiService: RestAPIService, private _masterService: MasterService,
     private _messageService: MessageService) { }
@@ -220,7 +221,6 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
             this.enableField = true;
             isExists = true;
             this.studentName = this.StudentsData[i].studentName;
-            console.log('gh')
             break; //break the loop
           } else {
             isExists = false;
@@ -236,6 +236,31 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         }
       }
     }
+    this.checkRegistrationExists();
+  }
+
+  checkRegistrationExists() {
+    var isExists = false;
+    if (this.feedbackRegData.length !== 0) {
+      if (this.aadharNo.length > 11) {
+        //forloop
+        for (let i = 0; i < this.feedbackRegData.length; i++) {
+          if (this.feedbackRegData[i].aadharNo === this.aadharNo) {
+            isExists = true;
+            this.studentName = this.feedbackRegData[i].studentName;
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.SuccessMessage
+            })
+            break; //break the loop
+          } else {
+            isExists = false;
+            continue;  //continuing the loop
+          }
+        }
+      }
+    }
   }
 
   onView() {
@@ -244,6 +269,11 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         this.userData = res.Table;
       }
     })
+    // this._restApiService.get(PathConstants.StudentRegistration_Get).subscribe(r => {
+    //   if (r) {
+    //     this.feedbackRegData = r;
+    //   }
+    // })
   }
 
   checkIfEmailExists() {

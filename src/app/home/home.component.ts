@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
           "alt": "Description for Image 4",
           "title": "Title 3"
       },
+      
     ];
   }
 
