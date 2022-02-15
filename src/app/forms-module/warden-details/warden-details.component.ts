@@ -60,6 +60,7 @@ export class WardenDetailsComponent implements OnInit {
   logged_user: User;
   wardenFileName: string;
   disableSave: boolean;
+  isValidEmail: boolean;
   public formData = new FormData();
 
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
@@ -73,12 +74,14 @@ export class WardenDetailsComponent implements OnInit {
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 70;
     this.yearRange = start_year_range + ':' + current_year;
+    this.isValidEmail = false;
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getDistrictAll();
     this.nativeDistricts = this.masterService.getDistrictAll();
     this.taluks = this.masterService.getTalukAll();
     // this.hostels = this.masterService.getMaster('HN');
-    this.courses = this.masterService.getMaster('CU');
+    // this.courses = this.masterService.getMaster('CU');
+    this.courses = this.masterService.getMaster('CL');
     this.disableTaluk = true;
     this.wardenId = 0;
     this.disableSave = ((this.logged_user.roleId * 1) === 4) ? true : false;
@@ -126,7 +129,11 @@ export class WardenDetailsComponent implements OnInit {
         this.talukOptions.unshift({ label: '-select-', value: null });
         break;
       case 'CU':
-        this.courses.forEach(q => {
+        var filtered_data = [];
+        filtered_data = this.courses.filter(f => {
+          return f.type === 2;
+        })
+        filtered_data.forEach(q => {
           courseSelection.push({ label: q.name, value: q.code });
         })
         this.qualificationOptions = courseSelection;
@@ -167,6 +174,18 @@ export class WardenDetailsComponent implements OnInit {
           this.hostelOptions.unshift({ label: '-select', value: null });
         };
       })
+    }
+  }
+
+  validateEmail() {
+    var regex = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+    if(this.email !== undefined && this.email !== null) {
+      var str: string = this.email;
+      if(str.match(regex)) {
+        this.isValidEmail = false;
+      } else {
+        this.isValidEmail = true;
+      }
     }
   }
 
@@ -311,5 +330,6 @@ export class WardenDetailsComponent implements OnInit {
     this.data = [];
     this.wardenImage = null;
     this.disableSave = ((this.logged_user.roleId * 1) === 4) ? true : false;
+    this.isValidEmail = false;
   }
 }

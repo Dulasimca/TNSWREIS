@@ -152,6 +152,6 @@ public static readonly FeedBack_Post = 'FeedBack/Post';
 public static readonly FeedBack_Get = 'FeedBack/Get';
 
 public static readonly StudentRegistration_Post = 'StudentRegistration/Post';
-
+public static readonly StudentRegistration_Get = 'StudentRegistration';
 
 }
