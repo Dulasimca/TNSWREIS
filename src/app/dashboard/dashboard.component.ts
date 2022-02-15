@@ -29,6 +29,9 @@ export class DashboardComponent implements OnInit {
     this.hostelCount = 0;
     this.wardenCount = 0;
     this.studentCount = 0;
+    this.totalDevice = 0;
+    this.totalPresent = 0;
+    this.totalStudent = 0;
     this.expensesToday = 10147;
     this.expensesMonthly = 45871;
     this.roleId = (this.login_user.roleId * 1);
@@ -49,21 +52,21 @@ export class DashboardComponent implements OnInit {
           if((this.login_user.roleId * 1) === 1) {
             this.hostelCount = res.Table1[0].hostelcount;
           } else {
-            this.totalStudent = res.Table1[0].totalStudent;
+            this.totalPresent = res.Table1[0].TotalPresent;
           }
           }
         if(res.Table2 !== undefined && res.Table2 !== null && res.Table2.length !== 0) {
           if((this.login_user.roleId * 1) === 1) {
             this.wardenCount = res.Table2[0].wardencount; 
           } else {
-            this.totalDevice = res.Table2[0].totalDevice;
+            this.totalDevice = res.Table2[0].TotalDevice;
           }
         }
         if(res.Table3 !== undefined && res.Table3 !== null && res.Table3.length !== 0) {
           if((this.login_user.roleId * 1) === 1) {
             this.studentCount = res.Table3[0].studentcount; 
           } else {
-            this.totalPresent = res.Table3[0].totalPresent;
+            this.totalStudent = res.Table3[0].TotalStudent;
           }
         }
       }
