@@ -103,7 +103,7 @@ export class AttendanceImageComponent implements OnInit {
       const params = {
         'Slno': this.Slno != undefined ? this.Slno : 0,
         'Id': 0,
-        'Uploaddate': this.date,
+        'Uploaddate':this.datepipe.transform(this.date, 'MM/dd/yyyy'), 
         'Districtcode': this.DistrictId,
         'Talukid': this.TalukId,
         'HostelID': this.HostelId,
