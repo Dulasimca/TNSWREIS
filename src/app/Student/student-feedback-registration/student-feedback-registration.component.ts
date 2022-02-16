@@ -40,6 +40,8 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   userData: any = [];
   checkEmail: boolean;
   feedbackRegData: any = [];
+  disableSave: boolean;
+  studentname: string;
 
   constructor(private _authService: AuthService, private _restApiService: RestAPIService, private _masterService: MasterService,
     private _messageService: MessageService) { }
@@ -243,21 +245,25 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
 
   checkRegistrationExists() {
     var isExists = false;
+    this.disableSave = false;
     if (this.feedbackRegData.length !== 0) {
       if (this.aadharNo.length > 11) {
         //forloop
         for (let i = 0; i < this.feedbackRegData.length; i++) {
-          if (this.feedbackRegData[i].aadharNo === this.aadharNo) {
+          if (this.feedbackRegData[i].AadharNo === this.aadharNo) {
             isExists = true;
-            this.studentName = this.feedbackRegData[i].studentName;
+            this.disableSave = true;
+            this.studentname = this.feedbackRegData[i].StudentName;
             this._messageService.clear();
             this._messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.SuccessMessage
+              summary: ResponseMessage.SUMMARY_ALERT, life: 4500,
+               detail: 'Hi' +' '+ this.studentname + '!' + ' ' +'You have been registered already. '
             })
             break; //break the loop
           } else {
             isExists = false;
+            this.disableSave = false;
             continue;  //continuing the loop
           }
         }
@@ -271,11 +277,11 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         this.userData = res.Table;
       }
     })
-    // this._restApiService.get(PathConstants.StudentRegistration_Get).subscribe(r => {
-    //   if (r) {
-    //     this.feedbackRegData = r;
-    //   }
-    // })
+    this._restApiService.get(PathConstants.StudentRegistration_Get).subscribe(r => {
+      if (r) {
+        this.feedbackRegData = r;
+      }
+    })
   }
 
   checkIfEmailExists() {
