@@ -670,6 +670,7 @@ main {
     font-size: 18px;
     font-weight: 500;
     color: whitesmoke;
+    cursor: pointer;
 }
 .feedback-box .feedback-box-content .feedback-box-icon {
     border-radius: 50%;
@@ -682,4 +683,16 @@ main {
 .feedback-box .feedback-box-content .feedback-box-icon i {
     line-height: inherit;
     font-size: 28px;
+}
+.txt-type {
+  color:#08747bc9 !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+  font-size: 11px !important;
+  /* text-align: center !important; */
+}
+.txt-type-1 { 
+    cursor: pointer;
+    font-size: 11px !important;
+    /* text-align: center !important; */
 }
