@@ -639,3 +639,47 @@ main {
 .p-overlaypanel .p-overlaypanel-content {
     background: #fdf8ef !important;
 }
+
+.feedback-box {
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 12%), 0 0 2px 0 rgb(0 0 0 / 14%);
+}
+.feedback-box.feedback-box-1 .feedback-box-header {
+    background-color: #92697754;;
+}
+.feedback-box .feedback-box-header {
+    height: 24px;
+}
+.feedback-box .feedback-box-content {
+    padding: 8px 14px 25px 14px;
+}
+.feedback-box.feedback-box-1 .feedback-box-content {
+    background-color: #926977;
+}
+.feedback-box .feedback-box-content .feedback-box-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto;
+    margin-top: -28px;
+    background: #926977;
+}
+.feedback-box .feedback-box-content .feedback-box-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: whitesmoke;
+}
+.feedback-box .feedback-box-content .feedback-box-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto;
+    margin-top: -28px;
+}
+.feedback-box .feedback-box-content .feedback-box-icon i {
+    line-height: inherit;
+    font-size: 28px;
+}

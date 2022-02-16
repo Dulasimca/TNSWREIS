@@ -186,6 +186,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   }
 
   loadStudentsData() {
+    if(this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined && this.hostel !== null && this.hostel !== undefined){
     const params = {
       'DCode': this.district,
       'TCode': this.taluk,
@@ -205,6 +206,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
     })
     this.onView();
   }
+}
 
   onAadharChange() {
     this.studentName = '';
@@ -291,7 +293,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
               if (email.trim() === entered_email) {
                 this._messageService.clear();
                 this._messageService.add({
-                  key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 2000,
+                  key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 3000,
                   summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.EmailAlreadyExists
                 })
                 this.checkEmail = false;
