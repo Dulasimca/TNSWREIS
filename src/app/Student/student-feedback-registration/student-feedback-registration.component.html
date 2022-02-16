@@ -47,7 +47,7 @@
                                                 <div><label for="_studentName">Name<span
                                                             class="form-mandatory-field">*</span></label></div>
                                                 <input type="text" class="p-col-12" name="_studentName" pInputText
-                                                    [(ngModel)]="studentName" />
+                                                    [(ngModel)]="studentName" style="text-transform: capitalize;" readonly="true" />
                                             </div>
                                             <div *ngIf="enableField" class="p-col-12 p-md-6 p-lg-3 no-pad-left">
                                                 <label for="_email">Email Id<span
@@ -65,7 +65,7 @@
                             <div class="p-col-12"></div>
                             <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                                 <button pButton type="button" label="Submit" icon="pi pi-check-circle"
-                                    (click)="onSubmit()" [disabled]="(!f.valid || !email)"></button>&nbsp;
+                                    (click)="onSubmit()" [disabled]="(!f.valid || !email || disableSave)"></button>&nbsp;
                             </div>
                         </div>
                     </div>
