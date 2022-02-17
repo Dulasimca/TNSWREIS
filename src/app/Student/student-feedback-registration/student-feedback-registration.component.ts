@@ -2,7 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { User } from 'src/app/interfaces/user';
@@ -35,6 +37,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   logged_user: User;
   StudentId: any;
   @ViewChild('f', { static: false }) _studentFeedback: NgForm;
+  @BlockUI() blockUI: NgBlockUI;
   enableField: boolean;
   userMasterId: string;
   userData: any = [];
@@ -54,6 +57,16 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
     this.districts = this._masterService.getDistrictAll();
     this.taluks = this._masterService.getTalukAll();
     this.StudentId = 0;
+    this.blockUI.start();
+    let master = new Observable<any[]>();
+    master = this._masterService.initializeMaster();
+    master.subscribe(response => {
+      if(response){
+        this.blockUI.stop();
+      }else {
+        this.blockUI.start();
+      }
+    });
 
   }
 
