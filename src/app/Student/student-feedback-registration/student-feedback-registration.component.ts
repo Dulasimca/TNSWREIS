@@ -90,7 +90,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
         'DCode': this.district,
         'TCode': this.taluk,
         'HostelId': 0
-        
+
       }
       if (this.district !== null && this.district !== undefined) {
         this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
@@ -188,27 +188,27 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   }
 
   loadStudentsData() {
-    if(this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined && this.hostel !== null && this.hostel !== undefined){
-    const params = {
-      'DCode': this.district,
-      'TCode': this.taluk,
-      'HCode': this.hostel
-    }
-    this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
-      if (res !== undefined && res !== null && res.length !== 0) {
-        this.StudentsData = res;
-        console.log('rs', this.StudentsData)
-      } else {
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
-        })
+    if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined && this.hostel !== null && this.hostel !== undefined) {
+      const params = {
+        'DCode': this.district,
+        'TCode': this.taluk,
+        'HCode': this.hostel
       }
-    })
-    this.onView();
+      this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
+        if (res !== undefined && res !== null && res.length !== 0) {
+          this.StudentsData = res;
+          console.log('rs', this.StudentsData)
+        } else {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+          })
+        }
+      })
+      this.onView();
+    }
   }
-}
 
   onAadharChange() {
     this.studentName = '';
@@ -258,7 +258,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
             this._messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
               summary: ResponseMessage.SUMMARY_ALERT, life: 4500,
-               detail: 'Hi' +' '+ this.studentname + '!' + ' ' +'You have been registered already. '
+              detail: 'Hi' + ' ' + this.studentname + '!' + ' ' + 'You have been registered already. '
             })
             break; //break the loop
           } else {
@@ -313,6 +313,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
       }
     }
   }
+
   clearForm() {
     this._studentFeedback.reset();
   }

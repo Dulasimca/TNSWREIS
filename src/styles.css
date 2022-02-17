@@ -690,14 +690,14 @@ main {
     line-height: inherit;
     font-size: 28px;
 }
-.txt-type {
+.login-link {
   color:#08747bc9 !important;
   text-decoration: underline !important;
   cursor: pointer;
   font-size: 11px !important;
   /* text-align: center !important; */
 }
-.txt-type-1 { 
+.login-text { 
     cursor: pointer;
     font-size: 11px !important;
     /* text-align: center !important; */

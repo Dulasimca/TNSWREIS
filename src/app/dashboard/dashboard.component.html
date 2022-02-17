@@ -10,7 +10,8 @@
                 <div #grid1 *ngIf="roleId != 5" class="p-grid div-main">
                     <div class="p-col-1 p-md-1 p-lg-1"></div>
                     <div class="p-col-10 p-md-10 p-lg-10 no-pad-top"
-                        [ngStyle]="{'margin-left': (roleId==1) ? '5%;' : '1%'}" [ngStyle.xs]="{'margin-left.rem': -0.5}">
+                        [ngStyle]="{'margin-left': (roleId==1) ? '5%;' : '1%'}"
+                        [ngStyle.xs]="{'margin-left.rem': -0.5}">
                         <div class="p-grid">
                             <div [ngClass]="(roleId==1) ? '' : 'p-col-12 p-md-12 p-lg-1'"></div>
                             <!-- [ngClass]="(roleId==1) ? 'p-col-12 p-md-6 p-lg-2' : 'p-col-12 p-md-6 p-lg-3'" -->
@@ -93,7 +94,6 @@
                                 </div>
                             </div>
                             <!-- <div [ngClass]="(roleId==5) ? 'p-col-1 p-md-1 p-lg-4' : 'p-col-1 p-md-1 p-lg-2'"></div> -->
-
                         </div>
                     </div>
                     <div class="p-col-1 p-md-1 p-lg-1"></div>
@@ -107,8 +107,7 @@
                             </div>
                             <div class="feedback-box-content">
                                 <div class="feedback-box-icon">
-                                    <i class="pi pi-comment"></i> 
-                                    <!-- <i class="fa"></i> -->
+                                    <i class="pi pi-comment"></i>
                                 </div>
                                 <div class="feedback-box-title">
                                     Submit your feedback
@@ -116,12 +115,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="overview-box-icon">
-                            <i class="pi pi-pencil"></i>
-                        </div>
-                        <div class="p-col-12 p-md-12 p-lg-12 no-padding" pTooltip="Click to type feedback">
-                            <span class="dsh-tab-label">Submit your feedback</span><br />
-                        </div> -->
                     </div>
                 </div>
                 <div #row2 class="p-col-12 p-md-12 p-lg-12" *ngIf="roleId==1">
