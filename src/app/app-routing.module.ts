@@ -133,7 +133,7 @@ const routes: Routes = [
   { path: 'purchasedetailsreport', component:PurchasedetailsReportComponent, canActivate: [AuthGuard]},
   { path: 'devicemappingreport', component:DevicemappingReportComponent, canActivate: [AuthGuard]},
   { path: 'feedback', component:FeedbackComponent, canActivate: [AuthGuard]},
-  { path: 'studentfeedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
+  { path: 'studentfeedback-registration', component:StudentFeedbackRegistrationComponent},
   { path: 'studentfeedback', component:StudentFeedbackComponent, canActivate: [AuthGuard]},
   // { path: 'feedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
   

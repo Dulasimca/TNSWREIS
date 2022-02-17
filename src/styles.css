@@ -632,6 +632,12 @@ main {
 .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text {
     color: whitesmoke !important;
 }
+.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link {
+    padding: 0.75rem 0.5rem !important;
+}
+.p-menubar .p-submenu-list>.p-menuitem-active>p-menubarsub>.p-submenu-list {
+    left: -84% !important;
+}
 .p-datatable-tbody > tr > td > .p-column-title {
     white-space: pre !important;
     color: #0288d1 !important;
@@ -670,6 +676,7 @@ main {
     font-size: 18px;
     font-weight: 500;
     color: whitesmoke;
+    cursor: pointer;
 }
 .feedback-box .feedback-box-content .feedback-box-icon {
     border-radius: 50%;
@@ -682,4 +689,16 @@ main {
 .feedback-box .feedback-box-content .feedback-box-icon i {
     line-height: inherit;
     font-size: 28px;
+}
+.login-link {
+  color:#08747bc9 !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+  font-size: 11px !important;
+  /* text-align: center !important; */
+}
+.login-text { 
+    cursor: pointer;
+    font-size: 11px !important;
+    /* text-align: center !important; */
 }
