@@ -35,9 +35,9 @@ export class MenuHeaderComponent implements OnInit {
     });
     this._authService.isLoggedIn.subscribe(value => {
       this.showMenu = value;
-      this.logged_user = this._authService.UserInfo;
       if (this.showMenu) {
         this.items = this._authService.menu;
+        this.logged_user = this._authService.UserInfo;
         if (this.items.length !== 0) {
           this.items.forEach(i => {
              if(i.label === 'Logout') {
@@ -45,9 +45,8 @@ export class MenuHeaderComponent implements OnInit {
             }
           })
         }
-      }
-      this.username = this.logged_user.username;
-      this.roleId = (this.logged_user.roleId * 1);
+        this.username = this.logged_user.username;
+        this.roleId = (this.logged_user.roleId * 1);
       if(this.roleId === 1) {
         this.officeType = 'Head Office';
         this.place = '';
@@ -67,6 +66,7 @@ export class MenuHeaderComponent implements OnInit {
         this.place = str[0];
         this.placeType = 'Hostel';
       }
+    }
     });
   }
 
