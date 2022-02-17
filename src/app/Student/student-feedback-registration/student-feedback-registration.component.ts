@@ -45,29 +45,34 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   feedbackRegData: any = [];
   disableSave: boolean;
   studentname: string;
+  response: any;
 
   constructor(private _authService: AuthService, private _restApiService: RestAPIService, private _masterService: MasterService,
-    private _messageService: MessageService) { }
+    private _messageService: MessageService) { 
+    this.blockUI.start();
+      let master = new Observable<any[]>();
+    master = this._masterService.initializeMaster();
+    master.subscribe(response => {
+      this.response = response;
+    });
+    }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 30;
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
-    this.districts = this._masterService.getDistrictAll();
-    this.taluks = this._masterService.getTalukAll();
     this.StudentId = 0;
-    this.blockUI.start();
-    let master = new Observable<any[]>();
-    master = this._masterService.initializeMaster();
-    master.subscribe(response => {
-      if(response){
+    // var time = 100;
+    // var loop = 1;
+    // for(let i=0; i<loop; i++) {
+    //   if()
+    // }
+    setTimeout(() => {
+      this.districts = this._masterService.getDistrictAll();
+        this.taluks = this._masterService.getTalukAll();
         this.blockUI.stop();
-      }else {
-        this.blockUI.start();
-      }
-    });
-
+    }, 500);
   }
 
   onSelect(type) {
