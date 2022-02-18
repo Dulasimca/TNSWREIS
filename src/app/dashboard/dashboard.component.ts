@@ -48,25 +48,25 @@ export class DashboardComponent implements OnInit {
     }
     this._restApiService.getByParameters(PathConstants.Dashboard_Get, params).subscribe(res => {
       if(res !== undefined && res !== null) {
+        if(res.Table !== undefined && res.Table !== null && res.Table.length !== 0) {
+          if((this.login_user.roleId * 1) != 4) {
+            this.hostelCount = res.Table[0].hostelcount;
+          } else {
+            this.totalPresent = res.Table[0].TotalPresent;
+          }
+          }
         if(res.Table1 !== undefined && res.Table1 !== null && res.Table1.length !== 0) {
           if((this.login_user.roleId * 1) != 4) {
-            this.hostelCount = res.Table1[0].hostelcount;
+            this.wardenCount = res.Table1[0].wardencount; 
           } else {
-            this.totalPresent = res.Table1[0].TotalPresent;
-          }
-          }
-        if(res.Table2 !== undefined && res.Table2 !== null && res.Table2.length !== 0) {
-          if((this.login_user.roleId * 1) != 4) {
-            this.wardenCount = res.Table2[0].wardencount; 
-          } else {
-            this.totalDevice = res.Table2[0].TotalDevice;
+            this.totalDevice = res.Table1[0].TotalDevice;
           }
         }
-        if(res.Table3 !== undefined && res.Table3 !== null && res.Table3.length !== 0) {
+        if(res.Table2 !== undefined && res.Table2 !== null && res.Table2.length !== 0) {
           if((this.login_user.roleId * 1) != 4) {
-            this.studentCount = res.Table3[0].studentcount; 
+            this.studentCount = res.Table2[0].studentcount; 
           } else {
-            this.totalStudent = res.Table3[0].TotalStudent;
+            this.totalStudent = res.Table2[0].TotalStudent;
           }
         }
       }

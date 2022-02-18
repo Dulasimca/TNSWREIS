@@ -74,6 +74,7 @@ export class MenuHeaderComponent implements OnInit {
 
   onLogout() {
   //  this._op.toggle(event);
+    this.onToggleSidenav();
     this._authService.logout();
   }
 
