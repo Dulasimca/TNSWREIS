@@ -119,6 +119,7 @@ import { DevicemappingReportComponent } from './Reports/devicemapping-report/dev
 import { FeedbackComponent } from './Student/feedback/feedback.component';
 import { StudentFeedbackRegistrationComponent } from './Student/student-feedback-registration/student-feedback-registration.component';
 import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
+import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -190,6 +191,7 @@ import { StudentFeedbackComponent } from './Student/student-feedback/student-fee
     FeedbackComponent,
     StudentFeedbackRegistrationComponent,
     StudentFeedbackComponent,
+    HomepageImageUploadComponent,
     
   ],
   imports: [

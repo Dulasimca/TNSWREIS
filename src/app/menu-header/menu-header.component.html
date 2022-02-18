@@ -16,24 +16,15 @@
                     &nbsp; <span>Government Of Tamilnadu - ADW Hostel Management</span>
                 </div>
             </div>
-            <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+            <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="end end" fxHide.xs>
                 <p-menubar [model]="items"></p-menubar>
-                <!-- <div style="color: whitesmoke; text-align: center !important;">
-                    <i class="fa fa-user-circle-o" style="font-size:2rem;"></i><br/>
-                    <span style="font-size: 14px;">{{username}}</span><br/>
-                    <span style="font-size: 14px;">{{place}}</span>
-                </div> -->
             </div>
             <div *ngIf="!showMenu" fxFlex fxLayout fxFlexFill fxLayoutAlign="end end">
                 <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()"></button>
             </div>
-            <!-- <div style="color: whitesmoke; text-align: center !important;">
-                <span style="font-size: 14px;">Welcome {{username}} </span><br/>
-                <span style="font-size: 14px;">{{place}}</span>
-            </div> -->
             <div *ngIf="showMenu" style="color: whitesmoke; text-align: center !important; margin-left: 5px;"
-            pTooltip="user info" tooltipPosition="top">
-                <i class="fa fa-user-circle-o" style="font-size:2.5rem;" (click)="op.toggle($event)"></i><br/>
+            [ngStyle.xs]="{'margin-left': '35%'}">
+                <i class="fa fa-user-circle-o" style="font-size:2.5rem;" pTooltip="user info" tooltipPosition="top" (click)="op.toggle($event)"></i><br/>
             </div>
         </mat-toolbar>
         <p-overlayPanel #op>

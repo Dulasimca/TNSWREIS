@@ -41,6 +41,7 @@ export class FeedbackComponent implements OnInit {
       { field: 'FBMessage', header: 'Feedback', width: '200px', align: 'left !important'},
       { field: 'ReplyMessage', header: 'Reply Message', width: '200px', align: 'left !important'},
     ];
+    console.log(this.onView())
     this.onView();
     this.login_user = this._authService.UserInfo;
     this.hostelName = this.login_user.hostelName;
@@ -131,11 +132,12 @@ export class FeedbackComponent implements OnInit {
 
   onView() {
     const params = {
-      'StudentId' : 216,
+      'StudentId': 216, 
+      'Type' : 0,
        }
     this._restApiService.getByParameters(PathConstants.FeedBack_Get, params).subscribe(res => {
-      if (res !== null && res !== undefined && res.Table.length !== 0) {
-        this.data = res.Table;
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.data = res.slice(0);
       }
     })
   }

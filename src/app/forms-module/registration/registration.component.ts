@@ -349,6 +349,7 @@ export class RegistrationComponent implements OnInit {
     this.obj.motherYIncome = 0;
     this.obj.fatherYIncome = 0;
     this.obj.scholarshipId = (this.obj.scholarshipId !== undefined) ? this.obj.scholarshipId : '';
+    this.obj.micrNo = (this.obj.micrNo !== undefined && this.obj.micrNo !== null) ? this.obj.micrNo : '';
     this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {

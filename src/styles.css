@@ -32,10 +32,12 @@ body,html {
     padding-top: 7.5rem !important; */
     position: absolute;
     top: 85px !important;
-    bottom: 25px !important;
+    bottom: 35px !important;
     left: 0;
     right: 0;
-    overflow: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 0 2px 0 2px;
 }
 
 .cursor {
@@ -221,7 +223,8 @@ height: 25px !important;
   }
 /* footer */
 .footer {
-    position: absolute;
+    /* position: absolute; */
+    position: fixed;
     overflow: hidden !important;
     left: 0 !important;
     right: 0 !important;
@@ -632,6 +635,12 @@ main {
 .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text {
     color: whitesmoke !important;
 }
+.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link {
+    padding: 0.75rem 0.5rem !important;
+}
+.p-menubar .p-submenu-list>.p-menuitem-active>p-menubarsub>.p-submenu-list {
+    left: -84% !important;
+}
 .p-datatable-tbody > tr > td > .p-column-title {
     white-space: pre !important;
     color: #0288d1 !important;
@@ -670,6 +679,7 @@ main {
     font-size: 18px;
     font-weight: 500;
     color: whitesmoke;
+    cursor: pointer;
 }
 .feedback-box .feedback-box-content .feedback-box-icon {
     border-radius: 50%;
@@ -682,4 +692,16 @@ main {
 .feedback-box .feedback-box-content .feedback-box-icon i {
     line-height: inherit;
     font-size: 28px;
+}
+.login-link {
+  color:#08747bc9 !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+  font-size: 11px !important;
+  /* text-align: center !important; */
+}
+.login-text { 
+    cursor: pointer;
+    font-size: 11px !important;
+    /* text-align: center !important; */
 }
