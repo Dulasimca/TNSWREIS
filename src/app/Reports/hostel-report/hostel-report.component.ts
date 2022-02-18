@@ -69,10 +69,6 @@ export class HostelReportComponent implements OnInit {
     this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
-    //  this.districtname = this.login_user.districtName;
-    //  this.talukname = this.login_user.talukName;
-    //  this.hostelname=this.login_user.hostelName;
-    // this.role=this.login_user.roleId;
 
   }
 

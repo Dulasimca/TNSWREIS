@@ -150,6 +150,8 @@ public static readonly DeviceMappingReport_Get = 'DeviceMappingReport/Get';
 
 public static readonly FeedBack_Post = 'FeedBack/Post';
 public static readonly FeedBack_Get = 'FeedBack/Get';
+public static readonly FeedBackForHO_Get = 'FeedBackForHO/Get'
+public static readonly FeedBackReport_Get = 'FeedBackReport/Get'
 
 public static readonly StudentRegistration_Post = 'StudentRegistration/Post';
 public static readonly StudentRegistration_Get = 'StudentRegistration';
