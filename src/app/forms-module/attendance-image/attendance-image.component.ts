@@ -103,7 +103,7 @@ export class AttendanceImageComponent implements OnInit {
       const params = {
         'Slno': this.Slno != undefined ? this.Slno : 0,
         'Id': 0,
-        'Uploaddate': this.date,
+        'Uploaddate':this.datepipe.transform(this.date, 'MM/dd/yyyy'), 
         'Districtcode': this.DistrictId,
         'Talukid': this.TalukId,
         'HostelID': this.HostelId,
@@ -113,6 +113,7 @@ export class AttendanceImageComponent implements OnInit {
         'Longitude': this.location.lng,
         'uploadImage': this.webcamImage,
         'Flag': 1,
+        'isMobile' : 0
       }
       this.restApiService.post(PathConstants.AttendanceImage_Post, params).subscribe(res => {
         if (res.Item1) {
