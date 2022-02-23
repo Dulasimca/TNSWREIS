@@ -51,36 +51,30 @@ export class OpeningbalanceReportComponent implements OnInit {
 
   onSelect(type) {
     let yearSelection = [];
-
-  
-      let districtSelection = [];
-      let talukSelection = [];
-      if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
-        switch (type) {
-          case 'D':
-            this.districts.forEach(d => {
-              districtSelection.push({ label: d.name, value: d.code });
-            })
-            this.districtOptions = districtSelection;
-            if ((this.logged_user.roleId * 1) === 1) {
-              this.districtOptions.unshift({ label: 'All', value: 0 });
-            }
-            this.districtOptions.unshift({ label: '-select-', value: null });
-            break;
-          case 'T':
-              this.taluks.forEach(t => {
-                  talukSelection.push({ label: t.name, value: t.code });
-              })
-              this.talukOptions = talukSelection;
-              if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
-                this.talukOptions.unshift({ label: 'All', value: 0 });
-              }
-              this.talukOptions.unshift({ label: '-select-', value: null });
-            break;
-        
-      
-    
-      
+    let districtSelection = [];
+    let talukSelection = [];
+    if (this.logged_user.roleId !== undefined && this.logged_user.roleId !== null) {
+      switch (type) {
+        case 'D':
+          this.districts.forEach(d => {
+            districtSelection.push({ label: d.name, value: d.code });
+          })
+          this.districtOptions = districtSelection;
+          if ((this.logged_user.roleId * 1) === 1) {
+            this.districtOptions.unshift({ label: 'All', value: 0 });
+          }
+          this.districtOptions.unshift({ label: '-select-', value: null });
+          break;
+        case 'T':
+          this.taluks.forEach(t => {
+            talukSelection.push({ label: t.name, value: t.code });
+          })
+          this.talukOptions = talukSelection;
+          if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
+            this.talukOptions.unshift({ label: 'All', value: 0 });
+          }
+          this.talukOptions.unshift({ label: '-select-', value: null });
+          break;
         case 'Y':
           this.years.forEach(y => {
             yearSelection.push({ label: y.name, value: y.code });
@@ -96,34 +90,34 @@ export class OpeningbalanceReportComponent implements OnInit {
   changeDistrict() {
     let hostelSelection = [];
     const params = {
-      'Type' : 0,
+      'Type': 0,
       'DCode': this.district,
       'TCode': this.taluk,
       'HostelId': ((this.logged_user.roleId * 1) === 4) ? this.logged_user.hostelId : 0
     }
     if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
-    this.taluk !== null && this.taluk !== undefined) {
+      this.taluk !== null && this.taluk !== undefined) {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
-            this.hostels.forEach(h => {
-              hostelSelection.push({ label: h.HostelName, value: h.Slno });
-            })
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
         }
       })
     }
-  
-  this.hostelOptions = hostelSelection;
-  if((this.logged_user.roleId * 1) !== 4) {
-  this.hostelOptions.unshift({ label: 'All', value: 0 });
-}
-  this.hostelOptions.unshift({ label: '-select-', value: null });
-}
+
+    this.hostelOptions = hostelSelection;
+    if ((this.logged_user.roleId * 1) !== 4) {
+      this.hostelOptions.unshift({ label: 'All', value: 0 });
+    }
+    this.hostelOptions.unshift({ label: '-select-', value: null });
+  }
   refreshFields(value) {
-    if(value === 'D') {
+    if (value === 'D') {
       this.taluk = null;
       this.talukOptions = [];
-    } 
+    }
     this.changeDistrict();
   }
 
@@ -132,8 +126,8 @@ export class OpeningbalanceReportComponent implements OnInit {
     // if (type === 'D') {
     //   this.taluk = null;
     //   this.talukOptions = [];
-      //  this.hostelName = null;
-      // this.hostelOptions = [];
+    //  this.hostelName = null;
+    // this.hostelOptions = [];
     // }
     this.openingData = [];
     this.totalRecords = 0;
@@ -159,7 +153,7 @@ export class OpeningbalanceReportComponent implements OnInit {
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
-        } 
+        }
       })
     }
   }
