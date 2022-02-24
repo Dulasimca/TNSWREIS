@@ -64,6 +64,7 @@ import { DevicemappingReportComponent } from './Reports/devicemapping-report/dev
 import { FeedbackComponent } from './Student/feedback/feedback.component';
 import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
 import { StudentFeedbackRegistrationComponent } from './Student/student-feedback-registration/student-feedback-registration.component';
+import { HostelgalleryComponent } from './forms-module/hostelgallery/hostelgallery.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -135,7 +136,7 @@ const routes: Routes = [
   { path: 'feedback', component:FeedbackComponent, canActivate: [AuthGuard]},
   { path: 'studentfeedback-registration', component:StudentFeedbackRegistrationComponent},
   { path: 'studentfeedback', component:StudentFeedbackComponent, canActivate: [AuthGuard]},
-  // { path: 'feedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
+  { path: 'Hostelgallery', component:HostelgalleryComponent, canActivate: [AuthGuard]},
   
 ];
 

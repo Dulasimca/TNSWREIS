@@ -1,0 +1,27 @@
+<div class="p-col-12 p-md-12 p-lg-12" >
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-panel header="Hostel Gallery">
+        <div class="p-grid"> 
+        <div class="p-col-12 p-md-10 p-lg-6">
+            <div class="p-col-12 p-md-12 p-lg-2 no-pad-top">
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <div #field16><img [src]="Hostelactivityimages"
+                            style="width: 200px; height: 200px;" />
+                        <input style="display: none" name="_HostelImg"
+                            type="file" (change)="onFileUpload($event, 1)"
+                            #userFile>
+                        <button class="b-size" style="margin: 0 !important;"
+                            icon="pi pi-plus edit-size" pButton type="file" #file
+                            (click)="userFile.click()">
+                        </button>  
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                        <button pButton type="button" label="Save File" icon="pi pi-save" (click)="onSubmit()">
+                        </button>
+                    </div>
+                </div>               
+        </div>              
+        </div>
+        </div>
+    </p-panel>
+</div>

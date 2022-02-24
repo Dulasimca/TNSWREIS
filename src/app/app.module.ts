@@ -120,6 +120,7 @@ import { FeedbackComponent } from './Student/feedback/feedback.component';
 import { StudentFeedbackRegistrationComponent } from './Student/student-feedback-registration/student-feedback-registration.component';
 import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
 import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
+import { HostelgalleryComponent } from './forms-module/hostelgallery/hostelgallery.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -192,6 +193,7 @@ import { HomepageImageUploadComponent } from './forms-module/homepage-image-uplo
     StudentFeedbackRegistrationComponent,
     StudentFeedbackComponent,
     HomepageImageUploadComponent,
+    HostelgalleryComponent,
     
   ],
   imports: [
@@ -230,6 +232,8 @@ import { HomepageImageUploadComponent } from './forms-module/homepage-image-uplo
     TreeTableModule,
     ToggleButtonModule,
     OverlayPanelModule,
+    
+    
     BlockUIModule.forRoot(),
   ],
 
