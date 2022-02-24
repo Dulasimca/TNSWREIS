@@ -10,18 +10,19 @@ import { RestAPIService } from '../services/restAPI.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  hostelCount: number;
-  wardenCount: number;
-  studentCount: number;
-  totalStudent: number;
-  totalPresent: number;
-  totalDevice: number;
+  hostelCount: any;
+  wardenCount: any;
+  studentCount: any;
+  totalStudent: any;
+  totalPresent: any;
+  totalDevice: any;
   chartOptions: any;
   consumptionData: any;
   expensesToday: any;
   expensesMonthly: any;
   roleId: number;
   login_user: User;
+  isTypeNumber: boolean;
   constructor(private _authService: AuthService, private _restApiService: RestAPIService) { }
 
   ngOnInit(): void {
@@ -32,8 +33,8 @@ export class DashboardComponent implements OnInit {
     this.totalDevice = 0;
     this.totalPresent = 0;
     this.totalStudent = 0;
-    this.expensesToday = 10147;
-    this.expensesMonthly = 45871;
+    this.expensesToday = 0;
+    this.expensesMonthly = 0;
     this.roleId = (this.login_user.roleId * 1);
     this.loadCount();
     this.loadChart();
@@ -64,10 +65,23 @@ export class DashboardComponent implements OnInit {
         }
         if(res.Table2 !== undefined && res.Table2 !== null && res.Table2.length !== 0) {
           if((this.login_user.roleId * 1) != 4) {
+            var str: string = res.Table2[0].studentcount;
+            var hasSlash = str.includes('/');
+            this.isTypeNumber = (hasSlash) ? !hasSlash : hasSlash;
             this.studentCount = res.Table2[0].studentcount; 
           } else {
             this.totalStudent = res.Table2[0].TotalStudent;
           }
+        }
+        if(res.Table3 !== undefined && res.Table3 !== null && res.Table3.length !== 0) {
+          if((this.login_user.roleId * 1) === 1) {
+            this.expensesToday = res.Table3[0].Today; 
+          } 
+        }
+        if(res.Table4 !== undefined && res.Table4 !== null && res.Table4.length !== 0) {
+          if((this.login_user.roleId * 1) === 1) {
+            this.expensesMonthly = res.Table4[0].Monthly; 
+          } 
         }
       }
     })

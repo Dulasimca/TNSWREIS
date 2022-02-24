@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { PathConstants } from '../Common-Modules/PathConstants';
 import { RestAPIService } from '../services/restAPI.service';
 
@@ -50,4 +49,5 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.images = this.homeImageData;
   }
 
+ 
 }
