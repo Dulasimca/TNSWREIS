@@ -30,7 +30,6 @@ export class SidenavListComponent implements OnInit {
         })
 
       }
-      console.log('items', this.items)
     });
   }
 
