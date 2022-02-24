@@ -17,6 +17,7 @@ export interface Registration {
     instituteName: string;
     medium: number;
     classId: number;
+    courseYearId: number;
     courseTitle: string;
     lastStudiedInstituteName: string;
     lastStudiedInstituteAddress: string;

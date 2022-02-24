@@ -29,7 +29,7 @@ export class HomepageImageUploadComponent implements OnInit {
   showDialog: boolean;
   homeImage: string;
   @BlockUI() blockUI: NgBlockUI;
-  @ViewChild('f', { static: false }) attendanceimageForm: NgForm;
+  @ViewChild('f', { static: false }) homeImageUploadForm: NgForm;
   @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
   @ViewChild('file', { static: false }) _input: InputText;
   file: string;
@@ -177,6 +177,6 @@ export class HomepageImageUploadComponent implements OnInit {
   }
 
   clearform() {
-    this.title = null;
+   this.homeImageUploadForm.reset();
   }
 }

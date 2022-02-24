@@ -42,6 +42,9 @@ export class EmployeeMasterComponent implements OnInit {
   showDialog: boolean;
   empName: string;
   designation: string;
+  mode: any;
+  modeOptions: SelectItem[];
+  modes?: any;
   
   @ViewChild ('f', { static: false }) employeeForm: NgForm;
   constructor(private _authService: AuthService,private _masterService: MasterService
@@ -54,6 +57,7 @@ export class EmployeeMasterComponent implements OnInit {
       { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
       { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
       { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
+      { field: 'ModeName', header: 'Mode Of Appointment', width: '100px', align: 'left !important'},
       { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
       { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
       { field: 'Doj', header: 'Doj', width: '100px', align: 'left !important'},
@@ -72,6 +76,9 @@ export class EmployeeMasterComponent implements OnInit {
 
     this._restApiService.get(PathConstants.EmployeeDesignation_Get).subscribe(employeeDesignation => {
       this.employeeDesignation = employeeDesignation;
+    })
+    this._restApiService.get(PathConstants.ModesType_Get).subscribe(res => {
+      this.modes = res;
     })
   }
 
@@ -105,6 +112,7 @@ export class EmployeeMasterComponent implements OnInit {
       'Districtcode': this.Districtcode,
       'Talukid': this.TalukId,
       'Designation': this.designationName,
+      'ModeType': this.mode,
       'FirstName': this.firstName,
       'LastName': this.lastName,
       'Doj': this._datePipe.transform(this.doj, 'MM/dd/yyyy'),
@@ -158,6 +166,7 @@ export class EmployeeMasterComponent implements OnInit {
     let genderSelection = [];
     let districtSelection = [];
     let designationSelection =[];
+    let modeSelection = [];
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
@@ -180,6 +189,13 @@ export class EmployeeMasterComponent implements OnInit {
           this.designationOptions = designationSelection;
           this.designationOptions.unshift({ label: '-select', value: null });
           break;
+          case 'MA':
+            this.modes.forEach(m => {
+              modeSelection.push({ label:m.Modes, value: m.Id });
+          })
+          this.modeOptions = modeSelection;
+          this.modeOptions.unshift({ label: '-select', value: null });
+          break;
   }
 }
 
@@ -188,6 +204,8 @@ onRowSelect(event, selectedRow) {
   console.log('t',this.RowId)
   this.designationName = selectedRow.Designation;
   this.designationOptions = [{ label: selectedRow.DesignationName, value: selectedRow.Designation}];
+  this.mode = selectedRow.ModeType;
+  this.modeOptions = [{ label: selectedRow.ModeName, value: selectedRow.ModeTypeId}];
   this.firstName = selectedRow.FirstName;
   this.lastName = selectedRow.LastName;
   this.doj = new Date(selectedRow.Doj);
@@ -255,17 +273,18 @@ onUpdate() {
 
 onClear() {
   this.employeeForm.form.markAsUntouched();
+  this.employeeForm.reset();
   this.designationName = null;
   this.designationOptions = [];
   this.nativeDistrict = null;
   this.districtOptions = [];
-  this.firstName = null;
-  this.lastName = null;
+  // this.firstName = null;
+  // this.lastName = null;
   this.doj = new Date();
   this.gender = null;
   this.genderOptions = [];
-  this.address = null;
-  this.mobileNo = null;
+  // this.address = null;
+  // this.mobileNo = null;
   this.RowId = 0;
 }
 

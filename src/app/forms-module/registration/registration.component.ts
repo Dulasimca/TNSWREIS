@@ -45,6 +45,7 @@ export class RegistrationComponent implements OnInit {
   mediums?: any;
   subCasteOptions: SelectItem[];
   subcastes?: any;
+  courseYearOptions: SelectItem[];
   isDisability: boolean = false;
   studentImage: any;
   incomeImg: any;
@@ -110,7 +111,7 @@ export class RegistrationComponent implements OnInit {
     let classSelection = [];
     let mediumSelection = [];
     let subcasteSelection = [];
-    let courseSelection = [];
+    let courseYearSelection = [];
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
@@ -172,11 +173,15 @@ export class RegistrationComponent implements OnInit {
         break;
       case 'CL':
         var filtered_data = [];
+        var courseYear = [];
         if (this.institutionType === '1') {
           filtered_data = this.classes.filter(f => {
-            return f.type === 1;
+            return f.type === 1 ;
           })
         } else {
+          courseYear = this.classes.filter(c => {
+            return (c.code * 1) <= 5;
+          })
           filtered_data = this.classes.filter(f => {
             return f.type === 2;
           })
@@ -184,6 +189,11 @@ export class RegistrationComponent implements OnInit {
         filtered_data.forEach(c => {
           classSelection.push({ label: c.name, value: c.code });
         })
+        courseYear.forEach(y => {
+          courseYearSelection.push({ label: y.name + ' Year', value: y.code });
+        })
+        this.courseYearOptions = courseYearSelection;
+        this.courseYearOptions.unshift({ label: '-select-', value: null });
         this.classOptions = classSelection;
         this.classOptions.unshift({ label: '-select-', value: null });
         break;
@@ -435,6 +445,7 @@ export class RegistrationComponent implements OnInit {
       this.bloodGroupOptions = [{ label: row.bloodgroupName, value: row.bloodGroup }];
       this.mediumOptions = [{ label: row.mediumName, value: row.medium }];
       this.subCasteOptions = [{ label: row.subcasteName, value: row.subCaste }];
+      this.courseYearOptions = [{ label: row.CourseYear, value: row.CourseYearId }];
       this.obj.dob = new Date(row.dob);
       this.ageTxt = this.obj.age + ' Years';
       this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';

@@ -58,8 +58,12 @@ export class HostelinfrastructureComponent implements OnInit {
   hostelinfrastructureId: any;
   hostelInfraRow: any;
   filteredFloorData: any[] = [];
+  playgroundCheck: boolean = false;
+  wallCheck: boolean = false;
+  rampCheck: boolean = false;
+
   @BlockUI() blockUI: NgBlockUI;
-  @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;   
+  @ViewChild('f', { static: false }) hostelinfrastructure: NgForm;
   @ViewChild('t', { static: false }) hostelinfrastructureextent: NgForm;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private messageService: MessageService, private _authService: AuthService,
@@ -85,6 +89,9 @@ export class HostelinfrastructureComponent implements OnInit {
       { field: 'TotalArea', header: 'Total Area' },
       { field: 'BuildingArea', header: 'Building Area' },
       { field: 'NoOfFloor', header: 'No Of Floor' },
+      { field: 'PlaygroundCheck', header: 'PlayGround' },
+      { field: 'CompoundWallCheck', header: 'Compound Wall' },
+      { field: 'RampFacilityCheck', header: 'Ramp Facility' },
       // { field: 'NoOfRoom', header: 'No Of Room' },
       // { field: 'Kitchen', header: 'Kitchen' },
       // { field: 'Bathroom', header: 'Bathroom' },
@@ -120,6 +127,9 @@ export class HostelinfrastructureComponent implements OnInit {
       'TotalArea': this.TotalArea,
       'BuildingArea': this.BuildingArea,
       'NoOfFloor': this.NoOfFloor,
+      'PlaygroundCheck': (this.playgroundCheck) ? 1 : 0,
+      'CompoundWallCheck': (this.wallCheck) ? 1 : 0,
+      'RampFacilityCheck': (this.rampCheck) ? 1 : 0,
       // 'NoOfRoom': this.NoOfRoom,
       // 'Kitchen': this.Kitchen,
       // 'Bathroom': this.Bathroom,
@@ -162,10 +172,8 @@ export class HostelinfrastructureComponent implements OnInit {
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
         })
-
       }
     })
-
   }
 
   onLoad() {
@@ -202,9 +210,9 @@ export class HostelinfrastructureComponent implements OnInit {
   }
 
   onDataChecking() {
-    if(this.floorwisedetaildata.length !== 0) {
-      for(let i = 0; i < this.floorwisedetaildata.length; i ++) {
-        if((this.floorwisedetaildata[i].FloorNo * 1) === (this.floor * 1)) {
+    if (this.floorwisedetaildata.length !== 0) {
+      for (let i = 0; i < this.floorwisedetaildata.length; i++) {
+        if ((this.floorwisedetaildata[i].FloorNo * 1) === (this.floor * 1)) {
           this.floor = null;
           this.floorOptions = [];
           this.messageService.clear();
@@ -231,6 +239,9 @@ export class HostelinfrastructureComponent implements OnInit {
         if (res.Table.length !== 0) {
           this.disableFields = true;
           res.Table.forEach(r => {
+            r.PlaygroundCheck = (r.PlaygroundCheck) ? 'Available' : 'Unavailable';
+            r.CompoundWallCheck = (r.CompoundWallCheck) ? 'Available' : 'Unavailable';
+            r.RampFacilityCheck = (r.RampFacilityCheck) ? 'Available' : 'Unavailable';
           })
           this.data = res.Table;
           this.hostelinfrastructureId = res.Table[0].Id;
@@ -252,96 +263,97 @@ export class HostelinfrastructureComponent implements OnInit {
   }
 
   onUpdate() {
-      const params = {
-        'Id': this.floorwiseId,
-        'HostelInfraStructureId': this.hostelinfrastructureId,
-        'Districtcode': this.Districtcode,
-        'Talukid': this.Talukid,
-        'HostelId': this.HostelId,
-        'FloorNo': this.floor,
-        'StudentRoom': this.studentStayingRoom,
-        'WardenRoom': this.wardenStayingRoom,
-        'BathRoomNos': this.bathroom,
-        'ToiletRoomNos': this.toilet,
-        'UrinalNos': this.urinal,
-        'StudyingArea': this.studentStudyingRoom,
-        'Kitchen': this.kitchen,
-        'Library': this.library,
-        'Flag': 1,
-      };
+    const params = {
+      'Id': this.floorwiseId,
+      'HostelInfraStructureId': this.hostelinfrastructureId,
+      'Districtcode': this.Districtcode,
+      'Talukid': this.Talukid,
+      'HostelId': this.HostelId,
+      'FloorNo': this.floor,
+      'StudentRoom': this.studentStayingRoom,
+      'WardenRoom': this.wardenStayingRoom,
+      'BathRoomNos': this.bathroom,
+      'ToiletRoomNos': this.toilet,
+      'UrinalNos': this.urinal,
+      'StudyingArea': this.studentStudyingRoom,
+      'Kitchen': this.kitchen,
+      'Library': this.library,
+      'Flag': 1,
+    };
 
-      console.log(params)
-      this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post, params).subscribe(res => {
-        console.log(res)
-        if (res !== undefined && res !== null) {
-          if (res) {
-            this.blockUI.stop();
-            this.onClear(2);
-            this.onLoad();
-            this.showDialog = false;
-            this.messageService.clear();
-            this.messageService.add({
-              key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-              summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-            });
+    console.log(params)
+    this.restApiService.post(PathConstants.HostelInfraStructureExtent_Post, params).subscribe(res => {
+      console.log(res)
+      if (res !== undefined && res !== null) {
+        if (res) {
+          this.blockUI.stop();
+          this.onClear(2);
+          this.onLoad();
+          this.showDialog = false;
+          this.messageService.clear();
+          this.messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
 
-          } else {
-            this.blockUI.stop();
-            this.messageService.clear();
-            this.messageService.add({
-              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-            });
-          }
         } else {
+          this.blockUI.stop();
           this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
           });
         }
-      }, (err: HttpErrorResponse) => {
-        this.blockUI.stop();
-        if (err.status === 0 || err.status === 400) {
-          this.messageService.clear();
-          this.messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          })
+      } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
 
-        }
-      })
+      }
+    })
   }
 
 
   onClear(type) {
-    if(type ===1) {
-    this.hostelinfrastructure.form.markAsUntouched();
-    this.hostelinfrastructure.form.markAsPristine();
-    this.hostelinfraId = 0;
-    this.NoOfFloor = null;
-    this.TotalArea = null;
-    this.BuildingArea = null;
+    if (type === 1) {
+      this.hostelinfrastructure.form.markAsUntouched();
+      this.hostelinfrastructure.form.markAsPristine();
+      this.hostelinfraId = 0;
+      this.NoOfFloor = null;
+      this.TotalArea = null;
+      this.BuildingArea = null;
+      this.playgroundCheck = null;
+    }
+    else {
+      //this.hostelinfrastructureextent.reset();
+      this.hostelinfrastructureextent.form.markAsUntouched();
+      this.hostelinfrastructureextent.form.markAsPristine();
+      this.studentStayingRoom = null;
+      this.wardenStayingRoom = null;
+      this.library = null;
+      this.kitchen = null;
+      this.bathroom = null;
+      this.toilet = null;
+      this.urinal = null;
+      this.studentStudyingRoom = null;
+      this.floorwiseId = 0;
+      this.floor = null;
+      this.floorOptions = [];
+      this.disableFields = true;
+    }
   }
- else {
-   //this.hostelinfrastructureextent.reset();
-    this.hostelinfrastructureextent.form.markAsUntouched();
-    this.hostelinfrastructureextent.form.markAsPristine();
-    this.studentStayingRoom = null;
-    this.wardenStayingRoom = null;
-    this.library = null;
-    this.kitchen = null;
-    this.bathroom = null;
-    this.toilet = null;
-    this.urinal = null;
-    this.studentStudyingRoom = null;
-    this.floorwiseId = 0;
-    this.floor = null;
-    this.floorOptions = [];
-    this.disableFields = true;
-  }
-  }
-  
+
 
   onEdit(data) {
     this.showDialog = true;
