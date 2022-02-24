@@ -156,4 +156,11 @@ public static readonly FeedBackReport_Get = 'FeedBackReport/Get'
 public static readonly StudentRegistration_Post = 'StudentRegistration/Post';
 public static readonly StudentRegistration_Get = 'StudentRegistration';
 
+public static readonly HomePageImageUpload_Post = 'HomePageImageUpload/Post';
+public static readonly HomePageImageUpload_Get = 'HomePageImageUpload';
+public static readonly HomePageImageUpload_Put = 'HomePageImageUpload/Put';
+
+public static readonly ModesType_Get = 'ModesType';
+
+
 }

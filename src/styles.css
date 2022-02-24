@@ -706,3 +706,7 @@ main {
     font-size: 11px !important;
     /* text-align: center !important; */
 }
+.checkbox-align {
+    padding: 1.5rem !important;
+    padding-left: 3px !important;
+}

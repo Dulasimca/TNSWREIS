@@ -37,9 +37,10 @@
                                                             </div>
                                                             <div #field3 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span #cal class="p-float-label">
-                                                                    <p-calendar dateFormat="dd/mm/yy" [appendTo]="field3"
-                                                                        [showOtherMonths]="false" [(ngModel)]="obj.dob"
-                                                                        name="_dob" [monthNavigator]="true" [readonlyInput]="true"
+                                                                    <p-calendar dateFormat="dd/mm/yy"
+                                                                        [appendTo]="field3" [showOtherMonths]="false"
+                                                                        [(ngModel)]="obj.dob" name="_dob"
+                                                                        [monthNavigator]="true" [readonlyInput]="true"
                                                                         [yearNavigator]="true" yearRange="{{yearRange}}"
                                                                         inputId="dateofbirth" [showIcon]="true"
                                                                         (onSelect)="calculateAge()" required>
@@ -268,6 +269,17 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
+                                                    <div #field22 *ngIf="institutionType=='0'"
+                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <p-dropdown name="_courseyear" [options]="courseYearOptions"
+                                                                (onClick)="onSelect('CL')" [(ngModel)]="obj.courseYearId"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_courseyear">Year<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
                                                     <div #field23 *ngIf="institutionType=='0'"
                                                         class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
@@ -276,8 +288,7 @@
                                                             <label for="_coursetitle">Course Title</label>
                                                         </span>
                                                     </div>
-                                                     <div #field20  
-                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                    <div #field20 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
                                                             <p-dropdown name="_schoolmedium" [options]="mediumOptions"
                                                                 (onClick)="onSelect('MD')" [(ngModel)]="obj.medium">
@@ -461,11 +472,13 @@
                                                         <span class="p-float-label">
                                                             <input type="text" name="_aadharno" pInputText
                                                                 [(ngModel)]="aadharNo" appInputFormat="digitOnly"
-                                                                (input)="validateAadhaar(aadharNo)" minlength="12" maxlength="12" required>
+                                                                (input)="validateAadhaar(aadharNo)" minlength="12"
+                                                                maxlength="12" required>
                                                             <label for="_aadharno">Aadhar No<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
-                                                        <div style="font-size: 13px;color: red;"> {{aadharValidationMsg}}</div>
+                                                        <div style="font-size: 13px;color: red;">
+                                                            {{aadharValidationMsg}}</div>
                                                     </div>
                                                     <div #field39 class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
@@ -540,25 +553,22 @@
                                                         <div #field45 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fathername" id="fname"
-                                                                    pInputText [(ngModel)]="obj.fatherName" required>
-                                                                <label for="_fathername">Father Name<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    pInputText [(ngModel)]="obj.fatherName">
+                                                                <label for="_fathername">Father Name</label>
                                                             </span>
                                                         </div>
                                                         <div #field46 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fatheroccupation" pInputText
-                                                                    [(ngModel)]="obj.fatherOccupation" required>
-                                                                <label for="_fatheroccupation">Occupation<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    [(ngModel)]="obj.fatherOccupation">
+                                                                <label for="_fatheroccupation">Occupation</label>
                                                             </span>
                                                         </div>
                                                         <div #field47 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fathereducation" pInputText
-                                                                    [(ngModel)]="obj.fatherQualification" required>
-                                                                <label for="_fathereducation">Qualification<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    [(ngModel)]="obj.fatherQualification">
+                                                                <label for="_fathereducation">Qualification</label>
                                                             </span>
                                                         </div>
                                                         <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -566,9 +576,8 @@
                                                                 <input type="text" name="_fathermobno" pInputText
                                                                     [(ngModel)]="obj.fatherMoileNo"
                                                                     appInputFormat="digitOnly" maxlength="10"
-                                                                    minlength="10" required>
-                                                                <label for="_fathermobno">Mobile No<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    minlength="10">
+                                                                <label for="_fathermobno">Mobile No</label>
                                                             </span>
                                                         </div>
                                                         <!-- <div #field49 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -593,27 +602,22 @@
                                                         <div #field50 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_mothername" id="fname"
-                                                                    pInputText [(ngModel)]="obj.motherName" required>
-                                                                <label for="_mothername">Mother Name<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    pInputText [(ngModel)]="obj.motherName">
+                                                                <label for="_mothername">Mother Name</label>
                                                             </span>
                                                         </div>
                                                         <div #field51 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_motheroccupation" id="fname"
-                                                                    pInputText [(ngModel)]="obj.motherOccupation"
-                                                                    required>
-                                                                <label for="_motheroccupation">Occupation<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    pInputText [(ngModel)]="obj.motherOccupation">
+                                                                <label for="_motheroccupation">Occupation</label>
                                                             </span>
                                                         </div>
                                                         <div #field52 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_mothereducation" id="fname"
-                                                                    pInputText [(ngModel)]="obj.motherQualification"
-                                                                    required>
-                                                                <label for="_mothereducation">Qualification<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    pInputText [(ngModel)]="obj.motherQualification">
+                                                                <label for="_mothereducation">Qualification</label>
                                                             </span>
                                                         </div>
                                                         <div #field53 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -621,9 +625,8 @@
                                                                 <input type="text" name="_mothermobno" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherMoileNo"
                                                                     minlength="10" maxlength="10"
-                                                                    appInputFormat="digitOnly" required>
-                                                                <label for="_mothermobno">Mobile No<span
-                                                                        class="form-mandatory-field">*</span></label>
+                                                                    appInputFormat="digitOnly">
+                                                                <label for="_mothermobno">Mobile No</label>
                                                             </span>
                                                         </div>
                                                         <!-- <div #field54 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -796,8 +799,8 @@
                                             Edit :
                                         </span>
                                         <span>
-                                        <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
-                                        </button></span>
+                                            <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
+                                            </button></span>
                                     </td>
                                     <!-- <td style="width: 120px" (click)="onDelete(rowData, rowIndex)">
                                     <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">

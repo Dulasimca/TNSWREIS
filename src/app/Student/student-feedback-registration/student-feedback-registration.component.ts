@@ -26,6 +26,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
   dob: any;
   email: any;
   studentName: any;
+  studentExistingID: any;
   yearRange: any;
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
@@ -214,8 +215,7 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
       }
       this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
-          this.StudentsData = res;
-          console.log('rs', this.StudentsData)
+          this.StudentsData = res;          
         } else {
           this._messageService.clear();
           this._messageService.add({
@@ -247,8 +247,9 @@ export class StudentFeedbackRegistrationComponent implements OnInit {
           } else {
             isExists = false;
             continue;  //continuing the loop
-          }
+          }          
         }
+    
         if (!isExists) {
           this._messageService.clear();
           this._messageService.add({

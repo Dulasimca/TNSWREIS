@@ -133,6 +133,7 @@ export class WardenDetailsComponent implements OnInit {
         filtered_data = this.courses.filter(f => {
           return f.type === 2;
         })
+        console.log('f',filtered_data)
         filtered_data.forEach(q => {
           courseSelection.push({ label: q.name, value: q.code });
         })
