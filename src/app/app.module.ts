@@ -120,7 +120,7 @@ import { FeedbackComponent } from './Student/feedback/feedback.component';
 import { StudentFeedbackRegistrationComponent } from './Student/student-feedback-registration/student-feedback-registration.component';
 import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
 import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
-import { HostelgalleryComponent } from './forms-module/hostelgallery/hostelgallery.component';
+import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload/hostelgalleryupload.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -193,7 +193,7 @@ import { HostelgalleryComponent } from './forms-module/hostelgallery/hostelgalle
     StudentFeedbackRegistrationComponent,
     StudentFeedbackComponent,
     HomepageImageUploadComponent,
-    HostelgalleryComponent,
+    HostelgalleryuploadComponent,
     
   ],
   imports: [
