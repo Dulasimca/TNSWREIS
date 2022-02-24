@@ -42,7 +42,8 @@
                                     <span class="dsh-tab-label">Student (in No's)</span>
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-12 no-padding">
-                                    <span class="dsh-tab-value">{{studentCount | number:'1.0':'en-US'}}</span>
+                                    <span *ngIf="isTypeNumber" class="dsh-tab-value">{{studentCount | number:'1.0':'en-US'}}</span>
+                                    <span *ngIf="!isTypeNumber" class="dsh-tab-value">{{studentCount}}</span>
                                 </div>
                             </div>
                             <div #el4 *ngIf="roleId==1"
