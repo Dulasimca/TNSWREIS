@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { AuthGuard } from 'src/app/services/auth.guard';
-import { RestAPIService } from 'src/app/Services/restAPI.service';
+import { RestAPIService } from 'src/app/services/restAPI.service';
 import { User } from 'src/app/Interfaces/user';
-import { AuthService } from 'src/app/Services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient} from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
@@ -24,9 +24,12 @@ export class HostelgalleryuploadComponent implements OnInit {
   years?: any;
   imagefilenam: any;
   logged_user: User;
+  title: any;
   date: Date = new Date(); 
 
-  @ViewChild('userFile', { static: false }) _HostelImg: ElementRef;                             
+  @ViewChild('userFile', { static: false }) _HostelImg: ElementRef;   
+  public formData = new FormData();
+  ImageId: any;
   
   constructor(private masterService: MasterService,private _restApiService: RestAPIService,private messageService: MessageService, private _d: DomSanitizer,
   private _AuthGuard:  AuthGuard, private _authService: AuthService, private http: HttpClient,private _datePipe: DatePipe) { }
@@ -53,35 +56,62 @@ export class HostelgalleryuploadComponent implements OnInit {
         break;    
     }
   }
-   onFileUpload($event, id) {
-    const selectedFile = $event.target.files[0];
-    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-        const s_url = window.URL.createObjectURL(selectedFile);
-        this.Hostelactivityimages = this._d.bypassSecurityTrustUrl(s_url);
-        //this.imagefilenam = this.uploadFile($event.target.files);
-        this.imagefilenam = $event.target.files;       
-    }
-    public uploadFile = (files) => {
-      if (files.length === 0) {
-        return;
+  //  onFileUpload($event, id) {
+  //   const selectedFile = $event.target.files[0];
+  //   var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+  //       const s_url = window.URL.createObjectURL(selectedFile);
+  //       this.Hostelactivityimages = this._d.bypassSecurityTrustUrl(s_url);
+  //       //this.imagefilenam = this.uploadFile($event.target.files);
+  //       this.imagefilenam = $event.target.files;       
+  //   }
+    // public uploadFile = (files) => {
+    //   if (files.length === 0) {
+    //     return;
+    //   }
+    //   var formData = new FormData()
+    //   let fileToUpload: any = <File>files[0];
+    //   let actualFilename = '';
+    //   const subfolder = this.years.value;
+    //   console.log(subfolder)
+    //   const folderName = this.logged_user.hostelId + '/' + 'Events' +'/' + '2021-2022';
+    //   const filename = fileToUpload.name + '^' + folderName;
+    //   formData.append('file', fileToUpload, filename);
+    //   actualFilename = fileToUpload.name;
+    //   this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
+    //     .subscribe((event: any) => {
+    //     }
+    //     );
+    //     return actualFilename;
+    // }
+    public uploadFile = (event) => {
+      const selectedFile = event.target.files[0];
+      {
+        const url = window.URL.createObjectURL(selectedFile);
+        this.Hostelactivityimages = this._d.bypassSecurityTrustUrl(url);
       }
-      var formData = new FormData()
-      let fileToUpload: any = <File>files[0];
-      let actualFilename = '';
-      const subfolder = this.years.value;
-      console.log(subfolder)
-      const folderName = this.logged_user.hostelId + '/' + 'Events' +'/' + '2021-2022';
+      this.formData = new FormData()
+      let fileToUpload: any = <File>event.target.files[0];
+      const folderName = this.logged_user.hostelId + '/' + 'Documents';
       const filename = fileToUpload.name + '^' + folderName;
-      formData.append('file', fileToUpload, filename);
-      actualFilename = fileToUpload.name;
-      this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
-        .subscribe((event: any) => {
+      this.formData.append('file', fileToUpload, filename);
+      this.imagefilenam = fileToUpload.name;
+      this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, this.formData)
+        .subscribe(event => {
         }
         );
-        return actualFilename;
     }
+  
     onSubmit(){
-          this.uploadFile(this.imagefilenam);
+          const params = {
+            'Id ': this.ImageId,
+            'AccYear': this.year,
+            'ImageTitle': this.title,
+            'Image' : this.imagefilenam,
+            'Flag': 1
+          }
+          this._restApiService.post(PathConstants.HostelGallery_Post ,params).subscribe (res => {
+            
+          })
           this.messageService.clear();
           this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,

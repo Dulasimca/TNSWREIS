@@ -22,8 +22,8 @@ export class HostelGalleryComponent implements OnInit {
   districts?: any;
   taluks?: any;
   hostels?; any;
-  images: any[];
-  data: any = [];
+  images: any[] = [];
+  homeImageData: any = [];
   logged_user: User;
   disableFields : boolean;
   responsiveOptions:any[] = [
@@ -58,7 +58,34 @@ export class HostelGalleryComponent implements OnInit {
       this.disableFields = false;
       this.show = true;
     } 
-    this.in();
+    const params = {
+      'HCode': this.logged_user.hostelId
+    }
+    
+    // var path = 'assets/layout/' + this.logged_user.hostelId + '/Events/2021-2022';
+    this.restApiService.getByParameters(PathConstants.HostelGallery_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined) {
+        if (res.Table.length !== 0) {
+          res.Table.forEach(i => {
+          i.previewImageSrc='../../assets/layout/' + this.logged_user.hostelId +'/Events/2021-2022/'+i.Image;
+          i.thumbnailImageSrc='../../assets/layout/' + this.logged_user.hostelId +'/Events/2021-2022/'+i.Image;
+          
+        console.log('g')
+            // this.images.push({
+            //   "previewImageSrc":'assets/layout/Home/Documents/TN_ADW_Food_INspection.png',
+            //   "alt": i.ImageDescription,
+            //   "title": i.ImageDescription
+            // })
+          })
+          this.images = res.Table;
+        }
+      }
+    })
+  }
+    // ngAfterViewInit(): void {
+    //   console.log('sec')
+    //     this.images = this.homeImageData;
+    //   }
     // this.images= [
         //   {
         //     'previewImageSrc': '../../assets/layout/' + this.logged_user.hostelId +'/Events/2021-2022/',
@@ -75,7 +102,7 @@ export class HostelGalleryComponent implements OnInit {
   //     'title': 'Title 2'
   // },
   //     ]
-    }
+    
 
     onSelect(type) {
       let districtSelection = [];
@@ -136,29 +163,30 @@ export class HostelGalleryComponent implements OnInit {
   }
   }
 
-  loadTable() {
+ 
+//  in() {
+//   const params = {
+//   'HCode': this.logged_user.hostelId
+// }
 
-  }
- in() {
-  const params = {
-  'HCode': this.logged_user.hostelId
-}
+// var path = 'assets/layout/Home/Documents/';
+// this.restApiService.getByParameters(PathConstants.HostelGallery_Get, params).subscribe(res => {
+//   if (res !== null && res !== undefined) {
+//     console.log('g')
+//     if (res.length !== 0) {
+//       res.forEach(i => {
+//         this.images.push({
+//           "previewImageSrc": path + i.Image,
+//           "alt": i.ImageDescription,
+//           "title": i.ImageDescription
+//         })
+//       })
+//     }
+//   }
+// })
 
-var path = 'assets/layout/' + this.logged_user.hostelId + '/Events/2021-2022';
-this.restApiService.getByParameters(PathConstants.HostelGallery_Get, params).subscribe(res => {
-  if (res !== null && res !== undefined) {
-    console.log('g')
-    if (res.length !== 0) {
-      res.forEach(i => {
-        this.images.push({
-          "previewImageSrc": path + i.Image,
-          "alt": i.ImageTitle,
-          "title": i.ImageTitle
-        })
-      })
-    }
-  }
-})
-
-}
+// }
+// ngAfterViewInit(): void {
+//   this.images = this.homeImageData;
+// }
 }
