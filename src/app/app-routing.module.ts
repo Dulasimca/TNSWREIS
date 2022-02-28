@@ -64,6 +64,7 @@ import { DevicemappingReportComponent } from './Reports/devicemapping-report/dev
 import { FeedbackComponent } from './Student/feedback/feedback.component';
 import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
 import { StudentFeedbackRegistrationComponent } from './Student/student-feedback-registration/student-feedback-registration.component';
+import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload/hostelgalleryupload.component';
 import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
 
 const routes: Routes = [
@@ -136,6 +137,8 @@ const routes: Routes = [
   { path: 'feedback', component:FeedbackComponent, canActivate: [AuthGuard]},
   { path: 'studentfeedback-registration', component:StudentFeedbackRegistrationComponent},
   { path: 'studentfeedback', component:StudentFeedbackComponent, canActivate: [AuthGuard]},
+  { path: 'Hostelgalleryupload', component:HostelgalleryuploadComponent, canActivate: [AuthGuard]},
+  
   // { path: 'feedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
   { path: 'homepage-image-upload', component:HomepageImageUploadComponent, canActivate: [AuthGuard]},
 ];

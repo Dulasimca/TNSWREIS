@@ -121,6 +121,7 @@ import { StudentFeedbackRegistrationComponent } from './Student/student-feedback
 import { StudentFeedbackComponent } from './Student/student-feedback/student-feedback.component';
 import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
 import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.component';
+import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload/hostelgalleryupload.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -194,6 +195,7 @@ import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.componen
     StudentFeedbackComponent,
     HomepageImageUploadComponent,
     HostelGalleryComponent,
+    HostelgalleryuploadComponent,
     
   ],
   imports: [
@@ -232,6 +234,8 @@ import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.componen
     TreeTableModule,
     ToggleButtonModule,
     OverlayPanelModule,
+    
+    
     BlockUIModule.forRoot(),
   ],
 

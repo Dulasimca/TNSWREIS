@@ -162,5 +162,10 @@ public static readonly HomePageImageUpload_Put = 'HomePageImageUpload/Put';
 
 public static readonly ModesType_Get = 'ModesType';
 
+public static readonly HostelGallery_Post = 'HostelGallery/Post';
+public static readonly HostelGallery_Get = 'HostelGallery/Get';
+
+
+
 
 }

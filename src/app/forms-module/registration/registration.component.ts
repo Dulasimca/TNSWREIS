@@ -14,6 +14,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -407,6 +408,7 @@ export class RegistrationComponent implements OnInit {
       'TCode': this.logged_user.talukId,
       'HCode': this.logged_user.hostelId
     }
+    
     this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
