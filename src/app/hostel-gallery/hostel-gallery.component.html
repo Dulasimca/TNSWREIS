@@ -45,7 +45,7 @@
                             [containerStyle]="{'max-width': '700px'}" [numVisible]="5" [circular]="true"
                             [autoPlay]="true" [transitionInterval]="2000">
                             <ng-template pTemplate="item" let-item>
-                                <img [src]="item.previewImageSrc" style="width: 730px;height: 300px;display: block;" />
+                                <img [src]="item.previewImageSrc" style="width: 700px;height: 300px;display: block; overflow: hidden;" />
                             </ng-template>
                             <ng-template pTemplate="thumbnail" let-item>
                                 <div class="p-grid p-nogutter p-justify-center">
