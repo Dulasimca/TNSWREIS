@@ -47,5 +47,7 @@ export class ResponseMessage {
     public static readonly AttendanceimageRestrict = 'You can upload only five image in a day';
     public static readonly ExistingdataMessage = 'OB Data Available. Use Edit Option';
     public static readonly Biometricvalidate = 'Biometric Device Available. Pemission Denied';
+    public static readonly NoImageMsg = 'No Images found!';
+
     
 }
