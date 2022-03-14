@@ -67,6 +67,7 @@ import { StudentFeedbackRegistrationComponent } from './Student/student-feedback
 import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload/hostelgalleryupload.component';
 import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
 import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -143,6 +144,8 @@ const routes: Routes = [
   // { path: 'feedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
   { path: 'homepage-image-upload', component:HomepageImageUploadComponent, canActivate: [AuthGuard]},
   { path: 'hostel-gallery', component:HostelGalleryComponent, canActivate: [AuthGuard]},
+  { path: 'privacy-policy', component:PrivacyPolicyComponent},
+
 ];
 
 

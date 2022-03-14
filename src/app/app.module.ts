@@ -122,6 +122,7 @@ import { StudentFeedbackComponent } from './Student/student-feedback/student-fee
 import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
 import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.component';
 import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload/hostelgalleryupload.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -196,6 +197,7 @@ import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload
     HomepageImageUploadComponent,
     HostelGalleryComponent,
     HostelgalleryuploadComponent,
+    PrivacyPolicyComponent,
     
   ],
   imports: [
