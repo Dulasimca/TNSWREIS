@@ -53,7 +53,7 @@ export class AuthService {
 
   public logout() {
     localStorage.removeItem('UserInfo');
-    this._router.navigate(['/']);
+    this._router.navigate(['/home']);
     window.location.reload();
     this.loggedIn.next(false);
   }
