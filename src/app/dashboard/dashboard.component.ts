@@ -155,7 +155,7 @@ export class DashboardComponent implements OnInit {
           datasets: [
             {
               label: 'Student count',
-              backgroundColor: '#d78479',
+              backgroundColor: '#a186c1',
               data: data
             },
           ]
