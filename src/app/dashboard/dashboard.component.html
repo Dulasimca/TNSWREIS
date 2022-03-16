@@ -127,7 +127,7 @@
                 <div #row2 class="p-col-12 p-md-12 p-lg-12" *ngIf="roleId==1">
                     <div #chart class="p-col-12 p-md-12 p-lg-12 no-padding card border-blue">
                         <div class="div-dsh-hd" style="font-weight: 500;">District Wise Student Count</div>
-                        <p-chart type="bar" [data]="studentCountData" [options]="barOptions" width="50vw"></p-chart>
+                        <p-chart type="bar" [data]="studentCountData" [options]="barChartOptions" [responsive]="true"></p-chart>
                     </div>
                 </div>
             </div>
