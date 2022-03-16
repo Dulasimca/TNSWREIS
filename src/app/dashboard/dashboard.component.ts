@@ -16,13 +16,16 @@ export class DashboardComponent implements OnInit {
   totalStudent: any;
   totalPresent: any;
   totalDevice: any;
-  chartOptions: any;
-  consumptionData: any;
+  // chartOptions: any;
+  studentCountData: any;
+  barOptions: any;
+  // consumptionData: any;
   expensesToday: any;
   expensesMonthly: any;
   roleId: number;
   login_user: User;
   isTypeNumber: boolean;
+  labels: any[] = [];
   constructor(private _authService: AuthService, private _restApiService: RestAPIService) { }
 
   ngOnInit(): void {
@@ -87,51 +90,78 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  loadChart() {
-    this.consumptionData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      datasets: [
-          {
-              label: 'Expenses in rupees',
-              data: [4500, 5121, 4451.99, 6784.44, 7812.08, 7411.33, 8457.74, 6548.5, 7455.10, 5466.11, 0,0],
-              fill: false,
-              borderColor: '#42A5F5',
-              tension: 0,
-              bezierCurve: false,
-    },
-      ]
-  };
-    this.chartOptions = {
-      responsive: true,
-      type: 'line',
-      bezierCurve: false,
-      plugins: {
-        legend: {
-            labels: {
-                color: '#495057'
-            }
-        }
-    },
-    scales: {
-        x: {
-            ticks: {
-                color: '#495057'
-            },
-            grid: {
-                color: '#ebedef'
-            }
-        },
-        y: {
-            ticks: {
-                color: '#495057'
-            },
-            grid: {
-                color: '#ebedef'
-            }
-        }
-    }
+  // loadChart() {
+  //   this.consumptionData = {
+  //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  //     datasets: [
+  //         {
+  //             label: 'Expenses in rupees',
+  //             data: [4500, 5121, 4451.99, 6784.44, 7812.08, 7411.33, 8457.74, 6548.5, 7455.10, 5466.11, 0,0],
+  //             fill: false,
+  //             borderColor: '#42A5F5',
+  //             tension: 0,
+  //             bezierCurve: false,
+  //   },
+  //     ]
+  // };
+  //   this.chartOptions = {
+  //     responsive: true,
+  //     type: 'line',
+  //     bezierCurve: false,
+  //     plugins: {
+  //       legend: {
+  //           labels: {
+  //               color: '#495057'
+  //           }
+  //       }
+  //   },
+  //   scales: {
+  //       x: {
+  //           ticks: {
+  //               color: '#495057'
+  //           },
+  //           grid: {
+  //               color: '#ebedef'
+  //           }
+  //       },
+  //       y: {
+  //           ticks: {
+  //               color: '#495057'
+  //           },
+  //           grid: {
+  //               color: '#ebedef'
+  //           }
+  //       }
+  //   }
 
-    }
-  }
+  //   }
+  // }
 
+loadChart() {
+  this._restApiService.get(PathConstants.StudentCount_Get).subscribe(res => {
+    if (res !== null && res !== undefined && res.length !== 0){
+      // this.studentCountData = res
+        // this.labels = res;
+        console.log(res,this.labels)
+    }
+  })
+ 
+this.studentCountData = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [
+      {
+          label: 'My First dataset',
+          backgroundColor: '#42A5F5',
+          data: [65, 59, 80, 81, 56, 55, 40]
+      },
+      // {
+      //     label: 'My Second dataset',
+      //     backgroundColor: '#FFA726',
+      //     data: [28, 48, 40, 19, 86, 27, 90]
+      // }
+  ]
+};
+
+
+}
 }

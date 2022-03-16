@@ -165,7 +165,6 @@ public static readonly ModesType_Get = 'ModesType';
 public static readonly HostelGallery_Post = 'HostelGallery/Post';
 public static readonly HostelGallery_Get = 'HostelGallery/Get';
 
-
-
+public static readonly StudentCount_Get = 'StudentCount';
 
 }
