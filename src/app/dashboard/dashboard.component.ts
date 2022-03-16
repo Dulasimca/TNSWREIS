@@ -17,9 +17,9 @@ export class DashboardComponent implements OnInit {
   totalStudent: any;
   totalPresent: any;
   totalDevice: any;
-  // chartOptions: any;
+  chartOptions: any;
   studentCountData: any;
-  // consumptionData: any;
+  consumptionData: any;
   expensesToday: any;
   expensesMonthly: any;
   roleId: number;
@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
     this.roleId = (this.login_user.roleId * 1);
     this.loadCount();
     this.loadChart();
+    this.loadBarChart();
   }
 
   loadCount() {
@@ -91,54 +92,54 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  // loadChart() {
-  //   this.consumptionData = {
-  //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-  //     datasets: [
-  //         {
-  //             label: 'Expenses in rupees',
-  //             data: [4500, 5121, 4451.99, 6784.44, 7812.08, 7411.33, 8457.74, 6548.5, 7455.10, 5466.11, 0,0],
-  //             fill: false,
-  //             borderColor: '#42A5F5',
-  //             tension: 0,
-  //             bezierCurve: false,
-  //   },
-  //     ]
-  // };
-  //   this.chartOptions = {
-  //     responsive: true,
-  //     type: 'line',
-  //     bezierCurve: false,
-  //     plugins: {
-  //       legend: {
-  //           labels: {
-  //               color: '#495057'
-  //           }
-  //       }
-  //   },
-  //   scales: {
-  //       x: {
-  //           ticks: {
-  //               color: '#495057'
-  //           },
-  //           grid: {
-  //               color: '#ebedef'
-  //           }
-  //       },
-  //       y: {
-  //           ticks: {
-  //               color: '#495057'
-  //           },
-  //           grid: {
-  //               color: '#ebedef'
-  //           }
-  //       }
-  //   }
-
-  //   }
-  // }
-
   loadChart() {
+    this.consumptionData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      datasets: [
+          {
+              label: 'Expenses in rupees',
+              data: [4500, 5121, 4451.99, 6784.44, 7812.08, 7411.33, 8457.74, 6548.5, 7455.10, 5466.11, 0,0],
+              fill: false,
+              borderColor: '#42A5F5',
+              tension: 0,
+              bezierCurve: false,
+    },
+      ]
+  };
+    this.chartOptions = {
+      responsive: true,
+      type: 'line',
+      bezierCurve: false,
+      plugins: {
+        legend: {
+            labels: {
+                color: '#495057'
+            }
+        }
+    },
+    scales: {
+        x: {
+            ticks: {
+                color: '#495057'
+            },
+            grid: {
+                color: '#ebedef'
+            }
+        },
+        y: {
+            ticks: {
+                color: '#495057'
+            },
+            grid: {
+                color: '#ebedef'
+            }
+        }
+    }
+
+    }
+  }
+
+  loadBarChart() {
     let max_value = 0;
     this._restApiService.get(PathConstants.StudentCount_Get).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
@@ -154,7 +155,7 @@ export class DashboardComponent implements OnInit {
           datasets: [
             {
               label: 'Student count',
-              backgroundColor: '#09d8eb',
+              backgroundColor: '#d78479',
               data: data
             },
           ]
