@@ -120,14 +120,14 @@
                 </div>
                 <div #row2 class="p-col-12 p-md-12 p-lg-12" *ngIf="roleId==1">
                     <div #chart class="p-col-12 p-md-12 p-lg-12 no-padding card border-blue">
-                        <div class="div-dsh-hd" style="font-weight: 500;">Month Wise Expenses</div>
-                        <p-chart type="line" [data]="consumptionData" [options]="chartOptions"></p-chart>
-                    </div>
-                </div>
-                <div #row2 class="p-col-12 p-md-12 p-lg-12" *ngIf="roleId==1">
-                    <div #chart class="p-col-12 p-md-12 p-lg-12 no-padding card border-blue">
                         <div class="div-dsh-hd" style="font-weight: 500;">District Wise Student Registration Count</div>
                         <p-chart type="bar" [data]="studentCountData" [options]="barChartOptions" [responsive]="true"></p-chart>
+                    </div>
+                </div>
+                <div #row3 class="p-col-12 p-md-12 p-lg-12" *ngIf="roleId==1 || roleId==2">
+                    <div #chart class="p-col-12 p-md-12 p-lg-12 no-padding card border-blue">
+                        <div class="div-dsh-hd" style="font-weight: 500;">Month Wise Expenses</div>
+                        <p-chart type="line" [data]="consumptionData" [options]="chartOptions"></p-chart>
                     </div>
                 </div>
             </div>

@@ -64,6 +64,7 @@ export class WardenDetailsComponent implements OnInit {
   public formData = new FormData();
 
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
+  loading: boolean;
 
   constructor(private restApiService: RestAPIService, private messageService: MessageService, private masterService: MasterService, private _d: DomSanitizer, private _tableConstants: TableConstants,
     private _datePipe: DatePipe, private http: HttpClient, private authService: AuthService) { }
@@ -269,6 +270,7 @@ export class WardenDetailsComponent implements OnInit {
 
   onView() {
     this.showTable = true;
+    this.loading = true;
     const params = {
       'DCode': (this.logged_user.districtCode !== undefined && this.logged_user.districtCode !== null) 
       ? this.logged_user.districtCode : 0,
@@ -280,6 +282,9 @@ export class WardenDetailsComponent implements OnInit {
     this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         this.data = res.Table;
+        this.loading = false;
+      }else {
+        this.loading = true;
       }
     });
   }

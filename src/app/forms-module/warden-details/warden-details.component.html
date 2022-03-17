@@ -156,8 +156,26 @@
                             </div>
                         </div>
                         <div *ngIf="showTable">
-                            <p-table [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
-                                [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
+                            <p-table #dt [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
+                                [paginator]="true" [rows]="40"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,40]" 
+                                [loading]="loading" [filterDelay]="0" [globalFilterFields]="['Name','Districtname']">
+                                <ng-template pTemplate="caption">
+                                    <div class="table-header">
+                                        <div class="p-grid">
+                                            <div class="p-col-6 p-md-6 p-lg-10 txt-end">
+                                                <span>Search by Warden name / District.</span>
+                                            </div>
+                                            <div class="p-col-4 p-md-4 p-lg-2">
+                                                <span class="p-input-icon-left">
+                                                    <i class="pi pi-search"></i>
+                                                    <input pInputText type="text" size="30"
+                                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                        placeholder="Global Search" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 50px;">S.No</th>
