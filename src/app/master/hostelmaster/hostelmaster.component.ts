@@ -64,6 +64,7 @@ export class HostelmasterComponent implements OnInit {
   public ngOnInit(): void {
    this.cols = [
      { field: 'HostelName', header: 'HostelName', width: '100px'},
+     { field: 'HostelCode', header: 'Hostel Code', width: '100px'},
      { field: 'HostelNameTamil', header: 'HostelNameTamil', width: '100px'},
      { field: 'HostelOpeningDate', header: 'Hostel Opening Date', width: '100px'},
      { field: 'FunctioningName', header: 'Functioning Type', width: '100px'},
