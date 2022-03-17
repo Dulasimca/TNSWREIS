@@ -359,9 +359,32 @@ export class RegistrationComponent implements OnInit {
     this.obj.hostelId = this.logged_user.hostelId;
     this.obj.motherYIncome = 0;
     this.obj.fatherYIncome = 0;
+    this.obj.altMobNo = (this.obj.altMobNo !== undefined && this.obj.altMobNo !== null) ? this.obj.altMobNo : '-';
+    this.obj.lastStudiedInstituteName = (this.obj.lastStudiedInstituteName !== undefined && this.obj.lastStudiedInstituteName !== null) ? this.obj.lastStudiedInstituteName : '-';
+    this.obj.lastStudiedInstituteAddress = (this.obj.lastStudiedInstituteAddress !== undefined && this.obj.lastStudiedInstituteAddress !== null) ? this.obj.lastStudiedInstituteAddress : '-';
+    this.obj.disabilityType = (this.obj.disabilityType !== undefined && this.obj.disabilityType !== null) ? this.obj.disabilityType : 0;
+    this.obj.landmark = (this.obj.landmark !== undefined && this.obj.landmark !== null) ? this.obj.landmark : '-';
+    this.obj.remarks = (this.obj.remarks !== undefined && this.obj.remarks !== null) ? this.obj.remarks : '-';
+    this.obj.fatherName = (this.obj.fatherName !== undefined && this.obj.fatherName !== null) ? this.obj.fatherName : '-';
+    this.obj.fatherOccupation = (this.obj.fatherOccupation !== undefined && this.obj.fatherOccupation !== null) ? this.obj.fatherOccupation : '-';
+    this.obj.fatherQualification = (this.obj.fatherQualification !== undefined && this.obj.fatherQualification !== null) ? this.obj.fatherQualification : '-';
+    this.obj.fatherMoileNo = (this.obj.fatherMoileNo !== undefined && this.obj.fatherMoileNo !== null) ? this.obj.fatherMoileNo : '-';
+    this.obj.motherName = (this.obj.motherName !== undefined && this.obj.motherName !== null) ? this.obj.motherName : '-';
+    this.obj.motherQualification = (this.obj.motherQualification !== undefined && this.obj.motherQualification !== null) ? this.obj.motherQualification : '-';
+    this.obj.motherOccupation = (this.obj.motherOccupation !== undefined && this.obj.motherOccupation !== null) ? this.obj.motherOccupation : '-';
+    this.obj.motherMoileNo = (this.obj.motherMoileNo !== undefined && this.obj.motherMoileNo !== null) ? this.obj.motherMoileNo : '-';
+    // this.obj.medium = (this.obj.medium !== undefined && this.obj.medium !== null) ? this.obj.medium : 0;
+    this.obj.courseTitle = (this.obj.courseTitle !== undefined && this.obj.courseTitle !== null) ? this.obj.courseTitle : '-';
     this.obj.scholarshipId = (this.obj.scholarshipId !== undefined) ? this.obj.scholarshipId : '';
     this.obj.micrNo = (this.obj.micrNo !== undefined && this.obj.micrNo !== null) ? this.obj.micrNo : '';
+    this.obj.branchName = (this.obj.branchName !== undefined && this.obj.branchName !== null) ? this.obj.branchName : '-';
     this.obj.courseYearId = (this.institutionType === '1') ? 0 : this.obj.courseYearId;
+    this.obj.village = (this.obj.village !== undefined && this.obj.village !== null) ? this.obj.village : '-';
+    this.obj.guardianName = (this.obj.guardianName !== undefined && this.obj.guardianName !== null) ? this.obj.guardianName : '-';
+    this.obj.guardianQualification = (this.obj.guardianQualification !== undefined && this.obj.guardianQualification !== null) ? this.obj.guardianQualification : '-';
+    this.obj.guardianOccupation = (this.obj.guardianOccupation !== undefined && this.obj.guardianOccupation !== null) ? this.obj.guardianOccupation : '-';
+    this.obj.guardianMobileNo = (this.obj.guardianMobileNo !== undefined && this.obj.guardianMobileNo !== null) ? this.obj.guardianMobileNo : '-';
+
     this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
