@@ -114,8 +114,8 @@ export class TableConstants {
         this.studentDetailsColumns = [
             { field: 'studentName', header: 'Name', align: 'left !important'},
             { field: 'AttendanceId', header: 'Attendance Id', align: 'right !important'},
-            { field: 'Districtname', header: 'District', align: 'left !important'},
-            { field: 'Talukname', header: 'Taluk', align: 'left !important'},
+            { field: 'hostelDName', header: 'District', align: 'left !important'},
+            { field: 'hostelTName', header: 'Taluk', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
             { field: 'age', header: 'Age', align: 'right !important'},
             { field: 'genderName', header: 'Gender', align: 'left !important'},

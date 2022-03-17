@@ -67,7 +67,9 @@ export class StudentDetailsComponent implements OnInit {
           break;
         case 'T':
           this.taluks.forEach(t => {
-            talukSelection.push({ label: t.name, value: t.code });
+            if (t.dcode === this.district) {
+              talukSelection.push({ label: t.name, value: t.code });
+            }
           })
           this.talukOptions = talukSelection;
           if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
