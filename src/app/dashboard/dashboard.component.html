@@ -8,12 +8,11 @@
         <div #main class="p-col-12 p-md-12 p-lg-12 no-pad-top">
             <div #row1 class="txt-center">
                 <div #grid1 *ngIf="roleId != 5" class="p-grid div-main">
-                    <div class="p-col-1 p-md-1 p-lg-1"></div>
-                    <div class="p-col-10 p-md-10 p-lg-10 no-pad-top"
-                        [ngStyle]="{'margin-left': (roleId==1) ? '5%;' : '1%'}"
+                    <!-- <div class="p-col-1 p-md-1 p-lg-1"></div> -->
+                    <div class="p-col-12 p-md-12 p-lg-12 no-pad-top"
                         [ngStyle.xs]="{'margin-left.rem': -0.5}">
-                        <div class="p-grid">
-                            <div [ngClass]="(roleId==1) ? '' : 'p-col-12 p-md-12 p-lg-1'"></div>
+                        <div class="p-grid" style="display: flex; justify-content: center;">
+                            <!-- <div [ngClass]="(roleId==1) ? '' : 'p-col-12 p-md-12 p-lg-1'"></div> -->
                             <!-- [ngClass]="(roleId==1) ? 'p-col-12 p-md-6 p-lg-2' : 'p-col-12 p-md-6 p-lg-3'" -->
                             <div #el1 *ngIf="(roleId == 1 || roleId == 2 || roleId == 3)"
                                 [ngClass]="(roleId==1) ? 'p-col-12 p-md-6 p-lg-2' : 'p-col-12 p-md-6 p-lg-3'"
