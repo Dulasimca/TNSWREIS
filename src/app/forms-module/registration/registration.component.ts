@@ -378,7 +378,7 @@ export class RegistrationComponent implements OnInit {
     this.obj.scholarshipId = (this.obj.scholarshipId !== undefined) ? this.obj.scholarshipId : '';
     this.obj.micrNo = (this.obj.micrNo !== undefined && this.obj.micrNo !== null) ? this.obj.micrNo : '';
     this.obj.branchName = (this.obj.branchName !== undefined && this.obj.branchName !== null) ? this.obj.branchName : '-';
-    this.obj.courseYearId = (this.institutionType === '1') ? 0 : this.obj.courseYearId;
+    this.obj.courseYearId = (this.institutionType === '1') ? 0 : (this.obj.courseYearId !== undefined && this.obj.courseYearId !== null) ? this.obj.courseYearId : 0;
     this.obj.village = (this.obj.village !== undefined && this.obj.village !== null) ? this.obj.village : '-';
     this.obj.guardianName = (this.obj.guardianName !== undefined && this.obj.guardianName !== null) ? this.obj.guardianName : '-';
     this.obj.guardianQualification = (this.obj.guardianQualification !== undefined && this.obj.guardianQualification !== null) ? this.obj.guardianQualification : '-';
