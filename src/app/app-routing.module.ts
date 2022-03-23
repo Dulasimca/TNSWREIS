@@ -34,6 +34,7 @@ import { DOFundManagementComponent } from './Fund-Management-Module/do-fund-mana
 import { HOFundmanagementComponent } from './Fund-Management-Module/ho-fundmanagement/ho-fundmanagement.component';
 import { TOFundManagementComponent } from './Fund-Management-Module/to-fund-management/to-fund-management.component';
 import { HostelFundManagementComponent } from './Fund-Management-Module/hostel-fund-management/hostel-fund-management.component';
+import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 
 import { AuditComponent } from './forms-module/audit/audit.component';
 import { StudentfacilityMasterComponent } from './master/studentfacility-master/studentfacility-master.component';
@@ -48,7 +49,6 @@ import { FeedingchargestypeReportComponent } from './Reports/feedingchargestype-
 import { EmployeeMasterComponent } from './master/employee-master/employee-master.component';
 import { EmployeeReportComponent } from './Reports/employee-report/employee-report.component';
 import { StudentTransferFormComponent } from './forms-module/student-transfer-form/student-transfer-form.component';
-import { FundmanagementReportComponent } from './Reports/fundmanagement-report/fundmanagement-report.component';
 import { EmployeeattendanceDetailsComponent } from './forms-module/employeeattendance-details/employeeattendance-details.component';
 import { StudentAttendanceComponent } from './forms-module/student-attendance/student-attendance.component';
 import { EmployeeattendanceReportComponent } from './Reports/employeeattendance-report/employeeattendance-report.component';
@@ -107,7 +107,7 @@ const routes: Routes = [
   { path: 'feedingchargestype', component:FeedingchargestypeComponent, canActivate: [AuthGuard]},
   { path: 'hostelinfrastructure', component:HostelinfrastructureComponent, canActivate: [AuthGuard]}, 
   { path: 'monthlywiseintent', component:MonthlywiseintentComponent,},
-  { path: 'taluk', component:DOFundManagementComponent, canActivate: [AuthGuard]},
+  // { path: 'taluk', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'ho-fundmanagement', component:HOFundmanagementComponent, canActivate: [AuthGuard]}, 
   { path: 'do-fundmanagement', component:DOFundManagementComponent, canActivate: [AuthGuard]},
   { path: 'to-fundmanagement', component:TOFundManagementComponent, canActivate: [AuthGuard]},
@@ -145,6 +145,7 @@ const routes: Routes = [
   { path: 'homepage-image-upload', component:HomepageImageUploadComponent, canActivate: [AuthGuard]},
   { path: 'hostel-gallery', component:HostelGalleryComponent, canActivate: [AuthGuard]},
   { path: 'privacy-policy', component:PrivacyPolicyComponent},
+  
 
 ];
 
