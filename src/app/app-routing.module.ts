@@ -68,6 +68,7 @@ import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload
 import { HomepageImageUploadComponent } from './forms-module/homepage-image-upload/homepage-image-upload.component';
 import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -145,6 +146,8 @@ const routes: Routes = [
   { path: 'homepage-image-upload', component:HomepageImageUploadComponent, canActivate: [AuthGuard]},
   { path: 'hostel-gallery', component:HostelGalleryComponent, canActivate: [AuthGuard]},
   { path: 'privacy-policy', component:PrivacyPolicyComponent},
+  { path: 'employee-strength', component:EmployeeStrengthComponent},
+
   
 
 ];

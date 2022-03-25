@@ -123,6 +123,7 @@ import { HomepageImageUploadComponent } from './forms-module/homepage-image-uplo
 import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.component';
 import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload/hostelgalleryupload.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -198,6 +199,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     HostelGalleryComponent,
     HostelgalleryuploadComponent,
     PrivacyPolicyComponent,
+    EmployeeStrengthComponent,
     
   ],
   imports: [
