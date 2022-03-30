@@ -60,6 +60,7 @@ export class EmployeeStrengthComponent implements OnInit {
       { field: 'Availability', header: 'Availability', width: '100px', align: 'center !important'},
       { field: 'Required', header: 'Required', width: '100px', align: 'center !important'},
     ];
+    this.onView();
   }
 
   onSelect(type) {
