@@ -11,7 +11,7 @@ footerText: string;
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
-    this.footerText = current_year + ' ' + ' - All Rights Reserved - Goverment of Tamilnadu'
+    this.footerText = current_year + ' ' + ' - All Rights Reserved - Government of Tamilnadu'
   }
 
 }
