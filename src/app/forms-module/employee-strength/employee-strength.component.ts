@@ -8,6 +8,7 @@ import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-employee-strength',
@@ -34,6 +35,7 @@ export class EmployeeStrengthComponent implements OnInit {
   RowId: 0;
   
   @ViewChild ('f', { static: false }) EmployeeStrengthForm: NgForm;
+  @BlockUI() blockUI: NgBlockUI;
   constructor(private _authService: AuthService,private _restApiService: RestAPIService,
     private _datepipe: DatePipe, private _messageService: MessageService) { }
 
@@ -89,7 +91,7 @@ export class EmployeeStrengthComponent implements OnInit {
     this._restApiService.post(PathConstants.EmployeeStrength_Post,params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
-          // this.blockUI.stop();
+          this.blockUI.stop();
            this.onClear();
            this.onView();
           this._messageService.clear();
@@ -99,7 +101,7 @@ export class EmployeeStrengthComponent implements OnInit {
           });
 
         } else {
-          // this.blockUI.stop();
+          this.blockUI.stop();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
@@ -114,7 +116,7 @@ export class EmployeeStrengthComponent implements OnInit {
         });
       }
     }, (err: HttpErrorResponse) => {
-      // this.blockUI.stop();
+      this.blockUI.stop();
       if (err.status === 0 || err.status === 400) {
         this._messageService.clear();
         this._messageService.add({
