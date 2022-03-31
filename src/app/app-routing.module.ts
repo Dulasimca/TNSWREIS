@@ -145,8 +145,8 @@ const routes: Routes = [
   // { path: 'feedback-registration', component:StudentFeedbackRegistrationComponent, canActivate: [AuthGuard]},
   { path: 'homepage-image-upload', component:HomepageImageUploadComponent, canActivate: [AuthGuard]},
   { path: 'hostel-gallery', component:HostelGalleryComponent, canActivate: [AuthGuard]},
-  { path: 'privacy-policy', component:PrivacyPolicyComponent},
-  { path: 'employee-strength', component:EmployeeStrengthComponent},
+  { path: 'privacy-policy', component:PrivacyPolicyComponent, canActivate: [AuthGuard]},
+  { path: 'employee-strength', component:EmployeeStrengthComponent, canActivate: [AuthGuard]},
 
   
 
