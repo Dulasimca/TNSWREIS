@@ -13,6 +13,7 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 @Component({
@@ -63,6 +64,7 @@ export class RegistrationComponent implements OnInit {
   aadharNo: string;
   aadharValidationMsg: string;
   maxDate: Date = new Date();
+  existingAadhar: any;
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
@@ -545,5 +547,23 @@ export class RegistrationComponent implements OnInit {
       c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
     }
     return inv[c];
+  }
+
+  checkAadhar() {
+    const params = {
+      'AadharNo': this.obj.aadharNo,
+    }
+    this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
+      console.log('data',res.Table)
+      if ( res.Table.length === 0) { 
+        this.onSubmit();
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: 'Aadhar number is already exist'
+        })
+      }
+    });
   }
 }
