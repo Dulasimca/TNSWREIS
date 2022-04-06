@@ -35,6 +35,7 @@ import {TreeTableModule} from 'primeng/treetable';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from "primeng/password";
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -238,6 +239,7 @@ import { EmployeeStrengthComponent } from './forms-module/employee-strength/empl
     TreeTableModule,
     ToggleButtonModule,
     OverlayPanelModule,
+    KeyFilterModule,
     
     
     BlockUIModule.forRoot(),

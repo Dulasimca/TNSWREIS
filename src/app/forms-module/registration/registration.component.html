@@ -131,7 +131,8 @@
                                                                     <input type="text" name="_mobno" pInputText
                                                                         [(ngModel)]="obj.mobileNo"
                                                                         appInputFormat="digitOnly" minlength="10"
-                                                                        maxlength="10" required>
+                                                                        maxlength="10" pattern="^[789]\d{9,9}$" 
+                                                                        title="Phone number with 6-9 and remaing 9 digit with 0-9" required>
                                                                     <label for="_mobno">Mobile No<span
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
@@ -160,7 +161,8 @@
                                                     <div #field12 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_altmobno" pInputText
-                                                                [(ngModel)]="obj.altMobNo" appInputFormat="digitOnly"
+                                                                [(ngModel)]="obj.altMobNo" pattern="^[789]\d{9,9}$" 
+                                                                title="Phone number with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly"
                                                                 minlength="10" maxlength="10">
                                                             <label for="_altmobno">Alternate Mobile No</label>
                                                         </span>

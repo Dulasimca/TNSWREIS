@@ -18,6 +18,7 @@ export class ChangePasswordComponent implements OnInit {
   confirmPassword: string;
   logged_user: User;
   showErrMsg: boolean;
+  blockSpace: RegExp = /[^\s]/;
 
   constructor(private _restApiService: RestAPIService, private _authService: AuthService,
     private _messageService: MessageService) { }
@@ -61,5 +62,7 @@ export class ChangePasswordComponent implements OnInit {
           }
     }
   }
+
+  
 
 }
