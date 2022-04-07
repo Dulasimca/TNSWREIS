@@ -749,6 +749,7 @@
                 [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-toast position="top-center" key="d-msg"></p-toast>
                         <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
                             [value]="registeredDetails" [paginator]="true" [rows]="10" [loading]="loading"
                             [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']">

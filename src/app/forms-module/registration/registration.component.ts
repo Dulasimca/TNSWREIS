@@ -448,7 +448,7 @@ export class RegistrationComponent implements OnInit {
         this.loading = false;
         this._messageService.clear();
         this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          key: 'd-msg', severity: ResponseMessage.SEVERITY_WARNING,
           summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
         })
       }
@@ -554,7 +554,6 @@ export class RegistrationComponent implements OnInit {
       'AadharNo': this.obj.aadharNo,
     }
     this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
-      console.log('data',res.Table)
       if ( res.Table.length === 0) { 
         this.onSubmit();
       } else {
