@@ -41,6 +41,7 @@ export class UsermasterComponent implements OnInit {
   showTaluk: boolean;
   showHostelName: boolean;
   checkEmail: boolean;
+  blockSpace: RegExp = /[^\s]/;
   @ViewChild('f', { static: false }) _usermaster: NgForm;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService,
