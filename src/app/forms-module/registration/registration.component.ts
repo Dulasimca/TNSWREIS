@@ -552,6 +552,7 @@ export class RegistrationComponent implements OnInit {
   checkAadhar() {
     const params = {
       'AadharNo': this.obj.aadharNo,
+      'studentId': this.obj.studentId
     }
     this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
       if ( res.Table.length === 0) { 
