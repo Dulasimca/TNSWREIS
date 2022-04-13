@@ -172,4 +172,6 @@ public static readonly StudentCount_Get = 'StudentCount';
 
 public static readonly AadharCheck_Get = 'AadharCheck/Get';
 
+public static readonly HostelWiseStudentCount_Get = 'HostelWiseStudentCount/Get';
+
 }

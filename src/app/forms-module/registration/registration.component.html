@@ -131,7 +131,7 @@
                                                                     <input type="text" name="_mobno" pInputText
                                                                         [(ngModel)]="obj.mobileNo"
                                                                         appInputFormat="digitOnly" minlength="10"
-                                                                        maxlength="10" pattern="^[789]\d{9,9}$" 
+                                                                        maxlength="10" pattern="^[6789]\d{9,9}$" 
                                                                         title="Phone number with 6-9 and remaing 9 digit with 0-9" required>
                                                                     <label for="_mobno">Mobile No<span
                                                                             class="form-mandatory-field">*</span></label>
@@ -161,7 +161,7 @@
                                                     <div #field12 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_altmobno" pInputText
-                                                                [(ngModel)]="obj.altMobNo" pattern="^[789]\d{9,9}$" 
+                                                                [(ngModel)]="obj.altMobNo" pattern="^[6789]\d{9,9}$" 
                                                                 title="Phone number with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly"
                                                                 minlength="10" maxlength="10">
                                                             <label for="_altmobno">Alternate Mobile No</label>
@@ -276,7 +276,7 @@
                                                         <span class="p-float-label">
                                                             <p-dropdown name="_courseyear" [options]="courseYearOptions"
                                                                 (onClick)="onSelect('CL')" [(ngModel)]="obj.courseYearId"
-                                                                required>
+                                                                >
                                                             </p-dropdown>
                                                             <label for="_courseyear">Year<span
                                                                     class="form-mandatory-field">*</span></label>
@@ -476,7 +476,7 @@
                                                                 [(ngModel)]="aadharNo" appInputFormat="digitOnly"
                                                                 (input)="validateAadhaar(aadharNo)" minlength="12"
                                                                 maxlength="12" required>
-                                                            <label for="_aadharno">Aadhar No<span
+                                                            <label for="_aadharno">Aadhaar No<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                         <div style="font-size: 13px;color: red;">
@@ -576,7 +576,8 @@
                                                         <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fathermobno" pInputText
-                                                                    [(ngModel)]="obj.fatherMoileNo"
+                                                                pattern="^[6789]\d{9,9}$" 
+                                                                title="Phone number with 6-9 and remaing 9 digit with 0-9" [(ngModel)]="obj.fatherMoileNo"
                                                                     appInputFormat="digitOnly" maxlength="10"
                                                                     minlength="10">
                                                                 <label for="_fathermobno">Mobile No</label>
@@ -626,7 +627,8 @@
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_mothermobno" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherMoileNo"
-                                                                    minlength="10" maxlength="10"
+                                                                    minlength="10" maxlength="10" pattern="^[6789]\d{9,9}$" 
+                                                                    title="Phone number with 6-9 and remaing 9 digit with 0-9"
                                                                     appInputFormat="digitOnly">
                                                                 <label for="_mothermobno">Mobile No</label>
                                                             </span>
@@ -676,7 +678,8 @@
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_guardianmobno" id="fname"
                                                                     pInputText [(ngModel)]="obj.guardianMobileNo"
-                                                                    appInputFormat="digitOnly" maxlength="10"
+                                                                    pattern="^[6789]\d{9,9}$" 
+                                                                    title="Phone number with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly" maxlength="10"
                                                                     minlength="10">
                                                                 <label for="_guardianmobno">Mobile No</label>
                                                             </span>
@@ -749,6 +752,7 @@
                 [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-toast position="top-center" key="d-msg"></p-toast>
                         <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
                             [value]="registeredDetails" [paginator]="true" [rows]="10" [loading]="loading"
                             [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']">
@@ -756,7 +760,7 @@
                                 <div class="table-header">
                                     <div class="p-grid">
                                         <div class="p-col-6 p-md-6 p-lg-10 txt-end">
-                                            <span>Search by Student name / Aadhar No.</span>
+                                            <span>Search by Student name / Aadhaar No.</span>
                                         </div>
                                         <div class="p-col-4 p-md-4 p-lg-2">
                                             <span class="p-input-icon-left">

@@ -380,7 +380,7 @@ export class RegistrationComponent implements OnInit {
     this.obj.scholarshipId = (this.obj.scholarshipId !== undefined) ? this.obj.scholarshipId : '';
     this.obj.micrNo = (this.obj.micrNo !== undefined && this.obj.micrNo !== null) ? this.obj.micrNo : '';
     this.obj.branchName = (this.obj.branchName !== undefined && this.obj.branchName !== null) ? this.obj.branchName : '-';
-    this.obj.courseYearId = (this.institutionType === '1') ? 0 : (this.obj.courseYearId !== undefined && this.obj.courseYearId !== null) ? this.obj.courseYearId : 0;
+    this.obj.courseYearId = (this.institutionType === '1') ? 1 : (this.obj.courseYearId !== undefined && this.obj.courseYearId !== null) ? this.obj.courseYearId : 1;
     this.obj.village = (this.obj.village !== undefined && this.obj.village !== null) ? this.obj.village : '-';
     this.obj.guardianName = (this.obj.guardianName !== undefined && this.obj.guardianName !== null) ? this.obj.guardianName : '-';
     this.obj.guardianQualification = (this.obj.guardianQualification !== undefined && this.obj.guardianQualification !== null) ? this.obj.guardianQualification : '-';
@@ -448,7 +448,7 @@ export class RegistrationComponent implements OnInit {
         this.loading = false;
         this._messageService.clear();
         this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          key: 'd-msg', severity: ResponseMessage.SEVERITY_WARNING,
           summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
         })
       }
@@ -554,7 +554,6 @@ export class RegistrationComponent implements OnInit {
       'AadharNo': this.obj.aadharNo,
     }
     this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
-      console.log('data',res.Table)
       if ( res.Table.length === 0) { 
         this.onSubmit();
       } else {

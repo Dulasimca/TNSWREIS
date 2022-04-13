@@ -26,6 +26,7 @@ export class TableConstants {
     BMAttendanceReportCols: any = [];
     biometricattendancecountColumns: any = [];
     purchasedetailsReportCols: any = [];
+    studentCountReportCols: any = [];
 
     
     AccountHeadTable: any = [];
@@ -338,8 +339,14 @@ export class TableConstants {
         { field: 'TalukAmount', header: 'Taluk Fund',align: 'right !important'},
         { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
         { field: 'HostelFund', header: 'Hostel Fund',align: 'right !important'},
+    ]
 
-
+    this.studentCountReportCols = [
+        { field: 'hostelDName', header: 'District Name', width: '100px', align: 'left !important'},
+        { field: 'hostelTName', header: 'Taluk Name', width: '100px', align: 'left !important'},
+        { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
+        { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'left !important'},
+        
     ]
     }
 }
