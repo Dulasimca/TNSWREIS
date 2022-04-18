@@ -132,7 +132,7 @@
                                                                         [(ngModel)]="obj.mobileNo"
                                                                         appInputFormat="digitOnly" minlength="10"
                                                                         maxlength="10" pattern="^[6789]\d{9,9}$" 
-                                                                        title="Phone number with 6-9 and remaing 9 digit with 0-9" required>
+                                                                        title="Phone number starts with 6-9 and remaing 9 digit with 0-9" required>
                                                                     <label for="_mobno">Mobile No<span
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
@@ -162,7 +162,7 @@
                                                         <span class="p-float-label">
                                                             <input type="text" name="_altmobno" pInputText
                                                                 [(ngModel)]="obj.altMobNo" pattern="^[6789]\d{9,9}$" 
-                                                                title="Phone number with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly"
+                                                                title="Phone number starts with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly"
                                                                 minlength="10" maxlength="10">
                                                             <label for="_altmobno">Alternate Mobile No</label>
                                                         </span>
@@ -577,7 +577,7 @@
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fathermobno" pInputText
                                                                 pattern="^[6789]\d{9,9}$" 
-                                                                title="Phone number with 6-9 and remaing 9 digit with 0-9" [(ngModel)]="obj.fatherMoileNo"
+                                                                title="Phone number starts with 6-9 and remaing 9 digit with 0-9" [(ngModel)]="obj.fatherMoileNo"
                                                                     appInputFormat="digitOnly" maxlength="10"
                                                                     minlength="10">
                                                                 <label for="_fathermobno">Mobile No</label>
@@ -628,7 +628,7 @@
                                                                 <input type="text" name="_mothermobno" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherMoileNo"
                                                                     minlength="10" maxlength="10" pattern="^[6789]\d{9,9}$" 
-                                                                    title="Phone number with 6-9 and remaing 9 digit with 0-9"
+                                                                    title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                     appInputFormat="digitOnly">
                                                                 <label for="_mothermobno">Mobile No</label>
                                                             </span>
@@ -679,7 +679,7 @@
                                                                 <input type="text" name="_guardianmobno" id="fname"
                                                                     pInputText [(ngModel)]="obj.guardianMobileNo"
                                                                     pattern="^[6789]\d{9,9}$" 
-                                                                    title="Phone number with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly" maxlength="10"
+                                                                    title="Phone number starts with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly" maxlength="10"
                                                                     minlength="10">
                                                                 <label for="_guardianmobno">Mobile No</label>
                                                             </span>
