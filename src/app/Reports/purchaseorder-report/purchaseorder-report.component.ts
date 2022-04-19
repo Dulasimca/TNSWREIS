@@ -33,6 +33,7 @@ export class PurchaseorderReportComponent implements OnInit {
   loading: boolean;
   logged_user: User;
   totalRecords: number;
+  disableExcel: boolean = true;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
@@ -129,8 +130,10 @@ export class PurchaseorderReportComponent implements OnInit {
           })
           this.purchaseData = res.Table;
           this.totalRecords = this.purchaseData.length;
+          this.disableExcel = false;
           this.loading = false;
         } else {
+          this.disableExcel = true;
           this.loading = false;
           this._messageService.clear();
           this._messageService.add({

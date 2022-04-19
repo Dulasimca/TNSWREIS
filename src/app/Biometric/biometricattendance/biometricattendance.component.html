@@ -46,7 +46,7 @@
                  
                       <button pButton type="button" icon="pi pi-file-excel" label="Export" style="text-align: right;"
                           style= "color: yellowgreen;"(click)="dt.exportCSV()"
-                          pTooltip="Excel-File download"></button>
+                          pTooltip="Excel-File download" [disabled]="disableExcel"></button>
                   
                 </div>
                 <p-table #dt [columns]="biometricattendancecountCols" [value]="biometricattendancecountData" [paginator]="true" [rows]="100"

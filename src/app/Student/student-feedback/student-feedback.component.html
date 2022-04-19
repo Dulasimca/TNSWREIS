@@ -43,7 +43,7 @@
                         <div style="text-align: right;">
                             <button pButton type="button" icon="pi pi-file-excel" label="Export"
                                 style="color: yellowgreen;" (click)="dt.exportCSV()"
-                                pTooltip="Excel-File download"></button>
+                                pTooltip="Excel-File download" [disabled]="disableExcel"></button>
                         </div>
                         <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                             [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"

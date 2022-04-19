@@ -163,6 +163,7 @@ export class StudentDetailsComponent implements OnInit {
           this.loading = false;
           this.disableExcel = false;
         } else {
+          this.disableExcel = true;
           this.loading = false;
           this._messageService.clear();
           this._messageService.add({
