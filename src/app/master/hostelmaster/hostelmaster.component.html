@@ -17,7 +17,7 @@
                                     <div><label for="_Functioningtype">Hostel Functioning Type</label></div>
                                     <p-dropdown name="_Functioningtype" [options]="FunctioningtypeOptions"
                                         [(ngModel)]="Functioningtype" (onClick)="onSelect('HF')"
-                                        [disabled]="disableFields" required>
+                                         required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
@@ -46,7 +46,7 @@
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <input type="text" name="_hosteltamilname" class="p-col-10" pInputText
-                                    [disabled]="disableFields"  [(ngModel)]="Hosteltamilname" required />
+                                      [(ngModel)]="Hosteltamilname" required />
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_hostelopendate">Hostel Opening Date<span

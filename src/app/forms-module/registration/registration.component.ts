@@ -13,6 +13,7 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 @Component({
@@ -63,6 +64,7 @@ export class RegistrationComponent implements OnInit {
   aadharNo: string;
   aadharValidationMsg: string;
   maxDate: Date = new Date();
+  existingAadhar: any;
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
@@ -378,7 +380,7 @@ export class RegistrationComponent implements OnInit {
     this.obj.scholarshipId = (this.obj.scholarshipId !== undefined) ? this.obj.scholarshipId : '';
     this.obj.micrNo = (this.obj.micrNo !== undefined && this.obj.micrNo !== null) ? this.obj.micrNo : '';
     this.obj.branchName = (this.obj.branchName !== undefined && this.obj.branchName !== null) ? this.obj.branchName : '-';
-    this.obj.courseYearId = (this.institutionType === '1') ? 0 : (this.obj.courseYearId !== undefined && this.obj.courseYearId !== null) ? this.obj.courseYearId : 0;
+    this.obj.courseYearId = (this.institutionType === '1') ? 1 : (this.obj.courseYearId !== undefined && this.obj.courseYearId !== null) ? this.obj.courseYearId : 1;
     this.obj.village = (this.obj.village !== undefined && this.obj.village !== null) ? this.obj.village : '-';
     this.obj.guardianName = (this.obj.guardianName !== undefined && this.obj.guardianName !== null) ? this.obj.guardianName : '-';
     this.obj.guardianQualification = (this.obj.guardianQualification !== undefined && this.obj.guardianQualification !== null) ? this.obj.guardianQualification : '-';
@@ -446,7 +448,7 @@ export class RegistrationComponent implements OnInit {
         this.loading = false;
         this._messageService.clear();
         this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          key: 'd-msg', severity: ResponseMessage.SEVERITY_WARNING,
           summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
         })
       }
@@ -545,5 +547,23 @@ export class RegistrationComponent implements OnInit {
       c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
     }
     return inv[c];
+  }
+
+  checkAadhar() {
+    const params = {
+      'AadharNo': this.obj.aadharNo,
+      'studentId': this.obj.studentId
+    }
+    this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
+      if ( res.Table.length === 0) { 
+        this.onSubmit();
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: 'Aadhar number is already exist'
+        })
+      }
+    });
   }
 }

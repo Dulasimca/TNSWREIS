@@ -35,6 +35,7 @@ import {TreeTableModule} from 'primeng/treetable';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from "primeng/password";
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -124,6 +125,7 @@ import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.componen
 import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload/hostelgalleryupload.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
+import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -200,6 +202,7 @@ import { EmployeeStrengthComponent } from './forms-module/employee-strength/empl
     HostelgalleryuploadComponent,
     PrivacyPolicyComponent,
     EmployeeStrengthComponent,
+    StudentcountReportComponent,
     
   ],
   imports: [
@@ -238,6 +241,7 @@ import { EmployeeStrengthComponent } from './forms-module/employee-strength/empl
     TreeTableModule,
     ToggleButtonModule,
     OverlayPanelModule,
+    KeyFilterModule,
     
     
     BlockUIModule.forRoot(),

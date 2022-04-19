@@ -69,6 +69,7 @@ import { HomepageImageUploadComponent } from './forms-module/homepage-image-uplo
 import { HostelGalleryComponent } from './hostel-gallery/hostel-gallery.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
+import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -147,6 +148,7 @@ const routes: Routes = [
   { path: 'hostel-gallery', component:HostelGalleryComponent, canActivate: [AuthGuard]},
   { path: 'privacy-policy', component:PrivacyPolicyComponent, canActivate: [AuthGuard]},
   { path: 'employee-strength', component:EmployeeStrengthComponent, canActivate: [AuthGuard]},
+  { path: 'student-count', component:StudentcountReportComponent, canActivate: [AuthGuard]},
 
   
 
