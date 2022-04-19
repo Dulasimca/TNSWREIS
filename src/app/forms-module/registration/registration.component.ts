@@ -79,7 +79,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
-    const start_year_range = current_year - 30;
+    const start_year_range = current_year - 50;
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
     this.bloodgroups = this._masterService.getMaster('BG');
