@@ -27,6 +27,8 @@ export class AuditComponent implements OnInit {
   disableFields: boolean;
   login_user: User;
   maxDate: Date = new Date();
+  loading: boolean;
+  studentcount: any;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild ('f', { static: false }) auditForm: NgForm;
   constructor(private _authService: AuthService,private _restApiService: RestAPIService,
@@ -41,6 +43,7 @@ export class AuditComponent implements OnInit {
     if (hasBiomteric) {
       this.disableFields = true;    
     }
+    this.loadTable();
   }
   Displaymessage(){
     var hasBiomteric = this.login_user.hasBiometric;
@@ -154,4 +157,43 @@ export class AuditComponent implements OnInit {
   }
 
 }
+
+loadTable() {
+  this.loading = true;
+    const params = {
+      'DCode': this.login_user.districtCode,
+      'TCode': this.login_user.talukId,
+      'HostelId': this.login_user.hostelId,
+    }
+    this._restApiService.getByParameters(PathConstants.HostelWiseStudentCount_Get,params).subscribe(res => {
+      if (res !== undefined && res !== null && res.length !== 0) {
+          res.forEach(r => {
+            this.studentcount = r.StudentCount;
+          })
+          this.loading = false;
+      } 
+      // else {
+      //   this.loading = false;
+      //   this._messageService.clear();
+      //   this._messageService.add({
+      //     key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+      //     summary: ResponseMessage.SUMMARY_WARNING, detail: 'Student count not available'
+      //   })
+      // }
+    })
+  }
+
+  checkStudentCount(count) {
+    if(count > this.studentcount){
+      this.noOfStudent = '';
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: 'Entered Student count is exceeded, The total count is ' + this.studentcount
+      })
+    } else {
+      this._messageService.clear();
+      this.disableFields = false;
+    }
+  } 
+
 }

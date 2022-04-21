@@ -15,10 +15,9 @@
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_mode">Mode of Appointment</label><span
-                                            class="form-mandatory-field">*</span></div>
+                                    <label for="_mode">Mode of Appointment<span class="form-mandatory-field">*</span></label>
                                     <p-dropdown name="_mode" [options]="modeOptions" (onClick)="onSelect('MA')"
-                                        [(ngModel)]="mode" required>
+                                        [(ngModel)]="modeOfAppt" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
@@ -36,21 +35,21 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_doj">Date of Joining<span
                                                 class="form-mandatory-field">*</span></label></div>
-                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="doj" name="_doj"
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="dateOfjoin" name="_doj"
                                         [showIcon]="true" [monthNavigator]="true" inputId="dateofjoining" required>
                                     </p-calendar>
                                 </div>
 
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
+                                    <div><label for="_gen">Gender<span class="form-mandatory-field">*</span></label>
                                     </div>
-                                    <p-dropdown name="_gender" [options]="genderOptions" (onClick)="onSelect('GD')"
+                                    <p-dropdown name="_gen" [options]="genderOptions" (onClick)="onSelect('GD')"
                                         [(ngModel)]="gender" required>
                                     </p-dropdown>
                                 </div>
                                 <div #row2 class="p-col-12 p-md-12 p-lg-3">
-                                    <label for="_address">Address<span class="form-mandatory-field">*</span></label>
-                                    <input type="text" name="_address" pInputText [(ngModel)]="address" required>
+                                    <label for="_addr">Address<span class="form-mandatory-field">*</span></label>
+                                    <input type="text" name="_addr" pInputText [(ngModel)]="address" required>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_district">Native District<span
@@ -63,6 +62,28 @@
                                     <label for="_mobno">Mobile No<span class="form-mandatory-field">*</span></label>
                                     <input type="text" name="_mobno" pInputText [(ngModel)]="mobileNo"
                                         appInputFormat="digitOnly" maxlength="10" minlength="10" required>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 23px;">
+                                    <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 23px;">
+                                    <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><img [src]="employeeImage"
+                                        style="width: 110px; height: 110px;" />
+                                    <input style="display: none" name="_employeeimage" type="file" #userFile
+                                        (change)="uploadFile($event)" required />
+                                    <button class="b-size" icon="pi pi-plus edit-size" pTooltip="Click to add photo" pButton
+                                        type="file" #file (click)="userFile.click()">
+                                    </button>
+                                    <div>Upload Employee Image<span
+                                            class="form-mandatory-field">*</span></div>
+                                </div>
                                 </div>
                                 <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
                                     <button pButton type="button" label="Submit"  icon="pi pi-save" (click)="onSubmit()"

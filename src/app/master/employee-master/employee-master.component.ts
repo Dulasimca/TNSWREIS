@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
@@ -20,7 +21,7 @@ export class EmployeeMasterComponent implements OnInit {
   designationOptions: SelectItem[];
   firstName: string;
   lastName: string;
-  doj: any;
+  dateOfjoin: any;
   genderOptions: SelectItem[];
   genders?: any;
   gender: any;
@@ -42,13 +43,19 @@ export class EmployeeMasterComponent implements OnInit {
   showDialog: boolean;
   empName: string;
   designation: string;
-  mode: any;
+  modeOfAppt: any;
   modeOptions: SelectItem[];
   modes?: any;
-  
+  employeeImage: any = '';
+  employeeFileName: string;
+  selectedType :number;
+  public formData = new FormData();
   @ViewChild ('f', { static: false }) employeeForm: NgForm;
+  @ViewChild('userFile', { static: false }) _employeeimage: ElementRef;
+  obj: any;
   constructor(private _authService: AuthService,private _masterService: MasterService
-    ,private _restApiService: RestAPIService,private _messageService: MessageService,private _datePipe: DatePipe) { }
+    ,private _restApiService: RestAPIService,private _messageService: MessageService,private _datePipe: DatePipe,
+    private http: HttpClient,private _d: DomSanitizer) { }
 
   ngOnInit(): void {
 
@@ -65,6 +72,7 @@ export class EmployeeMasterComponent implements OnInit {
       { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
       { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
       { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
+      { field: 'Flag', header: 'Status', width: '100px', align: 'left !important'},
       { field: 'EndDate', header: 'Last Date', width: '100px', align: 'centre !important'},
    ];
     this.login_user = this._authService.UserInfo;
@@ -92,8 +100,10 @@ export class EmployeeMasterComponent implements OnInit {
     this._restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res =>{
       if (res !== null && res !== undefined && res.length !== 0) {
         res.Table.forEach(i => {
+          i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+        })
           this.data = res.Table;
-    })
+   
     
   } else {
     this._messageService.clear();
@@ -112,15 +122,16 @@ export class EmployeeMasterComponent implements OnInit {
       'Districtcode': this.Districtcode,
       'Talukid': this.TalukId,
       'Designation': this.designationName,
-      'ModeType': this.mode,
+      'ModeType': this.modeOfAppt,
       'FirstName': this.firstName,
       'LastName': this.lastName,
-      'Doj': this._datePipe.transform(this.doj, 'MM/dd/yyyy'),
+      'Doj': this._datePipe.transform(this.dateOfjoin, 'MM/dd/yyyy'),
       'Gender': this.gender,
       'Address': this.address,
       'NativeDistrict': this.nativeDistrict,
       'MobileNo': this.mobileNo,
-      'Flag': 1,
+      'EmployeeImage': this.employeeFileName,
+      'Flag': (this.selectedType * 1),
     };
     this._restApiService.post(PathConstants.EmployeeDetails_Post,params).subscribe(res => {
       if (res !== undefined && res !== null) {
@@ -204,17 +215,20 @@ onRowSelect(event, selectedRow) {
   console.log('t',this.RowId)
   this.designationName = selectedRow.Designation;
   this.designationOptions = [{ label: selectedRow.DesignationName, value: selectedRow.Designation}];
-  this.mode = selectedRow.ModeType;
+  this.modeOfAppt = selectedRow.ModeTypeId;
   this.modeOptions = [{ label: selectedRow.ModeName, value: selectedRow.ModeTypeId}];
   this.firstName = selectedRow.FirstName;
   this.lastName = selectedRow.LastName;
-  this.doj = new Date(selectedRow.Doj);
+  this.dateOfjoin = new Date(selectedRow.Doj);
   this.gender = selectedRow.Gender;
   this.genderOptions = [{ label: selectedRow.GenderName, value: selectedRow.Gender}];
   this.address = selectedRow.Address;
   this.nativeDistrict = selectedRow.NativeDistrictID;
   this.districtOptions = [{ label: selectedRow.NativeDistrict, value: selectedRow.NativeDistrictID}];
   this.mobileNo = selectedRow.MobileNo;
+  this.employeeFileName = selectedRow.EmployeeImage;
+  var filePath = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + this.employeeFileName;
+  this.employeeImage = filePath;
 }
 
 onEdit(data) {
@@ -280,12 +294,35 @@ onClear() {
   this.districtOptions = [];
   // this.firstName = null;
   // this.lastName = null;
-  this.doj = new Date();
+  this.dateOfjoin = new Date();
   this.gender = null;
   this.genderOptions = [];
   // this.address = null;
   // this.mobileNo = null;
   this.RowId = 0;
+  this.employeeImage = null;
+  this.modeOfAppt = null;
+  this.modeOptions = [];
+}
+
+public uploadFile = (event) => {
+  const selectedFile = event.target.files[0];
+  {
+    const url = window.URL.createObjectURL(selectedFile);
+    this.employeeImage = this._d.bypassSecurityTrustUrl(url);
+  }
+  this.formData = new FormData()
+  let fileToUpload: any = <File>event.target.files[0];
+  const folderName = this.login_user.hostelId + '/' + 'Documents';
+  const filename = fileToUpload.name + '^' + folderName;
+  this.formData.append('file', fileToUpload, filename);
+  this.employeeFileName = fileToUpload.name;
+  this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, this.formData)
+    .subscribe(event => {
+    }
+    );
 }
 
 }
+
+
