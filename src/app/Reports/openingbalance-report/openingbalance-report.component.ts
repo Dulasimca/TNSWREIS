@@ -34,6 +34,7 @@ export class OpeningbalanceReportComponent implements OnInit {
   loading: boolean;
   logged_user: User;
   totalRecords: number;
+  disableExcel: boolean = true;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
@@ -67,7 +68,9 @@ export class OpeningbalanceReportComponent implements OnInit {
           break;
         case 'T':
           this.taluks.forEach(t => {
-            talukSelection.push({ label: t.name, value: t.code });
+            if (t.dcode === this.district) {
+              talukSelection.push({ label: t.name, value: t.code });
+            }
           })
           this.talukOptions = talukSelection;
           if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
@@ -145,9 +148,11 @@ export class OpeningbalanceReportComponent implements OnInit {
         if (res !== undefined && res !== null && res.Table.length !== 0) {
           this.openingData = res.Table;
           this.totalRecords = this.openingData.length;
+          this.disableExcel = false;
           this.loading = false;
         } else {
           this.loading = false;
+          this.disableExcel = true;
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,

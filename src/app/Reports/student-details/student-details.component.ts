@@ -39,6 +39,9 @@ export class StudentDetailsComponent implements OnInit {
   tApproval: number;
   hostelName: string;
   @BlockUI() blockUI: NgBlockUI;
+  value: any;
+  disableExcel: boolean = true;
+
   constructor(private _masterService: MasterService, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
 
@@ -132,6 +135,7 @@ export class StudentDetailsComponent implements OnInit {
       this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
           res.forEach(r => {
+            r.dob = this._datePipe.transform(r.dob,'dd/MM/yyyy')
             r.isDApproved = (r.districtApproval !== null && r.districtApproval !== 0 && (r.districtApproval)) ? 'true' : 'false';
             r.isTAprroved = (r.talukApproval !== null && r.talukApproval !== 0 && (r.talukApproval)) ? 'true' : 'false';
             if (this.roleId === 1 || this.roleId === 4) {
@@ -157,7 +161,9 @@ export class StudentDetailsComponent implements OnInit {
           })
           this.studentData = res;
           this.loading = false;
+          this.disableExcel = false;
         } else {
+          this.disableExcel = true;
           this.loading = false;
           this._messageService.clear();
           this._messageService.add({

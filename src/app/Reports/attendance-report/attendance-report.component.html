@@ -41,7 +41,7 @@
                     <div class="p-col-12 p-md-12 p-lg-12">
                         <div style="text-align: right;">
                             <button pButton type="button" icon="pi pi-file-excel" style="color: yellowgreen;"
-                                label="Export" (click)="dt.exportCSV()" pTooltip="Excel-File download"></button>
+                                label="Export" (click)="dt.exportCSV()" pTooltip="Excel-File download" [disabled]="disableExcel"></button>
                         </div>
                         <p-table #dt [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
                             [paginator]="true" [rows]="100" [rowsPerPageOptions]="[10,20,30,50,100]"

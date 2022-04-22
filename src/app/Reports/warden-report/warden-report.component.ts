@@ -48,6 +48,7 @@ export class WardenReportComponent implements OnInit {
   roleId: number;
   transferButton: boolean;
   editButton: boolean;
+  disableExcel: boolean = true;
 
   constructor(private _tableConstants: TableConstants, private _restApiService: RestAPIService,
     private _messageService: MessageService, private _authService: AuthService,
@@ -148,9 +149,11 @@ export class WardenReportComponent implements OnInit {
           })
           this.wardenDetailsAll = res.Table.slice(0);
           this.wardenDetails = res.Table;
+          this.disableExcel  = false;
           this.loading = false;
         } else {
           this.loading = false;
+          this.disableExcel = true;
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,

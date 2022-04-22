@@ -81,7 +81,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
-    const start_year_range = current_year - 30;
+    const start_year_range = current_year - 50;
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
     this.bloodgroups = this._masterService.getMaster('BG');
@@ -552,6 +552,7 @@ export class RegistrationComponent implements OnInit {
   checkAadhar() {
     const params = {
       'AadharNo': this.obj.aadharNo,
+      'studentId': this.obj.studentId
     }
     this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
       if ( res.Table.length === 0) { 

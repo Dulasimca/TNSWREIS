@@ -203,6 +203,7 @@ export class HostelFundManagementComponent implements OnInit {
    
   }
   refreshFields(value) {
+    // this.selectDistrict();
     if(value === 'D') {
       this.taluk = null;
       this.talukOptions = [];
@@ -302,14 +303,15 @@ export class HostelFundManagementComponent implements OnInit {
             console.log('j',res)
             this.HstlFundData = res.Table;
             this.blockUI.stop();
-          } else {
+          } 
+          else {
             this.blockUI.stop();
             this.HstlFundData = [];
             this.messageService.clear();
-            this.messageService.add({
-              key: 'msg', severity: ResponseMessage.SEVERITY_WARNING,
-              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-            })
+            // this.messageService.add({
+            //   key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            //   summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            // })
           }
         }
       })
@@ -334,6 +336,8 @@ export class HostelFundManagementComponent implements OnInit {
 
   clearForm() {
     // this.hostelOptions = [];
+    this._hostelFundForm.form.markAsUntouched();
+    this._hostelFundForm.form.markAsPristine();
     this.totalHostelAmount = 0;
     this.hostelAmount = 0;
     this.blncAmount = 0;

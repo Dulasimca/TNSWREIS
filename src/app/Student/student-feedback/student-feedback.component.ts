@@ -50,6 +50,8 @@ export class StudentFeedbackComponent implements OnInit {
   taluks?: any;
   hostels?: any = [];
   loading: boolean;
+  disableExcel: boolean = true;
+
 
   @ViewChild('f', { static: false }) studentFeedbackForm: NgForm;
 
@@ -223,9 +225,11 @@ export class StudentFeedbackComponent implements OnInit {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
             this.data = res.Table;
+            this.disableExcel = false;
             this.loading = false;
           } else {
             this.loading = false;
+            this.disableExcel = true;
             this._messageService.clear();
             this._messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
@@ -234,6 +238,7 @@ export class StudentFeedbackComponent implements OnInit {
           }
         } else {
           this.loading = false;
+          this.disableExcel = true;
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,

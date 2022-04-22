@@ -8,6 +8,7 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-employee-report',
@@ -60,9 +61,12 @@ export class EmployeeReportComponent implements OnInit {
   hostelCols: any;
   hostelData: any = [];
   loading: boolean;
+  disableExcel: boolean = true;
+  showDialog: boolean;
+  employeeImage: string;
   constructor(private http: HttpClient, private restApiService: RestAPIService,
     private masterService: MasterService, private _authService: AuthService,
-    private _messageService: MessageService, private tableConstants: TableConstants) { }
+    private _messageService: MessageService, private tableConstants: TableConstants, private datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.hostelCols = this.tableConstants.employeeReportCols
@@ -156,28 +160,32 @@ export class EmployeeReportComponent implements OnInit {
         'HostelId': this.hostel,
         
       }
-      this.restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res => {
-        if (res.Table !== undefined && res.Table !== null) {
-          if (res.Table.length !== 0) {
-            this.hostelData = res.Table;
-            this.loading = false;
-          } else {
-            this.loading = false;
-            this._messageService.clear();
-            this._messageService.add({
-              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-            })
-          }
-        } else {
-          this.loading = false;
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+      this.restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res =>{
+        if (res !== null && res !== undefined && res.length !== 0) {
+          res.Table.forEach(i => {
+            i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+            i.url = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + i.EmployeeImage;
           })
-        }
+            this.hostelData = res.Table;
+            this.disableExcel = false;
+            this.loading = false;
+    } else {
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+        summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
       })
     }
-  }
+  });
+
+      }
+    }
+
+    showImage(url) {
+      this.showDialog = true;
+      this.employeeImage = url;
+    }
+
+
 }
+
