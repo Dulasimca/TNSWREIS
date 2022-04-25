@@ -174,4 +174,11 @@ public static readonly AadharCheck_Get = 'AadharCheck/Get';
 
 public static readonly HostelWiseStudentCount_Get = 'HostelWiseStudentCount/Get';
 
+public static readonly CommitteeMaster_Get = 'CommitteeMaster';
+public static readonly CommitteeMember_Get = 'CommitteeMember';
+
+public static readonly HostelCommittee_Post = 'HostelCommittee/Post';
+
+public static readonly HostelCommittee_Get = 'HostelCommittee/Get';
+
 }

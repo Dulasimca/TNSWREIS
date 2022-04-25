@@ -126,6 +126,7 @@ import { HostelgalleryuploadComponent } from './forms-module/hostelgalleryupload
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
+import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -203,6 +204,7 @@ import { StudentcountReportComponent } from './Reports/studentcount-report/stude
     PrivacyPolicyComponent,
     EmployeeStrengthComponent,
     StudentcountReportComponent,
+    HostelCommitteeComponent,
     
   ],
   imports: [
