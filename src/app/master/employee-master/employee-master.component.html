@@ -61,7 +61,8 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_mobno">Mobile No<span class="form-mandatory-field">*</span></label>
                                     <input type="text" name="_mobno" pInputText [(ngModel)]="mobileNo"
-                                        appInputFormat="digitOnly" maxlength="10" minlength="10" required>
+                                        appInputFormat="digitOnly" maxlength="10" minlength="10" pattern="^[6789]\d{9,9}$" 
+                                        title="Phone number with 6-9 and remaing 9 digit with 0-9" required>
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 23px;">
                                     <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"

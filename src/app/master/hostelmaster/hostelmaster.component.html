@@ -61,7 +61,8 @@
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <input class="p-col-12" type="text" name="_mobno" pInputText minlength="10"
-                                        maxlength="10" [(ngModel)]="mobileNo" appInputFormat="digitOnly" required />
+                                        maxlength="10" [(ngModel)]="mobileNo" pattern="^[6789]\d{9,9}$" 
+                                        title="Phone number with 6-9 and remaing 9 digit with 0-9" appInputFormat="digitOnly" required />
                                         
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-1">
