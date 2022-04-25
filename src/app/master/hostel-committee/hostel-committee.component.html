@@ -35,12 +35,12 @@
                             <div [hidden]="disableName" class="p-col-12 p-md-6 p-lg-3">
                                 <div><label for="_name">Name</label></div>
                                 <p-dropdown name="_name" [hidden]="disableName" optionLabel="label"  [options]="NameOptions"
-                                    [(ngModel)]="name" (onClick)="onDropDownChecking()" (onChange)="NameChanges()">
+                                    [(ngModel)]="name" (onClick)="onDropDownChecking()" (onChange)="NameChanges()" required>
                                 </p-dropdown>
                             </div>
                             <div  class="p-col-12 p-md-6 p-lg-3">
                                 <div><label for="_Mname">Member Name</label></div>
-                                <input type="text"  name="_Mname" pInputText [(ngModel)]="memberName"/>
+                                <input type="text"  name="_Mname" pInputText [(ngModel)]="memberName" required/>
                             </div>
                             <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
                                 <button pButton type="button" label="Submit" (click)="onSubmit()"
