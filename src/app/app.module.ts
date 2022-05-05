@@ -32,10 +32,11 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
 import {TreeTableModule} from 'primeng/treetable';
-import {ToggleButtonModule} from 'primeng/togglebutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from "primeng/password";
-import {KeyFilterModule} from 'primeng/keyfilter';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { RippleModule } from 'primeng/ripple';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -127,6 +128,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
+import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -205,6 +208,7 @@ import { HostelCommitteeComponent } from './master/hostel-committee/hostel-commi
     EmployeeStrengthComponent,
     StudentcountReportComponent,
     HostelCommitteeComponent,
+    DistrictWiseDashboardComponent,
     
   ],
   imports: [
@@ -244,8 +248,7 @@ import { HostelCommitteeComponent } from './master/hostel-committee/hostel-commi
     ToggleButtonModule,
     OverlayPanelModule,
     KeyFilterModule,
-    
-    
+    RippleModule,
     BlockUIModule.forRoot(),
   ],
 

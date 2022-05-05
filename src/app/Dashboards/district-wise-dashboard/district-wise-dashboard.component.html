@@ -1,0 +1,58 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="District wise hostel details">
+            <p-card>
+                <div class="p-col-12 p-md-12 p-lg-12" style="padding: 12px; border-radius: 5px; border: 1px solid #67dfe7;" >
+                    <div class="p-col-12 p-md-12 p-lg-12" *ngFor="let d of data" style="border: 1px solid rgb(255 248 248); border-radius: 5px; margin-bottom: 5px;
+                    padding-top: 15px; padding-bottom: 0;">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2 p-lg-2 dist-dsh-box ripple" style="padding: 15px; align-self: center;">
+                                    {{d.name}}                             
+                            </div>
+                            <div class="p-col-12 p-md-10 p-lg-10" style="text-align: center;">
+                                <div class="p-grid">
+                                    <div class="p-col-3 p-md-2 p-lg-3 dist-dsh-count box1">
+                                        <div>Total Hostel Count</div>
+                                        <div>{{d.hcount}}</div>
+                                    </div>
+                                    <div class="p-col-3 p-md-2 p-lg-3 dist-dsh-count box2">
+                                        <div>Total Hostel Count</div>
+                                        <div>
+                                            <span>Boys: {{d.boysHostelCount}}</span> &nbsp;
+                                            <span>Girls: {{d.girlsHostelCount}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-3 p-md-2 p-lg-3 dist-dsh-count box3">
+                                        <div>Sanctioned Strength</div>
+                                        <div>
+                                            <span>Boys: {{d.sanctionedBoysCount}}</span> &nbsp;
+                                            <span>Girls: {{d.sanctionedGirlsCount}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-3 p-md-2 p-lg-3 dist-dsh-count box4">
+                                        <div>Total Students Count</div>
+                                        <div>
+                                            <span>Boys: {{d.boysCount}}</span> &nbsp;
+                                            <span>Girls: {{d.girlsCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div style="text-align: center;" (click)="scrollDown()">
+                        <i class="pi pi-chevron-circle-down" style="font-size: 2rem;"></i>
+                    </div> -->
+                    <div class="arrow-container animated fadeInDown" (click)="scrollDown()" *ngIf="isScrollDown">
+                        <div class="arrow-2">
+                          <i class="fa fa-angle-down"></i>
+                        </div>
+                        <div class="arrow-1 animated hinge infinite zoomIn"></div>
+                      </div>
+                      <div  id="scroller"></div>
+                </div>
+            </p-card>
+        </p-panel>
+    </div>
+</div>
