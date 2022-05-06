@@ -181,4 +181,7 @@ public static readonly HostelCommittee_Post = 'HostelCommittee/Post';
 
 public static readonly HostelCommittee_Get = 'HostelCommittee/Get';
 
+///dashboards
+public static readonly DashboardCategory_Get = 'DashboardDetails/Get';
+
 }

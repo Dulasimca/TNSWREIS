@@ -1,6 +1,8 @@
 import { ViewportScroller } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { RestAPIService } from 'src/app/services/restAPI.service';
 
 @Component({
   selector: 'app-district-wise-dashboard',
@@ -14,9 +16,10 @@ export class DistrictWiseDashboardComponent implements OnInit {
   data: any[] = [];
   isScrollDown: boolean = true;
 
-	constructor(private scroller: ViewportScroller, private router: Router) {}
+	constructor(private _restApiService: RestAPIService) {}
 		
   ngOnInit(): void {
+    this.loadData();
     this.items = [
       { 'name': 'Chennai', 'hcount': 120, 'boysHostelCount': 50, 'girlsHostelCount': 70, 'sanctionedBoysCount': 200
     , 'sanctionedGirlsCount': 200, 'boysCount': 85, 'girlsCount': 50 },
@@ -66,6 +69,16 @@ export class DistrictWiseDashboardComponent implements OnInit {
     console.log('data', this.data)
   }
 
+  loadData() {
+    this._restApiService.getByParameters(PathConstants.DashboardCategory_Get, {'type': 2}).subscribe((res: any) => {
+      if(res !== undefined && res !== null) {
+        if(res.length !== 0) {
+          this.items = res;
+        }
+      }
+    })
+  }
+
   scrollDown() {
     var curr_len = this.data.length;
     var max_len = curr_len + 5;
@@ -74,13 +87,9 @@ export class DistrictWiseDashboardComponent implements OnInit {
         this.data.push(i)
       }
     })
-    // this.scroller.scrollToAnchor("scroller");
-    // document.getElementById("scroller").scrollIntoView({
-    //   behavior: "smooth",
-    //   block: "start",
-    //   inline: "nearest"
-    // });
-    this.router.navigate([], { fragment: "scroller" });
+    if(this.data.length === this.items.length) {
+      this.isScrollDown = false;
+    }
   }
 
 }
