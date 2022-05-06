@@ -129,6 +129,8 @@ import { EmployeeStrengthComponent } from './forms-module/employee-strength/empl
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
+import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
+import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -209,6 +211,8 @@ import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashb
     StudentcountReportComponent,
     HostelCommitteeComponent,
     DistrictWiseDashboardComponent,
+    TalukWiseDashboardComponent,
+    HostelWiseDashboardComponent,
     
   ],
   imports: [

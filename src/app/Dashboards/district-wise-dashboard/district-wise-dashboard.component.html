@@ -2,7 +2,7 @@
     <div class="p-col-12 p-md-12 p-lg-12" #scrollMe [scrollTop]="scrollMe.scrollHeight">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <p-panel header="District wise hostel details">
-            <p-card>
+            <!-- <p-card> -->
                 <div class="p-col-12 p-md-12 p-lg-12"
                     style="padding: 12px; border-radius: 5px; border: 1px solid #67dfe7;">
                     <div class="p-col-12 p-md-12 p-lg-12 dist-dsh-txt-clr" *ngFor="let d of data" style="border: 1px solid rgb(255 248 248); border-radius: 5px; margin-bottom: 5px;
@@ -20,24 +20,19 @@
                                     </div>
                                     <div class="p-col-6 p-md-3 p-lg-3 dist-dsh-count box2">
                                         <div>Total Hostel Count</div>
-                                        <!-- <div>
-                                            <span>  Boys </span> &nbsp;
-                                            <span>  Girls </span> &nbsp;
-
-                                        </div> -->
                                         <div style="justify-content: center;">
                                             <div style="width: 50%; float: left;">
                                                 <div class="circle-double circle2">
                                                     <span style="font-size: 13px;">Boys</span>
-                                                    <span class="dist-dsh-count-font"> 
-                                                        {{d.boysHostelCount}}</span>
+                                                    <div class="dist-dsh-count-font"> 
+                                                        {{d.boysHostelCount}}</div>
                                                 </div>
                                             </div>
                                             <div style="width: 50%; float: right;">
                                                 <div class="circle-double circle2">
                                                     <span style="font-size: 13px;">Girls</span>
-                                                    <span class="dist-dsh-count-font"> 
-                                                        {{d.girlsHostelCount}}</span>
+                                                    <div class="dist-dsh-count-font"> 
+                                                        {{d.girlsHostelCount}}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -48,15 +43,15 @@
                                             <div style="width: 50%; float: left;">
                                                 <div class="circle-double circle3">
                                                     <span style="font-size: 13px;">Boys</span>
-                                                    <span class="dist-dsh-count-font">
-                                                        {{d.sanctionedBoysCount}}</span>
+                                                    <div class="dist-dsh-count-font">
+                                                        {{d.sanctionedBoysCount}}</div>
                                                 </div>
                                             </div>
                                             <div style="width: 50%; float: right;">
                                                 <div class="circle-double circle3">
                                                     <span style="font-size: 13px;">Girls</span>
-                                                    <span class="dist-dsh-count-font"> 
-                                                        {{d.sanctionedGirlsCount}}</span>
+                                                    <div class="dist-dsh-count-font"> 
+                                                        {{d.sanctionedGirlsCount}}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,39 +66,32 @@
                                             <div style="width: 50%; float: left;">
                                                 <div class="circle-double circle4">
                                                     <span style="font-size: 13px;">Boys</span>
-                                                    <span class="dist-dsh-count-font"> 
-                                                        {{d.boysCount}}</span>
+                                                    <div class="dist-dsh-count-font"> 
+                                                        {{d.boysCount}}</div>
                                                 </div>
                                             </div>
                                             <div style="width: 50%; float: right;">
                                                 <div class="circle-double circle4">
                                                     <span style="font-size: 13px;">Girls</span>
-                                                    <span class="dist-dsh-count-font"> 
-                                                        {{d.girlsCount}}</span>
+                                                    <div class="dist-dsh-count-font"> 
+                                                        {{d.girlsCount}}</div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div>
-                                            <span>Boys: {{d.boysCount}}</span> &nbsp;
-                                            <span>Girls: {{d.girlsCount}}</span>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div style="text-align: center;" (click)="scrollDown()">
-                        <i class="pi pi-chevron-circle-down" style="font-size: 2rem;"></i>
-                    </div> -->
                     <div class="arrow-container animated fadeInDown" (click)="scrollDown()" *ngIf="isScrollDown">
                         <div class="arrow-2">
                             <i class="fa fa-angle-down"></i>
                         </div>
                         <div class="arrow-1 animated hinge infinite zoomIn"></div>
                     </div>
-                    <div id="scroller"></div>
+                    <div #scroller id="scroller"></div>
                 </div>
-            </p-card>
+            <!-- </p-card> -->
         </p-panel>
     </div>
 </div>

@@ -16,7 +16,7 @@ export class DistrictWiseDashboardComponent implements OnInit {
   data: any[] = [];
   isScrollDown: boolean = true;
 
-	constructor(private _restApiService: RestAPIService) {}
+	constructor(private _restApiService: RestAPIService, private _scroller: ViewportScroller) {}
 		
   ngOnInit(): void {
     this.loadData();
@@ -90,6 +90,7 @@ export class DistrictWiseDashboardComponent implements OnInit {
     if(this.data.length === this.items.length) {
       this.isScrollDown = false;
     }
+    this._scroller.scrollToAnchor("scroller");
   }
 
 }

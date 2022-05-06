@@ -740,13 +740,13 @@ main {
 .circle-single {
     border-radius: 50% !important;
     width: 20% !important;
-    height: 80% !important;
+    height: 90% !important;
     font-size: 16px;
     /* text-align: center; */
     display: block;
     color: whitesmoke;
-    margin: 10px auto -30px auto !important;
-    padding-top: 5px !important;
+    margin: 2px auto -20px auto !important;
+    padding-top: 10px !important;
     align-self: center;
 }
 .circle-double {
@@ -757,7 +757,7 @@ main {
     /* text-align: center; */
     display: block;
     color: whitesmoke;
-    margin: 10px auto -30px auto !important;
+    margin: 2px auto -20px auto !important;
     padding-top: 0 !important;
     align-self: center;
 }
