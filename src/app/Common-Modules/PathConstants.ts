@@ -184,5 +184,7 @@ public static readonly HostelCommittee_Get = 'HostelCommittee/Get';
 public static readonly OnlineStudentRegistration_Post = 'OnlineStudentRegistration/Post';
 
 public static readonly OnlineStudentRegistration_Get = 'OnlineStudentRegistration/Get';
+///dashboards
+public static readonly DashboardCategory_Get = 'DashboardDetails/Get';
 
 }

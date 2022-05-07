@@ -32,10 +32,11 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import {GalleriaModule} from 'primeng/galleria';
 import {TreeTableModule} from 'primeng/treetable';
-import {ToggleButtonModule} from 'primeng/togglebutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from "primeng/password";
-import {KeyFilterModule} from 'primeng/keyfilter';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { RippleModule } from 'primeng/ripple';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -128,6 +129,10 @@ import { EmployeeStrengthComponent } from './forms-module/employee-strength/empl
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
 import { OnlineRegistrationComponent } from './forms-module/online-registration/online-registration.component';
+import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
+import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
+import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -207,6 +212,9 @@ import { OnlineRegistrationComponent } from './forms-module/online-registration/
     StudentcountReportComponent,
     HostelCommitteeComponent,
     OnlineRegistrationComponent,
+    DistrictWiseDashboardComponent,
+    TalukWiseDashboardComponent,
+    HostelWiseDashboardComponent,
     
   ],
   imports: [
@@ -246,8 +254,7 @@ import { OnlineRegistrationComponent } from './forms-module/online-registration/
     ToggleButtonModule,
     OverlayPanelModule,
     KeyFilterModule,
-    
-    
+    RippleModule,
     BlockUIModule.forRoot(),
   ],
 
