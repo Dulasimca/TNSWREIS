@@ -71,6 +71,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
+import { OnlineRegistrationComponent } from './forms-module/online-registration/online-registration.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -151,6 +152,7 @@ const routes: Routes = [
   { path: 'employee-strength', component:EmployeeStrengthComponent, canActivate: [AuthGuard]},
   { path: 'student-count', component:StudentcountReportComponent, canActivate: [AuthGuard]},
   { path: 'Hostel-Committee', component:HostelCommitteeComponent, canActivate: [AuthGuard]},
+  { path: 'online-registration', component:OnlineRegistrationComponent},
   
 
 ];

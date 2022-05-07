@@ -127,6 +127,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
+import { OnlineRegistrationComponent } from './forms-module/online-registration/online-registration.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -205,6 +206,7 @@ import { HostelCommitteeComponent } from './master/hostel-committee/hostel-commi
     EmployeeStrengthComponent,
     StudentcountReportComponent,
     HostelCommitteeComponent,
+    OnlineRegistrationComponent,
     
   ],
   imports: [
