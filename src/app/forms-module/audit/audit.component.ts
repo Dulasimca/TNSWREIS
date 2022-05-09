@@ -163,7 +163,7 @@ loadTable() {
     const params = {
       'DCode': this.login_user.districtCode,
       'TCode': this.login_user.talukId,
-      'HostelId': this.login_user.hostelId,
+      'HCode': this.login_user.hostelId,
     }
     this._restApiService.getByParameters(PathConstants.HostelWiseStudentCount_Get,params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
@@ -185,10 +185,10 @@ loadTable() {
 
   checkStudentCount(count) {
     if(count > this.studentcount){
-      this.noOfStudent = '';
+      this.noOfStudent = [];
       this._messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-        summary: ResponseMessage.SUMMARY_WARNING, detail: 'Entered Student count is exceeded, The total count is ' + this.studentcount
+        summary: ResponseMessage.SUMMARY_WARNING, detail: 'Entered Student count is exceeded, The total student count is ' + this.studentcount
       })
     } else {
       this._messageService.clear();
