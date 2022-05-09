@@ -49,6 +49,7 @@ export class EmployeeMasterComponent implements OnInit {
   employeeImage: any = '';
   employeeFileName: string;
   selectedType :number;
+  imageDialog: boolean;
   public formData = new FormData();
   @ViewChild ('f', { static: false }) employeeForm: NgForm;
   @ViewChild('userFile', { static: false }) _employeeimage: ElementRef;
@@ -101,6 +102,8 @@ export class EmployeeMasterComponent implements OnInit {
       if (res !== null && res !== undefined && res.length !== 0) {
         res.Table.forEach(i => {
           i.Flag = (i.Flag) ? 'Active' : 'Inactive';
+          i.url = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + i.EmployeeImage;
+
         })
           this.data = res.Table;
    
@@ -321,6 +324,11 @@ public uploadFile = (event) => {
     .subscribe(event => {
     }
     );
+}
+
+showImage(url) {
+  this.imageDialog = true;
+  this.employeeImage = url;
 }
 
 }
