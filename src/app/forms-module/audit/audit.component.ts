@@ -44,6 +44,7 @@ export class AuditComponent implements OnInit {
       this.disableFields = true;    
     }
     this.loadTable();
+    this.GetAttendanceInfo();
   }
   Displaymessage(){
     var hasBiomteric = this.login_user.hasBiometric;
@@ -55,7 +56,18 @@ export class AuditComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_REJECTED, detail: ResponseMessage.Biometricvalidate
           });
     }else{
+      if(this.noOfStudent > 0)
+      {
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_INFO,
+        summary: ResponseMessage.SUMMARY_ALERT, life: 4000,
+        detail: 'Attendance already exist for ' + this._datepipe.transform(this.attendanceDate, 'dd/MM/yyyy')
+      });
+    }else
+    {
       this.GetAttendanceInfo();
+    }
     }
     
   }
