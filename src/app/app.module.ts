@@ -131,6 +131,7 @@ import { HostelCommitteeComponent } from './master/hostel-committee/hostel-commi
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
+import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -213,6 +214,7 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
     DistrictWiseDashboardComponent,
     TalukWiseDashboardComponent,
     HostelWiseDashboardComponent,
+    HostelDashboardComponent,
     
   ],
   imports: [

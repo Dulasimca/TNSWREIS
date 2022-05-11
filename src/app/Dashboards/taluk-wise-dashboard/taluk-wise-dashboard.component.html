@@ -1,1 +1,49 @@
-<p>taluk-wise-dashboard works!</p>
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Taluk wise hostel details">
+                    <div class="p-col-12 p-md-12 p-lg-12 dist-dsh-txt-clr" *ngFor="let t of data">
+                        <div class="p-grid" style="justify-content: center;">
+                            <div class="p-col-12 p-md-2 p-lg-2 tlk-dsh-box ripple" (click)="gotoHostel(t.Id)">
+                                <div>{{t.name}}</div>
+                            </div>
+                            <div class="p-col-6 p-md-4 p-lg-2 tlk-box tlk-box1-sdw elementToFadeInAndOut">
+                                <div class="tlk-box-subdiv tlk-box-subdiv-bg1">Total Hostel
+                                    Count</div>
+                                <div class="tlk-circle tlk-circle1">{{t.hcount}}</div>
+                            </div>
+                            <div class="p-col-6 p-md-4 p-lg-2 tlk-box tlk-box2-sdw ">
+                                <div class="tlk-box-subdiv tlk-box-subdiv-bg2">Total Hostel
+                                    Count</div>
+                                <div style="width: 50%;float: left;">
+                                    <div class="tlk-circle tlk-circle2">Boys <br>{{t.boysHostelCount}}</div>
+                                </div>
+                                <div style="width: 50%;float: right;">
+                                    <div class="tlk-circle tlk-circle2">Girls <br> {{t.girlsHostelCount}}</div>
+                                </div>
+                            </div>
+                            <div class="p-col-6 p-md-4 p-lg-2 tlk-box tlk-box3-sdw">
+                                <div class="tlk-box-subdiv tlk-box-subdiv-bg3">Sanctioned Strength</div>
+                                <div style="width: 50%;float: left;">
+                                    <div class="tlk-circle tlk-circle3">Boys <br>{{t.sanctionedBoysCount}}</div>
+                                </div>
+                                <div style="width: 50%;float: right;">
+                                    <div class="tlk-circle tlk-circle3">Girls <br> {{t.sanctionedGirlsCount}}</div>
+                                </div>
+                            </div>
+                            <div class="p-col-6 p-md-4 p-lg-2 tlk-box tlk-box4-sdw">
+                                <div class="tlk-box-subdiv tlk-box-subdiv-bg4">Total Students Count</div>
+                                <div style="width: 50%;float: left;">
+                                    <div class="tlk-circle tlk-circle4">Boys <br>{{t.boysCount}}</div>
+                                </div>
+                                <div style="width: 50%;float: right;">
+                                    <div class="tlk-circle tlk-circle4">Girls <br> {{t.girlsCount}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </p-panel>
+        </div>
+    </div>
+</block-ui>

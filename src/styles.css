@@ -715,7 +715,7 @@ main {
     /* box-shadow: 60px 20px 60px 20px rgb(255, 117, 140) inset; */
     box-shadow: 60px 20px 60px 20px rgb(247, 107, 53) inset;
     /* clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); */
-    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 15% 50%, 0% 0%);
     border-radius: 10px;
     border: 1px solid whitesmoke;
     /* color: white; */
@@ -745,14 +745,14 @@ main {
     /* text-align: center; */
     display: block;
     color: whitesmoke;
-    margin: 2px auto -20px auto !important;
-    padding-top: 10px !important;
+    margin: 2px auto -15px auto !important;
+    padding-top: 12px !important;
     align-self: center;
 }
 .circle-double {
     border-radius: 50% !important;
-    width: 42% !important;
-    height: 70% !important;
+    width: 45% !important;
+    height: 80% !important;
     font-size: 16px;
     /* text-align: center; */
     display: block;
@@ -819,7 +819,7 @@ main {
 	position: relative; /*Position relative is required*/
 	display: block;
 	outline: none;
-	background: linear-gradient(135deg, #e570e7 0%,#79f1fc 100%);
+	background: linear-gradient(140deg, #30c9dc,#e91e63 100%);
 	box-sizing: border-box;
   }
   .ripple:hover:before{
@@ -932,4 +932,136 @@ main {
     -webkit-animation-name: zoomIn;
             animation-name: zoomIn;
   }
+
+  .tlk-box {
+    text-align: center;
+    /* border: 3px solid #f9eded; */
+    border-radius: 10px;
+    padding: 0 !important;
+    margin: 5px;
+    display: block;
+    color: whitesmoke;
+    background: #fffcd9;
+  }
+  .tlk-box1-sdw {
+    -webkit-box-shadow: 0px 20px 20px -17px #f7ee84;
+    -moz-box-shadow: 0px 20px 20px -17px #f7ee84;
+    box-shadow: 0px 20px 20px -17px #f7ee84;
+  }
+  .tlk-box2-sdw {
+    -webkit-box-shadow: 0px 20px 20px -17px #ffc8c8;
+    -moz-box-shadow: 0px 20px 20px -17px #ffc8c8;
+    box-shadow: 0px 20px 20px -17px #ffc8c8;
+  }
+  .tlk-box3-sdw {
+    -webkit-box-shadow: 0px 20px 20px -17px #d3ffa9;
+    -moz-box-shadow: 0px 20px 20px -17px #d3ffa9;
+    box-shadow: 0px 20px 20px -17px #d3ffa9;
+  }
+  .tlk-box4-sdw {
+    -webkit-box-shadow: 0px 20px 20px -17px #c5f9c5;
+    -moz-box-shadow: 0px 20px 20px -17px #c5f9c5;
+    box-shadow: 0px 20px 20px -17px #c5f9c5;
+  }
+  .tlk-box-subdiv {
+    border-radius: 5px 5px 0 0;
+  }
+  .tlk-box-subdiv-bg1{
+    background: gold;
+  }
+  .tlk-box-subdiv-bg2{
+    background:crimson;
+  }
+  .tlk-box-subdiv-bg3{
+    /* background:darkorchid; */
+    background: #61b118;
+  }
+  .tlk-box-subdiv-bg4{
+    background:darkseagreen;
+  }
+  .tlk-circle {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+  .tlk-circle1 {
+    background: gold;
+    border: 3px solid #fff147;
+    padding: 15px;
+  }
+  .tlk-circle2 {
+    background: crimson;
+    border: 3px solid #ff7979;
+    padding: 5px;
+  }
+  .tlk-circle3 {
+    /* background: darkorchid; */
+    background: #61b118;
+    /* border: 3px solid #ce78f9; */
+    border: 3px solid #a8ed6a;
+    padding: 5px;
+  }
+  .tlk-circle4 {
+    background: darkseagreen;
+    border: 3px solid #a1eda1;
+    padding: 5px;
+  }
+  .tlk-dsh-box {
+    /* box-shadow: 60px 20px 60px 20px #5589f3 inset; */
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 15% 50%, 0% 0%);
+    /* border-radius: 10px; */
+    margin: auto 0 auto 0;
+    border: 1px solid whitesmoke;
+    font-size: 16px;
+    text-shadow: 2px 2px #1359e5;
+    text-align: center;
+    color: whitesmoke;
+}
+
+.hst-gridbox {
+    border-radius: 10px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    border: 2px solid #d1d5ed;
+    padding: 0;
+    border: 5px solid white;
+}
+.hst-sub-gridbox {
+    /* display: flex;
+    justify-self: center; */
+    padding: 5px;
+}
+.hstl-div-hdr {
+    color: whitesmoke;
+    text-align:center;
+    background:#008494;
+    border-radius: 5px 5px 0 0;
+}
+.hstl-dsh-box {
+    border-radius: 10px;
+    text-align: center;
+    color: whitesmoke;
+    white-space: pre;
+    margin: auto;
+    width: 32% !important;
+}
+.hstl-dsh-box1 {
+    background: linear-gradient(#e66465, #9198e5);
+    border: 2px solid pink;
+}
+.hstl-dsh-box2 {
+    background: linear-gradient(#f7ed37,#ff5945);
+    border: 2px solid #fbea56;
+}
+.hstl-dsh-box3 {
+    background: linear-gradient(#4bb8f3,#3edf19);
+    border: 2px solid #89e5ff;
+}
  /* end */
+
+
+  
+  

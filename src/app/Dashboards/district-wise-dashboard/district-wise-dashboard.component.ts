@@ -1,6 +1,10 @@
 import { ViewportScroller } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { MessageService } from 'primeng/api';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 
@@ -14,68 +18,48 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 export class DistrictWiseDashboardComponent implements OnInit {
   items: any[] = [];
   data: any[] = [];
+  tempArr: any[] = [];
   isScrollDown: boolean = true;
-
-	constructor(private _restApiService: RestAPIService, private _scroller: ViewportScroller) {}
+  @BlockUI() blockUI: NgBlockUI;
+	constructor(private _restApiService: RestAPIService, private _scroller: ViewportScroller,
+    private _messageService: MessageService, private _router: Router) {}
 		
   ngOnInit(): void {
+    console.log('before call');
     this.loadData();
-    this.items = [
-      { 'name': 'Chennai', 'hcount': 120, 'boysHostelCount': 50, 'girlsHostelCount': 70, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 200, 'boysCount': 85, 'girlsCount': 50 },
-    { 'name': 'Chidambaram', 'hcount': 90, 'boysHostelCount': 42, 'girlsHostelCount': 38, 'sanctionedBoysCount': 120
-    , 'sanctionedGirlsCount': 100, 'boysCount': 75, 'girlsCount': 35 },
-    { 'name': 'Cuddalore', 'hcount': 80, 'boysHostelCount': 50, 'girlsHostelCount': 30, 'sanctionedBoysCount': 80
-    , 'sanctionedGirlsCount': 60, 'boysCount': 70, 'girlsCount': 50 },
-    { 'name': 'Dindigul', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Dharmapuri', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    { 'name': 'Krishnagiri', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Madurai', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    { 'name': 'Dindigul', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Dharmapuri', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    { 'name': 'Krishnagiri', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Dindigul', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Dharmapuri', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    { 'name': 'Krishnagiri', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Madurai', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    { 'name': 'Madurai', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    { 'name': 'Dindigul', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Dharmapuri', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    { 'name': 'Krishnagiri', 'hcount': 95, 'boysHostelCount': 50, 'girlsHostelCount': 45, 'sanctionedBoysCount': 110
-    , 'sanctionedGirlsCount': 90, 'boysCount': 102, 'girlsCount': 66 },
-    { 'name': 'Madurai', 'hcount': 112, 'boysHostelCount': 82, 'girlsHostelCount': 30, 'sanctionedBoysCount': 200
-    , 'sanctionedGirlsCount': 120, 'boysCount': 180, 'girlsCount': 98 },
-    ];
-    this.items.forEach((i, index) => {
-      console.log('ind', index)
-      if(index < 5) {
-        this.data.push(i)
-      }
-    })
-    console.log('data', this.data)
   }
 
   loadData() {
-    this._restApiService.getByParameters(PathConstants.DashboardCategory_Get, {'type': 2}).subscribe((res: any) => {
+    this.data.push('')
+    this.blockUI.start();
+    this.data.splice(0, 1);
+    this._restApiService.get(PathConstants.DistrictDashboard_Get).subscribe((res: any) => {
       if(res !== undefined && res !== null) {
         if(res.length !== 0) {
+          // this.data = res.slice(0, 5);
+          res.forEach((i, index) => {
+            if(index < 5) {
+              this.data.push(i);
+            }
+          })
           this.items = res;
+          this.blockUI.stop();
+        } else {
+          this.blockUI.stop();
         }
+      } else {
+        this.blockUI.stop();
       }
+    }, (err: HttpErrorResponse) => {
+      this.blockUI.stop();
+     if (err.status === 0 || err.status === 400) {
+       this._messageService.clear();
+       this._messageService.add({
+         key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+         summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+       })
+
+     }
     })
   }
 
@@ -84,13 +68,20 @@ export class DistrictWiseDashboardComponent implements OnInit {
     var max_len = curr_len + 5;
     this.items.forEach((i, index) => {
       if(index >= curr_len && index < max_len) {
-        this.data.push(i)
+        this.tempArr.push(i)
       }
     })
-    if(this.data.length === this.items.length) {
+    if(this.tempArr.length === this.items.length) {
       this.isScrollDown = false;
     }
     this._scroller.scrollToAnchor("scroller");
+    this.data = this.tempArr.slice(0);
+  }
+
+  gotoTaluk(id) {
+    if(id !== undefined && id !== null) {
+    this._router.navigate(['/taluk-wise-dashboard'],{queryParams:{'dcode': id} , replaceUrl: true});
+    }
   }
 
 }

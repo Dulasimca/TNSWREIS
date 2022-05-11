@@ -182,6 +182,8 @@ public static readonly HostelCommittee_Post = 'HostelCommittee/Post';
 public static readonly HostelCommittee_Get = 'HostelCommittee/Get';
 
 ///dashboards
-public static readonly DashboardCategory_Get = 'DashboardDetails/Get';
+public static readonly DistrictDashboard_Get = 'CMDistrictWiseDetails';
+public static readonly TalukDashboard_Get = "CMTalukWiseDetails/Get";
+public static readonly HostelDashboard_Get = "CMHostelWiseDetails/Get";
 
 }
