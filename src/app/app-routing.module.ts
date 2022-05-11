@@ -71,6 +71,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
+import { OnlineRegistrationComponent } from './forms-module/online-registration/online-registration.component';
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
@@ -156,7 +157,8 @@ const routes: Routes = [
   { path: 'Hostel-Committee', component:HostelCommitteeComponent, canActivate: [AuthGuard]},
   { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent },
   {  path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent },
-  {  path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent }
+  {  path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent },
+  { path: 'online-registration', component:OnlineRegistrationComponent},
 ];
 
 

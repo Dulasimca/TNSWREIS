@@ -128,6 +128,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { EmployeeStrengthComponent } from './forms-module/employee-strength/employee-strength.component';
 import { StudentcountReportComponent } from './Reports/studentcount-report/studentcount-report.component';
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
+import { OnlineRegistrationComponent } from './forms-module/online-registration/online-registration.component';
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
@@ -211,6 +212,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     EmployeeStrengthComponent,
     StudentcountReportComponent,
     HostelCommitteeComponent,
+    OnlineRegistrationComponent,
     DistrictWiseDashboardComponent,
     TalukWiseDashboardComponent,
     HostelWiseDashboardComponent,

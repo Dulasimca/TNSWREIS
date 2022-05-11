@@ -106,6 +106,9 @@
                                             {{col.header}}
                                         </th>
                                         <th>
+                                            Image
+                                        </th>
+                                        <th>
                                             End Date Update
                                         </th>
                                     </tr>
@@ -129,6 +132,14 @@
                                             <span style="text-align: end;"> {{rowData[col.field]}}
                                             </span>
                                         </td>
+                                        <td (click)="showImage(rowData.url)">
+                                            <span class="p-column-title">
+                                                Image :
+                                            </span>
+                                            <span>
+                                            <img alt="TN ADW Employee image" [src]="rowData.url" width="32"
+                                                style="vertical-align: middle" /></span>
+                                        </td>
                                         <td>
                                             <span class="p-column-title">End Date Update :</span> <span><button
                                                     style="height: 1.8rem;" (click)="onEdit(rowData)"
@@ -142,6 +153,10 @@
                     </form>
                 </p-card>
             </p-panel>
+            <p-dialog #dialog header="Employee Image" [(visible)]="imageDialog" [modal]="imageDialog"
+            [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+                <img alt="TN ADW Employee image" [src]="employeeImage" style="vertical-align: middle" />
+            </p-dialog>
             <p-dialog #dialog header="Employee End Date Update" [(visible)]="showDialog" [modal]="showDialog"
                 [maximizable]="true">
                 <div class="p-grid div-main">
