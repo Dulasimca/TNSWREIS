@@ -132,8 +132,9 @@ import { OnlineRegistrationComponent } from './forms-module/online-registration/
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
-import { NgxPrintModule } from 'ngx-print';
 import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
+import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -217,6 +218,7 @@ import { OnlineRegistrationCheckComponent } from './forms-module/online-registra
     TalukWiseDashboardComponent,
     HostelWiseDashboardComponent,
     OnlineRegistrationCheckComponent,
+    HostelDashboardComponent,
     
   ],
   imports: [
@@ -257,7 +259,6 @@ import { OnlineRegistrationCheckComponent } from './forms-module/online-registra
     OverlayPanelModule,
     KeyFilterModule,
     RippleModule,
-    NgxPrintModule,
     BlockUIModule.forRoot(),
   ],
 
