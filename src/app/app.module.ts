@@ -37,6 +37,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from "primeng/password";
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RippleModule } from 'primeng/ripple';
+import { HighchartsChartModule } from 'highcharts-angular';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -131,6 +133,8 @@ import { HostelCommitteeComponent } from './master/hostel-committee/hostel-commi
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
+import { SampleComponent } from './sample/sample.component';
+import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -213,6 +217,8 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
     DistrictWiseDashboardComponent,
     TalukWiseDashboardComponent,
     HostelWiseDashboardComponent,
+    SampleComponent,
+    TotalCountDashboardComponent,
     
   ],
   imports: [
@@ -253,6 +259,7 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
     OverlayPanelModule,
     KeyFilterModule,
     RippleModule,
+    HighchartsChartModule,
     BlockUIModule.forRoot(),
   ],
 

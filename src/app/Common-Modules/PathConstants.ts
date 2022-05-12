@@ -183,5 +183,9 @@ public static readonly HostelCommittee_Get = 'HostelCommittee/Get';
 
 ///dashboards
 public static readonly DashboardCategory_Get = 'DashboardDetails/Get';
+public static readonly CMMainDashBoard_Get = 'CMMainDashBoard';
+public static readonly CMDashboardGraph_Get = 'CMDashboardGraph';
+
+
 
 }
