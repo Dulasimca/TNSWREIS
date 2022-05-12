@@ -135,6 +135,7 @@ import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashb
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
+import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 
 @NgModule({
@@ -220,6 +221,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     TalukWiseDashboardComponent,
     HostelWiseDashboardComponent,
     TotalCountDashboardComponent,
+    OnlineRegistrationCheckComponent,
     HostelDashboardComponent,
     
   ],

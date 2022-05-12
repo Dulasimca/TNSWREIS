@@ -777,8 +777,6 @@
                                         [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
                                     <button pButton type="button" label="View" icon="pi pi-eye"
                                         (click)="onView()"></button>&nbsp;
-                                        <button pButton type="button" label="Check" icon="pi pi-eye"
-                                        (click)="generateReceipt(this.obj)"></button>&nbsp;
                                     <button pButton type="button" label="Clear" icon="pi pi-trash"
                                         (click)="clearForm()"></button>
                                 </div>
@@ -818,7 +816,7 @@
                                     <th *ngFor="let col of columns">
                                         {{col.header}}
                                     </th>
-                                    <th style="width: 120px">Edit</th>
+                                    <th style="width: 120px">Download</th>
                                     <!-- <th style="width: 120px">Delete</th> -->
                                 </tr>
                             </ng-template>
@@ -839,13 +837,13 @@
                                         <span style="text-align: end;"> {{rowData[col.field]}}
                                         </span>
                                     </td>
-                                    <td style="width: 120px" (click)="onEdit(rowData, rowIndex)">
+                                    <td style="width: 120px">
                                         <span class="p-column-title">
-                                            Edit :
+                                            Download :
                                         </span>
                                         <span>
-                                            <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
-                                            </button></span>
+                                            <i class="pi pi-file-pdf" (click)="onDownload(rowData.Download)" 
+                                             style="color: #e32727; font-size: 1.3rem;"></i></span>
                                     </td>
                                     <!-- <td style="width: 120px" (click)="onDelete(rowData, rowIndex)">
                                     <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
@@ -861,222 +859,7 @@
         <div class="p-col-1"></div>
     </div>
 </block-ui>
-
-<p-dialog [(visible)]="showReceipt" [style]="{width: '50vw'}" [modal]="true" [maximizable]="true"
-(onHide)="clearForm()">
-  <ng-template pTemplate="header">
-    <div>TNADW-HMS Online Registration Form</div>
-  </ng-template>
-  <div class="p-col-12" style="border: 1px solid black;">
-    <div id="printdiv">
-      <div class="p-col-12 no-pad" style="text-align: center;">
-        <img style="width: 80px;" src="assets/layout/images/TN_Govt_Logo_login.png" />
-      </div>
-      <div style="text-align: center;">
-        <span style="font-weight: bold; font-family: serif; text-transform: uppercase;">
-          {{hostelName}}
-        </span>
-      </div>
-      <!-- <hr class="no-pad p-col-12" style="color: black;"> -->
-      <div class="p-col-12">
-        <div class="txt-center">
-          <div style="font-weight: bold; font-family: serif; text-transform: uppercase;">
-            Student Registration Form</div>
-        </div>
-        <div class="p-col-12"></div>
-        <div class="p-grid">
-          <div class="p-col-6 p-md-6 p-lg-6">
-            <div class="p-col-12 no-pad-bottom">
-              <span style="font-weight: 600;">Receipt No. :</span>
-              <span style="padding-left: 3px;">{{studentId}}</span>
-            </div>
-            <div class="p-col-12 no-pad-bottom">
-              <span style="font-weight: 600;">Student Name :</span>
-              <span style="text-transform: uppercase; padding-left: 3px;">{{studentName}}</span>
-            </div>
-            <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">EMIS No/Reg No :</span>
-                <span style="text-transform: uppercase; padding-left: 3px;">{{emisno}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">DOB :</span>
-                <span style="text-transform: uppercase; padding-left: 3px;">{{dob}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Age :</span>
-                <span style="text-transform: uppercase; padding-left: 3px;">{{age}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Blood Group :</span>
-                <span style="text-transform: uppercase; padding-left: 3px;">{{bloodGroup}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Gender :</span>
-                <span style="text-transform: uppercase; padding-left: 3px;">{{gender}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Mother Tongue :</span>
-                <span style="text-transform: uppercase; padding-left: 3px;">{{motherTongue}}</span>
-              </div>
-            <div class="p-col-12 no-pad-bottom">
-              <span style="font-weight: 600;">Class :</span>
-              <span>{{classSection}}</span>
-            </div>
-            <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Applied For :</span>
-                <span style="text-transform: uppercase; padding-left: 3px;">{{hostelName}}</span>
-              </div>
-          </div>
-          <div class="p-col-6 p-md-6 p-lg-6">
-            <div class="p-col-12 no-pad-bottom">
-              <span style="font-weight: 600;">Admission No. :</span>
-              <span>{{admnNo}}</span>
-            </div>
-            <div class="p-col-12 no-pad-bottom">
-              <span style="font-weight: 600;">Date :</span>
-              <span>{{today}}</span>
-            </div>
-            <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Caste :</span>
-                <span>{{caste}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Sub Caste :</span>
-                <span>{{subCaste}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Religion :</span>
-                <span>{{religion}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Mobile Number :</span>
-                <span>{{mobileNo}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Alternate Mobile Number :</span>
-                <span>{{altMobNo}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Admission Number :</span>
-                <span>{{admissionNo}}</span>
-              </div>
-              <div class="p-col-12 no-pad-bottom">
-                <span style="font-weight: 600;">Annual Income :</span>
-                <span>{{totalYIncome}}</span>
-              </div>
-            </div>
-            <!-- <div class="p-col-12">
-                <div class="txt-center">
-                  <div style="font-weight: bold; font-family: serif; text-transform: uppercase;">
-                    Institution Details</div>
-                </div>
-                <div class="p-col-12"></div>
-                <div class="p-grid">
-                  <div class="p-col-6 p-md-6 p-lg-6">
-                    <div class="p-col-12 no-pad-bottom">
-                        <span style="font-weight: 600;">Receipt No. :</span>
-                        <span style="padding-left: 3px;">{{studentId}}</span>
-                      </div>
-
-                  </div>
-                </div>
-            </div> -->
-              <div class="p-col-12">
-              <div class="txt-center">
-                <div style="font-weight: bold; font-family: serif; text-transform: uppercase;">
-                  parent-Info</div></div>
-                  <div class="p-col-12"></div>
-                  <div class="p-grid">
-                    <div class="p-col-6 p-md-6 p-lg-6">
-                        <div class="p-col-6 no-pad-bottom">
-                            <span style="font-weight: 600;">Father Name :</span>
-                            <span style="padding-left: 3px;">{{fatherName}}</span>
-                          </div>                        
-                          <div class="p-col-6 no-pad-bottom">
-                            <span style="font-weight: 600;">Father Occupation :</span>
-                            <span style="padding-left: 3px;">{{fatherOccupation}}</span>
-                          </div>
-                          <div class="p-col-6 no-pad-bottom">
-                            <span style="font-weight: 600;">Father Qualification:</span>
-                            <span style="padding-left: 3px;">{{fatherQualification}}</span>
-                          </div>
-                          <div class="p-col-6 no-pad-bottom">
-                            <span style="font-weight: 600;">Father mobileNo :</span>
-                            <span style="padding-left: 3px;">{{fatherMobNo}}</span>
-                          </div>
-                        </div>
-                          <div class="p-col-6 p-md-6 p-lg-6">
-                            <div class="p-col-12 no-pad-bottom">
-                            <span style="font-weight: 600;">Mother Name :</span>
-                            <span style="padding-left: 3px;">{{motherName}}</span>
-                          </div>
-                          <div class="p-col-12 no-pad-bottom">
-                            <span style="font-weight: 600;">Mother Occupation :</span>
-                            <span style="padding-left: 3px;">{{motherOccupation}}</span>
-                          </div>
-                          <div class="p-col-12 no-pad-bottom">
-                            <span style="font-weight: 600;">Mother Qualification:</span>
-                            <span style="padding-left: 3px;">{{motherQualification}}</span>
-                          </div>
-                          <div class="p-col-12 no-pad-bottom">
-                            <span style="font-weight: 600;">Mother mobileNo :</span>
-                            <span style="padding-left: 3px;">{{motherMobNo}}</span>
-                          </div>
-                          </div>
-                          <div class="p-col-12">
-                            <div class="txt-center">
-                              <div style="font-weight: bold; font-family: serif; text-transform: uppercase;">
-                                Address-Info</div>
-                            </div>
-                                <div class="p-col-12"></div>
-                             <div class="p-grid">
-                             <div class="p-col-6 p-md-6 p-lg-6">
-                                <div class="p-col-6 no-pad-bottom">
-                            <span style="font-weight: 600;">Address Line 1 :</span>
-                            <span style="padding-left: 3px;">{{address1}}</span>
-                          </div>                    
-                          <div class="p-col-6 no-pad-bottom">
-                            <span style="font-weight: 600;">Landmark :</span>
-                            <span style="padding-left: 3px;">{{landMark}}</span>
-                          </div>  
-                          <div class="p-col-6 no-pad-bottom">
-                            <span style="font-weight: 600;">Taluk :</span>
-                            <span style="padding-left: 3px;">{{taluk}}</span>
-                          </div>   
-                          <div class="p-col-12 no-pad-bottom">
-                            <span style="font-weight: 600;">Pincode :</span>
-                            <span style="padding-left: 3px;">{{pinCode}}</span>
-                          </div>                      
-                          </div>
-                          <div class="p-col-6 p-md-6 p-lg-6">
-                            <div class="p-col-12 no-pad-bottom">
-                                <span style="font-weight: 600;">Address Line 2 :</span>
-                                <span style="padding-left: 3px;">{{address2}}</span>
-                              </div> 
-                            <div class="p-col-12 no-pad-bottom">
-                                <span style="font-weight: 600;">District :</span>
-                                <span style="padding-left: 3px;">{{district}}</span>
-                              </div>                              
-                            <div class="p-col-12 no-pad-bottom">
-                            <span style="font-weight: 600;">Village :</span>
-                            <span style="padding-left: 3px;">{{village}}</span>
-                          </div>
-                          </div>
-                             </div>
-                  </div>
-                
-              </div>
-          </div>
-      
-        <div>
-          <div class="p-col-12"></div>
-          <p style="font-size: x-small;">Note*:The receipt is given to students to acknowledge for registration </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  <div class="p-col-12 p-md-12 p-lg-12 txt-center">
-    <button printSectionId="printdiv" ngxPrint pButton type="button" label="Print"></button>
-  </div>
+<p-dialog #dialog *ngIf="pdfDialog" header="Download PDF" [(visible)]="showDialog"
+[modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+<div class="fgh txt-center"><embed id="fgh" src="assets/layout/images/check.pdf" type="application/pdf" width="800" height="500"></div>
 </p-dialog>

@@ -73,6 +73,7 @@ import { StudentcountReportComponent } from './Reports/studentcount-report/stude
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
 import { OnlineRegistrationComponent } from './forms-module/online-registration/online-registration.component';
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
+import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
@@ -163,6 +164,12 @@ const routes: Routes = [
   { path: 'total-count-dashboard', component:TotalCountDashboardComponent},
 
    
+  { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent},
+  { path: 'online-check', component:OnlineRegistrationCheckComponent},
+  
+  
+  
+
 ];
 
 
