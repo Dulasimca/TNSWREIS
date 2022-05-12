@@ -64,7 +64,7 @@ export class MasterService {
 
     getMaster(value): any {
         this.log_info = this._authService.UserInfo;
-        this.roleId = (this.log_info.roleId * 1);
+        this.roleId = this.log_info != undefined && this.log_info != null ? (this.log_info.roleId * 1) : 1;
         this.masterData = [];
         switch (value) {
             //district master
