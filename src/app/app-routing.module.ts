@@ -73,6 +73,7 @@ import { StudentcountReportComponent } from './Reports/studentcount-report/stude
 import { HostelCommitteeComponent } from './master/hostel-committee/hostel-committee.component';
 import { OnlineRegistrationComponent } from './forms-module/online-registration/online-registration.component';
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
+import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -155,7 +156,8 @@ const routes: Routes = [
   { path: 'Hostel-Committee', component:HostelCommitteeComponent, canActivate: [AuthGuard]},
   { path: 'online-registration', component:OnlineRegistrationComponent},
   { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent},
-
+  { path: 'online-check', component:OnlineRegistrationCheckComponent},
+  
   
   
 
