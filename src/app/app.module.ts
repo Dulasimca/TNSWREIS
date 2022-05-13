@@ -37,6 +37,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from "primeng/password";
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RippleModule } from 'primeng/ripple';
+import { CarouselModule } from 'primeng/carousel';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -257,6 +258,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     OverlayPanelModule,
     KeyFilterModule,
     RippleModule,
+    CarouselModule,
     BlockUIModule.forRoot(),
   ],
 

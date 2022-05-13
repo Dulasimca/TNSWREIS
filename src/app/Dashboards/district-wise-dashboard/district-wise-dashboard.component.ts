@@ -1,6 +1,6 @@
 import { ViewportScroller } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService } from 'primeng/api';
@@ -22,7 +22,7 @@ export class DistrictWiseDashboardComponent implements OnInit {
   isScrollDown: boolean = true;
   @BlockUI() blockUI: NgBlockUI;
 	constructor(private _restApiService: RestAPIService, private _scroller: ViewportScroller,
-    private _messageService: MessageService, private _router: Router) {}
+    private _messageService: MessageService, private _router: Router, private cdf: ChangeDetectorRef) {}
 		
   ngOnInit(): void {
     console.log('before call');
@@ -30,19 +30,17 @@ export class DistrictWiseDashboardComponent implements OnInit {
   }
 
   loadData() {
-    this.data.push('')
     this.blockUI.start();
-    this.data.splice(0, 1);
     this._restApiService.get(PathConstants.DistrictDashboard_Get).subscribe((res: any) => {
       if(res !== undefined && res !== null) {
         if(res.length !== 0) {
-          // this.data = res.slice(0, 5);
           res.forEach((i, index) => {
             if(index < 5) {
               this.data.push(i);
             }
           })
           this.items = res;
+          this.cdf.detectChanges();
           this.blockUI.stop();
         } else {
           this.blockUI.stop();

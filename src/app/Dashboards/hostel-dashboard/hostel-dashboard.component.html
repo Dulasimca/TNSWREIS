@@ -1,1 +1,301 @@
-<p>hostel-dashboard works!</p>
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="{{hostelName}}">
+            <div class="p-grid" style="background: #f9f9e3; padding: 2px;">
+                <div #row1 class="p-col-12 p-md-12 p-lg-12" style="justify-content: center; display: flex;">
+                    <div #h_img id="h_img">
+                        <span>
+                            <img alt="TN ADW Hostel image" src={{imgURL}} style="vertical-align: middle" />
+                        </span>
+                    </div>
+                </div>
+                <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                    <div class="p-grid" style="justify-content: center;">
+                        <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
+                            <div class="hs-div hs-div-bg1">Sanctioned Count</div>
+                            <div class="hs-title hs-title1 hs-title-count">{{info.sanctionedCount}} </div>
+                        </div>
+                        <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
+                            <div class="hs-div hs-div-bg2">Registered Count</div>
+                            <div class="hs-title hs-title2 hs-title-count">{{info.registeredCount}}</div>
+                        </div>
+                        <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
+                            <div class="hs-div hs-div-bg3">Attendance Count</div>
+                            <div class="hs-title hs-title3 hs-title-count" style="width: 50%; float:left;">
+                                {{info.attendanceStrdyCount}}
+                                <div class="hs-sub-title">Yesterday</div>
+                            </div>
+                            <div class="hs-title hs-title3 hs-title-count" style="width: 50%; float:right;">
+                                {{info.attendanceTdyCount}}
+                                <div class="hs-sub-title">Today</div>
+                            </div>
+                        </div>
+                        <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
+                            <div class="hs-div hs-div-bg4">Hostel Type</div>
+                            <div class="hs-title hs-title4 hs-title-txt">{{info.hstlType}}</div>
+                        </div>
+                        <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
+                            <div class="hs-div hs-div-bg5">Building Type</div>
+                            <div class="hs-title hs-title5 hs-title-txt">{{info.buildingType}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div #row3 class="p-col-12 p-md-12 p-lg-12 hs-parent-div">
+                    <div class="p-grid" style="justify-content: center;">
+                        <div #row3col1 class="p-col-12 p-md-6 p-lg-6 hs-child-div">
+                            <div class="hs-section-hdr">
+                                Food Images
+                            </div>
+                            <p-carousel [value]="data" styleClass="custom-carousel" [numVisible]="1" [numScroll]="1"
+                                [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="product-item">
+                                        <div class="product-item-content">
+                                            <div class="mb-3">
+                                                <img src="{{item.image}}" [alt]="item.name" class="product-image"
+                                                    style="width: 500px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-carousel>
+                        </div>
+                        <div #row3col2 class="p-col-12 p-md-6 p-lg-6 hs-child-div">
+                            <div class="hs-section-hdr">
+                                Food Menu
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12">
+                                <div class="p-grid" *ngFor="let i of menuItems">
+                                    <div class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid hs-menuitem-gap">
+                                            <div class="p-col-3 p-md-2 p-lg-2 hs-menu-name  hs-menuitems-colorchange">
+                                                {{i.iType}}</div>
+                                            <div class="p-col-9 p-md-10 p-lg-10 hs-menu-item">{{i.iName}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div #row4 class="p-col-12 p-md-12 p-lg-12 hs-parent-div">
+                    <div class="p-grid" style="justify-content: center;">
+                        <div #row4col1 class="p-col-12 p-md-6 p-lg-6 hs-child-div">
+                            <div class="hs-section-hdr">
+                                Employee Information
+                            </div>
+                            <div *ngFor="let e of employeeList">
+                                <div class="p-grid hs-emplist-gap">
+                                    <div class="p-col-12 p-md-12 p-lg-12 hs-emp-list" [style.border-left]="e.eBRClr"
+                                        [style.background]="e.eBGColor">
+                                        <div style="float: left; width: 20%">
+                                            <img src="{{e.eImage}}" style="border-radius: 100%; width: 50px;"
+                                                class="img-responsive" alt="#">
+                                        </div>
+                                        <div style="float: right; width: 80%">
+                                            <div class="hs-emp-name">{{e.eName}}</div>
+                                            <div class="hs-emp-subtxt">{{e.eDesignation}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div #row4col2 class="p-col-12 p-md-6 p-lg-6 hs-child-div">
+                            <div class="hs-section-hdr">
+                                Hostel Gallery
+                            </div>
+                            <p-carousel [value]="galleryData" styleClass="custom-carousel" [numVisible]="1"
+                                [numScroll]="1" [circular]="isGCircular" [autoplayInterval]="3000"
+                                [responsiveOptions]="responsiveOptions">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="product-item">
+                                        <div class="product-item-content">
+                                            <div class="mb-3">
+                                                <img src="{{item.image}}" [alt]="item.name" class="product-image"
+                                                    style="width: 500px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-carousel>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div #row5 class="p-col-12 p-md-12 p-lg-12 hs-parent-div">
+                    <div class="p-grid" style="justify-content: center;">
+                        <div class="p-col-12 p-md-12 p-lg-12 no-padding">
+                            <div class="hs-section-hdr">
+                                Student Attendance
+                            </div>
+                            <p-chart type="line" [data]="attendanceData" [options]="chartOptions" [responsive]="true">
+                            </p-chart>
+                        </div>
+                    </div>
+                </div> -->
+                <div #row6 class="p-col-12 p-md-12 p-lg-12 hs-parent-div">
+                    <div class="p-grid" style="justify-content: center;">
+                        <div #row6col1 class="p-col-12 p-md-6 p-lg-6 hs-child-div">
+                            <div class="hs-section-hdr">
+                                Hostel Infrastructure
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 no-pad-btm">
+                                <div class="p-grid" style="justify-content: center;">
+                                    <div #tarera class="p-col-4 p-md-4 p-lg-3 hs-infra-box">
+                                        <div class="hs-infra-boxtitle">Total Area</div>
+                                        <div class="hs-infra-box-subtitle">{{totalArea}}</div>
+                                        <div class="p-col-12 p-md-12 p-lg-12" style="background: #ff35a4;"></div>
+                                    </div>
+                                    <div #barea class="p-col-4 p-md-4 p-lg-3 hs-infra-box">
+                                        <div class="hs-infra-boxtitle">Building Area</div>
+                                        <div class="hs-infra-box-subtitle">{{buildingArea}}</div>
+                                        <div class="p-col-12 p-md-12 p-lg-12" style="background: #3564ff;"></div>
+                                    </div>
+                                    <div #nfloor class="p-col-4 p-md-4 p-lg-3 hs-infra-box">
+                                        <div class="hs-infra-boxtitle">No Of Floors</div>
+                                        <div class="hs-infra-box-subtitle">{{nFloors}}</div>
+                                        <div class="p-col-12 p-md-12 p-lg-12" style="background: #4cad13;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                                <div class="p-grid" style="justify-content: center;">
+                                    <div #cpdwall class="p-col-4 p-md-4 p-lg-3 hs-infra-box"
+                                        [ngStyle]="{'background': (cwValue == 1) ? '#ecffec' : '#ffdddd'}">
+                                        <div style="width: 20%; float: left; padding: 5px;"
+                                            [ngStyle]="{'background': (cwValue == 1) ? '#1b931f' : '#eb1111'}">
+                                            <i [ngClass]="(cwValue == 1) ? 'pi pi-check' : 'pi pi-times'"
+                                                style="color: white; font-size: 1.5rem; "></i>
+                                        </div>
+                                        <div style="width: 80%; float: right; padding: 5px;">Compound Wall</div>
+                                    </div>
+                                    <div #rmpfcl class="p-col-4 p-md-4 p-lg-3 hs-infra-box"
+                                        [ngStyle]="{'background': (rfValue == 1) ? '#ecffec' : '#ffdddd'}">
+                                        <div style="width: 20%; float: left; padding: 5px;"
+                                            [ngStyle]="{'background': (rfValue == 1) ? '#1b931f' : '#eb1111'}">
+                                            <i [ngClass]="(rfValue == 1) ? 'pi pi-check' : 'pi pi-times'"
+                                                style="color: white; font-size: 1.5rem; "></i>
+                                        </div>
+                                        <div style="width: 80%; float: right; padding: 5px;">Ramp Facility</div>
+                                    </div>
+                                    <div #pgrnd class="p-col-4 p-md-4 p-lg-3 hs-infra-box"
+                                        [ngStyle]="{'background': (pgValue == 1) ? '#ecffec' : '#ffdddd'}">
+                                        <div style="width: 20%; float: left; padding: 5px;"
+                                            [ngStyle]="{'background': (pgValue == 1) ? '#1b931f' : '#eb1111'}">
+                                            <i [ngClass]="(pgValue == 1) ? 'pi pi-check' : 'pi pi-times'"
+                                                style="color: white; font-size: 1.5rem; "></i>
+                                        </div>
+                                        <div style="width: 80%; float: right; padding: 5px;">Play Ground</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12" style="height: 250px; overflow-y: scroll;">
+                                <div *ngFor="let f of floorDetails">
+                                    <div class="p-col-12 p-md-12 p-lg-12 hs-fcl-list-gap">
+                                        <div style="width: 20%; float: left;" [style.background]="f.fBGColor">
+                                            <div>{{f.floorNo}} </div>
+                                            <div> Floor </div>
+                                        </div>
+                                        <div style="width: 80%; float: right;">
+                                            <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                                <div class="p-grid">
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>Bathroom No's</div>
+                                                        <div style="width: 20%; float: right;">{{f.bthRoom}}</div>
+                                                    </div>
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>Kitchen No's</div>
+                                                        <div style="width: 20%; float: right;">{{f.ktRoom}}</div>
+                                                    </div>
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>Library No's</div>
+                                                        <div style="width: 20%; float: right;">{{f.lbRoom}}</div>
+                                                    </div>
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>StudentRoom No's</div>
+                                                        <div style="width: 20%; float: right;">{{f.stRoom}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                                <div class="p-grid">
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>StudyingArea</div>
+                                                        <div style="width: 20%; float: right;">{{f.stdyArea}}</div>
+                                                    </div>
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>Toilet No's</div>
+                                                        <div style="width: 20%; float: right;">{{f.tlRoom}}</div>
+                                                    </div>
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>Urinal No's</div>
+                                                        <div style="width: 20%; float: right;">{{f.urRoom}}</div>
+                                                    </div>
+                                                    <div class="p-col-3 p-md-2 p-lg-2">
+                                                        <div style="width: 20%; float: left;">
+                                                        </div>
+                                                        <div>WardenRoom No's</div>
+                                                        <div style="width: 20%; float: right;">{{f.wrdRoom}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div #row6col2 class="p-col-12 p-md-6 p-lg-6 hs-child-div">
+                            <div class="hs-section-hdr">
+                                Facility Details
+                            </div>
+                            <div class="p-grid" style="justify-content: center;">
+                                <div class="p-col-10 p-md-10 p-lg-10 hs-fcl-box">
+                                    <div class="hs-fcl-title">Student Facility</div>
+                                    <div *ngFor="let s of studentFData">
+                                        <div class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid hs-fcl-list-gap">
+                                                <div
+                                                    class="p-col-3 p-md-2 p-lg-2 hs-menu-name hs-menuitems-colorchange hs-title-count">
+                                                    {{s.count}}</div>
+                                                <div class="p-col-9 p-md-10 p-lg-10 hs-menu-item">{{s.title}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-grid" style="justify-content: center;">
+                                <div class="p-col-10 p-md-10 p-lg-10 hs-fcl-box">
+                                    <div class="hs-fcl-title">Hostel Facility</div>
+                                    <div *ngFor="let h of hostelFData">
+                                        <div class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid hs-fcl-list-gap">
+                                                <div
+                                                    class="p-col-3 p-md-2 p-lg-2 hs-menu-name hs-menuitems-colorchange hs-title-count">
+                                                    {{h.count}}</div>
+                                                <div class="p-col-9 p-md-10 p-lg-10 hs-menu-item">{{h.title}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+</div>

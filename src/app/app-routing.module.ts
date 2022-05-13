@@ -75,6 +75,7 @@ import { OnlineRegistrationComponent } from './forms-module/online-registration/
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
+import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -158,6 +159,7 @@ const routes: Routes = [
   { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent },
   {  path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent },
   {  path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent },
+  {  path: 'hostel-dashboard', component:HostelDashboardComponent },
   { path: 'online-registration', component:OnlineRegistrationComponent},
 ];
 
