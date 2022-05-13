@@ -176,10 +176,16 @@ export class OnlineRegistrationComponent implements OnInit {
     this.registeredCols = this._tableConstants.registrationColumns;
     
     setTimeout(() => {
-
       this.districts = this._masterService.getDistrictAll();
       this.taluks = this._masterService.getTalukAll();
-      this.bloodgroups = this._masterService.getMaster('BG');   
+      this.bloodgroups = this._masterService.getMaster('BG');
+      this.genders = this._masterService.getMaster('GD');   
+      this.languages = this._masterService.getMaster('MT');
+      this.castes = this._masterService.getMaster('CS');
+      this.classes = this._masterService.getMaster('CL');
+    this.religions = this._masterService.getMaster('RL');
+    this.mediums = this._masterService.getMaster('MD');
+    this.subcastes = this._masterService.getMaster('SC');
       this.blockUI.stop();
     }, 500);
     this.defaultValues();
