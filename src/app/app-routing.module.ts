@@ -76,6 +76,7 @@ import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashb
 import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
+import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -156,10 +157,13 @@ const routes: Routes = [
   { path: 'employee-strength', component:EmployeeStrengthComponent, canActivate: [AuthGuard]},
   { path: 'student-count', component:StudentcountReportComponent, canActivate: [AuthGuard]},
   { path: 'Hostel-Committee', component:HostelCommitteeComponent, canActivate: [AuthGuard]},
-  { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent },
+  // { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent },
   {  path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent },
   {  path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent },
   { path: 'online-registration', component:OnlineRegistrationComponent},
+  { path: 'total-count-dashboard', component:TotalCountDashboardComponent},
+
+   
   { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent},
   { path: 'online-check', component:OnlineRegistrationCheckComponent},
   
