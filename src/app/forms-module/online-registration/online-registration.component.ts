@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Observable } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-online-registration',
@@ -75,56 +76,66 @@ export class OnlineRegistrationComponent implements OnInit {
   hostels?: any;
   hostel: any;
   hostelId: any;
-  
+  pdfDialog: boolean; 
 
-  // Regreceipt 
-  receiptCols: any;
-  receiptData: any = [];
-  showReceipt: boolean;
-  receiptYear: string;
-  studentId: any;
-  schoolName: string;
-  schoolAddress: string;
-  schoolContact: any;
-  studentName: string;
-  parentName: string;
-  classSection: string;
-  admnNo: any;
-  today: any;
-  total: any;
-  login_user: User;
-  sectionOptions: SelectItem[];
-  emisno: any;
-  dob:any;
-  age: number;
-  bloodGroup: number;
-  gender: number;
-  motherTongue: number;
-  caste: number;
-  subCaste: number;
-  religion: number;
-  mobileNo: string;
-  altMobNo: string;
-  admissionNo: string;
-  totalYIncome: number;
-  //parent-info
-  fatherName: string;
-  motherName: string;
-  fatherOccupation: string;
-  fatherQualification: string;
-  fatherMobNo: any;
-  motherOccupation: String;
-  motherQualification: string;
-  motherMobNo: any;
-  receiptNo: any;
-  //address-info
-  address1: string;
-  address2: string;
-  landMark: string;
-  village: string;
-  pinCode: any;
+  // // Regreceipt 
+  // receiptCols: any;
+  // receiptData: any = [];
+  // showReceipt: boolean;
+  // receiptYear: string;
+  // studentId: any;
   
-  data: any = [];
+  // schoolAddress: string;
+  // schoolContact: any;
+  // studentName: string;
+  // parentName: string;
+  // classSection: string;
+  // admnNo: any;
+  // today: any;
+  // total: any;
+  // login_user: User;
+  // sectionOptions: SelectItem[];
+  // emisno: any;
+  // dob:any;
+  // age: number;
+  // bloodGroup: number;
+  // gender: number;
+  // motherTongue: number;
+  // caste: number;
+  // subCaste: number;
+  // religion: number;
+  // mobileNo: string;
+  // altMobNo: string;
+  // admissionNo: string;
+  // totalYIncome: number;
+  // //parent-info
+  // fatherName: string;
+  // motherName: string;
+  // fatherOccupation: string;
+  // fatherQualification: string;
+  // fatherMobNo: any;
+  // motherOccupation: String;
+  // motherQualification: string;
+  // motherMobNo: any;
+  // receiptNo: any;
+  // //address-info
+  // address1: string;
+  // address2: string;
+  // landMark: string;
+  // village: string;
+  // pinCode: any;
+  // //institute-details
+  // schoolName: string;
+  // class: any;
+  // medium: any;
+  // scholarshipNumber: any;
+  // collegeName: string;
+  // courseStudying: any;
+  // year: any;
+  // courseTitle: any;
+  // cMedium: any;
+  // colScholNum: any;
+  // data: any = [];
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -165,10 +176,16 @@ export class OnlineRegistrationComponent implements OnInit {
     this.registeredCols = this._tableConstants.registrationColumns;
     
     setTimeout(() => {
-
       this.districts = this._masterService.getDistrictAll();
       this.taluks = this._masterService.getTalukAll();
-      this.bloodgroups = this._masterService.getMaster('BG');   
+      this.bloodgroups = this._masterService.getMaster('BG');
+      this.genders = this._masterService.getMaster('GD');   
+      this.languages = this._masterService.getMaster('MT');
+      this.castes = this._masterService.getMaster('CS');
+      this.classes = this._masterService.getMaster('CL');
+    this.religions = this._masterService.getMaster('RL');
+    this.mediums = this._masterService.getMaster('MD');
+    this.subcastes = this._masterService.getMaster('SC');
       this.blockUI.stop();
     }, 500);
     this.defaultValues();
@@ -467,13 +484,11 @@ export class OnlineRegistrationComponent implements OnInit {
       if (response !== undefined && response !== null) {
         if (response) {
           this.blockUI.stop();
-          console.log(this.obj);
-          this.generateReceipt(this.obj);
-          // this.onView();
+          this.onView();
           // this.clearForm();          
           this._messageService.clear();
           this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            key: 'd-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           })
         } else {
@@ -509,9 +524,9 @@ export class OnlineRegistrationComponent implements OnInit {
     this.registeredDetails = [];
     this.loading = true;
     const params = {
-      'DCode': this.district,
-      'TCode': this.taluk,
-      'HCode': this.hostelId
+      'AadharNo': this.obj.aadharNo,
+      'MobileNo': this.obj.mobileNo,
+      'Dob': this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy')
     }
     this._restApiService.getByParameters(PathConstants.OnlineStudentRegistration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
@@ -521,7 +536,6 @@ export class OnlineRegistrationComponent implements OnInit {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
           }
         })
-        console.log(this.registeredDetails);
         this.registeredDetails = res.slice(0);
         this.loading = false;
       } else {
@@ -702,41 +716,10 @@ loadHostelList() {
   
 }
 
-generateReceipt(OnlineRegistration) {
-  console.log('enter',OnlineRegistration);
-  this.showReceipt = true;
-  this.hostelName = 'MC Raja Hostel';
-  this.receiptNo = OnlineRegistration.studentId;
-  this.studentName = OnlineRegistration.studentName;
-  this.emisno = OnlineRegistration.emisno;
-  this.studentId = OnlineRegistration.StudentId;
-  this.fatherName = OnlineRegistration.fatherName;
-  this.mobileNo = OnlineRegistration.mobileNo;
-  this.altMobNo = OnlineRegistration.altMobNo;
-  this.totalYIncome = OnlineRegistration.totalYIncome;
-  this.caste = OnlineRegistration.caste;
-  this.subCaste = OnlineRegistration.subCaste;
-  this.dob = OnlineRegistration.dob;
-  this.age = OnlineRegistration.age;
-  this.bloodGroup = OnlineRegistration.bloodgroupName;
-  this.gender = OnlineRegistration.genderName;
-  this.motherTongue = OnlineRegistration.motherTongue;
-  this.classSection = OnlineRegistration.class;
-  // parent-info
-  this.fatherOccupation = OnlineRegistration.fatherOccupation;
-  this.fatherQualification = OnlineRegistration.fatherQualification;
-  this.fatherMobNo = OnlineRegistration.fatherMoileNo;
-  this.motherOccupation = OnlineRegistration.motherOccupation;
-  this.motherQualification = OnlineRegistration.motherQualification;
-  this.motherMobNo = OnlineRegistration.motherMoileNo;
- //address-info
- this.address1 = OnlineRegistration.address1;
- this.address2 = OnlineRegistration.address2;
- this.landMark = OnlineRegistration.landmark;
- this.district = OnlineRegistration.Districtcode;
- this.taluk = OnlineRegistration.TalukCode;
- this.village = OnlineRegistration.village;
- this.pinCode =OnlineRegistration.pincode;
+onDownload(Filename) {
+  this.pdfDialog = true;
+  // const path = "assets/layout/images/check.pdf" + "/" + Filename;
+  // saveAs(path, Filename);
 }
 }
 
