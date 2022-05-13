@@ -185,6 +185,11 @@ public static readonly OnlineStudentRegistration_Post = 'OnlineStudentRegistrati
 
 public static readonly OnlineStudentRegistration_Get = 'OnlineStudentRegistration/Get';
 ///dashboards
+public static readonly DashboardCategory_Get = 'DashboardDetails/Get';
+public static readonly CMMainDashBoard_Get = 'CMMainDashBoard';
+public static readonly CMDashboardGraph_Get = 'CMDashboardGraph';
+
+
 public static readonly DistrictDashboard_Get = 'CMDistrictWiseDetails';
 public static readonly TalukDashboard_Get = "CMTalukWiseDetails/Get";
 public static readonly HostelDashboard_Get = "CMHostelWiseDetails/Get";

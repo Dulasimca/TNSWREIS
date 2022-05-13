@@ -37,6 +37,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from "primeng/password";
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RippleModule } from 'primeng/ripple';
+import { HighchartsChartModule } from 'highcharts-angular';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -132,6 +134,7 @@ import { OnlineRegistrationComponent } from './forms-module/online-registration/
 import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashboard/district-wise-dashboard.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
+import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 
@@ -217,6 +220,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     DistrictWiseDashboardComponent,
     TalukWiseDashboardComponent,
     HostelWiseDashboardComponent,
+    TotalCountDashboardComponent,
     OnlineRegistrationCheckComponent,
     HostelDashboardComponent,
     
@@ -259,6 +263,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     OverlayPanelModule,
     KeyFilterModule,
     RippleModule,
+    HighchartsChartModule,
     BlockUIModule.forRoot(),
   ],
 
