@@ -7,7 +7,7 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 @Component({
   selector: 'app-hostel-dashboard',
   templateUrl: './hostel-dashboard.component.html',
-  styleUrls: ['./hostel-dashboard.component.css']
+  styleUrls: ['./hostel-dashboard.component.css'],
 })
 export class HostelDashboardComponent implements OnInit {
   hostelName: string = '';
@@ -63,14 +63,18 @@ export class HostelDashboardComponent implements OnInit {
     this.loadData(2376);
     this.data = [{ image: 'assets/layout/Home/Documents/TN_ADW_Food_Inspection.png', name: 'inspection' },
     { image: 'assets/layout/Home/Documents/TN_ADW_Hostel_Ground.png', name: 'ground' }];
+    var keys = Object.keys(this.info);
+    keys.forEach(k => {
+      this.info[k] = '-';
+    })
   }
 
   loadData(id) {
     var style = [
-      { 'br_clr': '4px solid #28a745', 'bg-clr': '#b6ffc7', 'fbg-clr': '#3b5998' },
-      { 'br_clr': '4px solid #2196f3', 'bg-clr': '#cee9ff', 'fbg-clr': '#d06900' },
-      { 'br_clr': '4px solid #e91e63', 'bg-clr': '#ffdfea', 'fbg-clr': '#e91e63' },
-      { 'br_clr': '4px solid #ff9800', 'bg-clr': '#ffe8c6', 'fbg-clr': '#00bcd4' },
+      { 'br_clr': '4px solid #28a745', 'bg-clr': '#b6ffc7', 'fbg-lt-clr': '#3b5998', 'fbg-rt-clr': '#bcd1fd' },
+      { 'br_clr': '4px solid #2196f3', 'bg-clr': '#cee9ff', 'fbg-lt-clr': '#d06900', 'fbg-rt-clr': '#ffc992' },
+      { 'br_clr': '4px solid #e91e63', 'bg-clr': '#ffdfea', 'fbg-lt-clr': '#e91e63', 'fbg-rt-clr': '#ffd6e4' },
+      { 'br_clr': '4px solid #ff9800', 'bg-clr': '#ffe8c6', 'fbg-lt-clr': '#00bcd4', 'fbg-rt-clr': '#d0faff' },
     ];
     this._restApiService.getByParameters(PathConstants.HostelDetailDashboard_Get, { 'Code': id }).subscribe((res: any) => {
       if (res !== undefined && res !== null) {
@@ -128,7 +132,8 @@ export class HostelDashboardComponent implements OnInit {
               'tlRoom': (t1.ToiletRoomNos !== undefined && t1.ToiletRoomNos !== null) ? t1.ToiletRoomNos : '-',
               'urRoom': (t1.UrinalNos !== undefined && t1.UrinalNos !== null) ? t1.UrinalNos : '-',
               'wrdRoom': (t1.WardenRoom !== undefined && t1.WardenRoom !== null) ? t1.WardenRoom : '-',
-              'fBGColor': style[ind]['fbg-clr']
+              'fLBGColor': style[ind]['fbg-lt-clr'],
+              'fRBGColor': style[ind]['fbg-rt-clr']
             })
           })
         }

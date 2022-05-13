@@ -735,11 +735,13 @@ main {
 
 .dist-dsh-count {
   border-radius: 10px; border: 1px solid whitesmoke;
+  margin-bottom: 0.8rem;
   /* color: white; */
 }
 .circle-single {
     border-radius: 50% !important;
-    width: 20% !important;
+    /* width: 20% !important; */
+    width: 50px;
     height: 90% !important;
     font-size: 16px;
     /* text-align: center; */
@@ -751,7 +753,8 @@ main {
 }
 .circle-double {
     border-radius: 50% !important;
-    width: 45% !important;
+    /* width: 45% !important; */
+    width: 50px;
     height: 80% !important;
     font-size: 16px;
     /* text-align: center; */
@@ -1060,6 +1063,13 @@ main {
     background: linear-gradient(#4bb8f3,#3edf19);
     border: 2px solid #89e5ff;
 }
+.hs-hdr {
+    text-align: center;
+    padding: 10px !important;
+    background: #f79530;
+    color: white;
+    text-shadow: 2px 2px #db770f;
+}
 .hs-main-div {
     text-align: center;
     padding: 0 !important;
@@ -1124,7 +1134,9 @@ main {
     color: #4caf50;
 }
 .hs-section-hdr {
-    background: #008494;
+    /* background: #008494; */
+    background: #f79530;
+    /* color: white; */
     text-align: center;
     color: whitesmoke;
     font-size: 16px;
@@ -1135,7 +1147,7 @@ main {
     padding: 10px 25px 0px 25px !important;
 }
 .hs-child-div {
-    border: 1px solid #d1e8eb;
+    border: 1px solid #4c4c4c;
     border-radius: 5px;
     padding: 0 !important;
 }
@@ -1161,7 +1173,14 @@ main {
     border-radius: 0 5px 5px 0;
     white-space: pre;
     overflow: auto;
+    color: whitesmoke;
     /* padding: 5px; */
+}
+.p-carousel .p-carousel-content .p-carousel-prev {
+    color: whitesmoke !important;
+}
+.p-carousel .p-carousel-content .p-carousel-next {
+    color: whitesmoke !important;
 }
 .hs-menuitem-gap {
     padding: 15px 10px 0 10px;
@@ -1227,10 +1246,12 @@ transform: translateY(50%);
     }
     .hs-emplist-gap {
         margin: auto !important;
-        padding: 10px 20px 5px 20px;
+        padding: 5px 20px 0px 20px;
     }
     .hs-emp-list {
         padding-bottom: 0 !important;
+        border-right: 5px solid #3c3c3c;
+        margin-top: 10px;
     }
     .hs-emp-subtxt {
         color: #7b7d7e;
@@ -1252,15 +1273,22 @@ transform: translateY(50%);
         font-size: 15px;
     font-weight: 600;
     text-align: center;
-    color: #616161;
+    /* color: #616161; */
+    color: #d7d2d2;
     }
     .hs-fcl-list-gap {
         padding: 5px 10px 0;
     }
     .hs-infra-box {
         padding: 0 !important;
-        margin: 10px;
+        /* margin: 10px; */
         box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    }
+    .hs-infra-box-xs-mg {
+        margin: 2px;
+    }
+    .hs-infra-box-lg-mg {
+        margin: 10px;
     }
     .hs-infra-boxtitle {
         text-align: center;
@@ -1273,6 +1301,47 @@ transform: translateY(50%);
     color: #757575;
     margin-top: 5px;
     }
+    .flr-lst-main {
+        animation: move 4s infinite right linear;
+    }
+    .marquee {
+        height: 230px;
+        margin-top: -20px;
+    }
+    .flr-no-box {
+        color: whitesmoke;
+        padding: 3rem;
+        text-align: center;
+    }
+    /* @keyframes jump {
+        0%   {transform: translate3d(0,0,0) scale3d(1,1,1);}
+        40%  {transform: translate3d(0,10%,0) scale3d(.3,1,1);}
+        100% {transform: translate3d(0,100%,0) scale3d(1,,1);}
+      } */
+      @keyframes jump {
+        0% { transform: translate(50%, 50%) scale(1.25, 0.75); }
+        50% { transform: translate(50%, 50%) scale(1, 1); }
+    }
+      .jump {
+        transform-origin: 50% 50%;
+        /* transform: translate(50%, 50%); */
+        /* animation: jump 1s linear alternate infinite; */
+        animation: jump 1.2s infinite;
+      }
+      @keyframes bounce {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+        to {
+            transform: translate3d(0, 50px, 0);
+        }
+    }
+      .bounce {
+        animation: bounce 0.2s;
+        animation-direction: alternate;
+        animation-timing-function: cubic-bezier(0,.02,.1,.02);
+        animation-iteration-count: infinite;
+      }
  /* end */
 
 
