@@ -45,7 +45,7 @@ public static readonly Login = 'Login/Post';
 public static readonly Hostelgo_post = 'HostelGo/Post'; 
 public static readonly Hostelgo_Get = 'HostelGo/Get'; 
 
-public static readonly UserMaster_Put = 'UserMaster/Put';
+public static readonly UserMaster_Put = 'ChangePassword/Post';
 
 
 public static readonly PurchaseOrder_Post = 'PurchaseOrder/Post';

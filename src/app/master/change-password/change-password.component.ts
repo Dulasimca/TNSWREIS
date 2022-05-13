@@ -43,7 +43,7 @@ export class ChangePasswordComponent implements OnInit {
       'OldEncryptedPwd': this.logged_user.token,
       'UserId': this.logged_user.userID
     }
-    this._restApiService.put(PathConstants.UserMaster_Put, params).subscribe(res => {
+    this._restApiService.post(PathConstants.UserMaster_Put, params).subscribe(res => {
       if (res.item1) {
         this.onClear();
         this._messageService.clear();
