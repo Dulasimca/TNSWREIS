@@ -38,6 +38,7 @@ import { PasswordModule } from "primeng/password";
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RippleModule } from 'primeng/ripple';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 import { AppComponent } from './app.component';
@@ -264,6 +265,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     KeyFilterModule,
     RippleModule,
     HighchartsChartModule,
+    PaginatorModule,
     BlockUIModule.forRoot(),
   ],
 
