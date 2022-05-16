@@ -1,6 +1,6 @@
 import { LocationStrategy, ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 
@@ -15,7 +15,7 @@ export class HostelWiseDashboardComponent implements OnInit {
   tcode: any;
 
 	constructor(private _restApiService: RestAPIService, private _activatedRoute: ActivatedRoute,
-    private _location: LocationStrategy) {}
+    private _location: LocationStrategy, private _router: Router) {}
 		
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe(params => {
@@ -41,6 +41,12 @@ export class HostelWiseDashboardComponent implements OnInit {
         }
       }
     })
+  }
+
+  gotoHostel(id, name) {
+    if(id !== undefined && id !== null) {
+    this._router.navigate(['/hostel-dashboard'],{queryParams:{'hcode': id, 'hname': name} , replaceUrl: true});
+    }
   }
 
 }

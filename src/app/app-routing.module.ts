@@ -76,6 +76,7 @@ import { DistrictWiseDashboardComponent } from './Dashboards/district-wise-dashb
 import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/taluk-wise-dashboard.component';
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
+import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 
 const routes: Routes = [
@@ -160,6 +161,7 @@ const routes: Routes = [
   // { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent },
   {  path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent },
   {  path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent },
+  {  path: 'hostel-dashboard', component:HostelDashboardComponent },
   { path: 'online-registration', component:OnlineRegistrationComponent},
   { path: 'total-count-dashboard', component:TotalCountDashboardComponent},
 

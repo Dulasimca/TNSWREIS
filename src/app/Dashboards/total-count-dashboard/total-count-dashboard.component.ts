@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 // import * as HighchartsMore from "highcharts/highcharts-more";
-import More from 'highcharts/highcharts-more'
+// import More from 'highcharts/highcharts-more'
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
-More(Highcharts)
+// More(Highcharts)
 
 @Component({
   selector: 'app-total-count-dashboard',
