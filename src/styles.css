@@ -1160,7 +1160,7 @@ main {
     10s forwards infinite; animation-delay: 0s;
     border-radius: 5px 0 0 5px;
     align-self: center;
-    color: whitesmoke;
+    color: white;
     /* padding: 5px; */
 }
 .hs-menu-item {
@@ -1173,14 +1173,14 @@ main {
     border-radius: 0 5px 5px 0;
     white-space: pre;
     overflow: auto;
-    color: whitesmoke;
+    color: white;
     /* padding: 5px; */
 }
 .p-carousel .p-carousel-content .p-carousel-prev {
-    color: whitesmoke !important;
+    color: white !important;
 }
 .p-carousel .p-carousel-content .p-carousel-next {
-    color: whitesmoke !important;
+    color: white !important;
 }
 .hs-menuitem-gap {
     padding: 15px 10px 0 10px;
@@ -1254,12 +1254,15 @@ transform: translateY(50%);
         margin-top: 10px;
     }
     .hs-emp-subtxt {
-        color: #7b7d7e;
+        /* color: #7b7d7e; */
+        color: white;
+        font-size: 13px;
     }
     .hs-emp-name {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 600;
-        color: #726a6a;
+        color: white;
+        /* color: #726a6a; */
     }
     .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button, .p-galleria .p-galleria-indicators .p-galleria-indicator.p-highlight button {
         background-color: #00a0b4!important;
@@ -1309,7 +1312,7 @@ transform: translateY(50%);
         margin-top: -20px;
     }
     .flr-no-box {
-        color: whitesmoke;
+        color: white;
         padding: 3rem;
         text-align: center;
     }

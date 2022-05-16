@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
+import * as Highcharts from "highcharts";
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-hostel-dashboard',
@@ -10,6 +12,7 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
   styleUrls: ['./hostel-dashboard.component.css'],
 })
 export class HostelDashboardComponent implements OnInit {
+  Highcharts: typeof Highcharts = Highcharts;
   hostelName: string = '';
   hcode: any;
   info: HostelInfo = {} as HostelInfo;
@@ -17,7 +20,9 @@ export class HostelDashboardComponent implements OnInit {
   responsiveOptions: any = [];
   data: any[] = [];
   attendanceData: any;
-  chartOptions: any;
+  // chartOptions: any;
+  chartLabels: any[] = [];
+  chartOptions: Highcharts.Options;
   menuItems: any[] = [];
   employeeList: any[] = [];
   galleryData: any[] = [];
@@ -71,10 +76,10 @@ export class HostelDashboardComponent implements OnInit {
 
   loadData(id) {
     var style = [
-      { 'br_clr': '4px solid #28a745', 'bg-clr': '#b6ffc7', 'fbg-lt-clr': '#3b5998', 'fbg-rt-clr': '#bcd1fd' },
-      { 'br_clr': '4px solid #2196f3', 'bg-clr': '#cee9ff', 'fbg-lt-clr': '#d06900', 'fbg-rt-clr': '#ffc992' },
-      { 'br_clr': '4px solid #e91e63', 'bg-clr': '#ffdfea', 'fbg-lt-clr': '#e91e63', 'fbg-rt-clr': '#ffd6e4' },
-      { 'br_clr': '4px solid #ff9800', 'bg-clr': '#ffe8c6', 'fbg-lt-clr': '#00bcd4', 'fbg-rt-clr': '#d0faff' },
+      { 'br_clr': '4px solid #ffbcd3', 'bg-clr': '#e91e63', 'fbg-lt-clr': '#3b5998', 'fbg-rt-clr': '#bcd1fd' },
+      { 'br_clr': '4px solid #fdd87d', 'bg-clr': '#ff9800', 'fbg-lt-clr': '#d06900', 'fbg-rt-clr': '#ffc992' },
+      { 'br_clr': '4px solid #61d5e4', 'bg-clr': '#558ebd', 'fbg-lt-clr': '#e91e63', 'fbg-rt-clr': '#ffd6e4' },
+      { 'br_clr': '4px solid #7df982', 'bg-clr': '#28a745', 'fbg-lt-clr': '#00bcd4', 'fbg-rt-clr': '#d0faff' },
     ];
     this._restApiService.getByParameters(PathConstants.HostelDetailDashboard_Get, { 'Code': id }).subscribe((res: any) => {
       if (res !== undefined && res !== null) {
@@ -89,8 +94,9 @@ export class HostelDashboardComponent implements OnInit {
               t.StudentCount : '-';
             this.info.sanctionedCount = (t.sanctionedStength !== undefined && t.sanctionedStength !== null) ?
               t.sanctionedStength : '-';
-            this.imgURL = (t.HostelImage !== undefined && t.HostelImage !== null) ?
-              'assets/layout/' + t.Code + '/' + t.HostelImage : '';
+            // this.imgURL = (t.HostelImage !== undefined && t.HostelImage !== null) ?
+              // 'assets/layout/' + t.Code + '/' + t.HostelImage : '';
+            this.imgURL = 'assets/layout/Home/Documents/TN_ADW_Hostel_Ground.png';
           })
         }
         //hostel menu info
@@ -122,8 +128,29 @@ export class HostelDashboardComponent implements OnInit {
             } else {
               ind += 1;
             }
+            switch(t1.FloorNo) {
+              case '0':
+                t1.FloorNo = '';
+                t1.FloorLbl = 'G';
+                break;
+              case '1':
+                t1.FloorLbl = 'st';
+                break;
+              case '2':
+                t1.FloorLbl = 'nd';
+                break;
+              case '3':
+                t1.FloorLbl = 'rd';
+                break;
+              case '4':
+                t1.FloorLbl = 'th';
+                break;
+              default:
+                t1.FloorLbl = 'th';
+                break;
+            }
             this.floorDetails.push({
-              'floorNo': (t1.FloorNo !== undefined && t1.FloorNo !== null) ? ((t1.FloorNo !== '0') ? t1.FloorNo + 'st' : 'G') : '-',
+              'floorNo': (t1.FloorNo !== undefined && t1.FloorNo !== null) ? t1.FloorNo + t1.FloorLbl : '-',
               'bthRoom': (t1.BathRoomNos !== undefined && t1.BathRoomNos !== null) ? t1.BathRoomNos : '-',
               'ktRoom': (t1.Kitchen !== undefined && t1.Kitchen !== null) ? t1.Kitchen : '-',
               'lbRoom': (t1.Library !== undefined && t1.Library !== null) ? t1.Library : '-',
@@ -202,37 +229,97 @@ export class HostelDashboardComponent implements OnInit {
             }
           })
         }
-        this.chartOptions = {
-          responsive: true,
-          type: 'line',
-          bezierCurve: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: '#495057'
+        // this.chartOptions = {
+        //   responsive: true,
+        //   type: 'line',
+        //   bezierCurve: false,
+        //   plugins: {
+        //     legend: {
+        //       labels: {
+        //         color: '#495057'
+        //       }
+        //     }
+        //   },
+        //   scales: {
+        //     x: {
+        //       ticks: {
+        //         color: '#495057'
+        //       },
+        //       grid: {
+        //         color: '#ebedef'
+        //       }
+        //     },
+        //     y: {
+        //       ticks: {
+        //         color: '#495057'
+        //       },
+        //       grid: {
+        //         color: '#ebedef'
+        //       }
+        //     }
+        //   }
+
+        // }
+        var attd_data = [50,0,0,10,20,35,55,44,87,77,49,81,66,74,78,70,0,52,66,88,87,82,71,75,77,69,91];
+        var curr_date = new Date(), curr_year = curr_date.getFullYear(), curr_month = curr_date.getMonth();
+        var firstDateOfMonth = new Date(curr_year, curr_month, 1).getDate();
+        var lastDateOfMonth = new Date(curr_year, curr_month + 1, 0).getDate();
+        var curr_full_month = new Date().toLocaleString('default', { month: 'short' });
+        console.log('date', firstDateOfMonth, lastDateOfMonth, curr_date, curr_month, curr_year)
+        for(let i = firstDateOfMonth; i <= lastDateOfMonth; i++) {
+          var formDate = i + '-' + curr_month + '-' + curr_year;
+          this.chartLabels.push(formDate);
+        }
+        this.attendanceData = {
+          title: {
+            text: 'Attendance details of ' + curr_full_month + ' - ' + curr_year
+          },
+          series: [{ data: attd_data, name: 'Student', color: '#00ff00' }],
+          plotOptions: {
+            bar: {
+              dataLabels: {
+                enabled: true
+              }
+            },
+            series: {
+              stacking: 'normal',
+              pointWidth: '25',
+              pointPadding: 0,
+              borderWidth: 0
+            }
+          },
+          chart: {
+            type: "line"
+          },
+          credits: {
+            enabled: false
+          },
+          xAxis: {
+            categories: this.chartLabels
+          },
+          yAxis: {
+            title: {
+              text: 'No.of Student Present',
+              align: 'high'
+            },
+            stackLabels: {
+              enabled: true,
+              style: {
+                overflow: 'justify'
               }
             }
           },
-          scales: {
-            x: {
-              ticks: {
-                color: '#495057'
-              },
-              grid: {
-                color: '#ebedef'
-              }
-            },
-            y: {
-              ticks: {
-                color: '#495057'
-              },
-              grid: {
-                color: '#ebedef'
-              }
-            }
-          }
-
-        }
+          legend: {
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 5,
+            floating: false,
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+          },
+        };
       }
     })
   }
