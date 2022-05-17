@@ -41,6 +41,7 @@ export class HostelDashboardComponent implements OnInit {
     private _restApiService: RestAPIService) { }
 
   ngOnInit(): void {
+    document.getElementById('maincontainer').style.background = '#00293c';
     this.responsiveOptions = [
       {
         breakpoint: '1024px',
@@ -228,6 +229,9 @@ export class HostelDashboardComponent implements OnInit {
                 t2.NOOfStudent : '-';
             }
           })
+        } else {
+          this.info.attendanceTdyCount = '-';
+          this.info.attendanceStrdyCount = '-';
         }
         // this.chartOptions = {
         //   responsive: true,
@@ -284,7 +288,7 @@ export class HostelDashboardComponent implements OnInit {
             style: {
               color: 'white',
             },
-            text: 'Attendance details of ' + curr_full_month + ' - ' + curr_year
+            text: 'Attendance Details of ' + curr_full_month + ' - ' + curr_year
           },
           series: [{ data: attd_data, name: 'Student', color: '#ffa600' }],
           plotOptions: {

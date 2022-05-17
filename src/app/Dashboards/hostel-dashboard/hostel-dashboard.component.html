@@ -1,5 +1,5 @@
 <div class="p-grid">
-    <div class="p-col-12 p-md-12 p-lg-12 no-padding" style="background: #1d1a1a; margin-bottom: -10px;">
+    <div class="p-col-12 p-md-12 p-lg-12 no-padding">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <!-- <p-panel header="{{hostelName}}" [ngClass]="'kb-row'"> -->
         <div class="p-col-12 p-md-12 p-lg-12 hs-hdr">
@@ -25,12 +25,12 @@
                     </div>
                     <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
                         <div class="hs-div hs-div-bg3">Attendance Count</div>
-                        <div class="hs-title hs-title3 hs-title-count" style="width: 50%; float:left;">
-                            {{info.attendanceStrdyCount}}
+                        <div style="width: 50%; float:left;">
+                            <div class="hs-title hs-title3 hs-title-count no-padding">{{info.attendanceStrdyCount}}</div><br/>
                             <div class="hs-sub-title">Yesterday</div>
                         </div>
-                        <div class="hs-title hs-title3 hs-title-count" style="width: 50%; float:right;">
-                            {{info.attendanceTdyCount}}
+                        <div style="width: 50%; float:right;">
+                           <div class="hs-title hs-title3 hs-title-count no-padding"> {{info.attendanceTdyCount}}</div><br/>
                             <div class="hs-sub-title">Today</div>
                         </div>
                     </div>
