@@ -50,6 +50,7 @@ export class TotalCountDashboardComponent implements OnInit {
             if (keys[k] !== 'name' && keys[k] !== 'Id') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
+              label = label.replace(/([A-Z])/g, ' $1').trim();
               label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
               this.ugArr.push({
                 name: label,
@@ -61,6 +62,7 @@ export class TotalCountDashboardComponent implements OnInit {
             if (keys[k] !== 'name' && keys[k] !== 'Id') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
+              label = label.replace(/([A-Z])/g, ' $1').trim();
               label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
               this.pgArr.push({
                 name: label,
