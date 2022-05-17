@@ -76,10 +76,10 @@ export class HostelDashboardComponent implements OnInit {
 
   loadData(id) {
     var style = [
-      { 'br_clr': '4px solid #ffbcd3', 'bg-clr': '#e91e63', 'fbg-lt-clr': '#3b5998', 'fbg-rt-clr': '#bcd1fd' },
-      { 'br_clr': '4px solid #fdd87d', 'bg-clr': '#ff9800', 'fbg-lt-clr': '#d06900', 'fbg-rt-clr': '#ffc992' },
-      { 'br_clr': '4px solid #61d5e4', 'bg-clr': '#558ebd', 'fbg-lt-clr': '#e91e63', 'fbg-rt-clr': '#ffd6e4' },
-      { 'br_clr': '4px solid #7df982', 'bg-clr': '#28a745', 'fbg-lt-clr': '#00bcd4', 'fbg-rt-clr': '#d0faff' },
+      { 'br_clr': '4px solid #ffbcd3', 'bg-clr': '#e91e63', 'fbg-lt-clr': '#3b5998', 'fbg-rt-clr': '#8da6d9' },
+      { 'br_clr': '4px solid #fdd87d', 'bg-clr': '#ff9800', 'fbg-lt-clr': '#d06900', 'fbg-rt-clr': '#fdb56c' },
+      { 'br_clr': '4px solid #61d5e4', 'bg-clr': '#558ebd', 'fbg-lt-clr': '#e91e63', 'fbg-rt-clr': '#f795b6' },
+      { 'br_clr': '4px solid #7df982', 'bg-clr': '#28a745', 'fbg-lt-clr': '#4d9909', 'fbg-rt-clr': '#8dd358' },
     ];
     this._restApiService.getByParameters(PathConstants.HostelDetailDashboard_Get, { 'Code': id }).subscribe((res: any) => {
       if (res !== undefined && res !== null) {
@@ -128,34 +128,34 @@ export class HostelDashboardComponent implements OnInit {
             } else {
               ind += 1;
             }
-            switch(t1.FloorNo) {
-              case '0':
-                t1.FloorNo = '';
-                t1.FloorLbl = 'G';
-                break;
-              case '1':
-                t1.FloorLbl = 'st';
-                break;
-              case '2':
-                t1.FloorLbl = 'nd';
-                break;
-              case '3':
-                t1.FloorLbl = 'rd';
-                break;
-              case '4':
-                t1.FloorLbl = 'th';
-                break;
-              default:
-                t1.FloorLbl = 'th';
-                break;
-            }
+            // switch(t1.FloorNo) {
+            //   case '0':
+            //     t1.FloorNo = '';
+            //     t1.FloorLbl = 'G';
+            //     break;
+            //   case '1':
+            //     t1.FloorLbl = 'st';
+            //     break;
+            //   case '2':
+            //     t1.FloorLbl = 'nd';
+            //     break;
+            //   case '3':
+            //     t1.FloorLbl = 'rd';
+            //     break;
+            //   case '4':
+            //     t1.FloorLbl = 'th';
+            //     break;
+            //   default:
+            //     t1.FloorLbl = 'th';
+            //     break;
+            // }
             this.floorDetails.push({
-              'floorNo': (t1.FloorNo !== undefined && t1.FloorNo !== null) ? t1.FloorNo + t1.FloorLbl : '-',
+              'floorNo': (t1.FloorNo !== undefined && t1.FloorNo !== null) ? ((t1.FloorNo !== '0') ? t1.FloorNo : 'G') : '-',
               'bthRoom': (t1.BathRoomNos !== undefined && t1.BathRoomNos !== null) ? t1.BathRoomNos : '-',
               'ktRoom': (t1.Kitchen !== undefined && t1.Kitchen !== null) ? t1.Kitchen : '-',
               'lbRoom': (t1.Library !== undefined && t1.Library !== null) ? t1.Library : '-',
               'stRoom': (t1.StudentRoom !== undefined && t1.StudentRoom !== null) ? t1.StudentRoom : '-',
-              'stdyArea': (t1.StudyingArea !== undefined && t1.StudyingArea !== null) ? t1.StudyingArea : '-',
+              'stdyArea': (t1.StudyingArea !== undefined && t1.StudyingArea !== null) ? t1.StudyingArea  : '-',
               'tlRoom': (t1.ToiletRoomNos !== undefined && t1.ToiletRoomNos !== null) ? t1.ToiletRoomNos : '-',
               'urRoom': (t1.UrinalNos !== undefined && t1.UrinalNos !== null) ? t1.UrinalNos : '-',
               'wrdRoom': (t1.WardenRoom !== undefined && t1.WardenRoom !== null) ? t1.WardenRoom : '-',
@@ -267,45 +267,59 @@ export class HostelDashboardComponent implements OnInit {
         var curr_full_month = new Date().toLocaleString('default', { month: 'short' });
         console.log('date', firstDateOfMonth, lastDateOfMonth, curr_date, curr_month, curr_year)
         for(let i = firstDateOfMonth; i <= lastDateOfMonth; i++) {
-          var formDate = i + '-' + curr_month + '-' + curr_year;
+          var formDate = ((i < 10) ? '0' + i : i) + '-' + ((curr_month < 10) ? '0' + curr_month : curr_month) + '-' + curr_year;
           this.chartLabels.push(formDate);
         }
         this.attendanceData = {
-          title: {
-            text: 'Attendance details of ' + curr_full_month + ' - ' + curr_year
-          },
-          series: [{ data: attd_data, name: 'Student', color: '#00ff00' }],
-          plotOptions: {
-            bar: {
-              dataLabels: {
-                enabled: true
-              }
-            },
-            series: {
-              stacking: 'normal',
-              pointWidth: '25',
-              pointPadding: 0,
-              borderWidth: 0
+          chart: {
+            type: "line",
+            backgroundColor: '#3c3c3c',
+            style: {
+              color: 'white',
+              fill: '#fff',
+              fontFamily: 'Verdana, Geneva, sans-serif'
             }
           },
-          chart: {
-            type: "line"
+          title: {
+            style: {
+              color: 'white',
+            },
+            text: 'Attendance details of ' + curr_full_month + ' - ' + curr_year
+          },
+          series: [{ data: attd_data, name: 'Student', color: '#ffa600' }],
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: true,
+                style: {
+                  color: '#fff'
+                }
+              },
+              enableMouseTracking: false
+            }
           },
           credits: {
             enabled: false
           },
           xAxis: {
-            categories: this.chartLabels
+            categories: this.chartLabels,
+            labels: {
+            style: {
+              color: '#fff'
+            }
+          }
           },
           yAxis: {
             title: {
               text: 'No.of Student Present',
-              align: 'high'
-            },
-            stackLabels: {
-              enabled: true,
+              align: 'high',
               style: {
-                overflow: 'justify'
+                color: '#fff'
+              },
+            },
+            labels: {
+              style: {
+                color: '#fff'
               }
             }
           },
@@ -313,11 +327,17 @@ export class HostelDashboardComponent implements OnInit {
             align: 'right',
             x: -30,
             verticalAlign: 'top',
-            y: 5,
+            y: 10,
             floating: false,
             borderColor: '#CCC',
-            borderWidth: 1,
-            shadow: false
+            borderWidth: 2,
+            shadow: false,
+            itemStyle: {
+              color: '#fff',
+            },
+            itemHoverStyle: {
+              color: '#ffab54'
+            }
           },
         };
       }
