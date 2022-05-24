@@ -51,6 +51,9 @@
                         </div>
                     </p-card>
                 </form>
+                <!-- <div id="embedDiv" class="fgh txt-center">
+                    <embed id="embedPDF" type="application/pdf" width="800" height="500">
+                </div> -->
             </p-panel>
             <p-dialog #dialog *ngIf="showDialog" header="Registered Student List" [(visible)]="showDialog"
                 [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
@@ -84,7 +87,6 @@
                                         {{col.header}}
                                     </th>
                                     <th style="width: 120px">Download</th>
-                                    <!-- <th style="width: 120px">Delete</th> -->
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
@@ -112,10 +114,6 @@
                                             <i class="pi pi-file-pdf" (click)="onDownload(rowData.Download)" 
                                              style="color: #e32727; font-size: 1.3rem;"></i></span>
                                     </td>
-                                    <!-- <td style="width: 120px" (click)="onDelete(rowData, rowIndex)">
-                                    <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
-                                    </button>
-                                </td> -->
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -123,10 +121,12 @@
                 </div>
             </p-dialog>
         </div>
+        <p-dialog #dialog *ngIf="pdfDialog" header="Download PDF" [(visible)]="pdfDialog" [modal]="pdfDialog"
+            [maximizable]="true" [style]="{width: '90vw', height: '90vw'}" (onShow)="onDialogShow()" >
+            <div id="embedDiv" class="fgh txt-center">
+                <embed id="embedPDF" type="application/pdf" width="800" height="500">
+            </div>
+        </p-dialog>
     </div>
 </block-ui>
-<p-dialog #dialog *ngIf="pdfDialog" header="Download PDF" [(visible)]="showDialog"
-[modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
-<div class="fgh txt-center"><embed id="fgh" src="assets/layout/images/check.pdf" type="application/pdf" width="800" height="500"></div>
-</p-dialog>
 
