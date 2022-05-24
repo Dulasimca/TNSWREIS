@@ -40,6 +40,8 @@ import { RippleModule } from 'primeng/ripple';
 import { CarouselModule } from 'primeng/carousel';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { PaginatorModule } from 'primeng/paginator';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 
 import { AppComponent } from './app.component';
@@ -139,6 +141,7 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
+import { ApplicationStatusComponent } from './application-status/application-status.component';
 
 @NgModule({
   declarations: [
@@ -225,6 +228,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     TotalCountDashboardComponent,
     OnlineRegistrationCheckComponent,
     HostelDashboardComponent,
+    ApplicationStatusComponent,
     
   ],
   imports: [
@@ -268,6 +272,8 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     CarouselModule,
     HighchartsChartModule,
     PaginatorModule,
+    MessagesModule,
+    MessageModule,
     BlockUIModule.forRoot(),
   ],
 

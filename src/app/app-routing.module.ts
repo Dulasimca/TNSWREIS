@@ -78,6 +78,7 @@ import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/t
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
+import { ApplicationStatusComponent } from './application-status/application-status.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -168,6 +169,9 @@ const routes: Routes = [
    
   { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent},
   { path: 'online-check', component:OnlineRegistrationCheckComponent},
+  { path: 'application-status', component:ApplicationStatusComponent},
+
+   
   
   
   
