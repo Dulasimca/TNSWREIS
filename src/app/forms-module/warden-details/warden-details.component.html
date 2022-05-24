@@ -160,7 +160,7 @@
                         <div *ngIf="showTable">
                             <p-table #dt [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
                                 [paginator]="true" [rows]="40"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,40]" 
-                                [loading]="loading" [filterDelay]="0" [globalFilterFields]="['Name','Districtname']">
+                                [loading]="loading" [filterDelay]="0" [globalFilterFields]="['Name','Districtname']" responsiveLayout="scroll">
                                 <ng-template pTemplate="caption">
                                     <div class="table-header">
                                         <div class="p-grid">
