@@ -17,6 +17,9 @@
                 </div>
             </div>
             <div *ngIf="!showMenu" fxFlex fxLayout fxFlexFill fxLayoutAlign="end end">
+                <span class="status-menu" routerLink="/online-check" routerLinkActive="active">Online Registration |</span>
+                <span class="status-menu" routerLink="/application-status" routerLinkActive="active"> Application Status</span>
+
                 <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()"></button>
             </div>
             <div *ngIf="showMenu" style="color: whitesmoke; text-align: center !important; margin-left: 5px;"

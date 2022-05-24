@@ -35,21 +35,12 @@ export class ApplicationStatusComponent implements OnInit {
   checkStatus() {
     this.registeredDetails = [];
     const params = {
-      //  'AadharNo': this.aadharNo,
-      //  'MobileNo': this.mobNo,
-      // 'Dob': this._datePipe.transform(this.dob, 'MM/dd/yyyy')
-       'AadharNo': '305278756145',
-      'MobileNo': '9840227196',
-      'Dob': '02/08/1997'
-      // 'AadharNo': '370693533850',
-      // 'MobileNo': '9850332574',
-      // 'Dob': '04/05/1997'
-      //  'AadharNo': '579244988209',
-      // 'MobileNo': '7010166091',
-      // 'Dob': '10/10/2002'
-      // 'AadharNo': '214059715415',
-      //  'MobileNo': '7604864955',
-      //  'Dob': '01/06/2007'
+      'AadharNo': this.aadharNo,
+      'MobileNo': this.mobNo,
+      'Dob': this._datePipe.transform(this.dob, 'MM/dd/yyyy')
+      //  'AadharNo': '305278756145',
+      // 'MobileNo': '9840227196',
+      // 'Dob': '02/08/1997'
     }
     this._restApiService.getByParameters(PathConstants.OnlineStudentRegistration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
@@ -58,7 +49,6 @@ export class ApplicationStatusComponent implements OnInit {
           this.studentName = r.studentName;
 
         })
-        console.log('u',res)
         this.registeredDetails = res;
         if (this.status === 0) {
           // var msg = "District Approval status has been rejected! Please Contact TNWHO-Admin for further queries!"
@@ -67,7 +57,7 @@ export class ApplicationStatusComponent implements OnInit {
           //   key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
           //   summary: ResponseMessage.SUMMARY_REJECTED, detail: msg
           // });
-          this.msgs = [{ severity: 'error', summary: 'Rejected', detail:'Hi' + ' ' + this.studentName +'!' + ' ' +  'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
+          this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
         } else {
 
         }
@@ -78,13 +68,13 @@ export class ApplicationStatusComponent implements OnInit {
           //   key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS, life: 5000,
           //   summary: ResponseMessage.SUMMARY_APPROVED, detail: msg
           // });
-          this.msgs = [{ severity: 'success', summary: 'Approved', detail:'Hi' + ' ' + this.studentName +'!' + ' ' +  'Your District Approval has been approved!' }];
+          this.msgs = [{ severity: 'success', summary: 'Approved', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been approved!' }];
 
         } else {
 
         }
         if (this.status === 2) {
-          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName +'!' + ' ' +  'Your District Approval status is still in pending!' }];
+          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
 
           // var msg = "District Approval status is still in pending"
           // this._messageService.clear();
