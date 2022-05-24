@@ -1,11 +1,11 @@
 <div class="p-grid">
-    <div class="p-col-12 p-md-12 p-lg-12 no-padding" style="background: rgb(29, 26, 26); margin-bottom: -10px;">
+    <div class="p-col-12 p-md-12 p-lg-12 no-padding">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <!-- <p-panel header="{{hostelName}}" [ngClass]="'kb-row'"> -->
         <div class="p-col-12 p-md-12 p-lg-12 hs-hdr">
             <div style="text-align: center;">{{hostelName}}</div>
         </div>
-        <div class="p-grid" style="padding: 2px; background: #3c3c3c;">
+        <div class="p-grid" style="padding: 2px; background: #00293c;">
             <div #row1 class="p-col-12 p-md-12 p-lg-12" style="justify-content: center; display: flex;">
                 <div #h_img id="h_img">
                     <span>
@@ -13,7 +13,7 @@
                     </span>
                 </div>
             </div>
-            <div #row2 class="p-col-12 p-md-12 p-lg-12">
+            <div #row2 class="p-col-12 p-md-12 p-lg-12 no-pad-btm">
                 <div class="p-grid" style="justify-content: center;">
                     <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
                         <div class="hs-div hs-div-bg1">Sanctioned Count</div>
@@ -25,12 +25,12 @@
                     </div>
                     <div class="p-col-8 p-md-4 p-lg-2 hs-main-div">
                         <div class="hs-div hs-div-bg3">Attendance Count</div>
-                        <div class="hs-title hs-title3 hs-title-count" style="width: 50%; float:left;">
-                            {{info.attendanceStrdyCount}}
+                        <div style="width: 50%; float:left;">
+                            <div class="hs-title hs-title3 hs-title-count no-padding">{{info.attendanceStrdyCount}}</div><br/>
                             <div class="hs-sub-title">Yesterday</div>
                         </div>
-                        <div class="hs-title hs-title3 hs-title-count" style="width: 50%; float:right;">
-                            {{info.attendanceTdyCount}}
+                        <div style="width: 50%; float:right;">
+                           <div class="hs-title hs-title3 hs-title-count no-padding"> {{info.attendanceTdyCount}}</div><br/>
                             <div class="hs-sub-title">Today</div>
                         </div>
                     </div>
@@ -133,31 +133,31 @@
                             <div class="p-grid" style="justify-content: center;">
                                 <div #tarera class="p-col-3 p-md-4 p-lg-3 hs-infra-box"
                                     [ngClass.xs]="'hs-infra-box-xs-mg'" [ngClass.md]="'hs-infra-box-lg-mg'"
-                                    [ngClass.lg]="'hs-infra-box-lg-mg'" style="background: #ffb3d3;">
+                                    [ngClass.lg]="'hs-infra-box-lg-mg'" style="background: #ff93c1;">
                                     <div class="hs-infra-boxtitle">Total Area</div>
                                     <div class="hs-infra-box-subtitle">{{totalArea}}</div>
                                     <div class="p-col-12 p-md-12 p-lg-12" style="background: #ff0a91;"></div>
                                 </div>
                                 <div #nfloor class="p-col-3 p-md-4 p-lg-3 hs-infra-box"
                                     [ngClass.xs]="'hs-infra-box-xs-mg'" [ngClass.md]="'hs-infra-box-lg-mg'"
-                                    [ngClass.lg]="'hs-infra-box-lg-mg'" style="background: #fcfd9c;">
+                                    [ngClass.lg]="'hs-infra-box-lg-mg'" style="background: #e3e55a;">
                                     <div class="hs-infra-boxtitle">No of Floors</div>
                                     <div class="hs-infra-box-subtitle">{{nFloors}}</div>
-                                    <div class="p-col-12 p-md-12 p-lg-12" style="background: #f1d61a;"></div>
+                                    <div class="p-col-12 p-md-12 p-lg-12" style="background: #f1cc16;"></div>
                                 </div>
                                 <div #barea class="p-col-3 p-md-4 p-lg-3 hs-infra-box"
                                     [ngClass.xs]="'hs-infra-box-xs-mg'" [ngClass.md]="'hs-infra-box-lg-mg'"
-                                    [ngClass.lg]="'hs-infra-box-lg-mg'" style="background: #a0d2fa;">
+                                    [ngClass.lg]="'hs-infra-box-lg-mg'" style="background: #73bbf5;">
                                     <div class="hs-infra-boxtitle">Building Area</div>
                                     <div class="hs-infra-box-subtitle">{{buildingArea}}</div>
-                                    <div class="p-col-12 p-md-12 p-lg-12" style="background: #3564ff;"></div>
+                                    <div class="p-col-12 p-md-12 p-lg-12" style="background: #2155ff;"></div>
                                 </div>
                             </div>
                             <div class="p-grid" style="justify-content: center;">
                                 <div #cpdwall class="p-col-3 p-md-4 p-lg-3 hs-infra-box"
                                     [ngClass.xs]="'hs-infra-box-xs-mg'" [ngClass.md]="'hs-infra-box-lg-mg'"
                                     [ngClass.lg]="'hs-infra-box-lg-mg'"
-                                    [ngStyle]="{'background': (cwValue == 1) ? '#c3ffc3' : '#ffdddd'}">
+                                    [ngStyle]="{'background': (cwValue == 1) ? '#7db77d' : '#f37e7e'}">
                                     <div style="width: 20%; float: left; padding: 5px;"
                                         [ngStyle]="{'background': (cwValue == 1) ? '#1b931f' : '#eb1111'}">
                                         <i [ngClass]="(cwValue == 1) ? 'pi pi-check-circle' : 'pi pi-times-circle'"
@@ -169,7 +169,7 @@
                                 <div #rmpfcl class="p-col-3 p-md-3 p-lg-3 hs-infra-box"
                                     [ngClass.xs]="'hs-infra-box-xs-mg'" [ngClass.md]="'hs-infra-box-lg-mg'"
                                     [ngClass.lg]="'hs-infra-box-lg-mg'"
-                                    [ngStyle]="{'background': (rfValue == 1) ? '#c3ffc3' : '#ffdddd'}">
+                                    [ngStyle]="{'background': (rfValue == 1) ? '#7db77d' : '#f37e7e'}">
                                     <div style="width: 20%; float: left; padding: 5px;"
                                         [ngStyle]="{'background': (rfValue == 1) ? '#1b931f' : '#eb1111'}">
                                         <i [ngClass]="(rfValue == 1) ? 'pi pi-check-circle' : 'pi pi-times-circle'"
@@ -181,7 +181,7 @@
                                 <div #pgrnd class="p-col-3 p-md-3 p-lg-3 hs-infra-box"
                                     [ngClass.xs]="'hs-infra-box-xs-mg'" [ngClass.md]="'hs-infra-box-lg-mg'"
                                     [ngClass.lg]="'hs-infra-box-lg-mg'"
-                                    [ngStyle]="{'background': (pgValue == 1) ? '#c3ffc3' : '#ffdddd'}">
+                                    [ngStyle]="{'background': (pgValue == 1) ? '#7db77d' : '#f37e7e'}">
                                     <div style="width: 20%; float: left; padding: 5px;"
                                         [ngStyle]="{'background': (pgValue == 1) ? '#1b931f' : '#eb1111'}">
                                         <i [ngClass]="(pgValue == 1) ? 'pi pi-check-circle' : 'pi pi-times-circle'"
@@ -197,42 +197,123 @@
                                 direction="up" onmouseover="this.stop()"             onmouseout="this.start()">
                                 <div *ngFor="let f of floorDetails">
                                     <div class="p-col-12 p-md-12 p-lg-12 hs-fcl-list-gap">
-                                        <div class="p-grid" [style.background]="f.fRBGColor">
-                                            <div style="width: 20%; float: left;" class="flr-no-box"
+                                        <div class="p-grid card-material" style="background: '#3c3c3c'; border: 1px solid rgb(117, 112, 112);">
+                                            <!-- [style.border-color]="f.fRBGColor" -->
+                                            <div style="width: 5%; float: left;" class="flr-no-box"
                                                 [style.background]="f.fLBGColor">
-                                                <div style="font-size: 28px;">{{f.floorNo}} </div>
-                                                <div style="font-size: 20px;"> Floor </div>
+                                                <div style="font-size: 22px;">{{f.floorNo}} </div>
+                                                <!-- <div style="font-size: 20px;"> Floor </div> -->
                                             </div>
-                                            <div style="width: 80%; float: right; color: white;">
-                                                <div #row1 class="p-col-12 p-md-12 p-lg-12">
-                                                    <div class="p-grid">
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>Bathroom - {{f.bthRoom}}</div>
+                                            <div style="width: 95%; float: right; color: white; margin: auto;">
+                                                <div #row1 class="p-col-12 p-md-12 p-lg-12" style="padding: 2px;">
+                                                    <div class="p-grid" style="margin: auto;">
+                                                        <div class="p-col-6 p-md-3 p-lg-3" style="border: 1px solid #4a4545; height: fit-content; padding-bottom: 0;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-bath.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 txt-center"  [style.background]="f.fRBGColor">
+                                                                    Bathroom
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.bthRoom}}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>Kitchen - {{f.ktRoom}}</div>
+                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-btm" style="border: 1px solid #4a4545; height: fit-content;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-kitchen.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 txt-center"  [style.background]="f.fRBGColor">
+                                                                    Kitchen
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.ktRoom}}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>Library - {{f.lbRoom}}</div>
+                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-btm" style="border: 1px solid #4a4545; height: fit-content;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-library.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 txt-center"  [style.background]="f.fRBGColor">
+                                                                    Library
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.lbRoom}}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>StudentRoom - {{f.stRoom}}</div>
+                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-btm" style="border: 1px solid #4a4545; height: fit-content;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-student.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 txt-center"  [style.background]="f.fRBGColor">
+                                                                    Student
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.stRoom}}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div #row2 class="p-col-12 p-md-12 p-lg-12">
-                                                    <div class="p-grid">
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>StudyingArea - {{f.stdyArea}}</div>
+                                                <div #row2 class="p-col-12 p-md-12 p-lg-12" style="padding: 2px;">
+                                                    <div class="p-grid"  style="margin: auto;">
+                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-btm" style="border: 1px solid #4a4545; height: fit-content;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-study.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 no-padding txt-center"  [style.background]="f.fRBGColor">
+                                                                    Study Area
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.stdyArea}}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>Toilet - {{f.tlRoom}}</div>
+                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-btm" style="border: 1px solid #4a4545; height: fit-content;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-toilet.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 txt-center"  [style.background]="f.fRBGColor">
+                                                                    Toilet
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.tlRoom}}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>Urinal - {{f.urRoom}}</div>
+                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-btm" style="border: 1px solid #4a4545; height: fit-content;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-urinal.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 txt-center"  [style.background]="f.fRBGColor">
+                                                                    Urinal
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.urRoom}}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-top no-pad-btm">
-                                                            <div>WardenRoom - {{f.wrdRoom}}</div>
+                                                        <div class="p-col-6 p-md-3 p-lg-3 no-pad-btm" style="border: 1px solid #4a4545; height: fit-content;">
+                                                            <div class="p-grid">
+                                                                <div class="p-col-3 p-md-3 p-lg-3" [style.background]="f.fLBGColor">
+                                                                 <img src="assets/layout/images/dashboard-warden.png" class="image-icon">
+                                                                </div>
+                                                                <div class="p-col-6 p-md-6 p-lg-6 txt-center"  [style.background]="f.fRBGColor">
+                                                                    Warden
+                                                                </div>
+                                                                <div class="p-col-3 p-md-3 p-lg-3" style="font-size: 15px" [style.background]="f.fLBGColor">
+                                                                   {{f.wrdRoom}}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -280,15 +361,17 @@
                     </div>
                 </div>
             </div>
-            <div #row6 class="p-col-12 p-md-12 p-lg-12 hs-parent-div">
+            <div #row6 class="p-col-12 p-md-12 p-lg-12 hs-parent-div card">
                 <div class="p-col-12 p-md-12 p-lg-12 no-padding">
                     <div class="hs-section-hdr">
                         Student Attendance
                     </div>
                     <!-- <p-chart type="line" [data]="attendanceData" [options]="chartOptions" [responsive]="true">
                     </p-chart> -->
-                    <highcharts-chart [Highcharts]="Highcharts" [options]="attendanceData"></highcharts-chart>
+                    <div class="p-col-12 p-md-12 p-lg-12 no-padding">
+                    <highcharts-chart [Highcharts]="Highcharts" [options]="attendanceData" style="height: 400px; display:block"></highcharts-chart>
                 </div>
+            </div>
             </div>
         </div>
         <!-- </p-panel> -->

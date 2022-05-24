@@ -32,7 +32,8 @@ export class HostelWiseDashboardComponent implements OnInit {
         if(res.length !== 0) {
           res.forEach((x: any) => {
             var temp = x.name.toString().split('^');
-            x.hname = temp[0];
+            var arr: string = temp[0].toString().split(',');
+            x.hname = (arr.length > 1) ? arr[0] + ' - ' + arr[arr.length-1] : arr[0];
             x.type = temp[1];
             x.studentCount = (x.genderType === 1) ? x.boysCount : x.girlsCount;
             x.sanctionedCount = (x.genderType === 1) ? x.sanctionedBoysCount : x.sanctionedGirlsCount;
