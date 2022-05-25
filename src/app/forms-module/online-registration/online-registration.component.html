@@ -799,7 +799,7 @@
                         <p-toast position="top-center" key="d-msg"></p-toast>
                         <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
                             [value]="registeredDetails" [paginator]="true" [rows]="10" [loading]="loading"
-                            [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']">
+                            [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']" responsiveLayout="scroll">
                             <ng-template pTemplate="caption">
                                 <div class="table-header">
                                     <div class="p-grid">

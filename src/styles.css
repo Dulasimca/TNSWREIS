@@ -1374,6 +1374,13 @@ transform: translateY(50%);
         animation-timing-function: cubic-bezier(0,.02,.1,.02);
         animation-iteration-count: infinite;
       }
+      .status-menu {
+          color: whitesmoke;
+          text-decoration: underline; 
+          font-size: smaller;
+          padding: 3px;
+          cursor: pointer;
+      }
       .highcharts-data-table thead tr,
 .highcharts-data-table tr:nth-child(even) {
     background: #f8f8f8;

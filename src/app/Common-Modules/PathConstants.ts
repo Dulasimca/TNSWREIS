@@ -197,4 +197,6 @@ public static readonly HostelDetailDashboard_Get = 'CMHostelDetails/Get';
 
 public static readonly OnlineStudentRegistrationDetails_Get = 'OnlineStudentRegistrationDetails/Get';
 public static readonly OnlineStudentRegistrationDetails_Put = 'OnlineStudentRegistrationDetails/Put';
+public static readonly GeneratePDFDocument_Get = 'GeneratePDFDocument/Get';
+
 }
