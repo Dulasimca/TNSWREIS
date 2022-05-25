@@ -38,7 +38,7 @@
                             </div>
                             <p-table #dt [value]="wardenDetails" [columns]="wardenDetailsCols"
                                 styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                                [rowsPerPageOptions]="[10,20,30,40]" totalR ecords="totalRecords"
+                                [rowsPerPageOptions]="[10,20,30,40]" responsiveLayout="scroll" totalR ecords="totalRecords"
                                 exportFilename="WARDEN_DETAILS_REPORT">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>

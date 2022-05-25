@@ -79,6 +79,7 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 
+
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -168,6 +169,8 @@ const routes: Routes = [
    
   { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent},
   { path: 'online-check', component:OnlineRegistrationCheckComponent},
+
+
   
   
   

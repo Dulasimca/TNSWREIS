@@ -139,6 +139,7 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -268,6 +269,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
     CarouselModule,
     HighchartsChartModule,
     PaginatorModule,
+    PdfViewerModule,
     BlockUIModule.forRoot(),
   ],
 
