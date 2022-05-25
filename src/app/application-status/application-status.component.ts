@@ -20,6 +20,7 @@ export class ApplicationStatusComponent implements OnInit {
   status: any;
   msgs: Message[];
   studentName: any;
+  pdfDialog: boolean;
 
   constructor(private _datePipe: DatePipe, private _restApiService: RestAPIService, private _messageService: MessageService,
   ) { }
@@ -47,7 +48,7 @@ export class ApplicationStatusComponent implements OnInit {
         res.forEach(r => {
           this.status = r.districtApproval;
           this.studentName = r.studentName;
-
+          this.onDialogShow();
         })
         this.registeredDetails = res;
         if (this.status === 0) {
@@ -99,4 +100,9 @@ export class ApplicationStatusComponent implements OnInit {
   }
 
   onAadharChange() { }
+
+  onDialogShow() {
+    var src = 'assets/layout/images/305278756145_75.pdf';
+    document.getElementById("embedPDF").setAttribute('src', src);
+  }
 }
