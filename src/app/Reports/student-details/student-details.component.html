@@ -33,6 +33,8 @@
                             </div>
                         </div>
                         <div class="p-col-12 p-md-12 p-lg-12">
+                            <!-- <p-tabView #tabview (onChange)="onTabChange($event)">
+                                <p-tabPanel [header]="item.header" *ngFor="let item of items; let i = index" [selected]="i == 0"> -->
                             <div style="text-align: right;">
                                 <button pButton type="button" icon="pi pi-file-excel" label="Export"
                                     style="color: yellowgreen;" (click)="dt.exportCSV()"
@@ -40,7 +42,7 @@
                             </div>
                             <p-table #dt [value]="studentData" [columns]="studentCols"
                                 styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                                [rowsPerPageOptions]="[10,20,30,40]" [loading]="loading" responsiveLayout="scroll"
+                                [rowsPerPageOptions]="[10,20,30,40]" responsiveLayout="scroll" totalRecords="totalRecords" [loading]="loading" responsiveLayout="scroll"
                                 exportFilename="STUDENT_DETAILS_REPORT">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
@@ -49,8 +51,8 @@
                                             {{col.header}}
                                         </th>
                                         <th *ngIf="(roleId==2 || roleId==3)">Approval Status</th>
-                                        <th *ngIf="(roleId==1 || roleId==4)">Taluk Approval Status</th>
                                         <th *ngIf="(roleId==1 || roleId==4)">District Approval Status</th>
+                                        <th *ngIf="(roleId==1 || roleId==4)">Taluk Approval Status</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
@@ -89,7 +91,7 @@
                                             </button></td>
                                         <td style="text-align: left;" *ngIf="((roleId==1 || roleId==4) || (roleId==2 && (rowData.districtApproval)))">
                                             <span class="p-column-title">
-                                                Taluk Approval Status :
+                                                District Approval Status :
                                             </span>
                                             <span style="text-align: end;">
                                                 {{rowData.dstatus}}
@@ -97,7 +99,7 @@
                                         </td>
                                         <td style="text-align: left;" *ngIf="((roleId==1 || roleId==4) || (roleId==3 && (rowData.talukApproval)))">
                                             <span class="p-column-title">
-                                                District Approval Status :
+                                                Taluk Approval Status :
                                             </span>
                                             <span style="text-align: end;">
                                                 {{rowData.tstatus}}
@@ -106,6 +108,8 @@
                                     </tr>
                                 </ng-template>
                             </p-table>
+                                <!-- </p-tabPanel>
+                            </p-tabView> -->
                         </div>
                     </div>
                 </div>

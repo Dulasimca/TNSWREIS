@@ -121,12 +121,17 @@
                 </div>
             </p-dialog>
         </div>
-        <p-dialog #dialog *ngIf="pdfDialog" header="Download PDF" [(visible)]="pdfDialog" [modal]="pdfDialog"
+        <!-- <p-dialog #dialog *ngIf="pdfDialog" header="Download PDF" [(visible)]="pdfDialog" [modal]="pdfDialog"
             [maximizable]="true" [style]="{width: '90vw', height: '90vw'}" (onShow)="onDialogShow()" >
             <div id="embedDiv" class="fgh txt-center">
                 <embed id="embedPDF" type="application/pdf" width="800" height="500">
             </div>
-        </p-dialog>
+        </p-dialog> -->
+        <div class="p-col-12 p-md-12 p-lg-12">
+        <div id="embedDiv" class="fgh txt-center">
+            <embed id="embedPDF" type="application/pdf" width="800" height="500">
+        </div> 
+        </div>  
     </div>
 </block-ui>
 

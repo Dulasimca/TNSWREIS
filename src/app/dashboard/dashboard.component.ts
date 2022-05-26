@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PathConstants } from '../Common-Modules/PathConstants';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
@@ -27,7 +28,7 @@ export class DashboardComponent implements OnInit {
   isTypeNumber: boolean;
   barChartOptions: any;
   constructor(private _authService: AuthService, private _restApiService: RestAPIService,
-    private _masterService: MasterService) { }
+    private _router: Router) { }
 
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
@@ -174,5 +175,9 @@ export class DashboardComponent implements OnInit {
         }]
       }
     };
+  }
+
+  gotoCMDashboard() {
+    this._router.navigate(['/total-count-dashboard']);
   }
 }

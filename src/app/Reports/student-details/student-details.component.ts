@@ -41,6 +41,10 @@ export class StudentDetailsComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   value: any;
   disableExcel: boolean = true;
+  items: any;
+  tabIndex: number;
+  data: any[] = [];
+  totalRecords: number;
 
   constructor(private _masterService: MasterService, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _messageService: MessageService, private _authService: AuthService, private _datePipe: DatePipe) { }
@@ -51,6 +55,10 @@ export class StudentDetailsComponent implements OnInit {
     this.taluks = this._masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;
     this.roleId = (this.logged_user.roleId * 1);
+    // this.items = [
+    //   {'header': 'Approved'},
+    //   {'header': 'Disapproved'}
+    // ]
   }
 
   onSelect(type) {
@@ -132,7 +140,7 @@ export class StudentDetailsComponent implements OnInit {
         'TCode': this.taluk,
         'HCode': this.hostel
       }
-      this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
+      this._restApiService.getByParameters(PathConstants.OnlineStudentRegistrationDetails_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
           res.forEach(r => {
             r.dob = this._datePipe.transform(r.dob,'dd/MM/yyyy')
@@ -200,7 +208,7 @@ export class StudentDetailsComponent implements OnInit {
       'districtApproval': (this.roleId === 2) ? 1 : this.dApproval,
       'talukApproval': (this.roleId === 3) ? 1 : this.tApproval
     }
-    this._restApiService.put(PathConstants.Registration_Put, params).subscribe(res => {
+    this._restApiService.put(PathConstants.OnlineStudentRegistrationDetails_Put, params).subscribe(res => {
       if (res) {
         if(this.roleId === 2) {
           this.insertStudentTransferDetails();
@@ -245,4 +253,29 @@ export class StudentDetailsComponent implements OnInit {
       }
     })
   }
+
+  // onTabChange($event) {
+  //   this.tabIndex = $event.index
+  //   switch ($event.index) {
+  //     case 0:
+  //       this.studentData = this.data.filter(e => {
+  //         return (e.ApprovalStatus * 1) === $event.index; 
+  //       })
+  //       this.totalRecords = this.studentData.length;
+  //       break;
+    
+  //   case 1:
+  //     this.studentData = this.data.filter(e => {
+  //       return (e.ApprovalStatus * 1) === $event.index; 
+  //     })
+  //     this.totalRecords = this.studentData.length;
+  //           break;
+  //     case 2:
+  //             this.studentData = this.data.filter(e => {
+  //               return (e.ApprovalStatus * 1) === $event.index; 
+  //             })
+  //             this.totalRecords = this.studentData.length;
+  //                   break;
+  //   }
+  // }
 }

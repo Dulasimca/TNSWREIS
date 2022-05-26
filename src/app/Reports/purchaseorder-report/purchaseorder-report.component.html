@@ -53,7 +53,7 @@
                                 label="Export" pTooltip="Excel-File download" (click)="dt.exportCSV()" [disabled]="disableExcel"></button>
                         </div>
                         <p-table #dt [value]="purchaseData" [columns]="purchaseCols" styleClass="p-datatable-gridlines"
-                            [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]"
+                            [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]" responsiveLayout="scroll"
                             totalRecords="totalRecords" exportFilename="PURCHASE_ORDER_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>

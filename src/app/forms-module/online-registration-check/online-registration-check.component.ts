@@ -42,10 +42,10 @@ export class OnlineRegistrationCheckComponent implements OnInit {
   constructor(private _masterService: MasterService, private _messageService: MessageService,
     private _datePipe: DatePipe, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _router: Router) { }
-    ngAfterViewInit() {
-      var src = 'assets/layout/images/check.pdf';
-      document.getElementById("embedPDF").setAttribute('src', src);
-       }
+    // ngAfterViewInit() {
+    //   var src = 'assets/layout/images/check.pdf';
+    //   document.getElementById("embedPDF").setAttribute('src', src);
+    //    }
     
 
   ngOnInit(): void {
@@ -74,7 +74,8 @@ export class OnlineRegistrationCheckComponent implements OnInit {
         })
         this.registeredDetails = res.slice(0);
         // this.showDialog = true;
-        this.pdfDialog = true;
+        // this.pdfDialog = true;
+        this.onDialogShow();
         this.loading = false;
         this.onClear();
       } else {
@@ -97,7 +98,7 @@ export class OnlineRegistrationCheckComponent implements OnInit {
   }
 
   onDialogShow() {
-    var src = 'assets/layout/Reports/55/' + this.aadharNo +   '_' + this.studentId + ".pdf";
+    var src = 'assets/layout/images/305278756145_75.pdf';
     document.getElementById("embedPDF").setAttribute('src', src);
   }
 

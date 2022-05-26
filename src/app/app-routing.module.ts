@@ -80,6 +80,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 
+
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -159,16 +160,15 @@ const routes: Routes = [
   { path: 'employee-strength', component:EmployeeStrengthComponent, canActivate: [AuthGuard]},
   { path: 'student-count', component:StudentcountReportComponent, canActivate: [AuthGuard]},
   { path: 'Hostel-Committee', component:HostelCommitteeComponent, canActivate: [AuthGuard]},
-  // { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent },
-  {  path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent },
-  {  path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent },
-  {  path: 'hostel-dashboard', component:HostelDashboardComponent },
-  { path: 'online-registration', component:OnlineRegistrationComponent},
-  { path: 'total-count-dashboard', component:TotalCountDashboardComponent},
-
-   
-  { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent},
+  { path: 'total-count-dashboard', component:TotalCountDashboardComponent,  canActivate: [AuthGuard]},
+  { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent, canActivate: [AuthGuard]},
+  { path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'hostel-dashboard', component:HostelDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'online-registration', component:OnlineRegistrationComponent, canActivate: [AuthGuard]},
   { path: 'online-check', component:OnlineRegistrationCheckComponent},
+
+
   { path: 'application-status', component:ApplicationStatusComponent},
 
    

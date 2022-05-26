@@ -19,7 +19,7 @@
                             pTooltip="Excel-File download" [disabled]="disableExcel"></button>
                     </div>
                     <p-table #dt [columns]="Cols" [value]="data" [paginator]="true" [rows]="100"
-                        [rowsPerPageOptions]="[10,30,50,100]" styleClass="p-datatable-gridlines" 
+                        [rowsPerPageOptions]="[10,30,50,100]" responsiveLayout="scroll" styleClass="p-datatable-gridlines" 
                         exportFilename="FEEDINGCHARGETYPE_REPORT">
                         <ng-template pTemplate="header" let-columns>
                             <tr>
