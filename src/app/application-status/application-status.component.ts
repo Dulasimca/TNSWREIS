@@ -21,6 +21,8 @@ export class ApplicationStatusComponent implements OnInit {
   msgs: Message[];
   studentName: any;
   pdfDialog: boolean;
+  studentId: any;
+  hostelId: any;
 
   constructor(private _datePipe: DatePipe, private _restApiService: RestAPIService, private _messageService: MessageService,
   ) { }
@@ -48,6 +50,8 @@ export class ApplicationStatusComponent implements OnInit {
         res.forEach(r => {
           this.status = r.districtApproval;
           this.studentName = r.studentName;
+          this.studentId = r.studentId;
+          this.hostelId = r.hostelId;
           this.onDialogShow();
         })
         this.registeredDetails = res;
@@ -102,7 +106,7 @@ export class ApplicationStatusComponent implements OnInit {
   onAadharChange() { }
 
   onDialogShow() {
-    var src = 'assets/layout/images/305278756145_75.pdf';
+    var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
     document.getElementById("embedPDF").setAttribute('src', src);
   }
 }

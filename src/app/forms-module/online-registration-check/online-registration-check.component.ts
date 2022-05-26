@@ -39,6 +39,7 @@ export class OnlineRegistrationCheckComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationCheck: NgForm;
   studentId: string;
+  hostelId: any;
   constructor(private _masterService: MasterService, private _messageService: MessageService,
     private _datePipe: DatePipe, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _router: Router) { }
@@ -66,7 +67,9 @@ export class OnlineRegistrationCheckComponent implements OnInit {
     this._restApiService.getByParameters(PathConstants.OnlineStudentRegistration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
-          r.StudentId = this.studentId;
+          this.studentId = r.studentId;
+          this.hostelId = r.hostelId;
+          console.log('d', this.studentId)
           var len = r.aadharNo.toString().length;
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
@@ -91,15 +94,12 @@ export class OnlineRegistrationCheckComponent implements OnInit {
   } 
   onDownload(Filename) {
     this.pdfDialog = true;
-    // this.pdfSource = "assets/layout/images/check.pdf";
-    //this.pdfSource = 'file:///E:/TNSWREIS/src/assets/layout/images/check.pdf';
-    // const path = "assets/layout/images/check.pdf" + "/" + Filename;
-    // saveAs(path, Filename);
   }
 
   onDialogShow() {
-    var src = 'assets/layout/images/305278756145_75.pdf';
+    var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
     document.getElementById("embedPDF").setAttribute('src', src);
+    console.log('src',src)
   }
 
   onClear() {

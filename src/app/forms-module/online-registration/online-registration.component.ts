@@ -145,6 +145,7 @@ export class OnlineRegistrationComponent implements OnInit  {
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
   @ViewChild('dialog', { static: false }) _dialog: Dialog;
+  studentId: any;
 
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
@@ -536,6 +537,8 @@ export class OnlineRegistrationComponent implements OnInit  {
     this._restApiService.getByParameters(PathConstants.OnlineStudentRegistration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
+          this.studentId = r.studentId;
+          this.hostelId = r.hostelId;
           var len = r.aadharNo.toString().length;
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
@@ -726,7 +729,7 @@ onDownload(Filename) {
   // document.getElementById("embedPDF").setAttribute('src', this.src);
 }
 onDialogShow() {
-  var src = 'assets/layout/images/REGISTRATION.pdf';
+  var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
   document.getElementById("embedPDF").setAttribute('src', src);
 }
 }
