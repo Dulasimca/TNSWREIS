@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 // import * as HighchartsMore from "highcharts/highcharts-more";
 // import More from 'highcharts/highcharts-more'
@@ -24,7 +25,7 @@ export class TotalCountDashboardComponent implements OnInit {
   pgChartOptions: any;
   ugChartOptions: any;
 
-  constructor(private restApiService: RestAPIService) { }
+  constructor(private restApiService: RestAPIService, private _router: Router) { }
 
   ngOnInit(): void {
     this.loadChartData();
@@ -315,6 +316,10 @@ export class TotalCountDashboardComponent implements OnInit {
         };
       }
     })
+  }
+  
+  gotoDistrictDashboard() {
+    this._router.navigate(['/district-wise-dashboard']);
   }
 }
 

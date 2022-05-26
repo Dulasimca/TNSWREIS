@@ -1383,6 +1383,38 @@ transform: translateY(50%);
     background: #f1f7ff;
 }
 
+.arrow1 {
+    animation: slide1 1s ease-in-out infinite;
+    margin-left: 9px;
+  }
+  @keyframes slide1 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+  
+    50% {
+      transform: translate(10px, 0);
+    }
+  }
+  .main-dsh-cmbtn {
+    float: right;
+    text-align: center;
+    background-image: linear-gradient(90deg,var(--teal-200),var(--pink-700));
+    border-radius: 5px;
+    width: 180px !important;
+    color: white;
+  }
+  .hs-not-available-txt {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 25px;
+    color: #706f6d;
+    transform: rotate(15deg);
+  }
+  
+
  /* end */
 
 
