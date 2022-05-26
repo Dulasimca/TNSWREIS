@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import * as Highcharts from "highcharts";
-import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-hostel-dashboard',
@@ -22,7 +21,6 @@ export class HostelDashboardComponent implements OnInit {
   attendanceData: any;
   // chartOptions: any;
   chartLabels: any[] = [];
-  chartOptions: Highcharts.Options;
   menuItems: any[] = [];
   employeeList: any[] = [];
   galleryData: any[] = [];
@@ -37,6 +35,10 @@ export class HostelDashboardComponent implements OnInit {
   rfValue: any = 0;
   pgValue: any = 0;
   floorDetails: any[] = [];
+  isHGAvailable: boolean = true;
+  isEIAvailable: boolean = true;
+  isFLAvailable: boolean = true;
+  isFCAvailable: boolean = true;
   constructor(private _activatedRoute: ActivatedRoute, private _location: LocationStrategy,
     private _restApiService: RestAPIService, private _datepipe: DatePipe) { }
 
@@ -66,7 +68,7 @@ export class HostelDashboardComponent implements OnInit {
       this._location.replaceState('', '', 'hostel-dashboard', '')
     })
     var code = (this.hcode !== undefined && this.hcode !== null) ? this.hcode : 0;
-    this.loadData(55);
+    this.loadData(code);
     this.data = [{ image: 'assets/layout/Home/Documents/TN_ADW_Food_Inspection.png', name: 'inspection' },
     { image: 'assets/layout/Home/Documents/TN_ADW_Hostel_Ground.png', name: 'ground' }];
     var keys = Object.keys(this.info);
@@ -84,8 +86,7 @@ export class HostelDashboardComponent implements OnInit {
     ];
     const params = {
       'HostelId': id,
-      // 'Month': new Date().getMonth(),
-      'Month': 1,
+      'Month': new Date().getMonth(),
       'Year': new Date().getFullYear()
     }
     this._restApiService.getByParameters(PathConstants.HostelDetailDashboard_Get, params).subscribe((res: any) => {
@@ -101,9 +102,9 @@ export class HostelDashboardComponent implements OnInit {
               t.StudentCount : '-';
             this.info.sanctionedCount = (t.sanctionedStength !== undefined && t.sanctionedStength !== null) ?
               t.sanctionedStength : '-';
-            // this.imgURL = (t.HostelImage !== undefined && t.HostelImage !== null) ?
-            // 'assets/layout/' + t.Code + '/' + t.HostelImage : '';
-            this.imgURL = 'assets/layout/Home/Documents/TN_ADW_Hostel_Ground.png';
+            this.imgURL = (t.HostelImage !== undefined && t.HostelImage !== null) ?
+            'assets/layout/' + t.Code + '/' + t.HostelImage : '';
+            // this.imgURL = 'assets/layout/Home/Documents/TN_ADW_Hostel_Ground.png';
           })
         }
         //hostel menu info
@@ -122,10 +123,11 @@ export class HostelDashboardComponent implements OnInit {
         }
         //infra info
         if (res.Table1.length !== 0) {
+          this.isFLAvailable = true;
           this.totalArea = res.Table1[0].TotalArea;
           this.buildingArea = res.Table1[0].BuildingArea;
           this.nFloors = res.Table1[0].NoOfFloor;
-          this.cwValue = 0;
+          this.cwValue = res.Table1[0].CompoundWallCheck;;
           this.rfValue = res.Table1[0].RampFacilityCheck;
           this.pgValue = res.Table1[0].PlaygroundCheck;
           let ind = -1;
@@ -135,27 +137,6 @@ export class HostelDashboardComponent implements OnInit {
             } else {
               ind += 1;
             }
-            // switch(t1.FloorNo) {
-            //   case '0':
-            //     t1.FloorNo = '';
-            //     t1.FloorLbl = 'G';
-            //     break;
-            //   case '1':
-            //     t1.FloorLbl = 'st';
-            //     break;
-            //   case '2':
-            //     t1.FloorLbl = 'nd';
-            //     break;
-            //   case '3':
-            //     t1.FloorLbl = 'rd';
-            //     break;
-            //   case '4':
-            //     t1.FloorLbl = 'th';
-            //     break;
-            //   default:
-            //     t1.FloorLbl = 'th';
-            //     break;
-            // }
             this.floorDetails.push({
               'floorNo': (t1.FloorNo !== undefined && t1.FloorNo !== null) ? ((t1.FloorNo !== '0') ? t1.FloorNo : 'G') : '-',
               'bthRoom': (t1.BathRoomNos !== undefined && t1.BathRoomNos !== null) ? t1.BathRoomNos : '-',
@@ -170,9 +151,12 @@ export class HostelDashboardComponent implements OnInit {
               'fRBGColor': style[ind]['fbg-rt-clr']
             })
           })
+        } else {
+          this.isFLAvailable = false;
         }
         //hostel employee info
         if (res.Table7.length !== 0) {
+          this.isEIAvailable = true;
           let ind = -1;
           res.Table7.forEach(t7 => {
             if (ind >= style.length - 1) {
@@ -190,9 +174,12 @@ export class HostelDashboardComponent implements OnInit {
               'eBGColor': style[ind]['bg-clr']
             })
           })
+        } else {
+          this.isEIAvailable = false;
         }
         //hostel gallery info 
         if (res.Table6.length !== 0) {
+          this.isHGAvailable = true;
           var tempArr = [];
           res.Table6.forEach(t6 => {
             tempArr.push({
@@ -203,9 +190,12 @@ export class HostelDashboardComponent implements OnInit {
           })
           this.isGCircular = (tempArr.length > 1) ? true : false;
           this.galleryData = tempArr;
+        } else {
+          this.isHGAvailable = false;
         }
         //facility info
         if (res.Table5.length !== 0) {
+          this.isFCAvailable = true;
           res.Table5.forEach(t5 => {
             if (t5.FacilityTypeId === 1) {
               this.studentFData.push({
@@ -219,6 +209,8 @@ export class HostelDashboardComponent implements OnInit {
               })
             }
           })
+        } else {
+          this.isFCAvailable = false;
         }
         //hostel attendance info
         if (res.Table2.length !== 0) {
@@ -239,44 +231,13 @@ export class HostelDashboardComponent implements OnInit {
           this.info.attendanceTdyCount = '-';
           this.info.attendanceStrdyCount = '-';
         }
-        // this.chartOptions = {
-        //   responsive: true,
-        //   type: 'line',
-        //   bezierCurve: false,
-        //   plugins: {
-        //     legend: {
-        //       labels: {
-        //         color: '#495057'
-        //       }
-        //     }
-        //   },
-        //   scales: {
-        //     x: {
-        //       ticks: {
-        //         color: '#495057'
-        //       },
-        //       grid: {
-        //         color: '#ebedef'
-        //       }
-        //     },
-        //     y: {
-        //       ticks: {
-        //         color: '#495057'
-        //       },
-        //       grid: {
-        //         color: '#ebedef'
-        //       }
-        //     }
-        //   }
-
-        // }
           var attd_data = [];
           var curr_date = new Date(), curr_year = curr_date.getFullYear(), curr_month = curr_date.getMonth();
           var firstDateOfMonth = new Date(curr_year, curr_month, 1).getDate();
           var lastDateOfMonth = new Date(curr_year, curr_month + 1, 0).getDate();
           var curr_full_month = new Date().toLocaleString('default', { month: 'short' });
           for(let i = firstDateOfMonth; i <= lastDateOfMonth; i++) {
-            var formDate = ((i < 10) ? '0' + i : i) + '-' + '01' + '-' + curr_year;
+            var formDate = ((i < 10) ? '0' + i : i) + '-' + ((curr_month < 10) ? '0' + curr_month : curr_month) + '-' + curr_year;
             attd_data.push(0);
             this.chartLabels.push(formDate);
           }
@@ -290,6 +251,7 @@ export class HostelDashboardComponent implements OnInit {
                 }
               })
             })
+        }
             console.log('dt', attd_data, this.chartLabels)
           this.attendanceData = {
             chart: {
@@ -361,7 +323,6 @@ export class HostelDashboardComponent implements OnInit {
               }
             },
           };
-        }
       }
     })
   }
