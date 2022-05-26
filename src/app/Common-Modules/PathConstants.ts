@@ -194,4 +194,9 @@ public static readonly DistrictDashboard_Get = 'CMDistrictWiseDetails';
 public static readonly TalukDashboard_Get = "CMTalukWiseDetails/Get";
 public static readonly HostelDashboard_Get = "CMHostelWiseDetails/Get";
 public static readonly HostelDetailDashboard_Get = 'CMHostelDetails/Get';
+
+public static readonly OnlineStudentRegistrationDetails_Get = 'OnlineStudentRegistrationDetails/Get';
+public static readonly OnlineStudentRegistrationDetails_Put = 'OnlineStudentRegistrationDetails/Put';
+public static readonly GeneratePDFDocument_Get = 'GeneratePDFDocument/Get';
+
 }

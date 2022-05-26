@@ -16,13 +16,14 @@ import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
+import { Dialog } from 'primeng/dialog';
 
 @Component({
   selector: 'app-online-registration',
   templateUrl: './online-registration.component.html',
   styleUrls: ['./online-registration.component.css']
 })
-export class OnlineRegistrationComponent implements OnInit {
+export class OnlineRegistrationComponent implements OnInit  {
   yearRange: string;
   genderOptions: SelectItem[];
   genders?: any;
@@ -77,7 +78,6 @@ export class OnlineRegistrationComponent implements OnInit {
   hostel: any;
   hostelId: any;
   pdfDialog: boolean; 
-
   // // Regreceipt 
   // receiptCols: any;
   // receiptData: any = [];
@@ -144,6 +144,7 @@ export class OnlineRegistrationComponent implements OnInit {
   @ViewChild('incomeCertificate', { static: false }) _incomeCertificate: ElementRef;
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
+  @ViewChild('dialog', { static: false }) _dialog: Dialog;
 
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
@@ -156,6 +157,10 @@ export class OnlineRegistrationComponent implements OnInit {
       this.response = response;
     });
      }
+
+    //  ngAfterViewInit() {
+    //   document.getElementById("embedPDF").setAttribute('src', this.src);
+    //  }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
@@ -718,8 +723,11 @@ loadHostelList() {
 
 onDownload(Filename) {
   this.pdfDialog = true;
-  // const path = "assets/layout/images/check.pdf" + "/" + Filename;
-  // saveAs(path, Filename);
+  // document.getElementById("embedPDF").setAttribute('src', this.src);
+}
+onDialogShow() {
+  var src = 'assets/layout/images/REGISTRATION.pdf';
+  document.getElementById("embedPDF").setAttribute('src', src);
 }
 }
 
