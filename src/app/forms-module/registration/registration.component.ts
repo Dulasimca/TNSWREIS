@@ -284,7 +284,8 @@ export class RegistrationComponent implements OnInit {
       .subscribe((event: any) => {
       }
       );
-    return actualFilename;
+      var curr_datetime =  this._datePipe.transform(new Date(), 'dd-MM-yyyy, h:mm:ss a');
+      return actualFilename + '^' + curr_datetime;
   }
 
   onFileUpload($event, id) {
