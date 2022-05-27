@@ -275,17 +275,18 @@ export class RegistrationComponent implements OnInit {
     }
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
-    let actualFilename = '';
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
-    const filename = fileToUpload.name + '^' + folderName;
+    var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+    var etxn = (fileToUpload.name).toString().split('.');
+    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     formData.append('file', fileToUpload, filename);
-    actualFilename = fileToUpload.name;
+    console.log('file', fileToUpload, curr_datetime);
     this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
       .subscribe((event: any) => {
       }
       );
-      var curr_datetime =  this._datePipe.transform(new Date(), 'dd-MM-yyyy, h:mm:ss a');
-      return actualFilename + '^' + curr_datetime;
+      return filenameWithExtn;
   }
 
   onFileUpload($event, id) {
