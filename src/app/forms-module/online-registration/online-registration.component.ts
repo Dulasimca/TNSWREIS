@@ -78,64 +78,7 @@ export class OnlineRegistrationComponent implements OnInit  {
   hostel: any;
   hostelId: any;
   pdfDialog: boolean; 
-  // // Regreceipt 
-  // receiptCols: any;
-  // receiptData: any = [];
-  // showReceipt: boolean;
-  // receiptYear: string;
-  // studentId: any;
-  
-  // schoolAddress: string;
-  // schoolContact: any;
-  // studentName: string;
-  // parentName: string;
-  // classSection: string;
-  // admnNo: any;
-  // today: any;
-  // total: any;
-  // login_user: User;
-  // sectionOptions: SelectItem[];
-  // emisno: any;
-  // dob:any;
-  // age: number;
-  // bloodGroup: number;
-  // gender: number;
-  // motherTongue: number;
-  // caste: number;
-  // subCaste: number;
-  // religion: number;
-  // mobileNo: string;
-  // altMobNo: string;
-  // admissionNo: string;
-  // totalYIncome: number;
-  // //parent-info
-  // fatherName: string;
-  // motherName: string;
-  // fatherOccupation: string;
-  // fatherQualification: string;
-  // fatherMobNo: any;
-  // motherOccupation: String;
-  // motherQualification: string;
-  // motherMobNo: any;
-  // receiptNo: any;
-  // //address-info
-  // address1: string;
-  // address2: string;
-  // landMark: string;
-  // village: string;
-  // pinCode: any;
-  // //institute-details
-  // schoolName: string;
-  // class: any;
-  // medium: any;
-  // scholarshipNumber: any;
-  // collegeName: string;
-  // courseStudying: any;
-  // year: any;
-  // courseTitle: any;
-  // cMedium: any;
-  // colScholNum: any;
-  // data: any = [];
+ 
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -729,7 +672,7 @@ onDownload(Filename) {
   // document.getElementById("embedPDF").setAttribute('src', this.src);
 }
 onDialogShow() {
-  var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
+  var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
   document.getElementById("embedPDF").setAttribute('src', src);
 }
 }

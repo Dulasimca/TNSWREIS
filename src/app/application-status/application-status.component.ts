@@ -52,7 +52,7 @@ export class ApplicationStatusComponent implements OnInit {
           this.studentName = r.studentName;
           this.studentId = r.studentId;
           this.hostelId = r.hostelId;
-          this.onDialogShow();
+          
         })
         this.registeredDetails = res;
         if (this.status === 0) {
@@ -62,7 +62,8 @@ export class ApplicationStatusComponent implements OnInit {
           //   key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
           //   summary: ResponseMessage.SUMMARY_REJECTED, detail: msg
           // });
-          this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
+          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
+          // this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
         } else {
 
         }
@@ -74,12 +75,13 @@ export class ApplicationStatusComponent implements OnInit {
           //   summary: ResponseMessage.SUMMARY_APPROVED, detail: msg
           // });
           this.msgs = [{ severity: 'success', summary: 'Approved', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been approved!' }];
-
+          this.onDialogShow();
         } else {
 
         }
         if (this.status === 2) {
-          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
+          this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
+          // this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
 
           // var msg = "District Approval status is still in pending"
           // this._messageService.clear();
