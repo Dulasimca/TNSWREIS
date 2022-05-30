@@ -18,7 +18,6 @@ export class TotalCountDashboardComponent implements OnInit {
   ugArr: any[] = [];
   pgArr: any[] = [];
   highcharts = Highcharts;
-  highchartss = Highcharts
   chartOptions: any;
   barchartOptions: any;
   chartLabels: any[];
@@ -36,11 +35,11 @@ export class TotalCountDashboardComponent implements OnInit {
         for (let k = 0; k < keys.length; k++) {
           var name: string = x['name'];
           if (name.toLowerCase() === 'school') {
-            if (keys[k] !== 'name' && keys[k] !== 'Id') {
+            if (keys[k] !== 'name' && keys[k] !== 'Id' && keys[k] !== 'genderType') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
               label = label.replace(/([A-Z])/g, ' $1').trim();
-              label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
+              label = (label.toLowerCase() !== 'hcount') ? label : 'Total Hostel Count';
               this.tempArr.push({
                 name: label,
                 y: x[keys[k]],
@@ -48,11 +47,11 @@ export class TotalCountDashboardComponent implements OnInit {
             }
           }
           if (name.toLowerCase() === 'college-ug') {
-            if (keys[k] !== 'name' && keys[k] !== 'Id') {
+            if (keys[k] !== 'name' && keys[k] !== 'Id' && keys[k] !== 'genderType') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
               label = label.replace(/([A-Z])/g, ' $1').trim();
-              label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
+              label = (label.toLowerCase() !== 'hcount') ? label : 'Total Hostel Count';
               this.ugArr.push({
                 name: label,
                 y: x[keys[k]],
@@ -60,11 +59,11 @@ export class TotalCountDashboardComponent implements OnInit {
             }
           }
           if (name.toLowerCase() === 'college-pg') {
-            if (keys[k] !== 'name' && keys[k] !== 'Id') {
+            if (keys[k] !== 'name' && keys[k] !== 'Id' && keys[k] !== 'genderType') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
               label = label.replace(/([A-Z])/g, ' $1').trim();
-              label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
+              label = (label.toLowerCase() !== 'hcount') ? label : 'Total Hostel Count';
               this.pgArr.push({
                 name: label,
                 y: x[keys[k]],
@@ -104,7 +103,12 @@ export class TotalCountDashboardComponent implements OnInit {
               format: '<b>{point.name}%</b>:{point.y:.0f}',
               distance: '-30%',
             },
-            showInLegend: true
+            showInLegend: true,
+            events: {
+              click: (event) => {
+                this._router.navigate(['/district-wise-dashboard']);
+              }
+            }
           }
         },
         series: [{
@@ -122,7 +126,6 @@ export class TotalCountDashboardComponent implements OnInit {
           }
         }
       };
-
       //pie-chart 2 - College-UG Hostel
       this.ugChartOptions = {
         colors: ['#ccff33', ' #99ff59', '#66ff80', '#3dff9e', '#14ffbd', '#00ffcc'],
@@ -153,23 +156,28 @@ export class TotalCountDashboardComponent implements OnInit {
               format: '<b>{point.name}%</b>:{point.y:.0f}',
               distance: '-30%',
             },
-            showInLegend: true
-          }
-        },
-        series: [{
-          type: 'pie',
-          name: 'Count',
-          colorByPoint: true,
-          data: this.ugArr,
-        }],
-        legend: {
-          itemStyle: {
-            color: '#fff'
+            showInLegend: true,
+            events: {
+              click: (event) => {
+                this._router.navigate(['/district-wise-dashboard']);
+              }
+            }
           },
-          itemHoverStyle: {
-            color: '#fff'
+        },
+          series: [{
+            type: 'pie',
+            name: 'Count',
+            colorByPoint: true,
+            data: this.ugArr,
+          }],
+          legend: {
+            itemStyle: {
+              color: '#fff'
+            },
+            itemHoverStyle: {
+              color: '#fff'
+            }
           }
-        }
       };
 
       //clge PG 
@@ -201,23 +209,28 @@ export class TotalCountDashboardComponent implements OnInit {
               format: '<b>{point.name}%</b>:{point.y:.0f}',
               distance: '-30%',
             },
-            showInLegend: true
+            showInLegend: true,
+            events: {
+              click: (event) => {
+                this._router.navigate(['/district-wise-dashboard']);
+              }
+            }
           }
-        },
-        series: [{
-          type: 'pie',
-          name: 'Count',
-          colorByPoint: true,
-          data: this.pgArr,
-        }],
-        legend: {
-          itemStyle: {
-            color: '#fff'
           },
-          itemHoverStyle: {
-            color: '#fff'
+          series: [{
+            type: 'pie',
+            name: 'Count',
+            colorByPoint: true,
+            data: this.pgArr,
+          }],
+          legend: {
+            itemStyle: {
+              color: '#fff'
+            },
+            itemHoverStyle: {
+              color: '#fff'
+            }
           }
-        }
       };
     })
   }
@@ -269,10 +282,10 @@ export class TotalCountDashboardComponent implements OnInit {
           xAxis: {
             categories: this.chartLabels,
             labels: {
-            style: {
-              color: '#fff'
+              style: {
+                color: '#fff'
+              }
             }
-          }
           },
           yAxis: {
             min: 0,
@@ -317,7 +330,7 @@ export class TotalCountDashboardComponent implements OnInit {
       }
     })
   }
-  
+
   gotoDistrictDashboard() {
     this._router.navigate(['/district-wise-dashboard']);
   }
