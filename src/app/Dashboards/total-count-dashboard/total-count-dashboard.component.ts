@@ -35,11 +35,11 @@ export class TotalCountDashboardComponent implements OnInit {
         for (let k = 0; k < keys.length; k++) {
           var name: string = x['name'];
           if (name.toLowerCase() === 'school') {
-            if (keys[k] !== 'name' && keys[k] !== 'Id') {
+            if (keys[k] !== 'name' && keys[k] !== 'Id' && keys[k] !== 'genderType') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
               label = label.replace(/([A-Z])/g, ' $1').trim();
-              label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
+              label = (label.toLowerCase() !== 'hcount') ? label : 'Total Hostel Count';
               this.tempArr.push({
                 name: label,
                 y: x[keys[k]],
@@ -47,11 +47,11 @@ export class TotalCountDashboardComponent implements OnInit {
             }
           }
           if (name.toLowerCase() === 'college-ug') {
-            if (keys[k] !== 'name' && keys[k] !== 'Id') {
+            if (keys[k] !== 'name' && keys[k] !== 'Id' && keys[k] !== 'genderType') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
               label = label.replace(/([A-Z])/g, ' $1').trim();
-              label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
+              label = (label.toLowerCase() !== 'hcount') ? label : 'Total Hostel Count';
               this.ugArr.push({
                 name: label,
                 y: x[keys[k]],
@@ -59,11 +59,11 @@ export class TotalCountDashboardComponent implements OnInit {
             }
           }
           if (name.toLowerCase() === 'college-pg') {
-            if (keys[k] !== 'name' && keys[k] !== 'Id') {
+            if (keys[k] !== 'name' && keys[k] !== 'Id' && keys[k] !== 'genderType') {
               var label = keys[k];
               label = label.charAt(0).toUpperCase() + label.slice(1);
               label = label.replace(/([A-Z])/g, ' $1').trim();
-              label = (label.toLowerCase() !== 'hcount') ? label : 'Hostel Count';
+              label = (label.toLowerCase() !== 'hcount') ? label : 'Total Hostel Count';
               this.pgArr.push({
                 name: label,
                 y: x[keys[k]],
