@@ -165,7 +165,7 @@ const routes: Routes = [
   { path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent, canActivate: [AuthGuard] },
   { path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent, canActivate: [AuthGuard] },
   { path: 'hostel-dashboard', component:HostelDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'online-registration', component:OnlineRegistrationComponent, canActivate: [AuthGuard]},
+  { path: 'online-registration', component:OnlineRegistrationComponent},
   { path: 'online-check', component:OnlineRegistrationCheckComponent},
 
 

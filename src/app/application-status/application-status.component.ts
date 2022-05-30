@@ -21,6 +21,8 @@ export class ApplicationStatusComponent implements OnInit {
   msgs: Message[];
   studentName: any;
   pdfDialog: boolean;
+  studentId: any;
+  hostelId: any;
 
   constructor(private _datePipe: DatePipe, private _restApiService: RestAPIService, private _messageService: MessageService,
   ) { }
@@ -48,7 +50,9 @@ export class ApplicationStatusComponent implements OnInit {
         res.forEach(r => {
           this.status = r.districtApproval;
           this.studentName = r.studentName;
-          this.onDialogShow();
+          this.studentId = r.studentId;
+          this.hostelId = r.hostelId;
+          
         })
         this.registeredDetails = res;
         if (this.status === 0) {
@@ -58,7 +62,8 @@ export class ApplicationStatusComponent implements OnInit {
           //   key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
           //   summary: ResponseMessage.SUMMARY_REJECTED, detail: msg
           // });
-          this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
+          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
+          // this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
         } else {
 
         }
@@ -70,12 +75,13 @@ export class ApplicationStatusComponent implements OnInit {
           //   summary: ResponseMessage.SUMMARY_APPROVED, detail: msg
           // });
           this.msgs = [{ severity: 'success', summary: 'Approved', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been approved!' }];
-
+          this.onDialogShow();
         } else {
 
         }
         if (this.status === 2) {
-          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
+          this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
+          // this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
 
           // var msg = "District Approval status is still in pending"
           // this._messageService.clear();
@@ -102,7 +108,7 @@ export class ApplicationStatusComponent implements OnInit {
   onAadharChange() { }
 
   onDialogShow() {
-    var src = 'assets/layout/images/305278756145_75.pdf';
+    var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
     document.getElementById("embedPDF").setAttribute('src', src);
   }
 }
