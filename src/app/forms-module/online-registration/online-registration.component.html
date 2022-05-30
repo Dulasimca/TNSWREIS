@@ -8,9 +8,51 @@
                         <div class="p-col-12 p-md-12 p-lg-12">
                             <p-tabView>
                                 <p-tabPanel header="Student Info">
+                                    <div #main2 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Hostel Details</div>
+                                            <div #row1 class="p-col-12 border-blue">
+                                                <div #grid1 class="p-grid div-main">
+                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_dis" [options]="distOptions"
+                                                                [(ngModel)]="district" (onClick)="onHostelSelect('D')"
+                                                                (ngModelChange)="refreshField('D')" required>
+                                                            </p-dropdown>
+                                                            <label for="_dis">Hostel District<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_tal" [options]="talOptions"
+                                                                [(ngModel)]="taluk" (onClick)="onHostelSelect('T')"
+                                                                (onChange)="refreshField('T')" required>
+                                                            </p-dropdown>
+                                                            <label for="_tal"> Hostel Taluk<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        <span class="p-float-label p-input-icon-right">
+                                                            <p-dropdown name="_hos" [options]="hosOptions"
+                                                                [(ngModel)]="hostelName" required>
+                                                            </p-dropdown>
+                                                            <label for="_hos">Hostel Name<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-1"></div>
                                     <div #main1 class="p-grid">
                                         <div class="p-col-1"></div>
                                         <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Personal Info</div>
+                                            <div #row1 class="p-col-12 border-blue">
                                             <div class="p-grid">
                                                 <div class="p-col-12 p-md-12 p-lg-10">
                                                     <div #row1 class="p-col-12 p-md-12 p-lg-12">
@@ -202,6 +244,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                     <div #main2 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
                                         <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
