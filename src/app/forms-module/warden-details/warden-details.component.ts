@@ -200,13 +200,17 @@ export class WardenDetailsComponent implements OnInit {
     this.formData = new FormData()
     let fileToUpload: any = <File>event.target.files[0];
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
-    const filename = fileToUpload.name + '^' + folderName;
+    var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+    var etxn = (fileToUpload.name).toString().split('.');
+    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     this.formData.append('file', fileToUpload, filename);
-    this.wardenFileName = fileToUpload.name;
+    this.wardenFileName = filenameWithExtn;
     this.http.post(this.restApiService.BASEURL + PathConstants.FileUpload_Post, this.formData)
       .subscribe(event => {
       }
       );
+      return filenameWithExtn;
   }
 
   // onFileUpload($event) {

@@ -318,8 +318,6 @@ export class OnlineRegistrationComponent implements OnInit  {
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
-    console.log('g',this.hostelId)
-    console.log('s',this.hostelName)
     const folderName = this.hostelName + '/' + 'Documents';
     var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
@@ -493,8 +491,6 @@ export class OnlineRegistrationComponent implements OnInit  {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
           }
         })
-        console.log('S',this.studentId)
-        console.log('H',this.hostelId)
         this.registeredDetails = res.slice(0);
         this.loading = false;
       } else {
@@ -682,9 +678,6 @@ onDownload(Filename) {
 onDialogShow() {
   var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
   document.getElementById("embedPDF").setAttribute('src', src);
-  console.log('H',this.hostelId)
-  console.log('A',this.obj.aadharNo)
-  console.log('s',this.studentId)
 }
 }
 
