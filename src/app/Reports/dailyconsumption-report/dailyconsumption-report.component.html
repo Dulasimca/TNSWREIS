@@ -53,7 +53,7 @@
                         </div>
                         <p-table #dt [value]="consumptionDetails" [columns]="consumptionCols"
                             styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
-                            [rowsPerPageOptions]="[10,20,30,40]" [loading]="loading"
+                            [rowsPerPageOptions]="[10,20,30,40]" responsiveLayout="scroll" [loading]="loading"
                             exportFilename="DAILY_CONSUMPTION_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>

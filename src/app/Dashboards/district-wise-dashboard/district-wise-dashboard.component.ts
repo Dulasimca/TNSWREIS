@@ -18,14 +18,13 @@ import { RestAPIService } from 'src/app/services/restAPI.service';
 export class DistrictWiseDashboardComponent implements OnInit {
   items: any[] = [];
   data: any[] = [];
-  tempArr: any[] = [];
   isScrollDown: boolean = true;
   @BlockUI() blockUI: NgBlockUI;
 	constructor(private _restApiService: RestAPIService, private _scroller: ViewportScroller,
     private _messageService: MessageService, private _router: Router, private cdf: ChangeDetectorRef) {}
 		
   ngOnInit(): void {
-    console.log('before call');
+    document.getElementById('maincontainer').style.background = '#00293c';
     this.loadData();
   }
 
@@ -66,14 +65,14 @@ export class DistrictWiseDashboardComponent implements OnInit {
     var max_len = curr_len + 5;
     this.items.forEach((i, index) => {
       if(index >= curr_len && index < max_len) {
-        this.tempArr.push(i)
+        this.data.push(i)
       }
     })
-    if(this.tempArr.length === this.items.length) {
+    if(this.data.length === this.items.length) {
       this.isScrollDown = false;
     }
+    console.log('sc', this.data, this.items)
     this._scroller.scrollToAnchor("scroller");
-    this.data = this.tempArr.slice(0);
   }
 
   gotoTaluk(id) {

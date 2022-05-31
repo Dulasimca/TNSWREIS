@@ -16,13 +16,14 @@ import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
+import { Dialog } from 'primeng/dialog';
 
 @Component({
   selector: 'app-online-registration',
   templateUrl: './online-registration.component.html',
   styleUrls: ['./online-registration.component.css']
 })
-export class OnlineRegistrationComponent implements OnInit {
+export class OnlineRegistrationComponent implements OnInit  {
   yearRange: string;
   genderOptions: SelectItem[];
   genders?: any;
@@ -77,65 +78,7 @@ export class OnlineRegistrationComponent implements OnInit {
   hostel: any;
   hostelId: any;
   pdfDialog: boolean; 
-
-  // // Regreceipt 
-  // receiptCols: any;
-  // receiptData: any = [];
-  // showReceipt: boolean;
-  // receiptYear: string;
-  // studentId: any;
-  
-  // schoolAddress: string;
-  // schoolContact: any;
-  // studentName: string;
-  // parentName: string;
-  // classSection: string;
-  // admnNo: any;
-  // today: any;
-  // total: any;
-  // login_user: User;
-  // sectionOptions: SelectItem[];
-  // emisno: any;
-  // dob:any;
-  // age: number;
-  // bloodGroup: number;
-  // gender: number;
-  // motherTongue: number;
-  // caste: number;
-  // subCaste: number;
-  // religion: number;
-  // mobileNo: string;
-  // altMobNo: string;
-  // admissionNo: string;
-  // totalYIncome: number;
-  // //parent-info
-  // fatherName: string;
-  // motherName: string;
-  // fatherOccupation: string;
-  // fatherQualification: string;
-  // fatherMobNo: any;
-  // motherOccupation: String;
-  // motherQualification: string;
-  // motherMobNo: any;
-  // receiptNo: any;
-  // //address-info
-  // address1: string;
-  // address2: string;
-  // landMark: string;
-  // village: string;
-  // pinCode: any;
-  // //institute-details
-  // schoolName: string;
-  // class: any;
-  // medium: any;
-  // scholarshipNumber: any;
-  // collegeName: string;
-  // courseStudying: any;
-  // year: any;
-  // courseTitle: any;
-  // cMedium: any;
-  // colScholNum: any;
-  // data: any = [];
+ 
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -144,6 +87,8 @@ export class OnlineRegistrationComponent implements OnInit {
   @ViewChild('incomeCertificate', { static: false }) _incomeCertificate: ElementRef;
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
+  @ViewChild('dialog', { static: false }) _dialog: Dialog;
+  studentId: any;
 
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
@@ -156,6 +101,10 @@ export class OnlineRegistrationComponent implements OnInit {
       this.response = response;
     });
      }
+
+    //  ngAfterViewInit() {
+    //   document.getElementById("embedPDF").setAttribute('src', this.src);
+    //  }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
@@ -369,15 +318,21 @@ export class OnlineRegistrationComponent implements OnInit {
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
-    const folderName = this.logged_user.hostelId + '/' + 'Documents';
-    const filename = fileToUpload.name + '^' + folderName;
+    console.log('g',this.hostelId)
+    console.log('s',this.hostelName)
+    const folderName = this.hostelName + '/' + 'Documents';
+    var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+    var etxn = (fileToUpload.name).toString().split('.');
+    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     formData.append('file', fileToUpload, filename);
     actualFilename = fileToUpload.name;
+    console.log('file', fileToUpload, curr_datetime);
     this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
       .subscribe((event: any) => {
       }
       );
-    return actualFilename;
+      return filenameWithExtn;
   }
 
   onFileUpload($event, id) {
@@ -531,11 +486,15 @@ export class OnlineRegistrationComponent implements OnInit {
     this._restApiService.getByParameters(PathConstants.OnlineStudentRegistration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
+          this.studentId = r.studentId;
+          this.hostelId = r.hostelId;
           var len = r.aadharNo.toString().length;
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
           }
         })
+        console.log('S',this.studentId)
+        console.log('H',this.hostelId)
         this.registeredDetails = res.slice(0);
         this.loading = false;
       } else {
@@ -718,8 +677,14 @@ loadHostelList() {
 
 onDownload(Filename) {
   this.pdfDialog = true;
-  // const path = "assets/layout/images/check.pdf" + "/" + Filename;
-  // saveAs(path, Filename);
+  // document.getElementById("embedPDF").setAttribute('src', this.src);
+}
+onDialogShow() {
+  var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
+  document.getElementById("embedPDF").setAttribute('src', src);
+  console.log('H',this.hostelId)
+  console.log('A',this.obj.aadharNo)
+  console.log('s',this.studentId)
 }
 }
 

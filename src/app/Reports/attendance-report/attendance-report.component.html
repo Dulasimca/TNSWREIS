@@ -45,7 +45,7 @@
                         </div>
                         <p-table #dt [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
                             [paginator]="true" [rows]="100" [rowsPerPageOptions]="[10,20,30,50,100]"
-                             exportFilename="ATTENDANCE_REPORT">
+                            responsiveLayout="scroll" exportFilename="ATTENDANCE_REPORT">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th>S.No</th>

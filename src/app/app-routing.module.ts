@@ -78,6 +78,8 @@ import { TalukWiseDashboardComponent } from './Dashboards/taluk-wise-dashboard/t
 import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard/hostel-wise-dashboard.component';
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
+import { ApplicationStatusComponent } from './application-status/application-status.component';
+
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -158,16 +160,18 @@ const routes: Routes = [
   { path: 'employee-strength', component:EmployeeStrengthComponent, canActivate: [AuthGuard]},
   { path: 'student-count', component:StudentcountReportComponent, canActivate: [AuthGuard]},
   { path: 'Hostel-Committee', component:HostelCommitteeComponent, canActivate: [AuthGuard]},
-  // { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent },
-  {  path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent },
-  {  path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent },
-  {  path: 'hostel-dashboard', component:HostelDashboardComponent },
+  { path: 'total-count-dashboard', component:TotalCountDashboardComponent,  canActivate: [AuthGuard]},
+  { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent, canActivate: [AuthGuard]},
+  { path: 'taluk-wise-dashboard', component:TalukWiseDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'hostel-wise-dashboard', component:HostelWiseDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'hostel-dashboard', component:HostelDashboardComponent, canActivate: [AuthGuard] },
   { path: 'online-registration', component:OnlineRegistrationComponent},
-  { path: 'total-count-dashboard', component:TotalCountDashboardComponent},
+  { path: 'online-check', component:OnlineRegistrationCheckComponent},
+
+
+  { path: 'application-status', component:ApplicationStatusComponent},
 
    
-  { path: 'district-wise-dashboard', component:DistrictWiseDashboardComponent},
-  { path: 'online-check', component:OnlineRegistrationCheckComponent},
   
   
   

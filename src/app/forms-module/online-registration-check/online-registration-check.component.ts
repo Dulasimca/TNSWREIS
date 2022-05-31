@@ -10,6 +10,7 @@ import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-online-registration-check',
@@ -31,18 +32,28 @@ export class OnlineRegistrationCheckComponent implements OnInit {
   pdfDialog: boolean;
   loading: boolean;
   aadharValidationMsg: string;
+  pdfSource: any;
+  src: any;
+  showPdf : boolean;
 
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationCheck: NgForm;
+  studentId: string;
+  hostelId: any;
   constructor(private _masterService: MasterService, private _messageService: MessageService,
     private _datePipe: DatePipe, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
     private _router: Router) { }
+    // ngAfterViewInit() {
+    //   var src = 'assets/layout/images/check.pdf';
+    //   document.getElementById("embedPDF").setAttribute('src', src);
+    //    }
+    
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear();
     const start_year_range = current_year - 50;
     this.yearRange = start_year_range + ':' + current_year;
-    this.registeredCols = this._tableConstants.registrationColumns;
+    // this.registeredCols = this._tableConstants.registrationColumns;
   }
 
   loadStudentsData() {
@@ -56,13 +67,18 @@ export class OnlineRegistrationCheckComponent implements OnInit {
     this._restApiService.getByParameters(PathConstants.OnlineStudentRegistration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
+          this.studentId = r.studentId;
+          this.hostelId = r.hostelId;
+          console.log('d', this.studentId)
           var len = r.aadharNo.toString().length;
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
           }
         })
         this.registeredDetails = res.slice(0);
-        this.showDialog = true;
+        // this.showDialog = true;
+        // this.pdfDialog = true;
+        this.onDialogShow();
         this.loading = false;
         this.onClear();
       } else {
@@ -71,15 +87,19 @@ export class OnlineRegistrationCheckComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: 'Not yet registered! Please register'
+          summary: ResponseMessage.SUMMARY_ALERT, detail: 'Not yet registered! Please register'
         })
       }
     })
   } 
   onDownload(Filename) {
     this.pdfDialog = true;
-    // const path = "assets/layout/images/check.pdf" + "/" + Filename;
-    // saveAs(path, Filename);
+  }
+
+  onDialogShow() {
+    var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
+    document.getElementById("embedPDF").setAttribute('src', src);
+    console.log('src',src)
   }
 
   onClear() {
