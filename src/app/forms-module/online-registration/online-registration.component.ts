@@ -438,6 +438,7 @@ export class OnlineRegistrationComponent implements OnInit  {
         if (response) {
           this.blockUI.stop();
           this.onView();
+          this.onDialogShow();
           // this.clearForm();          
           this._messageService.clear();
           this._messageService.add({
