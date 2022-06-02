@@ -318,15 +318,19 @@ export class OnlineRegistrationComponent implements OnInit  {
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
-    const folderName = this.logged_user.hostelId + '/' + 'Documents';
-    const filename = fileToUpload.name + '^' + folderName;
+    const folderName = this.hostelName + '/' + 'Documents';
+    var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+    var etxn = (fileToUpload.name).toString().split('.');
+    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     formData.append('file', fileToUpload, filename);
     actualFilename = fileToUpload.name;
+    console.log('file', fileToUpload, curr_datetime);
     this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
       .subscribe((event: any) => {
       }
       );
-    return actualFilename;
+      return filenameWithExtn;
   }
 
   onFileUpload($event, id) {
@@ -434,6 +438,7 @@ export class OnlineRegistrationComponent implements OnInit  {
         if (response) {
           this.blockUI.stop();
           this.onView();
+          this.onDialogShow();
           // this.clearForm();          
           this._messageService.clear();
           this._messageService.add({

@@ -317,13 +317,17 @@ public uploadFile = (event) => {
   this.formData = new FormData()
   let fileToUpload: any = <File>event.target.files[0];
   const folderName = this.login_user.hostelId + '/' + 'Documents';
-  const filename = fileToUpload.name + '^' + folderName;
+  var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+  var etxn = (fileToUpload.name).toString().split('.');
+  var filenameWithExtn = curr_datetime + '.' + etxn[1];
+  const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
   this.formData.append('file', fileToUpload, filename);
-  this.employeeFileName = fileToUpload.name;
+  this.employeeFileName = filenameWithExtn;
   this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, this.formData)
     .subscribe(event => {
     }
     );
+    return filenameWithExtn;
 }
 
 showImage(url) {
