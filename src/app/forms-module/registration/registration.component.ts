@@ -73,6 +73,8 @@ export class RegistrationComponent implements OnInit {
   @ViewChild('incomeCertificate', { static: false }) _incomeCertificate: ElementRef;
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
+  dstatus: boolean;
+  districtApproval: boolean = true;
 
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
@@ -439,6 +441,14 @@ export class RegistrationComponent implements OnInit {
     this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
+          this.dstatus =  r.districtApproval;
+          console.log('g', this.dstatus)
+
+          if(this.dstatus === true) {
+            this.districtApproval = false;
+          }else {
+            this.districtApproval = true;
+          }
           var len = r.aadharNo.toString().length;
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
