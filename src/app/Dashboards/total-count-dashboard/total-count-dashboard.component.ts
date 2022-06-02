@@ -174,7 +174,7 @@ export class TotalCountDashboardComponent implements OnInit {
 
       //clge PG 
       this.pgChartOptions = {
-        colors: ['#b599b278', '#987294b8', '#987294', '#8b5a85', '#653c60', '#452942'],
+        colors: ['#ffc6d7' , '#fca1bc', '#f681a3', '#f35d88', '#f44275', '#bc3159'],
         credits: {
           enabled: false
         },
