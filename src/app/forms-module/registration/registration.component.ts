@@ -73,6 +73,8 @@ export class RegistrationComponent implements OnInit {
   @ViewChild('incomeCertificate', { static: false }) _incomeCertificate: ElementRef;
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
+  dstatus: number;
+  districtApproval: boolean = true;
 
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
@@ -178,7 +180,7 @@ export class RegistrationComponent implements OnInit {
         var courseYear = [];
         if (this.institutionType === '1') {
           filtered_data = this.classes.filter(f => {
-            return f.type === 1 ; //school class name
+            return f.type === 1; //school class name
           })
         } else {
           courseYear = this.classes.filter(c => {
@@ -276,7 +278,7 @@ export class RegistrationComponent implements OnInit {
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
-    var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+    var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
     var filenameWithExtn = curr_datetime + '.' + etxn[1];
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
@@ -286,7 +288,7 @@ export class RegistrationComponent implements OnInit {
       .subscribe((event: any) => {
       }
       );
-      return filenameWithExtn;
+    return filenameWithExtn;
   }
 
   onFileUpload($event, id) {
@@ -432,17 +434,23 @@ export class RegistrationComponent implements OnInit {
     this.registeredDetails = [];
     this.loading = true;
     const params = {
-      'DCode': this.logged_user.districtCode,
-      'TCode': this.logged_user.talukId,
-      'HCode': this.logged_user.hostelId
+      'DStatus': 1,  //district approved
     }
-    this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
+    this._restApiService.getByParameters(PathConstants.OnlineRegistrationStatus_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
-          var len = r.aadharNo.toString().length;
-          if (len > 11) {
-            r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
+          this.dstatus = r.districtApproval;
+          console.log('g', this.dstatus)
+
+          if (this.dstatus === 1) {
+            this.districtApproval = false;  //enable save button
+          } else {
+            this.districtApproval = true; //disable save button
           }
+          // var len = r.aadharNo.toString().length;
+          // if (len > 11) {
+          //   r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
+          // }
         })
         this.registeredDetails = res.slice(0);
         this.loading = false;
@@ -476,7 +484,7 @@ export class RegistrationComponent implements OnInit {
       this.obj.dob = new Date(row.dob);
       this.ageTxt = this.obj.age + ' Years';
       this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';
-      this.studentImage = 'assets/layout/'+ this.logged_user.hostelId +'/Documents/'+ row.studentFilename;
+      this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/Documents/' + row.studentFilename;
       this.maskInput(this.obj.aadharNo);
     }
   }
@@ -510,7 +518,7 @@ export class RegistrationComponent implements OnInit {
         setTimeout(() => {
           this.aadharNo = null;
           this.aadharValidationMsg = 'Please enter valid Aadhar No!';
-    }, 300);
+        }, 300);
       }
       return false;
     }
@@ -557,7 +565,7 @@ export class RegistrationComponent implements OnInit {
       'studentId': this.obj.studentId
     }
     this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
-      if ( res.Table.length === 0) { 
+      if (res.Table.length === 0) {
         this.onSubmit();
       } else {
         this._messageService.clear();

@@ -6,7 +6,7 @@
                 ADW
                 Hostel Management System</span>
         </div>
-        <div class="p-col-2 p-md-2 p-lg-2 main-dsh-cmbtn" (click)="gotoCMDashboard()">
+        <div *ngIf="roleId==1" class="p-col-2 p-md-2 p-lg-2 main-dsh-cmbtn" (click)="gotoCMDashboard()">
             <span>
                 CM Dashboard
                 <span>
