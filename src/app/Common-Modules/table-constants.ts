@@ -27,6 +27,7 @@ export class TableConstants {
     biometricattendancecountColumns: any = [];
     purchasedetailsReportCols: any = [];
     studentCountReportCols: any = [];
+    HstlClosingdateEntryCols: any = [];
 
     
     AccountHeadTable: any = [];
@@ -238,11 +239,16 @@ export class TableConstants {
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
             { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
-            { field: 'Doj', header: 'Doj', width: '100px', align: 'center !important'},
             { field: 'GenderName', header: 'Gender', width: '100px', align: 'left !important'},
+            { field: 'DOB', header: 'Date of Birth', width: '100px', align: 'center !important'},
+            { field: 'Doj', header: 'Service Joined Date', width: '100px', align: 'center !important'},
+            { field: 'EmployeeJoinedDate', header: 'Joined Date', width: '100px', align: 'center !important'},
             { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
+            { field: 'Pincode', header: 'Pincode', width: '100px', align: 'left !important'},
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
+            { field: 'NativeTaluk', header: 'Native Taluk', width: '100px', align: 'left !important'},
             { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
+            { field: 'AltMobNo', header: 'Alt Mobile No', width: '100px', align: 'left !important'},
             { field: 'EndDate', header: 'End Date', width: '100px', align: 'centre !important'},
         ]
         this.DeviceMappingReportCols = [
@@ -384,6 +390,15 @@ export class TableConstants {
         { field: 'hostelTName', header: 'Taluk Name', width: '100px', align: 'left !important'},
         { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
         { field: 'StudentCount', header: 'Student Count', width: '100px', align: 'left !important'},
+        
+    ]
+    this.HstlClosingdateEntryCols = [
+        { field: 'ShortYear', header: 'Academic Year', width: '100px', align: 'center !important'},
+        { field: 'AppOpendate', header: 'Application Open Date', width: '100px', align: 'center !important'},
+        { field: 'AppClosedate', header: 'Application Close Date', width: '100px', align: 'center !important'},
+        { field: 'AppExtendDate', header: 'Application Extend Date', width: '100px', align: 'center !important'},
+        { field: 'HstlOpenDate', header: 'Hostel Opening Date', width: '100px', align: 'center !important'},
+        { field: 'HstlCloseDate', header: 'Hostel Closing Date', width: '100px', align: 'center !important'},
         
     ]
     }

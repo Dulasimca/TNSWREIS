@@ -143,6 +143,7 @@ import { OnlineRegistrationCheckComponent } from './forms-module/online-registra
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
+import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 
 @NgModule({
   declarations: [
@@ -230,6 +231,7 @@ import { ApplicationStatusComponent } from './application-status/application-sta
     OnlineRegistrationCheckComponent,
     HostelDashboardComponent,
     ApplicationStatusComponent,
+    HostelClosingdateEntryComponent,
     
   ],
   imports: [

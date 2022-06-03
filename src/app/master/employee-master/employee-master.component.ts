@@ -46,10 +46,22 @@ export class EmployeeMasterComponent implements OnInit {
   modeOfAppt: any;
   modeOptions: SelectItem[];
   modes?: any;
+  hostels?: any;
   employeeImage: any = '';
   employeeFileName: string;
   selectedType :number;
   imageDialog: boolean;
+  dateOfbirth: any;
+  yearRange: string;
+  hostelName: any;
+  hostelJoin: any;
+  district: any;
+  hostelOptions: SelectItem[];
+  talukOptions: SelectItem[];
+  nativeTaluk: any;
+  nativeTaluks: any;
+  pincode: any;
+  altMobNo: number;
   public formData = new FormData();
   @ViewChild ('f', { static: false }) employeeForm: NgForm;
   @ViewChild('userFile', { static: false }) _employeeimage: ElementRef;
@@ -60,6 +72,10 @@ export class EmployeeMasterComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const current_year = new Date().getFullYear();
+    const start_year_range = current_year - 50;
+    this.yearRange = start_year_range + ':' + current_year;
+
     this.cols = [
       { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
       { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
@@ -68,10 +84,13 @@ export class EmployeeMasterComponent implements OnInit {
       { field: 'ModeName', header: 'Mode Of Appointment', width: '100px', align: 'left !important'},
       { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
       { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
-      { field: 'Doj', header: 'Doj', width: '100px', align: 'left !important'},
+      { field: 'Doj', header: 'Service Joined date', width: '100px', align: 'left !important'},
+      { field: 'EmployeeJoinedDate', header: 'Joined as employee in', width: '100px', align: 'left !important'},
       { field: 'GenderName', header: 'Gender', width: '100px', align: 'left !important'},
       { field: 'Address', header: 'Address', width: '100px', align: 'left !important'},
       { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
+      { field: 'NativeTaluk', header: 'Native Taluk', width: '100px', align: 'left !important'},
+      { field: 'Pincode', header: 'Pincode', width: '100px', align: 'left !important'},
       { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
       { field: 'Flag', header: 'Status', width: '100px', align: 'left !important'},
       { field: 'EndDate', header: 'Last Date', width: '100px', align: 'centre !important'},
@@ -79,6 +98,7 @@ export class EmployeeMasterComponent implements OnInit {
     this.login_user = this._authService.UserInfo;
     this.genders = this._masterService.getMaster('GD');
     this.districts = this._masterService.getDistrictAll();
+    this.nativeTaluks = this._masterService.getTalukAll();
     this.Districtcode = this.login_user.districtCode;
     this.TalukId = this.login_user.talukId;
     this.HostelId = this.login_user.hostelId;
@@ -89,6 +109,33 @@ export class EmployeeMasterComponent implements OnInit {
     this._restApiService.get(PathConstants.ModesType_Get).subscribe(res => {
       this.modes = res;
     })
+  }
+
+  selectDistrict() {
+    this.hostelName = null;
+    this.hostelOptions = [];
+    let hostelSelection = [];
+    const params = {
+      'Type': 1,
+      'DCode': this.district,
+      'TCode': (this.login_user.talukId !== undefined && this.login_user.talukId !== null) ?
+      this.login_user.talukId : 0,
+      'HostelId': (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ?
+        this.login_user.hostelId : 0,
+    }
+    if (this.district !== null && this.district !== undefined) {
+      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          this.hostels = res.Table;
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
+          this.hostelOptions = hostelSelection;
+          this.hostelOptions.unshift({ label: '-select', value: null });
+        };
+      })
+    }
+
   }
 
   onView() {
@@ -103,6 +150,8 @@ export class EmployeeMasterComponent implements OnInit {
         res.Table.forEach(i => {
           i.Flag = (i.Flag) ? 'Active' : 'Inactive';
           i.url = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + i.EmployeeImage;
+          // i.EmployeeJinedDate = this._datePipe.transform(i.EmployeeJinedDate, 'dd/MM/yyyy');
+          // i.DoJ = this._datePipe.transform(i.DoJ, 'dd/MM/yyyy');
 
         })
           this.data = res.Table;
@@ -121,18 +170,23 @@ export class EmployeeMasterComponent implements OnInit {
   onSubmit() {
     const params = {
       'Id': this.RowId,
-      'HostelID': this.HostelId,
-      'Districtcode': this.Districtcode,
-      'Talukid': this.TalukId,
+      'HostelID': (this.login_user.roleId === 4)? this.login_user.hostelId : this.hostelName,
+      'Districtcode': (this.login_user.roleId === 4)? this.login_user.districtCode : this.nativeDistrict,
+      'Talukid': (this.login_user.roleId === 4)? this.login_user.talukId : this.nativeTaluk,
       'Designation': this.designationName,
       'ModeType': this.modeOfAppt,
       'FirstName': this.firstName,
       'LastName': this.lastName,
       'Doj': this._datePipe.transform(this.dateOfjoin, 'MM/dd/yyyy'),
+      'Dob': this._datePipe.transform(this.dateOfbirth, 'MM/dd/yyyy'),
+      'EmployeeJoinedDate': this._datePipe.transform(this.hostelJoin, 'MM/dd/yyyy'),
       'Gender': this.gender,
       'Address': this.address,
       'NativeDistrict': this.nativeDistrict,
+      'Nativetaluk': this.nativeTaluk,
       'MobileNo': this.mobileNo,
+      'AltMobNo': this.altMobNo,
+      'Pincode': this.pincode,
       'EmployeeImage': this.employeeFileName,
       'Flag': (this.selectedType * 1),
     };
@@ -181,6 +235,7 @@ export class EmployeeMasterComponent implements OnInit {
     let districtSelection = [];
     let designationSelection =[];
     let modeSelection = [];
+    let talukSelection = [];
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
@@ -210,6 +265,16 @@ export class EmployeeMasterComponent implements OnInit {
           this.modeOptions = modeSelection;
           this.modeOptions.unshift({ label: '-select', value: null });
           break;
+          case 'T':
+            this.nativeTaluks.forEach(t => {
+              if (t.dcode === this.nativeDistrict) {
+                talukSelection.push({ label: t.name, value: t.code });
+              }
+            })
+    
+            this.talukOptions = talukSelection;
+            this.talukOptions.unshift({ label: '-select-', value: null });
+            break;
   }
 }
 
@@ -223,12 +288,19 @@ onRowSelect(event, selectedRow) {
   this.firstName = selectedRow.FirstName;
   this.lastName = selectedRow.LastName;
   this.dateOfjoin = new Date(selectedRow.Doj);
+  this.dateOfbirth = new Date(selectedRow.DOB);
+  this.hostelJoin = new Date(selectedRow.EmployeeJoinedDate);
   this.gender = selectedRow.Gender;
   this.genderOptions = [{ label: selectedRow.GenderName, value: selectedRow.Gender}];
   this.address = selectedRow.Address;
   this.nativeDistrict = selectedRow.NativeDistrictID;
+  this.nativeTaluk = selectedRow.NativeTalukID;
   this.districtOptions = [{ label: selectedRow.NativeDistrict, value: selectedRow.NativeDistrictID}];
+  this.talukOptions = [{ label: selectedRow.NativeTaluk, value: selectedRow.NativeTalukID}];
+  this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelID}];
   this.mobileNo = selectedRow.MobileNo;
+  this.altMobNo = selectedRow.AltMobNo;
+  this.pincode = selectedRow.Pincode;
   this.employeeFileName = selectedRow.EmployeeImage;
   var filePath = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + this.employeeFileName;
   this.employeeImage = filePath;

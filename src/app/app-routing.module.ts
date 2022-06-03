@@ -79,6 +79,7 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
+import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 
 
 const routes: Routes = [
@@ -170,11 +171,7 @@ const routes: Routes = [
 
 
   { path: 'application-status', component:ApplicationStatusComponent},
-
-   
-  
-  
-  
+  { path: 'closingdate-entry', component:HostelClosingdateEntryComponent,canActivate: [AuthGuard] },
 
 ];
 
