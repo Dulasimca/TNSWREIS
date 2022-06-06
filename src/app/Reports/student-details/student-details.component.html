@@ -167,6 +167,8 @@
                                                 <span>
                                                 {{rowData.dAStatus}}
                                             </span>
+                                            <span *ngIf="dEnableTick">
+                                                <i class="status-icon-green pi pi-check"></i></span>
                                             </td>
                                             <td style="text-align: left;"
                                                 *ngIf="(roleId==2 && ((rowData.districtApproval)!=0))">
@@ -179,6 +181,8 @@
                                                 <span>
                                                 {{rowData.dDAStatus}}
                                             </span>
+                                            <span *ngIf="dCrossTick">
+                                                <i class="status-icon-red pi pi-times"></i></span>
                                             </td>
                                             <!-- taluk approval for role id = 3 (both approval & disapproval status only) -->
                                             <td style="text-align: left;"
@@ -192,6 +196,8 @@
                                                 <span>
                                                     {{rowData.tAStatus}}
                                                 </span>
+                                                <span *ngIf="tEnableTick">
+                                                    <i class="status-icon-green pi pi-check"></i></span>
                                             </td>
                                             <td style="text-align: left;"
                                                 *ngIf="(roleId==3 && ((rowData.talukApproval)!=0))">
@@ -204,6 +210,8 @@
                                                 <span>
                                                     {{rowData.tDAStatus}}
                                                 </span>
+                                                <span *ngIf="tCrossTick">
+                                                 <i class="status-icon-red pi pi-times"></i></span>
                                             </td>
                                             <!-- warden approval for role id = 4 (both approval & disapproval status only) -->
                                             <td style="text-align: left;"
@@ -217,6 +225,8 @@
                                                 <span>
                                                     {{rowData.wAStatus}}
                                                 </span>
+                                                <span *ngIf="wEnableTick">
+                                                    <i class="status-icon-green pi pi-check"></i></span>
                                             </td>
                                             <td style="width: 120px" *ngIf="(roleId==2 &&((rowData.Download)!=0))" 
                                              >
@@ -281,7 +291,8 @@
                             required>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-7">
-                        <label for="_reas">Reason for Disapprove</label>
+                        <label for="_reas">Reason for Disapprove<span
+                            class="formandam-tory-field">*</span></label>
                         <input type="text" name="_reas" pInputText [(ngModel)]="reason" 
                             required>
                     </div>

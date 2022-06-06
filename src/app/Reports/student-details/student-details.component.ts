@@ -54,6 +54,11 @@ export class StudentDetailsComponent implements OnInit {
   hostelId: any;
   reason: any;
   aReason: string;
+  wEnableTick: boolean;
+  tEnableTick: boolean;
+  tCrossTick: boolean;
+  dEnableTick: boolean;
+  dCrossTick: boolean;
 
 
   constructor(private _masterService: MasterService, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
@@ -157,9 +162,6 @@ export class StudentDetailsComponent implements OnInit {
             this.aadharNo = r.aadharNo;
             this.hostelId = r.hostelId;
             this.studentId = r.studentId;
-            console.log('s',this.studentId)
-            console.log('a',this.aadharNo)
-            console.log('H',this.hostelId)
             r.dob = r.dob, 
             r.isDApproved = (r.districtApproval !== null && r.districtApproval !== 0 && (r.districtApproval)) ? 'true' : 'false';
             r.isTAprroved = (r.talukApproval !== null && r.talukApproval !== 0 && (r.talukApproval)) ? 'true' : 'false';
@@ -189,7 +191,8 @@ export class StudentDetailsComponent implements OnInit {
               }
               if (r.wardenApproval !== null && r.wardenApproval !== undefined) {
                 if (r.wardenApproval === 1) {
-                  r.wstatus = 'Approved !';
+                  // r.wstatus = 'Approved !';
+                  this.wEnableTick = true;
                 } else if (r.wardenApproval === 2) {
                   r.wstatus = 'DisApproved';
                 } else {
@@ -205,21 +208,27 @@ export class StudentDetailsComponent implements OnInit {
                   // r.dAStatus = '-';
                   r.enableApprove = true;
                   r.enableDisapprove = false;
-                  r.dDAStatus = 'DisApproved !';
+                  this.dCrossTick = true;
+                  // r.dDAStatus = 'DisApproved !';
                 } else if (r.districtApproval === 1) {
                   // r.dDAStatus = '-';
                   r.enableApprove = false;
                   r.enableDisapprove = true;
-                  r.dAStatus = 'Approved !';
+                  this.dEnableTick = true;
+                  // r.dAStatus = 'Approved !';
                 } else {
                   r.dstatus = 'Pending !';
                   r.enableApprove = false;
                   r.enableDisapprove = false;
+                  r.dEnableTick = false;
+                  r.dCrossTick = false;
                 }
               } else {
                 r.dstatus = '-';
                 r.enableApprove = false;
                 r.enableDisapprove = false;
+                r.dEnableTick = false;
+                r.dCrossTick = false;
               }
             } else if (this.roleId === 3) {
               ///Taluk approval
@@ -228,12 +237,14 @@ export class StudentDetailsComponent implements OnInit {
                   // r.tAStatus = '-';
                   r.enableApprove = true;
                   r.enableDisapprove = false;
-                  r.tDAStatus = 'DisApproved !';
+                  this.tCrossTick = true;
+                  // r.tDAStatus = 'DisApproved !';
                 } else if (r.talukApproval === 1) {
                   // r.tDAStatus = '-';
                   r.enableApprove = false;
                   r.enableDisapprove = true;
-                  r.tAStatus = 'Approved !';
+                  this.tEnableTick = true;
+                  // r.tAStatus = 'Approved !';
                 } else {
                   r.tstatus = 'Pending !';
                   r.enableApprove = false;
@@ -248,15 +259,16 @@ export class StudentDetailsComponent implements OnInit {
               ///warden approval
               if (r.wardenApproval !== null && r.wardenApproval !== undefined) {
                 if (r.wardenApproval === 2) {
-                  // r.wAStatus = '-';
+                  r.wAStatus = '-';
                   r.enableApprove = true;
                   r.enableDisapprove = false;
                   r.wDAStatus = 'DisApproved !';
                 } else if (r.wardenApproval === 1) {
-                  // r.wDAStatus = '-';
+                  // r.wDAStatus = '-';              
                   r.enableApprove = false;
                   r.enableDisapprove = true;
-                  r.wAStatus = 'Approved !';
+                  this.wEnableTick = true;
+                  // r.wAStatus = 'Approved !';
                 } else {
                   r.wstatus = 'Pending !';
                   r.enableApprove = false;
@@ -422,15 +434,11 @@ export class StudentDetailsComponent implements OnInit {
       'MobileNo': this.mobileNo,
       'Dob': this._datePipe.transform(this.dob, 'MM/dd/yyyy')
     }
-    console.log(this.aadharNo)
-    console.log(this.mobileNo)
-    console.log(this.dob)
     this._restApiService.getByParameters(PathConstants.OnlineStudentRegistration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
           this.studentId = r.studentId;
           this.hostelId = r.hostelId;
-          console.log('d', this.studentId)
           var len = r.aadharNo.toString().length;
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
@@ -462,9 +470,6 @@ export class StudentDetailsComponent implements OnInit {
   onDialogShow() {
     var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
     document.getElementById("embedPDF").setAttribute('src', src);
-    console.log('h',this.hostel)
-    console.log('a',this.aadharNo)
-    console.log('s',this.studentId)
   }
 
 }
