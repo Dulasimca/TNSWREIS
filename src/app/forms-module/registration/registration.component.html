@@ -740,8 +740,7 @@
                                 </p-tabPanel>
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" icon="pi pi-send"
-                                        (click)="checkAadhar()"
-                                        [disabled]="(!f.valid || !f.dirty || districtApproval)"></button>&nbsp;
+                                        (click)="checkAadhar()" [disabled]="(!f.valid || !f.dirty ||enableSave)"></button>&nbsp;
                                     <button pButton type="button" label="View" icon="pi pi-eye"
                                         (click)="onView()"></button>&nbsp;
                                     <button pButton type="button" label="Clear" icon="pi pi-trash"

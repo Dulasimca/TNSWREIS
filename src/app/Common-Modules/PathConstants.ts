@@ -200,6 +200,9 @@ public static readonly OnlineStudentRegistrationDetails_Put = 'OnlineStudentRegi
 public static readonly GeneratePDFDocument_Get = 'GeneratePDFDocument/Get';
  
 public static readonly OnlineRegistrationStatus_Get = 'OnlineRegistrationStatus/Get';
+public static readonly HostelClosingDateEntry_Post = 'HostelClosingDateEntry/Post';
+public static readonly HostelClosingDateEntry_Get= 'HostelClosingDateEntry';
+
 
 
 }
