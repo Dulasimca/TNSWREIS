@@ -558,7 +558,7 @@ export class RegistrationComponent implements OnInit {
       'AadharNo': this.obj.aadharNo,
       'studentId': this.obj.studentId
     }
-    this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
+    this._restApiService.getByParameters(PathConstants.StudentAadhaarCheck_Get, params).subscribe(res => {
       if (res.Table.length === 0) {
         this.onSubmit();
       } else {

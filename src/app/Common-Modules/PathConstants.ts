@@ -202,6 +202,9 @@ public static readonly GeneratePDFDocument_Get = 'GeneratePDFDocument/Get';
 public static readonly OnlineRegistrationStatus_Get = 'OnlineRegistrationStatus/Get';
 public static readonly HostelClosingDateEntry_Post = 'HostelClosingDateEntry/Post';
 public static readonly HostelClosingDateEntry_Get= 'HostelClosingDateEntry';
+public static readonly HostelOnlineApplication_Get= 'HostelOnlineApplication';
+public static readonly StudentFromOnlineRegistration_Post = 'StudentFromOnlineRegistration/Post';
+public static readonly StudentAadhaarCheck_Get = 'StudentAadhaarCheck/Get';
 
 
 

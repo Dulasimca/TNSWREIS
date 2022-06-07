@@ -144,6 +144,7 @@ import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-d
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
+import { StudentReportComponent } from './Reports/student-report/student-report.component';
 
 @NgModule({
   declarations: [
@@ -232,6 +233,7 @@ import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/host
     HostelDashboardComponent,
     ApplicationStatusComponent,
     HostelClosingdateEntryComponent,
+    StudentReportComponent,
     
   ],
   imports: [

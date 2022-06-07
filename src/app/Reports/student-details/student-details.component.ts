@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MessageService, SelectItem } from 'primeng/api';
@@ -191,8 +192,8 @@ export class StudentDetailsComponent implements OnInit {
               }
               if (r.wardenApproval !== null && r.wardenApproval !== undefined) {
                 if (r.wardenApproval === 1) {
-                  // r.wstatus = 'Approved !';
-                  this.wEnableTick = true;
+                 r.wstatus = 'Approved !';
+                  // this.wEnableTick = true;
                 } else if (r.wardenApproval === 2) {
                   r.wstatus = 'DisApproved';
                 } else {
@@ -353,6 +354,9 @@ export class StudentDetailsComponent implements OnInit {
         if (this.roleId === 2) {
           this.insertStudentTransferDetails();
         }
+        if (this.roleId === 4) {
+          this.insertStudentFromOnlineReg();
+        }
         this.blockUI.stop();
         this.studentId = null;
         this.showDialog = false;
@@ -407,6 +411,52 @@ export class StudentDetailsComponent implements OnInit {
       }
     })
   }
+
+  insertStudentFromOnlineReg() {
+    const params = {
+      'Id': this.studentId,
+      'wardenapproval': this.wApproval,
+      'Districtapproval': this.dApproval,
+    };
+    this._restApiService.post(PathConstants.StudentFromOnlineRegistration_Post,params).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        if (res) {
+          // this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+          
+        } else {
+          // this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+        
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      // this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+
+      }
+    })
+
+}
 
   insertStudentTransferDetails() {
     const params = [];

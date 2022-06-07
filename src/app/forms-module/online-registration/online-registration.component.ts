@@ -17,6 +17,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { Dialog } from 'primeng/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-online-registration',
@@ -93,7 +94,7 @@ export class OnlineRegistrationComponent implements OnInit  {
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
     private _restApiService: RestAPIService, private _authService: AuthService,
-    private _tableConstants: TableConstants, private http: HttpClient) {
+    private _tableConstants: TableConstants, private http: HttpClient, private router: Router) {
     this.blockUI.start();
     let master = new Observable<any[]>();
     master = this._masterService.initializeMaster();
@@ -138,6 +139,22 @@ export class OnlineRegistrationComponent implements OnInit  {
       this.blockUI.stop();
     }, 500);
     this.defaultValues();
+    this._restApiService.get(PathConstants.HostelOnlineApplication_Get).subscribe(res => {
+      if (res !== null && res !== undefined) {
+        if(res.length === 0) {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Closed'
+          })
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          },1000)
+        }
+      } else {
+        this.router.navigate(['/home']);
+      }
+    }) 
   }
 
   onSelectType() {
