@@ -63,7 +63,7 @@
                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left"><label for="_district">Hostel
                                         District<span class="form-mandatory-field">*</span></label>
                                     <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                        (onClick)="onSelect('D')" (onChange)="selectDistrict()">
+                                        (onClick)="onSelect('DT')" (onChange)="selectDistrict()">
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
@@ -89,7 +89,7 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_district">Native District<span
                                             class="form-mandatory-field">*</span></label>
-                                    <p-dropdown name="_district" [options]="districtOptions" (onClick)="onSelect('DT')"
+                                    <p-dropdown name="_district" [options]="nativeDistrictOptions" (onClick)="onSelect('ND')"
                                         [(ngModel)]="nativeDistrict" required>
                                     </p-dropdown>
                                 </div>

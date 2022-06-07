@@ -62,6 +62,8 @@ export class EmployeeMasterComponent implements OnInit {
   nativeTaluks: any;
   pincode: any;
   altMobNo: number;
+  nativeDistricts? : any;
+  nativeDistrictOptions: SelectItem[];
   public formData = new FormData();
   @ViewChild ('f', { static: false }) employeeForm: NgForm;
   @ViewChild('userFile', { static: false }) _employeeimage: ElementRef;
@@ -97,6 +99,7 @@ export class EmployeeMasterComponent implements OnInit {
    ];
     this.login_user = this._authService.UserInfo;
     this.genders = this._masterService.getMaster('GD');
+    this.nativeDistricts = this._masterService.getDistrictAll();
     this.districts = this._masterService.getDistrictAll();
     this.nativeTaluks = this._masterService.getTalukAll();
     this.Districtcode = this.login_user.districtCode;
@@ -233,6 +236,7 @@ export class EmployeeMasterComponent implements OnInit {
   onSelect(type) {
     let genderSelection = [];
     let districtSelection = [];
+    let nativedtSelection = [];
     let designationSelection =[];
     let modeSelection = [];
     let talukSelection = [];
@@ -251,6 +255,13 @@ export class EmployeeMasterComponent implements OnInit {
           this.districtOptions = districtSelection;
           this.districtOptions.unshift({ label: '-select-', value: null });
           break;
+          case 'ND':
+            this.nativeDistricts.forEach(d => {
+              nativedtSelection.push({ label: d.name, value: d.code });
+            })
+            this.nativeDistrictOptions = nativedtSelection;
+            this.nativeDistrictOptions.unshift({ label: '-select-', value: null });
+            break;
         case 'ED':
             this.employeeDesignation.forEach(c => {
               designationSelection.push({ label:c.Name, value: c.Id });
