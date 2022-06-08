@@ -64,6 +64,11 @@ export class EmployeeMasterComponent implements OnInit {
   altMobNo: number;
   nativeDistricts? : any;
   nativeDistrictOptions: SelectItem[];
+  hideDropDown: boolean;
+  districtId: any;
+  talukID: any;
+  hostel: any;
+  loading: boolean;
   public formData = new FormData();
   @ViewChild ('f', { static: false }) employeeForm: NgForm;
   @ViewChild('userFile', { static: false }) _employeeimage: ElementRef;
@@ -142,12 +147,36 @@ export class EmployeeMasterComponent implements OnInit {
   }
 
   onView() {
-    this.data = [];
-    const params = {
-   'DCode' : this.login_user.districtCode,
-   'TCode' : this.login_user.talukId,
-   'HostelId' : this.login_user.hostelId,
+    let params = {};
+    if(this.login_user.roleId === 1) {
+      this.hideDropDown = true; 
+      params = this.selectDropdown();
+    } else {
+      this.hideDropDown = false;
+      params = {
+        'DCode' : this.login_user.districtCode,
+        'TCode' : this.login_user.talukId,
+        'HostelId' : this.login_user.hostelId,
     }
+    this.loadTable(params);
+    this.loading = true;
+    }
+      this.data = [];
+  }
+  selectDropdown(): any {
+    let param = {};
+    if (this.districtId !== undefined && this.districtId !== null && this.talukID !== undefined && this.talukID !== null &&
+      this.hostel !== undefined && this.hostel !== null) {
+        param = {
+          'DCode': this.districtId,
+          'TCode': this.talukID,
+          'HostelId': this.hostel
+        }
+        this.loadTable(param);
+      }
+      return param;
+    }
+    loadTable(params) {
     this._restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res =>{
       if (res !== null && res !== undefined && res.length !== 0) {
         res.Table.forEach(i => {
@@ -158,13 +187,13 @@ export class EmployeeMasterComponent implements OnInit {
 
         })
           this.data = res.Table;
-   
-    
-  } else {
-    this._messageService.clear();
-    this._messageService.add({
-      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+          this.loading = false;
+        } else {
+          this.loading = false;
+           this._messageService.clear();
+           this._messageService.add({
+           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
     })
   }
 });
@@ -286,6 +315,16 @@ export class EmployeeMasterComponent implements OnInit {
             this.talukOptions = talukSelection;
             this.talukOptions.unshift({ label: '-select-', value: null });
             break;
+            case 'TH':
+              if (this.districtId !== undefined && this.districtId !== null) {
+                this.nativeTaluks.forEach(t => {
+                  if (t.dcode === this.districtId) {
+                    talukSelection.push({ label: t.name, value: t.code });
+                  }
+                })
+                this.talukOptions = talukSelection;
+                this.talukOptions.unshift({ label: '-select-', value: null });
+              }
   }
 }
 
@@ -416,6 +455,38 @@ public uploadFile = (event) => {
 showImage(url) {
   this.imageDialog = true;
   this.employeeImage = url;
+}
+
+refreshField(value) {
+  if (value === 'D') {
+    this.talukID = null;
+    this.talukOptions = [];
+  }
+  this.loadHostelList();
+}
+
+loadHostelList() {
+  this.hostel = null;
+  this.hostelOptions = [];
+  let hostelSelection = [];
+  const params = {
+    'DCode': this.districtId,
+    'TCode': this.talukID,
+  }
+  if (this.districtId !== null && this.districtId !== undefined && this.districtId !== 'All' &&
+    this.talukID !== null && this.talukID !== undefined && this.talukID !== 'All') {
+    this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.hostels = res.Table;
+        this.hostels.forEach(h => {
+          hostelSelection.push({ label: h.HostelName, value: h.Slno });
+        })
+      }
+    })
+  }
+  this.hostelOptions = hostelSelection;
+  this.hostelOptions.unshift({ label: '-select-', value: null });
+
 }
 
 }

@@ -148,10 +148,33 @@
                                         (click)="onClear()"></button>
                                 </div>
                             </div>
+                            <div class="p-grid">
+                            <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_dis">District</label>
+                                </div>
+                                <p-dropdown name="_dis" [options]="districtOptions" [(ngModel)]="districtId"
+                                    (onClick)="onSelect('DT')" (ngModelChange)="refreshField('D')"  required>
+                                </p-dropdown>
+                            </div>
+                            <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_tal">Taluk</label>
+                                </div>
+                                <p-dropdown name="_tal" [options]="talukOptions" [(ngModel)]="talukID"
+                                    (onClick)="onSelect('TH')" (onChange)="refreshField('TH')"  required>
+                                </p-dropdown>
+                            </div>
+                            <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_hos">Hostel Name</label>
+                                </div>
+                                <p-dropdown name="_hos" [options]="hostelOptions"  [(ngModel)]="hostel"
+                                (onChange)="selectDropdown()" required>
+                                </p-dropdown>
+                            </div>
+                            </div>
                             <div class="p-col-1"></div>
                             <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                                 [rowsPerPageOptions]="[5,10,15,20]" responsiveLayout="scroll"
-                                totalRecords="totalRecords" styleClass="p-datatable-gridlines">
+                                totalRecords="totalRecords" [loading]="loading" styleClass="p-datatable-gridlines">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th>S.No</th>
