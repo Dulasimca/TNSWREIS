@@ -763,6 +763,27 @@
                             <ng-template pTemplate="caption">
                                 <div class="table-header">
                                     <div class="p-grid">
+                                        <div *ngIf="hideDropDown" class="p-col-6 p-md-6 p-lg-2">
+                                            <div><label for="_dis">District</label>
+                                            </div>
+                                            <p-dropdown name="_dis" [options]="districtOptions" [(ngModel)]="districtId"
+                                                (onClick)="onSelect('DT')" (ngModelChange)="refreshField('D')" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div *ngIf="hideDropDown" class="p-col-6 p-md-6 p-lg-2">
+                                            <div><label for="_tal">Taluk</label>
+                                            </div>
+                                            <p-dropdown name="_tal" [options]="talukOptions" [(ngModel)]="talukID"
+                                                (onClick)="onSelect('T')" (onChange)="refreshField('T')" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-3">
+                                            <div><label for="_hos">Hostel Name</label>
+                                            </div>
+                                            <p-dropdown name="_hos" [options]="hostelOptions" [(ngModel)]="hostel"
+                                            (onChange)="selectDropdown()" required>
+                                            </p-dropdown>
+                                        </div>
                                         <div class="p-col-6 p-md-6 p-lg-10 txt-end">
                                             <span>Search by Student name / Aadhaar No.</span>
                                         </div>

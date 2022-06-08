@@ -65,6 +65,16 @@ export class RegistrationComponent implements OnInit {
   aadharValidationMsg: string;
   maxDate: Date = new Date();
   existingAadhar: any;
+  hostel: any;
+  district: any;
+  taluk: any;
+  hostels?: any;
+  hideDropDown: boolean;
+  hostelOptions: SelectItem[];
+  districtId: any;
+  talukID: any;
+
+
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
@@ -97,6 +107,7 @@ export class RegistrationComponent implements OnInit {
     this.subcastes = this._masterService.getMaster('SC');
     this.registeredCols = this._tableConstants.registrationColumns;
     this.defaultValues();
+    // this.hideDropDown = true;
   }
 
   onSelectType() {
@@ -153,6 +164,17 @@ export class RegistrationComponent implements OnInit {
         if (this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) {
           this.taluks.forEach(t => {
             if (t.dcode === this.obj.distrctCode) {
+              talukSelection.push({ label: t.name, value: t.code });
+            }
+          })
+          this.talukOptions = talukSelection;
+          this.talukOptions.unshift({ label: '-select-', value: null });
+        }
+        break;
+      case 'T':
+        if (this.districtId !== undefined && this.districtId !== null) {
+          this.taluks.forEach(t => {
+            if (t.dcode === this.districtId) {
               talukSelection.push({ label: t.name, value: t.code });
             }
           })
@@ -429,14 +451,43 @@ export class RegistrationComponent implements OnInit {
   }
 
   onView() {
+    let params = {};
+    if (this.logged_user.roleId === 1) {
+      this.hideDropDown = true;
+      params = this.selectDropdown();
+      // this.loading = true;
+    } else {
+
+      this.hideDropDown = false;
+      params = {
+        'DCode': this.logged_user.districtCode,
+        'TCode': this.logged_user.talukId,
+        'HCode': this.logged_user.hostelId
+      }
+      this.loadTable(params);
+      console.log('j', params)
+      this.loading = true;
+    }
     this.showDialog = true;
     this.registeredDetails = [];
-    this.loading = true;
-    const params = {
-      'DCode': this.logged_user.districtCode,
-      'TCode': this.logged_user.talukId,
-      'HCode': this.logged_user.hostelId
+  }
+
+  selectDropdown(): any {
+    let param = {};
+    if (this.districtId !== undefined && this.districtId !== null && this.talukID !== undefined && this.talukID !== null &&
+      this.hostel !== undefined && this.hostel !== null) {
+      param = {
+        'DCode': this.districtId,
+        'TCode': this.talukID,
+        'HCode': this.hostel
+      }
+      this.loadTable(param);
+
     }
+    return param;
+  }
+
+  loadTable(params) {
     this._restApiService.getByParameters(PathConstants.Registration_Get, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         res.forEach(r => {
@@ -570,4 +621,41 @@ export class RegistrationComponent implements OnInit {
       }
     });
   }
+
+
+  refreshField(value) {
+    if (value === 'D') {
+      this.talukID = null;
+      this.talukOptions = [];
+    }
+    this.loadHostelList();
+  }
+
+  loadHostelList() {
+    this.hostel = null;
+    this.hostelOptions = [];
+    let hostelSelection = [];
+    const params = {
+      'DCode': this.districtId,
+      'TCode': this.talukID,
+    }
+    if (this.districtId !== null && this.districtId !== undefined && this.districtId !== 'All' &&
+      this.talukID !== null && this.talukID !== undefined && this.talukID !== 'All') {
+      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          this.hostels = res.Table;
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
+        }
+      })
+    }
+    this.hostelOptions = hostelSelection;
+    this.hostelOptions.unshift({ label: '-select-', value: null });
+
+  }
+
+
 }
+
+
