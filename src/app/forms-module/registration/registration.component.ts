@@ -383,7 +383,7 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
-    this.obj.hostelId = this.logged_user.hostelId;
+    this.obj.hostelId = this.logged_user.roleId ==1 ? this.hostel : this.logged_user.hostelId;
     this.obj.motherYIncome = 0;
     this.obj.fatherYIncome = 0;
     this.obj.altMobNo = (this.obj.altMobNo !== undefined && this.obj.altMobNo !== null) ? this.obj.altMobNo : '-';
@@ -473,6 +473,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   selectDropdown(): any {
+    this.clearForm();
+    
     let param = {};
     if (this.districtId !== undefined && this.districtId !== null && this.talukID !== undefined && this.talukID !== null &&
       this.hostel !== undefined && this.hostel !== null) {
@@ -500,6 +502,7 @@ export class RegistrationComponent implements OnInit {
         this.loading = false;
       } else {
         this.loading = false;
+        this.registeredDetails = [];
         this._messageService.clear();
         this._messageService.add({
           key: 'd-msg', severity: ResponseMessage.SEVERITY_WARNING,
