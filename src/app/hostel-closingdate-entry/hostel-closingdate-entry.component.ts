@@ -69,7 +69,7 @@ export class HostelClosingdateEntryComponent implements OnInit {
     this.restApiService.post(PathConstants.HostelClosingDateEntry_Post, params).subscribe(res => {
       if (res) {
         this.clearform();
-        // this.onView();
+        this.onView();
         this.messageService.clear();
         this.messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -97,7 +97,7 @@ export class HostelClosingdateEntryComponent implements OnInit {
   onEdit(rowData) {
     if (rowData !== null && rowData !== undefined) {
       this.entryId = rowData.Id;
-      this.academicYear = rowData.ShortNumber;
+      this.academicYear = rowData.AcademicYear;
       this.yearOptions = [{ label: rowData.ShortYear, value: rowData.AcademicYear }];
       this.openingDate = rowData.AppOpendate;
       this.closingDate =rowData.AppClosedate;
