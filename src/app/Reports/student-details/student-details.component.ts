@@ -349,7 +349,7 @@ export class StudentDetailsComponent implements OnInit {
       'wardenApproval': (this.roleId === 4) ? 1 : this.wApproval,
       'ReasonForDisApprove': this.aReason 
     }
-    this._restApiService.put(PathConstants.OnlineStudentRegistrationDetails_Put, params).subscribe(res => {
+    this._restApiService.post(PathConstants.OnlineStudentRegistrationDetails_Post, params).subscribe(res => {
       if (res) {
         if (this.roleId === 2) {
           this.insertStudentTransferDetails();
@@ -386,7 +386,7 @@ export class StudentDetailsComponent implements OnInit {
       'wardenApproval': (this.roleId === 4) ? 2 : this.wApproval,
       'ReasonForDisApprove': this.reason
     }
-    this._restApiService.put(PathConstants.OnlineStudentRegistrationDetails_Put, params).subscribe(res => {
+    this._restApiService.post(PathConstants.OnlineStudentRegistrationDetails_Post, params).subscribe(res => {
       if (res) {
         if (this.roleId === 2) {
           this.insertStudentTransferDetails();
