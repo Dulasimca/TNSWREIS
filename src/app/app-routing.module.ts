@@ -81,6 +81,7 @@ import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 import { StudentReportComponent } from './Reports/student-report/student-report.component';
+import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
 
 
 const routes: Routes = [
@@ -173,7 +174,8 @@ const routes: Routes = [
 
   { path: 'application-status', component:ApplicationStatusComponent},
   { path: 'closingdate-entry', component:HostelClosingdateEntryComponent,canActivate: [AuthGuard] },
-  { path: 'student-report', component:StudentReportComponent,canActivate: [AuthGuard] }, 
+  { path: 'studentreport', component:StudentReportComponent,canActivate: [AuthGuard] }, 
+  // { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] }, 
 
 ];
 
