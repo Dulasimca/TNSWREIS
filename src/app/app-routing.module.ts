@@ -175,7 +175,7 @@ const routes: Routes = [
   { path: 'application-status', component:ApplicationStatusComponent},
   { path: 'closingdate-entry', component:HostelClosingdateEntryComponent,canActivate: [AuthGuard] },
   { path: 'studentreport', component:StudentReportComponent,canActivate: [AuthGuard] }, 
-  // { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] }, 
+  { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] }, 
 
 ];
 

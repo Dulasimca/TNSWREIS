@@ -196,7 +196,7 @@ public static readonly HostelDashboard_Get = "CMHostelWiseDetails/Get";
 public static readonly HostelDetailDashboard_Get = 'CMHostelDetails/Get';
 
 public static readonly OnlineStudentRegistrationDetails_Get = 'OnlineStudentRegistrationDetails/Get';
-public static readonly OnlineStudentRegistrationDetails_Put = 'OnlineStudentRegistrationDetails/Put';
+public static readonly OnlineStudentRegistrationDetails_Post = 'OnlineStudentRegistrationDetails/Post';
 public static readonly GeneratePDFDocument_Get = 'GeneratePDFDocument/Get';
  
 public static readonly OnlineRegistrationStatus_Get = 'OnlineRegistrationStatus/Get';
@@ -205,6 +205,8 @@ public static readonly HostelClosingDateEntry_Get= 'HostelClosingDateEntry';
 public static readonly HostelOnlineApplication_Get= 'HostelOnlineApplication';
 public static readonly StudentFromOnlineRegistration_Post = 'StudentFromOnlineRegistration/Post';
 public static readonly StudentAadhaarCheck_Get = 'StudentAadhaarCheck/Get';
+public static readonly HostelFunctioningType_post = 'HostelFunctioningType/post';
+public static readonly HostelFunctioningType_Get = 'HostelFunctioningType';
 
 
 

@@ -145,6 +145,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 import { StudentReportComponent } from './Reports/student-report/student-report.component';
+import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
 
 @NgModule({
   declarations: [
@@ -234,6 +235,7 @@ import { StudentReportComponent } from './Reports/student-report/student-report.
     ApplicationStatusComponent,
     HostelClosingdateEntryComponent,
     StudentReportComponent,
+    HostelFunctioningTypeMasterComponent,
     
   ],
   imports: [
