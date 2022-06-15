@@ -36,6 +36,7 @@ export class RegistrationComponent implements OnInit {
   schoolOptions: SelectItem[];
   schools?: any;
   districtOptions: SelectItem[];
+  districtAllOptions: SelectItem[];
   districts?: any;
   talukOptions: SelectItem[];
   taluks?: any;
@@ -73,8 +74,7 @@ export class RegistrationComponent implements OnInit {
   hostelOptions: SelectItem[];
   districtId: any;
   talukID: any;
-
-
+  districtAll?: any;
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
@@ -98,7 +98,8 @@ export class RegistrationComponent implements OnInit {
     this.bloodgroups = this._masterService.getMaster('BG');
     this.taluks = this._masterService.getTalukAll();
     this.genders = this._masterService.getMaster('GD');
-    this.districts = this._masterService.getDistrictAll();
+    this.districtAll = this._masterService.getDistrictAll();
+    this.districts = this._masterService.getMaster('DT');
     this.languages = this._masterService.getMaster('MT');
     this.castes = this._masterService.getMaster('CS');
     this.classes = this._masterService.getMaster('CL');
@@ -115,6 +116,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSelect(type) {
+    let districtAllSelection = [];
     let districtSelection = [];
     let genderSelection = [];
     let talukSelection = [];
@@ -149,32 +151,30 @@ export class RegistrationComponent implements OnInit {
         this.motherTongueOptions.unshift({ label: '-select-', value: null });
         break;
       case 'DT':
-        this.districts.forEach(d => {
-          districtSelection.push({ label: d.name, value: d.code });
+        this.districtAll.forEach(d => {
+          districtAllSelection.push({ label: d.name, value: d.code });
         })
-        this.districtOptions = districtSelection;
-        this.districtOptions.unshift({ label: '-select-', value: null });
+        this.districtAllOptions = districtAllSelection;
+        this.districtAllOptions.unshift({ label: '-select-', value: null });
         if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
           this.disableTaluk = false;
         } else {
           this.disableTaluk = true;
         }
         break;
-      case 'TK':
-        if (this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) {
-          this.taluks.forEach(t => {
-            if (t.dcode === this.obj.distrctCode) {
-              talukSelection.push({ label: t.name, value: t.code });
-            }
-          })
-          this.talukOptions = talukSelection;
-          this.talukOptions.unshift({ label: '-select-', value: null });
-        }
+        case 'D':
+        this.districts.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
+        })
+        this.districtOptions = districtSelection;
+        this.districtOptions.unshift({ label: '-select-', value: null });
         break;
-      case 'T':
-        if (this.districtId !== undefined && this.districtId !== null) {
+      case 'TK':
+        if ((this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) || 
+        (this.districtId !== undefined && this.districtId !== null)) {
+          var dcode = (this.logged_user.roleId === 2 || this.logged_user.roleId === 1) ? this.districtId : this.obj.distrctCode;
           this.taluks.forEach(t => {
-            if (t.dcode === this.districtId) {
+            if (t.dcode === dcode) {
               talukSelection.push({ label: t.name, value: t.code });
             }
           })
@@ -383,7 +383,7 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
-    this.obj.hostelId = this.logged_user.roleId ==1 ? this.hostel : this.logged_user.hostelId;
+    this.obj.hostelId = this.logged_user.roleId ==1 || this.logged_user.roleId == 2 ? this.hostel : this.logged_user.hostelId;
     this.obj.motherYIncome = 0;
     this.obj.fatherYIncome = 0;
     this.obj.altMobNo = (this.obj.altMobNo !== undefined && this.obj.altMobNo !== null) ? this.obj.altMobNo : '-';
@@ -452,12 +452,11 @@ export class RegistrationComponent implements OnInit {
 
   onView() {
     let params = {};
-    if (this.logged_user.roleId === 1) {
+    if (this.logged_user.roleId === 1 || this.logged_user.roleId === 2) {
       this.hideDropDown = true;
       params = this.selectDropdown();
       // this.loading = true;
     } else {
-
       this.hideDropDown = false;
       params = {
         'DCode': this.logged_user.districtCode,
@@ -465,7 +464,6 @@ export class RegistrationComponent implements OnInit {
         'HCode': this.logged_user.hostelId
       }
       this.loadTable(params);
-      console.log('j', params)
       this.loading = true;
     }
     this.showDialog = true;
@@ -474,7 +472,6 @@ export class RegistrationComponent implements OnInit {
 
   selectDropdown(): any {
     this.clearForm();
-    
     let param = {};
     if (this.districtId !== undefined && this.districtId !== null && this.talukID !== undefined && this.talukID !== null &&
       this.hostel !== undefined && this.hostel !== null) {
