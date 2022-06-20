@@ -369,7 +369,7 @@ onUpdate() {
       'EndDate': this.endDate,
       'Remarks': this.remarks
     }
-    this._restApiService.put(PathConstants.EmployeeDetails_put,params).subscribe(res => {
+    this._restApiService.post(PathConstants.UpdateEmployeeDetails_Post,params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
           //this.blockUI.stop();

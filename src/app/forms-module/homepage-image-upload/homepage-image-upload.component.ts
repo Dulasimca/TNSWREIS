@@ -150,7 +150,7 @@ export class HomepageImageUploadComponent implements OnInit {
       accept: () => {
         this._alert.disableModality();
         this.blockUI.start();
-        this.restApiService.put(PathConstants.HomePageImageUpload_Put, { 'ImageId': rowData.ImageId }).subscribe(res => {
+        this.restApiService.post(PathConstants.UpdateHomePageImageUpload_Put, { 'ImageId': rowData.ImageId }).subscribe(res => {
           if (res !== null && res !== undefined) {
             this.onView();
             this.blockUI.stop;

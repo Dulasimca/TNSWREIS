@@ -9,12 +9,12 @@ public static readonly FileUpload_Post = 'FileUpload';
 
 public static readonly Hostel_Post = 'Hostel/Post';
 public static readonly Hostel_Get = 'Hostel/Get';
-public static readonly Hostel_put = 'Hostel/put';
+public static readonly UpdateHostel_put = 'UpdateHostel/post';
 
 
 public static readonly Warden_post = 'Warden/Post'; 
 public static readonly Warden_Get = 'Warden/Get'; 
-public static readonly Warden_Put = 'Warden/Put';
+public static readonly UpdateWarden_Post = 'UpdateWarden/Post';
 
 public static readonly DistrictMaster_post = 'DistrictMaster/post';
 public static readonly DistrictMaster_Get = 'DistrictMaster';
@@ -50,7 +50,7 @@ public static readonly UserMaster_Put = 'ChangePassword/Post';
 
 public static readonly PurchaseOrder_Post = 'PurchaseOrder/Post';
 public static readonly PurchaseOrder_Get = 'PurchaseOrder/Get';
-public static readonly PurchaseOrder_Delete = 'PurchaseOrder/Put';
+public static readonly UpdatePurchaseOrder_Delete = 'UpdatePurchaseOrder/Post';
 
 public static readonly PurchaseDetailsReport_Get = 'PurchaseDetailsReport/Get';
 
@@ -59,7 +59,7 @@ public static readonly PurchaseDocumentUpload_Post = 'PurchaseDocumentUpload/Pos
 
 public static readonly Consumption_Post = 'DailyConsumption/Post';
 public static readonly Consumption_Get = 'DailyConsumption/Get';
-public static readonly Consumption_Delete = 'DailyConsumption/Put';
+public static readonly Consumption_Delete = 'UpdateDailyConsumption/Post';
 
 public static readonly WardenDetails_Report_Post = 'WardenDetails/Post'
 public static readonly DailyConsumption_Report_Post = 'DailyConsumptionDetails/Post' 
@@ -102,7 +102,7 @@ public static readonly HostelFundAllotment_Get = 'HostelFundAllotment/Get';
 public static readonly FundManagementReport_Get = 'FundManagementReport/Get';
 public static readonly  StudentAttendance_Get = 'StudentAttendance/Get';
 public static readonly StudentAttendance_Post = 'StudentAttendance/Post';
-public static readonly StudentAttendance_Put = 'StudentAttendance/Put';
+public static readonly StudentAttendance_Put = 'UpdateStudentAttendance/Post';
 public static readonly AccHeadType_Get = 'AccHeadType';
 public static readonly GroupHeadType_Get = 'GroupHeadType';
 public static readonly AccHeadFundAllotment_Post = 'AccHeadFundAllotment/Post';
@@ -114,13 +114,13 @@ public static readonly ApprovalList_Get = 'ApprovalList';
 public static readonly ApprovalDetails_Post = 'ApprovalDetails/Post';
 public static readonly ApprovalDetails_Get = 'ApprovalDetails/Get';
 
-public static readonly ApprovalDetails_put = 'ApprovalDetails/put';
+public static readonly UpdateApprovalDetails_put = 'UpdateApprovalDetails/post';
 
-public static readonly MonthlywiseIntent_put = 'MonthlywiseIntent/put';
+public static readonly UpdateMonthlywiseIntent_put = 'UpdateMonthlywiseIntent/post';
 public static readonly EmployeeDesignation_Get = 'EmployeeDesignation';
 public static readonly EmployeeDetails_Post = 'EmployeeDetails/Post';
 public static readonly EmployeeDetails_Get = 'EmployeeDetails/Get';
-public static readonly EmployeeDetails_put = 'EmployeeDetails/Put';
+public static readonly UpdateEmployeeDetails_Post = 'UpdateEmployeeDetails/Post';
 
 public static readonly EmployeeStrength_Post = 'EmployeeStrength/Post';
 public static readonly EmployeeStrength_Get = 'EmployeeStrength/Get';
@@ -131,7 +131,7 @@ public static readonly EmployeeAttendance_Post = 'EmployeeAttendance/Post';
 
 public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
 public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';
-public static readonly StudentTransferDetails_Put = 'StudentTransferDetails/Put';
+public static readonly UpdateStudentTransferDetails_Put = 'UpdateStudentTransferDetails/Post';
 
 public static readonly BioMetric_Post = 'BioMetric/Post';
 public static readonly BioMetric_Get = 'BioMetric/Get';
@@ -161,7 +161,7 @@ public static readonly StudentRegistration_Get = 'StudentRegistration';
 
 public static readonly HomePageImageUpload_Post = 'HomePageImageUpload/Post';
 public static readonly HomePageImageUpload_Get = 'HomePageImageUpload';
-public static readonly HomePageImageUpload_Put = 'HomePageImageUpload/Put';
+public static readonly UpdateHomePageImageUpload_Put = 'UpdateHomePageImageUpload/Post';
 
 public static readonly ModesType_Get = 'ModesType';
 

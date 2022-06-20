@@ -258,7 +258,7 @@ this._restApiService.post(PathConstants.Warden_post, params).subscribe(res => {
       'WardenId': this.wardenId,
       'EndDate': this._datePipe.transform(this.endDate, 'yyyy-MM-dd'),
     }
-    this._restApiService.put(PathConstants.Warden_Put, params).subscribe(res => {
+    this._restApiService.post(PathConstants.UpdateWarden_Post, params).subscribe(res => {
       if (res !== undefined && res !== null && res.length !== 0) {
         this.loadTable();
         this._messageService.clear();

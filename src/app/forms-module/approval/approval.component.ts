@@ -118,7 +118,7 @@ export class ApprovalComponent implements OnInit {
         'ApprovalStatus': 2
       }
     }
-    this._restApiService.put(PathConstants.ApprovalDetails_put, params).subscribe(res => {
+    this._restApiService.post(PathConstants.UpdateApprovalDetails_put, params).subscribe(res => {
       var message = (id === 1) ? 'Approved Successfully' : 'Disapproved Successfully';
       if (res !== undefined && res !== null) {
         if (res) {

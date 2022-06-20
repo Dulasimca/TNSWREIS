@@ -98,7 +98,7 @@ export class HostelImageComponent implements OnInit {
       'Longitude': this.location.lng,
       'Latitude': this.location.lat,
     }
-    this.restApiService.put(PathConstants.Hostel_put, params).subscribe(res => {
+    this.restApiService.post(PathConstants.UpdateHostel_put, params).subscribe(res => {
       if (res) {
         this.messageService.clear();
         this.messageService.add({
