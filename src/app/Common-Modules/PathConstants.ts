@@ -207,6 +207,7 @@ public static readonly StudentFromOnlineRegistration_Post = 'StudentFromOnlineRe
 public static readonly StudentAadhaarCheck_Get = 'StudentAadhaarCheck/Get';
 public static readonly HostelFunctioningType_post = 'HostelFunctioningType/post';
 public static readonly HostelFunctioningType_Get = 'HostelFunctioningType';
+public static readonly StudentApprovalFromOnlineReg_Post = 'StudentApprovalFromOnlineReg/Post';
 
 
 

@@ -60,6 +60,7 @@ export class StudentDetailsComponent implements OnInit {
   tCrossTick: boolean;
   dEnableTick: boolean;
   dCrossTick: boolean;
+  academicYear: any;
 
 
   constructor(private _masterService: MasterService, private _restApiService: RestAPIService, private _tableConstants: TableConstants,
@@ -163,6 +164,7 @@ export class StudentDetailsComponent implements OnInit {
             this.aadharNo = r.aadharNo;
             this.hostelId = r.hostelId;
             this.studentId = r.studentId;
+            this.academicYear = r.AcademicYear;
             r.dob = r.dob, 
             r.isDApproved = (r.districtApproval !== null && r.districtApproval !== 0 && (r.districtApproval)) ? 'true' : 'false';
             r.isTAprroved = (r.talukApproval !== null && r.talukApproval !== 0 && (r.talukApproval)) ? 'true' : 'false';
@@ -353,9 +355,11 @@ export class StudentDetailsComponent implements OnInit {
       if (res) {
         if (this.roleId === 2) {
           this.insertStudentTransferDetails();
+          this.insertStudentApprovalFromOnlineReg();
         }
         if (this.roleId === 4) {
           this.insertStudentFromOnlineReg();
+          this.insertStudentApprovalFromOnlineReg();
         }
         this.blockUI.stop();
         this.studentId = null;
@@ -457,6 +461,58 @@ export class StudentDetailsComponent implements OnInit {
     })
 
 }
+
+  insertStudentApprovalFromOnlineReg() {
+    const params = {
+      'Slno': 0,
+      'DistrictId': this.district,
+      'TalukId': this.taluk,
+      'HostelId': this.hostel,
+      'StudentId': this.studentId,
+      'wardenapproval': this.wApproval,
+      'Districtapproval': this.dApproval,
+      'AccountingYear': this.academicYear,
+      'ReasonForDisapprove': this.aReason,
+      'Flag': 1
+    };
+    this._restApiService.post(PathConstants.StudentApprovalFromOnlineReg_Post,params).subscribe(res => {
+      if (res !== undefined && res !== null) {
+        if (res) {
+          // this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          });
+          
+        } else {
+          // this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          });
+        }
+        
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      // this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+
+      }
+    })
+  }
 
   insertStudentTransferDetails() {
     const params = [];
