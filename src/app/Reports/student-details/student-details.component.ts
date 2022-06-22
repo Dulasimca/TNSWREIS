@@ -479,11 +479,11 @@ export class StudentDetailsComponent implements OnInit {
       if (res !== undefined && res !== null) {
         if (res) {
           // this.blockUI.stop();
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-          });
+          // this._messageService.clear();
+          // this._messageService.add({
+          //   key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+          //   summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          // });
           
         } else {
           // this.blockUI.stop();
