@@ -235,7 +235,7 @@ export class TableConstants {
             { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
-            { field: 'WardenName', header: 'Warden Name', width: '100px', align: 'left !important'},
+            // { field: 'WardenName', header: 'Employee Name', width: '100px', align: 'left !important'},
             { field: 'DesignationName', header: 'Designation', width: '100px', align: 'left !important'},
             { field: 'FirstName', header: 'First Name', width: '100px', align: 'left !important'},
             { field: 'LastName', header: 'Last Name', width: '100px', align: 'left !important'},
@@ -248,7 +248,7 @@ export class TableConstants {
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
             { field: 'NativeTaluk', header: 'Native Taluk', width: '100px', align: 'left !important'},
             { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
-            { field: 'AltMobNo', header: 'Alt Mobile No', width: '100px', align: 'left !important'},
+            // { field: 'AltMobNo', header: 'Alt Mobile No', width: '100px', align: 'left !important'},
             { field: 'EndDate', header: 'End Date', width: '100px', align: 'centre !important'},
         ]
         this.DeviceMappingReportCols = [

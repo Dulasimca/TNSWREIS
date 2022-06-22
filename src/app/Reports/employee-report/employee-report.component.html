@@ -51,6 +51,7 @@
                                         {{col.header}}
                                     </th>
                                     <th style="width: 50px;">Image</th>
+                                    <th>Approval status</th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
@@ -77,6 +78,17 @@
                                         <span>
                                         <img alt="TN ADW Employee image" [src]="rowData.url" width="32"
                                             style="vertical-align: middle" /></span>
+                                    </td>
+                                    <td>
+                                        <span class="p-column-title">
+                                          Approval status :
+                                        </span>
+                                        <span *ngIf="(rowData.status == 1)">Confirmed!
+                                        </span>
+                                        <span *ngIf="(rowData.status == 0)">Declined!
+                                        </span>
+                                        <span *ngIf="(rowData.status == 2)">Pending!
+                                        </span>
                                     </td>
                                 </tr>
                             </ng-template>
