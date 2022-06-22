@@ -148,7 +148,7 @@ export class EmployeeMasterComponent implements OnInit {
 
   onView() {
     let params = {};
-    if(this.login_user.roleId === 1) {
+    if(this.login_user.roleId !== 4) {
       this.hideDropDown = true; 
       params = this.selectDropdown();
     } else {
