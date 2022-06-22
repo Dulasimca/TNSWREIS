@@ -108,7 +108,7 @@ export class OnlineRegistrationComponent implements OnInit  {
     //  }
 
   ngOnInit(): void {
-    const current_year = new Date().getFullYear();
+    const current_year = new Date().getFullYear() - 5 ;
     const start_year_range = current_year - 50;
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
