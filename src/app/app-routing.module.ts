@@ -84,6 +84,7 @@ import { StudentReportComponent } from './Reports/student-report/student-report.
 import { CommoditygroupEntryComponent } from './master/commoditygroup-entry/commoditygroup-entry.component';
 import { UnitMasterEntryComponent } from './master/unit-master-entry/unit-master-entry.component';
 import { EmployeeConfirmationComponent } from './employee-confirmation/employee-confirmation.component';
+import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
 
 
 const routes: Routes = [
@@ -176,7 +177,7 @@ const routes: Routes = [
 
   { path: 'application-status', component:ApplicationStatusComponent},
   { path: 'closingdate-entry', component:HostelClosingdateEntryComponent,canActivate: [AuthGuard] },
-  { path: 'student-report', component:StudentReportComponent,canActivate: [AuthGuard] }, 
+  // { path: 'student-report', component:StudentReportComponent,canActivate: [AuthGuard] }, 
   { path: 'commoditygroup-entry', component:CommoditygroupEntryComponent},
   { path: 'unit-master-entry', component:UnitMasterEntryComponent},
   { path: 'employee-confirmation', component:EmployeeConfirmationComponent},
@@ -185,6 +186,8 @@ const routes: Routes = [
 
    
    
+  { path: 'studentreport', component:StudentReportComponent,canActivate: [AuthGuard] }, 
+  { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] }, 
 
 ];
 

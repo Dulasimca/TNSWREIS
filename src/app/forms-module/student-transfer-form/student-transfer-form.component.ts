@@ -255,7 +255,7 @@ export class StudentTransferFormComponent implements OnInit {
       })
       if (this.unSelectedStudentList.length !== 0) {
         this.blockUI.start();
-        this._restApiService.put(PathConstants.StudentTransferDetails_Put, this.unSelectedStudentList).subscribe(res => {
+        this._restApiService.post(PathConstants.UpdateStudentTransferDetails_Put, this.unSelectedStudentList).subscribe(res => {
           if (res) {
             this.blockUI.stop();
             this.studentDetails = [];

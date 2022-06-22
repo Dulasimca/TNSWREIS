@@ -331,7 +331,7 @@ export class PurchaseOrderComponent implements OnInit {
           'PurchaseId': id
         }
         var msg_key = (type === 1) ? 't-msg' : 't-dialog-msg';
-        this._restApiService.put(PathConstants.PurchaseOrder_Delete, params).subscribe(res => {
+        this._restApiService.post(PathConstants.UpdatePurchaseOrder_Delete, params).subscribe(res => {
           if (res !== undefined && res !== null) {
             if (res) {
               this.blockUI.stop();

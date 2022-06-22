@@ -421,12 +421,12 @@
                                                     <div #grid1 class="p-grid">
                                                         <div #field34 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label p-input-icon-right">
-                                                                <p-dropdown name="_district" [options]="districtOptions"
+                                                                <p-dropdown name="_districtAll" [options]="districtAllOptions"
                                                                     (onClick)="onSelect('DT')"
                                                                     (onChange)="refreshFields('D')"
                                                                     [(ngModel)]="obj.distrctCode" required>
                                                                 </p-dropdown>
-                                                                <label for="_district">District<span
+                                                                <label for="_districtAll">District<span
                                                                         class="form-mandatory-field">*</span></label>
                                                             </span>
                                                         </div>
@@ -767,14 +767,14 @@
                                             <div><label for="_dis">District</label>
                                             </div>
                                             <p-dropdown name="_dis" [options]="districtOptions" [(ngModel)]="districtId"
-                                                (onClick)="onSelect('DT')" (ngModelChange)="refreshField('D')" required>
+                                                (onClick)="onSelect('D')" (ngModelChange)="refreshField('D')" required>
                                             </p-dropdown>
                                         </div>
                                         <div *ngIf="hideDropDown" class="p-col-6 p-md-6 p-lg-2">
                                             <div><label for="_tal">Taluk</label>
                                             </div>
                                             <p-dropdown name="_tal" [options]="talukOptions" [(ngModel)]="talukID"
-                                                (onClick)="onSelect('T')" (onChange)="refreshField('T')" required>
+                                                (onClick)="onSelect('TK')" (onChange)="refreshField('T')" required>
                                             </p-dropdown>
                                         </div>
                                         <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-3">

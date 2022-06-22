@@ -145,10 +145,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 import { StudentReportComponent } from './Reports/student-report/student-report.component';
-import { EmployeeApprovalComponent } from './employee-approval/employee-approval.component';
 import { CommoditygroupEntryComponent } from './master/commoditygroup-entry/commoditygroup-entry.component';
 import { UnitMasterEntryComponent } from './master/unit-master-entry/unit-master-entry.component';
 import { EmployeeConfirmationComponent } from './employee-confirmation/employee-confirmation.component';
+import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
 
 @NgModule({
   declarations: [
@@ -238,10 +238,10 @@ import { EmployeeConfirmationComponent } from './employee-confirmation/employee-
     ApplicationStatusComponent,
     HostelClosingdateEntryComponent,
     StudentReportComponent,
-    EmployeeApprovalComponent,
     CommoditygroupEntryComponent,
     UnitMasterEntryComponent,
     EmployeeConfirmationComponent,
+    HostelFunctioningTypeMasterComponent,
     
   ],
   imports: [
