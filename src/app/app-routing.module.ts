@@ -180,7 +180,7 @@ const routes: Routes = [
   // { path: 'student-report', component:StudentReportComponent,canActivate: [AuthGuard] }, 
   { path: 'commoditygroup-entry', component:CommoditygroupEntryComponent},
   { path: 'unit-master-entry', component:UnitMasterEntryComponent},
-  { path: 'employee-confirmation', component:EmployeeConfirmationComponent},
+  { path: 'employee-confirmation', component:EmployeeConfirmationComponent,canActivate: [AuthGuard]},
 
    
 
