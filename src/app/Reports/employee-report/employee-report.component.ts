@@ -165,6 +165,8 @@ export class EmployeeReportComponent implements OnInit {
           res.Table.forEach(i => {
             i.Flag = (i.Flag) ? 'Active' : 'Inactive';
             i.url = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + i.EmployeeImage;
+            i.status = i.DistrictApproval;
+            console.log('i',i.status)
           })
             this.hostelData = res.Table;
             this.disableExcel = false;

@@ -137,7 +137,7 @@ export class MasterService {
             case 'AY':
                 if (this.data.Table5 !== undefined && this.data.Table5 !== null) {
                     this.data.Table5.forEach(a => {
-                        this.masterData.push({ name: a.ShortYear, code: a.Id, type: a.ShortNumber });
+                        this.masterData.push({ name: a.ShortYear, code: a.Id, type: a.ShortNumber, fDate: a.FromDate, tDate: a.ToDate });
                     })
                 } else {
                     this.masterData = [];

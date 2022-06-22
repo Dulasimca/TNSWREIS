@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService, SelectItem } from 'primeng/api';
@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
   templateUrl: './online-registration.component.html',
   styleUrls: ['./online-registration.component.css']
 })
-export class OnlineRegistrationComponent implements OnInit  {
+export class OnlineRegistrationComponent implements OnInit {
   yearRange: string;
   genderOptions: SelectItem[];
   genders?: any;
@@ -78,8 +78,11 @@ export class OnlineRegistrationComponent implements OnInit  {
   hostels?: any;
   hostel: any;
   hostelId: any;
-  pdfDialog: boolean; 
- 
+  pdfDialog: boolean;
+  yearSelection: any[] = [];
+  studentId: any;
+  accountingYear: string;
+  accountingYearId: any = 0;
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -89,7 +92,6 @@ export class OnlineRegistrationComponent implements OnInit  {
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
   @ViewChild('dialog', { static: false }) _dialog: Dialog;
-  studentId: any;
 
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
@@ -101,11 +103,11 @@ export class OnlineRegistrationComponent implements OnInit  {
     master.subscribe(response => {
       this.response = response;
     });
-     }
+  }
 
-    //  ngAfterViewInit() {
-    //   document.getElementById("embedPDF").setAttribute('src', this.src);
-    //  }
+  //  ngAfterViewInit() {
+  //   document.getElementById("embedPDF").setAttribute('src', this.src);
+  //  }
 
   ngOnInit(): void {
     const current_year = new Date().getFullYear() - 5 ;
@@ -124,37 +126,39 @@ export class OnlineRegistrationComponent implements OnInit  {
     this.mediums = this._masterService.getMaster('MD');
     this.subcastes = this._masterService.getMaster('SC');
     this.registeredCols = this._tableConstants.registrationColumns;
-    
+
     setTimeout(() => {
       this.districts = this._masterService.getDistrictAll();
       this.taluks = this._masterService.getTalukAll();
       this.bloodgroups = this._masterService.getMaster('BG');
-      this.genders = this._masterService.getMaster('GD');   
+      this.genders = this._masterService.getMaster('GD');
       this.languages = this._masterService.getMaster('MT');
       this.castes = this._masterService.getMaster('CS');
       this.classes = this._masterService.getMaster('CL');
-    this.religions = this._masterService.getMaster('RL');
-    this.mediums = this._masterService.getMaster('MD');
-    this.subcastes = this._masterService.getMaster('SC');
+      this.religions = this._masterService.getMaster('RL');
+      this.mediums = this._masterService.getMaster('MD');
+      this.subcastes = this._masterService.getMaster('SC');
+      this.yearSelection = this._masterService.getMaster('AY');
+      this.loadAccYear();
       this.blockUI.stop();
     }, 500);
     this.defaultValues();
-    this._restApiService.get(PathConstants.HostelOnlineApplication_Get).subscribe(res => {
-      if (res !== null && res !== undefined) {
-        if(res.length === 0) {
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Closed'
-          })
-          setTimeout(() => {
-            this.router.navigate(['/home']);
-          },1000)
-        }
-      } else {
-        this.router.navigate(['/home']);
-      }
-    }) 
+    // this._restApiService.get(PathConstants.HostelOnlineApplication_Get).subscribe(res => {
+    //   if (res !== null && res !== undefined) {
+    //     if(res.length === 0) {
+    //       this._messageService.clear();
+    //       this._messageService.add({
+    //         key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+    //         summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Closed'
+    //       })
+    //       setTimeout(() => {
+    //         this.router.navigate(['/home']);
+    //       },1000)
+    //     }
+    //   } else {
+    //     this.router.navigate(['/home']);
+    //   }
+    // }) 
   }
 
   onSelectType() {
@@ -237,7 +241,7 @@ export class OnlineRegistrationComponent implements OnInit  {
         var courseYear = [];
         if (this.institutionType === '1') {
           filtered_data = this.classes.filter(f => {
-            return f.type === 1 ; //school class name
+            return f.type === 1; //school class name
           })
         } else {
           courseYear = this.classes.filter(c => {
@@ -336,7 +340,7 @@ export class OnlineRegistrationComponent implements OnInit  {
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
     const folderName = this.hostelName + '/' + 'Documents';
-    var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+    var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
     var filenameWithExtn = curr_datetime + '.' + etxn[1];
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
@@ -347,7 +351,7 @@ export class OnlineRegistrationComponent implements OnInit  {
       .subscribe((event: any) => {
       }
       );
-      return filenameWithExtn;
+    return filenameWithExtn;
   }
 
   onFileUpload($event, id) {
@@ -416,6 +420,7 @@ export class OnlineRegistrationComponent implements OnInit  {
     this.obj.parentId = 0;
     this.obj.bankId = 0;
     this.obj.documentId = 0;
+    this.obj.studentAccId = 0;
   }
 
   onSubmit() {
@@ -449,11 +454,13 @@ export class OnlineRegistrationComponent implements OnInit  {
     this.obj.guardianQualification = (this.obj.guardianQualification !== undefined && this.obj.guardianQualification !== null) ? this.obj.guardianQualification : '-';
     this.obj.guardianOccupation = (this.obj.guardianOccupation !== undefined && this.obj.guardianOccupation !== null) ? this.obj.guardianOccupation : '-';
     this.obj.guardianMobileNo = (this.obj.guardianMobileNo !== undefined && this.obj.guardianMobileNo !== null) ? this.obj.guardianMobileNo : '-';
+    this.obj.accYearId = this.accountingYearId;
 
     this._restApiService.post(PathConstants.OnlineStudentRegistration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
           this.blockUI.stop();
+          // this.saveAccountingYear();
           this.onView();
           this.onDialogShow();
           // this.clearForm();          
@@ -462,6 +469,50 @@ export class OnlineRegistrationComponent implements OnInit  {
             key: 'd-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           })
+        } else {
+          this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
+        }
+      } else {
+        this.blockUI.stop();
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    }, (err: HttpErrorResponse) => {
+      this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    })
+  }
+
+  saveAccountingYear() {
+    console.log('save')
+    // this.blockUI.start();
+    const params = {
+      'Id': 0,
+      'DCode': this.obj.distrctCode,
+      'TCode': this.obj.talukCode,
+      'HCode': this.obj.hostelId,
+      'StudentId': this.obj.studentId,
+      'Flag': 1,
+      'AccYearId': this.accountingYearId
+    }
+    this._restApiService.post(PathConstants.OnlineStudentRegistration_Post, params).subscribe(response => {
+      if (response !== undefined && response !== null) {
+        if (response) {
+          this.blockUI.stop();
         } else {
           this.blockUI.stop();
           this._messageService.clear();
@@ -541,7 +592,7 @@ export class OnlineRegistrationComponent implements OnInit  {
       this.obj.dob = new Date(row.dob);
       this.ageTxt = this.obj.age + ' Years';
       this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';
-      this.studentImage = 'assets/layout/'+ this.logged_user.hostelId +'/Documents/'+ row.studentFilename;
+      this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/Documents/' + row.studentFilename;
       this.maskInput(this.obj.aadharNo);
     }
   }
@@ -575,7 +626,7 @@ export class OnlineRegistrationComponent implements OnInit  {
         setTimeout(() => {
           this.aadharNo = null;
           this.aadharValidationMsg = 'Please enter valid Aadhar No!';
-    }, 300);
+        }, 300);
       }
       return false;
     }
@@ -622,7 +673,7 @@ export class OnlineRegistrationComponent implements OnInit  {
       'studentId': this.obj.studentId
     }
     this._restApiService.getByParameters(PathConstants.AadharCheck_Get, params).subscribe(res => {
-      if ( res.Table.length === 0) { 
+      if (res.Table.length === 0) {
         this.onSubmit();
       } else {
         this._messageService.clear();
@@ -637,65 +688,79 @@ export class OnlineRegistrationComponent implements OnInit  {
   onHostelSelect(value) {
     let districtSelection = [];
     let talukSelection = [];
-      switch (value) {
-        case 'D':
-          this.districts.forEach(d => {
-            districtSelection.push({ label: d.name, value: d.code });
-          })
-          this.distOptions = districtSelection;
-          this.distOptions.unshift({ label: '-select-', value: 'null' });
-          break;
-        case 'T':
-            this.taluks.forEach(t => {
-              if (t.dcode === this.district) {
-                talukSelection.push({ label: t.name, value: t.code });
-              }
-            })
-            this.talOptions = talukSelection;
-            this.talOptions .unshift({ label: '-select-', value: 'null' });
-          break;
-      } 
-}
-
-refreshField(value) {
-  if(value === 'D') {
-    this.taluk = null;
-    this.talukOptions = [];
-  }
-    this.loadHostelList();
-}
-
-loadHostelList() {
-  this.hostel = null;
-  this.hosOptions = [];
-  let hostelSelection = [];
-  const params = {
-    'DCode': this.district,
-    'TCode': this.taluk,
-  }
-  if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
-  this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
-    this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
-        this.hostels = res.Table;
-        this.hostels.forEach(h => {
-          hostelSelection.push({ label: h.HostelName, value: h.Slno });
+    switch (value) {
+      case 'D':
+        this.districts.forEach(d => {
+          districtSelection.push({ label: d.name, value: d.code });
         })
-      }
-    })
+        this.distOptions = districtSelection;
+        this.distOptions.unshift({ label: '-select-', value: 'null' });
+        break;
+      case 'T':
+        this.taluks.forEach(t => {
+          if (t.dcode === this.district) {
+            talukSelection.push({ label: t.name, value: t.code });
+          }
+        })
+        this.talOptions = talukSelection;
+        this.talOptions.unshift({ label: '-select-', value: 'null' });
+        break;
+    }
   }
-  this.hosOptions = hostelSelection;
-  this.hosOptions.unshift({ label: '-select-', value: null });
-  
-}
 
-onDownload(Filename) {
-  this.pdfDialog = true;
-  // document.getElementById("embedPDF").setAttribute('src', this.src);
-}
-onDialogShow() {
-  var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
-  document.getElementById("embedPDF").setAttribute('src', src);
-}
+  refreshField(value) {
+    if (value === 'D') {
+      this.taluk = null;
+      this.talukOptions = [];
+    }
+    this.loadHostelList();
+  }
+
+  loadHostelList() {
+    this.hostel = null;
+    this.hosOptions = [];
+    let hostelSelection = [];
+    const params = {
+      'DCode': this.district,
+      'TCode': this.taluk,
+    }
+    if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
+      this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
+      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          this.hostels = res.Table;
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
+        }
+      })
+    }
+    this.hosOptions = hostelSelection;
+    this.hosOptions.unshift({ label: '-select-', value: null });
+
+  }
+
+  onDownload(Filename) {
+    this.pdfDialog = true;
+    // document.getElementById("embedPDF").setAttribute('src', this.src);
+  }
+
+  onDialogShow() {
+    var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
+    document.getElementById("embedPDF").setAttribute('src', src);
+  }
+
+  loadAccYear() {
+    if (this.yearSelection.length !== 0) {
+      const _currDate = new Date();
+      this.yearSelection.forEach(y => {
+        if (new Date(y.fDate) <= _currDate && new Date(y.tDate) >= _currDate) {
+          this.accountingYear = y.name;
+          this.accountingYearId = y.code;
+          this.obj.accYearId = this.accountingYearId;
+        }
+      })
+    }
+  }
 }
 
