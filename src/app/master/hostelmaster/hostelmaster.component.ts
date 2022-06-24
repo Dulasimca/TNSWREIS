@@ -57,6 +57,11 @@ export class HostelmasterComponent implements OnInit {
   policeStationAddress: string;
   hostelOpeningDate: Date = new Date();
   nearestPhc: any;
+  SpecialDashildar: string;
+  MPOptions: SelectItem[];
+  MLAOptions: SelectItem[];
+  MLAId: string;
+  MPId: string;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private _datepipe: DatePipe, private messageService: MessageService,private _authService: AuthService) { }
@@ -90,6 +95,39 @@ export class HostelmasterComponent implements OnInit {
       this.disableFields = false;
     }
     this.onView();
+    this.loadMPData() ;
+  }
+
+  loadMPData() {
+    let mpSelection = [];
+    this.restApiService.get(PathConstants.MPMaster_Get).subscribe((response: any) => {
+      if(response !== null && response !== undefined) {
+        if(response.length !== 0) {
+          response.forEach(m => {
+            mpSelection.push({ label: m.Name, value: m.MPId });
+          })
+          this.MPOptions = mpSelection;
+          this.MPOptions.unshift({ label: '-select-', value: null });
+        }
+      }
+    });
+  }
+
+  onChangeMP() {
+    let mlaSelection = [];
+    if(this.MPId !== undefined && this.MPId !== null) {
+    this.restApiService.getByParameters(PathConstants.MLAMaster_Get, {'MPId': this.MPId}).subscribe((response: any) => {
+      if(response !== null && response !== undefined) {
+        if(response.length !== 0) {
+          response.forEach(m => {
+            mlaSelection.push({ label: m.Name, value: m.MPId });
+          })
+          this.MLAOptions = mlaSelection;
+          this.MLAOptions.unshift({ label: '-select-', value: null });
+        }
+      }
+    });
+    }
   }
 
   onSelect(type) {
@@ -150,7 +188,10 @@ export class HostelmasterComponent implements OnInit {
       'Phone': this.mobileNo,
       'PoliceStationAddress': this.policeStationAddress,
       'HostelOpeningDate': this._datepipe.transform(this.hostelOpeningDate, 'MM/dd/yyyy'),
-      'NearestPhc': this.nearestPhc
+      'NearestPhc': this.nearestPhc,
+      'MPId': this.MPId,
+      'MLAId': this.MLAId,
+      'SpecialDashildar': this.SpecialDashildar
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
         if (res) {

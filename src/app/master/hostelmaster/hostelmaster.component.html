@@ -35,6 +35,27 @@
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_mp">MP<span
+                                        class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_mp"  [options]="MPOptions"
+                                         [(ngModel)]="MPId" [disabled]="disableFields" (onChange)="onChangeMP()" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_mla">MLA<span
+                                        class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_mla"  [options]="MLAOptions"
+                                         [(ngModel)]="MLAId" [disabled]="disableFields" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_spcldashildar">Special Dashildar<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_spcldashildar" class="p-col-10" pInputText
+                                    [disabled]="disableFields" [(ngModel)]="SpecialDashildar" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_hostelname">Hostelname<span
                                                 class="form-mandatory-field">*</span></label>
                                     </div>

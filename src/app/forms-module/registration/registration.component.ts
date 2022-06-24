@@ -533,44 +533,42 @@ export class RegistrationComponent implements OnInit {
     this.obj.guardianQualification = (this.obj.guardianQualification !== undefined && this.obj.guardianQualification !== null) ? this.obj.guardianQualification : '-';
     this.obj.guardianOccupation = (this.obj.guardianOccupation !== undefined && this.obj.guardianOccupation !== null) ? this.obj.guardianOccupation : '-';
     this.obj.guardianMobileNo = (this.obj.guardianMobileNo !== undefined && this.obj.guardianMobileNo !== null) ? this.obj.guardianMobileNo : '-';
-
-    console.log('obj', this.obj)
-    // this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
-    //   if (response !== undefined && response !== null) {
-    //     if (response) {
-    //       this.blockUI.stop();
-    //       this.clearForm();
-    //       this._messageService.clear();
-    //       this._messageService.add({
-    //         key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-    //         summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-    //       })
-    //     } else {
-    //       this.blockUI.stop();
-    //       this._messageService.clear();
-    //       this._messageService.add({
-    //         key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-    //         summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-    //       })
-    //     }
-    //   } else {
-    //     this.blockUI.stop();
-    //     this._messageService.clear();
-    //     this._messageService.add({
-    //       key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-    //       summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-    //     })
-    //   }
-    // }, (err: HttpErrorResponse) => {
-    //   this.blockUI.stop();
-    //   if (err.status === 0 || err.status === 400) {
-    //     this._messageService.clear();
-    //     this._messageService.add({
-    //       key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-    //       summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-    //     })
-    //   }
-    // })
+    this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
+      if (response !== undefined && response !== null) {
+        if (response) {
+          this.blockUI.stop();
+          this.clearForm();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+          })
+        } else {
+          this.blockUI.stop();
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
+        }
+      } else {
+        this.blockUI.stop();
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    }, (err: HttpErrorResponse) => {
+      this.blockUI.stop();
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    })
   }
 
   onView() {
@@ -654,6 +652,7 @@ export class RegistrationComponent implements OnInit {
       this.mTitleOptions =[{ label: row.mnTitleName, value: row.mnTitleCode }];
       this.gTitleOptions =[{ label: row.gnTitleName, value: row.gnTitleCode }];
       this.obj.currentInstituteId = row.currentInstituteId;
+      this.instituteOptions = [{ label: row.lastStudiedInstituteName, value: row.lastStudiedInstituteCode }];
       this.instituteDcode = row.instituteDCode;
       this.currentSchoolDistrict = row.currentInstituteDCode;
       this.obj.dob = new Date(row.dob);

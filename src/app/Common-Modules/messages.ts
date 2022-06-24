@@ -50,6 +50,6 @@ export class ResponseMessage {
     public static readonly NoImageMsg = 'No Images found!';
     public static readonly DisApprovedSuccess = 'Disapproved';
     public static readonly NoInstituteFound = 'No institutes found !';
-
-    
+    public static readonly SanctionedEligibiltyErr = 'Cannot select student more than sanctioned strength !';
+ 
 } 
