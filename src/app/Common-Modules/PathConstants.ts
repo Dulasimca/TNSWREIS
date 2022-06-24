@@ -211,9 +211,8 @@ public static readonly EmployeeApproval_Put = 'EmployeeApproval/Post';
 
 public static readonly AccountingYear_Get = 'AccountingYear';
 public static readonly Institute_Get = 'InstituteMaster/Get';
-
- 
-
+public static readonly MPMaster_Get = 'MPMaster';
+public static readonly MLAMaster_Get = 'MLAMaster/Get';
 
 //masters entry 
 public static readonly CommodityGroup_Post = 'CommodityGroup/Post';
