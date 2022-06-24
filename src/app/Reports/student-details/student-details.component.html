@@ -93,7 +93,7 @@
                                                 <span class="p-column-title">
                                                     Approval Status :
                                                 </span>
-                                                <button label="Approve" pButton type="button">
+                                                <button label="Select" pButton type="button">
                                                 </button>
                                             </td>
                                             <td *ngIf="(roleId==2 && !(rowData.districtApproval))"
@@ -101,7 +101,7 @@
                                                 <span class="p-column-title">
                                                     Approval Status :
                                                 </span>
-                                                <button label="Approve" pButton type="button">
+                                                <button label="Select" pButton type="button">
                                                 </button>
                                             </td>
                                             <!-- disapprove -->
@@ -119,7 +119,7 @@
                                                 <span class="p-column-title">
                                                     DisApproval Status :
                                                 </span>
-                                                <button label="DisApprove" pButton type="button">
+                                                <button label="Reject" pButton type="button">
                                                 </button>
                                             </td>
                                             <td *ngIf="(roleId==2 && !(rowData.districtApproval))"
@@ -127,7 +127,7 @@
                                                 <span class="p-column-title">
                                                     DisApproval Status :
                                                 </span>
-                                                <button label="DisApprove" pButton type="button">
+                                                <button label="Reject" pButton type="button">
                                                 </button>
                                             </td>
                                             <!-- role id = 1 -> district, taluk & warden status only -->
@@ -162,7 +162,7 @@
                                                     Approval Status :
                                                 </span>
                                                 <span style="text-align: end;" *ngIf="(rowData.enableApprove)">
-                                                    <button pButton type="button" label="Approve" (click)="selectForApproval(rowData)"></button>                                                    
+                                                    <button pButton type="button" label="Select" (click)="selectForApproval(rowData)"></button>                                                    
                                                 </span>
                                                 <span>
                                                 {{rowData.dAStatus}}
@@ -176,7 +176,7 @@
                                                     Disapproval Status :
                                                 </span>
                                                 <span style="text-align: end;" *ngIf = "(rowData.enableDisapprove)">
-                                                    <button pButton type="button" label="DisApprove" (click)="selectForDisApproval(rowData)"></button>
+                                                    <button pButton type="button" label="Reject" (click)="selectForDisApproval(rowData)"></button>
                                                 </span>
                                                 <span>
                                                 {{rowData.dDAStatus}}
@@ -191,7 +191,7 @@
                                                     Approval Status :
                                                 </span>
                                                 <span style="text-align: end;" *ngIf="(rowData.enableApprove)">
-                                                    <button pButton type="button" label="Approve" (click)="selectForApproval(rowData)"></button>                                                    
+                                                    <button pButton type="button" label="Select" (click)="selectForApproval(rowData)"></button>                                                    
                                                 </span>
                                                 <span>
                                                     {{rowData.tAStatus}}
@@ -205,7 +205,7 @@
                                                     Disapproval Status :
                                                 </span>
                                                 <span style="text-align: end;" *ngIf = "(rowData.enableDisapprove)">
-                                                    <button pButton type="button" label="DisApprove" (click)="selectForDisApproval(rowData)"></button>
+                                                    <button pButton type="button" label="Reject" (click)="selectForDisApproval(rowData)"></button>
                                                 </span>
                                                 <span>
                                                     {{rowData.tDAStatus}}
@@ -273,7 +273,7 @@
                             required>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12 txt-center">
-                        <button pButton type="button" label="Approve" (click)="onApprove()"></button>
+                        <button pButton type="button" label="Select" (click)="onApprove()"></button>
                     </div>
                 </div>
             </p-dialog>
@@ -297,7 +297,7 @@
                             required>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12 txt-center">
-                        <button pButton type="button" label="DisApprove" (click)="onDisApprove()"></button>
+                        <button pButton type="button" label="Reject" (click)="onDisApprove()"></button>
                     </div>
                 </div>
             </p-dialog>

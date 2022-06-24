@@ -220,6 +220,10 @@ public static readonly CommodityGroup_Post = 'CommodityGroup/Post';
 public static readonly CommodityGroup_Get = 'CommodityGroup';
 public static readonly UnitMasterEntry_Get = 'UnitMasterEntry';
 public static readonly UnitMasterEntry_Post = 'UnitMasterEntry/Post';
+public static readonly SubcasteMaster_Post = 'SubcasteMaster/Post';
+public static readonly SubcasteMaster_Get = 'SubcasteMaster';
+public static readonly CourseMaster_Post = 'CourseMaster/Post';
+public static readonly CourseMaster_Get = 'CourseMaster';
 
 public static readonly HostelFunctioningType_post = 'HostelFunctioningType/post';
 public static readonly HostelFunctioningType_Get = 'HostelFunctioningType';
