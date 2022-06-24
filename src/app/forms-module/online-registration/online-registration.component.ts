@@ -37,7 +37,6 @@ export class OnlineRegistrationComponent implements OnInit {
   casteOptions: SelectItem[];
   castes?: any;
   schoolOptions: SelectItem[];
-  schools?: any;
   districtOptions: SelectItem[];
   districts?: any;
   talukOptions: SelectItem[];
@@ -72,9 +71,9 @@ export class OnlineRegistrationComponent implements OnInit {
   district: any;
   taluk: any;
   hostelName: any;
-  distOptions: SelectItem[];
-  talOptions: SelectItem[];
-  hosOptions: SelectItem[];
+  hostelDistrictOptions: SelectItem[];
+  hostelTalukOptions: SelectItem[];
+  hostelOptions: SelectItem[];
   hostels?: any;
   hostel: any;
   hostelId: any;
@@ -83,6 +82,13 @@ export class OnlineRegistrationComponent implements OnInit {
   studentId: any;
   accountingYear: string;
   accountingYearId: any = 0;
+  instituteDcode: any;
+  instituteOptions: SelectItem[];
+  instituteDistrictOptions: SelectItem[];
+  isInsAddrAvailable: boolean;
+  isSaved: boolean;
+  schoolSelection: any[] = [];
+  filteredSchoolData: any[] = [];
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -105,12 +111,8 @@ export class OnlineRegistrationComponent implements OnInit {
     });
   }
 
-  //  ngAfterViewInit() {
-  //   document.getElementById("embedPDF").setAttribute('src', this.src);
-  //  }
-
   ngOnInit(): void {
-    const current_year = new Date().getFullYear() - 5 ;
+    const current_year = new Date().getFullYear() - 5;
     const start_year_range = current_year - 50;
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
@@ -161,14 +163,27 @@ export class OnlineRegistrationComponent implements OnInit {
     // }) 
   }
 
-  onSelectType() {
+  onSelectType(id: number) {
+    this.schoolOptions = [];
+    this.obj.currentInstituteId = null;
+    this.filteredSchoolData.length = 0;
+    if (id === 1) {
+      this.filteredSchoolData = this.schoolSelection.filter(s => {
+        return s.type === 1;
+      })
+    } else {
+      this.filteredSchoolData = this.schoolSelection.filter(s => {
+        return s.type === 2;
+      })
+    }
     this.classOptions = [];
   }
 
-  onSelect(type) {
+  onSelect(value, id) {
     let districtSelection = [];
     let genderSelection = [];
     let talukSelection = [];
+    let hostelTalukSelection = [];
     let bloodGroupSelection = [];
     let languageSelection = [];
     let casteSelection = [];
@@ -177,7 +192,7 @@ export class OnlineRegistrationComponent implements OnInit {
     let mediumSelection = [];
     let subcasteSelection = [];
     let courseYearSelection = [];
-    switch (type) {
+    switch (value) {
       case 'GD':
         this.genders.forEach(g => {
           genderSelection.push({ label: g.name, value: g.code });
@@ -203,8 +218,12 @@ export class OnlineRegistrationComponent implements OnInit {
         this.districts.forEach(d => {
           districtSelection.push({ label: d.name, value: d.code });
         })
-        this.districtOptions = districtSelection;
+        this.districtOptions = districtSelection.slice(0);
         this.districtOptions.unshift({ label: '-select-', value: null });
+        this.hostelDistrictOptions = districtSelection.slice(0);
+        this.hostelDistrictOptions.unshift({ label: '-select-', value: null });
+        this.instituteDistrictOptions = districtSelection.slice(0);
+        this.instituteDistrictOptions.unshift({ label: '-select-', value: null });
         if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
           this.disableTaluk = false;
         } else {
@@ -212,14 +231,26 @@ export class OnlineRegistrationComponent implements OnInit {
         }
         break;
       case 'TK':
-        if (this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) {
-          this.taluks.forEach(t => {
-            if (t.dcode === this.obj.distrctCode) {
-              talukSelection.push({ label: t.name, value: t.code });
-            }
-          })
-          this.talukOptions = talukSelection;
-          this.talukOptions.unshift({ label: '-select-', value: null });
+        if (id === 1) {
+          if (this.district !== undefined && this.district !== null) {
+            this.taluks.forEach(t => {
+              if (t.dcode === this.district) {
+                hostelTalukSelection.push({ label: t.name, value: t.code });
+              }
+            })
+            this.hostelTalukOptions = hostelTalukSelection.slice(0);
+            this.hostelTalukOptions.unshift({ label: '-select-', value: null });
+          }
+        } else {
+          if (this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) {
+            this.taluks.forEach(t => {
+              if (t.dcode === this.obj.distrctCode) {
+                talukSelection.push({ label: t.name, value: t.code });
+              }
+            })
+            this.talukOptions = talukSelection.slice(0);
+            this.talukOptions.unshift({ label: '-select-', value: null });
+          }
         }
         break;
       case 'CT':
@@ -282,6 +313,11 @@ export class OnlineRegistrationComponent implements OnInit {
         this.subCasteOptions = subcasteSelection;
         this.subCasteOptions.unshift({ label: '-select-', value: null });
         break;
+      case 'SH':
+        this.schoolOptions = [];
+        this.schoolOptions = this.filteredSchoolData.slice(0);
+        this.schoolOptions.unshift({ label: '-select-', value: null });
+        break;
     }
   }
 
@@ -339,14 +375,13 @@ export class OnlineRegistrationComponent implements OnInit {
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
-    const folderName = this.hostelName + '/' + 'Documents';
+    const folderName = this.hostelName.value + '/' + 'Documents';
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
     var filenameWithExtn = curr_datetime + '.' + etxn[1];
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     formData.append('file', fileToUpload, filename);
     actualFilename = fileToUpload.name;
-    console.log('file', fileToUpload, curr_datetime);
     this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
       .subscribe((event: any) => {
       }
@@ -384,7 +419,76 @@ export class OnlineRegistrationComponent implements OnInit {
         this.obj.declarationFilename = this.uploadFile($event.target.files);
         break;
     }
+  }
 
+  loadInstitute(id: number) {
+    let params = {};
+    let instituteSelection = [];
+    if (id === 1) {
+      params = { 'Dcode': this.district };
+    } else {
+      params = { 'Dcode': this.instituteDcode };
+    }
+    if ((this.instituteDcode !== undefined && this.instituteDcode !== null) ||
+      (this.district !== undefined && this.district !== null)) {
+      this._restApiService.getByParameters(PathConstants.Institute_Get, params).subscribe(res => {
+        if (res !== undefined && res !== null) {
+          if (res.length !== 0) {
+            res.forEach(i => {
+              instituteSelection.push({
+                label: i.Name, value: i.InstituteCode, address: i.Addressinfo,
+                id: i.Id, type: i.IType
+              })
+            })
+            if (id === 1) {
+              this.schoolSelection = instituteSelection.slice(0);
+              this.onSelectType(1);
+            } else {
+              this.instituteOptions = instituteSelection.slice(0);
+              this.instituteOptions.unshift({ label: '-select-', value: null });
+            }
+          } else {
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoInstituteFound
+            })
+          }
+        } else {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoInstituteFound
+          })
+        }
+      })
+    }
+  }
+
+  onSelectInstitute(type: number) {
+    if (type === 1) {
+      if (this.obj.currentInstituteInfo !== undefined && this.obj.currentInstituteInfo !== null) {
+        var curr_instid = (this.obj.currentInstituteInfo.id !== undefined && this.obj.currentInstituteInfo.id !== null)
+          ? this.obj.currentInstituteInfo.id : 0;
+        var curr_instname = (this.obj.currentInstituteInfo.label !== undefined && this.obj.currentInstituteInfo.label !== null)
+          ? this.obj.currentInstituteInfo.label : '';
+        this.obj.instituteName = curr_instname;
+        this.obj.currentInstituteId = curr_instid;
+      } else {
+        this.obj.instituteName = '';
+        this.obj.currentInstituteId = 0;
+      }
+    } else {
+      if (this.obj.instituteInfo !== null && this.obj.instituteInfo !== undefined) {
+        const address: string = this.obj.instituteInfo.address;
+        this.obj.lastStudiedInstituteCode = this.obj.instituteInfo.id;
+        this.obj.lastStudiedInstituteAddress = (address !== undefined && address !== null && address.trim() !== '') ?
+          address : '';
+        this.isInsAddrAvailable = (address !== undefined && address !== null && address.trim() !== '') ? true : false;
+      } else {
+        this.isInsAddrAvailable = false;
+      }
+    }
   }
 
   clearForm() {
@@ -396,6 +500,16 @@ export class OnlineRegistrationComponent implements OnInit {
     this._incomeCertificate.nativeElement.value = null;
     this._transferCertificate.nativeElement.value = null;
     this._declarationForm.nativeElement.value = null;
+    this._onlineRegistrationForm.controls._refugeesNo.setValue(0);
+    this.casteOptions = []; this.hostelOptions = [];
+    this.classOptions = []; this.mediumOptions = [];
+    this.genderOptions = []; this.schoolOptions = [];
+    this.talukOptions = []; this.districtOptions = [];
+    this.religionOptions = []; this.subCasteOptions = [];
+    this.instituteOptions = []; this.bloodGroupOptions = [];
+    this.courseYearOptions = []; this.hostelTalukOptions = [];
+    this.motherTongueOptions = []; this.hostelDistrictOptions = [];
+    this.instituteDistrictOptions = [];
     this.defaultValues();
   }
 
@@ -406,6 +520,8 @@ export class OnlineRegistrationComponent implements OnInit {
     this.disableTaluk = true;
     this.isDisability = false;
     this.enableScholarship = true;
+    this.isInsAddrAvailable = false;
+    this.isSaved = false;
     this.institutionType = '1';
     this.obj.incomeCertificateFilename = '';
     this.obj.bankPassbookFilename = '';
@@ -421,17 +537,17 @@ export class OnlineRegistrationComponent implements OnInit {
     this.obj.bankId = 0;
     this.obj.documentId = 0;
     this.obj.studentAccId = 0;
+    this.obj.refugeeId = '-';
+    this.obj.refugeeSelectedType = 0;
   }
 
   onSubmit() {
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
-    this.obj.hostelId = this.hostelName;
+    this.obj.hostelId = this.hostelName.value;
     this.obj.motherYIncome = 0;
     this.obj.fatherYIncome = 0;
     this.obj.altMobNo = (this.obj.altMobNo !== undefined && this.obj.altMobNo !== null) ? this.obj.altMobNo : '-';
-    this.obj.lastStudiedInstituteName = (this.obj.lastStudiedInstituteName !== undefined && this.obj.lastStudiedInstituteName !== null) ? this.obj.lastStudiedInstituteName : '-';
-    this.obj.lastStudiedInstituteAddress = (this.obj.lastStudiedInstituteAddress !== undefined && this.obj.lastStudiedInstituteAddress !== null) ? this.obj.lastStudiedInstituteAddress : '-';
     this.obj.disabilityType = (this.obj.disabilityType !== undefined && this.obj.disabilityType !== null) ? this.obj.disabilityType : 0;
     this.obj.landmark = (this.obj.landmark !== undefined && this.obj.landmark !== null) ? this.obj.landmark : '-';
     this.obj.remarks = (this.obj.remarks !== undefined && this.obj.remarks !== null) ? this.obj.remarks : '-';
@@ -460,16 +576,16 @@ export class OnlineRegistrationComponent implements OnInit {
       if (response !== undefined && response !== null) {
         if (response) {
           this.blockUI.stop();
-          // this.saveAccountingYear();
+          this.isSaved = true;
           this.onView();
           this.onDialogShow();
-          // this.clearForm();          
           this._messageService.clear();
           this._messageService.add({
             key: 'd-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           })
         } else {
+          this.isSaved = false;
           this.blockUI.stop();
           this._messageService.clear();
           this._messageService.add({
@@ -478,6 +594,7 @@ export class OnlineRegistrationComponent implements OnInit {
           })
         }
       } else {
+        this.isSaved = false;
         this.blockUI.stop();
         this._messageService.clear();
         this._messageService.add({
@@ -486,6 +603,7 @@ export class OnlineRegistrationComponent implements OnInit {
         })
       }
     }, (err: HttpErrorResponse) => {
+      this.isSaved = false;
       this.blockUI.stop();
       if (err.status === 0 || err.status === 400) {
         this._messageService.clear();
@@ -497,9 +615,14 @@ export class OnlineRegistrationComponent implements OnInit {
     })
   }
 
+  onClosingView() {
+    if (this.isSaved) {
+      this.clearForm();
+    }
+    this.showDialog = false;
+  }
+
   saveAccountingYear() {
-    console.log('save')
-    // this.blockUI.start();
     const params = {
       'Id': 0,
       'DCode': this.obj.distrctCode,
@@ -571,34 +694,6 @@ export class OnlineRegistrationComponent implements OnInit {
         })
       }
     })
-  }
-
-  onEdit(row, index) {
-    if (row !== undefined && row !== null) {
-      this.obj = null;
-      this.showDialog = false;
-      this.obj = row;
-      this.classOptions = [{ label: row.class, value: row.classId }];
-      this.casteOptions = [{ label: row.casteName, value: row.caste }];
-      this.talukOptions = [{ label: row.Talukname, value: row.talukCode }];
-      this.genderOptions = [{ label: row.genderName, value: row.gender }];
-      this.districtOptions = [{ label: row.Districtname, value: row.distrctCode }];
-      this.religionOptions = [{ label: row.religionName, value: row.religion }];
-      this.motherTongueOptions = [{ label: row.mothertongueName, value: row.motherTongue }];
-      this.bloodGroupOptions = [{ label: row.bloodgroupName, value: row.bloodGroup }];
-      this.mediumOptions = [{ label: row.mediumName, value: row.medium }];
-      this.subCasteOptions = [{ label: row.subcasteName, value: row.subCaste }];
-      this.courseYearOptions = [{ label: row.courseYear + ' Year', value: row.courseYearId }];
-      this.obj.dob = new Date(row.dob);
-      this.ageTxt = this.obj.age + ' Years';
-      this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';
-      this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/Documents/' + row.studentFilename;
-      this.maskInput(this.obj.aadharNo);
-    }
-  }
-
-  onDelete(row, index) {
-
   }
 
   validateAadhaar(aadhaarString) {
@@ -685,40 +780,27 @@ export class OnlineRegistrationComponent implements OnInit {
     });
   }
 
-  onHostelSelect(value) {
-    let districtSelection = [];
-    let talukSelection = [];
-    switch (value) {
-      case 'D':
-        this.districts.forEach(d => {
-          districtSelection.push({ label: d.name, value: d.code });
-        })
-        this.distOptions = districtSelection;
-        this.distOptions.unshift({ label: '-select-', value: 'null' });
-        break;
-      case 'T':
-        this.taluks.forEach(t => {
-          if (t.dcode === this.district) {
-            talukSelection.push({ label: t.name, value: t.code });
-          }
-        })
-        this.talOptions = talukSelection;
-        this.talOptions.unshift({ label: '-select-', value: 'null' });
-        break;
-    }
-  }
-
   refreshField(value) {
     if (value === 'D') {
       this.taluk = null;
       this.talukOptions = [];
+      this.loadInstitute(1);
     }
     this.loadHostelList();
   }
 
+  showGender() {
+    if (this.hostelName !== undefined && this.hostelName !== null) {
+      if (this.hostelName.gender !== null && this.hostelName.gender !== undefined) {
+        this.genderOptions = (this.hostelName.gender === 1) ? [{ label: 'Male', value: 1 }] : [{ label: 'Female', value: 2 }]
+        this.obj.gender = this.hostelName.gender;
+      }
+    }
+  }
+
   loadHostelList() {
     this.hostel = null;
-    this.hosOptions = [];
+    this.hostelOptions = [];
     let hostelSelection = [];
     const params = {
       'DCode': this.district,
@@ -730,24 +812,21 @@ export class OnlineRegistrationComponent implements OnInit {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
           this.hostels.forEach(h => {
-            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType });
           })
         }
       })
     }
-    this.hosOptions = hostelSelection;
-    this.hosOptions.unshift({ label: '-select-', value: null });
-
-  }
-
-  onDownload(Filename) {
-    this.pdfDialog = true;
-    // document.getElementById("embedPDF").setAttribute('src', this.src);
+    this.hostelOptions = hostelSelection;
+    this.hostelOptions.unshift({ label: '-select-', value: null });
   }
 
   onDialogShow() {
-    var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
-    document.getElementById("embedPDF").setAttribute('src', src);
+    // var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
+    // if(document.getElementById("embedPDF") !== undefined) {
+    // document.getElementById("embedPDF").setAttribute('src', src);
+    // }
+    // this.clearForm();
   }
 
   loadAccYear() {
