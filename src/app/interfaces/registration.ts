@@ -68,6 +68,11 @@ export interface Registration {
     guardianMobileNo: string;
     guardianQualification: string;
     totalYIncome: number;
+    fnTitleCode: number;
+    mnTitleCode: number;
+    gnTitleCode: number;
+    
+    //doc
     documentId: number;
     incomeCertificateFilename: string;
     tcFilename: string;

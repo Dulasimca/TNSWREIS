@@ -658,28 +658,39 @@
                                                 <div class="div-header" style="font-weight: 500;">Father Details </div>
                                                 <div #row1 class="p-col-12 border-blue">
                                                     <div #grid1 class="p-grid div-main">
-                                                        <div #field45 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field45 class="p-field p-col-12 p-md-12 p-lg-1">
+                                                            <span class="p-float-label p-input-icon-right">
+                                                                <p-dropdown name="_ftitle"
+                                                                    [options]="titleOptions"
+                                                                    (onClick)="onSelect('TO', 0)"
+                                                                    [(ngModel)]="obj.fnTitleCode">
+                                                                </p-dropdown>
+                                                                <label for="_ftitle">Title<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field46 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fathername" id="fname"
                                                                     pInputText [(ngModel)]="obj.fatherName">
                                                                 <label for="_fathername">Father Name</label>
                                                             </span>
                                                         </div>
-                                                        <div #field46 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field47 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fatheroccupation" pInputText
                                                                     [(ngModel)]="obj.fatherOccupation">
                                                                 <label for="_fatheroccupation">Occupation</label>
                                                             </span>
                                                         </div>
-                                                        <div #field47 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fathereducation" pInputText
                                                                     [(ngModel)]="obj.fatherQualification">
                                                                 <label for="_fathereducation">Qualification</label>
                                                             </span>
                                                         </div>
-                                                        <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field49 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_fathermobno" pInputText
                                                                     pattern="^[6789]\d{9,9}$"
@@ -709,14 +720,25 @@
                                                 <div class="div-header" style="font-weight: 500;">Mother Details </div>
                                                 <div #row1 class="p-col-12 border-blue">
                                                     <div #grid1 class="p-grid div-main">
-                                                        <div #field50 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field50 class="p-field p-col-12 p-md-12 p-lg-1">
+                                                            <span class="p-float-label p-input-icon-right">
+                                                                <p-dropdown name="_mtitle"
+                                                                    [options]="titleOptions"
+                                                                    (onClick)="onSelect('TO', 0)"
+                                                                    [(ngModel)]="obj.mnTitleCode">
+                                                                </p-dropdown>
+                                                                <label for="_mtitle">Title<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field51 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_mothername" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherName">
                                                                 <label for="_mothername">Mother Name</label>
                                                             </span>
                                                         </div>
-                                                        <div #field51 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <div #field52 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_motheroccupation" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherOccupation">
@@ -761,6 +783,17 @@
                                                 </div>
                                                 <div #row1 class="p-col-12 border-blue">
                                                     <div #grid1 class="p-grid div-main">
+                                                        <div #field54 class="p-field p-col-12 p-md-12 p-lg-1">
+                                                            <span class="p-float-label p-input-icon-right">
+                                                                <p-dropdown name="_gtitle"
+                                                                    [options]="titleOptions"
+                                                                    (onClick)="onSelect('TO', 0)"
+                                                                    [(ngModel)]="obj.gnTitleCode">
+                                                                </p-dropdown>
+                                                                <label for="_gtitle">Title<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div>
                                                         <div #field55 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_guardianname" id="fname"

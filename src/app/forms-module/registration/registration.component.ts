@@ -81,6 +81,10 @@ export class RegistrationComponent implements OnInit {
   filteredSchoolData: any[] = [];
   instituteDistrictOptions: SelectItem[];
   currentSchoolDistrict: number;
+  fTitleOptions: SelectItem[];
+  mTitleOptions: SelectItem[];
+  gTitleOptions: SelectItem[];
+  titles?: any;
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
@@ -111,6 +115,7 @@ export class RegistrationComponent implements OnInit {
     this.religions = this._masterService.getMaster('RL');
     this.mediums = this._masterService.getMaster('MD');
     this.subcastes = this._masterService.getMaster('SC');
+    this.titles = this._masterService.getMaster('NT');
     this.registeredCols = this._tableConstants.registrationColumns;
     this.defaultValues();
     // this.hideDropDown = true;
@@ -145,6 +150,8 @@ export class RegistrationComponent implements OnInit {
     let mediumSelection = [];
     let subcasteSelection = [];
     let courseYearSelection = [];
+    let titleSelection = [];
+
     switch (type) {
       case 'GD':
         this.genders.forEach(g => {
@@ -265,6 +272,17 @@ export class RegistrationComponent implements OnInit {
         this.schoolOptions = [];
         this.schoolOptions = this.filteredSchoolData.slice(0);
         this.schoolOptions.unshift({ label: '-select-', value: null });
+        break;
+        case 'TO':
+        this.titles.forEach(c => {
+          titleSelection.push({ label: c.name, value: c.code });
+        })
+        this.fTitleOptions = titleSelection;
+        this.fTitleOptions.unshift({ label: '-select-', value: null });
+        this.mTitleOptions = titleSelection;
+        this.mTitleOptions.unshift({ label: '-select-', value: null });
+        this.gTitleOptions = titleSelection;
+        this.gTitleOptions.unshift({ label: '-select-', value: null });
         break;
     }
   }
@@ -632,6 +650,9 @@ export class RegistrationComponent implements OnInit {
       this.courseYearOptions = [{ label: row.courseYear + ' Year', value: row.courseYearId }];
       this.instituteDistrictOptions = [{ label: row.instituteDName, value: row.instituteDCode }];
       this.schoolOptions = [{ label: row.instituteName, value: row.currentInstituteId }];
+      this.fTitleOptions =[{ label: row.fnTitleName, value: row.fnTitleCode }];
+      this.mTitleOptions =[{ label: row.mnTitleName, value: row.mnTitleCode }];
+      this.gTitleOptions =[{ label: row.gnTitleName, value: row.gnTitleCode }];
       this.obj.currentInstituteId = row.currentInstituteId;
       this.instituteDcode = row.instituteDCode;
       this.currentSchoolDistrict = row.currentInstituteDCode;

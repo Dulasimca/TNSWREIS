@@ -86,6 +86,8 @@ export class OnlineRegistrationComponent implements OnInit {
   instituteOptions: SelectItem[];
   isInsAddrAvailable: boolean;
   isSaved: boolean;
+  titleOptions: SelectItem[];
+  titles?: any;
   schoolSelection: any[] = [];
   filteredSchoolData: any[] = [];
   obj: OnlineRegistration = {} as OnlineRegistration;
@@ -126,6 +128,7 @@ export class OnlineRegistrationComponent implements OnInit {
     this.religions = this._masterService.getMaster('RL');
     this.mediums = this._masterService.getMaster('MD');
     this.subcastes = this._masterService.getMaster('SC');
+    this.titles = this._masterService.getMaster('NT')
     this.registeredCols = this._tableConstants.registrationColumns;
 
     setTimeout(() => {
@@ -139,6 +142,7 @@ export class OnlineRegistrationComponent implements OnInit {
       this.religions = this._masterService.getMaster('RL');
       this.mediums = this._masterService.getMaster('MD');
       this.subcastes = this._masterService.getMaster('SC');
+      this.titles = this._masterService.getMaster('NT')
       this.yearSelection = this._masterService.getMaster('AY');
       this.loadAccYear();
       this.blockUI.stop();
@@ -191,6 +195,7 @@ export class OnlineRegistrationComponent implements OnInit {
     let mediumSelection = [];
     let subcasteSelection = [];
     let courseYearSelection = [];
+    let titleSelection = [];
     switch (value) {
       case 'GD':
         this.genders.forEach(g => {
@@ -314,6 +319,13 @@ export class OnlineRegistrationComponent implements OnInit {
         this.schoolOptions = [];
         this.schoolOptions = this.filteredSchoolData.slice(0);
         this.schoolOptions.unshift({ label: '-select-', value: null });
+        break;
+      case 'TO':
+        this.titles.forEach(c => {
+          titleSelection.push({ label: c.name, value: c.code });
+        })
+        this.titleOptions = titleSelection;
+        this.titleOptions.unshift({ label: '-select-', value: null });
         break;
     }
   }
