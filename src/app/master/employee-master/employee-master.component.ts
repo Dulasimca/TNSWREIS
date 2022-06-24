@@ -367,7 +367,8 @@ onUpdate() {
     const params = {
       'Id': this.RowId,
       'EndDate': this.endDate,
-      'Remarks': this.remarks
+      'Remarks': this.remarks,
+      'Flag':1
     }
     this._restApiService.post(PathConstants.UpdateEmployeeDetails_Post,params).subscribe(res => {
       if (res !== undefined && res !== null) {
@@ -488,6 +489,53 @@ loadHostelList() {
   this.hostelOptions.unshift({ label: '-select-', value: null });
 
 }
+
+//update flag
+// onDelete(rowData) {
+//   const params = {
+//     'Id': rowData.Id,
+//     'EndDate': rowData.EndDate,
+//     'Remarks': rowData.Remarks,
+//     'Flag': 0
+//   }
+//   this._restApiService.post(PathConstants.UpdateEmployeeDetails_Post,params).subscribe(res => {
+//     if (res !== undefined && res !== null) {
+//       if (res) {
+//         //this.blockUI.stop();
+//         this.onView();
+//         this.showDialog = false;
+//         this._messageService.clear();
+//         this._messageService.add({
+//           key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+//           summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+//         });
+//       } else {
+//         //this.blockUI.stop();
+//         this._messageService.clear();
+//         this._messageService.add({
+//           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+//           summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+//         });
+//       }
+//     } else {
+//       this._messageService.clear();
+//       this._messageService.add({
+//         key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+//         summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+//       });
+//     }
+//   }, (err: HttpErrorResponse) => {
+//    // this.blockUI.stop();
+//     if (err.status === 0 || err.status === 400) {
+//       this._messageService.clear();
+//       this._messageService.add({
+//         key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+//         summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+//       })
+
+//     }
+//   })
+// }
 
 }
 

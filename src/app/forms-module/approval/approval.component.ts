@@ -30,8 +30,8 @@ export class ApprovalComponent implements OnInit {
     this.tabIndex = 0;
     this.items = [
       {'header': 'Pending'},
-      {'header': 'Approved'},
-      {'header': 'Disapproved'}
+      {'header': 'Selected'},
+      {'header': 'Rejected'}
     ]
     this.cols = [
       { field: 'Districtname', header: 'District Name', width: '200px', align: 'left !important' },
@@ -119,7 +119,7 @@ export class ApprovalComponent implements OnInit {
       }
     }
     this._restApiService.post(PathConstants.UpdateApprovalDetails_put, params).subscribe(res => {
-      var message = (id === 1) ? 'Approved Successfully' : 'Disapproved Successfully';
+      var message = (id === 1) ? 'Selected Successfully' : 'Rejected Successfully';
       if (res !== undefined && res !== null) {
         if (res) {
           this.blockUI.stop();
