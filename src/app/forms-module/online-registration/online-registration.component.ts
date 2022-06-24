@@ -84,7 +84,6 @@ export class OnlineRegistrationComponent implements OnInit {
   accountingYearId: any = 0;
   instituteDcode: any;
   instituteOptions: SelectItem[];
-  instituteDistrictOptions: SelectItem[];
   isInsAddrAvailable: boolean;
   isSaved: boolean;
   schoolSelection: any[] = [];
@@ -222,8 +221,6 @@ export class OnlineRegistrationComponent implements OnInit {
         this.districtOptions.unshift({ label: '-select-', value: null });
         this.hostelDistrictOptions = districtSelection.slice(0);
         this.hostelDistrictOptions.unshift({ label: '-select-', value: null });
-        this.instituteDistrictOptions = districtSelection.slice(0);
-        this.instituteDistrictOptions.unshift({ label: '-select-', value: null });
         if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
           this.disableTaluk = false;
         } else {
@@ -509,7 +506,6 @@ export class OnlineRegistrationComponent implements OnInit {
     this.instituteOptions = []; this.bloodGroupOptions = [];
     this.courseYearOptions = []; this.hostelTalukOptions = [];
     this.motherTongueOptions = []; this.hostelDistrictOptions = [];
-    this.instituteDistrictOptions = [];
     this.defaultValues();
   }
 

@@ -15,11 +15,14 @@ export interface Registration {
     subCaste: number;
     studentFilename: string;
     instituteName: string;
+    currentInstituteId: number;
+    currentInstituteInfo: any;
     medium: number;
     classId: number;
     courseYearId: number;
     courseTitle: string;
-    lastStudiedInstituteName: string;
+    instituteInfo: any;
+    lastStudiedInstituteCode: string;
     lastStudiedInstituteAddress: string;
     distanceFromHostelToHome: number;
     distanceFromHostelToInstitute: number;
@@ -39,6 +42,8 @@ export interface Registration {
     admissionNo: string;
     remarks: string;
     scholarshipId: any;
+    refugeeSelectedType: number;
+    refugeeId: string;
     //bank
     bankId: number;
     bankName: string;
