@@ -67,14 +67,20 @@ export class RegistrationComponent implements OnInit {
   maxDate: Date = new Date();
   existingAadhar: any;
   hostel: any;
-  district: any;
-  taluk: any;
   hostels?: any;
   hideDropDown: boolean;
   hostelOptions: SelectItem[];
   districtId: any;
   talukID: any;
   districtAll?: any;
+  instituteDcode: number;
+  schoolSelection: any[] = [];
+  instituteOptions: SelectItem[];
+  enableSave: boolean = false;
+  isInsAddrAvailable: boolean;
+  filteredSchoolData: any[] = [];
+  instituteDistrictOptions: SelectItem[];
+  currentSchoolDistrict: number;
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
@@ -83,7 +89,6 @@ export class RegistrationComponent implements OnInit {
   @ViewChild('incomeCertificate', { static: false }) _incomeCertificate: ElementRef;
   @ViewChild('userFile', { static: false }) _studentImg: ElementRef;
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
-  enableSave: boolean = true;
 
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
@@ -91,7 +96,7 @@ export class RegistrationComponent implements OnInit {
     private _tableConstants: TableConstants, private http: HttpClient) { }
 
   ngOnInit(): void {
-    const current_year = new Date().getFullYear();
+    const current_year = new Date().getFullYear() - 5;
     const start_year_range = current_year - 50;
     this.yearRange = start_year_range + ':' + current_year;
     this.logged_user = this._authService.UserInfo;
@@ -111,7 +116,19 @@ export class RegistrationComponent implements OnInit {
     // this.hideDropDown = true;
   }
 
-  onSelectType() {
+  onSelectType(type: number) {
+    this.schoolOptions = [];
+    this.obj.currentInstituteId = null;
+    this.filteredSchoolData.length = 0;
+    if (type === 1) {
+      this.filteredSchoolData = this.schoolSelection.filter(s => {
+        return s.type === 1;
+      })
+    } else {
+      this.filteredSchoolData = this.schoolSelection.filter(s => {
+        return s.type === 2;
+      })
+    }
     this.classOptions = [];
   }
 
@@ -154,15 +171,17 @@ export class RegistrationComponent implements OnInit {
         this.districtAll.forEach(d => {
           districtAllSelection.push({ label: d.name, value: d.code });
         })
-        this.districtAllOptions = districtAllSelection;
+        this.districtAllOptions = districtAllSelection.slice(0);
         this.districtAllOptions.unshift({ label: '-select-', value: null });
+        this.instituteDistrictOptions = districtAllSelection.slice(0);
+        this.instituteDistrictOptions.unshift({ label: '-select-', value: null });
         if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
           this.disableTaluk = false;
         } else {
           this.disableTaluk = true;
         }
         break;
-        case 'D':
+      case 'D':
         this.districts.forEach(d => {
           districtSelection.push({ label: d.name, value: d.code });
         })
@@ -170,9 +189,9 @@ export class RegistrationComponent implements OnInit {
         this.districtOptions.unshift({ label: '-select-', value: null });
         break;
       case 'TK':
-        if ((this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) || 
-        (this.districtId !== undefined && this.districtId !== null)) {
-          var dcode = (this.logged_user.roleId === 2 || this.logged_user.roleId === 1) ? this.districtId : this.obj.distrctCode;
+        if ((this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) ||
+          (this.districtId !== undefined && this.districtId !== null)) {
+          var dcode = (this.showDialog && (this.logged_user.roleId === 2 || this.logged_user.roleId === 1)) ? this.districtId : this.obj.distrctCode;
           this.taluks.forEach(t => {
             if (t.dcode === dcode) {
               talukSelection.push({ label: t.name, value: t.code });
@@ -242,6 +261,11 @@ export class RegistrationComponent implements OnInit {
         this.subCasteOptions = subcasteSelection;
         this.subCasteOptions.unshift({ label: '-select-', value: null });
         break;
+      case 'SH':
+        this.schoolOptions = [];
+        this.schoolOptions = this.filteredSchoolData.slice(0);
+        this.schoolOptions.unshift({ label: '-select-', value: null });
+        break;
     }
   }
 
@@ -261,6 +285,77 @@ export class RegistrationComponent implements OnInit {
       this.subCasteOptions = [];
     }
   }
+
+  loadInstitute(id: number) {
+    let params = {};
+    let instituteSelection = [];
+    if (id === 1) {
+      params = { 'Dcode': this.currentSchoolDistrict };
+    } else {
+      params = { 'Dcode': this.instituteDcode };
+    }
+    if ((this.instituteDcode !== undefined && this.instituteDcode !== null) ||
+      (this.currentSchoolDistrict !== undefined && this.currentSchoolDistrict !== null)) {
+      this._restApiService.getByParameters(PathConstants.Institute_Get, params).subscribe(res => {
+        if (res !== undefined && res !== null) {
+          if (res.length !== 0) {
+            res.forEach(i => {
+              instituteSelection.push({
+                label: i.Name, value: i.InstituteCode, address: i.Addressinfo,
+                id: i.Id, type: i.IType
+              })
+            })
+            if (id === 1) {
+              this.schoolSelection = instituteSelection.slice(0);
+              this.onSelectType(1);
+            } else {
+              this.instituteOptions = instituteSelection.slice(0);
+              this.instituteOptions.unshift({ label: '-select-', value: null });
+            }
+          } else {
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoInstituteFound
+            })
+          }
+        } else {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoInstituteFound
+          })
+        }
+      })
+    }
+  }
+
+  onSelectInstitute(type: number) {
+    if (type === 1) {
+      if (this.obj.currentInstituteInfo !== undefined && this.obj.currentInstituteInfo !== null) {
+        var curr_instid = (this.obj.currentInstituteInfo.id !== undefined && this.obj.currentInstituteInfo.id !== null)
+          ? this.obj.currentInstituteInfo.id : 0;
+        var curr_instname = (this.obj.currentInstituteInfo.label !== undefined && this.obj.currentInstituteInfo.label !== null)
+          ? this.obj.currentInstituteInfo.label : '';
+        this.obj.instituteName = curr_instname;
+        this.obj.currentInstituteId = curr_instid;
+      } else {
+        this.obj.instituteName = '';
+        this.obj.currentInstituteId = 0;
+      }
+    } else {
+      if (this.obj.instituteInfo !== null && this.obj.instituteInfo !== undefined) {
+        const address: string = this.obj.instituteInfo.address;
+        this.obj.lastStudiedInstituteCode = this.obj.instituteInfo.id;
+        this.obj.lastStudiedInstituteAddress = (address !== undefined && address !== null && address.trim() !== '') ?
+          address : '';
+        this.isInsAddrAvailable = (address !== undefined && address !== null && address.trim() !== '') ? true : false;
+      } else {
+        this.isInsAddrAvailable = false;
+      }
+    }
+  }
+
 
   checkScholardhipEligibility() {
     if (this.institutionType === '1') {
@@ -354,6 +449,15 @@ export class RegistrationComponent implements OnInit {
     this._incomeCertificate.nativeElement.value = null;
     this._transferCertificate.nativeElement.value = null;
     this._declarationForm.nativeElement.value = null;
+    this._registrationForm.controls._refugeesNo.setValue(0);
+    this.casteOptions = []; this.hostelOptions = [];
+    this.classOptions = []; this.mediumOptions = [];
+    this.genderOptions = []; this.schoolOptions = [];
+    this.talukOptions = []; this.districtOptions = [];
+    this.religionOptions = []; this.subCasteOptions = [];
+    this.instituteOptions = []; this.bloodGroupOptions = [];
+    this.courseYearOptions = []; this.instituteDistrictOptions = [];
+    this.motherTongueOptions = [];
     this.defaultValues();
   }
 
@@ -378,17 +482,17 @@ export class RegistrationComponent implements OnInit {
     this.obj.parentId = 0;
     this.obj.bankId = 0;
     this.obj.documentId = 0;
+    this.obj.refugeeId = '-';
+    this.obj.refugeeSelectedType = 0;
   }
 
   onSubmit() {
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
-    this.obj.hostelId = this.logged_user.roleId ==1 || this.logged_user.roleId == 2 ? this.hostel : this.logged_user.hostelId;
+    this.obj.hostelId = this.logged_user.roleId == 1 || this.logged_user.roleId == 2 ? this.hostel : this.logged_user.hostelId;
     this.obj.motherYIncome = 0;
     this.obj.fatherYIncome = 0;
     this.obj.altMobNo = (this.obj.altMobNo !== undefined && this.obj.altMobNo !== null) ? this.obj.altMobNo : '-';
-    this.obj.lastStudiedInstituteName = (this.obj.lastStudiedInstituteName !== undefined && this.obj.lastStudiedInstituteName !== null) ? this.obj.lastStudiedInstituteName : '-';
-    this.obj.lastStudiedInstituteAddress = (this.obj.lastStudiedInstituteAddress !== undefined && this.obj.lastStudiedInstituteAddress !== null) ? this.obj.lastStudiedInstituteAddress : '-';
     this.obj.disabilityType = (this.obj.disabilityType !== undefined && this.obj.disabilityType !== null) ? this.obj.disabilityType : 0;
     this.obj.landmark = (this.obj.landmark !== undefined && this.obj.landmark !== null) ? this.obj.landmark : '-';
     this.obj.remarks = (this.obj.remarks !== undefined && this.obj.remarks !== null) ? this.obj.remarks : '-';
@@ -412,42 +516,43 @@ export class RegistrationComponent implements OnInit {
     this.obj.guardianOccupation = (this.obj.guardianOccupation !== undefined && this.obj.guardianOccupation !== null) ? this.obj.guardianOccupation : '-';
     this.obj.guardianMobileNo = (this.obj.guardianMobileNo !== undefined && this.obj.guardianMobileNo !== null) ? this.obj.guardianMobileNo : '-';
 
-    this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
-      if (response !== undefined && response !== null) {
-        if (response) {
-          this.blockUI.stop();
-          this.clearForm();
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
-          })
-        } else {
-          this.blockUI.stop();
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          })
-        }
-      } else {
-        this.blockUI.stop();
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        })
-      }
-    }, (err: HttpErrorResponse) => {
-      this.blockUI.stop();
-      if (err.status === 0 || err.status === 400) {
-        this._messageService.clear();
-        this._messageService.add({
-          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-        })
-      }
-    })
+    console.log('obj', this.obj)
+    // this._restApiService.post(PathConstants.Registration_Post, this.obj).subscribe(response => {
+    //   if (response !== undefined && response !== null) {
+    //     if (response) {
+    //       this.blockUI.stop();
+    //       this.clearForm();
+    //       this._messageService.clear();
+    //       this._messageService.add({
+    //         key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+    //         summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+    //       })
+    //     } else {
+    //       this.blockUI.stop();
+    //       this._messageService.clear();
+    //       this._messageService.add({
+    //         key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+    //         summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+    //       })
+    //     }
+    //   } else {
+    //     this.blockUI.stop();
+    //     this._messageService.clear();
+    //     this._messageService.add({
+    //       key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+    //       summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+    //     })
+    //   }
+    // }, (err: HttpErrorResponse) => {
+    //   this.blockUI.stop();
+    //   if (err.status === 0 || err.status === 400) {
+    //     this._messageService.clear();
+    //     this._messageService.add({
+    //       key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+    //       summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+    //     })
+    //   }
+    // })
   }
 
   onView() {
@@ -471,7 +576,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   selectDropdown(): any {
-    this.clearForm();
     let param = {};
     if (this.districtId !== undefined && this.districtId !== null && this.talukID !== undefined && this.talukID !== null &&
       this.hostel !== undefined && this.hostel !== null) {
@@ -510,7 +614,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onEdit(row, index) {
-    this.enableSave = false;
+    this.enableSave = true;
     if (row !== undefined && row !== null) {
       this.obj = null;
       this.showDialog = false;
@@ -526,16 +630,17 @@ export class RegistrationComponent implements OnInit {
       this.mediumOptions = [{ label: row.mediumName, value: row.medium }];
       this.subCasteOptions = [{ label: row.subcasteName, value: row.subCaste }];
       this.courseYearOptions = [{ label: row.courseYear + ' Year', value: row.courseYearId }];
+      this.instituteDistrictOptions = [{ label: row.instituteDName, value: row.instituteDCode }];
+      this.schoolOptions = [{ label: row.instituteName, value: row.currentInstituteId }];
+      this.obj.currentInstituteId = row.currentInstituteId;
+      this.instituteDcode = row.instituteDCode;
+      this.currentSchoolDistrict = row.currentInstituteDCode;
       this.obj.dob = new Date(row.dob);
       this.ageTxt = this.obj.age + ' Years';
       this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';
       this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/Documents/' + row.studentFilename;
       this.maskInput(this.obj.aadharNo);
     }
-  }
-
-  onDelete(row, index) {
-
   }
 
   validateAadhaar(aadhaarString) {
@@ -652,10 +757,7 @@ export class RegistrationComponent implements OnInit {
     }
     this.hostelOptions = hostelSelection;
     this.hostelOptions.unshift({ label: '-select-', value: null });
-
   }
-
-
 }
 
 

@@ -81,10 +81,12 @@ import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 import { StudentReportComponent } from './Reports/student-report/student-report.component';
-import { CommoditygroupEntryComponent } from './master/commoditygroup-entry/commoditygroup-entry.component';
-import { UnitMasterEntryComponent } from './master/unit-master-entry/unit-master-entry.component';
 import { EmployeeConfirmationComponent } from './employee-confirmation/employee-confirmation.component';
 import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
+import { CoursemasterEntryComponent } from './Master-Entry/coursemaster-entry/coursemaster-entry.component';
+import { CommoditygroupEntryComponent } from './Master-Entry/commoditygroup-entry/commoditygroup-entry.component';
+import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-master-entry.component';
+import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
 
 
 const routes: Routes = [
@@ -178,16 +180,16 @@ const routes: Routes = [
   { path: 'application-status', component:ApplicationStatusComponent},
   { path: 'closingdate-entry', component:HostelClosingdateEntryComponent,canActivate: [AuthGuard] },
   // { path: 'student-report', component:StudentReportComponent,canActivate: [AuthGuard] }, 
-  { path: 'commoditygroup-entry', component:CommoditygroupEntryComponent},
-  { path: 'unit-master-entry', component:UnitMasterEntryComponent},
+    { path: 'studentreport', component:StudentReportComponent,canActivate: [AuthGuard] }, 
   { path: 'employee-confirmation', component:EmployeeConfirmationComponent,canActivate: [AuthGuard]},
 
-   
-
-   
-   
-  { path: 'studentreport', component:StudentReportComponent,canActivate: [AuthGuard] }, 
-  { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] }, 
+  //master entry
+  { path: 'commoditygroup-entry', component:CommoditygroupEntryComponent,canActivate: [AuthGuard]},
+  { path: 'unit-master-entry', component:UnitMasterEntryComponent,canActivate: [AuthGuard]},
+  { path: 'subcaste-entry', component:SubcasteEntryComponent,canActivate: [AuthGuard]},
+  { path: 'coursemaster-entry', component:  CoursemasterEntryComponent  ,canActivate: [AuthGuard]},
+  { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] },
+  
 
 ];
 

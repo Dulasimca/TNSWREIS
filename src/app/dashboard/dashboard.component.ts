@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit {
         }
         if (res.Table2 !== undefined && res.Table2 !== null && res.Table2.length !== 0) {
           if ((this.login_user.roleId * 1) != 4) {
-            var str: string = res.Table2[0].studentcount;
+            var str: string = res.Table2[0].studentcount as string;
             var hasSlash = str.includes('/');
             this.isTypeNumber = (hasSlash) ? !hasSlash : hasSlash;
             this.studentCount = res.Table2[0].studentcount;

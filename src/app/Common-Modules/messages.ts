@@ -48,7 +48,8 @@ export class ResponseMessage {
     public static readonly ExistingdataMessage = 'OB Data Available. Use Edit Option';
     public static readonly Biometricvalidate = 'Biometric Device Available. Pemission Denied';
     public static readonly NoImageMsg = 'No Images found!';
-    public static readonly DisApprovedSuccess = 'Disapproved'
+    public static readonly DisApprovedSuccess = 'Disapproved';
+    public static readonly NoInstituteFound = 'No institutes found !';
 
     
 } 

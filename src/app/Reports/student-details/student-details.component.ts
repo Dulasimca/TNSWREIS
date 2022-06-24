@@ -172,9 +172,9 @@ export class StudentDetailsComponent implements OnInit {
             if (this.roleId === 1) {
               if (r.districtApproval !== null && r.districtApproval !== undefined) {
                 if (r.districtApproval === 1) {
-                  r.dstatus = 'Approved !';
+                  r.dstatus = 'Selected !';
                 } else if (r.districtApproval === 2) {
-                  r.dstatus = 'DisApproved';
+                  r.dstatus = 'Rejected';
                 } else {
                   r.dstatus = 'Pending !';
                 }
@@ -183,9 +183,9 @@ export class StudentDetailsComponent implements OnInit {
               }
               if (r.talukApproval !== null && r.talukApproval !== undefined) {
                 if (r.talukApproval === 1) {
-                  r.tstatus = 'Approved !';
+                  r.tstatus = 'Selected !';
                 } else if (r.talukApproval === 2) {
-                  r.tstatus = 'DisApproved';
+                  r.tstatus = 'Rejected';
                 } else {
                   r.tstatus = 'Pending !';
                 }
@@ -194,10 +194,10 @@ export class StudentDetailsComponent implements OnInit {
               }
               if (r.wardenApproval !== null && r.wardenApproval !== undefined) {
                 if (r.wardenApproval === 1) {
-                 r.wstatus = 'Approved !';
+                 r.wstatus = 'Selected !';
                   // this.wEnableTick = true;
                 } else if (r.wardenApproval === 2) {
-                  r.wstatus = 'DisApproved';
+                  r.wstatus = 'Rejected';
                 } else {
                   r.wstatus = 'Pending !';
                 }
@@ -265,7 +265,7 @@ export class StudentDetailsComponent implements OnInit {
                   r.wAStatus = '-';
                   r.enableApprove = true;
                   r.enableDisapprove = false;
-                  r.wDAStatus = 'DisApproved !';
+                  r.wDAStatus = 'Rejected !';
                 } else if (r.wardenApproval === 1) {
                   // r.wDAStatus = '-';              
                   r.enableApprove = false;
