@@ -145,12 +145,17 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 import { StudentReportComponent } from './Reports/student-report/student-report.component';
-import { CommoditygroupEntryComponent } from './master/commoditygroup-entry/commoditygroup-entry.component';
-import { UnitMasterEntryComponent } from './master/unit-master-entry/unit-master-entry.component';
 import { EmployeeConfirmationComponent } from './employee-confirmation/employee-confirmation.component';
 import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
+
 import { HostelwisedataReportComponent } from './Reports/hostelwisedata-report/hostelwisedata-report.component';
 import { SchoolWiseStudentDetailsReportComponent } from './school-wise-student-details-report/school-wise-student-details-report.component';
+
+import { CoursemasterEntryComponent } from './Master-Entry/coursemaster-entry/coursemaster-entry.component';
+import { CommoditygroupEntryComponent } from './Master-Entry/commoditygroup-entry/commoditygroup-entry.component';
+import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-master-entry.component';
+import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
+
 
 @NgModule({
   declarations: [
@@ -244,8 +249,12 @@ import { SchoolWiseStudentDetailsReportComponent } from './school-wise-student-d
     UnitMasterEntryComponent,
     EmployeeConfirmationComponent,
     HostelFunctioningTypeMasterComponent,
+
     HostelwisedataReportComponent,
     SchoolWiseStudentDetailsReportComponent,
+
+    SubcasteEntryComponent,
+    CoursemasterEntryComponent,
     
   ],
   imports: [

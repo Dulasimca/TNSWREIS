@@ -51,7 +51,7 @@ export class StudentDetailsComponent implements OnInit {
   pdfDialog: boolean;
   aadharNo: any;
   mobileNo: any;
-  dob:any;
+  dob: any;
   hostelId: any;
   reason: any;
   aReason: string;
@@ -165,16 +165,16 @@ export class StudentDetailsComponent implements OnInit {
             this.hostelId = r.hostelId;
             this.studentId = r.studentId;
             this.academicYear = r.AcademicYear;
-            r.dob = r.dob, 
-            r.isDApproved = (r.districtApproval !== null && r.districtApproval !== 0 && (r.districtApproval)) ? 'true' : 'false';
+            r.dob = r.dob,
+              r.isDApproved = (r.districtApproval !== null && r.districtApproval !== 0 && (r.districtApproval)) ? 'true' : 'false';
             r.isTAprroved = (r.talukApproval !== null && r.talukApproval !== 0 && (r.talukApproval)) ? 'true' : 'false';
             r.isWApproved = (r.wardenApproval !== null && r.wardenApproval !== 0 && (r.wardenApproval)) ? 'true' : 'false';
             if (this.roleId === 1) {
               if (r.districtApproval !== null && r.districtApproval !== undefined) {
                 if (r.districtApproval === 1) {
-                  r.dstatus = 'Approved !';
+                  r.dstatus = 'Selected !';
                 } else if (r.districtApproval === 2) {
-                  r.dstatus = 'DisApproved';
+                  r.dstatus = 'Rejected';
                 } else {
                   r.dstatus = 'Pending !';
                 }
@@ -183,9 +183,9 @@ export class StudentDetailsComponent implements OnInit {
               }
               if (r.talukApproval !== null && r.talukApproval !== undefined) {
                 if (r.talukApproval === 1) {
-                  r.tstatus = 'Approved !';
+                  r.tstatus = 'Selected !';
                 } else if (r.talukApproval === 2) {
-                  r.tstatus = 'DisApproved';
+                  r.tstatus = 'Rejected';
                 } else {
                   r.tstatus = 'Pending !';
                 }
@@ -194,10 +194,10 @@ export class StudentDetailsComponent implements OnInit {
               }
               if (r.wardenApproval !== null && r.wardenApproval !== undefined) {
                 if (r.wardenApproval === 1) {
-                 r.wstatus = 'Approved !';
+                  r.wstatus = 'Selected !';
                   // this.wEnableTick = true;
                 } else if (r.wardenApproval === 2) {
-                  r.wstatus = 'DisApproved';
+                  r.wstatus = 'Rejected';
                 } else {
                   r.wstatus = 'Pending !';
                 }
@@ -265,7 +265,7 @@ export class StudentDetailsComponent implements OnInit {
                   r.wAStatus = '-';
                   r.enableApprove = true;
                   r.enableDisapprove = false;
-                  r.wDAStatus = 'DisApproved !';
+                  r.wDAStatus = 'Rejected !';
                 } else if (r.wardenApproval === 1) {
                   // r.wDAStatus = '-';              
                   r.enableApprove = false;
@@ -285,7 +285,6 @@ export class StudentDetailsComponent implements OnInit {
             }
           })
           this.studentData = res;
-          console.log('res', res)
           this.loading = false;
           this.disableExcel = false;
         } else {
@@ -301,21 +300,45 @@ export class StudentDetailsComponent implements OnInit {
     }
   }
 
+  checkEligibility(totalValue: number): boolean {
+    let isEligible = false;
+    if (totalValue !== 0) {
+      var approvedValue = this.studentData.filter(f => f.districtApproval === 1).length;
+      if (approvedValue < totalValue) {
+        isEligible = true;
+      } else {
+        isEligible = false;
+      }
+    } else {
+      isEligible = false;
+    }
+    return isEligible;
+  }
+
   selectForApproval(row) {
     if (row !== undefined && row !== null) {
-      this.showDialog = true;
-      this.studentName = row.studentName;
-      this.hostelName = row.HostelName;
-      this.student = {
-        'hostelId': (row.hostelId !== undefined && row.hostelId !== null) ? row.hostelId : 0,
-        'emisno': (row.emisno !== undefined) ? row.emisno : null,
-        'academicYear': (row.AcademicYear !== undefined) ? row.AcademicYear : null,
+      const isAllowed = this.checkEligibility(row.totalStudent);
+      if (isAllowed) {
+        this.showDialog = true;
+        this.studentName = row.studentName;
+        this.hostelName = row.HostelName;
+        this.student = {
+          'hostelId': (row.hostelId !== undefined && row.hostelId !== null) ? row.hostelId : 0,
+          'emisno': (row.emisno !== undefined) ? row.emisno : null,
+          'academicYear': (row.AcademicYear !== undefined) ? row.AcademicYear : null,
+        }
+        this.studentId = (row.studentId !== undefined && row.studentId !== null) ? row.studentId : 0;
+        this.dApproval = (this.roleId === 2) ? 1 : ((row.districtApproval !== undefined && row.districtApproval !== null) ? row.districtApproval : null);
+        this.tApproval = (this.roleId === 3) ? 1 : ((row.talukApproval !== undefined && row.talukApproval !== null) ? row.talukApproval : null);
+        this.wApproval = (this.roleId === 4) ? 1 : ((row.wardenApproval !== undefined && row.wardenApproval !== null) ? row.wardenApproval : null);
+        this.reason = null;
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.SanctionedEligibiltyErr
+        })
       }
-      this.studentId = (row.studentId !== undefined && row.studentId !== null) ? row.studentId : 0;
-      this.dApproval = (this.roleId === 2) ? 1 : ((row.districtApproval !== undefined && row.districtApproval !== null) ? row.districtApproval : null);
-      this.tApproval = (this.roleId === 3) ? 1 : ((row.talukApproval !== undefined && row.talukApproval !== null) ? row.talukApproval : null);
-      this.wApproval = (this.roleId === 4) ? 1 : ((row.wardenApproval !== undefined && row.wardenApproval !== null) ? row.wardenApproval: null);
-      this.reason = null;
     } else {
       this.showDialog = false;
     }
@@ -349,7 +372,7 @@ export class StudentDetailsComponent implements OnInit {
       'districtApproval': (this.roleId === 2) ? 1 : this.dApproval,
       'talukApproval': (this.roleId === 3) ? 1 : this.tApproval,
       'wardenApproval': (this.roleId === 4) ? 1 : this.wApproval,
-      'ReasonForDisApprove': this.aReason 
+      'ReasonForDisApprove': this.aReason
     }
     this._restApiService.post(PathConstants.OnlineStudentRegistrationDetails_Post, params).subscribe(res => {
       if (res) {
@@ -422,7 +445,7 @@ export class StudentDetailsComponent implements OnInit {
       'wardenapproval': this.wApproval,
       'Districtapproval': this.dApproval,
     };
-    this._restApiService.post(PathConstants.StudentFromOnlineRegistration_Post,params).subscribe(res => {
+    this._restApiService.post(PathConstants.StudentFromOnlineRegistration_Post, params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
           // this.blockUI.stop();
@@ -431,7 +454,7 @@ export class StudentDetailsComponent implements OnInit {
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           });
-          
+
         } else {
           // this.blockUI.stop();
           this._messageService.clear();
@@ -440,7 +463,7 @@ export class StudentDetailsComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
           });
         }
-        
+
       } else {
         this._messageService.clear();
         this._messageService.add({
@@ -460,7 +483,7 @@ export class StudentDetailsComponent implements OnInit {
       }
     })
 
-}
+  }
 
   insertStudentApprovalFromOnlineReg() {
     const params = {
@@ -475,7 +498,7 @@ export class StudentDetailsComponent implements OnInit {
       'ReasonForDisapprove': this.aReason,
       'Flag': 1
     };
-    this._restApiService.post(PathConstants.StudentApprovalFromOnlineReg_Post,params).subscribe(res => {
+    this._restApiService.post(PathConstants.StudentApprovalFromOnlineReg_Post, params).subscribe(res => {
       if (res !== undefined && res !== null) {
         if (res) {
           // this.blockUI.stop();
@@ -484,7 +507,7 @@ export class StudentDetailsComponent implements OnInit {
           //   key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
           //   summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           // });
-          
+
         } else {
           // this.blockUI.stop();
           this._messageService.clear();
@@ -493,7 +516,7 @@ export class StudentDetailsComponent implements OnInit {
             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
           });
         }
-        
+
       } else {
         this._messageService.clear();
         this._messageService.add({
@@ -574,7 +597,7 @@ export class StudentDetailsComponent implements OnInit {
   }
 
   onDialogShow() {
-    var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
+    var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.aadharNo + '_' + this.studentId + '.pdf';
     document.getElementById("embedPDF").setAttribute('src', src);
   }
 
