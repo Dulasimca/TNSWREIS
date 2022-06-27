@@ -248,7 +248,6 @@ export class TableConstants {
             { field: 'NativeDistrict', header: 'Native District', width: '100px', align: 'left !important'},
             { field: 'NativeTaluk', header: 'Native Taluk', width: '100px', align: 'left !important'},
             { field: 'MobileNo', header: 'Mobile No', width: '100px', align: 'left !important'},
-            { field: 'Flag', header: 'Status', width: '100px', align: 'left !important'},
             // { field: 'AltMobNo', header: 'Alt Mobile No', width: '100px', align: 'left !important'},
             { field: 'EndDate', header: 'End Date', width: '100px', align: 'centre !important'},
         ]
@@ -421,7 +420,7 @@ export class TableConstants {
         { field: 'Class',  header: 'Standard/Course', width: '100px', align: 'left !important'},
         { field: 'CourseTitle',  header: 'Subject', width: '100px', align: 'left !important'},
         { field: 'TotalYearlyIncome',  header: 'Income', width: '100px', align: 'left !important'},
-        { field: 'Caste',  header: 'Caste', width: '100px', align: 'left !important'},
+        { field: 'Name',  header: 'Caste', width: '100px', align: 'left !important'},
     ]
     }
 }

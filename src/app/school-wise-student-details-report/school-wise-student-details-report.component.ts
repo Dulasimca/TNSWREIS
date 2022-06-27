@@ -125,7 +125,7 @@ export class SchoolWiseStudentDetailsReportComponent implements OnInit {
     }
     if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
     this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
-      this.restApiService.getByParameters(PathConstants.SchoolWiseStudentDetails_Get, params).subscribe(res => {
+      this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
           this.hostels.forEach(h => {
@@ -143,18 +143,18 @@ export class SchoolWiseStudentDetailsReportComponent implements OnInit {
   loadTable() {
     this.hostelData = [];
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
-      this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined) {
+      this.hostel !== null && this.hostel !== undefined) {
       this.loading = true;
       const params = {
-        'Type': 0,
+        // 'Type': 0,
         'DCode': this.district,
         'TCode': this.taluk,
         'HostelId': this.hostel,
       }
       this.restApiService.getByParameters(PathConstants.SchoolWiseStudentDetails_Get, params).subscribe(res => {
-        if (res.Table !== undefined && res.Table !== null) {
-          if (res.Table.length !== 0) {
-            this.hostelData = res.Table;
+        if (res !== undefined && res !== null) {
+          if (res.length !== 0) {
+            this.hostelData = res;
             this.loading = false;
             this.disableExcel = false;
           } else {
