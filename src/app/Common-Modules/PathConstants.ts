@@ -9,6 +9,7 @@ public static readonly FileUpload_Post = 'FileUpload';
 
 public static readonly Hostel_Post = 'Hostel/Post';
 public static readonly Hostel_Get = 'Hostel/Get';
+public static readonly School_Get = 'School/Get';
 public static readonly UpdateHostel_put = 'UpdateHostel/post';
 
 
@@ -212,7 +213,8 @@ public static readonly EmployeeApproval_Put = 'EmployeeApproval/Post';
 public static readonly AccountingYear_Get = 'AccountingYear';
 
 
- 
+public static readonly Hostelwisedata_Get = 'Hostelwisedata';
+public static readonly SchoolWiseStudentDetails_Get = 'SchoolWiseStudentDetails';
 
 
 //masters entry 

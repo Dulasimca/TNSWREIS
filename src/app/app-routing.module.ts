@@ -85,6 +85,8 @@ import { CommoditygroupEntryComponent } from './master/commoditygroup-entry/comm
 import { UnitMasterEntryComponent } from './master/unit-master-entry/unit-master-entry.component';
 import { EmployeeConfirmationComponent } from './employee-confirmation/employee-confirmation.component';
 import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
+import { HostelwisedataReportComponent } from './Reports/hostelwisedata-report/hostelwisedata-report.component';
+import { SchoolWiseStudentDetailsReportComponent } from './school-wise-student-details-report/school-wise-student-details-report.component';
 
 
 const routes: Routes = [
@@ -188,7 +190,8 @@ const routes: Routes = [
    
   { path: 'studentreport', component:StudentReportComponent,canActivate: [AuthGuard] }, 
   { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] }, 
-
+  { path: 'hostelwisedatareport', component:HostelwisedataReportComponent},
+  { path: 'Schoolwisestudentdetailsreport', component:SchoolWiseStudentDetailsReportComponent}
 ];
 
 

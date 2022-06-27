@@ -149,6 +149,8 @@ import { CommoditygroupEntryComponent } from './master/commoditygroup-entry/comm
 import { UnitMasterEntryComponent } from './master/unit-master-entry/unit-master-entry.component';
 import { EmployeeConfirmationComponent } from './employee-confirmation/employee-confirmation.component';
 import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
+import { HostelwisedataReportComponent } from './Reports/hostelwisedata-report/hostelwisedata-report.component';
+import { SchoolWiseStudentDetailsReportComponent } from './school-wise-student-details-report/school-wise-student-details-report.component';
 
 @NgModule({
   declarations: [
@@ -242,6 +244,8 @@ import { HostelFunctioningTypeMasterComponent } from './master/hostel-functionin
     UnitMasterEntryComponent,
     EmployeeConfirmationComponent,
     HostelFunctioningTypeMasterComponent,
+    HostelwisedataReportComponent,
+    SchoolWiseStudentDetailsReportComponent,
     
   ],
   imports: [

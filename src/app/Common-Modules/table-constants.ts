@@ -28,8 +28,8 @@ export class TableConstants {
     purchasedetailsReportCols: any = [];
     studentCountReportCols: any = [];
     HstlClosingdateEntryCols: any = [];
-
-    
+    onlineapplicationstatusCols:any = [];
+    schoolwisestudentdetailsCols:any = [];
     AccountHeadTable: any = [];
     HostelFundtable: any = [];
     DeviceMappingReportCols: any = [];
@@ -400,6 +400,27 @@ export class TableConstants {
         { field: 'HstlOpenDate', header: 'Hostel Opening Date', width: '100px', align: 'center !important'},
         { field: 'HstlCloseDate', header: 'Hostel Closing Date', width: '100px', align: 'center !important'},
         
+    ]
+    this.onlineapplicationstatusCols =[
+        { field: 'Districtname',  header: 'District Name', width: '100px', align: 'left !important'},
+        { field: 'Talukname',  header: 'Taluk Name', width: '100px', align: 'left !important'},
+        { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'left !important'},
+        { field: 'Name',  header: 'Caste', width: '100px', align: 'left !important'},
+        { field: 'total',  header: 'Total', width: '100px', align: 'left !important'},
+        { field: '',  header: 'Selected', width: '100px', align: 'left !important'},
+        { field: '',  header: 'Rejected', width: '100px', align: 'left !important'},
+        { field: 'Remarks',  header: 'Remarks', width: '100px', align: 'left !important'},
+    ]
+    this.schoolwisestudentdetailsCols=[
+        { field: 'Districtname',  header: 'District Name', width: '100px', align: 'left !important'},
+        { field: 'Talukname',  header: 'Taluk Name', width: '100px', align: 'left !important'},
+        { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'left !important'},
+        { field: 'InstituteName',  header: 'School/College', width: '100px', align: 'left !important'},
+        { field: 'Emisno',  header: 'EMIS No/Registeration No', width: '100px', align: 'left !important'},
+        { field: 'Class',  header: 'Standard/Course', width: '100px', align: 'left !important'},
+        { field: 'CourseTitle',  header: 'Subject', width: '100px', align: 'left !important'},
+        { field: 'TotalYearlyIncome',  header: 'Income', width: '100px', align: 'left !important'},
+        { field: 'Caste',  header: 'Caste', width: '100px', align: 'left !important'},
     ]
     }
 }
