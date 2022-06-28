@@ -406,9 +406,10 @@ export class TableConstants {
         { field: 'Talukname',  header: 'Taluk Name', width: '100px', align: 'left !important'},
         { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'left !important'},
         { field: 'Name',  header: 'Caste', width: '100px', align: 'left !important'},
-        { field: 'total',  header: 'Total', width: '100px', align: 'left !important'},
-        { field: '',  header: 'Selected', width: '100px', align: 'left !important'},
-        { field: '',  header: 'Rejected', width: '100px', align: 'left !important'},
+        { field: 'TotalCount',  header: 'Total', width: '100px', align: 'left !important'},
+        { field: 'Pending',  header: 'Pending', width: '100px', align: 'left !important'},
+        { field: 'Selected',  header: 'Selected', width: '100px', align: 'left !important'},
+        { field: 'Rejected',  header: 'Rejected', width: '100px', align: 'left !important'},
         { field: 'Remarks',  header: 'Remarks', width: '100px', align: 'left !important'},
     ]
     this.schoolwisestudentdetailsCols=[
@@ -417,8 +418,8 @@ export class TableConstants {
         { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'left !important'},
         { field: 'InstituteName',  header: 'School/College', width: '100px', align: 'left !important'},
         { field: 'Emisno',  header: 'EMIS No/Registeration No', width: '100px', align: 'left !important'},
-        { field: 'Class',  header: 'Standard/Course', width: '100px', align: 'left !important'},
-        { field: 'CourseTitle',  header: 'Subject', width: '100px', align: 'left !important'},
+        { field: 'CourseTitle',  header: 'Standard/Course', width: '100px', align: 'left !important'},
+        { field: 'ClassName',  header: 'Subject', width: '100px', align: 'left !important'},
         { field: 'TotalYearlyIncome',  header: 'Income', width: '100px', align: 'left !important'},
         { field: 'Name',  header: 'Caste', width: '100px', align: 'left !important'},
     ]
