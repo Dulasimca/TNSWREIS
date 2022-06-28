@@ -27,7 +27,7 @@
                                                 Details</div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
-                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                    <div #field17 class="p-field p-col-12 p-md-6 p-lg-3">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_hosteldistrict"
                                                                 [options]="hostelDistrictOptions" [(ngModel)]="district"
@@ -39,7 +39,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
-                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                    <div #field17 class="p-field p-col-12 p-md-6 p-lg-3">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_hosteltaluk"
                                                                 [options]="hostelTalukOptions" [(ngModel)]="taluk"
@@ -51,7 +51,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
-                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-5">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_hos" [options]="hostelOptions"
                                                                 [(ngModel)]="hostelName" optionLabel="label"
@@ -62,6 +62,16 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
+                                                    <div class="p-col-12 p-md-12 p-lg-6 no-pad-top">
+                                                    <div>
+                                                    <p-radioButton name="_oldStudent" label="பழைய மாணவர்/Old" value=1
+                                                        [(ngModel)]="obj.orphanageSelectedType">
+                                                    </p-radioButton>&nbsp;
+                                                    <p-radioButton name="_newStudent" label="புதிய மாணவர்/New" value=0
+                                                        [(ngModel)]="obj.orphanageSelectedType">
+                                                    </p-radioButton>
+                                                    </div>
+                                                </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -298,20 +308,29 @@
                                         <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="p-col-12 p-md-12 p-lg-12 div-header">
                                                 <div class="p-grid">
-                                                    <div class="p-col-6 p-md-6 p-lg-6 no-pad-top no-pad-btm"
+                                                    <div class="p-col-12 p-md-6 p-lg-4 no-pad-top no-pad-btm"
                                                         style="font-weight: 500;">மாற்றுத்திறனாளி/Physically
                                                         Changelled
                                                         <p-checkbox #field29 [(ngModel)]="isDisability" binary="true"
                                                             inputId="binary">
                                                         </p-checkbox>
                                                     </div>
-                                                    <div class="p-col-6 p-md-6 p-lg-6 div-header no-pad-top no-pad-btm"
+                                                    <div class="p-col-12 p-md-6 p-lg-4 div-header no-pad-top no-pad-btm"
                                                         style="font-weight: 500;">இலங்கை அகதிகள்/Srilankan Refugees
                                                         <p-radioButton name="_refugeesYes" label="YES" value=1
                                                             [(ngModel)]="obj.refugeeSelectedType">
                                                         </p-radioButton>&nbsp;
                                                         <p-radioButton name="_refugeesNo" label="NO" value=0
                                                             [(ngModel)]="obj.refugeeSelectedType">
+                                                        </p-radioButton>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-6 p-lg-4 div-header no-pad-top no-pad-btm"
+                                                        style="font-weight: 500;">ஆதரவற்ற குழந்தைகள்/Orphanages
+                                                        <p-radioButton name="_orphanageYes" label="YES" value=1
+                                                            [(ngModel)]="obj.orphanageSelectedType">
+                                                        </p-radioButton>&nbsp;
+                                                        <p-radioButton name="_orphanageNo" label="NO" value=0
+                                                            [(ngModel)]="obj.orphanageSelectedType">
                                                         </p-radioButton>
                                                     </div>
                                                 </div>
@@ -443,7 +462,7 @@
                                                     <div #field24 *ngIf="enableScholarship"
                                                         class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span>
-                                                            <label for="_scholarshipid">உதவித்தொகை எண்</label>
+                                                            <label for="_scholarshipid" style="white-space: pre;">உதவித்தொகை எண்</label>
                                                             <input type="text" name="_scholarshipid" pInputText
                                                                 [(ngModel)]="obj.scholarshipId"
                                                                 placeholder="Scholarship No.">
@@ -589,7 +608,7 @@
                                             </div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
-                                                    <div #field27 class="p-field p-col-12 p-md-12 p-lg-5">
+                                                    <div #field27 class="p-field p-col-12 p-md-12 p-lg-6">
                                                         <span>
                                                             <label for="_distance1">விடுதியிலிருந்து வீடுவரையிலான பயண
                                                                 தூரம்<span
@@ -600,7 +619,7 @@
                                                             
                                                         </span>
                                                     </div>
-                                                    <div #field28 class="p-field p-col-12 p-md-12 p-lg-5">
+                                                    <div #field28 class="p-field p-col-12 p-md-12 p-lg-6">
                                                         <span>
                                                             <label for="_distance2">விடுதியிலிருந்து
                                                                 கல்விநிறுவனத்திற்கான பயண தூரம்<span
@@ -643,6 +662,13 @@
                                                                 [(ngModel)]="obj.rationCardrNo"
                                                                 placeholder="Ration Card No.">
 
+                                                        </span>
+                                                    </div>
+                                                    <div #field39 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span>
+                                                            <label for="_communitycertificateno">சாதி சான்றிதழ் எண்</label>
+                                                            <input type="text" name="_communitycertificateno" pInputText
+                                                                [(ngModel)]="obj.communityCertificateNo" placeholder="Community Certificate No." required>
                                                         </span>
                                                     </div>
                                                 </div>

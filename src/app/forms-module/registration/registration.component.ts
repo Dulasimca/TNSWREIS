@@ -502,6 +502,8 @@ export class RegistrationComponent implements OnInit {
     this.obj.documentId = 0;
     this.obj.refugeeId = '-';
     this.obj.refugeeSelectedType = 0;
+    this.obj.orphanageSelectedType = 0;
+    this.obj.isNewStudent = 0;
   }
 
   onSubmit() {
@@ -659,6 +661,8 @@ export class RegistrationComponent implements OnInit {
       this.ageTxt = this.obj.age + ' Years';
       this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';
       this.studentImage = 'assets/layout/' + this.logged_user.hostelId + '/Documents/' + row.studentFilename;
+      this.obj.isNewStudent = row.isNewStudent;
+      this.obj.orphanageSelectedType = row.orphanageSelectedType;
       this.maskInput(this.obj.aadharNo);
     }
   }
