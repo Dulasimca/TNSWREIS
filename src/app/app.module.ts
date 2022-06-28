@@ -147,10 +147,15 @@ import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/host
 import { StudentReportComponent } from './Reports/student-report/student-report.component';
 import { EmployeeConfirmationComponent } from './employee-confirmation/employee-confirmation.component';
 import { HostelFunctioningTypeMasterComponent } from './master/hostel-functioning-type-master/hostel-functioning-type-master.component';
+
+import { HostelwisedataReportComponent } from './Reports/hostelwisedata-report/hostelwisedata-report.component';
+import { SchoolWiseStudentDetailsReportComponent } from './school-wise-student-details-report/school-wise-student-details-report.component';
+
 import { CoursemasterEntryComponent } from './Master-Entry/coursemaster-entry/coursemaster-entry.component';
 import { CommoditygroupEntryComponent } from './Master-Entry/commoditygroup-entry/commoditygroup-entry.component';
 import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-master-entry.component';
 import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
+
 
 @NgModule({
   declarations: [
@@ -244,6 +249,10 @@ import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-e
     UnitMasterEntryComponent,
     EmployeeConfirmationComponent,
     HostelFunctioningTypeMasterComponent,
+
+    HostelwisedataReportComponent,
+    SchoolWiseStudentDetailsReportComponent,
+
     SubcasteEntryComponent,
     CoursemasterEntryComponent,
     

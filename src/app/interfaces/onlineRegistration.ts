@@ -76,6 +76,9 @@ export interface OnlineRegistration {
        tcFilename: string;
        bankPassbookFilename: string;
        declarationFilename: string;
+       fnTitleCode: number;
+       mnTitleCode: number;
+       gnTitleCode: number;
        //accounting
        accYearId: string;
        studentAccId: number;
