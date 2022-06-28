@@ -547,6 +547,8 @@ export class OnlineRegistrationComponent implements OnInit {
     this.obj.studentAccId = 0;
     this.obj.refugeeId = '-';
     this.obj.refugeeSelectedType = 0;
+    this.obj.orphanageSelectedType = 0;
+    this.obj.isNewStudent = 0;
   }
 
   onSubmit() {

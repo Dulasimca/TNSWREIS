@@ -62,7 +62,7 @@ export class ApplicationStatusComponent implements OnInit {
           //   key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 5000,
           //   summary: ResponseMessage.SUMMARY_REJECTED, detail: msg
           // });
-          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
+          this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Your Application is still in pending!' }];
           // this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
         } else {
 
@@ -74,13 +74,13 @@ export class ApplicationStatusComponent implements OnInit {
           //   key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS, life: 5000,
           //   summary: ResponseMessage.SUMMARY_APPROVED, detail: msg
           // });
-          this.msgs = [{ severity: 'success', summary: 'Approved', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been approved!' }];
+          this.msgs = [{ severity: 'success', summary: 'Selected', detail:  'Your Application has been selected!' }];
           this.onDialogShow();
         } else {
 
         }
         if (this.status === 2) {
-          this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval has been rejected! Please Contact TNWHO-Admin for further queries.' }];
+          this.msgs = [{ severity: 'error', summary: 'Rejected', detail: 'Your Application has been rejected! Please Contact TNWHO-Admin for further queries.' }];
           // this.msgs = [{ severity: 'warn', summary: 'Pending', detail: 'Hi' + ' ' + this.studentName + '!' + ' ' + 'Your District Approval status is still in pending!' }];
 
           // var msg = "District Approval status is still in pending"

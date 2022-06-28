@@ -209,13 +209,13 @@
                                         <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
                                             <div class="p-col-12 p-md-12 p-lg-12 div-header">
                                                 <div class="p-grid">
-                                                    <div class="p-col-6 p-md-6 p-lg-6 no-pad-top no-pad-btm"
+                                                    <div class="p-col-12 p-md-4 p-lg-4 no-pad-top no-pad-btm"
                                                         style="font-weight: 500;">Physically Changelled
                                                         <p-checkbox #field29 [(ngModel)]="isDisability" binary="true"
                                                             inputId="binary">
                                                         </p-checkbox>
                                                     </div>
-                                                    <div class="p-col-6 p-md-6 p-lg-6 div-header no-pad-top no-pad-btm"
+                                                    <div class="p-col-12 p-md-4 p-lg-4 div-header no-pad-top no-pad-btm"
                                                         style="font-weight: 500;">Srilankan Refugees
                                                         <p-radioButton name="_refugeesYes" label="YES" value=1
                                                             [(ngModel)]="obj.refugeeSelectedType">
@@ -224,6 +224,15 @@
                                                             [(ngModel)]="obj.refugeeSelectedType">
                                                         </p-radioButton>
                                                     </div>
+                                                    <div class="p-col-12 p-md-4 p-lg-4 div-header no-pad-top no-pad-btm"
+                                                    style="font-weight: 500;">Orphanages
+                                                    <p-radioButton name="_orphanageYes" label="YES" value=1
+                                                        [(ngModel)]="obj.orphanageSelectedType">
+                                                    </p-radioButton>&nbsp;
+                                                    <p-radioButton name="_orphanageNo" label="NO" value=0
+                                                        [(ngModel)]="obj.orphanageSelectedType">
+                                                    </p-radioButton>
+                                                </div>
                                                 </div>
                                             </div>
                                             <div *ngIf="isDisability || (obj.refugeeSelectedType == 1)" #row1
@@ -526,8 +535,15 @@
                                                     <div #field39 class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_rationcardno" pInputText
-                                                                [(ngModel)]="obj.rationCardrNo" required>
-                                                            <label for="_rationcardno">Ration Card No<span
+                                                                [(ngModel)]="obj.rationCardrNo">
+                                                            <label for="_rationcardno">Ration Card No</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field39 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_communitycertificateno" pInputText
+                                                                [(ngModel)]="obj.communityCertificateNo" required>
+                                                            <label for="_communitycertificateno">Ration Card No<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>

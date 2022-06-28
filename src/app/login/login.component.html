@@ -38,7 +38,8 @@
                     </div>
             </div>
             <div class="p-col-12 txt-center align-center">
-                <button pButton type="button" label="Sign In" icon="pi pi-sign-in" (click)="onLogin()"></button>
+                <button pButton type="button" label="Sign In" icon="pi pi-sign-in" (click)="onLogin()"
+                [disabled]="(!username || !password)"></button>
             </div>
             <div class="p-col-12 txt-center">
                 <span class="login-text">Online Student Registration --></span>
