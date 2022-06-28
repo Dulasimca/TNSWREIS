@@ -44,6 +44,9 @@ export interface Registration {
     scholarshipId: any;
     refugeeSelectedType: number;
     refugeeId: string;
+    orphanageSelectedType: number;
+    isNewStudent: number;
+    communityCertificateNo: string;
     //bank
     bankId: number;
     bankName: string;
