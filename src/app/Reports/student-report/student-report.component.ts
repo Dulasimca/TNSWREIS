@@ -157,7 +157,7 @@ export class StudentReportComponent implements OnInit {
       const params = {
         'DCode': this.district,
         'TCode': this.taluk,
-        'HostelId': this.hostel,
+        'HCode': this.hostel,
         
       }
       this.restApiService.getByParameters(PathConstants.Registration_Get,params).subscribe(res =>{
