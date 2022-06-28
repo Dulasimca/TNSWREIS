@@ -152,9 +152,9 @@ export class HostelwisedataReportComponent implements OnInit {
         'HostelId': this.hostel,
       }
       this.restApiService.getByParameters(PathConstants.Hostelwisedata_Get, params).subscribe(res => {
-        if (res.Table !== undefined && res.Table !== null) {
-          if (res.Table.length !== 0) {
-            this.hostelData = res.Table;
+        if (res !== undefined && res !== null) {
+          if (res.length !== 0) {
+            this.hostelData = res;
             this.loading = false;
             this.disableExcel = false;
           } else {

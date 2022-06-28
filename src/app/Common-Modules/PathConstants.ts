@@ -214,8 +214,8 @@ public static readonly AccountingYear_Get = 'AccountingYear';
 
 
 
-public static readonly Hostelwisedata_Get = 'Hostelwisedata';
-public static readonly SchoolWiseStudentDetails_Get = 'SchoolWiseStudentDetails';
+public static readonly Hostelwisedata_Get = 'Hostelwisedata/Get';
+public static readonly SchoolWiseStudentDetails_Get = 'SchoolWiseStudentDetails/Get';
 
 
 public static readonly Institute_Get = 'InstituteMaster/Get';
