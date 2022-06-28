@@ -80,7 +80,7 @@ export class EmployeeMasterComponent implements OnInit {
   ngOnInit(): void {
 
     const current_year = new Date().getFullYear();
-    const start_year_range = current_year - 50;
+    const start_year_range = current_year - 72;
     this.yearRange = start_year_range + ':' + current_year;
 
     this.cols = [
