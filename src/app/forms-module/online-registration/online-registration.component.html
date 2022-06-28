@@ -51,7 +51,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
-                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-5">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_hos" [options]="hostelOptions"
                                                                 [(ngModel)]="hostelName" optionLabel="label"
@@ -62,8 +62,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
-                                                    <div class="p-col-12 p-md-12 p-lg-2 no-pad-top no-pad-btm">
-                                                    <div>புதிய மாணவர்/பழைய மாணவர்</div>
+                                                    <div class="p-col-12 p-md-12 p-lg-6 no-pad-top">
                                                     <div>
                                                     <p-radioButton name="_oldStudent" label="பழைய மாணவர்/Old" value=1
                                                         [(ngModel)]="obj.orphanageSelectedType">
@@ -463,7 +462,7 @@
                                                     <div #field24 *ngIf="enableScholarship"
                                                         class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span>
-                                                            <label for="_scholarshipid">உதவித்தொகை எண்</label>
+                                                            <label for="_scholarshipid" style="white-space: pre;">உதவித்தொகை எண்</label>
                                                             <input type="text" name="_scholarshipid" pInputText
                                                                 [(ngModel)]="obj.scholarshipId"
                                                                 placeholder="Scholarship No.">
@@ -609,7 +608,7 @@
                                             </div>
                                             <div #row1 class="p-col-12 border-blue">
                                                 <div #grid1 class="p-grid div-main">
-                                                    <div #field27 class="p-field p-col-12 p-md-12 p-lg-5">
+                                                    <div #field27 class="p-field p-col-12 p-md-12 p-lg-6">
                                                         <span>
                                                             <label for="_distance1">விடுதியிலிருந்து வீடுவரையிலான பயண
                                                                 தூரம்<span
@@ -620,7 +619,7 @@
                                                             
                                                         </span>
                                                     </div>
-                                                    <div #field28 class="p-field p-col-12 p-md-12 p-lg-5">
+                                                    <div #field28 class="p-field p-col-12 p-md-12 p-lg-6">
                                                         <span>
                                                             <label for="_distance2">விடுதியிலிருந்து
                                                                 கல்விநிறுவனத்திற்கான பயண தூரம்<span
@@ -666,11 +665,10 @@
                                                         </span>
                                                     </div>
                                                     <div #field39 class="p-field p-col-12 p-md-12 p-lg-3">
-                                                        <span class="p-float-label">
+                                                        <span>
+                                                            <label for="_communitycertificateno">சாதி சான்றிதழ் எண்</label>
                                                             <input type="text" name="_communitycertificateno" pInputText
                                                                 [(ngModel)]="obj.communityCertificateNo" placeholder="Community Certificate No." required>
-                                                            <label for="_communitycertificateno">சாதி சான்றிதழ் எண்<span
-                                                                    class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
                                                 </div>
