@@ -108,7 +108,7 @@ export class TableConstants {
             { field: 'mobileNo', header: 'Mobile No.', align: 'right !important'},
             { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
             { field: 'Course', header: 'Course', align: 'left !important'},
-            { field: 'aadharNoMasked', header: 'Aadhar No.', align: 'right !important'},
+            // { field: 'aadharNoMasked', header: 'Aadhar No.', align: 'right !important'},
             { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
             { field: 'totalYIncome', header: 'Yearly Income', align: 'right !important'},
         ];
