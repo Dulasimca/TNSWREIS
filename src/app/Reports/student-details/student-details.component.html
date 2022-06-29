@@ -54,9 +54,9 @@
                                             <th *ngIf="(roleId==2 || roleId==3 || roleId==4)">Approval Status</th>
                                             <th *ngIf="(roleId==2 || roleId==3)">DisApproval Status</th>
                                             <th *ngIf="(roleId==2)">Download PDF</th>
+                                            <th *ngIf="(roleId==1)">Warden Approval Status</th>
                                             <th *ngIf="(roleId==1)">District Approval Status</th>
                                             <th *ngIf="(roleId==1)">Taluk Approval Status</th>
-                                            <th *ngIf="(roleId==1)">Warden Approval Status</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex"
@@ -133,10 +133,10 @@
                                             <!-- role id = 1 -> district, taluk & warden status only -->
                                             <td style="text-align: left;" *ngIf="roleId==1">
                                                 <span class="p-column-title">
-                                                    District Approval Status :
+                                                    Warden Approval Status :
                                                 </span>
                                                 <span style="text-align: end;">
-                                                    {{rowData.dstatus}}
+                                                    {{rowData.wstatus}}
                                                 </span>
                                             </td>
                                             <td style="text-align: left;" *ngIf="roleId==1">
@@ -149,41 +149,30 @@
                                             </td>
                                             <td style="text-align: left;" *ngIf="roleId==1">
                                                 <span class="p-column-title">
-                                                    Warden Approval Status :
+                                                    District Approval Status :
                                                 </span>
                                                 <span style="text-align: end;">
-                                                    {{rowData.wstatus}}
+                                                    {{rowData.dstatus}}
                                                 </span>
                                             </td>
-                                            <!-- district approval for role id = 2 (both approval & disapproval status only) -->
+
                                             <td style="text-align: left;"
-                                                *ngIf="(roleId==2 && ((rowData.districtApproval)!=0))">
+                                                *ngIf="(roleId==4 && ((rowData.wardenApproval)!=0))">
                                                 <span class="p-column-title">
                                                     Approval Status :
                                                 </span>
                                                 <span style="text-align: end;" *ngIf="(rowData.enableApprove)">
-                                                    <button pButton type="button" label="Select" (click)="selectForApproval(rowData)"></button>                                                    
+                                                    <button pButton type="button" label="Accept" (click)="selectForApproval(rowData)"></button>                                                    
                                                 </span>
                                                 <span>
-                                                {{rowData.dAStatus}}
-                                            </span>
-                                            <span *ngIf="dEnableTick">
-                                                <i class="status-icon-green pi pi-check"></i></span>
-                                            </td>
-                                            <td style="text-align: left;"
-                                                *ngIf="(roleId==2 && ((rowData.districtApproval)!=0))">
-                                                <span class="p-column-title">
-                                                    Disapproval Status :
+                                                    {{rowData.wAStatus}}
                                                 </span>
-                                                <span style="text-align: end;" *ngIf = "(rowData.enableDisapprove)">
-                                                    <button pButton type="button" label="Reject" (click)="selectForDisApproval(rowData)"></button>
-                                                </span>
-                                                <span>
-                                                {{rowData.dDAStatus}}
-                                            </span>
-                                            <span *ngIf="dCrossTick">
-                                                <i class="status-icon-red pi pi-times"></i></span>
+                                                <span *ngIf="wEnableTick">
+                                                    <i class="status-icon-green pi pi-check"></i></span>
                                             </td>
+                                            
+                                            <!-- district approval for role id = 2 (both approval & disapproval status only) -->
+                                           
                                             <!-- taluk approval for role id = 3 (both approval & disapproval status only) -->
                                             <td style="text-align: left;"
                                                 *ngIf="(roleId==3 && ((rowData.talukApproval)!=0))">
@@ -215,19 +204,33 @@
                                             </td>
                                             <!-- warden approval for role id = 4 (both approval & disapproval status only) -->
                                             <td style="text-align: left;"
-                                                *ngIf="(roleId==4 && ((rowData.wardenApproval)!=0))">
-                                                <span class="p-column-title">
-                                                    Approval Status :
-                                                </span>
-                                                <span style="text-align: end;" *ngIf="(rowData.enableApprove)">
-                                                    <button pButton type="button" label="Accept" (click)="selectForApproval(rowData)"></button>                                                    
-                                                </span>
-                                                <span>
-                                                    {{rowData.wAStatus}}
-                                                </span>
-                                                <span *ngIf="wEnableTick">
-                                                    <i class="status-icon-green pi pi-check"></i></span>
-                                            </td>
+                                            *ngIf="(roleId==2 && ((rowData.districtApproval)!=0))">
+                                            <span class="p-column-title">
+                                                Approval Status :
+                                            </span>
+                                            <span style="text-align: end;" *ngIf="(rowData.enableApprove)">
+                                                <button pButton type="button" label="Select" (click)="selectForApproval(rowData)"></button>                                                    
+                                            </span>
+                                            <span>
+                                            {{rowData.dAStatus}}
+                                        </span>
+                                        <span *ngIf="dEnableTick">
+                                            <i class="status-icon-green pi pi-check"></i></span>
+                                        </td>
+                                        <td style="text-align: left;"
+                                            *ngIf="(roleId==2 && ((rowData.districtApproval)!=0))">
+                                            <span class="p-column-title">
+                                                Disapproval Status :
+                                            </span>
+                                            <span style="text-align: end;" *ngIf = "(rowData.enableDisapprove)">
+                                                <button pButton type="button" label="Reject" (click)="selectForDisApproval(rowData)"></button>
+                                            </span>
+                                            <span>
+                                            {{rowData.dDAStatus}}
+                                        </span>
+                                        <span *ngIf="dCrossTick">
+                                            <i class="status-icon-red pi pi-times"></i></span>
+                                        </td>
                                             <td style="width: 120px" *ngIf="(roleId==2 &&((rowData.Download)!=0))" 
                                              >
                                                 <span class="p-column-title">

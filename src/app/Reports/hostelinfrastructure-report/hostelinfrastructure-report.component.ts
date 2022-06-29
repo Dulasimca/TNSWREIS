@@ -147,7 +147,7 @@ export class HostelinfrastructureReportComponent implements OnInit {
   loadTable() {
     this.hostelData = [];
     if (this.district !== null && this.district !== undefined && this.taluk !== null && this.taluk !== undefined &&
-      this.hostel !== null && this.hostel !== undefined && this.hostel !== undefined) {
+      this.hostel !== null && this.hostel !== undefined) {
       this.loading = true;
       const params = { 
         'Districtcode': this.district,
@@ -156,7 +156,7 @@ export class HostelinfrastructureReportComponent implements OnInit {
       }
       console.log(params)
       this.restApiService.getByParameters(PathConstants.HostelInfraStructureFloor_Get,params).subscribe(res => {
-        if (res.Table !== undefined && res.Table !== null) {
+        if (res !== undefined && res !== null) {
           if (res.Table.length !== 0) {
             this.hostelData = res.Table;
             this.disableExcel = false
