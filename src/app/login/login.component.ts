@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     const params = {
       UserId: this.username,
       Password: this.password,
-    }
+    };
       this._restApiService.post(PathConstants.Login, params).subscribe(response => {
         if (response !== undefined && response !== null) {
           if (response.item1) {
@@ -62,14 +62,16 @@ export class LoginComponent implements OnInit {
                   , districtName: (i.districtName !== undefined && i.districtName !== null) ? i.districtName : ''
                   , hasBiometric: (i.hasBiometric !== undefined && i.hasBiometric !== null) ? i.hasBiometric : false
                   , isDefaultPwd: (this.password.toString().trim() === '12345') ? true : false
-                }
+                };
+                if(obj.isDefaultPwd) {
                 this._authService.login(obj);
-                if(!obj.isDefaultPwd) {
+                } else {
                 this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(response => {
                   if (response !== undefined && response !== null && response.length !== 0) {
                     this.checkChildItems(response);
                     response.push({ label: 'Logout', icon: 'pi pi-power-off' });
                     this._authService.setMenu(response);
+                    this._authService.login(obj);
                     let master = new Observable<any[]>();
                     master = this._masterService.initializeMaster();
                     master.subscribe(response => { });
@@ -78,9 +80,9 @@ export class LoginComponent implements OnInit {
                     this._messageService.add({
                       key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
                       summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.MenuDataError
-                    })
+                    });
                   }
-                })
+                });
               }
               });
             } else {
@@ -95,14 +97,14 @@ export class LoginComponent implements OnInit {
             this._messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
               summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
-            })
+            });
           }
         } else {
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          })
+          });
         }
       }, (err: HttpErrorResponse) => {
         if (err.status === 0 || err.status === 400) {
@@ -110,15 +112,15 @@ export class LoginComponent implements OnInit {
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
-          })
+          });
         } else {
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
             summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.NetworkErrorMessage
-          })
+          });
         }
-      })
+      });
   }
 
   checkChildItems(data: any) {
