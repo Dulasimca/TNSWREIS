@@ -178,7 +178,8 @@ export class EmployeeMasterComponent implements OnInit {
     }
     loadTable(params) {
     this._restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res =>{
-      if (res !== null && res !== undefined && res.length !== 0) {
+      if (res !== null && res !== undefined) {
+        if(res.Table.length !== 0){
         res.Table.forEach(i => {
           i.Flag = (i.Flag) ? 'Active' : 'Inactive';
           i.url = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + i.EmployeeImage;
@@ -188,12 +189,21 @@ export class EmployeeMasterComponent implements OnInit {
         })
           this.data = res.Table;
           this.loading = false;
-        } else {
+        } 
+        else {
           this.loading = false;
            this._messageService.clear();
            this._messageService.add({
            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+    })
+  }
+}else {
+          this.loading = false;
+           this._messageService.clear();
+           this._messageService.add({
+           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
     })
   }
 });
