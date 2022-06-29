@@ -154,8 +154,7 @@ export class BiometricAttendanceComponent implements OnInit {
         'DCode': this.district,
         'TCode': this.taluk,
         'Adate' : this.datepipe.transform(this.Adate, 'MM/dd/yyyy'),
-        'HostelId' :  (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? 
-        this.login_user.hostelId : 0,
+        'HostelId' : this.hostel
       }
      
       console.log(true);
