@@ -11,4 +11,5 @@ export interface User {
     token: string;
     hostelName: string;
     hasBiometric: boolean;
+    isDefaultPwd: boolean;
 }

@@ -43,9 +43,6 @@ export class LoginComponent implements OnInit {
       UserId: this.username,
       Password: this.password,
     }
-    if (this.password.toString().trim() === '12345') {
-      this._router.navigate(['/changepassword']);
-    } else {
       this._restApiService.post(PathConstants.Login, params).subscribe(response => {
         if (response !== undefined && response !== null) {
           if (response.item1) {
@@ -64,13 +61,15 @@ export class LoginComponent implements OnInit {
                   , talukName: (i.talukName !== undefined && i.talukName !== null) ? i.talukName : ''
                   , districtName: (i.districtName !== undefined && i.districtName !== null) ? i.districtName : ''
                   , hasBiometric: (i.hasBiometric !== undefined && i.hasBiometric !== null) ? i.hasBiometric : false
+                  , isDefaultPwd: (this.password.toString().trim() === '12345') ? true : false
                 }
+                this._authService.login(obj);
+                if(!obj.isDefaultPwd) {
                 this._restApiService.getByParameters(PathConstants.MenuMaster_Get, { 'roleId': obj.roleId }).subscribe(response => {
                   if (response !== undefined && response !== null && response.length !== 0) {
                     this.checkChildItems(response);
                     response.push({ label: 'Logout', icon: 'pi pi-power-off' });
                     this._authService.setMenu(response);
-                    this._authService.login(obj);
                     let master = new Observable<any[]>();
                     master = this._masterService.initializeMaster();
                     master.subscribe(response => { });
@@ -82,6 +81,7 @@ export class LoginComponent implements OnInit {
                     })
                   }
                 })
+              }
               });
             } else {
               this._messageService.clear();
@@ -119,7 +119,6 @@ export class LoginComponent implements OnInit {
           })
         }
       })
-    }
   }
 
   checkChildItems(data: any) {

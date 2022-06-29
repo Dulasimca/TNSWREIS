@@ -27,7 +27,11 @@ export class AuthService {
     if (user.username !== '' && user.token !== '' ) { 
       localStorage.setItem('UserInfo', JSON.stringify(user));
       this.loggedIn.next(true);
-      this._router.navigate(['/dashboard']);
+      if(user.isDefaultPwd) {
+        this._router.navigate(['/changepassword']);
+      } else {
+        this._router.navigate(['/dashboard']);
+      }
     }
   }
 

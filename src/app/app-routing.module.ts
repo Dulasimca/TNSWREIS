@@ -121,7 +121,7 @@ const routes: Routes = [
   { path: 'district', component:DistrictComponent, canActivate: [AuthGuard]},
   { path: 'taluk', component:TalukComponent, canActivate: [AuthGuard]},
   { path: 'attendance', component:AuditComponent, canActivate: [AuthGuard]},
-  { path: 'changepassword', component:ChangePasswordComponent},
+  { path: 'changepassword', component:ChangePasswordComponent, canActivate: [AuthGuard]},
 
   { path: 'attendancereport', component:AttendanceReportComponent, canActivate: [AuthGuard]},
   { path: 'attendance-image', component:AttendanceImageComponent, canActivate: [AuthGuard]},  
