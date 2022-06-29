@@ -281,7 +281,11 @@ export class EmployeeMasterComponent implements OnInit {
           this.districts.forEach(d => {
             districtSelection.push({ label: d.name, value: d.code });
           })
+           
           this.districtOptions = districtSelection;
+          if ((this.login_user.roleId * 1) === 1) {
+            this.districtOptions.unshift({ label: 'All', value: 0 });
+          }
           this.districtOptions.unshift({ label: '-select-', value: null });
           break;
           case 'ND':
@@ -323,6 +327,9 @@ export class EmployeeMasterComponent implements OnInit {
                   }
                 })
                 this.talukOptions = talukSelection;
+                if ((this.login_user.roleId * 1) === 1 ) {
+                  this.talukOptions.unshift({ label: 'All', value: 0 });
+                }
                 this.talukOptions.unshift({ label: '-select-', value: null });
               }
   }
