@@ -234,7 +234,7 @@ export class TableConstants {
             { field: 'Remarks', header: 'Remarks', width: '100px', align: 'left !important' },
         ]
         this.employeeReportCols = [
-            { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
+            { field: 'hostelDistrict', header: 'District Name', width: '100px', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
             // { field: 'WardenName', header: 'Employee Name', width: '100px', align: 'left !important'},
