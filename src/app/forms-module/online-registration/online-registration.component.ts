@@ -202,28 +202,24 @@ export class OnlineRegistrationComponent implements OnInit {
           genderSelection.push({ label: g.name, value: g.code });
         })
         this.genderOptions = genderSelection;
-        this.genderOptions.unshift({ label: '-select-', value: null });
         break;
       case 'BG':
         this.bloodgroups.forEach(b => {
           bloodGroupSelection.push({ label: b.name, value: b.code });
         })
         this.bloodGroupOptions = bloodGroupSelection;
-        this.bloodGroupOptions.unshift({ label: '-select-', value: null });
         break;
       case 'MT':
         this.languages.forEach(m => {
           languageSelection.push({ label: m.name, value: m.code });
         })
         this.motherTongueOptions = languageSelection;
-        this.motherTongueOptions.unshift({ label: '-select-', value: null });
         break;
       case 'DT':
         this.districts.forEach(d => {
           districtSelection.push({ label: d.name, value: d.code });
         })
         this.districtOptions = districtSelection.slice(0);
-        this.districtOptions.unshift({ label: '-select-', value: null });
         this.hostelDistrictOptions = districtSelection.slice(0);
         this.hostelDistrictOptions.unshift({ label: '-select-', value: null });
         if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
@@ -251,7 +247,6 @@ export class OnlineRegistrationComponent implements OnInit {
               }
             })
             this.talukOptions = talukSelection.slice(0);
-            this.talukOptions.unshift({ label: '-select-', value: null });
           }
         }
         break;
@@ -260,14 +255,12 @@ export class OnlineRegistrationComponent implements OnInit {
           casteSelection.push({ label: c.name, value: c.code });
         })
         this.casteOptions = casteSelection;
-        this.casteOptions.unshift({ label: '-select-', value: null });
         break;
       case 'RL':
         this.religions.forEach(r => {
           religionSelection.push({ label: r.name, value: r.code });
         })
         this.religionOptions = religionSelection;
-        this.religionOptions.unshift({ label: '-select-', value: null });
         break;
       case 'CL':
         var filtered_data = [];
@@ -291,16 +284,13 @@ export class OnlineRegistrationComponent implements OnInit {
           courseYearSelection.push({ label: y.name + ' Year', value: y.code });
         })
         this.courseYearOptions = courseYearSelection;
-        this.courseYearOptions.unshift({ label: '-select-', value: null });
         this.classOptions = classSelection;
-        this.classOptions.unshift({ label: '-select-', value: null });
         break;
       case 'MD':
         this.mediums.forEach(m => {
           mediumSelection.push({ label: m.name, value: m.code });
         })
         this.mediumOptions = mediumSelection;
-        this.mediumOptions.unshift({ label: '-select-', value: null });
         break;
       case 'SC':
         if (this.obj.caste !== null && this.obj.caste !== undefined) {
@@ -313,19 +303,16 @@ export class OnlineRegistrationComponent implements OnInit {
           subcasteSelection = [];
         }
         this.subCasteOptions = subcasteSelection;
-        this.subCasteOptions.unshift({ label: '-select-', value: null });
         break;
       case 'SH':
         this.schoolOptions = [];
         this.schoolOptions = this.filteredSchoolData.slice(0);
-        this.schoolOptions.unshift({ label: '-select-', value: null });
         break;
       case 'TO':
         this.titles.forEach(c => {
           titleSelection.push({ label: c.name, value: c.code });
         })
         this.titleOptions = titleSelection;
-        this.titleOptions.unshift({ label: '-select-', value: null });
         break;
     }
   }
@@ -454,7 +441,6 @@ export class OnlineRegistrationComponent implements OnInit {
               this.onSelectType(1);
             } else {
               this.instituteOptions = instituteSelection.slice(0);
-              this.instituteOptions.unshift({ label: '-select-', value: null });
             }
           } else {
             this._messageService.clear();
