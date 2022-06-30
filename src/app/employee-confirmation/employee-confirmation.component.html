@@ -75,20 +75,21 @@
                                                 Present/Absent :
                                             </span>
                                             <span>
+                                                <button icon="pi pi-exclamation-circle" *ngIf="(rowData.Dapproval == 0)"
+                                                pButton type="button" label="Pending" pTooltip="Toggle to confirm"
+                                                style="background: #08747b !important;"
+                                                (click)="onClick(rowData, 0)">
+                                            </button>
                                                 <button icon="pi pi-check" *ngIf="(rowData.Dapproval == 1)" pButton
                                                     type="button" label="Confirmed" pTooltip="Toggle to decline" style="background: green !important;"
                                                     (click)="onClick(rowData, 1)">
                                                 </button>
-                                                <button icon="pi pi-times" *ngIf="(rowData.Dapproval == 0)" pButton
+                                                <button icon="pi pi-times" *ngIf="(rowData.Dapproval == 2)" pButton
                                                     type="button" label="Declined" pTooltip="Toggle to confirm again"
                                                     style=" background: rgb(215 11 11) !important;"
                                                     (click)="onClick(rowData, 2)">
                                                 </button>
-                                                <button icon="pi pi-exclamation-circle" *ngIf="(rowData.Dapproval == 2)"
-                                                    pButton type="button" label="Pending" pTooltip="Toggle to confirm"
-                                                    style="background: #08747b !important;"
-                                                    (click)="onClick(rowData, 0)">
-                                                </button>
+                                                
                                             </span>
                                         </td>
                                         <td class="td-border">
@@ -98,9 +99,9 @@
                                             <span>
                                                 <span *ngIf="(rowData.Dapproval == 1)">Confirmed!
                                                 </span>
-                                                <span *ngIf="(rowData.Dapproval == 0)">Declined!
+                                                <span *ngIf="(rowData.Dapproval == 2)">Declined!
                                                 </span>
-                                                <span *ngIf="(rowData.Dapproval == 2)">Pending!
+                                                <span *ngIf="(rowData.Dapproval == 0)">Pending!
                                                 </span>
                                             </span>
                                         </td>

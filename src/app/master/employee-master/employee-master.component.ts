@@ -149,6 +149,9 @@ export class EmployeeMasterComponent implements OnInit {
         hostelSelection.push({ label: h.HostelName, value: h.Slno });
       });
       this.hostelOptions = hostelSelection;
+      if((this.login_user.roleId * 1) !== 4) {
+        this.hostelOptions.unshift({ label: 'All', value: 0 });
+      }
       this.hostelOptions.unshift({ label: '-select', value: null });
     }
     })
@@ -230,6 +233,7 @@ export class EmployeeMasterComponent implements OnInit {
       'AltMobNo': this.altMobNo,
       'Pincode': this.pincode,
       'EmployeeImage': this.employeeFileName,
+      'DApproval': 0,
       'Flag': (this.selectedType * 1),
     };
     this._restApiService.post(PathConstants.EmployeeDetails_Post, params).subscribe(res => {
@@ -295,6 +299,9 @@ export class EmployeeMasterComponent implements OnInit {
         this.hostelDistrictOptions = districtSelection.slice(0);
         this.hostelDistrictOptions.unshift({ label: '-select-', value: null });
         this.districtOptions = districtSelection.slice(0);
+        if((this.login_user.roleId * 1) === 1) {
+          this.districtOptions.unshift({ label: 'All', value: 0 });
+        }
         this.districtOptions.unshift({ label: '-select-', value: null });
         break;
       case 'ND':
@@ -334,6 +341,9 @@ export class EmployeeMasterComponent implements OnInit {
             }
           })
           this.talukOptions = talukSelection;
+          if((this.login_user.roleId * 1) !== 4) {
+            this.talukOptions.unshift({ label: 'All', value: 0 });
+          }
           this.talukOptions.unshift({ label: '-select-', value: null });
         }
         break;
