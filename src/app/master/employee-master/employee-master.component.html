@@ -156,7 +156,7 @@
                                 <div><label for="_dis">District</label>
                                 </div>
                                 <p-dropdown name="_dis" [options]="districtOptions" [(ngModel)]="districtId"
-                                    (onClick)="onSelect('DT', 2)" (ngModelChange)="refreshField('D')"  required>
+                                    (onClick)="onSelect('DT', 2)" (onChange)="selectDistrict(1)"(ngModelChange)="refreshField('D')"  required>
                                 </p-dropdown>
                             </div>
                             <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
