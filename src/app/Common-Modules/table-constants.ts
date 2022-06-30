@@ -201,6 +201,8 @@ export class TableConstants {
 
         this.hostelReportCols = [
             { field: 'HostelCode', header: 'Hostel Code', align: 'left !important'},
+            { field: 'FunctioningName', header: 'Hostel Type', align: 'left !important'},
+            { field: 'HGenderType', header: 'Boys/Girls Hostel', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
             { field: 'HostelOpeningDate', header: 'Hostel Opening Date', width: '100px'},
@@ -233,7 +235,7 @@ export class TableConstants {
             { field: 'Remarks', header: 'Remarks', width: '100px', align: 'left !important' },
         ]
         this.employeeReportCols = [
-            { field: 'district1', header: 'District Name', width: '100px', align: 'left !important'},
+            { field: 'hostelDistrict', header: 'District Name', width: '100px', align: 'left !important'},
             { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', width: '100px', align: 'left !important'},
             // { field: 'WardenName', header: 'Employee Name', width: '100px', align: 'left !important'},

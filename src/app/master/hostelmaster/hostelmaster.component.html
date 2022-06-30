@@ -137,6 +137,14 @@
                                     pInputText  [(ngModel)]="nearestPhc" appInputFormat="noSpecialChars" required />
                                         
                                 </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"
+                                            required>
+                                        </p-radioButton>&nbsp;
+                                        <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType"
+                                            required>
+                                        </p-radioButton>
+                                </div>
                             
                                 <div class="p-col-12 txt-center">
                                     <button pButton type="button" label="Submit" (click)="onSubmit()" 

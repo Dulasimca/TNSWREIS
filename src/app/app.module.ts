@@ -156,6 +156,7 @@ import { CommoditygroupEntryComponent } from './Master-Entry/commoditygroup-entr
 import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-master-entry.component';
 import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
 import { StudentCertificateDownloadComponent } from './Reports/student-certificate-download/student-certificate-download.component';
+import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/schoolwise-document-upload.component';
 
 
 @NgModule({
@@ -257,6 +258,7 @@ import { StudentCertificateDownloadComponent } from './Reports/student-certifica
     SubcasteEntryComponent,
     CoursemasterEntryComponent,
     StudentCertificateDownloadComponent,
+    SchoolwiseDocumentUploadComponent,
     
   ],
   imports: [

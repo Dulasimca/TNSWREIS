@@ -156,6 +156,11 @@ export class HostelReportComponent implements OnInit {
       this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
+            res.Table.forEach(r => {
+              r.HGenderType = (r.HGenderType === 1) ? 'Boys' : 'Girls'
+            console.log('i',r.HGenderType)
+
+            })
             this.hostelData = res.Table;
             this.loading = false;
             this.disableExcel = false;

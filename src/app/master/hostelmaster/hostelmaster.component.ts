@@ -62,6 +62,7 @@ export class HostelmasterComponent implements OnInit {
   MLAOptions: SelectItem[];
   MLAId: string;
   MPId: string;
+  selectedType: number;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private _datepipe: DatePipe, private messageService: MessageService,private _authService: AuthService) { }
@@ -191,7 +192,8 @@ export class HostelmasterComponent implements OnInit {
       'NearestPhc': this.nearestPhc,
       'MPId': this.MPId,
       'MLAId': this.MLAId,
-      'SpecialDashildar': this.SpecialDashildar
+      'SpecialDashildar': this.SpecialDashildar,
+      'Flag': (this.selectedType * 1)
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
         if (res) {
@@ -219,8 +221,6 @@ export class HostelmasterComponent implements OnInit {
         }
       })
     }
-  
-    
   
   onView() {
     this.data = [];
@@ -285,6 +285,12 @@ export class HostelmasterComponent implements OnInit {
     this.policeStationAddress = selectedRow.PoliceStationAddress;
     this.hostelOpeningDate = (selectedRow.HostelOpeningDate !== null) ? new Date(selectedRow.HostelOpeningDate) : null;
     this.nearestPhc = selectedRow.NearestPhc;
+    this.selectedType =selectedRow.Flag;
+    this.MPId = selectedRow.MPId;
+    this.MPOptions = [{ label: selectedRow.MPName , value: selectedRow.MPId}];
+    this.MLAId = selectedRow.MLAId;
+    this.MLAOptions = [{ label: selectedRow.MLAName, value: selectedRow.MLAId}];
+    this.SpecialDashildar = selectedRow.SpecialDashildar;
  }
   }
 
