@@ -222,8 +222,6 @@ export class HostelmasterComponent implements OnInit {
       })
     }
   
-    
-  
   onView() {
     this.data = [];
     const params = {
