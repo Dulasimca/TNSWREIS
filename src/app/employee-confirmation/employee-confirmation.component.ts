@@ -108,29 +108,29 @@ export class EmployeeConfirmationComponent implements OnInit {
       } 
       this.loadHostelList();
     }
-
+//approval button functions
     onClick(data, value) {
       this.loading = true;
       if (value === 0) {
         ///Confirm
         this.employeeDetails.forEach(i => {
           if (i.Id === data.Id)
-            i.Dapproval = 1; // present to absent
+            i.Dapproval = 1; // pending to confirm
           this.loading = false;
         })
       } 
       if (value === 1) {
-        ///Confirm
+        ///decline
         this.employeeDetails.forEach(i => {
           if (i.Id === data.Id)
-            i.Dapproval = 0; // present to absent
+            i.Dapproval = 2; // confirm to decline
           this.loading = false;
         })
       }else {
         ///absent
         this.employeeDetails.forEach(i => {
           if (i.Id === data.Id)
-            i.Dapproval = 1; // absent to present
+            i.Dapproval = 1; // decline to confirm
           this.loading = false;
         })
       }
