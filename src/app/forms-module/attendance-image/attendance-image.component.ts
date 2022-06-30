@@ -213,13 +213,22 @@ export class AttendanceImageComponent implements OnInit {
       'Todate': this.datepipe.transform(this.date, 'MM/dd/yyyy'),
     }
     this.restApiService.getByParameters(PathConstants.AttendanceImage_Get, params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
+      if (res !== null && res !== undefined) {
+        if( res.Table.length !== 0){
         res.Table.forEach(i => {
           i.url = 'assets/layout/' + i.HostelID + '/' + i.ImageName;
         })
         this.data = res.Table;
         this.imagecount = res.Table.length;
       }
+      else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_ALERT, detail: ResponseMessage.NoRecForCombination
+        });
+      }
+    }
       else {
         this._messageService.clear();
         this._messageService.add({

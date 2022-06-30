@@ -143,7 +143,6 @@ export class EmployeeMasterComponent implements OnInit {
       });
       this.hostelNameOptions = hostelDistrictWiseSelection;
       this.hostelNameOptions.unshift({ label: '-select', value: null });
-      console.log('hst', this.hostelName)
     } else {
       const hostelSelection = [];
       res.Table.forEach(h => {
