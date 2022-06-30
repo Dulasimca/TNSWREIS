@@ -20,7 +20,7 @@ export class EmployeeConfirmationComponent implements OnInit {
   taluk: any;
   hostelName: any;
   employeeCols: any;
-  consumptionDetails: any[] = [];
+  employeeDetails: any[] = [];
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
   hostelOptions: SelectItem[];
@@ -113,7 +113,7 @@ export class EmployeeConfirmationComponent implements OnInit {
       this.loading = true;
       if (value === 0) {
         ///Confirm
-        this.consumptionDetails.forEach(i => {
+        this.employeeDetails.forEach(i => {
           if (i.Id === data.Id)
             i.Dapproval = 1; // present to absent
           this.loading = false;
@@ -121,14 +121,14 @@ export class EmployeeConfirmationComponent implements OnInit {
       } 
       if (value === 1) {
         ///Confirm
-        this.consumptionDetails.forEach(i => {
+        this.employeeDetails.forEach(i => {
           if (i.Id === data.Id)
             i.Dapproval = 0; // present to absent
           this.loading = false;
         })
       }else {
         ///absent
-        this.consumptionDetails.forEach(i => {
+        this.employeeDetails.forEach(i => {
           if (i.Id === data.Id)
             i.Dapproval = 1; // absent to present
           this.loading = false;
@@ -156,13 +156,13 @@ export class EmployeeConfirmationComponent implements OnInit {
     }
 
     loadTable() {
-      this.consumptionDetails = [];
+      this.employeeDetails = [];
       if(this.district !== null && this.district !== undefined && this.taluk !==null && this.taluk !==undefined &&
         this.hostelName !== null && this.hostelName !== undefined && this.hostelName !==undefined) {
       this.loading = true;
       const params = {
-        'Districtcode': this.district,
-        'Talukid': this.taluk,
+        'DCode': this.district,
+        'TCode': this.taluk,
         'HostelId': this.hostelName ,
       }
       this.restApiService.getByParameters(PathConstants.EmployeeDetails_Get, params).subscribe(res => {
@@ -173,7 +173,7 @@ export class EmployeeConfirmationComponent implements OnInit {
             console.log('h',r.Districtapproval)
 
           })
-          this.consumptionDetails = res.Table;
+          this.employeeDetails = res.Table;
           this.disableExcel = false;
           this.loading = false;
         } else {

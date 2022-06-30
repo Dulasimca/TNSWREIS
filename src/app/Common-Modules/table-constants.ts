@@ -200,6 +200,8 @@ export class TableConstants {
 
         this.hostelReportCols = [
             { field: 'HostelCode', header: 'Hostel Code', align: 'left !important'},
+            { field: 'FunctioningName', header: 'Hostel Type', align: 'left !important'},
+            { field: 'HGenderType', header: 'Boys/Girls Hostel', align: 'left !important'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
             { field: 'HostelNameTamil', header: 'விடுதியின் பெயர்', align: 'left !important'},
             { field: 'HostelOpeningDate', header: 'Hostel Opening Date', width: '100px'},
