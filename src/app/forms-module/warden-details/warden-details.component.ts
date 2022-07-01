@@ -72,7 +72,7 @@ export class WardenDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.cols = this._tableConstants.wardenTableColumns;
     this.logged_user = this.authService.UserInfo;
-    const current_year = new Date().getFullYear() - 5;
+    const current_year = new Date().getFullYear();
     const start_year_range = current_year - 70;
     this.yearRange = start_year_range + ':' + current_year;
     this.isValidEmail = false;
