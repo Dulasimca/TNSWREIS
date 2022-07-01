@@ -141,7 +141,6 @@ import { HostelWiseDashboardComponent } from './Dashboards/hostel-wise-dashboard
 import { TotalCountDashboardComponent } from './Dashboards/total-count-dashboard/total-count-dashboard.component';
 import { OnlineRegistrationCheckComponent } from './forms-module/online-registration-check/online-registration-check.component';
 import { HostelDashboardComponent } from './Dashboards/hostel-dashboard/hostel-dashboard.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { HostelClosingdateEntryComponent } from './hostel-closingdate-entry/hostel-closingdate-entry.component';
 import { StudentReportComponent } from './Reports/student-report/student-report.component';
@@ -302,7 +301,6 @@ import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/
     CarouselModule,
     HighchartsChartModule,
     PaginatorModule,
-    PdfViewerModule,
     MessagesModule,
     MessageModule,
     BlockUIModule.forRoot(),

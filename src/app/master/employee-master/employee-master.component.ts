@@ -68,6 +68,7 @@ export class EmployeeMasterComponent implements OnInit {
   hostelOptions: SelectItem[];
   hostel: any;
   loading: boolean;
+  dobYearRange: string;
   public formData = new FormData();
   @ViewChild('f', { static: false }) employeeForm: NgForm;
   @ViewChild('userFile', { static: false }) _employeeimage: ElementRef;
@@ -78,9 +79,10 @@ export class EmployeeMasterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const current_year = new Date().getFullYear() - 5;
-    const start_year_range = current_year - 72;
-    this.yearRange = start_year_range + ':' + current_year;
+    const current_year = new Date().getFullYear();
+    const dob_cyear = current_year - 5;
+    this.dobYearRange = 1950 + ':' + dob_cyear;
+    this.yearRange = 1950 + ':' + current_year;
 
     this.cols = [
       { field: 'hostelDistrict', header: 'District Name', width: '100px', align: 'left !important' },

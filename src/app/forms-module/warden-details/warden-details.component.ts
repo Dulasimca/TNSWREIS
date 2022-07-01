@@ -61,6 +61,7 @@ export class WardenDetailsComponent implements OnInit {
   wardenFileName: string;
   disableSave: boolean;
   isValidEmail: boolean;
+  dobYearRange: string;
   public formData = new FormData();
 
   @ViewChild('f', { static: false }) _wardenDetails: NgForm;
@@ -72,9 +73,10 @@ export class WardenDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.cols = this._tableConstants.wardenTableColumns;
     this.logged_user = this.authService.UserInfo;
-    const current_year = new Date().getFullYear() - 5;
-    const start_year_range = current_year - 70;
-    this.yearRange = start_year_range + ':' + current_year;
+    const current_year = new Date().getFullYear();
+    const dob_cyear = current_year - 5;
+    this.dobYearRange = 1950 + ':' + dob_cyear;
+    this.yearRange = 1950 + ':' + current_year;
     this.isValidEmail = false;
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getDistrictAll();
