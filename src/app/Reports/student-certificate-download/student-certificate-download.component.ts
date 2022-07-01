@@ -106,6 +106,8 @@ export class StudentCertificateDownloadComponent implements OnInit {
     this.studentDocData = [];
     this.loading = true;
     const params = {
+      'DCode': this.district,
+      'TCode': this.taluk,
       'HCode': ((this.logged_user.roleId * 1) === 4) ? this.logged_user.hostelId : this.hostel
     }
     this._restApiService.getByParameters(PathConstants.StudentCertificate_Get, params).subscribe(res => {
