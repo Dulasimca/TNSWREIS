@@ -38,14 +38,14 @@
                                     <label for="_mp">MP<span
                                         class="form-mandatory-field">*</span></label>
                                     <p-dropdown name="_mp"  [options]="MPOptions"
-                                         [(ngModel)]="MPId" [disabled]="disableFields" (onChange)="onChangeMP()" required>
+                                         [(ngModel)]="MPId" (onClick)="loadMPData()"  (onChange)="onChangeMP()" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_mla">MLA<span
                                         class="form-mandatory-field">*</span></label>
                                     <p-dropdown name="_mla"  [options]="MLAOptions"
-                                         [(ngModel)]="MLAId" [disabled]="disableFields" required>
+                                         [(ngModel)]="MLAId"  required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
