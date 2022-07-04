@@ -133,6 +133,7 @@ export class EmployeeMasterComponent implements OnInit {
       params['DCode'] = (this.districtId !== null && this.districtId !== undefined) ? this.districtId : '0';
       params['TCode'] = (this.talukID !== null && this.talukID !== undefined) ? this.talukID : '0';
        this.loadHostel(params, id);
+       this.selectDropdown();
     }
   }
 
@@ -148,6 +149,7 @@ export class EmployeeMasterComponent implements OnInit {
     } else {
       const hostelSelection = [];
       res.Table.forEach(h => {
+        if(h.Talukid === this.talukID)
         hostelSelection.push({ label: h.HostelName, value: h.Slno });
       });
       this.hostelOptions = hostelSelection;
@@ -192,8 +194,9 @@ export class EmployeeMasterComponent implements OnInit {
   }
 
   loadTable(params) {
+    this.data = [];
     this._restApiService.getByParameters(PathConstants.EmployeeDetails_Get, params).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
+      if (res !== null && res !== undefined && res.Table.length !== 0) {
         res.Table.forEach(i => {
           i.Flag = (i.Flag) ? 'Active' : 'Inactive';
           i.url = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + i.EmployeeImage;
@@ -208,7 +211,7 @@ export class EmployeeMasterComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
         })
       }
     });

@@ -89,6 +89,7 @@ export class DailyconsumptionReportComponent implements OnInit {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
             this.hostels.forEach(h => {
+              if(h.Talukid === this.taluk)
               hostelSelection.push({ label: h.HostelName, value: h.Slno });
             })
         }

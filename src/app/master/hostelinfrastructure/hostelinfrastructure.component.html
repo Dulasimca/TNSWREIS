@@ -184,13 +184,13 @@
                                 </label>
                             </div>
                             <input type="text" name="_studstayingroom" appInputFormat="digitOnly" pInputText
-                                [(ngModel)]="studentStayingRoom">
+                                [(ngModel)]="studentStayingRoom" required>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                             <div><label for="_wardenstayingroom">Warden Staying Rooms<span
                                         class="form-mandatory-field">*</span></label></div>
                             <input type="text" name="_wardenstayingroom" appInputFormat="digitOnly" pInputText
-                                [(ngModel)]="wardenStayingRoom">
+                                [(ngModel)]="wardenStayingRoom" required>
                         </div>
                         <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                             <div><label for="_library">Library<span class="form-mandatory-field">*</span></label></div>
@@ -227,7 +227,7 @@
 
                         <div class="p-col-12 p-md-12 p-lg-12 txt-center">
                             <button pButton type="button" label="Submit" (click)="onUpdate()"
-                                class="btn-bg"></button>&nbsp;
+                                class="btn-bg" [disabled]="(!t.valid || !t.dirty)"></button>&nbsp;
                             <button pButton type="button" label="View" icon="pi pi-eye"
                                 (click)="onLoad()"></button>&nbsp;
                             <button pButton type="button" label="Clear" icon="pi pi-trash"

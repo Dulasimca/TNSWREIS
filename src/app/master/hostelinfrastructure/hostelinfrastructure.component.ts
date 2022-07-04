@@ -449,6 +449,9 @@ export class HostelinfrastructureComponent implements OnInit {
     this.BuildingArea = selectedRow.BuildingArea;
     this.NoOfFloor = selectedRow.NoOfFloor;
     this.HostelId = selectedRow.HostelId;
+    this.playgroundCheck =selectedRow.PlaygroundCheck;
+    this.rampCheck =selectedRow.RampFacilityCheck;
+    this.wallCheck =selectedRow.CompoundWallCheck;
     this.disableFields = false;
   }
 
