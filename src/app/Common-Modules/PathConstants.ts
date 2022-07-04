@@ -237,6 +237,10 @@ public static readonly HostelFunctioningType_post = 'HostelFunctioningType/post'
 public static readonly HostelFunctioningType_Get = 'HostelFunctioningType';
 public static readonly StudentApprovalFromOnlineReg_Post = 'StudentApprovalFromOnlineReg/Post';
 
+public static readonly UpdateHostelGallery_Put = 'UpdateHostelGallery/Post';
+
+public static readonly UpdateHostelImage_Put = 'UpdateHostelImage/Post';
+
 
 
 }

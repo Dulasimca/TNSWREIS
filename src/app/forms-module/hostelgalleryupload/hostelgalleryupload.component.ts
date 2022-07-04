@@ -4,12 +4,15 @@ import { AuthGuard } from 'src/app/services/auth.guard';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { User } from 'src/app/Interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
-import { MessageService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { MasterService } from '../../services/master-data.service';
+import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -26,15 +29,21 @@ export class HostelgalleryuploadComponent implements OnInit {
   logged_user: User;
   title: any;
   date: Date = new Date();
-
+  hostelGallerycols: any;
+  hostelGallerydata: any[] = [];
+  imageDialog: boolean;
+  loading: boolean;
+  @ViewChild('f', { static: false }) hostelImageUpload: NgForm;
   @ViewChild('userFile', { static: false }) _HostelImg: ElementRef;
+  @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
   public formData = new FormData();
   ImageId: any;
 
-  constructor(private masterService: MasterService, private _restApiService: RestAPIService, private messageService: MessageService, private _d: DomSanitizer,
-    private _AuthGuard: AuthGuard, private _authService: AuthService, private http: HttpClient, private _datePipe: DatePipe) { }
+  constructor(private _tableConstants: TableConstants, private masterService: MasterService, private _restApiService: RestAPIService, private messageService: MessageService, private _d: DomSanitizer,
+    private _AuthGuard: AuthGuard, private _authService: AuthService, private http: HttpClient, private _datePipe: DatePipe,  private _confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
+    this.hostelGallerycols = this._tableConstants.hostelGalleryUploadColumns;
     this.ImageId = 0;
     this.logged_user = this._authService.UserInfo;
     this.years = this.masterService.getMaster('AY');
@@ -56,33 +65,7 @@ export class HostelgalleryuploadComponent implements OnInit {
         break;
     }
   }
-  //  onFileUpload($event, id) {
-  //   const selectedFile = $event.target.files[0];
-  //   var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-  //       const s_url = window.URL.createObjectURL(selectedFile);
-  //       this.Hostelactivityimages = this._d.bypassSecurityTrustUrl(s_url);
-  //       //this.imagefilenam = this.uploadFile($event.target.files);
-  //       this.imagefilenam = $event.target.files;       
-  //   }
-  // public uploadFile = (files) => {
-  //   if (files.length === 0) {
-  //     return;
-  //   }
-  //   var formData = new FormData()
-  //   let fileToUpload: any = <File>files[0];
-  //   let actualFilename = '';
-  //   const subfolder = this.years.value;
-  //   console.log(subfolder)
-  //   const folderName = this.logged_user.hostelId + '/' + 'Events' +'/' + '2021-2022';
-  //   const filename = fileToUpload.name + '^' + folderName;
-  //   formData.append('file', fileToUpload, filename);
-  //   actualFilename = fileToUpload.name;
-  //   this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
-  //     .subscribe((event: any) => {
-  //     }
-  //     );
-  //     return actualFilename;
-  // }
+
   public uploadFile = (event) => {
     const selectedFile = event.target.files[0];
     {
@@ -127,12 +110,76 @@ export class HostelgalleryuploadComponent implements OnInit {
     });
   }
   clearForm() {
-    this.defaultValues();
+    this.hostelImageUpload.reset();
   }
-  defaultValues() {
-    this.Hostelactivityimages = 'assets/layout/' + this.logged_user.hostelId + '/Documents/' + 'Mohan.jpg';
-    this.imagefilenam = '';
+  // defaultValues() {
+  //   this.Hostelactivityimages = 'assets/layout/' + this.logged_user.hostelId + '/Documents/' + 'Mohan.jpg';
+  //   this.imagefilenam = '';
+  // }
+
+  showImage(url) {
+    this.imageDialog = true;
+    this.Hostelactivityimages = url;
   }
+
+  loadTable() {
+    const params = {
+      'HCode' : this.logged_user.hostelId,
+       }
+    this._restApiService.getByParameters(PathConstants.HostelGallery_Get, params).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        res.Table.forEach(i => {
+          i.url = 'assets/layout/' + this.logged_user.hostelId + '/Events' + '/' + '2021-2022' + '/' + i.Image;
+        })
+        this.hostelGallerydata = res.Table;
+        this.loading = false;
+      } else {
+        this.loading = false;
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+        })
+      }
+    });
+  }
+
+  onDelete(rowData) { 
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this._alert.disableModality();
+        // this.blockUI.start();
+        this._restApiService.post(PathConstants.UpdateHostelGallery_Put, { 'ImageId': rowData.Id }).subscribe(res => {
+    console.log('enter')
+
+          if (res !== null && res !== undefined) {
+            this.loadTable();
+            // this.blockUI.stop;
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+              summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.DeleteSuccessMsg
+            });
+          } else {
+            // this.blockUI.start();
+            this.messageService.clear();
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+              summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.DeleteFailMsg
+            });
+          }
+        })
+      },
+      reject: () => {
+        this.messageService.clear();
+        this._alert.disableModality();
+      }
+    })
+  }
+    
 }
 
 

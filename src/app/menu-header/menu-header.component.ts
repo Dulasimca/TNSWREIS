@@ -4,6 +4,11 @@ import { MenuItem } from 'primeng/api';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
+import { RestAPIService } from '../services/restAPI.service';
+import { PathConstants } from 'src/app/Common-Modules/PathConstants';
+import { MessageService, SelectItem } from 'primeng/api';
+import { ResponseMessage } from 'src/app/Common-Modules/messages';
+
 
 
 @Component({
@@ -23,7 +28,7 @@ export class MenuHeaderComponent implements OnInit {
   officeType: string;
   placeType: string;
   @ViewChild('op', { static: false }) _op: OverlayPanel;
-  constructor(private _authService: AuthService, private _router: Router) {
+  constructor(private _authService: AuthService, private _router: Router, private _restApiService: RestAPIService, private _messageService: MessageService) {
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login') {
@@ -84,6 +89,35 @@ export class MenuHeaderComponent implements OnInit {
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
+  }
+
+  CheckApplicaitonStatus()
+  {
+    this._restApiService.get(PathConstants.HostelOnlineApplication_Get).subscribe(res => {
+      if (res !== null && res !== undefined) {
+        if(res.length === 0) {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Will Be Opened Soon, Please Contact TNADWHO'
+          })
+          // setTimeout(() => {
+          //   this._router.navigate(['/online-registration']);
+          // },1000)
+        }
+        else
+        {
+          console.log('test')
+        this._router.navigate(['/online-registration']);
+        }
+      } else {
+        console.log('test')
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Will Be Opened Soon, Please Contact TNADWHO'
+        })
+      }
+    }) 
   }
 
 }

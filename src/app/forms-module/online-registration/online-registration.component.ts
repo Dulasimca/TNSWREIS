@@ -148,22 +148,6 @@ export class OnlineRegistrationComponent implements OnInit {
       this.blockUI.stop();
     }, 500);
     this.defaultValues();
-    this._restApiService.get(PathConstants.HostelOnlineApplication_Get).subscribe(res => {
-      if (res !== null && res !== undefined) {
-        if(res.length === 0) {
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Closed'
-          })
-          setTimeout(() => {
-            this.router.navigate(['/home']);
-          },1000)
-        }
-      } else {
-        this.router.navigate(['/home']);
-      }
-    }) 
   }
 
   onSelectType(id: number) {
