@@ -177,9 +177,26 @@
                             </div>
                             </div>
                             <div class="p-col-1"></div>
-                            <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                            <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                                 [rowsPerPageOptions]="[5,10,15,20]" responsiveLayout="scroll"
-                                totalRecords="totalRecords" [loading]="loading" styleClass="p-datatable-gridlines">
+                                totalRecords="totalRecords" [loading]="loading" [filterDelay]="0" [globalFilterFields]="['FirstName','LastName']" styleClass="p-datatable-gridlines">
+                                <ng-template pTemplate="caption">
+                                    <div class="table-header">
+                                        <div class="p-grid">
+                                            <div class="p-col-6 p-md-6 p-lg-10 txt-end">
+                                                <span>Search by Employee name</span>
+                                            </div>
+                                            <div class="p-col-4 p-md-4 p-lg-2">
+                                                <span class="p-input-icon-left">
+                                                    <i class="pi pi-search"></i>
+                                                    <input pInputText type="text" size="30"
+                                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                        placeholder="Global Search" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th>S.No</th>

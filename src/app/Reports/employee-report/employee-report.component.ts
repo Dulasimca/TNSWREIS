@@ -161,7 +161,8 @@ export class EmployeeReportComponent implements OnInit {
         
       }
       this.restApiService.getByParameters(PathConstants.EmployeeDetails_Get,params).subscribe(res =>{
-        if (res !== null && res !== undefined && res.length !== 0) {
+        if (res !== null && res !== undefined) {
+          if(res.Table.length !== 0){
           res.Table.forEach(i => {
             i.Flag = (i.Flag) ? 'Active' : 'Inactive';
             i.url = 'assets/layout/' + this.login_user.hostelId + '/Documents' + '/' + i.EmployeeImage;
@@ -176,6 +177,14 @@ export class EmployeeReportComponent implements OnInit {
       this._messageService.add({
         key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
         summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
+      })
+    }
+  }
+    else {
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+        summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
       })
     }
   });

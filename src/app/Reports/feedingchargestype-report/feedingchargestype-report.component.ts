@@ -68,7 +68,8 @@ export class FeedingchargestypeReportComponent implements OnInit {
       'AccountingYearId' : this.Accountingyear,
     };
     this.restApiService.getByParameters(PathConstants.FeedingChargesDetail_Get,params).subscribe(res => {
-      if (res !== null && res !== undefined && res.Table.length !== 0) {
+      if (res !== null && res !== undefined) {
+        if(res.Table.length !== 0){
         this.data = res.Table;
         this.data.forEach(i => {
           i.Flag = (i.Flag) ? 'Active' : 'Inactive';
@@ -82,6 +83,15 @@ export class FeedingchargestypeReportComponent implements OnInit {
         summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
       })
     }
+  }
+    else{
+      this.disableExcel = true;
+    this._messageService.clear();
+    this._messageService.add({
+      key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+      summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+    })
+  }
     });
   
   }
