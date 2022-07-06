@@ -99,7 +99,6 @@ export class OnlineRegistrationCheckComponent implements OnInit {
   onDialogShow() {
     var src = 'assets/layout/Reports/' + this.hostelId+ '/' + this.aadharNo + '_' + this.studentId + '.pdf';
     document.getElementById("embedPDF").setAttribute('src', src);
-    console.log('src',src)
   }
 
   onClear() {

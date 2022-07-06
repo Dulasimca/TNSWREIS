@@ -156,7 +156,12 @@ import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-
 import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
 import { StudentCertificateDownloadComponent } from './Reports/student-certificate-download/student-certificate-download.component';
 import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/schoolwise-document-upload.component';
+<<<<<<< HEAD
 import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
+=======
+import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
+import { NgxPrintModule } from 'ngx-print';
+>>>>>>> 254761b359e82bd9e5bf9fe674cbe4675e564c16
 
 
 @NgModule({
@@ -259,7 +264,11 @@ import { OnlineApplicationControlComponent } from './master/online-application-c
     CoursemasterEntryComponent,
     StudentCertificateDownloadComponent,
     SchoolwiseDocumentUploadComponent,
+<<<<<<< HEAD
     OnlineApplicationControlComponent,
+=======
+    StudentIdcardComponent,
+>>>>>>> 254761b359e82bd9e5bf9fe674cbe4675e564c16
     
   ],
   imports: [
@@ -305,6 +314,7 @@ import { OnlineApplicationControlComponent } from './master/online-application-c
     PaginatorModule,
     MessagesModule,
     MessageModule,
+    NgxPrintModule,
     BlockUIModule.forRoot(),
   ],
 

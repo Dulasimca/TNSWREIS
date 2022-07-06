@@ -34,6 +34,7 @@ export class TableConstants {
     HostelFundtable: any = [];
     DeviceMappingReportCols: any = [];
     StudentDocumentColumns: any[] = [];
+    studentIdcardColumns: any[] = [];
     hostelGalleryUploadColumns: any = [];
     onlineApplicationControlColumns: any = [];
     constructor() {
@@ -435,6 +436,14 @@ export class TableConstants {
         { field: 'MobileNo',  header: 'MobileNo', width: '100px', align: 'right !important'},
     ];
 
+    this.studentIdcardColumns = [
+        { field: 'studentName',  header: 'Student Name', width: '150px', align: 'left !important'},
+        { field: 'hostelDName',  header: 'District Name', width: '100px', align: 'right !important'},
+        { field: 'hostelTName',  header: 'Taluk Name', width: '100px', align: 'right !important'},
+        { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'right !important'},
+        { field: 'aadharNo',  header: 'Aadhar No.', width: '80px', align: 'left !important'},
+    ];
+
     this.hostelGalleryUploadColumns = [
         { field: 'ShortYear',  header: 'Accounting Year', width: '200px', align: 'left !important'},
         { field: 'ImageDescription',  header: 'Title', width: '200px', align: 'left !important'},
@@ -447,5 +456,7 @@ export class TableConstants {
         { field: 'ApplicationOpenDate',  header: 'Application Open Date', width: '200px', align: 'left !important'},
         { field: 'ApplicationCloseDate',  header: 'Application Close Date', width: '200px', align: 'left !important'},
     ];
+    
+
     }
 }
