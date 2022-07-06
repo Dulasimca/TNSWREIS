@@ -473,10 +473,11 @@
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_pincode" pInputText
                                                                     [(ngModel)]="obj.pincode" appInputFormat="digitOnly"
-                                                                    minlength="6" maxlength="6" required>
+                                                                    minlength="6" maxlength="6" pattern="^6[0-4]\d{4}$" required>
                                                                 <label for="_pincode">Pincode<span
                                                                         class="form-mandatory-field">*</span></label>
                                                             </span>
+                                                            <span *ngIf="f.controls._pincode.invalid && obj.pincode != null" style="font-size: 12px;color: crimson;">Pincode is invalid</span>
                                                         </div>
                                                     </div>
                                                 </div>
