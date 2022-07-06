@@ -135,4 +135,33 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+
+  CheckApplicaitonStatus()
+  {
+    this._restApiService.get(PathConstants.HostelOnlineApplication_Get).subscribe(res => {
+      if (res !== null && res !== undefined) {
+        if(res.length === 0) {
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Will Be Opened Soon, Please Contact TNADWHO'
+          })
+          // setTimeout(() => {
+          //   this._router.navigate(['/online-registration']);
+          // },1000)
+        }
+        else
+        {
+          console.log('test')
+        this._router.navigate(['/online-registration']);
+        }
+      } else {
+        console.log('test')
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Will Be Opened Soon, Please Contact TNADWHO'
+        })
+      }
+    }) 
+  }
 }

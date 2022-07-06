@@ -28,7 +28,7 @@
                                         <button pButton type="button" class="p-col-12" label="Capture"
                                             (click)="capture()" [disabled]="(disableCapture)"icon="pi pi-camera" class="btn-bg"></button>
                                     </div>
-                                </div>
+                                </div>                               
                                 <div *ngIf="openCamera">
                                     <app-camera (pictureTaken)="handleImage($event)" [capture]="triggerObservable"
                                         (triggerCamera)="captureImage()" style="margin-left: 3%;"></app-camera>
@@ -39,10 +39,27 @@
                                 <div *ngIf="!showCapture">
                                     <img [src]="hostelImage" style="width: 300px; height: 250px;" />
                                 </div>
+                                <div *ngIf="showDelete" class="p-col-12 p-md-6 p-lg-2">
+                                    <button pButton type="button" class="p-col-12" label="Delete"
+                                            (click)="delete()" icon="pi pi-delete" class="btn-bg"></button>
+                                </div>  
                             </div>
                         </div>
                     </form>
                 </p-card>
             </p-panel>
         </div>
+        <p-dialog #dialog header="Event Image" [(visible)]="imageDialog" [modal]="imageDialog"
+        [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+        <!-- <img alt="TN ADW Event image" [src]="Hostelactivityimages" style="vertical-align: middle" /> -->
+    </p-dialog>
+        <p-confirmDialog #cd [style]="{width: '50vw'}" [appendTo]="dialog">
+            <ng-template pTemplate="header">
+                <span>Alert</span>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+            </ng-template>
+        </p-confirmDialog>
     </div>
