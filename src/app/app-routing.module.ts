@@ -90,12 +90,9 @@ import { CommoditygroupEntryComponent } from './Master-Entry/commoditygroup-entr
 import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-master-entry.component';
 import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
 import { StudentCertificateDownloadComponent } from './Reports/student-certificate-download/student-certificate-download.component';
-<<<<<<< HEAD
 import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
-=======
 import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/schoolwise-document-upload.component';
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
->>>>>>> 254761b359e82bd9e5bf9fe674cbe4675e564c16
 
 
 const routes: Routes = [
