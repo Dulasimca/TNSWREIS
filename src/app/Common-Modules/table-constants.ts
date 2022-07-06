@@ -35,6 +35,7 @@ export class TableConstants {
     DeviceMappingReportCols: any = [];
     StudentDocumentColumns: any[] = [];
     hostelGalleryUploadColumns: any = [];
+    onlineApplicationControlColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -437,6 +438,14 @@ export class TableConstants {
     this.hostelGalleryUploadColumns = [
         { field: 'ShortYear',  header: 'Accounting Year', width: '200px', align: 'left !important'},
         { field: 'ImageDescription',  header: 'Title', width: '200px', align: 'left !important'},
-    ]
+    ];
+
+    this.onlineApplicationControlColumns = [
+        { field: 'HostelFuncType',  header: 'Hostel Type', width: '200px', align: 'left !important'},
+        { field: 'ApplicationTypeName',  header: 'Application Type', width: '200px', align: 'left !important'},
+        { field: 'ShortYear',  header: 'Academic Year', width: '200px', align: 'left !important'},
+        { field: 'ApplicationOpenDate',  header: 'Application Open Date', width: '200px', align: 'left !important'},
+        { field: 'ApplicationCloseDate',  header: 'Application Close Date', width: '200px', align: 'left !important'},
+    ];
     }
 }

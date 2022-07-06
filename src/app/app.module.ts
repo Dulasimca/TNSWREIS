@@ -156,6 +156,7 @@ import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-
 import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
 import { StudentCertificateDownloadComponent } from './Reports/student-certificate-download/student-certificate-download.component';
 import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/schoolwise-document-upload.component';
+import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
 
 
 @NgModule({
@@ -258,6 +259,7 @@ import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/
     CoursemasterEntryComponent,
     StudentCertificateDownloadComponent,
     SchoolwiseDocumentUploadComponent,
+    OnlineApplicationControlComponent,
     
   ],
   imports: [
