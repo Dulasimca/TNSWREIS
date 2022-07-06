@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
@@ -7,7 +7,8 @@ import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/Interfaces/user';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 
 @Component({
@@ -25,11 +26,14 @@ export class HostelImageComponent implements OnInit {
   hostelImage: string;
   showCapture: boolean = false;
   disableCapture: boolean;
+  showDelete: boolean;
+  hostelimagedata: any[] = [];
+  imageDialog: boolean;
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
-
+  @ViewChild('cd', { static: false }) _alert: ConfirmDialog;
   constructor(private _locationService: LocationService, private restApiService: RestAPIService, private _authService: AuthService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,  private _confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.login_user = this._authService.UserInfo;
@@ -38,7 +42,11 @@ export class HostelImageComponent implements OnInit {
     this.talukname = this.login_user.talukName;
     this.hostelname = this.login_user.hostelName;
     this.disableCapture = true;
+    this.LoadImage();
+  }
 
+  LoadImage()
+  {
     const params = {
       'Type': 0,
       'DCode': this.login_user.districtCode,
@@ -54,13 +62,16 @@ export class HostelImageComponent implements OnInit {
               if (i.HostelImage.trim() !== '') {
                 this.hostelImage = 'assets/layout/' + this.login_user.hostelId + '/' + i.HostelImage;
                 this.showCapture = false;
+                this.showDelete = true;
               } else {
                 this.hostelImage = '';
                 this.showCapture = true;
+                this.showDelete = true;
               }
             } else {
               this.hostelImage = '';
               this.showCapture = true;
+              this.showDelete = true;
             }
           })
         } else {
@@ -130,11 +141,13 @@ export class HostelImageComponent implements OnInit {
         if(pos !== undefined && pos !== null) {
           if(pos.code !== 1) {
             this.disableCapture = false;
+            this.showDelete = false;
             this.openCamera = true;
             this.messageService.clear();
             this.location = pos;
           } else {
             this.disableCapture = true;
+            this.showDelete = false;
             this.openCamera = false;
             this.messageService.clear();
             this.messageService.add({
@@ -144,6 +157,7 @@ export class HostelImageComponent implements OnInit {
           }
         } else {
           this.disableCapture = true;
+          this.showDelete = false;
           this.openCamera = false;
           this.messageService.clear();
           this.messageService.add({
@@ -154,7 +168,43 @@ export class HostelImageComponent implements OnInit {
       });
     }
 
+    delete() {
+      this._confirmationService.confirm({
+        message: 'Are you sure that you want to delete?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this._alert.disableModality();
+          // this.blockUI.start();
+          this.restApiService.post(PathConstants.UpdateHostelImage_Put, { 'HostelId': this.login_user.hostelId}).subscribe(res => {
+            if (res ===  true) {
+              this.LoadImage();
+              // this.blockUI.stop;
+              this.messageService.clear();
+              this.messageService.add({
+                key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+                summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.DeleteSuccessMsg
+              });
+            } else {
+              // this.blockUI.start();
+              this.messageService.clear();
+              this.messageService.add({
+                key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+                summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.DeleteFailMsg
+              });
+            }
+          })
+        },
+        reject: () => {
+          this.messageService.clear();
+          this._alert.disableModality();
+        }
+      })
+    }
 
+    showImage(url) {
+      this.imageDialog = true;
+    }
   capture() {
     this.captureImage();
   }
