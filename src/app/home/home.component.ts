@@ -10,7 +10,8 @@ import { RestAPIService } from '../services/restAPI.service';
 export class HomeComponent implements OnInit, AfterViewInit {
   images: any[] = [];
   homeImageData: any[] = [];
-
+  newApplications: any = [];
+  updateApplications: any = [];
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -43,6 +44,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       }
     })
+    this.newApplications.push(
+      { slno: '1.', type: 'ஆதிதிராவிடர் நல கல்லூரி விடுதிகள்', start: '18.07.2022', end: '05.08.2022' },
+      { slno: '2.', type: 'ஆதிதிராவிடர் நல பள்ளி விடுதிகள்', start: '05.07.2022', end: '20.07.2022' }
+    );
+    this.updateApplications.push(
+      { slno: '1.', type: 'ஆதிதிராவிடர் நல கல்லூரி விடுதிகள்', start: '05.07.2022', end: '25.07.2022' },
+      { slno: '2.', type: 'ஆதிதிராவிடர் நல பள்ளி விடுதிகள்', start: '05.07.2022', end: '15.07.2022' }
+    )
   }
 
   ngAfterViewInit(): void {
