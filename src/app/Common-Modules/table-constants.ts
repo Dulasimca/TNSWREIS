@@ -441,11 +441,12 @@ export class TableConstants {
         { field: 'hostelTName',  header: 'Taluk Name', width: '100px', align: 'right !important'},
         { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'right !important'},
         { field: 'aadharNo',  header: 'Aadhar No.', width: '80px', align: 'left !important'},
-
+    ];
 
     this.hostelGalleryUploadColumns = [
         { field: 'ShortYear',  header: 'Accounting Year', width: '200px', align: 'left !important'},
         { field: 'ImageDescription',  header: 'Title', width: '200px', align: 'left !important'},
     ]
+
     }
 }
