@@ -34,6 +34,7 @@ export class TableConstants {
     HostelFundtable: any = [];
     DeviceMappingReportCols: any = [];
     StudentDocumentColumns: any[] = [];
+    studentIdcardColumns: any[] = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -432,5 +433,15 @@ export class TableConstants {
         { field: 'Dob',  header: 'D.O.B', width: '80px', align: 'left !important'},
         { field: 'MobileNo',  header: 'MobileNo', width: '100px', align: 'right !important'},
     ];
+
+    this.studentIdcardColumns = [
+        { field: 'studentName',  header: 'Student Name', width: '150px', align: 'left !important'},
+        { field: 'hostelDName',  header: 'District Name', width: '100px', align: 'right !important'},
+        { field: 'hostelTName',  header: 'Taluk Name', width: '100px', align: 'right !important'},
+        { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'right !important'},
+        { field: 'aadharNo',  header: 'Aadhar No.', width: '80px', align: 'left !important'},
+
+
+    ]
     }
 }
