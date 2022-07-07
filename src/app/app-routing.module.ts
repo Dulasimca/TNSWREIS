@@ -90,6 +90,7 @@ import { CommoditygroupEntryComponent } from './Master-Entry/commoditygroup-entr
 import { UnitMasterEntryComponent } from './Master-Entry/unit-master-entry/unit-master-entry.component';
 import { SubcasteEntryComponent } from './Master-Entry/subcaste-entry/subcaste-entry.component';
 import { StudentCertificateDownloadComponent } from './Reports/student-certificate-download/student-certificate-download.component';
+import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
 import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/schoolwise-document-upload.component';
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
 
@@ -200,6 +201,7 @@ const routes: Routes = [
   { path: 'coursemaster-entry', component:  CoursemasterEntryComponent  ,canActivate: [AuthGuard]},
   { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] },
   { path: 'student-certificate-download', component:StudentCertificateDownloadComponent,canActivate: [AuthGuard] },
+  { path: 'OnlineApplicationControl', component:OnlineApplicationControlComponent,canActivate: [AuthGuard] },
 ];
 
 

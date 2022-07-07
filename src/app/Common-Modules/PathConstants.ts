@@ -241,6 +241,8 @@ public static readonly UpdateHostelGallery_Put = 'UpdateHostelGallery/Post';
 
 public static readonly UpdateHostelImage_Put = 'UpdateHostelImage/Post';
 
-
+public static readonly ApplicationType_Get = 'ApplicationType';
+public static readonly OnlineApplicationControl_Post = 'OnlineApplicationControl/Post';
+public static readonly OnlineApplicationControl_Get= 'OnlineApplicationControl';
 
 }

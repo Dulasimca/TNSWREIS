@@ -90,6 +90,10 @@ export class OnlineRegistrationComponent implements OnInit {
   titles?: any;
   schoolSelection: any[] = [];
   filteredSchoolData: any[] = [];
+  activeTabIndex: number = 0;
+  tab2: boolean;
+  tab3: boolean;
+  showSubmit: boolean;
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -495,6 +499,9 @@ export class OnlineRegistrationComponent implements OnInit {
     this.maxDate = new Date();
     this.obj = {} as OnlineRegistration;
     this.studentImage = '';
+    this.showSubmit = false;
+    this.tab2 = false;
+    this.tab3 = false;
     this.disableTaluk = true;
     this.isDisability = false;
     this.enableScholarship = true;
@@ -821,5 +828,21 @@ export class OnlineRegistrationComponent implements OnInit {
       })
     }
   }
+
+  moveTo() {
+    this.activeTabIndex = (this.activeTabIndex === 2) ? 0 : this.activeTabIndex + 1;
+    this.tab2 = (this.activeTabIndex === 1 || (this.activeTabIndex !== 1 && this.tab2)) ? true : false;
+    this.tab3 = (this.activeTabIndex === 2 || (this.activeTabIndex === 2 && this.tab3)) ? true : false;
+    this.showSubmit = (this.tab2 && this.tab3) ? true : false;
+    console.log('move', this.tab2, this.tab3, this.showSubmit, this.activeTabIndex);
+  }
+
+  handleChange(e) {
+    var index = e.index;
+    this.tab2 = (index === 1 || (index !== 1 && this.tab2)) ? true : false;
+    this.tab3 = (index === 2 || (index === 2 && this.tab3)) ? true : false;
+    this.showSubmit = (this.tab2 && this.tab3) ? true : false;
+  }
+
 }
 

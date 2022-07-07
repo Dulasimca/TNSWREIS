@@ -36,6 +36,7 @@ export class TableConstants {
     StudentDocumentColumns: any[] = [];
     studentIdcardColumns: any[] = [];
     hostelGalleryUploadColumns: any = [];
+    onlineApplicationControlColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -117,12 +118,12 @@ export class TableConstants {
         ];
 
         this.studentDetailsColumns = [
-            { field: 'admissionNo', header: 'Admission No.', align: 'right !important', width: '100px'},
-            { field: 'studentName', header: 'Name', align: 'left !important' , width: '100px' },
-            // { field: 'AttendanceId', header: 'Attendance Id', align: 'right !important', width: '100px'},
             { field: 'hostelDName', header: 'District', align: 'left !important', width: '100px'},
             { field: 'hostelTName', header: 'Taluk', align: 'left !important', width: '100px'},
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important', width: '100px'},
+            { field: 'admissionNo', header: 'Admission No.', align: 'right !important', width: '100px'},
+            { field: 'studentName', header: 'Name', align: 'left !important' , width: '100px' },
+            // { field: 'AttendanceId', header: 'Attendance Id', align: 'right !important', width: '100px'},
             // { field: 'dob', header: 'Date of birth', align: 'center !important', width: '100px'},
             // { field: 'age', header: 'Age', align: 'right !important', width: '100px'},
             // { field: 'genderName', header: 'Gender', align: 'left !important', width: '100px'},
@@ -423,8 +424,8 @@ export class TableConstants {
         { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'left !important'},
         { field: 'InstituteName',  header: 'School/College', width: '100px', align: 'left !important'},
         { field: 'Emisno',  header: 'EMIS No/Registeration No', width: '100px', align: 'left !important'},
-        { field: 'CourseTitle',  header: 'Standard/Course', width: '100px', align: 'left !important'},
-        { field: 'ClassName',  header: 'Subject', width: '100px', align: 'left !important'},
+        { field: 'ClassName',  header: 'Standard/Course', width: '100px', align: 'left !important'},
+        { field: 'CourseTitle',  header: 'Subject', width: '100px', align: 'left !important'},
         { field: 'TotalYearlyIncome',  header: 'Income', width: '100px', align: 'left !important'},
         { field: 'Name',  header: 'Caste', width: '100px', align: 'left !important'},
     ];
@@ -446,7 +447,16 @@ export class TableConstants {
     this.hostelGalleryUploadColumns = [
         { field: 'ShortYear',  header: 'Accounting Year', width: '200px', align: 'left !important'},
         { field: 'ImageDescription',  header: 'Title', width: '200px', align: 'left !important'},
-    ]
+    ];
+
+    this.onlineApplicationControlColumns = [
+        { field: 'HostelFuncType',  header: 'Hostel Type', width: '200px', align: 'left !important'},
+        { field: 'ApplicationTypeName',  header: 'Application Type', width: '200px', align: 'left !important'},
+        { field: 'ShortYear',  header: 'Academic Year', width: '200px', align: 'left !important'},
+        { field: 'ApplicationOpenDate',  header: 'Application Open Date', width: '200px', align: 'left !important'},
+        { field: 'ApplicationCloseDate',  header: 'Application Close Date', width: '200px', align: 'left !important'},
+    ];
+    
 
     }
 }
