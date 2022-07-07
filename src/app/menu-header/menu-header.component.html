@@ -1,5 +1,6 @@
 <div *ngIf="!hideHeader" class="p-col-12 p-md-12 p-lg-12 menu-header no-padding">
     <div class="p-col-12 p-md-12 p-lg-12 no-pad-lt">
+        <p-toast position="top-center" key="t-msg"></p-toast>
         <mat-toolbar color="primary">
             <div *ngIf="showMenu" (click)="onToggleSidenav()" fxHide fxShow.xs fxShow.sm fxShow.md fxHide.lg fxHide.lt-lg fxHide.lt-xl>
                 <span style="float: left;">
@@ -17,7 +18,7 @@
                 </div>
             </div>
             <div *ngIf="!showMenu" fxFlex fxLayout fxFlexFill fxLayoutAlign="end end">
-                <span class="status-menu" routerLink="/online-registration" routerLinkActive="active">Online Registration |</span>
+                <span class="status-menu" (click)="CheckApplicaitonStatus()"  routerLinkActive="active">Online Registration |</span>
                 <span class="status-menu" routerLink="/application-status" routerLinkActive="active"> Application Status</span>
 
                 <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()"></button>
