@@ -421,8 +421,8 @@ export class TableConstants {
         { field: 'HostelName',  header: 'Hostel Name', width: '100px', align: 'left !important'},
         { field: 'InstituteName',  header: 'School/College', width: '100px', align: 'left !important'},
         { field: 'Emisno',  header: 'EMIS No/Registeration No', width: '100px', align: 'left !important'},
-        { field: 'CourseTitle',  header: 'Standard/Course', width: '100px', align: 'left !important'},
-        { field: 'ClassName',  header: 'Subject', width: '100px', align: 'left !important'},
+        { field: 'ClassName',  header: 'Standard/Course', width: '100px', align: 'left !important'},
+        { field: 'CourseTitle',  header: 'Subject', width: '100px', align: 'left !important'},
         { field: 'TotalYearlyIncome',  header: 'Income', width: '100px', align: 'left !important'},
         { field: 'Name',  header: 'Caste', width: '100px', align: 'left !important'},
     ];
