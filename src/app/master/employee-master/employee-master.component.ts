@@ -145,6 +145,9 @@ export class EmployeeMasterComponent implements OnInit {
         hostelDistrictWiseSelection.push({ label: h.HostelName, value: h.Slno, hostelTCode: h.Talukid });
       });
       this.hostelNameOptions = hostelDistrictWiseSelection;
+      if((this.login_user.roleId * 1) === 2 || (this.login_user.roleId * 1) ===1) {
+        this.hostelNameOptions.unshift({ label: 'All', value: 0 });
+      }
       this.hostelNameOptions.unshift({ label: '-select', value: null });
     } else {
       const hostelSelection = [];
