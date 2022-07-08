@@ -43,6 +43,8 @@ export class UsermasterComponent implements OnInit {
   checkEmail: boolean;
   blockSpace: RegExp = /[^\s]/;
   @ViewChild('f', { static: false }) _usermaster: NgForm;
+  userNameExists: any;
+  checkUsername: boolean = false;
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService,
     private messageService: MessageService, private authService: AuthService) { }
@@ -174,6 +176,24 @@ export class UsermasterComponent implements OnInit {
         }
       }
     }
+  }
+//username check
+  checkIfNameExists() {
+    this.checkUsername = true;
+    this.data.forEach(i => {
+      const userNameExists = i.UserName;
+      if (userNameExists === this.userName) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING, life: 2000,
+          summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.CheckUserNameExists
+        })
+        this.userName = '';
+        this.checkUsername = false;
+      }else {
+        this.checkUsername = false;
+      }
+    })
   }
 
   onSubmit() {
