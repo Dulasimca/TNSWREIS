@@ -121,6 +121,8 @@ export class EmployeeMasterComponent implements OnInit {
       'Type': 1,
       'HostelId': (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ?
         this.login_user.hostelId : 0,
+        'TCode': (this.login_user.talukId !== undefined && this.login_user.talukId !== null) ?
+      this.login_user.talukId : 0,
     };
     if(id === 1) {
       //district wise
@@ -149,7 +151,7 @@ export class EmployeeMasterComponent implements OnInit {
         this.hostelNameOptions.unshift({ label: 'All', value: 0 });
       }
       this.hostelNameOptions.unshift({ label: '-select', value: null });
-    } else {
+    } else {  
       const hostelSelection = [];
       res.Table.forEach(h => {
         if(h.Talukid === this.talukID)
