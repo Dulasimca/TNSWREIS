@@ -63,11 +63,19 @@ export class HostelmasterComponent implements OnInit {
   MLAId: string;
   MPId: string;
   selectedType: number;
+  hstlOpeningYearRange: string;
+  hstlGenderType: any;
+  hstlGenderOptions : SelectItem[];
+  genderTypes?: any;
   @ViewChild('f', { static: false }) _hostelmaster: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private _datepipe: DatePipe, private messageService: MessageService,private _authService: AuthService) { }
 
   public ngOnInit(): void {
+
+    const current_year = new Date().getFullYear();
+    const hstl_openingYear = current_year ;
+    this.hstlOpeningYearRange = 1950 + ':' + hstl_openingYear;
    this.cols = [
      { field: 'HostelName', header: 'HostelName', width: '100px'},
      { field: 'HostelCode', header: 'Hostel Code', width: '100px'},
@@ -89,6 +97,7 @@ export class HostelmasterComponent implements OnInit {
     this.Districtcodes = this._masterService.getDistrictAll();
     this.Hosteltypes = this._masterService.getMaster('HT');
     this.Hostelfunctions = this._masterService.getMaster('HF');
+    this.genderTypes = this._masterService.getMaster('GD');
     this.TalukIds = this._masterService.getTalukAll();
     if((this.login_user.roleId * 1) === 4) {
         this.disableFields = true;
@@ -136,6 +145,7 @@ export class HostelmasterComponent implements OnInit {
     let talukSelection = [];
     let hostelSelection = [];
     let hostelfunctionSelection = [];
+    let hstlGenderSelection = [];
     switch (type) {
       case 'DT':
         this.Districtcodes.forEach(d => {
@@ -168,7 +178,14 @@ export class HostelmasterComponent implements OnInit {
         })
         this.FunctioningtypeOptions = hostelfunctionSelection;
         this.FunctioningtypeOptions.unshift({ label: '-select-', value: null });
-        break;       
+        break; 
+        case 'HG':
+          this.genderTypes.forEach(f => {
+            hstlGenderSelection.push({ label: f.gender, value: f.code });
+          })
+          this.hstlGenderOptions = hstlGenderSelection;
+          this.hstlGenderOptions.unshift({ label: '-select-', value: null });
+          break;        
     }
   }
 
@@ -193,6 +210,7 @@ export class HostelmasterComponent implements OnInit {
       'MPId': this.MPId,
       'MLAId': this.MLAId,
       'SpecialDashildar': this.SpecialDashildar,
+      'HostelGenderType': this.hstlGenderType,
       'Flag': (this.selectedType * 1)
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {

@@ -37,7 +37,7 @@
                                     <div><label for="_dob">Date of Birth<span
                                                 class="form-mandatory-field">*</span></label></div>
                                     <p-calendar [showOtherMonths]="false" [(ngModel)]="dateOfbirth" name="_dob"
-                                        [showIcon]="true" [monthNavigator]="true" [monthNavigator]="true"
+                                        [showIcon]="true" [monthNavigator]="true"
                                         [showOtherMonths]="false" [readonlyInput]="true" [yearNavigator]="true"
                                         yearRange="{{dobYearRange}}" inputId="dateofbirth" required>
                                     </p-calendar>
@@ -106,7 +106,11 @@
                                     <div><label for="_pincode">Pincode</label><span
                                             class="form-mandatory-field">*</span></div>
                                     <input type="text" class="p-col-12" name="_pincode" pInputText [(ngModel)]="pincode"
-                                        minlength="6" maxlength="6" appInputFormat="digitOnly" required />
+                                        minlength="6" maxlength="6" appInputFormat="digitOnly" pattern="^6[0-4]\d{4}$"
+                                         required />
+                                         <div>
+                                            <span *ngIf="f.controls._pincode.invalid && pincode != null" style="color: crimson;font-size: 12px;">Pincode is invalid</span>
+                                         </div>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_mobno">Mobile No<span class="form-mandatory-field">*</span></label>

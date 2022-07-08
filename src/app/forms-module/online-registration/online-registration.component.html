@@ -18,7 +18,7 @@
                 <p-card>
                     <form #f="ngForm" name="_onlineRegistrationForm">
                         <div class="p-col-12 p-md-12 p-lg-12">
-                            <p-tabView>
+                            <p-tabView [(activeIndex)]="activeTabIndex" (onChange)="handleChange($event)">
                                 <p-tabPanel header="மாணவரின் விவரங்கள்/Student Info">
                                     <div #main1 class="p-grid" style="margin-top: 10px;">
                                         <div class="p-col-1"></div>
@@ -69,10 +69,10 @@
                                                     <div class="p-col-12 p-md-12 p-lg-6 no-pad-top">
                                                         <div>
                                                             <p-radioButton name="_oldStudent" label="பழைய மாணவர்/Old"
-                                                                value=1 [(ngModel)]="obj.orphanageSelectedType">
+                                                                value=1 [(ngModel)]="obj.isNewStudent">
                                                             </p-radioButton>&nbsp;
                                                             <p-radioButton name="_newStudent" label="புதிய மாணவர்/New"
-                                                                value=0 [(ngModel)]="obj.orphanageSelectedType">
+                                                                value=0 [(ngModel)]="obj.isNewStudent">
                                                             </p-radioButton>
                                                         </div>
                                                     </div>
@@ -637,9 +637,10 @@
                                                                 <input type="text" name="_pincode" pInputText
                                                                     [(ngModel)]="obj.pincode" appInputFormat="digitOnly"
                                                                     minlength="6" maxlength="6" placeholder="Pincode"
-                                                                    required>
+                                                                    pattern="^6[0-4]\d{4}$" required>
 
                                                             </span>
+                                                            <span *ngIf="f.controls._pincode.invalid && obj.pincode != null" style="color: crimson;font-size: 12px;">Pincode is invalid</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -760,7 +761,7 @@
                                                                 எண்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_ifsccode" pInputText
                                                                 [(ngModel)]="obj.ifscCode" placeholder="IFSC Code"
-                                                                required>
+                                                                pattern="^[a-zA-Z]+$" required>
                                                         </span>
                                                     </div>
                                                     <div #field43 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -1044,7 +1045,9 @@
                                     </div>
                                 </p-tabPanel>
                                 <div class="p-col-12 txt-center">
-                                    <button pButton type="button" label="Submit" icon="pi pi-send"
+                                    <button *ngIf="!showSubmit" pButton type="button" label="Save&Next"
+                                        (click)="moveTo()"></button>&nbsp;
+                                    <button *ngIf="showSubmit" pButton type="button" label="Submit" icon="pi pi-send"
                                         (click)="checkAadhar()" [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
                                     <button pButton type="button" label="View" icon="pi pi-eye"
                                         (click)="onView()"></button>&nbsp;
