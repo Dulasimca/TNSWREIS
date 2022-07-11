@@ -117,7 +117,7 @@ export class MasterService {
             case 'GD':
                 if (this.data.Table3 !== undefined && this.data.Table3 !== null) {
                     this.data.Table3.forEach(g => {
-                        this.masterData.push({ name: g.Name, code: g.Id });
+                        this.masterData.push({ name: g.Name, code: g.Id, gender:g.GenderType });
                     })
                 } else {
                     this.masterData = [];

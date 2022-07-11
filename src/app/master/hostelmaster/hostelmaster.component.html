@@ -7,7 +7,7 @@
                     <div class="p-col-12 p-md-12 p-lg-12 ">
                         <div class="p-grid">
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_Hosteltype">Hostel Type</label></div>
+                                <div><label for="_Hosteltype">Hostel Building Type</label></div>
                                 <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions" [(ngModel)]="Hosteltype"
                                     (onClick)="onSelect('HT')" required>
                                 </p-dropdown>
@@ -16,6 +16,12 @@
                                 <div><label for="_Functioningtype">Hostel Functioning Type</label></div>
                                 <p-dropdown name="_Functioningtype" [options]="FunctioningtypeOptions"
                                     [(ngModel)]="Functioningtype" (onClick)="onSelect('HF')" required>
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_hstlGenderType">Hostel Gender Type</label></div>
+                                <p-dropdown name="_hstlGenderType" [options]="hstlGenderOptions"
+                                    [(ngModel)]="hstlGenderType" (onClick)="onSelect('HG')" required>
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
@@ -43,7 +49,7 @@
                                 </p-dropdown>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_spcldashildar">Special Dashildar<span
+                                <div><label for="_spcldashildar">Special Tahsildar<span
                                             class="form-mandatory-field">*</span></label>
                                 </div>
                                 <input type="text" name="_spcldashildar" class="p-col-10" pInputText
@@ -55,6 +61,23 @@
                                 </div>
                                 <input type="text" name="_hostelname" class="p-col-10" pInputText
                                     [disabled]="disableFields" [(ngModel)]="Hostelname" required />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_hosteltamilname">Hostel Name Tamil<span
+                                            class="form-mandatory-field">*</span></label>
+                                </div>
+                                <input type="text" name="_hosteltamilname" class="p-col-10" pInputText
+                                    [(ngModel)]="Hosteltamilname" required />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_hostelopendate">Hostel Opening Date<span
+                                            class="form-mandatory-field">*</span></label>
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="hostelOpeningDate"
+                                        [showIcon]="true" name="_hostelopendate" [monthNavigator]="true"
+                                        [readonlyInput]="true" [yearNavigator]="true"
+                                        yearRange="{{hstlOpeningYearRange}}" inputId="hstlOpenDate" required>
+                                    </p-calendar>
+                                </div>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-2">
                                 <div><label for="_hosteltamilname">Hostel Name Tamil<span
@@ -120,9 +143,8 @@
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-1">
                                 <div><label for="_pincode"
-                                    [ngStyle]="{'color': (pincode !== null && pincode !== undefined) ? ((f.controls._pincode.invalid)||(pincode>pincode_max) ? 'crimson' : '#495057') : 'crimson'}">
-                                    Postal Code<span
-                                            class="form-mandatory-field">*</span></label>
+                                        [ngStyle]="{'color': (pincode !== null && pincode !== undefined) ? ((f.controls._pincode.invalid)||(pincode>pincode_max) ? 'crimson' : '#495057') : 'crimson'}">
+                                        Postal Code<span class="form-mandatory-field">*</span></label>
                                 </div>
                                 <input class="p-col-12" name="_pincode" type="text" pInputText minlength="6"
                                     maxlength="6" [(ngModel)]="pincode" appInputFormat="digitOnly"
@@ -210,11 +232,10 @@
                                 </tr>
                             </ng-template>
                         </p-table>
-
                     </div>
+                    <!-- </div> -->
                 </form>
             </p-card>
-
         </p-panel>
         <p-dialog #dialog header="Hostel Image" [(visible)]="showDialog" [modal]="showDialog" [maximizable]="true"
             [style]="{width: '90vw', height: '90vw'}">

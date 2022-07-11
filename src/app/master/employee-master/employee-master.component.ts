@@ -144,6 +144,8 @@ export class EmployeeMasterComponent implements OnInit {
       'Type': 1,
       'HostelId': (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ?
         this.login_user.hostelId : 0,
+        'TCode': (this.login_user.talukId !== undefined && this.login_user.talukId !== null) ?
+      this.login_user.talukId : 0,
     };
     if (id === 1) {
       //district wise
@@ -165,22 +167,24 @@ export class EmployeeMasterComponent implements OnInit {
       if (type === 1) {
         const hostelDistrictWiseSelection = [];
         res.Table.forEach(h => {
-          hostelDistrictWiseSelection.push({ label: h.HostelName, value: h.Slno, hostelTCode: h.Talukid });
-        });
-        this.hostelNameOptions = hostelDistrictWiseSelection;
-        this.hostelNameOptions.unshift({ label: '-select', value: null });
-      } else {
-        const hostelSelection = [];
-        res.Table.forEach(h => {
-          if (h.Talukid === this.talukID)
-            hostelSelection.push({ label: h.HostelName, value: h.Slno });
-        });
-        this.hostelOptions = hostelSelection;
-        if ((this.login_user.roleId * 1) !== 4) {
-          this.hostelOptions.unshift({ label: 'All', value: 0 });
-        }
-        this.hostelOptions.unshift({ label: '-select', value: null });
+        hostelDistrictWiseSelection.push({ label: h.HostelName, value: h.Slno, hostelTCode: h.Talukid });
+      });
+      this.hostelNameOptions = hostelDistrictWiseSelection;
+      if((this.login_user.roleId * 1) === 2 || (this.login_user.roleId * 1) ===1) {
+        this.hostelNameOptions.unshift({ label: 'All', value: 0 });
       }
+      this.hostelNameOptions.unshift({ label: '-select', value: null });
+    } else {  
+      const hostelSelection = [];
+      res.Table.forEach(h => {
+        if(h.Talukid === this.talukID)
+        hostelSelection.push({ label: h.HostelName, value: h.Slno });
+      });
+      this.hostelOptions = hostelSelection;
+      if((this.login_user.roleId * 1) !== 4) {
+        this.hostelOptions.unshift({ label: 'All', value: 0 });
+      }
+    }
     })
   }
 
