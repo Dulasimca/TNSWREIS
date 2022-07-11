@@ -119,15 +119,19 @@
 
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-1">
-                                <div><label for="_pincode">Postal Code<span
+                                <div><label for="_pincode"
+                                    [ngStyle]="{'color': (pincode !== null && pincode !== undefined) ? ((f.controls._pincode.invalid)||(pincode>pincode_max) ? 'crimson' : '#495057') : 'crimson'}">
+                                    Postal Code<span
                                             class="form-mandatory-field">*</span></label>
                                 </div>
                                 <input class="p-col-12" name="_pincode" type="text" pInputText minlength="6"
                                     maxlength="6" [(ngModel)]="pincode" appInputFormat="digitOnly"
-                                    pattern="^6[0-4]\d{4}$" required />
+                                    pattern="^6[0-4]\d{4}$" (input)="checkPincode()" required />
                                 <div>
-                                    <span *ngIf="f.controls._pincode.invalid && pincode != null"
-                                        style="color: crimson;font-size: 12px;">Pincode is invalid</span>
+                                    <span *ngIf="(pincode != null && pincode !== undefined)">
+                                        <span *ngIf="(f.controls._pincode.invalid)||(pincode>pincode_max)"
+                                            style="color: crimson;font-size: 12px;">Invalid pincode</span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="p-col-12 p-md-6 p-lg-3">

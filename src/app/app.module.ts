@@ -159,6 +159,7 @@ import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/
 import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
 import { NgxPrintModule } from 'ngx-print';
+import { UtilsService } from './services/utils.service';
 
 
 @NgModule({
@@ -314,7 +315,7 @@ import { NgxPrintModule } from 'ngx-print';
 
 
   providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService,
-    ConfirmationService],
+    ConfirmationService,UtilsService],
 
   bootstrap: [AppComponent]
 

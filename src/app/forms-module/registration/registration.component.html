@@ -132,14 +132,17 @@
                                                             <div #field11 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                 <span class="p-float-label">
                                                                     <input type="text" name="_mobno" pInputText
-                                                                        [(ngModel)]="obj.mobileNo"
-                                                                        appInputFormat="digitOnly" minlength="10"
+                                                                        [(ngModel)]="obj.mobileNo"  appInputFormat="digitOnly" minlength="10"
                                                                         maxlength="10" pattern="^[6789]\d{9,9}$"
                                                                         title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
-                                                                        required>
+                                                                        (input)="validateFields('M')" required>
                                                                     <label for="_mobno">Mobile No<span
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
+                                                                <div><span
+                                                                        *ngIf="(obj.mobileNo==obj.altMobNo) && obj.mobileNo != null && obj.altMobNo != null"
+                                                                        style="font-size: 12px;color: crimson;">mob no.
+                                                                        cannot be same as alt mob no.</span></div>
                                                             </div>
 
                                                         </div>
@@ -168,7 +171,7 @@
                                                                 [(ngModel)]="obj.altMobNo" pattern="^[6789]\d{9,9}$"
                                                                 title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                 appInputFormat="digitOnly" minlength="10"
-                                                                maxlength="10">
+                                                                maxlength="10" (input)="validateFields('M')">
                                                             <label for="_altmobno">Alternate Mobile No</label>
                                                         </span>
                                                     </div>
@@ -187,11 +190,14 @@
                                                             <input type="text" name="_totalyincome" pInputText
                                                                 [(ngModel)]="obj.totalYIncome"
                                                                 appInputFormat="digitOnly" minlength="1" maxlength="30"
-                                                                required>
+                                                                (input)="validateFields('I')" required>
                                                             <label for="_totalyincome">Annual
                                                                 Income<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
+                                                        <div><span *ngIf="(obj.totalYIncome>income_min)"
+                                                                style="font-size: 12px;color: crimson;">Income should be
+                                                                less than 2.5Lakhs</span></div>
                                                     </div>
                                                     <div #field15 class="p-field p-col-12 p-md-12 p-lg-3">
                                                         <span class="p-float-label">
@@ -225,14 +231,14 @@
                                                         </p-radioButton>
                                                     </div>
                                                     <div class="p-col-12 p-md-4 p-lg-4 div-header no-pad-top no-pad-btm"
-                                                    style="font-weight: 500;">Orphanages
-                                                    <p-radioButton name="_orphanageYes" label="YES" value=1
-                                                        [(ngModel)]="obj.orphanageSelectedType">
-                                                    </p-radioButton>&nbsp;
-                                                    <p-radioButton name="_orphanageNo" label="NO" value=0
-                                                        [(ngModel)]="obj.orphanageSelectedType">
-                                                    </p-radioButton>
-                                                </div>
+                                                        style="font-weight: 500;">Orphanages
+                                                        <p-radioButton name="_orphanageYes" label="YES" value=1
+                                                            [(ngModel)]="obj.orphanageSelectedType">
+                                                        </p-radioButton>&nbsp;
+                                                        <p-radioButton name="_orphanageNo" label="NO" value=0
+                                                            [(ngModel)]="obj.orphanageSelectedType">
+                                                        </p-radioButton>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div *ngIf="isDisability || (obj.refugeeSelectedType == 1)" #row1
@@ -373,8 +379,8 @@
                                                     <div #field17 class="p-field p-col-12 p-md-4 p-lg-2">
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_institutedistrict"
-                                                                [options]="instituteDistrictOptions" [(ngModel)]="instituteDcode"
-                                                                (onClick)="onSelect('DT')"
+                                                                [options]="instituteDistrictOptions"
+                                                                [(ngModel)]="instituteDcode" (onClick)="onSelect('DT')"
                                                                 (onChange)="loadInstitute(2)" [filter]="true"
                                                                 filterBy="label" [showClear]="true">
                                                             </p-dropdown>
@@ -473,11 +479,17 @@
                                                             <span class="p-float-label">
                                                                 <input type="text" name="_pincode" pInputText
                                                                     [(ngModel)]="obj.pincode" appInputFormat="digitOnly"
-                                                                    minlength="6" maxlength="6" pattern="^6[0-4]\d{4}$" required>
+                                                                    minlength="6" maxlength="6" pattern="^6[0-4]\d{4}$"
+                                                                    (input)="validateFields('P')" required>
                                                                 <label for="_pincode">Pincode<span
                                                                         class="form-mandatory-field">*</span></label>
                                                             </span>
-                                                            <span *ngIf="f.controls._pincode.invalid && obj.pincode != null" style="font-size: 12px;color: crimson;">Pincode is invalid</span>
+                                                            <span *ngIf="(obj.pincode != null && obj.pincode !== undefined)">
+                                                                <span
+                                                                    *ngIf="(f.controls._pincode.invalid)||(obj.pincode>pincode_max)"
+                                                                    style="font-size: 12px;color: crimson;">Invalid
+                                                                    pincode!</span>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -544,8 +556,8 @@
                                                         <span class="p-float-label">
                                                             <input type="text" name="_communitycertificateno" pInputText
                                                                 [(ngModel)]="obj.communityCertificateNo" required>
-                                                            <label for="_communitycertificateno">Community Certificate No<span
-                                                                    class="form-mandatory-field">*</span></label>
+                                                            <label for="_communitycertificateno">Community Certificate
+                                                                No<span class="form-mandatory-field">*</span></label>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -577,10 +589,16 @@
                                                     </div>
                                                     <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
-                                                            <input type="text" name="_ifsccode" pInputText
-                                                                [(ngModel)]="obj.ifscCode" required>
+                                                            <input type="text" name="_ifsccode" pInputText style="text-transform: uppercase;"
+                                                                [(ngModel)]="obj.ifscCode" pattern="^[A-Za-z]{4}\d{10}$" required>
                                                             <label for="_ifsccode">IFSC Code<span
                                                                     class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                        <span *ngIf="(obj.ifscCode != null && obj.ifscCode !== undefined)">
+                                                            <span
+                                                                *ngIf="f.controls._ifsccode.invalid"
+                                                                style="color: crimson;font-size: 12px;">Invalid
+                                                                IFSC code!</span>
                                                         </span>
                                                     </div>
                                                     <div #field43 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -612,8 +630,7 @@
                                                     <div #grid1 class="p-grid div-main">
                                                         <div #field45 class="p-field p-col-12 p-md-12 p-lg-1">
                                                             <span class="p-float-label p-input-icon-right">
-                                                                <p-dropdown name="_ftitle"
-                                                                    [options]="fTitleOptions"
+                                                                <p-dropdown name="_ftitle" [options]="fTitleOptions"
                                                                     (onClick)="onSelect('TO')"
                                                                     [(ngModel)]="obj.fnTitleCode">
                                                                 </p-dropdown>
@@ -673,8 +690,7 @@
                                                     <div #grid1 class="p-grid div-main">
                                                         <div #field50 class="p-field p-col-12 p-md-12 p-lg-1">
                                                             <span class="p-float-label p-input-icon-right">
-                                                                <p-dropdown name="_mtitle"
-                                                                    [options]="mTitleOptions"
+                                                                <p-dropdown name="_mtitle" [options]="mTitleOptions"
                                                                     (onClick)="onSelect('TO')"
                                                                     [(ngModel)]="obj.mnTitleCode">
                                                                 </p-dropdown>
@@ -735,8 +751,7 @@
                                                     <div #grid1 class="p-grid div-main">
                                                         <div #field54 class="p-field p-col-12 p-md-12 p-lg-1">
                                                             <span class="p-float-label p-input-icon-right">
-                                                                <p-dropdown name="_gtitle"
-                                                                    [options]="gTitleOptions"
+                                                                <p-dropdown name="_gtitle" [options]="gTitleOptions"
                                                                     (onClick)="onSelect('TO')"
                                                                     [(ngModel)]="obj.gnTitleCode">
                                                                 </p-dropdown>

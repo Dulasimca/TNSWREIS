@@ -244,17 +244,23 @@
                                                                 <div #field11 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                     <span>
                                                                         <label style="font-size: 12px;"
-                                                                            for="_mobno">தொடர்பு கைபேசி எண்<span
+                                                                            for="_mobno" [ngStyle]="{'color': (obj.mobileNo != null) ?
+                                                                             ((f.controls._mobileNo.invalid)||(obj.mobileNo==obj.altMobNo) ? 'crimson' : '#495057') : '#495057'}">
+                                                                             தொடர்பு கைபேசி எண்<span
                                                                                 class="form-mandatory-field">*</span></label>
                                                                         <input type="text" name="_mobno" pInputText
                                                                             [(ngModel)]="obj.mobileNo"
                                                                             appInputFormat="digitOnly" minlength="10"
                                                                             maxlength="10" pattern="^[6789]\d{9,9}$"
-                                                                            placeholder="Mobile No"
+                                                                            placeholder="Mobile No" (input)="validateFields('M')"
                                                                             title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                             required>
 
                                                                     </span>
+                                                                    <div><span
+                                                                        *ngIf="(obj.mobileNo==obj.altMobNo) && obj.mobileNo != null && obj.altMobNo != null"
+                                                                        style="font-size: 12px;color: crimson;">mob no.
+                                                                        cannot be same as alt mob no.</span></div>
                                                                 </div>
 
                                                             </div>
@@ -285,7 +291,7 @@
                                                                 <input type="text" name="_altmobno" pInputText
                                                                     [(ngModel)]="obj.altMobNo" pattern="^[6789]\d{9,9}$"
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
-                                                                    appInputFormat="digitOnly" minlength="10"
+                                                                    appInputFormat="digitOnly" minlength="10" (input)="validateFields('M')"
                                                                     placeholder="Alternate Mobile No" maxlength="10">
                                                             </span>
                                                         </div>
@@ -308,6 +314,7 @@
                                                                         class="form-mandatory-field">*</span></label>
                                                                 <input type="text" name="_totalyincome" pInputText
                                                                     [(ngModel)]="obj.totalYIncome"
+                                                                    (input)="validateFields('I')"
                                                                     appInputFormat="digitOnly" minlength="1"
                                                                     maxlength="30" placeholder="Annual Income" required>
                                                             </span>
@@ -317,7 +324,8 @@
                                                                 <label style="font-size: 12px;"
                                                                     for="_remarks">கருத்துக்கள்</label>
                                                                 <input type="text" name="_remarks" pInputText
-                                                                    [(ngModel)]="obj.remarks" placeholder="Remarks in English">
+                                                                    [(ngModel)]="obj.remarks"
+                                                                    placeholder="Remarks in English">
                                                             </span>
                                                         </div>
                                                     </div>
@@ -565,7 +573,8 @@
                                                         <input type="text" name="_addressline1" pInputText
                                                             [(ngModel)]="obj.address1" required>
                                                         <label style="font-size: 12px;" for="_addressline1">Address Line
-                                                            1 in English<span class="form-mandatory-field">*</span></label>
+                                                            1 in English<span
+                                                                class="form-mandatory-field">*</span></label>
                                                     </span>
                                                     <span style="font-size: 12px;">கதவு எண்/Door no., Building,
                                                         Company</span>
@@ -575,7 +584,8 @@
                                                         <input type="text" name="_addressline2" pInputText
                                                             [(ngModel)]="obj.address2" required>
                                                         <label style="font-size: 12px;" for="_addressline2">Address Line
-                                                            2 in English<span class="form-mandatory-field">*</span></label>
+                                                            2 in English<span
+                                                                class="form-mandatory-field">*</span></label>
                                                     </span>
                                                     <span style="font-size: 12px;">தெருவின் பெயர்/Area, Colony, Street
                                                         name</span>
@@ -585,7 +595,8 @@
                                                         <label style="font-size: 12px;" for="_landmark">இடத்திற்கான
                                                             அடையாளம்</label>
                                                         <input type="text" name="_landmark" pInputText
-                                                            [(ngModel)]="obj.landmark" placeholder="Landmark in English">
+                                                            [(ngModel)]="obj.landmark"
+                                                            placeholder="Landmark in English">
                                                     </span>
                                                     <!-- <span style="font-size: 12px;">eg: </span> -->
                                                 </div>
@@ -631,16 +642,23 @@
                                                         </div>
                                                         <div #field37 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span>
-                                                                <label style="font-size: 12px;" for="_pincode">அஞ்சல்
+                                                                <label style="font-size: 12px;" for="_pincode"
+                                                                [ngStyle]="{'color': (obj.pincode != null && obj.pincode !== undefined) ? ((f.controls._pincode.invalid)||(obj.pincode>pincode_max) ? 'crimson' : '#495057') : '#495057'}">அஞ்சல்
                                                                     குறியீடு<span
                                                                         class="form-mandatory-field">*</span></label>
                                                                 <input type="text" name="_pincode" pInputText
                                                                     [(ngModel)]="obj.pincode" appInputFormat="digitOnly"
-                                                                    minlength="6" maxlength="6" placeholder="Pincode"
+                                                                    minlength="6" maxlength="6"
+                                                                    (input)="validateFields('P')" placeholder="Pincode"
                                                                     pattern="^6[0-4]\d{4}$" required>
 
                                                             </span>
-                                                            <span *ngIf="f.controls._pincode.invalid && obj.pincode != null" style="color: crimson;font-size: 12px;">Pincode is invalid</span>
+                                                            <span *ngIf="(obj.pincode != null && obj.pincode !== undefined)">
+                                                                <span
+                                                                    *ngIf="(f.controls._pincode.invalid)||(obj.pincode>pincode_max)"
+                                                                    style="color: crimson;font-size: 12px;">Invalid
+                                                                    pincode!</span>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -740,8 +758,8 @@
                                                             <label style="font-size: 12px;" for="_bankname">வங்கியின்
                                                                 பெயர்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_bankname" pInputText
-                                                                [(ngModel)]="obj.bankName" placeholder="Bank Name in English"
-                                                                required>
+                                                                [(ngModel)]="obj.bankName"
+                                                                placeholder="Bank Name in English" required>
 
                                                         </span>
                                                     </div>
@@ -757,11 +775,18 @@
                                                     </div>
                                                     <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span>
-                                                            <label style="font-size: 12px;" for="_ifsccode">IFSC
+                                                            <label style="font-size: 12px;text-transform: uppercase;" for="_ifsccode"
+                                                            [ngStyle]="{'color': (obj.ifscCode != null && obj.ifscCode !== undefined) ? (f.controls._ifsccode.invalid ? 'crimson' : '#495057') : '#495057'}">IFSC
                                                                 எண்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_ifsccode" pInputText
                                                                 [(ngModel)]="obj.ifscCode" placeholder="IFSC Code"
-                                                                pattern="^[a-zA-Z]+$" required>
+                                                                pattern="^[A-Za-z]{4}\d{10}$" required>
+                                                        </span>
+                                                        <span *ngIf="(obj.ifscCode != null && obj.ifscCode !== undefined)">
+                                                            <span
+                                                                *ngIf="f.controls._ifsccode.invalid"
+                                                                style="color: crimson;font-size: 12px;">Invalid
+                                                                IFSC code!</span>
                                                         </span>
                                                     </div>
                                                     <div #field43 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -769,7 +794,8 @@
                                                             <label style="font-size: 12px;" for="_branchname">கிளையின்
                                                                 பெயர்</label>
                                                             <input type="text" name="_branchname" pInputText
-                                                                [(ngModel)]="obj.branchName" placeholder="Branch Name in English">
+                                                                [(ngModel)]="obj.branchName"
+                                                                placeholder="Branch Name in English">
                                                         </span>
                                                     </div>
                                                     <div #field44 class="p-field p-col-12 p-md-12 p-lg-2">
