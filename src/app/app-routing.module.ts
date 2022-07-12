@@ -93,6 +93,8 @@ import { StudentCertificateDownloadComponent } from './Reports/student-certifica
 import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
 import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/schoolwise-document-upload.component';
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
+import { SpecialTashildarMasterComponent } from './master/special-tashildar-master/special-tashildar-master.component';
+import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-mapping.component';
 import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
 
 
@@ -205,6 +207,8 @@ const routes: Routes = [
 
   { path: 'student-certificate-download', component:StudentCertificateDownloadComponent,canActivate: [AuthGuard] },
   { path: 'OnlineApplicationControl', component:OnlineApplicationControlComponent,canActivate: [AuthGuard] },
+  { path: 'specialTashildar-master', component:SpecialTashildarMasterComponent,canActivate: [AuthGuard] },
+  { path: 'tashildar-mapping', component:TashildarMappingComponent,canActivate: [AuthGuard] },
    
 ];
 

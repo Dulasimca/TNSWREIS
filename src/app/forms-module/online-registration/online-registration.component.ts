@@ -777,11 +777,15 @@ export class OnlineRegistrationComponent implements OnInit {
     this.loadHostelList();
   }
 
-  showGender() {
+  onHostelChange() {
     if (this.hostelName !== undefined && this.hostelName !== null) {
       if (this.hostelName.gender !== null && this.hostelName.gender !== undefined) {
         this.genderOptions = (this.hostelName.gender === 1) ? [{ label: 'Male', value: 1 }] : [{ label: 'Female', value: 2 }]
         this.obj.gender = this.hostelName.gender;
+      }
+      if(this.hostelName.type !== null && this.hostelName.type !== undefined) {
+        this.institutionType = (this.hostelName.type === 2) ? '0' : '1';
+        this.onSelectType(parseInt(this.institutionType, 0));
       }
     }
   }
@@ -800,7 +804,7 @@ export class OnlineRegistrationComponent implements OnInit {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
           this.hostels.forEach(h => {
-            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType });
+            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
           })
         }
       })
@@ -857,7 +861,7 @@ export class OnlineRegistrationComponent implements OnInit {
             this.obj.mobileNo.toString() === this.obj.altMobNo.toString()) {
             this._onlineRegistrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
           } else {
-            this._onlineRegistrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
+            this._onlineRegistrationForm.controls['_mobno'].setErrors(null);
           }
         }
         break;
