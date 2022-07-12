@@ -37,6 +37,7 @@ export class TableConstants {
     studentIdcardColumns: any[] = [];
     hostelGalleryUploadColumns: any = [];
     onlineApplicationControlColumns: any = [];
+    InstituteMasterColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -455,6 +456,16 @@ export class TableConstants {
         { field: 'ShortYear',  header: 'Academic Year', width: '200px', align: 'left !important'},
         { field: 'ApplicationOpenDate',  header: 'Application Open Date', width: '200px', align: 'left !important'},
         { field: 'ApplicationCloseDate',  header: 'Application Close Date', width: '200px', align: 'left !important'},
+    ];
+
+    this.InstituteMasterColumns = [
+        { field: 'Districtname',  header: 'District', width: '200px', align: 'left !important'},
+        { field: 'InstituteCode',  header: 'Institution Code', width: '200px', align: 'left !important'},
+        { field: 'Name',  header: 'Institution Name', width: '200px', align: 'left !important'},
+        { field: 'HstlInstituteType',  header: 'Institution Type', width: '200px', align: 'left !important'},
+        { field: 'Addressinfo',  header: 'Address', width: '200px', align: 'left !important'},
+        { field: 'status',  header: 'Status', width: '200px', align: 'left !important'},
+
     ];
     
 

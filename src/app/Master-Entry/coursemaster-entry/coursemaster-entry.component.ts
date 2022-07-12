@@ -19,7 +19,7 @@ export class CoursemasterEntryComponent implements OnInit {
   courseId: any = 0;
   data: any = [];
 
-  @ViewChild('f', { static: false }) _commodityGroup: NgForm;
+  @ViewChild('f', { static: false }) _courseMaster: NgForm;
 
 
   constructor(private restApiService: RestAPIService, private messageService: MessageService) { }
@@ -62,7 +62,7 @@ export class CoursemasterEntryComponent implements OnInit {
     })
   }
   clearform() {
-    this._commodityGroup.reset();
+    this._courseMaster.reset();
   }
   onView() {
     this.restApiService.get(PathConstants.CourseMaster_Get).subscribe(res => {
