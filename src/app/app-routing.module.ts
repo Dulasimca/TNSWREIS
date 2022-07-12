@@ -93,6 +93,7 @@ import { StudentCertificateDownloadComponent } from './Reports/student-certifica
 import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
 import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/schoolwise-document-upload.component';
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
+import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
 
 
 const routes: Routes = [
@@ -200,8 +201,11 @@ const routes: Routes = [
   { path: 'subcaste-entry', component:SubcasteEntryComponent,canActivate: [AuthGuard]},
   { path: 'coursemaster-entry', component:  CoursemasterEntryComponent  ,canActivate: [AuthGuard]},
   { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] },
+  { path: 'InstituteMaster-Entry', component:InstituteMasterEntryComponent,canActivate: [AuthGuard] },
+
   { path: 'student-certificate-download', component:StudentCertificateDownloadComponent,canActivate: [AuthGuard] },
   { path: 'OnlineApplicationControl', component:OnlineApplicationControlComponent,canActivate: [AuthGuard] },
+   
 ];
 
 

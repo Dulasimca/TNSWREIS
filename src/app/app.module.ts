@@ -159,6 +159,7 @@ import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/
 import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
 import { NgxPrintModule } from 'ngx-print';
+import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
 import { UtilsService } from './services/utils.service';
 
 
@@ -264,6 +265,7 @@ import { UtilsService } from './services/utils.service';
     SchoolwiseDocumentUploadComponent,
     OnlineApplicationControlComponent,
     StudentIdcardComponent,
+    InstituteMasterEntryComponent,
     
   ],
   imports: [
