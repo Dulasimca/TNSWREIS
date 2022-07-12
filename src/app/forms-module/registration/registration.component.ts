@@ -14,6 +14,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { GlobalVariable } from 'src/app/Common-Modules/GlobalVariables';
 
 
 @Component({
@@ -85,6 +86,8 @@ export class RegistrationComponent implements OnInit {
   mTitleOptions: SelectItem[];
   gTitleOptions: SelectItem[];
   titles?: any;
+  pincode_max: number;
+  income_min: number;
   obj: Registration = {} as Registration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _registrationForm: NgForm;
@@ -100,9 +103,9 @@ export class RegistrationComponent implements OnInit {
     private _tableConstants: TableConstants, private http: HttpClient) { }
 
   ngOnInit(): void {
-    const current_year = new Date().getFullYear() - 5;
-    const start_year_range = current_year - 50;
-    this.yearRange = start_year_range + ':' + current_year;
+    this.pincode_max = GlobalVariable.PINCODE_MAX;
+    this.income_min = GlobalVariable.INCOME_MIN_VALUE;
+    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.STUDENT_DOB_MAX_YEAR;
     this.logged_user = this._authService.UserInfo;
     this.bloodgroups = this._masterService.getMaster('BG');
     this.taluks = this._masterService.getTalukAll();
@@ -273,7 +276,7 @@ export class RegistrationComponent implements OnInit {
         this.schoolOptions = this.filteredSchoolData.slice(0);
         this.schoolOptions.unshift({ label: '-select-', value: null });
         break;
-        case 'TO':
+      case 'TO':
         this.titles.forEach(c => {
           titleSelection.push({ label: c.name, value: c.code });
         })
@@ -650,9 +653,9 @@ export class RegistrationComponent implements OnInit {
       this.courseYearOptions = [{ label: row.courseYear + ' Year', value: row.courseYearId }];
       this.instituteDistrictOptions = [{ label: row.instituteDName, value: row.instituteDCode }];
       this.schoolOptions = [{ label: row.instituteName, value: row.currentInstituteId }];
-      this.fTitleOptions =[{ label: row.fnTitleName, value: row.fnTitleCode }];
-      this.mTitleOptions =[{ label: row.mnTitleName, value: row.mnTitleCode }];
-      this.gTitleOptions =[{ label: row.gnTitleName, value: row.gnTitleCode }];
+      this.fTitleOptions = [{ label: row.fnTitleName, value: row.fnTitleCode }];
+      this.mTitleOptions = [{ label: row.mnTitleName, value: row.mnTitleCode }];
+      this.gTitleOptions = [{ label: row.gnTitleName, value: row.gnTitleCode }];
       this.obj.currentInstituteId = row.currentInstituteId;
       this.instituteOptions = [{ label: row.lastStudiedInstituteName, value: row.lastStudiedInstituteCode }];
       this.instituteDcode = row.instituteDCode;
@@ -781,6 +784,40 @@ export class RegistrationComponent implements OnInit {
     }
     this.hostelOptions = hostelSelection;
     this.hostelOptions.unshift({ label: '-select-', value: null });
+  }
+
+  validateFields(field) {
+    switch (field) {
+      case 'P':
+        if (this.obj.pincode !== null && this.obj.pincode !== undefined) {
+          if (this.obj.pincode > this.pincode_max) {
+            this._registrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this._registrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'I':
+        if (this.obj.totalYIncome !== null && this.obj.totalYIncome !== undefined) {
+          if (this.obj.totalYIncome > this.income_min) {
+            this._registrationForm.controls['_totalyincome'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this._registrationForm.controls['_totalyincome'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'M':
+        if (this.obj.mobileNo !== null && this.obj.mobileNo !== undefined && this.obj.altMobNo !== null
+          && this.obj.altMobNo !== undefined) {
+          if (this.obj.mobileNo.toString().length === 10 && this.obj.altMobNo.toString().length === 10 &&
+            this.obj.mobileNo.toString() === this.obj.altMobNo.toString()) {
+            this._registrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
+          } else {
+            this._registrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
+          }
+        }
+        break;
+    }
   }
 }
 

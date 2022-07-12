@@ -160,6 +160,7 @@ import { OnlineApplicationControlComponent } from './master/online-application-c
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
 import { NgxPrintModule } from 'ngx-print';
 import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
+import { UtilsService } from './services/utils.service';
 
 
 @NgModule({
@@ -316,7 +317,7 @@ import { InstituteMasterEntryComponent } from './institute-master-entry/institut
 
 
   providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService,
-    ConfirmationService],
+    ConfirmationService,UtilsService],
 
   bootstrap: [AppComponent]
 
