@@ -37,6 +37,8 @@ export class TableConstants {
     studentIdcardColumns: any[] = [];
     hostelGalleryUploadColumns: any = [];
     onlineApplicationControlColumns: any = [];
+    SpecialTashildarcols: any = [];
+    TashildarMappingcols: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -456,7 +458,23 @@ export class TableConstants {
         { field: 'ApplicationOpenDate',  header: 'Application Open Date', width: '200px', align: 'left !important'},
         { field: 'ApplicationCloseDate',  header: 'Application Close Date', width: '200px', align: 'left !important'},
     ];
+
+    this.SpecialTashildarcols = [
+        { field: 'Districtname',  header: 'District Name', width: '200px', align: 'left !important'},
+        { field: 'Talukname',  header: 'Taluk Name', width: '200px', align: 'left !important'},
+        { field: 'SplTashildarName',  header: 'Tashildar Name', width: '200px', align: 'left !important'},
+        { field: 'MobileNum',  header: 'Mobile Number', width: '200px', align: 'left !important'},
+        { field: 'EmailId',  header: 'Email Id', width: '200px', align: 'left !important'},
+    ];
+
+    this.TashildarMappingcols = [
+        { field: 'Districtname',  header: 'District Name', width: '200px', align: 'left !important'},
+        { field: 'Talukname',  header: 'Taluk Name', width: '200px', align: 'left !important'},
+        { field: 'SplTashildarName',  header: 'Tashildar Name', width: '200px', align: 'left !important'},
+        { field: 'Flag',  header: 'Status', width: '200px', align: 'left !important'},
+    ];
     
+
 
     }
 }
