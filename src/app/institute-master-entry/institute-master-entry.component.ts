@@ -29,6 +29,7 @@ export class InstituteMasterEntryComponent implements OnInit {
   districts?: any;
   selectedType: any;
   Id: any;
+  disableExcel: boolean;
   @ViewChild('f', { static: false }) _institutemasterForm: NgForm;
 
 
@@ -115,6 +116,7 @@ export class InstituteMasterEntryComponent implements OnInit {
   }
 
   onView() {
+    this.disableExcel = false;
     this.instituteData = [];
     if (this.district !== null && this.district !== undefined) {
     this.loading = true;
@@ -127,11 +129,13 @@ export class InstituteMasterEntryComponent implements OnInit {
           i.HstlInstituteType = (i.IType === 1) ? 'School' : 'College'
         })
         this.instituteData = res;
+        this.disableExcel = true;
         this.loading = false;
         this.clearform();
       })
     }
     else {
+      this.disableExcel = false;
       this.loading = false;
       this.messageService.clear();
       this.messageService.add({

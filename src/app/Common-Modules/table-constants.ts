@@ -124,7 +124,7 @@ export class TableConstants {
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important', width: '100px'},
             { field: 'admissionNo', header: 'Admission No.', align: 'right !important', width: '100px'},
             { field: 'studentName', header: 'Name', align: 'left !important' , width: '100px' },
-            // { field: 'AttendanceId', header: 'Attendance Id', align: 'right !important', width: '100px'},
+            // { field: 'isNewStudent', header: 'Registered for Old/New Student', align: 'right !important', width: '100px'},
             // { field: 'dob', header: 'Date of birth', align: 'center !important', width: '100px'},
             // { field: 'age', header: 'Age', align: 'right !important', width: '100px'},
             // { field: 'genderName', header: 'Gender', align: 'left !important', width: '100px'},

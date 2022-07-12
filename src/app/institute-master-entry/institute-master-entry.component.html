@@ -64,11 +64,34 @@
 
                         </div>
                     </div>
-
+                        <div style="text-align: right;">
+                            <button pButton type="button" icon="pi pi-file-excel" label="Export"
+                                style="color: yellowgreen;" (click)="dt.exportCSV()"
+                                pTooltip="Excel-File download" [disabled]="disableExcel"></button>
+                        </div>
                     <!-- show table -->
-                        <p-table [value]="instituteData" styleClass="p-datatable-gridlines" responsiveLayout="stack"
+                        <p-table #dt [value]="instituteData" styleClass="p-datatable-gridlines" responsiveLayout="stack"
                             [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,30,50,70,100]"
-                            [columns]="instituteCols" [loading]="loading">
+                            [columns]="instituteCols" [loading]="loading"
+                            [filterDelay]="0"
+                            [globalFilterFields]="['Name']" responsiveLayout="scroll" exportFilename="INSTITUTE_DETAILS_REPORT">
+                            <ng-template pTemplate="caption">
+                                <div class="table-header">
+                                    <div class="p-grid">
+                                        <div class="p-col-6 p-md-6 p-lg-10 txt-end">
+                                            <span>Search by Institution Name</span>
+                                        </div>
+                                        <div class="p-col-4 p-md-4 p-lg-2">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text" size="30"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Global Search" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width: 100px">S.No</th>
