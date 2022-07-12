@@ -11,6 +11,7 @@ import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { saveAs } from 'file-saver';
+import { GlobalVariable } from 'src/app/Common-Modules/GlobalVariables';
 
 @Component({
   selector: 'app-online-registration-check',
@@ -50,9 +51,7 @@ export class OnlineRegistrationCheckComponent implements OnInit {
     
 
   ngOnInit(): void {
-    const current_year = new Date().getFullYear();
-    const start_year_range = current_year - 50;
-    this.yearRange = start_year_range + ':' + current_year;
+    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.STUDENT_DOB_MAX_YEAR;
     // this.registeredCols = this._tableConstants.registrationColumns;
   }
 

@@ -232,6 +232,9 @@ public static readonly SubcasteMaster_Post = 'SubcasteMaster/Post';
 public static readonly SubcasteMaster_Get = 'SubcasteMaster';
 public static readonly CourseMaster_Post = 'CourseMaster/Post';
 public static readonly CourseMaster_Get = 'CourseMaster';
+public static readonly InstituteMasterEntry_Post = 'InstituteMasterEntry/Post';
+public static readonly InstituteMasterEntry_Get = 'InstituteMasterEntry';
+
 
 public static readonly HostelFunctioningType_post = 'HostelFunctioningType/post';
 public static readonly HostelFunctioningType_Get = 'HostelFunctioningType';
@@ -250,5 +253,6 @@ public static readonly SpecialTashildar_Get= 'SpecialTashildar';
 
 public static readonly TashildarMapping_Post = 'TashildarMapping/Post';
 public static readonly TashildarMapping_Get= 'TashildarMapping';
+ 
 
 }

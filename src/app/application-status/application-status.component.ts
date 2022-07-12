@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, Message } from 'primeng/api';
+import { GlobalVariable } from '../Common-Modules/GlobalVariables';
 import { ResponseMessage } from '../Common-Modules/messages';
 import { PathConstants } from '../Common-Modules/PathConstants';
 import { RestAPIService } from '../services/restAPI.service';
@@ -28,10 +29,7 @@ export class ApplicationStatusComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    const current_year = new Date().getFullYear();
-    const start_year_range = current_year - 50;
-    this.yearRange = start_year_range + ':' + current_year;
+    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.CURRENT_YEAR;
   }
 
 

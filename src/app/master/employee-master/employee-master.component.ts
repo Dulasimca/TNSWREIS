@@ -4,12 +4,14 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService, SelectItem } from 'primeng/api';
+import { GlobalVariable } from 'src/app/Common-Modules/GlobalVariables';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-employee-master',
@@ -31,7 +33,7 @@ export class EmployeeMasterComponent implements OnInit {
   district: string;
   hostelNameOptions: SelectItem[];
   hostelName: any;
-  mobileNo: string;
+  mobileNo: number;
   cols: any;
   data: any = [];
   employeeDesignation?: any = [];
@@ -69,21 +71,20 @@ export class EmployeeMasterComponent implements OnInit {
   hostel: any;
   loading: boolean;
   dobYearRange: string;
+  pincode_max: number;
+  serviceMinDate: Date;
+  obj: any;
   public formData = new FormData();
   @ViewChild('f', { static: false }) employeeForm: NgForm;
   @ViewChild('userFile', { static: false }) _employeeimage: ElementRef;
-  obj: any;
-  constructor(private _authService: AuthService, private _masterService: MasterService
-    , private _restApiService: RestAPIService, private _messageService: MessageService, private _datePipe: DatePipe,
+  constructor(private _authService: AuthService, private _masterService: MasterService, private _utilsService: UtilsService,
+    private _restApiService: RestAPIService, private _messageService: MessageService, private _datePipe: DatePipe,
     private http: HttpClient, private _d: DomSanitizer) { }
 
   ngOnInit(): void {
-
-    const current_year = new Date().getFullYear();
-    const dob_cyear = current_year - 5;
-    this.dobYearRange = 1950 + ':' + dob_cyear;
-    this.yearRange = 1950 + ':' + current_year;
-
+    this.pincode_max = GlobalVariable.PINCODE_MAX;
+    this.dobYearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.EMPLOYEE_DOB_MAX_YEAR;
+    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.CURRENT_YEAR;
     this.cols = [
       { field: 'hostelDistrict', header: 'District Name', width: '100px', align: 'left !important' },
       { field: 'Talukname', header: 'Taluk Name', width: '100px', align: 'left !important' },
@@ -116,6 +117,28 @@ export class EmployeeMasterComponent implements OnInit {
     })
   }
 
+  getServiceMinDate() {
+    this.serviceMinDate = this._utilsService.findMinDate(this.dateOfbirth);
+    let msg = '';
+    if( this.hostelJoin !== null && this.hostelJoin !== undefined && this.hostelJoin < this.serviceMinDate) {
+      msg = 'Please select valid hostel joining date !'
+    } else {
+      this.hostelJoin = null;
+      msg = '';
+    }
+    if (this.dateOfjoin !== null && this.dateOfjoin !== undefined && this.dateOfjoin < this.serviceMinDate) {
+      msg = 'Please select valid service date !'
+    } else {
+      this.dateOfjoin = null;
+      msg = '';
+    }
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+        summary: ResponseMessage.SUMMARY_ERROR, detail: msg
+      });
+  }
+
   selectDistrict(id: number) {
     let params = {
       'Type': 1,
@@ -124,24 +147,24 @@ export class EmployeeMasterComponent implements OnInit {
         'TCode': (this.login_user.talukId !== undefined && this.login_user.talukId !== null) ?
       this.login_user.talukId : 0,
     };
-    if(id === 1) {
+    if (id === 1) {
       //district wise
-     this.hostelNameOptions = [];
-     params['DCode'] = (this.district !== null && this.district !== undefined) ? this.district : '0';
+      this.hostelNameOptions = [];
+      params['DCode'] = (this.district !== null && this.district !== undefined) ? this.district : '0';
       this.loadHostel(params, id);
     } else {
       //view select hostel dropdown
       this.hostelOptions = [];
       params['DCode'] = (this.districtId !== null && this.districtId !== undefined) ? this.districtId : '0';
       params['TCode'] = (this.talukID !== null && this.talukID !== undefined) ? this.talukID : '0';
-       this.loadHostel(params, id);
-       this.selectDropdown();
+      this.loadHostel(params, id);
+      this.selectDropdown();
     }
   }
 
   loadHostel(params, type): any {
     this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-      if(type === 1) {
+      if (type === 1) {
         const hostelDistrictWiseSelection = [];
         res.Table.forEach(h => {
         hostelDistrictWiseSelection.push({ label: h.HostelName, value: h.Slno, hostelTCode: h.Talukid });
@@ -161,7 +184,6 @@ export class EmployeeMasterComponent implements OnInit {
       if((this.login_user.roleId * 1) !== 4) {
         this.hostelOptions.unshift({ label: 'All', value: 0 });
       }
-      this.hostelOptions.unshift({ label: '-select', value: null });
     }
     })
   }
@@ -309,7 +331,7 @@ export class EmployeeMasterComponent implements OnInit {
         this.hostelDistrictOptions = districtSelection.slice(0);
         this.hostelDistrictOptions.unshift({ label: '-select-', value: null });
         this.districtOptions = districtSelection.slice(0);
-        if((this.login_user.roleId * 1) === 1) {
+        if ((this.login_user.roleId * 1) === 1) {
           this.districtOptions.unshift({ label: 'All', value: 0 });
         }
         this.districtOptions.unshift({ label: '-select-', value: null });
@@ -351,7 +373,7 @@ export class EmployeeMasterComponent implements OnInit {
             }
           })
           this.talukOptions = talukSelection;
-          if((this.login_user.roleId * 1) !== 4) {
+          if ((this.login_user.roleId * 1) !== 4) {
             this.talukOptions.unshift({ label: 'All', value: 0 });
           }
           this.talukOptions.unshift({ label: '-select-', value: null });
@@ -379,7 +401,7 @@ export class EmployeeMasterComponent implements OnInit {
     this.hostelName = { label: selectedRow.HostelName, value: selectedRow.HostelID, hostelTCode: selectedRow.TalukID };
     this.hostelNameOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelID }];
     this.nativeDistrict = selectedRow.NativeDistrictID;
-    this.nativeDistrictOptions = [{ label: selectedRow.NativeDistrict , value: selectedRow.NativeDistrictID }];
+    this.nativeDistrictOptions = [{ label: selectedRow.NativeDistrict, value: selectedRow.NativeDistrictID }];
     this.nativeTaluk = selectedRow.NativeTalukID;
     this.nativeTalukOptions = [{ label: selectedRow.NativeTaluk, value: selectedRow.NativeTalukID }];
     this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelID }];
@@ -443,7 +465,11 @@ export class EmployeeMasterComponent implements OnInit {
 
       }
     })
+  }
 
+  setServiceMinDate() {
+    this.serviceMinDate = this.dateOfbirth;
+    this.yearRange = new Date(this.dateOfbirth).getFullYear() + ':' + GlobalVariable.CURRENT_YEAR;
   }
 
 
@@ -495,6 +521,31 @@ export class EmployeeMasterComponent implements OnInit {
       }
       );
     return filenameWithExtn;
+  }
+
+  validateFields(field) {
+    switch (field) {
+      case 'P':
+        if (this.pincode !== null && this.pincode !== undefined) {
+          if (this.pincode > this.pincode_max) {
+            this.employeeForm.controls['_pincode'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this.employeeForm.controls['_pincode'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'M':
+        if (this.mobileNo !== null && this.mobileNo !== undefined && this.altMobNo !== null
+          && this.altMobNo !== undefined) {
+          if (this.mobileNo.toString().length === 10 && this.altMobNo.toString().length === 10 &&
+            this.mobileNo.toString() === this.altMobNo.toString()) {
+            this.employeeForm.controls['_mobno'].setErrors({ 'incorrect': true });
+          } else {
+            this.employeeForm.controls['_mobno'].setErrors({ 'incorrect': true });
+          }
+        }
+        break;
+    }
   }
 
   showImage(url) {

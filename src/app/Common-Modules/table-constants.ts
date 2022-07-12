@@ -39,6 +39,7 @@ export class TableConstants {
     onlineApplicationControlColumns: any = [];
     SpecialTashildarcols: any = [];
     TashildarMappingcols: any = [];
+    InstituteMasterColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -472,6 +473,15 @@ export class TableConstants {
         { field: 'Talukname',  header: 'Taluk Name', width: '200px', align: 'left !important'},
         { field: 'SplTashildarName',  header: 'Tashildar Name', width: '200px', align: 'left !important'},
         { field: 'Flag',  header: 'Status', width: '200px', align: 'left !important'},
+    ];
+    this.InstituteMasterColumns = [
+        { field: 'Districtname',  header: 'District', width: '200px', align: 'left !important'},
+        { field: 'InstituteCode',  header: 'Institution Code', width: '200px', align: 'left !important'},
+        { field: 'Name',  header: 'Institution Name', width: '200px', align: 'left !important'},
+        { field: 'HstlInstituteType',  header: 'Institution Type', width: '200px', align: 'left !important'},
+        { field: 'Addressinfo',  header: 'Address', width: '200px', align: 'left !important'},
+        { field: 'status',  header: 'Status', width: '200px', align: 'left !important'},
+
     ];
     
 

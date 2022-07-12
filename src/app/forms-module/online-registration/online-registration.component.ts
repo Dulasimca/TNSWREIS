@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService, SelectItem } from 'primeng/api';
@@ -13,11 +13,10 @@ import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Observable } from 'rxjs';
-import { saveAs } from 'file-saver';
 import { Dialog } from 'primeng/dialog';
 import { Router } from '@angular/router';
+import { GlobalVariable } from 'src/app/Common-Modules/GlobalVariables';
 
 @Component({
   selector: 'app-online-registration',
@@ -94,6 +93,8 @@ export class OnlineRegistrationComponent implements OnInit {
   tab2: boolean;
   tab3: boolean;
   showSubmit: boolean;
+  pincode_max: number;
+  income_min: number;
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -107,7 +108,7 @@ export class OnlineRegistrationComponent implements OnInit {
   constructor(private _masterService: MasterService, private _d: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
     private _restApiService: RestAPIService, private _authService: AuthService,
-    private _tableConstants: TableConstants, private http: HttpClient, private router: Router) {
+    private _tableConstants: TableConstants, private http: HttpClient) {
     this.blockUI.start();
     let master = new Observable<any[]>();
     master = this._masterService.initializeMaster();
@@ -117,9 +118,9 @@ export class OnlineRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const current_year = new Date().getFullYear() - 5;
-    const start_year_range = current_year - 50;
-    this.yearRange = start_year_range + ':' + current_year;
+    this.pincode_max = GlobalVariable.PINCODE_MAX;
+    this.income_min = GlobalVariable.INCOME_MIN_VALUE;
+    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.STUDENT_DOB_MAX_YEAR;
     this.logged_user = this._authService.UserInfo;
 
     this.bloodgroups = this._masterService.getMaster('BG');
@@ -776,11 +777,15 @@ export class OnlineRegistrationComponent implements OnInit {
     this.loadHostelList();
   }
 
-  showGender() {
+  onHostelChange() {
     if (this.hostelName !== undefined && this.hostelName !== null) {
       if (this.hostelName.gender !== null && this.hostelName.gender !== undefined) {
         this.genderOptions = (this.hostelName.gender === 1) ? [{ label: 'Male', value: 1 }] : [{ label: 'Female', value: 2 }]
         this.obj.gender = this.hostelName.gender;
+      }
+      if(this.hostelName.type !== null && this.hostelName.type !== undefined) {
+        this.institutionType = (this.hostelName.type === 2) ? '0' : '1';
+        this.onSelectType(parseInt(this.institutionType, 0));
       }
     }
   }
@@ -799,7 +804,7 @@ export class OnlineRegistrationComponent implements OnInit {
         if (res !== null && res !== undefined && res.length !== 0) {
           this.hostels = res.Table;
           this.hostels.forEach(h => {
-            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType });
+            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
           })
         }
       })
@@ -810,8 +815,8 @@ export class OnlineRegistrationComponent implements OnInit {
 
   onDialogShow() {
     var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
-    if(document.getElementById("embedPDF") !== undefined) {
-    document.getElementById("embedPDF").setAttribute('src', src);
+    if (document.getElementById("embedPDF") !== undefined) {
+      document.getElementById("embedPDF").setAttribute('src', src);
     }
     this.clearForm();
   }
@@ -826,6 +831,40 @@ export class OnlineRegistrationComponent implements OnInit {
           this.obj.accYearId = this.accountingYearId;
         }
       })
+    }
+  }
+
+  validateFields(field) {
+    switch (field) {
+      case 'P':
+        if (this.obj.pincode !== null && this.obj.pincode !== undefined) {
+          if (this.obj.pincode > this.pincode_max) {
+            this._onlineRegistrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this._onlineRegistrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'I':
+        if (this.obj.totalYIncome !== null && this.obj.totalYIncome !== undefined) {
+          if (this.obj.totalYIncome > this.income_min) {
+            this._onlineRegistrationForm.controls['_totalyincome'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this._onlineRegistrationForm.controls['_totalyincome'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'M':
+        if (this.obj.mobileNo !== null && this.obj.mobileNo !== undefined && this.obj.altMobNo !== null
+          && this.obj.altMobNo !== undefined) {
+          if (this.obj.mobileNo.toString().length === 10 && this.obj.altMobNo.toString().length === 10 &&
+            this.obj.mobileNo.toString() === this.obj.altMobNo.toString()) {
+            this._onlineRegistrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
+          } else {
+            this._onlineRegistrationForm.controls['_mobno'].setErrors(null);
+          }
+        }
+        break;
     }
   }
 

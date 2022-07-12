@@ -161,6 +161,8 @@ import { StudentIdcardComponent } from './student-idcard/student-idcard.componen
 import { NgxPrintModule } from 'ngx-print';
 import { SpecialTashildarMasterComponent } from './master/special-tashildar-master/special-tashildar-master.component';
 import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-mapping.component';
+import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
+import { UtilsService } from './services/utils.service';
 
 
 @NgModule({
@@ -267,6 +269,7 @@ import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-
     StudentIdcardComponent,
     SpecialTashildarMasterComponent,
     TashildarMappingComponent,
+    InstituteMasterEntryComponent,
     
   ],
   imports: [
@@ -318,7 +321,7 @@ import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-
 
 
   providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService,
-    ConfirmationService],
+    ConfirmationService,UtilsService],
 
   bootstrap: [AppComponent]
 

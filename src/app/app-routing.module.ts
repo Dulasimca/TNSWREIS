@@ -95,6 +95,7 @@ import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
 import { SpecialTashildarMasterComponent } from './master/special-tashildar-master/special-tashildar-master.component';
 import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-mapping.component';
+import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
 
 
 const routes: Routes = [
@@ -202,10 +203,13 @@ const routes: Routes = [
   { path: 'subcaste-entry', component:SubcasteEntryComponent,canActivate: [AuthGuard]},
   { path: 'coursemaster-entry', component:  CoursemasterEntryComponent  ,canActivate: [AuthGuard]},
   { path: 'hostel-functioningtype', component:HostelFunctioningTypeMasterComponent,canActivate: [AuthGuard] },
+  { path: 'InstituteMaster-Entry', component:InstituteMasterEntryComponent,canActivate: [AuthGuard] },
+
   { path: 'student-certificate-download', component:StudentCertificateDownloadComponent,canActivate: [AuthGuard] },
   { path: 'OnlineApplicationControl', component:OnlineApplicationControlComponent,canActivate: [AuthGuard] },
   { path: 'specialTashildar-master', component:SpecialTashildarMasterComponent,canActivate: [AuthGuard] },
   { path: 'tashildar-mapping', component:TashildarMappingComponent,canActivate: [AuthGuard] },
+   
 ];
 
 
