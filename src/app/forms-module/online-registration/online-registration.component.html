@@ -58,7 +58,7 @@
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_hos" [options]="hostelOptions"
                                                                 [(ngModel)]="hostelName" optionLabel="label"
-                                                                (onChange)="showGender()" [filter]="true"
+                                                                (onChange)="onHostelChange()" [filter]="true"
                                                                 filterBy="label" [showClear]="true" required>
                                                             </p-dropdown>
                                                             <label style="font-size: 12px;" for="_hos">விடுதியின்
@@ -243,9 +243,9 @@
                                                                 </div>
                                                                 <div #field11 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                     <span>
-                                                                        <label style="font-size: 12px;"
-                                                                            for="_mobno" [ngStyle]="{'color': (obj.mobileNo != null) ?
-                                                                             ((f.controls._mobileNo.invalid)||(obj.mobileNo==obj.altMobNo) ? 'crimson' : '#495057') : '#495057'}">
+                                                                        <label style="font-size: 12px; white-space: pre;"
+                                                                            for="_mobno" [ngStyle]="{'color': (obj.mobileNo != null && obj.mobileNo !== undefined) ?
+                                                                             ((f.controls._mobno.invalid)||(obj.mobileNo==obj.altMobNo) ? 'crimson' : '#495057') : '#495057'}">
                                                                              தொடர்பு கைபேசி எண்<span
                                                                                 class="form-mandatory-field">*</span></label>
                                                                         <input type="text" name="_mobno" pInputText
@@ -257,10 +257,13 @@
                                                                             required>
 
                                                                     </span>
-                                                                    <div><span
-                                                                        *ngIf="(obj.mobileNo==obj.altMobNo) && obj.mobileNo != null && obj.altMobNo != null"
+                                                                    <div>
+                                                                        <span *ngIf="(obj.mobileNo!=null && obj.mobileNo!=undefined && obj.altMobNo!=null && obj.altMobNo!=undefined)">
+                                                                        <span *ngIf="(obj.mobileNo==obj.altMobNo)"
                                                                         style="font-size: 12px;color: crimson;">mob no.
-                                                                        cannot be same as alt mob no.</span></div>
+                                                                        cannot be same as alt mob no.</span>
+                                                                    </span>
+                                                                    </div>
                                                                 </div>
 
                                                             </div>
@@ -405,10 +408,10 @@
                                                 <div #grid1 class="p-grid div-main">
                                                     <div #field17 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <p-radioButton name="_school" label="பள்ளி/School" value=1
-                                                            [(ngModel)]="institutionType" (onClick)="onSelectType(1)">
+                                                            [(ngModel)]="institutionType" [disabled]="institutionType == '0'" (onClick)="onSelectType(1)">
                                                         </p-radioButton> &nbsp;
                                                         <p-radioButton name="_college" label="கல்லூரி/College" value=0
-                                                            [(ngModel)]="institutionType" (onClick)="onSelectType(0)">
+                                                            [(ngModel)]="institutionType" [disabled]="institutionType == '1'" (onClick)="onSelectType(0)">
                                                         </p-radioButton>
                                                     </div>
                                                     <div #field18 *ngIf="institutionType=='1'"
@@ -780,7 +783,7 @@
                                                                 எண்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_ifsccode" pInputText
                                                                 [(ngModel)]="obj.ifscCode" placeholder="IFSC Code"
-                                                                pattern="^[A-Za-z]{4}\d{10}$" required>
+                                                                pattern="^[A-Za-z]{3,4}[A-Za-z\d]{1,10}$" required>
                                                         </span>
                                                         <span *ngIf="(obj.ifscCode != null && obj.ifscCode !== undefined)">
                                                             <span

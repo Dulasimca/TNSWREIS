@@ -139,10 +139,13 @@
                                                                     <label for="_mobno">Mobile No<span
                                                                             class="form-mandatory-field">*</span></label>
                                                                 </span>
-                                                                <div><span
-                                                                        *ngIf="(obj.mobileNo==obj.altMobNo) && obj.mobileNo != null && obj.altMobNo != null"
+                                                                <div>
+                                                                    <span *ngIf="(obj.mobileNo!=null && obj.mobileNo!=undefined && obj.altMobNo!=null && obj.altMobNo!=undefined)">
+                                                                    <span *ngIf="obj.mobileNo==obj.altMobNo"
                                                                         style="font-size: 12px;color: crimson;">mob no.
-                                                                        cannot be same as alt mob no.</span></div>
+                                                                        cannot be same as alt mob no.</span>
+                                                                    </span>
+                                                                    </div>
                                                             </div>
 
                                                         </div>
@@ -590,7 +593,7 @@
                                                     <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span class="p-float-label">
                                                             <input type="text" name="_ifsccode" pInputText style="text-transform: uppercase;"
-                                                                [(ngModel)]="obj.ifscCode" pattern="^[A-Za-z]{4}\d{10}$" required>
+                                                                [(ngModel)]="obj.ifscCode" pattern="^[A-Za-z]{3,4}[A-Za-z\d]{1,10}$" required>
                                                             <label for="_ifsccode">IFSC Code<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>

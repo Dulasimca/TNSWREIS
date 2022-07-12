@@ -812,10 +812,10 @@ export class RegistrationComponent implements OnInit {
           if (this.obj.mobileNo.toString().length === 10 && this.obj.altMobNo.toString().length === 10 &&
             this.obj.mobileNo.toString() === this.obj.altMobNo.toString()) {
             this._registrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
-          } else {
-            this._registrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
-          }
+        } else {
+          this._registrationForm.controls['_mobno'].setErrors(null);
         }
+      }
         break;
     }
   }
