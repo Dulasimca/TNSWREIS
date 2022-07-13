@@ -101,7 +101,7 @@
                                                                             id="sname" pInputText
                                                                             [(ngModel)]="obj.studentName" required
                                                                             appInputFormat="englishOnly"
-                                                                            placeholder="Student Name in English">
+                                                                            placeholder="Student Name in English" autocomplete="off">
 
                                                                     </span>
                                                                 </div>
@@ -112,7 +112,7 @@
                                                                                 class="form-mandatory-field">*</span></label>
                                                                         <input type="text" name="_emisno" pInputText
                                                                             [(ngModel)]="obj.emisno" minlength="1"
-                                                                            maxlength="18" placeholder="EMIS No/Reg No."
+                                                                            maxlength="18" placeholder="EMIS No/Reg No." autocomplete="off"
                                                                             required>
 
                                                                     </span>
@@ -143,7 +143,7 @@
                                                                             for="_age">வயது</label>
                                                                         <input type="text" name="_age" id="sname"
                                                                             pInputText [(ngModel)]="ageTxt"
-                                                                            [disabled]="true" placeholder="Age">
+                                                                            [disabled]="true" placeholder="Age" autocomplete="off">
                                                                     </span>
                                                                 </div>
                                                                 <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
@@ -254,7 +254,7 @@
                                                                             maxlength="10" pattern="^[6789]\d{9,9}$"
                                                                             placeholder="Mobile No" (input)="validateFields('M')"
                                                                             title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
-                                                                            required>
+                                                                            autocomplete="off" required>
 
                                                                     </span>
                                                                     <div>
@@ -275,10 +275,10 @@
                                                                     style="width: 100px; height: 100px;" />
                                                                 <input style="display: none" name="_studentimage"
                                                                     type="file" (change)="onFileUpload($event, 1)"
-                                                                    #userFile>
+                                                                    #userFile required>
                                                                 <button class="b-size" style="margin: 0 !important;"
                                                                     icon="pi pi-plus edit-size" pButton type="file"
-                                                                    #file (click)="userFile.click()" required>
+                                                                    #file (click)="userFile.click()" >
                                                                 </button>
                                                                 <span class="form-mandatory-field">*</span>
                                                             </div>
@@ -295,7 +295,7 @@
                                                                     [(ngModel)]="obj.altMobNo" pattern="^[6789]\d{9,9}$"
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                     appInputFormat="digitOnly" minlength="10" (input)="validateFields('M')"
-                                                                    placeholder="Alternate Mobile No" maxlength="10">
+                                                                    placeholder="Alternate Mobile No" maxlength="10"autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field13 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -306,7 +306,7 @@
                                                                 <input type="text" name="_admissionno" pInputText
                                                                     [(ngModel)]="obj.admissionNo"
                                                                     appInputFormat="noSpecialChars" minlength="1"
-                                                                    maxlength="40" placeholder="Admission No." required>
+                                                                    maxlength="40" placeholder="Admission No." autocomplete="off" required>
 
                                                             </span>
                                                         </div>
@@ -319,7 +319,7 @@
                                                                     [(ngModel)]="obj.totalYIncome"
                                                                     (input)="validateFields('I')"
                                                                     appInputFormat="digitOnly" minlength="1"
-                                                                    maxlength="30" placeholder="Annual Income" required>
+                                                                    maxlength="30" placeholder="Annual Income" autocomplete="off" required>
                                                             </span>
                                                         </div>
                                                         <div #field15 class="p-field p-col-12 p-md-12 p-lg-3">
@@ -328,7 +328,7 @@
                                                                     for="_remarks">கருத்துக்கள்</label>
                                                                 <input type="text" name="_remarks" pInputText
                                                                     [(ngModel)]="obj.remarks"
-                                                                    placeholder="Remarks in English">
+                                                                    placeholder="Remarks in English"autocomplete="off">
                                                             </span>
                                                         </div>
                                                     </div>
@@ -383,7 +383,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_disability" pInputText
                                                                 [(ngModel)]="obj.disabilityType"
-                                                                placeholder="Physically Changelled Type" required>
+                                                                placeholder="Physically Changelled Type"autocomplete="off" required>
                                                         </span>
                                                     </div>
                                                     <div #field31 *ngIf="(obj.refugeeSelectedType == 1)"
@@ -392,7 +392,7 @@
                                                             <label style="font-size: 12px;" for="_refugeeId">அடையாள
                                                                 எண்ணை உள்ளிடவும்/Enter ID</label>
                                                             <input type="text" name="_refugeeId" pInputText
-                                                                [(ngModel)]="obj.refugeeId">
+                                                                [(ngModel)]="obj.refugeeId" autocomplete="off">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -490,7 +490,7 @@
                                                             <label style="font-size: 12px;" for="_coursetitle">பட்டப்
                                                                 படிப்பின் பெயர்</label>
                                                             <input type="text" name="_coursetitle" pInputText
-                                                                [(ngModel)]="obj.courseTitle" placeholder="Subject">
+                                                                [(ngModel)]="obj.courseTitle" placeholder="Subject" autocomplete="off">
                                                         </span>
                                                     </div>
                                                     <div #field20 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -510,7 +510,7 @@
                                                                 for="_scholarshipid">உதவித்தொகை எண்</label>
                                                             <input type="text" name="_scholarshipid" pInputText
                                                                 [(ngModel)]="obj.scholarshipId"
-                                                                placeholder="Scholarship No.">
+                                                                placeholder="Scholarship No." autocomplete="off">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -558,7 +558,7 @@
                                                             <input type="text" name="_lastaddress" pInputText
                                                                 [(ngModel)]="obj.lastStudiedInstituteAddress"
                                                                 readonly="{{isInsAddrAvailable}}"
-                                                                placeholder="Institution Address in English">
+                                                                placeholder="Institution Address in English" autocomplete="off">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -574,7 +574,7 @@
                                                 <div #field31 class="p-field p-col-12 p-md-12 p-lg-4 no-pad-top">
                                                     <span class="p-float-label">
                                                         <input type="text" name="_addressline1" pInputText
-                                                            [(ngModel)]="obj.address1" required>
+                                                            [(ngModel)]="obj.address1" autocomplete="off" required>
                                                         <label style="font-size: 12px;" for="_addressline1">Address Line
                                                             1 in English<span
                                                                 class="form-mandatory-field">*</span></label>
@@ -585,7 +585,7 @@
                                                 <div #field32 class="p-field p-col-12 p-md-12 p-lg-4 no-pad-top">
                                                     <span class="p-float-label">
                                                         <input type="text" name="_addressline2" pInputText
-                                                            [(ngModel)]="obj.address2" required>
+                                                            [(ngModel)]="obj.address2" autocomplete="off" required>
                                                         <label style="font-size: 12px;" for="_addressline2">Address Line
                                                             2 in English<span
                                                                 class="form-mandatory-field">*</span></label>
@@ -599,7 +599,7 @@
                                                             அடையாளம்</label>
                                                         <input type="text" name="_landmark" pInputText
                                                             [(ngModel)]="obj.landmark"
-                                                            placeholder="Landmark in English">
+                                                            placeholder="Landmark in English" autocomplete="off">
                                                     </span>
                                                     <!-- <span style="font-size: 12px;">eg: </span> -->
                                                 </div>
@@ -640,7 +640,7 @@
                                                                     for="_village">கிராமம்</label>
                                                                 <input type="text" name="_village" pInputText
                                                                     [(ngModel)]="obj.village" placeholder="Village"
-                                                                    size="25">
+                                                                    autocomplete="off" size="25">
                                                             </span>
                                                         </div>
                                                         <div #field37 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -653,7 +653,7 @@
                                                                     [(ngModel)]="obj.pincode" appInputFormat="digitOnly"
                                                                     minlength="6" maxlength="6"
                                                                     (input)="validateFields('P')" placeholder="Pincode"
-                                                                    pattern="^6[0-4]\d{4}$" required>
+                                                                    pattern="^6[0-4]\d{4}$" autocomplete="off" required>
 
                                                             </span>
                                                             <span *ngIf="(obj.pincode != null && obj.pincode !== undefined)">
@@ -684,7 +684,7 @@
                                                             <input type="text" name="_distance1" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToHome"
                                                                 appInputFormat="digitOnly"
-                                                                placeholder="Distance From Hostel To Home" required>
+                                                                placeholder="Distance From Hostel To Home" autocomplete="off" required>
 
                                                         </span>
                                                     </div>
@@ -698,7 +698,7 @@
                                                                 [(ngModel)]="obj.distanceFromHostelToInstitute"
                                                                 appInputFormat="digitOnly"
                                                                 placeholder="Distance From Hostel To Institute"
-                                                                required>
+                                                                autocomplete="off" required>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -720,7 +720,7 @@
                                                             <input type="text" name="_aadharno" pInputText
                                                                 [(ngModel)]="aadharNo" appInputFormat="digitOnly"
                                                                 (input)="validateAadhaar(aadharNo)" minlength="12"
-                                                                maxlength="12" placeholder="Aadhaar Number" required>
+                                                                maxlength="12" placeholder="Aadhaar Number" autocomplete="off" required>
 
                                                         </span>
                                                         <div style="font-size: 13px;color: red;">
@@ -732,7 +732,7 @@
                                                                 அட்டை எண்</label>
                                                             <input type="text" name="_rationcardno" pInputText
                                                                 [(ngModel)]="obj.rationCardrNo"
-                                                                placeholder="Ration Card No.">
+                                                                placeholder="Ration Card No." autocomplete="off">
 
                                                         </span>
                                                     </div>
@@ -742,7 +742,7 @@
                                                                 for="_communitycertificateno">சாதி சான்றிதழ் எண்</label>
                                                             <input type="text" name="_communitycertificateno" pInputText
                                                                 [(ngModel)]="obj.communityCertificateNo"
-                                                                placeholder="Community Certificate No.">
+                                                                placeholder="Community Certificate No." autocomplete="off">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -762,7 +762,7 @@
                                                                 பெயர்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_bankname" pInputText
                                                                 [(ngModel)]="obj.bankName"
-                                                                placeholder="Bank Name in English" required>
+                                                                placeholder="Bank Name in English" autocomplete="off" required>
 
                                                         </span>
                                                     </div>
@@ -773,7 +773,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_bankaccno" pInputText
                                                                 [(ngModel)]="obj.bankAccNo" appInputFormat="digitOnly"
-                                                                placeholder="Bank Account No." required>
+                                                                placeholder="Bank Account No." autocomplete="off" required>
                                                         </span>
                                                     </div>
                                                     <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -783,7 +783,7 @@
                                                                 எண்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_ifsccode" pInputText
                                                                 [(ngModel)]="obj.ifscCode" placeholder="IFSC Code"
-                                                                pattern="^[A-Za-z]{3,4}[A-Za-z\d]{1,10}$" required>
+                                                                pattern="^[A-Za-z]{3,4}[A-Za-z\d]{1,10}$" autocomplete="off" required>
                                                         </span>
                                                         <span *ngIf="(obj.ifscCode != null && obj.ifscCode !== undefined)">
                                                             <span
@@ -798,7 +798,7 @@
                                                                 பெயர்</label>
                                                             <input type="text" name="_branchname" pInputText
                                                                 [(ngModel)]="obj.branchName"
-                                                                placeholder="Branch Name in English">
+                                                                placeholder="Branch Name in English" autocomplete="off">
                                                         </span>
                                                     </div>
                                                     <div #field44 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -807,7 +807,7 @@
                                                                 எண்</label>
                                                             <input type="text" name="_micrno" pInputText
                                                                 [(ngModel)]="obj.micrNo" appInputFormat="digitOnly"
-                                                                placeholder="MICR No">
+                                                                placeholder="MICR No" autocomplete="off">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -841,7 +841,7 @@
                                                                     for="_fathername">தந்தையின் பெயர்</label>
                                                                 <input type="text" name="_fathername" id="fname"
                                                                     pInputText [(ngModel)]="obj.fatherName"
-                                                                    placeholder="Father Name in English">
+                                                                    placeholder="Father Name in English" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field47 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -850,7 +850,7 @@
                                                                     for="_fatheroccupation">தொழில்</label>
                                                                 <input type="text" name="_fatheroccupation" pInputText
                                                                     [(ngModel)]="obj.fatherOccupation"
-                                                                    placeholder="Occupation in English">
+                                                                    placeholder="Occupation in English" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -859,7 +859,7 @@
                                                                     for="_fathereducation">கல்வி தகுதி</label>
                                                                 <input type="text" name="_fathereducation" pInputText
                                                                     [(ngModel)]="obj.fatherQualification"
-                                                                    placeholder="qualification">
+                                                                    placeholder="qualification" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field49 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -871,7 +871,7 @@
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                     [(ngModel)]="obj.fatherMoileNo"
                                                                     appInputFormat="digitOnly" maxlength="10"
-                                                                    minlength="10" placeholder="Mobile No.">
+                                                                    minlength="10" placeholder="Mobile No." autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <!-- <div #field49 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -910,7 +910,7 @@
                                                                     பெயர்</label>
                                                                 <input type="text" name="_mothername" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherName"
-                                                                    placeholder="Mother's Name in English">
+                                                                    placeholder="Mother's Name in English" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field52 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -919,7 +919,7 @@
                                                                     for="_motheroccupation">தொழில்</label>
                                                                 <input type="text" name="_motheroccupation" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherOccupation"
-                                                                    placeholder="Ocuupation in English">
+                                                                    placeholder="Ocuupation in English" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field52 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -928,7 +928,7 @@
                                                                     for="_mothereducation">கல்வி தகுதி</label>
                                                                 <input type="text" name="_mothereducation" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherQualification"
-                                                                    placeholder="Qualification">
+                                                                    placeholder="Qualification" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field53 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -940,7 +940,7 @@
                                                                     minlength="10" maxlength="10"
                                                                     pattern="^[6789]\d{9,9}$"
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
-                                                                    appInputFormat="digitOnly" placeholder="Mobile No">
+                                                                    appInputFormat="digitOnly" placeholder="Mobile No" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <!-- <div #field54 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -980,7 +980,7 @@
                                                                     for="_guardianname">பாதுகாவலர் பெயர்</label>
                                                                 <input type="text" name="_guardianname" id="fname"
                                                                     pInputText [(ngModel)]="obj.guardianName"
-                                                                    placeholder="Guardian Name in English">
+                                                                    placeholder="Guardian Name in English" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field56 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -989,7 +989,7 @@
                                                                     for="_guardianoccupation">தொழில்</label>
                                                                 <input type="text" name="_guardianoccupation" id="fname"
                                                                     pInputText [(ngModel)]="obj.guardianOccupation"
-                                                                    placeholder="Occupation in English">
+                                                                    placeholder="Occupation in English" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field57 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -998,7 +998,7 @@
                                                                     for="_guardianeducation">கல்வி தகுதி</label>
                                                                 <input type="text" name="_guardianeducation" id="fname"
                                                                     pInputText [(ngModel)]="obj.guardianQualification"
-                                                                    placeholder="Qualification">
+                                                                    placeholder="Qualification" autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field58 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -1010,7 +1010,7 @@
                                                                     pattern="^[6789]\d{9,9}$"
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                     appInputFormat="digitOnly" maxlength="10"
-                                                                    minlength="10" placeholder="Mobile No">
+                                                                    minlength="10" placeholder="Mobile No" autocomplete="off">
                                                             </span>
                                                         </div>
                                                     </div>
@@ -1036,7 +1036,7 @@
                                                             <input #incomeCertificate class="p-col-12"
                                                                 name="_incomecertificate" type="file" pInputText
                                                                 (change)="onFileUpload($event, 2)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                                accept=".pdf,.png,.jpg,.jpeg"  />
                                                         </div>
                                                         <div #field60 class="p-field p-col-12 p-md-12 p-lg-4">
                                                             <label style="font-size: 12px;"

@@ -20,7 +20,8 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   districts: any;
   school: any;
   schoolOptions: SelectItem[];
-  hostel: any;;
+  hostel: any;id: any;
+;
   hostelOptions: SelectItem[];
   hostels?: any
   schoolSelection: any[] = [];
@@ -29,19 +30,29 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   logged_user: User;
   institutes?: any;
   instituteOptions: SelectItem[];
+  institute: any;
+  data: any = [];
 
   constructor(private _restApiService: RestAPIService, private _messageService: MessageService, private _masterService: MasterService
     ,private _datePipe: DatePipe,private http: HttpClient) { }
 
   ngOnInit(): void {
     this.districts = this._masterService.getMaster('DT');
+    this.id = 0;
     // this.loadInstitute();
-    const params = {
-      'HCode' : 55
+     
     }
-    this._restApiService.getByParameters(PathConstants.RegisteredHostelWiseInstitute_Get, params).subscribe(res => {
-      this.institutes = res.table;
-    })
+    loadInstitues() {
+      if(this.hostel !== null && this.hostel !== undefined){
+      const params = {
+        'HCode' : this.hostel
+      }
+      this._restApiService.getByParameters(PathConstants.RegisteredHostelWiseInstitute_Get, params).subscribe(res => {
+        this.institutes = res;
+        console.log('i',this.institutes)
+      
+      })
+    }
     }
 
   public uploadFile = (files) => {
@@ -131,12 +142,29 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   }
 
   onSubmit() {
+    const params = {
+      'Id': this.id,
+      'DCode': this.district,
+      'HCode': this.hostel,
+      'ICode': this.institute,
+      'Filename': '',
+      'Flag': 1
+    }
+ this._restApiService.post(PathConstants.SchoolwiseDocUpload_Post,params).subscribe(res => {
 
+ })
+  }
+
+  onEdit(rowData) {
   }
 
   onView() {
+    this._restApiService.get(PathConstants.SchoolWiseStudentDetails_Get).subscribe(res => {
+      this.data = res;
+    })
 
   }
+
   loadTable() {
 
   }

@@ -257,6 +257,10 @@ public static readonly TashildarMapping_Get= 'TashildarMapping';
 public static readonly RegisteredHostelWiseInstitute_Get= 'RegisteredHostelWiseInstitute/Get';
 public static readonly OnlineRegisteredStudent_Get= 'OnlineRegisteredStudent/Get';
 
+public static readonly SchoolwiseDocUpload_Post = 'SchoolwiseDocUpload/Post';
+public static readonly SchoolwiseDocUpload_Get = 'SchoolwiseDocUpload';
+
+
  
 
  
