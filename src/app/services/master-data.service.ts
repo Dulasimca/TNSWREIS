@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Injectable, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PathConstants } from '../Common-Modules/PathConstants';
 import { User } from '../interfaces/user';
@@ -18,10 +18,13 @@ export class MasterService {
     commodity?: any = [];
     log_info: User;
     roleId: number;
+    specialDhasildarData?: any = [];
 
     constructor(private _restApiService: RestAPIService, private _authService: AuthService) { }
 
     initializeMaster(): Observable<any[]> {
+        this.log_info = this._authService.UserInfo;
+        this.roleId = this.log_info != undefined && this.log_info != null ? (this.log_info.roleId * 1) : 1;
         this._restApiService.get(PathConstants.DaysMaster_Get).subscribe(res => {
             this.days = res;
         });
@@ -31,15 +34,23 @@ export class MasterService {
         this._restApiService.get(PathConstants.CommodityMaster_Get).subscribe(commodity => {
             this.commodity = commodity;
         })
-        // setTime
-        // setTimeout(this.data = function () {
-        //     return this.data;
-        // }, 1000);
-        return of(this.data, this.days, this.commodity);
+        if (this.roleId === 6) {
+            const params = {
+                'type': 1,
+                'value': this.log_info.emailId
+            }
+            this._restApiService.getByParameters(PathConstants.TashildarMapping_Get, params).subscribe(dhasildar => {
+                this.specialDhasildarData = dhasildar;
+            })
+        } else {
+            this.specialDhasildarData = [];
+        }
+        return of(this.data, this.days, this.commodity, this.specialDhasildarData);
     }
 
     getDistrictAll() {
         this.districtData = [];
+        this.roleId = this.log_info != undefined && this.log_info != null ? (this.log_info.roleId * 1) : 1;
         if (this.data.Table !== undefined && this.data.Table !== null) {
             this.data.Table.forEach(d => {
                 this.districtData.push({ name: d.DistrictName, code: d.Districtcode });
@@ -52,6 +63,7 @@ export class MasterService {
 
     getTalukAll() {
         this.talukData = [];
+        this.roleId = this.log_info != undefined && this.log_info != null ? (this.log_info.roleId * 1) : 1;
         if (this.data.Table1 !== undefined && this.data.Table1 !== null) {
             this.data.Table1.forEach(t => {
                 this.talukData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
@@ -73,6 +85,11 @@ export class MasterService {
                     this.data.Table.forEach(d => {
                         if (this.roleId === 1) {
                             this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
+                        } else if (this.roleId === 6 && this.specialDhasildarData.length !== 0) {
+                            console.log('mast', this.roleId, this.specialDhasildarData[0])
+                            if (d.Districtcode === this.specialDhasildarData[0].DistrictId) {
+                                this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
+                            }
                         } else {
                             if ((this.log_info.districtCode * 1) === (d.Districtcode * 1)) {
                                 this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
@@ -92,6 +109,16 @@ export class MasterService {
                         } else if (this.roleId === 2) {
                             if ((this.log_info.districtCode * 1) === (t.Districtcode * 1)) {
                                 this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+                            }
+                        } else if (this.roleId === 6) {
+                            if (this.specialDhasildarData.length !== 0) {
+                                this.specialDhasildarData.forEach(st => {
+                                    if (t.Talukid === st.TalukId) {
+                                        this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
+                                    }
+                                })
+                            } else {
+                                this.masterData = [];
                             }
                         } else {
                             if ((this.log_info.talukId * 1) === (t.Talukid * 1)) {
@@ -117,7 +144,7 @@ export class MasterService {
             case 'GD':
                 if (this.data.Table3 !== undefined && this.data.Table3 !== null) {
                     this.data.Table3.forEach(g => {
-                        this.masterData.push({ name: g.Name, code: g.Id, gender:g.GenderType });
+                        this.masterData.push({ name: g.Name, code: g.Id, gender: g.GenderType });
                     })
                 } else {
                     this.masterData = [];
@@ -257,7 +284,7 @@ export class MasterService {
             case 'HF':
                 if (this.data.Table15 !== undefined && this.data.Table15 !== null) {
                     this.data.Table15.forEach(h => {
-                        this.masterData.push({ name: h.Name, code: h.Id, type:  h.IType });
+                        this.masterData.push({ name: h.Name, code: h.Id });
                     })
                 } else {
                     this.masterData = [];

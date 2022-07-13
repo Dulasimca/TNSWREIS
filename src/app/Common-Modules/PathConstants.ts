@@ -252,7 +252,17 @@ public static readonly SpecialTashildar_Post = 'SpecialTashildar/Post';
 public static readonly SpecialTashildar_Get= 'SpecialTashildar/Get';
 
 public static readonly TashildarMapping_Post = 'TashildarMapping/Post';
-public static readonly TashildarMapping_Get= 'TashildarMapping';
+public static readonly TashildarMapping_Get= 'TashildarMapping/Get';
+
+public static readonly RegisteredHostelWiseInstitute_Get= 'RegisteredHostelWiseInstitute/Get';
+public static readonly OnlineRegisteredStudent_Get= 'OnlineRegisteredStudent/Get';
+
+public static readonly SchoolwiseDocUpload_Post = 'SchoolwiseDocUpload/Post';
+public static readonly SchoolwiseDocUpload_Get = 'SchoolwiseDocUpload';
+
+
+ 
+
  
 
 }

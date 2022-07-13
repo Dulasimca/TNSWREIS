@@ -64,12 +64,15 @@ export class MenuHeaderComponent implements OnInit {
         this.officeType = 'Taluk Office';
         this.place = this.logged_user.talukName;
         this.placeType = 'Taluk';
-      } else {
+      } else if(this.roleId === 4) {
         this.officeType = 'Hostel';
         var str: any = (this.logged_user.hostelName).toString();
         str = str.split(',');
         this.place = str[0];
         this.placeType = 'Hostel';
+      } else if(this.roleId === 6) {
+        this.officeType = 'Tasildhar Office';
+        // this.place = this.logged_user.
       }
     }
     });
@@ -107,11 +110,9 @@ export class MenuHeaderComponent implements OnInit {
         }
         else
         {
-          console.log('test')
         this._router.navigate(['/online-registration']);
         }
       } else {
-        console.log('test')
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
           summary: ResponseMessage.SUMMARY_ERROR, detail: 'Registration Will Be Opened Soon, Please Contact TNADWHO'

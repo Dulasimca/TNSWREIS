@@ -96,6 +96,7 @@ import { StudentIdcardComponent } from './student-idcard/student-idcard.componen
 import { SpecialTashildarMasterComponent } from './master/special-tashildar-master/special-tashildar-master.component';
 import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-mapping.component';
 import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
+import { OnlineRegisteredStudentReportComponent } from './online-registered-student-report/online-registered-student-report.component';
 
 
 const routes: Routes = [
@@ -209,6 +210,9 @@ const routes: Routes = [
   { path: 'OnlineApplicationControl', component:OnlineApplicationControlComponent,canActivate: [AuthGuard] },
   { path: 'specialTashildar-master', component:SpecialTashildarMasterComponent,canActivate: [AuthGuard] },
   { path: 'tashildar-mapping', component:TashildarMappingComponent,canActivate: [AuthGuard] },
+  { path: 'onlineregisteredstudent-report', component:OnlineRegisteredStudentReportComponent,canActivate: [AuthGuard] },
+
+   
    
 ];
 

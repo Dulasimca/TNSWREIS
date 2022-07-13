@@ -85,7 +85,7 @@ export class TashildarMappingComponent implements OnInit {
 
   onView() {
     this.data = [];
-    this.restApiService.get(PathConstants.TashildarMapping_Get).subscribe(res => {
+    this.restApiService.getByParameters(PathConstants.TashildarMapping_Get, {'type': 0}).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0){
         res.forEach(i => {
           i.Status = (i.Flag) ? 'Active' : 'Inactive';

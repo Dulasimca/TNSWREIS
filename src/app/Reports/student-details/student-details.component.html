@@ -43,11 +43,30 @@
                                 <p-table #dt [value]="studentData" [columns]="studentCols"
                                     styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
                                     [rowsPerPageOptions]="[10,20,30,40]"  responsiveLayout="scroll"
-                                    totalRecords="totalRecords" [loading]="loading" responsiveLayout="scroll"
-                                    exportFilename="STUDENT_DETAILS_REPORT">
+                                    totalRecords="totalRecords" [loading]="loading"  
+                                    exportFilename="STUDENT_DETAILS_REPORT"  [globalFilterFields]="['studentName']">
+                                    <ng-template pTemplate="caption">
+                                        <div class="table-header">
+                                            <div class="p-grid">
+                                                <div class="p-col-6 p-md-6 p-lg-10 txt-end">
+                                                    <span>Search by Student Name</span>
+                                                </div>
+                                                <div class="p-col-4 p-md-4 p-lg-2">
+                                                    <span class="p-input-icon-left">
+                                                        <i class="pi pi-search"></i>
+                                                        <input pInputText type="text" size="30"
+                                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                            placeholder="Global Search" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
                                     <ng-template pTemplate="header" let-columns>
                                         <tr>
                                             <th>S.No</th>
+                                            <th pSortableColumn="isNewStudent">Old/New Student <p-sortIcon field="isNewStudent"></p-sortIcon></th>
+
                                             <th *ngFor="let col of columns">
                                                 {{col.header}}
                                             </th>
@@ -69,6 +88,13 @@
                                                 </span>
                                                 <span style="text-align: end;">
                                                     {{rowIndex+1}}
+                                                </span>
+                                            </td>
+                                            <td class="td-border">
+                                                <span class="p-column-title">
+                                                   Old/New Student:
+                                                </span>
+                                                <span style="text-align: end;"> {{rowData.isNewStudent}}
                                                 </span>
                                             </td>
                                             <td *ngFor="let col of columns" [style.text-align]="col.align"

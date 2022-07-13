@@ -5,7 +5,6 @@ import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
-import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
