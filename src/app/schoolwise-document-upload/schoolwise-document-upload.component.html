@@ -2,6 +2,7 @@
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
         <p-panel header="School Wise Document Upload">
+            <form #f="ngForm" name="schoolwiseDocUpload">
             <p-card>
                 <div class="p-col-12 no-pad-top">
                     <div class="p-grid">
@@ -13,7 +14,14 @@
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
-                                        (onClick)="onSelect('D')" required>
+                                        (onClick)="onSelect('D')" (onChange)="selectDistrict()" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                    <label for="_hostelname">Hostel Name<span
+                                            class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_hostelname" [options]="hostelOptions"
+                                        [(ngModel)]="hostel" (click)="onSelect('HN')" required>
                                     </p-dropdown>
                                 </div>
                                 <div #row1 class="p-col-6 p-md-6 p-lg-2">
@@ -21,7 +29,7 @@
                                                 class="form-mandatory-field">*</span></label>
                                     </div>
                                     <p-dropdown name="_school" [options]="schoolOptions" [(ngModel)]="school"
-                                        (onClick)="onSelect('SH')" (ngModelChange)="reloadFields('T')" required>
+                                        (onClick)="onSelect('IN')" (ngModelChange)="reloadFields('T')" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-3">
@@ -30,11 +38,18 @@
                                     <input #declarationForm class="p-col-12" name="_document" type="file" pInputText
                                         (change)="onFileUpload($event)" accept=".pdf,.png,.jpg,.jpeg" />
                                 </div>
+                                <div class="p-col-12"></div>
+                                <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                    <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSubmit()"
+                                        [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                    <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </p-card>
+            </form>
         </p-panel>
     </div>
 </div>

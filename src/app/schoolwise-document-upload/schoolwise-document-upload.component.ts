@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from '../Common-Modules/messages';
 import { PathConstants } from '../Common-Modules/PathConstants';
+import { User } from '../interfaces/user';
 import { MasterService } from '../services/master-data.service';
 import { RestAPIService } from '../services/restAPI.service';
 
@@ -19,12 +20,15 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   districts: any;
   school: any;
   schoolOptions: SelectItem[];
-  hostel: any;
+  hostel: any;;
   hostelOptions: SelectItem[];
+  hostels?: any
   schoolSelection: any[] = [];
   filteredSchoolData: any[] = [];
   Filename: string;
-
+  logged_user: User;
+  institutes?: any;
+  instituteOptions: SelectItem[];
 
   constructor(private _restApiService: RestAPIService, private _messageService: MessageService, private _masterService: MasterService
     ,private _datePipe: DatePipe,private http: HttpClient) { }
@@ -32,7 +36,13 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   ngOnInit(): void {
     this.districts = this._masterService.getMaster('DT');
     // this.loadInstitute();
-  }
+    const params = {
+      'HCode' : 55
+    }
+    this._restApiService.getByParameters(PathConstants.RegisteredHostelWiseInstitute_Get, params).subscribe(res => {
+      this.institutes = res.table;
+    })
+    }
 
   public uploadFile = (files) => {
     if (files.length === 0) {
@@ -63,7 +73,8 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   }
 
   onSelect(value) {
-    let districtSelection = [];
+    let districtSelection = []; 
+    let instituteSelection = [];
 
     switch (value) {
       case 'D':
@@ -73,12 +84,13 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
         this.districtOptions = districtSelection;
 
         this.districtOptions.unshift({ label: '-select-', value: null });
-        this.loadInstitute();
         break;
-      case 'SH':
-        this.schoolOptions = [];
-        this.schoolOptions = this.filteredSchoolData.slice(0);
-        this.schoolOptions.unshift({ label: '-select-', value: null });
+        case 'IN':
+        this.institutes.forEach(n => {
+          instituteSelection.push({ label: n.InstituteName, value: n.CurrentInstituteId })
+        });
+        this.instituteOptions = instituteSelection;
+        this.instituteOptions.unshift({ label: '-select', value: null });
         break;
     }
   }
@@ -92,37 +104,38 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
       return s.type === 1;
     })
   }
-  loadInstitute() {
-    // let params = {};
-    let instituteSelection = [];
-    console.log('1')
+   
+
+  selectDistrict() {
+    this.hostel = null;
+    this.hostelOptions = [];
+    let hostelSelection = [];
     const params = {
-      'Dcode': this.district
+      'Type': 1,
+      'DCode': this.district,
+      'TCode': 0,
+      'HostelId': 0,
     }
-    if (this.district !== undefined && this.district !== null) {
-      this._restApiService.getByParameters(PathConstants.Institute_Get, params).subscribe(res => {
-        console.log('2')
-        if (res !== undefined && res !== null) {
-          if (res.length !== 0) {
-            res.forEach(i => {
-              instituteSelection.push({
-                label: i.Name, value: i.InstituteCode, address: i.Addressinfo,
-                id: i.Id, type: i.IType
-              })
-            })
-            this.schoolSelection = instituteSelection.slice(0);
-            this.onSelectType();
-          }
-        }
-        else {
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoInstituteFound
+    if (this.district !== null && this.district !== undefined) {
+      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          this.hostels = res.Table;
+          this.hostels.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
           })
-        }
+          this.hostelOptions = hostelSelection;
+          this.hostelOptions.unshift({ label: '-select', value: null });
+        };
       })
     }
+  }
+
+  onSubmit() {
+
+  }
+
+  onView() {
+
   }
   loadTable() {
 
