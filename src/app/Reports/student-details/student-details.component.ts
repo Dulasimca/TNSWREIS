@@ -161,6 +161,7 @@ export class StudentDetailsComponent implements OnInit {
       this._restApiService.getByParameters(PathConstants.OnlineStudentRegistrationDetails_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
           res.forEach(r => {
+            r.isNewStudent = (r.isNewStudent === 1) ? 'Old Student' : 'New Student'
             this.aadharNo = r.aadharNo;
             this.hostelId = r.hostelId;
             this.studentId = r.studentId;
