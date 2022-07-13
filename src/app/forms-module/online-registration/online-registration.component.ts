@@ -499,6 +499,7 @@ export class OnlineRegistrationComponent implements OnInit {
   defaultValues() {
     this.maxDate = new Date();
     this.obj = {} as OnlineRegistration;
+    this.activeTabIndex = 0;
     this.studentImage = '';
     this.showSubmit = false;
     this.tab2 = false;
@@ -873,7 +874,6 @@ export class OnlineRegistrationComponent implements OnInit {
     this.tab2 = (this.activeTabIndex === 1 || (this.activeTabIndex !== 1 && this.tab2)) ? true : false;
     this.tab3 = (this.activeTabIndex === 2 || (this.activeTabIndex === 2 && this.tab3)) ? true : false;
     this.showSubmit = (this.tab2 && this.tab3) ? true : false;
-    console.log('move', this.tab2, this.tab3, this.showSubmit, this.activeTabIndex);
   }
 
   handleChange(e) {

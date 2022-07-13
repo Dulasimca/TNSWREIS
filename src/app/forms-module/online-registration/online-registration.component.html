@@ -275,7 +275,7 @@
                                                                     style="width: 100px; height: 100px;" />
                                                                 <input style="display: none" name="_studentimage"
                                                                     type="file" (change)="onFileUpload($event, 1)"
-                                                                    #userFile>
+                                                                    #userFile required>
                                                                 <button class="b-size" style="margin: 0 !important;"
                                                                     icon="pi pi-plus edit-size" pButton type="file"
                                                                     #file (click)="userFile.click()" required>
@@ -778,7 +778,7 @@
                                                     </div>
                                                     <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span>
-                                                            <label style="font-size: 12px;text-transform: uppercase;" for="_ifsccode"
+                                                            <label style="font-size: 12px;text-transform: uppercase !important;" for="_ifsccode"
                                                             [ngStyle]="{'color': (obj.ifscCode != null && obj.ifscCode !== undefined) ? (f.controls._ifsccode.invalid ? 'crimson' : '#495057') : '#495057'}">IFSC
                                                                 எண்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_ifsccode" pInputText
@@ -1074,7 +1074,7 @@
                                     </div>
                                 </p-tabPanel>
                                 <div class="p-col-12 txt-center">
-                                    <button *ngIf="!showSubmit" pButton type="button" label="Save&Next"
+                                    <button *ngIf="!showSubmit" pButton type="button" label="Next"
                                         (click)="moveTo()"></button>&nbsp;
                                     <button *ngIf="showSubmit" pButton type="button" label="Submit" icon="pi pi-send"
                                         (click)="checkAadhar()" [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;

@@ -252,7 +252,7 @@ public static readonly SpecialTashildar_Post = 'SpecialTashildar/Post';
 public static readonly SpecialTashildar_Get= 'SpecialTashildar';
 
 public static readonly TashildarMapping_Post = 'TashildarMapping/Post';
-public static readonly TashildarMapping_Get= 'TashildarMapping';
+public static readonly TashildarMapping_Get= 'TashildarMapping/Get';
  
 
 }
