@@ -10,24 +10,24 @@
                             <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                 <div class="p-grid">
                                     <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_talshiName">Tashildar Name<span
-                                             class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="_talshiName" [options]="tashildarNameOptions" (onClick)="onSelect('TN')"
-                                        (onChange)="onNameChecking()"  [(ngModel)]="tashildarName" required>
-                                        </p-dropdown>
-                                    </div>
-                                    <div class="p-col-12 p-md-12 p-lg-2">
                                         <div><label for="_dis">District<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_dis" [options]="districtOptions"  (onClick)="onSelect('D')"
-                                        (onChange)="refreshTaluk()" (onChange)="onDistrictChecking()" [(ngModel)]="district" required>
+                                        (onChange)="loadTasildhar()"  [(ngModel)]="district" required>
                                         </p-dropdown>
                                     </div>
+                                    <div class="p-col-12 p-md-12 p-lg-2">
+                                        <div><label for="_talshiName">Tashildar Name<span
+                                             class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_talshiName" [options]="tashildarNameOptions" (onClick)="onSelect('TN')"
+                                         [(ngModel)]="tashildarName" required>
+                                        </p-dropdown>
+                                    </div>                               
                                     <div class="p-col-12 p-md-12 p-lg-2">
                                         <div><label for="_tal">Taluk<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_tal" [options]="talukOptions" (onClick)="onSelect('T')"
-                                            (onChange)="onDataChecking()" [(ngModel)]="taluk" required>
+                                          (onChange)="onDataChecking()"   [(ngModel)]="taluk" required>
                                         </p-dropdown>
                                     </div>
                                  
@@ -42,7 +42,9 @@
                                         <button pButton type="button" label="Save" icon="pi pi-save"
                                         [disabled]="((!f.valid || !f.dirty))" (click)="onSubmit()"></button>&nbsp;
                                         <button pButton type="button" label="View" icon="pi pi-eye"
-                                            (click)="onView()"></button>
+                                            (click)="onView()"></button>&nbsp;
+                                            <button pButton type="button" label="Clear" icon="pi pi-eye"
+                                            (click)="onClear()"></button>
                                     </div>
                                 </div>
                             </div>

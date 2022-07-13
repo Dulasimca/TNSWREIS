@@ -25,7 +25,7 @@ export class TashildarMappingComponent implements OnInit {
   taluks?: any;
   data: any = [];
   cols: any;
-  tname?: any = [];
+  tasildhars?: any = [];
   tashildarName: any;
   tashildarNameOptions: SelectItem[];
   RowId: any = 0;
@@ -39,13 +39,17 @@ export class TashildarMappingComponent implements OnInit {
     this.cols = this.tableConstants.TashildarMappingcols;
     this.districts = this.masterService.getDistrictAll();
     this.taluks = this.masterService.getTalukAll();
-    this.restApiService.get(PathConstants.SpecialTashildar_Get).subscribe(tashildarName => {
-      this.tname = tashildarName.slice(0);
-    })
     this.onView();
-    this.onDataChecking();
-    this.onDistrictChecking();
-    this.onNameChecking();
+  }
+
+  loadTasildhar() {
+    this.taluk = null;
+    this.talukOptions = [];
+    this.tashildarName = null;
+    this.tashildarNameOptions = [];
+    this.restApiService.getByParameters(PathConstants.SpecialTashildar_Get, {'Dcode': this.district}).subscribe(response => {
+      this.tasildhars = response.slice(0);
+    })
   }
 
   onSelect(type) {
@@ -70,8 +74,8 @@ export class TashildarMappingComponent implements OnInit {
           this.talukOptions.unshift({ label: '-select-', value: null });
           break;
           case 'TN':
-          this.tname.forEach(n => {
-              tashildarSelection.push({ label: n.SplTashildarName, value: n.Slno });           
+          this.tasildhars.forEach(n => {
+              tashildarSelection.push({ label: n.SplTashildarName, value: n.Slno });  
           })
           this.tashildarNameOptions = tashildarSelection;
           this.tashildarNameOptions.unshift({ label: '-select-', value: null });
@@ -84,7 +88,7 @@ export class TashildarMappingComponent implements OnInit {
     this.restApiService.get(PathConstants.TashildarMapping_Get).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0){
         res.forEach(i => {
-          i.status = (i.Flag) ? 'Active' : 'Inactive';
+          i.Status = (i.Flag) ? 'Active' : 'Inactive';
         })
       this.data = res;
     }
@@ -135,7 +139,8 @@ export class TashildarMappingComponent implements OnInit {
       this.districtOptions = [{ label: rowData.Districtname, value: rowData.DistrictId}];
       this.taluk = rowData.TalukId;
       this.talukOptions = [{ label: rowData.Talukname, value: rowData.TalukId}];
-      this.selectedType = rowData.Flag;
+      this.selectedType = rowData.Flag ? 1 : 0;
+      this.onDataChecking();
     }
   }
 
@@ -160,10 +165,12 @@ export class TashildarMappingComponent implements OnInit {
   onDataChecking() {
     if(this.data.length !== 0) {
       for(let i = 0; i < this.data.length; i ++) {
-        if((this.data[i].TalukId * 1) === (this.taluk * 1)) {
-          this.tashildarName = this.data[i].SplTashildarName;
-          this.district =this.data[i].DistrictId;
-          this.taluk =this.data[i].TalukId;  
+        if((this.data[i].TalukId * 1) === (this.taluk * 1) 
+        && (this.data[i].DistrictId * 1) === (this.district * 1) && this.data[i].Flag) {
+          this.talukOptions = [];
+          this.taluk = null;
+          console.log('data', this.data[i])
+          this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
             summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Taluk is already exist please select different taluk'
@@ -176,42 +183,23 @@ export class TashildarMappingComponent implements OnInit {
     }
   }
 
-  onDistrictChecking() {
-    if(this.data.length !== 0) {
-      for(let i = 0; i < this.data.length; i ++) {
-        if((this.data[i].DistrictId * 1) === (this.district * 1)) {
-          this.tashildarName = this.data[i].SplTashildarName;
-          this.district =this.data[i].DistrictId;
-          this.taluk =this.data[i].TalukId;  
-          this.messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected District is already exist please select different district'
-          })
-          break;
-        } else {
-          continue;
-        }
-      }
-    }
-  }
-
-  onNameChecking() {
-    if(this.data.length !== 0) {
-      for(let i = 0; i < this.data.length; i ++) {
-        if((this.data[i].TashildarName * 1) === (this.tashildarName * 1)) {
-          this.tashildarName = this.data[i].SplTashildarName;
-          this.district =this.data[i].DistrictId;
-          this.taluk =this.data[i].TalukId;  
-          this.messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Name is already exist please select different name'
-          })
-          break;
-        } else {
-          continue;
-        }
-      }
-    }
-  }
+  // onNameChecking() {
+  //   if(this.data.length !== 0) {
+  //     for(let i = 0; i < this.data.length; i ++) {
+  //       if((this.data[i].TashildarName * 1) === (this.tashildarName * 1)) {
+  //         this.tashildarName = this.data[i].SplTashildarName;
+  //         this.district =this.data[i].DistrictId;
+  //         this.taluk =this.data[i].TalukId;  
+  //         this.messageService.add({
+  //           key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+  //           summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Name is already exist please select different name'
+  //         })
+  //         break;
+  //       } else {
+  //         continue;
+  //       }
+  //     }
+  //   }
+  // }
 
 }
