@@ -96,7 +96,7 @@ export class MenuHeaderComponent implements OnInit {
 
   CheckApplicaitonStatus()
   {
-    this._restApiService.get(PathConstants.HostelOnlineApplication_Get).subscribe(res => {
+    this._restApiService.get(PathConstants.HostelClosingDateEntry_Get).subscribe(res => {
       if (res !== null && res !== undefined) {
         if(res.length === 0) {
           this._messageService.clear();
