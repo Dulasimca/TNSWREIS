@@ -110,16 +110,6 @@ export class MasterService {
                             if ((this.log_info.districtCode * 1) === (t.Districtcode * 1)) {
                                 this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
                             }
-                        } else if (this.roleId === 6) {
-                            if (this.specialDhasildarData.length !== 0) {
-                                this.specialDhasildarData.forEach(st => {
-                                    if (t.Talukid === st.TalukId) {
-                                        this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
-                                    }
-                                })
-                            } else {
-                                this.masterData = [];
-                            }
                         } else {
                             if ((this.log_info.talukId * 1) === (t.Talukid * 1)) {
                                 this.masterData.push({ name: t.Talukname, code: t.Talukid, dcode: t.Districtcode });
