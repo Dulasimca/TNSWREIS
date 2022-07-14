@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService, SelectItem } from 'primeng/api';
+import { GlobalVariable } from 'src/app/Common-Modules/GlobalVariables';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
@@ -12,6 +12,7 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-warden-details',
@@ -29,7 +30,7 @@ export class WardenDetailsComponent implements OnInit {
   hostelOptions: SelectItem[];
   qualificationOptions: SelectItem[];
   nativeDistrictOptions: SelectItem[];
-  dob: any;
+  dob: Date;
   servicedoj: any;
   hostelJoin: any;
   hstlLeaveDate: any;
@@ -60,24 +61,24 @@ export class WardenDetailsComponent implements OnInit {
   logged_user: User;
   wardenFileName: string;
   disableSave: boolean;
-  isValidEmail: boolean;
-  dobYearRange: string;
-  public formData = new FormData();
-
-  @ViewChild('f', { static: false }) _wardenDetails: NgForm;
   loading: boolean;
+  dobYearRange: string;
+  pincode_max: number;
+  serviceMinDate: Date;
+  public formData = new FormData();
+  @ViewChild('f', { static: false }) _wardenForm: NgForm;
 
-  constructor(private restApiService: RestAPIService, private messageService: MessageService, private masterService: MasterService, private _d: DomSanitizer, private _tableConstants: TableConstants,
+  constructor(private restApiService: RestAPIService, private messageService: MessageService,
+    private masterService: MasterService, private _d: DomSanitizer,
+    private _tableConstants: TableConstants, private _utilsService: UtilsService,
     private _datePipe: DatePipe, private http: HttpClient, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.pincode_max = GlobalVariable.PINCODE_MAX;
     this.cols = this._tableConstants.wardenTableColumns;
     this.logged_user = this.authService.UserInfo;
-    const current_year = new Date().getFullYear();
-    const dob_cyear = current_year - 5;
-    this.dobYearRange = 1950 + ':' + dob_cyear;
-    this.yearRange = 1950 + ':' + current_year;
-    this.isValidEmail = false;
+    this.dobYearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.EMPLOYEE_DOB_MAX_YEAR;
+    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.CURRENT_YEAR;
     this.genders = this.masterService.getMaster('GD');
     this.districts = this.masterService.getDistrictAll();
     this.nativeDistricts = this.masterService.getDistrictAll();
@@ -136,7 +137,7 @@ export class WardenDetailsComponent implements OnInit {
         filtered_data = this.courses.filter(f => {
           return f.type === 2;
         })
-        console.log('f',filtered_data)
+        console.log('f', filtered_data)
         filtered_data.forEach(q => {
           courseSelection.push({ label: q.name, value: q.code });
         })
@@ -146,10 +147,28 @@ export class WardenDetailsComponent implements OnInit {
     }
   }
 
-  // resetField() {
-  //   this.taluk = null;
-  //   this.talukOptions = [];
-  // }
+  getServiceMinDate() {
+    this.serviceMinDate = this._utilsService.findMinDate(this.dob);
+    let msg = '';
+    if(this.hostelJoin !== null && this.hostelJoin !== undefined && this.hostelJoin < this.serviceMinDate) {
+      msg = 'Please select valid hostel joining date !'
+    } else {
+      msg = '';
+      this.hostelJoin = null;
+    }
+    if (this.servicedoj !== null && this.servicedoj !== undefined && this.servicedoj < this.serviceMinDate) {
+      msg = 'Please select valid hostel joining date !'
+    } else {
+      msg = '';
+      this.servicedoj = null;
+    }
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+        summary: ResponseMessage.SUMMARY_ERROR, detail: msg
+      });
+  }
+
   refreshTaluk() {
     this.taluk = null;
     this.talukOptions = [];
@@ -163,7 +182,7 @@ export class WardenDetailsComponent implements OnInit {
       'Type': 1,
       'DCode': this.district,
       'TCode': (this.logged_user.talukId !== undefined && this.logged_user.talukId !== null) ?
-      this.logged_user.talukId : 0,
+        this.logged_user.talukId : 0,
       'HostelId': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ?
         this.logged_user.hostelId : 0,
     }
@@ -181,18 +200,6 @@ export class WardenDetailsComponent implements OnInit {
     }
   }
 
-  validateEmail() {
-    var regex = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
-    if(this.email !== undefined && this.email !== null) {
-      var str: string = this.email;
-      if(str.match(regex)) {
-        this.isValidEmail = false;
-      } else {
-        this.isValidEmail = true;
-      }
-    }
-  }
-
   public uploadFile = (event) => {
     const selectedFile = event.target.files[0];
     {
@@ -202,7 +209,7 @@ export class WardenDetailsComponent implements OnInit {
     this.formData = new FormData()
     let fileToUpload: any = <File>event.target.files[0];
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
-    var curr_datetime =  this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
+    var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
     var filenameWithExtn = curr_datetime + '.' + etxn[1];
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
@@ -212,7 +219,7 @@ export class WardenDetailsComponent implements OnInit {
       .subscribe(event => {
       }
       );
-      return filenameWithExtn;
+    return filenameWithExtn;
   }
 
   // onFileUpload($event) {
@@ -278,18 +285,18 @@ export class WardenDetailsComponent implements OnInit {
     this.showTable = true;
     this.loading = true;
     const params = {
-      'DCode': (this.logged_user.districtCode !== undefined && this.logged_user.districtCode !== null) 
-      ? this.logged_user.districtCode : 0,
+      'DCode': (this.logged_user.districtCode !== undefined && this.logged_user.districtCode !== null)
+        ? this.logged_user.districtCode : 0,
       'TCode': (this.logged_user.talukId !== undefined && this.logged_user.talukId !== null) ?
-       this.logged_user.talukId : 0,
+        this.logged_user.talukId : 0,
       'Value': (this.logged_user.hostelId !== undefined && this.logged_user.hostelId !== null) ? this.logged_user.hostelId : 0
-    
+
     }
     this.restApiService.getByParameters(PathConstants.Warden_Get, params).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0) {
         this.data = res.Table;
         this.loading = false;
-      }else {
+      } else {
         this.loading = true;
       }
     });
@@ -328,10 +335,35 @@ export class WardenDetailsComponent implements OnInit {
     }
   }
 
+  validateFields(field) {
+    switch (field) {
+      case 'P':
+        if (this.pincode !== null && this.pincode !== undefined) {
+          if (this.pincode > this.pincode_max) {
+            this._wardenForm.controls['_pincode'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this._wardenForm.controls['_pincode'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'M':
+        if (this.mobNo !== null && this.mobNo !== undefined && this.altMobNo !== null 
+          && this.altMobNo !== undefined) {
+          if (this.mobNo.toString().length === 10 && this.altMobNo.toString().length === 10 &&
+            this.mobNo.toString() === this.altMobNo.toString()) {
+            this._wardenForm.controls['_mobno'].setErrors({ 'incorrect': true });
+          } else {
+            this._wardenForm.controls['_mobno'].setErrors({ 'incorrect': true });
+          }
+        }
+        break;
+    }
+  }
+
   onClear() {
-    this._wardenDetails.form.reset();
-    this._wardenDetails.form.markAsUntouched();
-    this._wardenDetails.form.markAsPristine();
+    this._wardenForm.form.reset();
+    this._wardenForm.form.markAsUntouched();
+    this._wardenForm.form.markAsPristine();
     this.wardenId = 0;
     this.talukOptions = [];
     this.districtOptions = [];
@@ -342,6 +374,5 @@ export class WardenDetailsComponent implements OnInit {
     this.data = [];
     this.wardenImage = null;
     this.disableSave = ((this.logged_user.roleId * 1) === 4) ? true : false;
-    this.isValidEmail = false;
   }
 }

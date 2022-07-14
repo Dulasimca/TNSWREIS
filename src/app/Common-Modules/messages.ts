@@ -52,5 +52,9 @@ export class ResponseMessage {
     public static readonly DisApprovedSuccess = 'Disapproved';
     public static readonly NoInstituteFound = 'No institutes found !';
     public static readonly SanctionedEligibiltyErr = 'Cannot select student more than sanctioned strength !';
+    public static readonly CheckUserNameExists = 'Username already exists! Please try different username ';
+    public static readonly SelectDistrict = 'Please select District to view!';
+
+
  
 } 

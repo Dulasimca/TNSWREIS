@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/Interfaces/user';
 import { MasterService } from 'src/app/services/master-data.service';
 import { DatePipe } from '@angular/common';
+import { GlobalVariable } from 'src/app/Common-Modules/GlobalVariables';
 
 @Component({
   selector: 'app-hostelmaster',
@@ -36,7 +37,7 @@ export class HostelmasterComponent implements OnInit {
   Street: any;
   Landmark: string;
   upload: any;
-  pincode: any;
+  pincode: number;
   Longitude: any;
   Latitude: any;
   Radius: any;
@@ -63,11 +64,18 @@ export class HostelmasterComponent implements OnInit {
   MLAId: string;
   MPId: string;
   selectedType: number;
-  @ViewChild('f', { static: false }) _hostelmaster: NgForm;
+  pincode_max: number;
+  hstlOpeningYearRange: string;
+  hstlGenderType: any;
+  hstlGenderOptions : SelectItem[];
+  genderTypes?: any;
+  @ViewChild('f', { static: false }) _hostelForm: NgForm;
   constructor(private _masterService: MasterService, private restApiService: RestAPIService,
     private _datepipe: DatePipe, private messageService: MessageService,private _authService: AuthService) { }
 
   public ngOnInit(): void {
+    this.pincode_max = GlobalVariable.PINCODE_MAX;
+    this.hstlOpeningYearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.CURRENT_YEAR;
    this.cols = [
      { field: 'HostelName', header: 'HostelName', width: '100px'},
      { field: 'HostelCode', header: 'Hostel Code', width: '100px'},
@@ -89,6 +97,7 @@ export class HostelmasterComponent implements OnInit {
     this.Districtcodes = this._masterService.getDistrictAll();
     this.Hosteltypes = this._masterService.getMaster('HT');
     this.Hostelfunctions = this._masterService.getMaster('HF');
+    this.genderTypes = this._masterService.getMaster('GD');
     this.TalukIds = this._masterService.getTalukAll();
     if((this.login_user.roleId * 1) === 4) {
         this.disableFields = true;
@@ -136,6 +145,7 @@ export class HostelmasterComponent implements OnInit {
     let talukSelection = [];
     let hostelSelection = [];
     let hostelfunctionSelection = [];
+    let hstlGenderSelection = [];
     switch (type) {
       case 'DT':
         this.Districtcodes.forEach(d => {
@@ -168,7 +178,14 @@ export class HostelmasterComponent implements OnInit {
         })
         this.FunctioningtypeOptions = hostelfunctionSelection;
         this.FunctioningtypeOptions.unshift({ label: '-select-', value: null });
-        break;       
+        break; 
+        case 'HG':
+          this.genderTypes.forEach(f => {
+            hstlGenderSelection.push({ label: f.gender, value: f.code });
+          })
+          this.hstlGenderOptions = hstlGenderSelection;
+          this.hstlGenderOptions.unshift({ label: '-select-', value: null });
+          break;        
     }
   }
 
@@ -193,6 +210,7 @@ export class HostelmasterComponent implements OnInit {
       'MPId': this.MPId,
       'MLAId': this.MLAId,
       'SpecialDashildar': this.SpecialDashildar,
+      'HostelGenderType': this.hstlGenderType,
       'Flag': (this.selectedType * 1)
     };
       this.restApiService.post(PathConstants.Hostel_Post,params).subscribe(res => {
@@ -253,7 +271,7 @@ export class HostelmasterComponent implements OnInit {
     this.hostelImage = url;
   }
   clear() {
-    this._hostelmaster.reset();
+    this._hostelForm.reset();
     this.Hosteltype = null;
     this.HosteltypeOptions = [];
     this.Functioningtype = null;
@@ -292,6 +310,16 @@ export class HostelmasterComponent implements OnInit {
     this.MLAOptions = [{ label: selectedRow.MLAName, value: selectedRow.MLAId}];
     this.SpecialDashildar = selectedRow.SpecialDashildar;
  }
+  }
+
+  checkPincode() {
+    if(this.pincode !== null && this.pincode !== undefined) {
+      if(this.pincode > this.pincode_max) {
+      this._hostelForm.controls['_pincode'].setErrors({'incorrect': true});
+      } 
+    } else {
+      this._hostelForm.controls['_pincode'].setErrors({'incorrect': true});
+    }
   }
 
 }

@@ -37,9 +37,18 @@
                                     <div><label for="_dob">Date of Birth<span
                                                 class="form-mandatory-field">*</span></label></div>
                                     <p-calendar [showOtherMonths]="false" [(ngModel)]="dateOfbirth" name="_dob"
-                                        [showIcon]="true" [monthNavigator]="true" [monthNavigator]="true"
+                                        [showIcon]="true" [monthNavigator]="true"
                                         [showOtherMonths]="false" [readonlyInput]="true" [yearNavigator]="true"
-                                        yearRange="{{dobYearRange}}" inputId="dateofbirth" required>
+                                        yearRange="{{dobYearRange}}" (ngModelChange)="getServiceMinDate()" inputId="dateofbirth" required>
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_doj">Service Joined Date<span
+                                                class="form-mandatory-field">*</span></label></div>
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="dateOfjoin" name="_doj"
+                                        [monthNavigator]="true" [showOtherMonths]="false" [readonlyInput]="true"
+                                        [yearNavigator]="true" [minDate]="serviceMinDate" [showIcon]="true"
+                                        yearRange="{{yearRange}}" inputId="dateofjoining" required>
                                     </p-calendar>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
@@ -49,38 +58,28 @@
                                         [(ngModel)]="gender" required>
                                     </p-dropdown>
                                 </div>
-                                <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_doj">Service Joined Date<span
-                                                class="form-mandatory-field">*</span></label></div>
-                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="dateOfjoin" name="_doj"
-                                        [monthNavigator]="true" [showOtherMonths]="false"
-                                        [readonlyInput]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
-                                        [showIcon]="true" inputId="dateofjoining" required>
-                                    </p-calendar>
-                                </div>
-
 
                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left"><label for="_district">Hostel
                                         District<span class="form-mandatory-field">*</span></label>
-                                    <p-dropdown name="_district" [options]="hostelDistrictOptions" [(ngModel)]="district"
-                                        (onClick)="onSelect('DT', 1)"   (onChange)="selectDistrict(1)">
+                                    <p-dropdown name="_district" [options]="hostelDistrictOptions"
+                                        [(ngModel)]="district" (onClick)="onSelect('DT', 1)"
+                                        (onChange)="selectDistrict(1)">
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                     <label for="_hostelname">Hostel Name<span
                                             class="form-mandatory-field">*</span></label>
-                                    <p-dropdown name="_hostelname" [filter]="true"
-                                    filterBy="label" [showClear]="true" [options]="hostelNameOptions" [(ngModel)]="hostelName"
-                                      optionLabel="label">
+                                    <p-dropdown name="_hostelname" [filter]="true" filterBy="label" [showClear]="true"
+                                        [options]="hostelNameOptions" [(ngModel)]="hostelName" optionLabel="label">
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_hstljoindate">Joined as employee in<span
                                                 class="form-mandatory-field">*</span></label></div>
-                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="hostelJoin"
-                                        name="_hstljoindate" [showIcon]="true" [monthNavigator]="true"
-                                        [showOtherMonths]="false" [readonlyInput]="true" [yearNavigator]="true"
-                                        yearRange="{{yearRange}}" inputId="hosteljoindate" required>
+                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="hostelJoin" name="_hstljoindate"
+                                        [showIcon]="true" [monthNavigator]="true" [showOtherMonths]="false"
+                                        [readonlyInput]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
+                                        inputId="hosteljoindate" [minDate]="serviceMinDate" required>
                                     </p-calendar>
                                 </div>
                                 <div #row2 class="p-col-12 p-md-12 p-lg-4">
@@ -90,41 +89,51 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <label for="_district">Native District<span
                                             class="form-mandatory-field">*</span></label>
-                                    <p-dropdown name="_district" [filter]="true"
-                                    filterBy="label" [showClear]="true" [options]="nativeDistrictOptions" (onClick)="onSelect('ND', 0)"
+                                    <p-dropdown name="_district" [filter]="true" filterBy="label" [showClear]="true"
+                                        [options]="nativeDistrictOptions" (onClick)="onSelect('ND', 0)"
                                         [(ngModel)]="nativeDistrict" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
                                     <label for="_taluk">Native Taluk<span class="form-mandatory-field">*</span> </label>
-                                    <p-dropdown [options]="nativeTalukOptions" [filter]="true"
-                                    filterBy="label" [showClear]="true" [(ngModel)]="nativeTaluk"
-                                        (onClick)="onSelect('T', 1)" name="_taluk" required>
+                                    <p-dropdown [options]="nativeTalukOptions" [filter]="true" filterBy="label"
+                                        [showClear]="true" [(ngModel)]="nativeTaluk" (onClick)="onSelect('T', 1)"
+                                        name="_taluk" required>
                                     </p-dropdown>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <div><label for="_pincode">Pincode</label><span
+                                    <div><label for="_pincode"
+                                            [ngStyle]="{'color': (pincode !== null && pincode !== undefined) ? ((f.controls._pincode.invalid)||(pincode>pincode_max) ? 'crimson' : '#495057') : '#495057'}">
+                                            Pincode</label><span
                                             class="form-mandatory-field">*</span></div>
                                     <input type="text" class="p-col-12" name="_pincode" pInputText [(ngModel)]="pincode"
                                         minlength="6" maxlength="6" appInputFormat="digitOnly" pattern="^6[0-4]\d{4}$"
-                                         required />
-                                         <div>
-                                            <span *ngIf="f.controls._pincode.invalid && pincode != null" style="color: crimson;font-size: 12px;">Pincode is invalid</span>
-                                         </div>
+                                        (input)="validateFields('P')" required />
+                                    <div>
+                                        <span *ngIf="(pincode != null && pincode !== undefined)">
+                                            <span *ngIf="(f.controls._pincode.invalid)||(pincode>pincode_max)"
+                                                style="color: crimson;font-size: 12px;">Invalid pincode</span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
-                                    <label for="_mobno">Mobile No<span class="form-mandatory-field">*</span></label>
+                                    <label for="_mobno"
+                                        [ngStyle]="{'color': (mobileNo==altMobNo && mobileNo != null && altMobNo != null) ? 'crimson' : '#495057'}">
+                                        Mobile No<span class="form-mandatory-field">*</span></label>
                                     <input type="text" name="_mobno" pInputText [(ngModel)]="mobileNo"
                                         appInputFormat="digitOnly" maxlength="10" minlength="10"
-                                        pattern="^[6789]\d{9,9}$"
+                                        pattern="^[6789]\d{9,9}$" (input)="validateFields('M')"
                                         title="Phone number with 6-9 and remaing 9 digit with 0-9" required>
+                                    <div><span *ngIf="(mobileNo==altMobNo) && mobileNo != null && altMobNo != null"
+                                            style="font-size: 12px;color: crimson;">mob no. cannot be same as
+                                            alt mob no.</span></div>
                                 </div>
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><label for="_altmobno">Alternate Mobile No.</label></div>
                                     <input type="text" class="p-col-12" name="_altmobno" pInputText
                                         [(ngModel)]="altMobNo" minlength="10" pattern="^[6789]\d{9,9}$"
                                         title="Phone number with 6-9 and remaing 9 digit with 0-9" maxlength="10"
-                                        appInputFormat="digitOnly" />
+                                        appInputFormat="digitOnly" (input)="validateFields('M')" />
                                 </div>
                                 <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 23px;">
                                     <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"
@@ -156,34 +165,36 @@
                                 </div>
                             </div>
                             <div class="p-grid">
-                            <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_dis">District</label>
+                                <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_dis">District</label>
+                                    </div>
+                                    <p-dropdown name="_dis" [options]="districtOptions" [(ngModel)]="districtId"
+                                        (onClick)="onSelect('DT', 2)" (onChange)="selectDistrict(1)"
+                                        (ngModelChange)="refreshField('D')" required>
+                                    </p-dropdown>
                                 </div>
-                                <p-dropdown name="_dis" [options]="districtOptions" [(ngModel)]="districtId"
-                                    (onClick)="onSelect('DT', 2)" (onChange)="selectDistrict(1)"(ngModelChange)="refreshField('D')"  required>
-                                </p-dropdown>
-                            </div>
-                            <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_tal">Taluk</label>
+                                <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_tal">Taluk</label>
+                                    </div>
+                                    <p-dropdown name="_tal" [options]="talukOptions" [(ngModel)]="talukID"
+                                        (onClick)="onSelect('T', 2)" [filter]="true" filterBy="label" [showClear]="true"
+                                        (onChange)="selectDistrict(2)" required>
+                                    </p-dropdown>
                                 </div>
-                                <p-dropdown name="_tal" [options]="talukOptions" [(ngModel)]="talukID"
-                                    (onClick)="onSelect('T', 2)"  [filter]="true"
-                                    filterBy="label" [showClear]="true" (onChange)="selectDistrict(2)" required>
-                                </p-dropdown>
-                            </div>
-                            <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
-                                <div><label for="_hos">Hostel Name</label>
+                                <div *ngIf="hideDropDown" class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_hos">Hostel Name</label>
+                                    </div>
+                                    <p-dropdown name="_hos" [filter]="true" filterBy="label" [showClear]="true"
+                                        [options]="hostelOptions" [(ngModel)]="hostel" (onChange)="selectDropdown()"
+                                        required>
+                                    </p-dropdown>
                                 </div>
-                                <p-dropdown name="_hos"  [filter]="true"
-                                filterBy="label" [showClear]="true" [options]="hostelOptions"  [(ngModel)]="hostel"
-                                (onChange)="selectDropdown()" required>
-                                </p-dropdown>
-                            </div>
                             </div>
                             <div class="p-col-1"></div>
                             <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
                                 [rowsPerPageOptions]="[5,10,15,20]" responsiveLayout="scroll"
-                                totalRecords="totalRecords" [loading]="loading" [filterDelay]="0" [globalFilterFields]="['FirstName','LastName']" styleClass="p-datatable-gridlines">
+                                totalRecords="totalRecords" [loading]="loading" [filterDelay]="0"
+                                [globalFilterFields]="['FirstName','LastName']" styleClass="p-datatable-gridlines">
                                 <ng-template pTemplate="caption">
                                     <div class="table-header">
                                         <div class="p-grid">
@@ -247,9 +258,9 @@
                                         </td>
                                         <td>
                                             <span class="p-column-title">Edit :</span> <span><button
-                                                style="height: 1.8rem;" (click)="onRowSelect(rowData)"
-                                                icon="pi pi-pencil" pButton type="button">
-                                            </button></span>
+                                                    style="height: 1.8rem;" (click)="onRowSelect(rowData)"
+                                                    icon="pi pi-pencil" pButton type="button">
+                                                </button></span>
                                         </td>
                                         <td>
                                             <span class="p-column-title">End Date Update :</span> <span><button

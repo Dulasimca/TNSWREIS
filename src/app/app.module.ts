@@ -159,6 +159,11 @@ import { SchoolwiseDocumentUploadComponent } from './schoolwise-document-upload/
 import { OnlineApplicationControlComponent } from './master/online-application-control/online-application-control.component';
 import { StudentIdcardComponent } from './student-idcard/student-idcard.component';
 import { NgxPrintModule } from 'ngx-print';
+import { SpecialTashildarMasterComponent } from './master/special-tashildar-master/special-tashildar-master.component';
+import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-mapping.component';
+import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
+import { UtilsService } from './services/utils.service';
+import { OnlineRegisteredStudentReportComponent } from './online-registered-student-report/online-registered-student-report.component';
 
 
 @NgModule({
@@ -263,6 +268,10 @@ import { NgxPrintModule } from 'ngx-print';
     SchoolwiseDocumentUploadComponent,
     OnlineApplicationControlComponent,
     StudentIdcardComponent,
+    SpecialTashildarMasterComponent,
+    TashildarMappingComponent,
+    InstituteMasterEntryComponent,
+    OnlineRegisteredStudentReportComponent,
     
   ],
   imports: [
@@ -314,7 +323,7 @@ import { NgxPrintModule } from 'ngx-print';
 
 
   providers: [RestAPIService, MasterService, MessageService, DatePipe, TableConstants, LocationService,
-    ConfirmationService],
+    ConfirmationService,UtilsService],
 
   bootstrap: [AppComponent]
 
