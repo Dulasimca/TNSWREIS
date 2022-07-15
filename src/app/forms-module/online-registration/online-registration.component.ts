@@ -95,6 +95,7 @@ export class OnlineRegistrationComponent implements OnInit {
   showSubmit: boolean;
   pincode_max: number;
   income_min: number;
+  pdfURL: any;
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -105,7 +106,7 @@ export class OnlineRegistrationComponent implements OnInit {
   @ViewChild('declarationForm', { static: false }) _declarationForm: ElementRef;
   @ViewChild('dialog', { static: false }) _dialog: Dialog;
 
-  constructor(private _masterService: MasterService, private _d: DomSanitizer,
+  constructor(private _masterService: MasterService, private _sanitizer: DomSanitizer,
     private _datePipe: DatePipe, private _messageService: MessageService,
     private _restApiService: RestAPIService, private _authService: AuthService,
     private _tableConstants: TableConstants, private http: HttpClient) {
@@ -380,27 +381,27 @@ export class OnlineRegistrationComponent implements OnInit {
     switch (id) {
       case 1:
         const s_url = window.URL.createObjectURL(selectedFile);
-        this.studentImage = this._d.bypassSecurityTrustUrl(s_url);
+        this.studentImage = this._sanitizer.bypassSecurityTrustUrl(s_url);
         this.obj.studentFilename = this.uploadFile($event.target.files);
         break;
       case 2:
         const i_url = window.URL.createObjectURL(selectedFile);
-        this.incomeImg = this._d.bypassSecurityTrustUrl(i_url);
+        this.incomeImg = this._sanitizer.bypassSecurityTrustUrl(i_url);
         this.obj.incomeCertificateFilename = this.uploadFile($event.target.files);
         break;
       case 3:
         const t_url = window.URL.createObjectURL(selectedFile);
-        this.tcImg = this._d.bypassSecurityTrustUrl(t_url);
+        this.tcImg = this._sanitizer.bypassSecurityTrustUrl(t_url);
         this.obj.tcFilename = this.uploadFile($event.target.files);
         break;
       case 4:
         const p_url = window.URL.createObjectURL(selectedFile);
-        this.passbookImg = this._d.bypassSecurityTrustUrl(p_url);
+        this.passbookImg = this._sanitizer.bypassSecurityTrustUrl(p_url);
         this.obj.bankPassbookFilename = this.uploadFile($event.target.files);
         break;
       case 5:
         const d_url = window.URL.createObjectURL(selectedFile);
-        this.declarationImg = this._d.bypassSecurityTrustUrl(d_url);
+        this.declarationImg = this._sanitizer.bypassSecurityTrustUrl(d_url);
         this.obj.declarationFilename = this.uploadFile($event.target.files);
         break;
     }
@@ -411,11 +412,16 @@ export class OnlineRegistrationComponent implements OnInit {
     let instituteSelection = [];
     if (id === 1) {
       params = { 'Dcode': this.district };
+      this.obj.currentInstituteInfo = null;
+      this.schoolOptions = [];
     } else {
       params = { 'Dcode': this.instituteDcode };
+      this.instituteOptions = [];
+      this.obj.instituteInfo = null;
+      this.obj.lastStudiedInstituteAddress = null;
     }
-    if ((this.instituteDcode !== undefined && this.instituteDcode !== null) ||
-      (this.district !== undefined && this.district !== null)) {
+    if ((this.instituteDcode !== undefined && this.instituteDcode !== null && id === 2) ||
+      (this.district !== undefined && this.district !== null && id === 1)) {
       this._restApiService.getByParameters(PathConstants.Institute_Get, params).subscribe(res => {
         if (res !== undefined && res !== null) {
           if (res.length !== 0) {
@@ -567,7 +573,6 @@ export class OnlineRegistrationComponent implements OnInit {
           this.blockUI.stop();
           this.isSaved = true;
           this.onView();
-          this.onDialogShow();
           this._messageService.clear();
           this._messageService.add({
             key: 'd-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
@@ -674,6 +679,11 @@ export class OnlineRegistrationComponent implements OnInit {
         })
         this.registeredDetails = res.slice(0);
         this.loading = false;
+        var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
+        // if (document.getElementById("embedPDF") !== undefined) {
+        //   document.getElementById("embedPDF").setAttribute('src', src);
+        // }
+        this.pdfURL = this._sanitizer.bypassSecurityTrustResourceUrl(src);
       } else {
         this.loading = false;
         this._messageService.clear();
@@ -814,11 +824,7 @@ export class OnlineRegistrationComponent implements OnInit {
     this.hostelOptions.unshift({ label: '-select-', value: null });
   }
 
-  onDialogShow() {
-    var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
-    if (document.getElementById("embedPDF") !== undefined) {
-      document.getElementById("embedPDF").setAttribute('src', src);
-    }
+  onDialogHide() {
     this.clearForm();
   }
 

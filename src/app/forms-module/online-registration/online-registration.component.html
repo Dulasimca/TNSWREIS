@@ -278,7 +278,7 @@
                                                                     #userFile required>
                                                                 <button class="b-size" style="margin: 0 !important;"
                                                                     icon="pi pi-plus edit-size" pButton type="file"
-                                                                    #file (click)="userFile.click()" >
+                                                                    #file (click)="userFile.click()" required>
                                                                 </button>
                                                                 <span class="form-mandatory-field">*</span>
                                                             </div>
@@ -313,14 +313,20 @@
                                                         <div #field14 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span>
                                                                 <label style="font-size: 12px;"
-                                                                    for="_totalyincome">ஆண்டு வருமானம்<span
+                                                                    for="_totalyincome"
+                                                                    [ngStyle]="{'color': (obj.totalYIncome != null && obj.totalYIncome !== undefined) ? 
+                                                                    ((f.controls._totalyincome.invalid)||(obj.totalYIncome>income_min) ? 'crimson' : '#495057') : '#495057'}">ஆண்டு வருமானம்<span
                                                                         class="form-mandatory-field">*</span></label>
                                                                 <input type="text" name="_totalyincome" pInputText
                                                                     [(ngModel)]="obj.totalYIncome"
                                                                     (input)="validateFields('I')"
                                                                     appInputFormat="digitOnly" minlength="1"
-                                                                    maxlength="30" placeholder="Annual Income" autocomplete="off" required>
+                                                                    maxlength="8" placeholder="Annual Income" autocomplete="off" required>
                                                             </span>
+                                                            <div>
+                                                                <span *ngIf="(obj.totalYIncome>income_min)" style="font-size: 12px;color: crimson;">
+                                                                    Annual income should be less than 2.5L</span>
+                                                            </div>
                                                         </div>
                                                         <div #field15 class="p-field p-col-12 p-md-12 p-lg-3">
                                                             <span>
@@ -683,7 +689,7 @@
                                                                 தூரம்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_distance1" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToHome"
-                                                                appInputFormat="digitOnly" minlength="1" maxlength="5"
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="5"
                                                                 placeholder="Distance From Hostel To Home" autocomplete="off" required>
 
                                                         </span>
@@ -696,7 +702,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_distance2" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToInstitute"
-                                                                appInputFormat="digitOnly"  minlength="1" maxlength="2"
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="2"
                                                                 placeholder="Distance From Hostel To Institute"
                                                                 autocomplete="off" required>
                                                         </span>
@@ -1077,7 +1083,7 @@
                                     <button *ngIf="!showSubmit" pButton type="button" label="Next"
                                         (click)="moveTo()"></button>&nbsp;
                                     <button *ngIf="showSubmit" pButton type="button" label="Submit" icon="pi pi-send"
-                                        (click)="checkAadhar()" [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                        (click)="checkAadhar()" [disabled]="(!f.valid || !f.dirty || obj.studentFilename.length<2)"></button>&nbsp;
                                     <button pButton type="button" label="View" icon="pi pi-eye"
                                         (click)="onView()"></button>&nbsp;
                                     <button pButton type="button" label="Clear" icon="pi pi-trash"
@@ -1162,9 +1168,9 @@
         </div>
         <div class="p-col-1"></div>
         <p-dialog #dialog *ngIf="pdfDialog" header="Download PDF" [(visible)]="pdfDialog" [modal]="pdfDialog"
-            [maximizable]="true" [style]="{width: '90vw', height: '90vw'}" (onShow)="onDialogShow()">
+            [maximizable]="true" [style]="{width: '90vw', height: '90vw'}" (onHide)="onDialogHide()">
             <div id="embedDiv" class="fgh txt-center">
-                <embed id="embedPDF" type="application/pdf" width="800" height="500">
+                <embed id="embedPDF" [src]="pdfURL" type="application/pdf" width="800" height="500">
             </div>
         </p-dialog>
     </div>
