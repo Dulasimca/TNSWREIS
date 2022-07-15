@@ -28,6 +28,7 @@ export class UsermasterComponent implements OnInit {
   districtOptions: SelectItem[];
   talukOptions: SelectItem[];
   hostelOptions: SelectItem[];
+  userOptions: SelectItem[];
   userMasterId: number;
   data: any = [];
   logged_user: User;
@@ -41,10 +42,13 @@ export class UsermasterComponent implements OnInit {
   showTaluk: boolean;
   showHostelName: boolean;
   checkEmail: boolean;
+  users?: any = [];
+  userNameExists: any;
+  showUserDropdown: boolean = false;
+  checkUsername: boolean = false;
   blockSpace: RegExp = /[^\s]/;
   @ViewChild('f', { static: false }) _usermaster: NgForm;
-  userNameExists: any;
-  checkUsername: boolean = false;
+
 
   constructor(private masterService: MasterService, private restApiService: RestAPIService,
     private messageService: MessageService, private authService: AuthService) { }
@@ -61,6 +65,7 @@ export class UsermasterComponent implements OnInit {
     let districtSelection = [];
     let talukSelection = [];
     let roleSelection = [];
+    let userSelection = [];
     switch (type) {
       case 'R':
         this.roles.forEach(r => {
@@ -84,6 +89,13 @@ export class UsermasterComponent implements OnInit {
         })
         this.talukOptions = talukSelection;
         this.talukOptions.unshift({ label: '-select', value: null });
+        break;
+      case 'U':
+        this.users.forEach(u => {
+          userSelection.push({ label: u.SplTashildarName, value: u.Slno, email: u.EmailId });
+        })
+        this.userOptions = userSelection;
+        this.userOptions.unshift({ label: '-select', value: null });
         break;
     }
   }
@@ -123,6 +135,8 @@ export class UsermasterComponent implements OnInit {
   }
   // role dropdown
   onRoleChange() {
+    this.users = [];
+    this.showUserDropdown = false;
     if (this.role != undefined && this.role !== null) {
       if (this.role === 1) {
         this.showDistrict = false;
@@ -140,11 +154,23 @@ export class UsermasterComponent implements OnInit {
         this.showDistrict = true;
         this.showTaluk = true;
         this.showHostelName = true
-      } else {
+      } else if(this.role === 6) {
+        this.showUserDropdown = true;
+        this.restApiService.getByParameters(PathConstants.SpecialTashildar_Get, {'Dcode': 0}).subscribe(response => {
+          this.users = response.slice(0);
+        })
+      }
+      else {
         this.showDistrict = false;
         this.showTaluk = false;
         this.showHostelName = false;
       }
+    }
+  }
+  
+  onUserChange() {
+    if(this.userName !== undefined && this.userName !== null) {
+      this.emailId = this.userName.email;
     }
   }
 
@@ -202,7 +228,8 @@ export class UsermasterComponent implements OnInit {
       'Districtcode': (this.district !== undefined && this.district !== null) ? this.district : 0,
       'HostelID': (this.hostelName !== undefined && this.hostelName !== null) ? this.hostelName : 0,
       'Talukid': (this.taluk !== undefined && this.taluk !== null) ? this.taluk : 0,
-      'UserName': this.userName,
+      'UserName': (this.role === 6) ? this.userName.label : this.userName,
+      'TasildharId': (this.role === 6) ? this.userName.value : null,
       'EMailId': this.emailId,
       'RoleId': (this.role !== undefined && this.role !== null) ? this.role : 0,
       'Pwd': this.password,
@@ -251,14 +278,13 @@ export class UsermasterComponent implements OnInit {
       this.userMasterId = selectedRow.Id;
       this.role = selectedRow.RoleId;
       this.roleOptions = [{ label: selectedRow.Role, value: selectedRow.RoleId }];
-
       this.district = selectedRow.Districtcode;
       this.taluk = selectedRow.Talukid;
       this.talukOptions = [{ label: selectedRow.Talukname, value: selectedRow.Talukid }];
       this.hostelName = selectedRow.HostelID;
       this.hostelOptions = [{ label: selectedRow.HostelName, value: selectedRow.HostelID }];
-
-      this.userName = selectedRow.UserName;
+      this.userName = (this.role === 6) ? { label: selectedRow.UserName, value: selectedRow.TasildharId, email: selectedRow.EmailId } : selectedRow.UserName;
+      this.userOptions = [{ label: selectedRow.UserName, value: selectedRow.TasildharId }];
       this.emailId = selectedRow.EMailId;
       this.password = selectedRow.Pwd;
       this.districtOptions = [{ label: selectedRow.Districtname, value: selectedRow.Districtcode }];
@@ -272,6 +298,8 @@ export class UsermasterComponent implements OnInit {
     this.districtOptions = [];
     this.talukOptions = [];
     this.hostelOptions = [];
+    this.userOptions = [];
+    this.roleOptions = [];
   }
 
 }

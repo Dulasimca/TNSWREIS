@@ -192,14 +192,14 @@
                                                         <span class="p-float-label">
                                                             <input type="text" name="_totalyincome" pInputText
                                                                 [(ngModel)]="obj.totalYIncome"
-                                                                appInputFormat="digitOnly" minlength="1" maxlength="30"
+                                                                appInputFormat="digitOnly" minlength="1" maxlength="8"
                                                                 (input)="validateFields('I')" required>
                                                             <label for="_totalyincome">Annual
                                                                 Income<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
                                                         <div><span *ngIf="(obj.totalYIncome>income_min)"
-                                                                style="font-size: 12px;color: crimson;">Income should be
+                                                                style="font-size: 12px;color: crimson;">Annual income should be
                                                                 less than 2.5Lakhs</span></div>
                                                     </div>
                                                     <div #field15 class="p-field p-col-12 p-md-12 p-lg-3">

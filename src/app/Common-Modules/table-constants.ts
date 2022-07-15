@@ -470,10 +470,11 @@ export class TableConstants {
     ];
 
     this.TashildarMappingcols = [
-        { field: 'Districtname',  header: 'District Name', width: '200px', align: 'left !important'},
-        { field: 'Talukname',  header: 'Taluk Name', width: '200px', align: 'left !important'},
         { field: 'SplTashildarName',  header: 'Tashildar Name', width: '200px', align: 'left !important'},
-        { field: 'Flag',  header: 'Status', width: '200px', align: 'left !important'},
+        { field: 'Districtname',  header: 'District Name', width: '200px', align: 'left !important'},
+        { field: 'Talukname',  header: 'Taluk Name', width: '200px', align: 'left !important'}, 
+        { field: 'HostelName',  header: 'Hostel Name', width: '200px', align: 'left !important'},  
+        { field: 'Status',  header: 'Status', width: '200px', align: 'left !important'},
     ];
     this.InstituteMasterColumns = [
         { field: 'Districtname',  header: 'District', width: '200px', align: 'left !important'},

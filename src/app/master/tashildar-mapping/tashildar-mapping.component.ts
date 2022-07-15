@@ -5,6 +5,8 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 
@@ -25,27 +27,35 @@ export class TashildarMappingComponent implements OnInit {
   taluks?: any;
   data: any = [];
   cols: any;
-  tname?: any = [];
+  tasildhars?: any = [];
   tashildarName: any;
   tashildarNameOptions: SelectItem[];
   RowId: any = 0;
-
+  hostel: any;
+  hostelOptions: SelectItem[] = [];
+  login_user: User;
+  disableFields: boolean = false;
   @ViewChild('f', { static: false }) tashildarMappingcontrol: NgForm;
   
   constructor(private masterService: MasterService, private restApiService: RestAPIService, private messageService: MessageService,
-    private tableConstants: TableConstants) { }
+    private tableConstants: TableConstants, private _authService: AuthService) { }
 
   ngOnInit(): void {
     this.cols = this.tableConstants.TashildarMappingcols;
+    this.login_user = this._authService.UserInfo;
     this.districts = this.masterService.getDistrictAll();
     this.taluks = this.masterService.getTalukAll();
-    this.restApiService.get(PathConstants.SpecialTashildar_Get).subscribe(tashildarName => {
-      this.tname = tashildarName.slice(0);
-    })
     this.onView();
-    this.onDataChecking();
-    this.onDistrictChecking();
-    this.onNameChecking();
+  }
+
+  loadTasildhar() {
+    this.taluk = null;
+    this.talukOptions = [];
+    this.tashildarName = null;
+    this.tashildarNameOptions = [];
+    this.restApiService.getByParameters(PathConstants.SpecialTashildar_Get, {'Dcode': this.district}).subscribe(response => {
+      this.tasildhars = response.slice(0);
+    })
   }
 
   onSelect(type) {
@@ -70,8 +80,8 @@ export class TashildarMappingComponent implements OnInit {
           this.talukOptions.unshift({ label: '-select-', value: null });
           break;
           case 'TN':
-          this.tname.forEach(n => {
-              tashildarSelection.push({ label: n.SplTashildarName, value: n.Slno });           
+          this.tasildhars.forEach(n => {
+              tashildarSelection.push({ label: n.SplTashildarName, value: n.Slno });  
           })
           this.tashildarNameOptions = tashildarSelection;
           this.tashildarNameOptions.unshift({ label: '-select-', value: null });
@@ -81,10 +91,10 @@ export class TashildarMappingComponent implements OnInit {
 
   onView() {
     this.data = [];
-    this.restApiService.get(PathConstants.TashildarMapping_Get).subscribe(res => {
+    this.restApiService.getByParameters(PathConstants.TashildarMapping_Get, {'type': 0}).subscribe(res => {
       if (res !== null && res !== undefined && res.length !== 0){
         res.forEach(i => {
-          i.status = (i.Flag) ? 'Active' : 'Inactive';
+          i.Status = (i.Flag) ? 'Active' : 'Inactive';
         })
       this.data = res;
     }
@@ -96,6 +106,7 @@ export class TashildarMappingComponent implements OnInit {
       'Id': this.RowId,
       'DistrictId':this.district,
       'TalukId': this.taluk,
+      'HostelId': this.hostel,
       'TashildarName': this.tashildarName,
       'Flag': (this.selectedType * 1)
     }
@@ -135,7 +146,10 @@ export class TashildarMappingComponent implements OnInit {
       this.districtOptions = [{ label: rowData.Districtname, value: rowData.DistrictId}];
       this.taluk = rowData.TalukId;
       this.talukOptions = [{ label: rowData.Talukname, value: rowData.TalukId}];
-      this.selectedType = rowData.Flag;
+      this.hostel = rowData.HostelId;
+      this.hostelOptions = [{ label: rowData.HostelName, value: rowData.HostelId }];
+      this.selectedType = rowData.Flag ? 1 : 0;
+      this.onInActiveCheck(rowData);
     }
   }
 
@@ -155,19 +169,25 @@ export class TashildarMappingComponent implements OnInit {
     this.taluk = null;
     this.talukOptions = [];
     this.RowId = 0;
+    this.hostel = null;
+    this.hostelOptions = [];
+    this.disableFields = false;
   }
 
   onDataChecking() {
     if(this.data.length !== 0) {
       for(let i = 0; i < this.data.length; i ++) {
-        if((this.data[i].TalukId * 1) === (this.taluk * 1)) {
-          this.tashildarName = this.data[i].SplTashildarName;
-          this.district =this.data[i].DistrictId;
-          this.taluk =this.data[i].TalukId;  
+        if((this.data[i].HostelId * 1) === (this.hostel * 1) 
+        && (this.data[i].DistrictId * 1) === (this.district * 1) && this.data[i].Flag) {
+          this.hostelOptions = [];
+          this.hostel = null;
+          this.taluk  = null;
+          this.talukOptions = [];
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Taluk is already exist please select different taluk'
+            summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Hostel is already exist please select different hostel'
           })
+          this.messageService.clear();
           break;
         } else {
           continue;
@@ -176,42 +196,55 @@ export class TashildarMappingComponent implements OnInit {
     }
   }
 
-  onDistrictChecking() {
-    if(this.data.length !== 0) {
-      for(let i = 0; i < this.data.length; i ++) {
-        if((this.data[i].DistrictId * 1) === (this.district * 1)) {
-          this.tashildarName = this.data[i].SplTashildarName;
-          this.district =this.data[i].DistrictId;
-          this.taluk =this.data[i].TalukId;  
-          this.messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected District is already exist please select different district'
-          })
-          break;
-        } else {
-          continue;
+  onInActiveCheck(rowData) {
+    this.disableFields = false;
+    if (this.data.length !== 0) {
+      if (rowData.Flag) {
+        //disable
+        this.disableFields = true;
+      } else {
+        for (let i = 0; i < this.data.length; i++) {         
+          if ((this.data[i].HostelId * 1) === (rowData.HostelId * 1) && this.data[i].Flag) {
+            this.hostel = null;
+            this.hostelOptions = [];
+            this.taluk = null;
+            this.talukOptions = [];
+            this.messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Hostel is already ACTIVE for ' + this.data[i].SplTashildarName
+            })
+            this.messageService.clear();
+            break;
+          } else {
+            continue;
+          }
         }
       }
     }
   }
 
-  onNameChecking() {
-    if(this.data.length !== 0) {
-      for(let i = 0; i < this.data.length; i ++) {
-        if((this.data[i].TashildarName * 1) === (this.tashildarName * 1)) {
-          this.tashildarName = this.data[i].SplTashildarName;
-          this.district =this.data[i].DistrictId;
-          this.taluk =this.data[i].TalukId;  
-          this.messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Name is already exist please select different name'
-          })
-          break;
-        } else {
-          continue;
-        }
-      }
+  loadHostelList() {
+    this.hostel = null;
+    this.hostelOptions = [];
+    let hostelSelection = [];
+    const params = {
+      'DCode': this.district,
+      'TCode': this.taluk,
+      'HostelId': (this.login_user.hostelId !== undefined && this.login_user.hostelId !== null) ? 
+      this.login_user.hostelId : 0,
     }
+    if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
+    this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
+      this.restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          res.Table.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno });
+          })
+        }
+      })
+    }
+    this.hostelOptions = hostelSelection;
+    this.hostelOptions.unshift({ label: '-select-', value: null });
   }
 
 }

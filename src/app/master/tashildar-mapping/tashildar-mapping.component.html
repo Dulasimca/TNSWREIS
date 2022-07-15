@@ -10,25 +10,35 @@
                             <div #row1 class="p-col-12 p-md-12 p-lg-12">
                                 <div class="p-grid">
                                     <div class="p-col-12 p-md-12 p-lg-2">
-                                        <div><label for="_talshiName">Tashildar Name<span
-                                             class="form-mandatory-field">*</span></label></div>
-                                        <p-dropdown name="_talshiName" [options]="tashildarNameOptions" (onClick)="onSelect('TN')"
-                                        (onChange)="onNameChecking()"  [(ngModel)]="tashildarName" required>
-                                        </p-dropdown>
-                                    </div>
-                                    <div class="p-col-12 p-md-12 p-lg-2">
                                         <div><label for="_dis">District<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_dis" [options]="districtOptions"  (onClick)="onSelect('D')"
-                                        (onChange)="refreshTaluk()" (onChange)="onDistrictChecking()" [(ngModel)]="district" required>
+                                        (onChange)="loadTasildhar()" [readonly]="disableFields" [(ngModel)]="district" required>
                                         </p-dropdown>
                                     </div>
+                                    <div class="p-col-12 p-md-12 p-lg-2">
+                                        <div><label for="_talshiName">Tashildar Name<span
+                                             class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_talshiName" [options]="tashildarNameOptions" (onClick)="onSelect('TN')"
+                                             [readonly]="disableFields" [(ngModel)]="tashildarName" required>
+                                        </p-dropdown>
+                                    </div>                               
                                     <div class="p-col-12 p-md-12 p-lg-2">
                                         <div><label for="_tal">Taluk<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_tal" [options]="talukOptions" (onClick)="onSelect('T')"
-                                            (onChange)="onDataChecking()" [(ngModel)]="taluk" required>
+                                          (onChange)="loadHostelList()" [readonly]="disableFields" [(ngModel)]="taluk" required>
                                         </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_hostel">Hostel Name</label>
+                                        </div>
+                                        <span class="p-input-icon-right">
+                                            <i *ngIf="(hostelOptions.length>2)" class="pi pi-spin pi-spinner"></i>
+                                        <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
+                                            [readonly]="disableFields" (onChange)="onDataChecking()" required>
+                                        </p-dropdown>
+                                        </span>
                                     </div>
                                  
                                     <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">                                    
@@ -42,7 +52,9 @@
                                         <button pButton type="button" label="Save" icon="pi pi-save"
                                         [disabled]="((!f.valid || !f.dirty))" (click)="onSubmit()"></button>&nbsp;
                                         <button pButton type="button" label="View" icon="pi pi-eye"
-                                            (click)="onView()"></button>
+                                            (click)="onView()"></button>&nbsp;
+                                            <button pButton type="button" label="Clear" icon="pi pi-eye"
+                                            (click)="onClear()"></button>
                                     </div>
                                 </div>
                             </div>

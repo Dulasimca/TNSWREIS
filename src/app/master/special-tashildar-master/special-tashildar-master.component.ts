@@ -1,11 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MessageService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
 import { PathConstants } from 'src/app/Common-Modules/PathConstants';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
-import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterService } from 'src/app/services/master-data.service';
 import { RestAPIService } from 'src/app/services/restAPI.service';
@@ -36,13 +35,13 @@ export class SpecialTashildarMasterComponent implements OnInit {
   
   @ViewChild('f', { static: false }) specialTashildarcontrol: NgForm;
   constructor(private messageService: MessageService, private masterService: MasterService, private authService: AuthService,
-    private restApiService: RestAPIService,  private tableConstants: TableConstants) { }
+    private restApiService: RestAPIService,  private tableConstants: TableConstants, private _confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.cols = this.tableConstants.SpecialTashildarcols;
     this.districts = this.masterService.getDistrictAll();
     this.taluks = this.masterService.getTalukAll();
-    
+    this.onView();
   }
 
   onSelect(type) {
@@ -74,18 +73,32 @@ export class SpecialTashildarMasterComponent implements OnInit {
   }
 
   onView() {
-    this.showTable = true;
-    this.restApiService.get(PathConstants.SpecialTashildar_Get).subscribe(res => {
+    this.data = [];
+    this.restApiService.getByParameters(PathConstants.SpecialTashildar_Get, {'Dcode': 0}).subscribe(res => {
       this.data = res;
-    })
-    this.messageService.clear();
-    this.messageService.add({
-      key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-      summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecordMessage
     })
   }
 
   onSubmit() {
+    const isRecordExist = this.checkForDuplicate();
+    if(isRecordExist) {
+      this._confirmationService.confirm({
+        message: 'You have already registered Do you want to change?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.onSave();
+        },
+        reject: () => {
+          this.messageService.clear();
+        }
+    }) 
+    } else {
+      this.onSave();
+    }
+  }
+
+  onSave() {
     const params = {
       'Slno': this.RowId,
       'DistrictId':this.district,
@@ -95,7 +108,6 @@ export class SpecialTashildarMasterComponent implements OnInit {
       'EmailId': this.emailId,
       'Flag': 1
     }
-    console.log('enter')
     this.restApiService.post(PathConstants.SpecialTashildar_Post, params).subscribe(res => {
       if (res) {
         this.onClear();
@@ -126,6 +138,7 @@ export class SpecialTashildarMasterComponent implements OnInit {
   onEdit(rowData) {
     if (rowData !== null && rowData !== undefined) {
       this.RowId = rowData.Slno;
+      console.log('row', this.RowId)
       this.district = rowData.DistrictId;
       this.districtOptions = [{ label: rowData.Districtname, value: rowData.DistrictId}];
       this.taluk  = rowData.TalukId;
@@ -136,14 +149,32 @@ export class SpecialTashildarMasterComponent implements OnInit {
     }
   }
 
-  validateEmail() {
-    var regex = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
-    if(this.emailId !== undefined && this.emailId !== null) {
-      var str: string = this.emailId;
-      if(str.match(regex)) {
-        this.isValidEmail = false;
-      } else {
-        this.isValidEmail = true;
+  checkIfEmailExists() {
+    if (this.emailId !== undefined && this.emailId !== null && this.emailId.trim() !== '' &&
+      this.data.length !== 0) {
+      this.checkEmail = true;
+      const entered_email: string = this.emailId.trim();
+      const substr = entered_email.split('@');
+      if (substr !== undefined && substr.length > 1) {
+        const last_str = substr[1].split('.');
+        if (last_str !== undefined && last_str.length > 1) {
+          if (last_str[1].toLowerCase() === 'com' || last_str[1].toLowerCase() === 'in') {
+            this.data.forEach(i => {
+              const email: string = i.EmailId;
+              if (email.trim() === entered_email) {
+                this.messageService.clear();
+                this.messageService.add({
+                  key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR, life: 2000,
+                  summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.EmailAlreadyExists
+                })
+                this.checkEmail = false;
+                this.emailId = '';
+              } else {
+                this.checkEmail = false;
+              }
+            })
+          }
+        }
       }
     }
   }
@@ -161,10 +192,28 @@ export class SpecialTashildarMasterComponent implements OnInit {
     this.districtOptions = [];
     this.taluk = null;
     this.talukOptions = [];
-    this.specialTashildarcontrol = null;
     this.mobileNo = null;
     this.emailId = null;
     this.RowId = 0;
   }
 
+  checkForDuplicate(): boolean {
+    let isExist = false;
+    if(this.data.length !== 0) {
+      for(let i = 0; i < this.data.length; i++) {
+        console.log('cck', this.RowId)
+        if((this.data[i].DistrictId * 1) === (this.district * 1) && 
+        (this.data[i].TalukId * 1) === (this.taluk * 1) && this.RowId === 0) {
+          this.RowId = this.data[i].Slno;
+          isExist = true;
+          break;
+        } else {
+          isExist = false;
+          continue;
+        }
+      }
+      console.log('ex', isExist)
+      return isExist;
+    }
+  }
 }
