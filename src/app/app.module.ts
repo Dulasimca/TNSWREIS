@@ -164,6 +164,7 @@ import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-
 import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
 import { UtilsService } from './services/utils.service';
 import { OnlineRegisteredStudentReportComponent } from './online-registered-student-report/online-registered-student-report.component';
+import { OnlineRegisteredStudentstatusComponent } from './online-registered-studentstatus/online-registered-studentstatus.component';
 
 
 @NgModule({
@@ -272,6 +273,7 @@ import { OnlineRegisteredStudentReportComponent } from './online-registered-stud
     TashildarMappingComponent,
     InstituteMasterEntryComponent,
     OnlineRegisteredStudentReportComponent,
+    OnlineRegisteredStudentstatusComponent,
     
   ],
   imports: [
