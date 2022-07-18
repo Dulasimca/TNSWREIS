@@ -577,6 +577,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   onView() {
+    this.districtId = null;
+    this.districtOptions = [];
+    this.talukID = null;
+    this.talukOptions = [];
+    this.hostel = null;
+    this.hostelOptions = [];
     let params = {};
     if (this.logged_user.roleId === 1 || this.logged_user.roleId === 2) {
       this.hideDropDown = true;

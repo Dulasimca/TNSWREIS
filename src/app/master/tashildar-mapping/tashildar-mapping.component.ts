@@ -183,11 +183,11 @@ export class TashildarMappingComponent implements OnInit {
           this.hostel = null;
           this.taluk  = null;
           this.talukOptions = [];
+          this.messageService.clear();
           this.messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
             summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Hostel is already exist please select different hostel'
           })
-          this.messageService.clear();
           break;
         } else {
           continue;
@@ -209,11 +209,11 @@ export class TashildarMappingComponent implements OnInit {
             this.hostelOptions = [];
             this.taluk = null;
             this.talukOptions = [];
+            this.messageService.clear();
             this.messageService.add({
               key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
               summary: ResponseMessage.SUMMARY_WARNING, detail: 'Selected Hostel is already ACTIVE for ' + this.data[i].SplTashildarName
             })
-            this.messageService.clear();
             break;
           } else {
             continue;
