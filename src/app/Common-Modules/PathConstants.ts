@@ -260,6 +260,9 @@ public static readonly OnlineRegisteredStudent_Get= 'OnlineRegisteredStudent/Get
 public static readonly SchoolwiseDocUpload_Post = 'SchoolwiseDocUpload/Post';
 public static readonly SchoolwiseDocUpload_Get = 'SchoolwiseDocUpload';
 
+public static readonly UpdateOnlineRegistrationStatus_Put = 'UpdateOnlineRegistrationStatus/Post';
+
+
 
  
 
