@@ -572,6 +572,11 @@ export class OnlineRegistrationComponent implements OnInit {
         if (response) {
           this.blockUI.stop();
           this.isSaved = true;
+          var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
+        // if (document.getElementById("embedPDF") !== undefined) {
+        //   document.getElementById("embedPDF").setAttribute('src', src);
+        // }
+        this.pdfURL = this._sanitizer.bypassSecurityTrustResourceUrl(src);
           this.onView();
           this._messageService.clear();
           this._messageService.add({
@@ -679,11 +684,7 @@ export class OnlineRegistrationComponent implements OnInit {
         })
         this.registeredDetails = res.slice(0);
         this.loading = false;
-        var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
-        // if (document.getElementById("embedPDF") !== undefined) {
-        //   document.getElementById("embedPDF").setAttribute('src', src);
-        // }
-        this.pdfURL = this._sanitizer.bypassSecurityTrustResourceUrl(src);
+        
       } else {
         this.loading = false;
         this._messageService.clear();
