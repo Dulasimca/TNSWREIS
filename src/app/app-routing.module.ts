@@ -97,6 +97,9 @@ import { SpecialTashildarMasterComponent } from './master/special-tashildar-mast
 import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-mapping.component';
 import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
 import { OnlineRegisteredStudentReportComponent } from './online-registered-student-report/online-registered-student-report.component';
+import { EmployeeVacancyComponent } from './forms-module/employee-vacancy/employee-vacancy.component';
+import { EmployeeVacanyDetailsComponent } from './Reports/employee-vacany-details/employee-vacany-details.component';
+import { StudentCasteWiseDetailsComponent } from './Reports/student-caste-wise-details/student-caste-wise-details.component';
 
 
 const routes: Routes = [
@@ -211,6 +214,9 @@ const routes: Routes = [
   { path: 'specialTashildar-master', component:SpecialTashildarMasterComponent,canActivate: [AuthGuard] },
   { path: 'tashildar-mapping', component:TashildarMappingComponent,canActivate: [AuthGuard] },
   { path: 'onlineregisteredstudent-report', component:OnlineRegisteredStudentReportComponent,canActivate: [AuthGuard] },
+  { path: 'employeevacany', component:EmployeeVacancyComponent,canActivate: [AuthGuard] },
+  { path: 'employeevacany-report', component:EmployeeVacanyDetailsComponent,canActivate: [AuthGuard] },
+  { path: 'studentcategorywise-report', component:StudentCasteWiseDetailsComponent,canActivate: [AuthGuard] },
 
    
    

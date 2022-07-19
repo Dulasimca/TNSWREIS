@@ -7,6 +7,42 @@
                     <p-card>
                         <div class="p-col-12 no-pad-top">
                             <div class="p-grid">
+                                <div #districtField class="p-field p-col-12 p-md-6 p-lg-3">
+                                    <span class="p-float-label p-input-icon-right">
+                                        <p-dropdown name="_district"
+                                            [options]="districtOptions" [(ngModel)]="district"
+                                            (onClick)="onSelect('DT')"
+                                            (ngModelChange)="refreshFields('D')" [filter]="true"
+                                            filterBy="label" [showClear]="true" required>
+                                        </p-dropdown>
+                                        <label style="font-size: 12px;"
+                                            for="_district">District<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </span>
+                                </div>
+                                <div #field17 class="p-field p-col-12 p-md-6 p-lg-3">
+                                    <span class="p-float-label p-input-icon-right">
+                                        <p-dropdown name="_taluk"
+                                            [options]="talukOptions" [(ngModel)]="taluk"
+                                            (onClick)="onSelect('TK')"
+                                            (onChange)="refreshFields('T')" [filter]="true"
+                                            filterBy="label" [showClear]="true" required>
+                                        </p-dropdown>
+                                        <label style="font-size: 12px;"
+                                            for="_taluk">Taluk<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </span>
+                                </div>
+                                <div #field17 class="p-field p-col-12 p-md-12 p-lg-5">
+                                    <span class="p-float-label p-input-icon-right">
+                                        <p-dropdown name="_hostel" [options]="hostelOptions"
+                                            [(ngModel)]="hostel" optionLabel="label"
+                                             [filter]="true" filterBy="label" [showClear]="true" required>
+                                        </p-dropdown>
+                                        <label style="font-size: 12px;" for="_hos">Hostel<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </p-card>
