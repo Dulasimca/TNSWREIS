@@ -1,7 +1,7 @@
 <div class="p-grid">
     <div class="p-col-12 p-md-12 p-lg-12">
         <p-toast position="top-center" key="t-msg"></p-toast>
-        <p-panel header="Employee Confirmation Status">
+        <p-panel header="Online-Registered Students Active status">
             <p-card>
                 <div class="p-col-12 no-pad-top">
                     <div class="p-grid">
@@ -38,18 +38,35 @@
                                     label="Export" (click)="dt.exportCSV()" pTooltip="Excel-File download"
                                     [disabled]="disableExcel"></button>
                             </div>
-                            <p-table #dt [value]="employeeDetails" [columns]="employeeCols"
+                            <p-table #dt [value]="StudentDetails" [columns]="studentCols"
                                 styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
                                 [rowsPerPageOptions]="[10,20,30,40]" responsiveLayout="scroll" [loading]="loading"
-                                exportFilename="EMPLOYEE_CONFIRMATION_REPORT">
+                                exportFilename="ONLINE_REGISTERED_STUDENT_REPORT" [filterDelay]="0"
+                                [globalFilterFields]="['studentName']">
+                                <ng-template pTemplate="caption">
+                                    <div class="table-header">
+                                        <div class="p-grid">
+                                            <div class="p-col-6 p-md-6 p-lg-10 txt-end">
+                                                <span>Search by Student Name</span>
+                                            </div>
+                                            <div class="p-col-4 p-md-4 p-lg-2">
+                                                <span class="p-input-icon-left">
+                                                    <i class="pi pi-search"></i>
+                                                    <input pInputText type="text" size="30"
+                                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                        placeholder="Global Search" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 45px;">S.No</th>
                                         <th *ngFor="let col of columns">
                                             {{col.header}}
                                         </th>
-                                        <th>Approval</th>
-                                        <th>Approval Status</th>
+                                        <th>Status</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
@@ -72,37 +89,18 @@
                                         </td>
                                         <td class="td-border">
                                             <span class="p-column-title">
-                                                Approval status :
-                                            </span>
-                                            <span>
-                                                <button icon="pi pi-exclamation-circle" *ngIf="(rowData.Dapproval == 0)"
-                                                pButton type="button" label="Pending" pTooltip="Toggle to confirm"
-                                                style="background: #08747b !important;"
-                                                (click)="onClick(rowData, 0)">
-                                            </button>
-                                                <button icon="pi pi-check" *ngIf="(rowData.Dapproval == 1)" pButton
-                                                    type="button" label="Confirmed" pTooltip="Toggle to decline" style="background: green !important;"
-                                                    (click)="onClick(rowData, 1)">
-                                                </button>
-                                                <button icon="pi pi-times" *ngIf="(rowData.Dapproval == 2)" pButton
-                                                    type="button" label="Declined" pTooltip="Toggle to confirm again"
-                                                    style=" background: rgb(215 11 11) !important;"
-                                                    (click)="onClick(rowData, 2)">
-                                                </button>
-                                                
-                                            </span>
-                                        </td>
-                                        <td class="td-border">
-                                            <span class="p-column-title">
                                                 Status :
                                             </span>
                                             <span>
-                                                <span *ngIf="(rowData.Dapproval == 1)">Confirmed!
-                                                </span>
-                                                <span *ngIf="(rowData.Dapproval == 2)">Declined!
-                                                </span>
-                                                <span *ngIf="(rowData.Dapproval == 0)">Pending!
-                                                </span>
+                                                <button *ngIf="(rowData.Flag == true)" pButton type="button"
+                                                    label="Active" pTooltip="Toggle to Inactive" tooltipPosition="left"
+                                                    style="background: green !important;" (click)="onClick(rowData, 0)">
+                                                </button>
+                                                <button *ngIf="(rowData.Flag == false)" pButton type="button"
+                                                    label="Inactive" pTooltip="Toggle to active" tooltipPosition="left"
+                                                    style="background: crimson !important;"
+                                                    (click)="onClick(rowData, 1)">
+                                                </button>
                                             </span>
                                         </td>
                                     </tr>

@@ -20,6 +20,9 @@ export class EmployeeVacancyComponent implements OnInit {
   hostel: number;
   districts?: any = [];
   taluks?: any = [];
+  tasildhars?: any = [];
+  tasildhar: any;
+  tasildharOptions: SelectItem[];
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _employeeVacancyForm: NgForm;
   constructor(private _masterService: MasterService, private _restApiService: RestAPIService) { }
@@ -32,7 +35,7 @@ export class EmployeeVacancyComponent implements OnInit {
   onSelect(value) {
     let districtSelection = [];
     let talukSelection = [];
-    let hostelSelection = [];
+    let tasildharSelection = [];
     switch (value) {
       case 'DT':
         this.districts.forEach(d => {
@@ -52,19 +55,29 @@ export class EmployeeVacancyComponent implements OnInit {
           this.talukOptions.unshift({ label: '-select-', value: null });
         }
         break;
+        case 'TN':
+          this.tasildhars.forEach(n => {
+            tasildharSelection.push({ label: n.SplTashildarName, value: n.Slno });  
+          })
+          this.tasildharOptions = tasildharSelection;
+          this.tasildharOptions.unshift({ label: '-select-', value: null });
+          break;
     }
   }
 
   refreshFields(value) {
-    if (value === 'D') {
+    if (value === 'DT') {
+      this._employeeVacancyForm.form.controls['_tasildhar'].reset();
       this._employeeVacancyForm.form.controls['_taluk'].reset();
       this._employeeVacancyForm.form.controls['_hostel'].reset();
+      this.tasildhar = null;
+      this.tasildharOptions = [];
       this.taluk = null;
       this.talukOptions = [];
       this.hostel = null;
       this.hostelOptions = [];
       this.loadTasildhar();
-    } else {
+    } else if(value === 'TS') {
       this._employeeVacancyForm.form.controls['_hostel'].reset();
       this.hostel = null;
       this.hostelOptions = [];
@@ -86,8 +99,12 @@ export class EmployeeVacancyComponent implements OnInit {
         this.taluk !== null && this.taluk !== undefined) {
         this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
           if (res !== null && res !== undefined && res.length !== 0) {
+            const hostelAssignedToTasildhar = (this.tasildhar !== undefined && this.tasildhar !== null) ?
+            ((this.tasildhar.hcode !== undefined) ? this.tasildhar.hcode : null) : null;
             res.Table.forEach(h => {
+              if(h.Slno === hostelAssignedToTasildhar) {
               hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
+              }
             })
           }
         })
@@ -98,9 +115,11 @@ export class EmployeeVacancyComponent implements OnInit {
   }
 
   loadTasildhar() {
-    if(this.district !== null && this.district !== undefined) {
-    this._restApiService.getByParameters(PathConstants.TashildarMapping_Get, {})
-    }
+    this.tasildhar = null;
+    this.tasildharOptions = [];
+    this._restApiService.getByParameters(PathConstants.SpecialTashildar_Get, {'Dcode': this.district}).subscribe(response => {
+      this.tasildhars = response.slice(0);
+    })
   }
 
 

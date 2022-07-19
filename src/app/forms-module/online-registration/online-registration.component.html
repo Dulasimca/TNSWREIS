@@ -429,14 +429,12 @@
                                                 <div #grid1 class="p-grid div-main">
                                                     <div #field17 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <p-radioButton name="_school" label="பள்ளி/School" value=1
-                                                            [(ngModel)]="institutionType"
-                                                            [disabled]="institutionType == '0'"
-                                                            (onClick)="onSelectType(1)">
+                                                            [(ngModel)]="institutionType" (onClick)="onSelectType(1)">
+                                                            <!-- [disabled]="institutionType == '0'"  -->
                                                         </p-radioButton> &nbsp;
                                                         <p-radioButton name="_college" label="கல்லூரி/College" value=0
-                                                            [(ngModel)]="institutionType"
-                                                            [disabled]="institutionType == '1'"
-                                                            (onClick)="onSelectType(0)">
+                                                            [(ngModel)]="institutionType"  (onClick)="onSelectType(0)">
+                                                            <!-- [disabled]="institutionType == '1'" -->
                                                         </p-radioButton>
                                                     </div>
                                                     <div #field18 *ngIf="institutionType=='1'"
@@ -711,9 +709,8 @@
                                                                 தூரம்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_distancefromhosteltohome" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToHome"
-                                                                appInputFormat="allowDecimal"
-                                                                placeholder="Distance From Hostel To Home"
-                                                                autocomplete="off" required>
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="5"
+                                                                placeholder="Distance From Hostel To Home" autocomplete="off" required>
 
                                                         </span>
                                                     </div>
@@ -725,7 +722,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_distancefromhosteltoinstitute" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToInstitute"
-                                                                appInputFormat="allowDecimal"
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="2"
                                                                 placeholder="Distance From Hostel To Institute"
                                                                 autocomplete="off" required>
                                                         </span>

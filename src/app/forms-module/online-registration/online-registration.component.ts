@@ -729,14 +729,12 @@ export class OnlineRegistrationComponent implements OnInit {
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
           }
+          const src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
+          this.pdfURL = this._sanitizer.bypassSecurityTrustResourceUrl(src);
         })
         this.registeredDetails = res.slice(0);
         this.loading = false;
-        var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
-        // if (document.getElementById("embedPDF") !== undefined) {
-        //   document.getElementById("embedPDF").setAttribute('src', src);
-        // }
-        this.pdfURL = this._sanitizer.bypassSecurityTrustResourceUrl(src);
+        
       } else {
         this.loading = false;
         this._messageService.clear();

@@ -12,7 +12,7 @@
                                         <p-dropdown name="_district"
                                             [options]="districtOptions" [(ngModel)]="district"
                                             (onClick)="onSelect('DT')"
-                                            (ngModelChange)="refreshFields('D')" [filter]="true"
+                                            (ngModelChange)="refreshFields('DT')" [filter]="true"
                                             filterBy="label" [showClear]="true" required>
                                         </p-dropdown>
                                         <label style="font-size: 12px;"
@@ -25,7 +25,7 @@
                                         <p-dropdown name="_taluk"
                                             [options]="talukOptions" [(ngModel)]="taluk"
                                             (onClick)="onSelect('TK')"
-                                            (onChange)="refreshFields('T')" [filter]="true"
+                                            (onChange)="refreshFields('TK')" [filter]="true"
                                             filterBy="label" [showClear]="true" required>
                                         </p-dropdown>
                                         <label style="font-size: 12px;"
@@ -33,13 +33,20 @@
                                                 class="form-mandatory-field">*</span></label>
                                     </span>
                                 </div>
-                                <div #field17 class="p-field p-col-12 p-md-12 p-lg-5">
+                                <div class="p-col-12 p-md-12 p-lg-2">
+                                    <div><label for="_tasildhar">Tashildar<span
+                                         class="form-mandatory-field">*</span></label></div>
+                                    <p-dropdown name="_tasildhar" [options]="tasildharOptions" (onClick)="onSelect('TN')"
+                                     [(ngModel)]="tasildhar" optionLabel="label" (ngModelChange)="refreshFields('TS')" 
+                                     required>  
+                                    </p-dropdown>
+                                </div> 
+                                <div class="p-field p-col-12 p-md-12 p-lg-5">
                                     <span class="p-float-label p-input-icon-right">
                                         <p-dropdown name="_hostel" [options]="hostelOptions"
-                                            [(ngModel)]="hostel" optionLabel="label"
-                                             [filter]="true" filterBy="label" [showClear]="true" required>
+                                            [(ngModel)]="hostel" [filter]="true" filterBy="label" [showClear]="true" required>
                                         </p-dropdown>
-                                        <label style="font-size: 12px;" for="_hos">Hostel<span
+                                        <label style="font-size: 12px;" for="_hostel">Hostel<span
                                                 class="form-mandatory-field">*</span></label>
                                     </span>
                                 </div>

@@ -100,7 +100,7 @@ import { OnlineRegisteredStudentReportComponent } from './online-registered-stud
 import { EmployeeVacancyComponent } from './forms-module/employee-vacancy/employee-vacancy.component';
 import { EmployeeVacanyDetailsComponent } from './Reports/employee-vacany-details/employee-vacany-details.component';
 import { StudentCasteWiseDetailsComponent } from './Reports/student-caste-wise-details/student-caste-wise-details.component';
-
+import { OnlineRegisteredStudentstatusComponent } from './online-registered-studentstatus/online-registered-studentstatus.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
@@ -217,6 +217,9 @@ const routes: Routes = [
   { path: 'employeevacany', component:EmployeeVacancyComponent,canActivate: [AuthGuard] },
   { path: 'employeevacany-report', component:EmployeeVacanyDetailsComponent,canActivate: [AuthGuard] },
   { path: 'studentcategorywise-report', component:StudentCasteWiseDetailsComponent,canActivate: [AuthGuard] },
+  { path: 'onlineregisteredstudent-status', component:OnlineRegisteredStudentstatusComponent,canActivate: [AuthGuard] },
+
+   
 
    
    
