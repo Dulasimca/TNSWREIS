@@ -1023,9 +1023,12 @@ export class OnlineRegistrationComponent implements OnInit {
       this.ageTxt = row.age + ' Years';
       this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';
       this.studentImage = 'assets/layout/' + row.hostelId + '/Documents/' + row.studentFilename;
-      this.obj.isNewStudent = row.isNewStudent;
-      this.obj.orphanageSelectedType = row.orphanageSelectedType;
+      this.obj.isNewStudent = row.isNewStudent.toString();
+      this.obj.orphanageSelectedType = row.orphanageSelectedType.toString();
+      this.institutionType = (row.courseYearId === 1) ? '1' : '0';
+      this.checkScholardhipEligibility();
       this.maskInput(row.aadharNo);
+      delete this.obj['Flag'];
     }
   }
 
