@@ -13,22 +13,36 @@
                                         <div><label for="_dis">District<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_dis" [options]="districtOptions"  (onClick)="onSelect('D')"
-                                        (onChange)="loadTasildhar()"  [(ngModel)]="district" required>
+                                        (onChange)="loadTasildhar()" [readonly]="disableFields" [(ngModel)]="district"
+                                        [filter]="true" filterBy="label" [showClear]="true" required>
                                         </p-dropdown>
                                     </div>
                                     <div class="p-col-12 p-md-12 p-lg-2">
                                         <div><label for="_talshiName">Tashildar Name<span
                                              class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_talshiName" [options]="tashildarNameOptions" (onClick)="onSelect('TN')"
-                                         [(ngModel)]="tashildarName" required>
+                                             [readonly]="disableFields" [(ngModel)]="tashildarName" 
+                                             [filter]="true" filterBy="label" [showClear]="true" required>
                                         </p-dropdown>
                                     </div>                               
                                     <div class="p-col-12 p-md-12 p-lg-2">
                                         <div><label for="_tal">Taluk<span
                                                     class="form-mandatory-field">*</span></label></div>
                                         <p-dropdown name="_tal" [options]="talukOptions" (onClick)="onSelect('T')"
-                                          (onChange)="onDataChecking()"   [(ngModel)]="taluk" required>
+                                          (onChange)="loadHostelList()" [readonly]="disableFields" [(ngModel)]="taluk" 
+                                          [filter]="true" filterBy="label" [showClear]="true" required>
                                         </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_hostel">Hostel Name</label>
+                                        </div>
+                                        <span class="p-input-icon-right">
+                                            <i *ngIf="(hostelOptions.length>2)" class="pi pi-spin pi-spinner"></i>
+                                        <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
+                                            [readonly]="disableFields" (onChange)="onDataChecking()" 
+                                            [filter]="true" filterBy="label" [showClear]="true" required>
+                                        </p-dropdown>
+                                        </span>
                                     </div>
                                  
                                     <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">                                    

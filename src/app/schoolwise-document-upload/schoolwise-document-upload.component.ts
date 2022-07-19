@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from '../Common-Modules/messages';
@@ -20,8 +20,9 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   districts: any;
   school: any;
   schoolOptions: SelectItem[];
-  hostel: any;id: any;
-;
+  hostel: any;
+  id: any;
+  loading: boolean;
   hostelOptions: SelectItem[];
   hostels?: any
   schoolSelection: any[] = [];
@@ -34,26 +35,26 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   data: any = [];
 
   constructor(private _restApiService: RestAPIService, private _messageService: MessageService, private _masterService: MasterService
-    ,private _datePipe: DatePipe,private http: HttpClient) { }
+    , private _datePipe: DatePipe, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.districts = this._masterService.getMaster('DT');
     this.id = 0;
     // this.loadInstitute();
-     
-    }
-    loadInstitues() {
-      if(this.hostel !== null && this.hostel !== undefined){
+
+  }
+  loadInstitues() {
+    if (this.hostel !== null && this.hostel !== undefined) {
       const params = {
-        'HCode' : this.hostel
+        'HCode': this.hostel
       }
       this._restApiService.getByParameters(PathConstants.RegisteredHostelWiseInstitute_Get, params).subscribe(res => {
         this.institutes = res;
-        console.log('i',this.institutes)
-      
+        console.log('i', this.institutes)
+
       })
     }
-    }
+  }
 
   public uploadFile = (files) => {
     if (files.length === 0) {
@@ -62,7 +63,7 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
-    const folderName = 111+ '/' + 'Documents';
+    const folderName = this.hostel + '/' + 'Documents';
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
     var filenameWithExtn = curr_datetime + '.' + etxn[1];
@@ -78,13 +79,13 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   onFileUpload($event) {
     const selectedFile = $event.target.files[0];
     var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-        const s_url = window.URL.createObjectURL(selectedFile);
-        // this.studentImage = this._d.bypassSecurityTrustUrl(s_url);
-        this.Filename = this.uploadFile($event.target.files);
+    const s_url = window.URL.createObjectURL(selectedFile);
+    // this.studentImage = this._d.bypassSecurityTrustUrl(s_url);
+    this.Filename = this.uploadFile($event.target.files);
   }
 
   onSelect(value) {
-    let districtSelection = []; 
+    let districtSelection = [];
     let instituteSelection = [];
 
     switch (value) {
@@ -96,7 +97,7 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
 
         this.districtOptions.unshift({ label: '-select-', value: null });
         break;
-        case 'IN':
+      case 'IN':
         this.institutes.forEach(n => {
           instituteSelection.push({ label: n.InstituteName, value: n.CurrentInstituteId })
         });
@@ -105,8 +106,12 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
         break;
     }
   }
-  reloadFields(type) {
-
+  reloadFields(value) {
+    if (value === 'H') {
+      this.institute = null;
+      this.instituteOptions = [];
+    }
+    this.loadInstitues();
   }
   onSelectType() {
     this.schoolOptions = [];
@@ -115,7 +120,7 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
       return s.type === 1;
     })
   }
-   
+
 
   selectDistrict() {
     this.hostel = null;
@@ -147,20 +152,56 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
       'DCode': this.district,
       'HCode': this.hostel,
       'ICode': this.institute,
-      'Filename': '',
+      'Filename': this.Filename,
       'Flag': 1
     }
- this._restApiService.post(PathConstants.SchoolwiseDocUpload_Post,params).subscribe(res => {
-
- })
+    this._restApiService.post(PathConstants.SchoolwiseDocUpload_Post, params).subscribe(res => {
+      if (res) {
+        // this.onClear();
+        this.onView();
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+          summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+        });
+      } else {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.status === 0 || err.status === 400) {
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
+      }
+    })
   }
 
   onEdit(rowData) {
+    this.id = rowData.Id;
+    this.Filename = rowData.DocumentFilenaame;
+    this.institute = rowData.InstituteId;
+    this.instituteOptions = [{ label: rowData.InstituteName, value: rowData.InstituteId }];
+    this.district = rowData.DistrictCode;
+    this.districtOptions = [{ label: rowData.Districtname, value: rowData.DistrictCode }];
+    this.hostel = rowData.HostelId;
+    this.hostelOptions = [{ label: rowData.HostelName, value: rowData.HostelId }];
   }
 
   onView() {
-    this._restApiService.get(PathConstants.SchoolWiseStudentDetails_Get).subscribe(res => {
-      this.data = res;
+    this.loading = true;
+    this._restApiService.get(PathConstants.SchoolwiseDocUpload_Get).subscribe(res => {
+      if (res !== null && res !== undefined && res.length !== 0) {
+        this.data = res;
+        this.loading = false;
+      } else {
+        this.loading = false;
+      }
     })
 
   }

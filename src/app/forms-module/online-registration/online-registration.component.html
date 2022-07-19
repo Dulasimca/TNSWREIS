@@ -691,7 +691,7 @@
                                                                 தூரம்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_distance1" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToHome"
-                                                                appInputFormat="allowDecimal"
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="5"
                                                                 placeholder="Distance From Hostel To Home" autocomplete="off" required>
 
                                                         </span>
@@ -704,7 +704,7 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_distance2" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToInstitute"
-                                                                appInputFormat="allowDecimal"
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="2"
                                                                 placeholder="Distance From Hostel To Institute"
                                                                 autocomplete="off" required>
                                                         </span>

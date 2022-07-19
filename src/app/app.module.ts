@@ -164,6 +164,10 @@ import { TashildarMappingComponent } from './master/tashildar-mapping/tashildar-
 import { InstituteMasterEntryComponent } from './institute-master-entry/institute-master-entry.component';
 import { UtilsService } from './services/utils.service';
 import { OnlineRegisteredStudentReportComponent } from './online-registered-student-report/online-registered-student-report.component';
+import { OnlineRegisteredStudentstatusComponent } from './online-registered-studentstatus/online-registered-studentstatus.component';
+import { EmployeeVacanyDetailsComponent } from './Reports/employee-vacany-details/employee-vacany-details.component';
+import { StudentCasteWiseDetailsComponent } from './Reports/student-caste-wise-details/student-caste-wise-details.component';
+import { EmployeeVacancyComponent } from './forms-module/employee-vacancy/employee-vacancy.component';
 
 
 @NgModule({
@@ -272,6 +276,10 @@ import { OnlineRegisteredStudentReportComponent } from './online-registered-stud
     TashildarMappingComponent,
     InstituteMasterEntryComponent,
     OnlineRegisteredStudentReportComponent,
+    OnlineRegisteredStudentstatusComponent,
+    EmployeeVacanyDetailsComponent,
+    StudentCasteWiseDetailsComponent,
+    EmployeeVacancyComponent,
     
   ],
   imports: [

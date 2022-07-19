@@ -362,6 +362,7 @@ export class OnlineRegistrationComponent implements OnInit {
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
     const folderName = this.hostelName.value + '/' + 'Documents';
+    console.log('k',folderName)
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
     var filenameWithExtn = curr_datetime + '.' + etxn[1];
