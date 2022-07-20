@@ -41,7 +41,11 @@ export class TableConstants {
     TashildarMappingcols: any = [];
     InstituteMasterColumns: any = [];
     OnlineRegisteredStudentColumns: any =[];
+<<<<<<< HEAD
     employeeVacancyDetailcolumns: any = [];
+=======
+    EmployeeVacancyReportCols: any = [];
+>>>>>>> d87a5692c6c8e387bbde60e8338f55a3487d8256
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -266,7 +270,7 @@ export class TableConstants {
             {field:'Districtname',header:'District Name'},
             {field:'HostelName',header: 'Hostel Name'},
             {field:'DeviceId',header: 'Biometric Device Id'},
-            {field:'Flag',header: 'Status'}
+            {field:'status',header: 'Status'}
         ]
         this.OpeningBalanceColumns = [
             { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},
@@ -547,7 +551,7 @@ export class TableConstants {
         { field: 'Vacancy', header: 'Vacancy', align: 'right !important', width: '100px'},
         { field: 'VacantDate', header: 'Vacant From', align: 'left !important', width: '100px'},
         { field: 'CreatedDate', header: 'Created Date', align: 'left !important', width: '100px'},
-    ]
+    ];
     
 
 

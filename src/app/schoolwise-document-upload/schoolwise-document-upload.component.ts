@@ -50,7 +50,6 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
       }
       this._restApiService.getByParameters(PathConstants.RegisteredHostelWiseInstitute_Get, params).subscribe(res => {
         this.institutes = res;
-        console.log('i', this.institutes)
 
       })
     }
@@ -196,11 +195,26 @@ export class SchoolwiseDocumentUploadComponent implements OnInit {
   onView() {
     this.loading = true;
     this._restApiService.get(PathConstants.SchoolwiseDocUpload_Get).subscribe(res => {
-      if (res !== null && res !== undefined && res.length !== 0) {
+      if (res !== null && res !== undefined) {
+        if(res.length !== 0){
         this.data = res;
         this.loading = false;
-      } else {
+      } 
+      else {
         this.loading = false;
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+          summary: ResponseMessage.SUMMARY_ALERT, detail: ResponseMessage.NoRecordMessage
+        })
+      }
+    }else {
+        this.loading = false;
+        this._messageService.clear();
+        this._messageService.add({
+          key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+        })
       }
     })
 
