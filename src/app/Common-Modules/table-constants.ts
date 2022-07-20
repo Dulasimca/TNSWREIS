@@ -266,7 +266,7 @@ export class TableConstants {
             {field:'Districtname',header:'District Name'},
             {field:'HostelName',header: 'Hostel Name'},
             {field:'DeviceId',header: 'Biometric Device Id'},
-            {field:'Flag',header: 'Status'}
+            {field:'status',header: 'Status'}
         ]
         this.OpeningBalanceColumns = [
             { field: 'ShortYear', header: 'Accounting Year', align: 'left !important'},

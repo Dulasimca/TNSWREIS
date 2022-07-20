@@ -58,9 +58,9 @@ export class StudentCertificateDownloadComponent implements OnInit {
             districtSelection.push({ label: d.name, value: d.code });
           })
           this.districtOptions = districtSelection;
-          if ((this.logged_user.roleId * 1) === 1) {
-            this.districtOptions.unshift({ label: 'All', value: 0 });
-          }
+          // if ((this.logged_user.roleId * 1) === 1) {
+          //   this.districtOptions.unshift({ label: 'All', value: 0 });
+          // }
           break;
         case 'T':
           this.taluks.forEach(t => {
@@ -69,9 +69,9 @@ export class StudentCertificateDownloadComponent implements OnInit {
             }
           })
           this.talukOptions = talukSelection;
-          if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
-            this.talukOptions.unshift({ label: 'All', value: 0 });
-          }
+          // if ((this.logged_user.roleId * 1) === 1 || (this.logged_user.roleId * 1) === 2) {
+          //   this.talukOptions.unshift({ label: 'All', value: 0 });
+          // }
           break;
       }
     }
@@ -97,9 +97,9 @@ export class StudentCertificateDownloadComponent implements OnInit {
       })
     }
     this.hostelOptions = hostelSelection;
-    if ((this.logged_user.roleId * 1) !== 4) {
-      this.hostelOptions.unshift({ label: 'All', value: 0 });
-    }
+    // if ((this.logged_user.roleId * 1) !== 4) {
+    //   this.hostelOptions.unshift({ label: 'All', value: 0 });
+    // }
   }
 
   loadStudentDetails() {

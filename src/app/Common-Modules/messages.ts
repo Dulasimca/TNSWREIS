@@ -54,6 +54,7 @@ export class ResponseMessage {
     public static readonly SanctionedEligibiltyErr = 'Cannot select student more than sanctioned strength !';
     public static readonly CheckUserNameExists = 'Username already exists! Please try different username ';
     public static readonly SelectDistrict = 'Please select District to view!';
+    public static readonly ValidForm = 'All mandatory fields are filled. Please submit the form !';
 
 
  
