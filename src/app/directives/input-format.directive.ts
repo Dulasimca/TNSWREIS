@@ -104,8 +104,8 @@ export class InputFormatDirective {
       }
       let k;
       k = event.keyCode;
-      // k = event.charCode;  (Both can be used)
-      if ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57) || (k === 45 || k === 46)) {
+      if ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57)) {
+        // (k === 45 || --> hyphen   || k === 46 -->dot
           return;
       }
       const ch = String.fromCharCode(e.keyCode);

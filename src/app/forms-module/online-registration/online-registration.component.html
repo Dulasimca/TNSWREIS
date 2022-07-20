@@ -33,7 +33,7 @@
                                                             <p-dropdown name="_hosteldistrict"
                                                                 [options]="hostelDistrictOptions" [(ngModel)]="district"
                                                                 (onClick)="onSelect('DT', 1)"
-                                                                (ngModelChange)="refreshField('D')" [filter]="true"
+                                                                (ngModelChange)="refreshFields('HD')" [filter]="true"
                                                                 filterBy="label" [showClear]="true" required>
                                                             </p-dropdown>
                                                             <label style="font-size: 12px;"
@@ -46,7 +46,7 @@
                                                             <p-dropdown name="_hosteltaluk"
                                                                 [options]="hostelTalukOptions" [(ngModel)]="taluk"
                                                                 (onClick)="onSelect('TK', 1)"
-                                                                (onChange)="refreshField('T')" [filter]="true"
+                                                                (onChange)="refreshFields('HT')" [filter]="true"
                                                                 filterBy="label" [showClear]="true" required>
                                                             </p-dropdown>
                                                             <label style="font-size: 12px;"
@@ -56,12 +56,12 @@
                                                     </div>
                                                     <div #field17 class="p-field p-col-12 p-md-12 p-lg-5">
                                                         <span class="p-float-label p-input-icon-right">
-                                                            <p-dropdown name="_hos" [options]="hostelOptions"
-                                                                [(ngModel)]="hostelName" optionLabel="label"
+                                                            <p-dropdown name="_hostel" [options]="hostelOptions"
+                                                                [(ngModel)]="hostel" optionLabel="label"
                                                                 (onChange)="onHostelChange()" [filter]="true"
                                                                 filterBy="label" [showClear]="true" required>
                                                             </p-dropdown>
-                                                            <label style="font-size: 12px;" for="_hos">விடுதியின்
+                                                            <label style="font-size: 12px;" for="_hostel">விடுதியின்
                                                                 பெயர்/Hostel Name<span
                                                                     class="form-mandatory-field">*</span></label>
                                                         </span>
@@ -100,8 +100,9 @@
                                                                         <input type="text" name="_studentname"
                                                                             id="sname" pInputText
                                                                             [(ngModel)]="obj.studentName" required
-                                                                            appInputFormat="englishOnly"
-                                                                            placeholder="Student Name in English" autocomplete="off">
+                                                                            appInputFormat="noSpecialChars"
+                                                                            placeholder="Student Name in English"
+                                                                            autocomplete="off">
 
                                                                     </span>
                                                                 </div>
@@ -112,8 +113,8 @@
                                                                                 class="form-mandatory-field">*</span></label>
                                                                         <input type="text" name="_emisno" pInputText
                                                                             [(ngModel)]="obj.emisno" minlength="1"
-                                                                            maxlength="18" placeholder="EMIS No/Reg No." autocomplete="off"
-                                                                            required>
+                                                                            maxlength="18" placeholder="EMIS No/Reg No."
+                                                                            autocomplete="off" required>
 
                                                                     </span>
                                                                 </div>
@@ -143,7 +144,8 @@
                                                                             for="_age">வயது</label>
                                                                         <input type="text" name="_age" id="sname"
                                                                             pInputText [(ngModel)]="ageTxt"
-                                                                            [disabled]="true" placeholder="Age" autocomplete="off">
+                                                                            [disabled]="true" placeholder="Age"
+                                                                            autocomplete="off">
                                                                     </span>
                                                                 </div>
                                                                 <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
@@ -243,26 +245,31 @@
                                                                 </div>
                                                                 <div #field11 class="p-field p-col-12 p-md-12 p-lg-2">
                                                                     <span>
-                                                                        <label style="font-size: 12px; white-space: pre;"
-                                                                            for="_mobno" [ngStyle]="{'color': (obj.mobileNo != null && obj.mobileNo !== undefined) ?
-                                                                             ((f.controls._mobno.invalid)||(obj.mobileNo==obj.altMobNo) ? 'crimson' : '#495057') : '#495057'}">
-                                                                             தொடர்பு கைபேசி எண்<span
+                                                                        <label
+                                                                            style="font-size: 12px; white-space: pre;"
+                                                                            for="_mobileno"
+                                                                            [ngStyle]="{'color': (obj.mobileNo != null && obj.mobileNo !== undefined) ?
+                                                                             ((f.controls._mobileno.invalid)||(obj.mobileNo==obj.altMobNo) ? 'crimson' : '#495057') : '#495057'}">
+                                                                            தொடர்பு கைபேசி எண்<span
                                                                                 class="form-mandatory-field">*</span></label>
-                                                                        <input type="text" name="_mobno" pInputText
+                                                                        <input type="text" name="_mobileno" pInputText
                                                                             [(ngModel)]="obj.mobileNo"
                                                                             appInputFormat="digitOnly" minlength="10"
                                                                             maxlength="10" pattern="^[6789]\d{9,9}$"
-                                                                            placeholder="Mobile No" (input)="validateFields('M')"
+                                                                            placeholder="Mobile No"
+                                                                            (input)="validateFields('M')"
                                                                             title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                             autocomplete="off" required>
 
                                                                     </span>
                                                                     <div>
-                                                                        <span *ngIf="(obj.mobileNo!=null && obj.mobileNo!=undefined && obj.altMobNo!=null && obj.altMobNo!=undefined)">
-                                                                        <span *ngIf="(obj.mobileNo==obj.altMobNo)"
-                                                                        style="font-size: 12px;color: crimson;">mob no.
-                                                                        cannot be same as alt mob no.</span>
-                                                                    </span>
+                                                                        <span
+                                                                            *ngIf="(obj.mobileNo!=null && obj.mobileNo!=undefined && obj.altMobNo!=null && obj.altMobNo!=undefined)">
+                                                                            <span *ngIf="(obj.mobileNo==obj.altMobNo)"
+                                                                                style="font-size: 12px;color: crimson;">mob
+                                                                                no.
+                                                                                cannot be same as alt mob no.</span>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
 
@@ -271,6 +278,9 @@
                                                     </div>
                                                     <div class="p-col-12 p-md-12 p-lg-2 no-pad-top">
                                                         <div class="p-col-12 p-md-12 p-lg-12">
+                                                            <div><label style="font-size: 12px;white-space: pre;">மாணவர் புகைப்படம்
+                                                                    <span class="form-mandatory-field">*</span>
+                                                                </label></div>
                                                             <div #field16><img [src]="studentImage"
                                                                     style="width: 100px; height: 100px;" />
                                                                 <input style="display: none" name="_studentimage"
@@ -280,7 +290,6 @@
                                                                     icon="pi pi-plus edit-size" pButton type="file"
                                                                     #file (click)="userFile.click()" required>
                                                                 </button>
-                                                                <span class="form-mandatory-field">*</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -294,8 +303,10 @@
                                                                 <input type="text" name="_altmobno" pInputText
                                                                     [(ngModel)]="obj.altMobNo" pattern="^[6789]\d{9,9}$"
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
-                                                                    appInputFormat="digitOnly" minlength="10" (input)="validateFields('M')"
-                                                                    placeholder="Alternate Mobile No" maxlength="10"autocomplete="off">
+                                                                    appInputFormat="digitOnly" minlength="10"
+                                                                    (input)="validateFields('M')"
+                                                                    placeholder="Alternate Mobile No" maxlength="10"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field13 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -306,25 +317,28 @@
                                                                 <input type="text" name="_admissionno" pInputText
                                                                     [(ngModel)]="obj.admissionNo"
                                                                     appInputFormat="noSpecialChars" minlength="1"
-                                                                    maxlength="40" placeholder="Admission No." autocomplete="off" required>
+                                                                    maxlength="40" placeholder="Admission No."
+                                                                    autocomplete="off" required>
 
                                                             </span>
                                                         </div>
                                                         <div #field14 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span>
-                                                                <label style="font-size: 12px;"
-                                                                    for="_totalyincome"
+                                                                <label style="font-size: 12px;" for="_annualincome"
                                                                     [ngStyle]="{'color': (obj.totalYIncome != null && obj.totalYIncome !== undefined) ? 
-                                                                    ((f.controls._totalyincome.invalid)||(obj.totalYIncome>income_min) ? 'crimson' : '#495057') : '#495057'}">ஆண்டு வருமானம்<span
+                                                                    ((f.controls._annualincome.invalid)||(obj.totalYIncome>income_min) ? 'crimson' : '#495057') : '#495057'}">ஆண்டு
+                                                                    வருமானம்<span
                                                                         class="form-mandatory-field">*</span></label>
-                                                                <input type="text" name="_totalyincome" pInputText
+                                                                <input type="text" name="_annualincome" pInputText
                                                                     [(ngModel)]="obj.totalYIncome"
                                                                     (input)="validateFields('I')"
                                                                     appInputFormat="digitOnly" minlength="1"
-                                                                    maxlength="8" placeholder="Annual Income" autocomplete="off" required>
+                                                                    maxlength="8" placeholder="Annual Income"
+                                                                    autocomplete="off" required>
                                                             </span>
                                                             <div>
-                                                                <span *ngIf="(obj.totalYIncome>income_min)" style="font-size: 12px;color: crimson;">
+                                                                <span *ngIf="(obj.totalYIncome>income_min)"
+                                                                    style="font-size: 12px;color: crimson;">
                                                                     Annual income should be less than 2.5L</span>
                                                             </div>
                                                         </div>
@@ -334,7 +348,7 @@
                                                                     for="_remarks">கருத்துக்கள்</label>
                                                                 <input type="text" name="_remarks" pInputText
                                                                     [(ngModel)]="obj.remarks"
-                                                                    placeholder="Remarks in English"autocomplete="off">
+                                                                    placeholder="Remarks in English" autocomplete="off">
                                                             </span>
                                                         </div>
                                                     </div>
@@ -389,7 +403,8 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_disability" pInputText
                                                                 [(ngModel)]="obj.disabilityType"
-                                                                placeholder="Physically Changelled Type"autocomplete="off" required>
+                                                                placeholder="Physically Changelled Type"
+                                                                autocomplete="off" required>
                                                         </span>
                                                     </div>
                                                     <div #field31 *ngIf="(obj.refugeeSelectedType == 1)"
@@ -414,10 +429,12 @@
                                                 <div #grid1 class="p-grid div-main">
                                                     <div #field17 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <p-radioButton name="_school" label="பள்ளி/School" value=1
-                                                            [(ngModel)]="institutionType" [disabled]="institutionType == '0'" (onClick)="onSelectType(1)">
+                                                            [(ngModel)]="institutionType" (onClick)="onSelectType(1)">
+                                                            <!-- [disabled]="institutionType == '0'"  -->
                                                         </p-radioButton> &nbsp;
                                                         <p-radioButton name="_college" label="கல்லூரி/College" value=0
-                                                            [(ngModel)]="institutionType" [disabled]="institutionType == '1'" (onClick)="onSelectType(0)">
+                                                            [(ngModel)]="institutionType"  (onClick)="onSelectType(0)">
+                                                            <!-- [disabled]="institutionType == '1'" -->
                                                         </p-radioButton>
                                                     </div>
                                                     <div #field18 *ngIf="institutionType=='1'"
@@ -496,7 +513,8 @@
                                                             <label style="font-size: 12px;" for="_coursetitle">பட்டப்
                                                                 படிப்பின் பெயர்</label>
                                                             <input type="text" name="_coursetitle" pInputText
-                                                                [(ngModel)]="obj.courseTitle" placeholder="Subject" autocomplete="off">
+                                                                [(ngModel)]="obj.courseTitle" placeholder="Subject"
+                                                                autocomplete="off">
                                                         </span>
                                                     </div>
                                                     <div #field20 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -535,7 +553,7 @@
                                                             <label style="font-size: 12px;"
                                                                 for="_institutedistrict">மாவட்டம்</label>
                                                             <p-dropdown name="_institutedistrict"
-                                                                [options]="districtOptions" [(ngModel)]="instituteDcode"
+                                                                [options]="instituteDistrictOptions" [(ngModel)]="instituteDcode"
                                                                 (onClick)="onSelect('DT', 2)"
                                                                 (onChange)="loadInstitute(2)" [filter]="true"
                                                                 filterBy="label" [showClear]="true"
@@ -564,7 +582,8 @@
                                                             <input type="text" name="_lastaddress" pInputText
                                                                 [(ngModel)]="obj.lastStudiedInstituteAddress"
                                                                 readonly="{{isInsAddrAvailable}}"
-                                                                placeholder="Institution Address in English" autocomplete="off">
+                                                                placeholder="Institution Address in English"
+                                                                autocomplete="off">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -604,8 +623,8 @@
                                                         <label style="font-size: 12px;" for="_landmark">இடத்திற்கான
                                                             அடையாளம்</label>
                                                         <input type="text" name="_landmark" pInputText
-                                                            [(ngModel)]="obj.landmark"
-                                                            placeholder="Landmark in English" autocomplete="off">
+                                                            [(ngModel)]="obj.landmark" placeholder="Landmark in English"
+                                                            autocomplete="off">
                                                     </span>
                                                     <!-- <span style="font-size: 12px;">eg: </span> -->
                                                 </div>
@@ -618,7 +637,7 @@
                                                                         class="form-mandatory-field">*</span></label>
                                                                 <p-dropdown name="_district" [options]="districtOptions"
                                                                     (onClick)="onSelect('DT', 3)"
-                                                                    (onChange)="refreshFields('D')"
+                                                                    (onChange)="refreshFields('ND')"
                                                                     [(ngModel)]="obj.distrctCode" [filter]="true"
                                                                     filterBy="label" [showClear]="true"
                                                                     placeholder="District" required>
@@ -652,7 +671,7 @@
                                                         <div #field37 class="p-field p-col-12 p-md-12 p-lg-2">
                                                             <span>
                                                                 <label style="font-size: 12px;" for="_pincode"
-                                                                [ngStyle]="{'color': (obj.pincode != null && obj.pincode !== undefined) ? ((f.controls._pincode.invalid)||(obj.pincode>pincode_max) ? 'crimson' : '#495057') : '#495057'}">அஞ்சல்
+                                                                    [ngStyle]="{'color': (obj.pincode != null && obj.pincode !== undefined) ? ((f.controls._pincode.invalid)||(obj.pincode>pincode_max) ? 'crimson' : '#495057') : '#495057'}">அஞ்சல்
                                                                     குறியீடு<span
                                                                         class="form-mandatory-field">*</span></label>
                                                                 <input type="text" name="_pincode" pInputText
@@ -662,7 +681,8 @@
                                                                     pattern="^6[0-4]\d{4}$" autocomplete="off" required>
 
                                                             </span>
-                                                            <span *ngIf="(obj.pincode != null && obj.pincode !== undefined)">
+                                                            <span
+                                                                *ngIf="(obj.pincode != null && obj.pincode !== undefined)">
                                                                 <span
                                                                     *ngIf="(f.controls._pincode.invalid)||(obj.pincode>pincode_max)"
                                                                     style="color: crimson;font-size: 12px;">Invalid
@@ -685,11 +705,11 @@
                                                     <div #field27 class="p-field p-col-12 p-md-12 p-lg-5">
                                                         <span>
                                                             <label style="font-size: 12px;"
-                                                                for="_distance1">விடுதியிலிருந்து வீடுவரையிலான பயண
+                                                                for="_distancefromhosteltohome">விடுதியிலிருந்து வீடுவரையிலான பயண
                                                                 தூரம்<span class="form-mandatory-field">*</span></label>
-                                                            <input type="text" name="_distance1" pInputText
+                                                            <input type="text" name="_distancefromhosteltohome" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToHome"
-                                                                appInputFormat="allowDecimal" minlength="1" maxlength="5"
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="9"
                                                                 placeholder="Distance From Hostel To Home" autocomplete="off" required>
 
                                                         </span>
@@ -697,12 +717,12 @@
                                                     <div #field28 class="p-field p-col-12 p-md-12 p-lg-5">
                                                         <span>
                                                             <label style="font-size: 12px;"
-                                                                for="_distance2">விடுதியிலிருந்து
+                                                                for="_distancefromhosteltoinstitute">விடுதியிலிருந்து
                                                                 கல்விநிறுவனத்திற்கான பயண தூரம்<span
                                                                     class="form-mandatory-field">*</span></label>
-                                                            <input type="text" name="_distance2" pInputText
+                                                            <input type="text" name="_distancefromhosteltoinstitute" pInputText
                                                                 [(ngModel)]="obj.distanceFromHostelToInstitute"
-                                                                appInputFormat="allowDecimal" minlength="1" maxlength="2"
+                                                                appInputFormat="allowDecimal" minlength="1" maxlength="6"
                                                                 placeholder="Distance From Hostel To Institute"
                                                                 autocomplete="off" required>
                                                         </span>
@@ -726,7 +746,8 @@
                                                             <input type="text" name="_aadharno" pInputText
                                                                 [(ngModel)]="aadharNo" appInputFormat="digitOnly"
                                                                 (input)="validateAadhaar(aadharNo)" minlength="12"
-                                                                maxlength="12" placeholder="Aadhaar Number" autocomplete="off" required>
+                                                                maxlength="12" placeholder="Aadhaar Number"
+                                                                autocomplete="off" required>
 
                                                         </span>
                                                         <div style="font-size: 13px;color: red;">
@@ -748,7 +769,8 @@
                                                                 for="_communitycertificateno">சாதி சான்றிதழ் எண்</label>
                                                             <input type="text" name="_communitycertificateno" pInputText
                                                                 [(ngModel)]="obj.communityCertificateNo"
-                                                                placeholder="Community Certificate No." autocomplete="off">
+                                                                placeholder="Community Certificate No."
+                                                                autocomplete="off">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -768,7 +790,8 @@
                                                                 பெயர்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_bankname" pInputText
                                                                 [(ngModel)]="obj.bankName"
-                                                                placeholder="Bank Name in English" autocomplete="off" required>
+                                                                placeholder="Bank Name in English" autocomplete="off"
+                                                                required>
 
                                                         </span>
                                                     </div>
@@ -779,21 +802,25 @@
                                                                     class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_bankaccno" pInputText
                                                                 [(ngModel)]="obj.bankAccNo" appInputFormat="digitOnly"
-                                                                placeholder="Bank Account No." autocomplete="off" required>
+                                                                placeholder="Bank Account No." autocomplete="off"
+                                                                required>
                                                         </span>
                                                     </div>
                                                     <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
                                                         <span>
-                                                            <label style="font-size: 12px;text-transform: uppercase !important;" for="_ifsccode"
-                                                            [ngStyle]="{'color': (obj.ifscCode != null && obj.ifscCode !== undefined) ? (f.controls._ifsccode.invalid ? 'crimson' : '#495057') : '#495057'}">IFSC
+                                                            <label style="font-size: 12px;" for="_ifsccode"
+                                                                [ngStyle]="{'color': (obj.ifscCode != null && obj.ifscCode !== undefined) ? (f.controls._ifsccode.invalid ? 'crimson' : '#495057') : '#495057'}">IFSC
                                                                 எண்<span class="form-mandatory-field">*</span></label>
                                                             <input type="text" name="_ifsccode" pInputText
+                                                                style="text-transform: uppercase !important;"
                                                                 [(ngModel)]="obj.ifscCode" placeholder="IFSC Code"
-                                                                pattern="^[A-Za-z]{3,4}[A-Za-z\d]{1,10}$" autocomplete="off" required>
+                                                                pattern="^[A-Za-z]{3,4}[A-Za-z\d]{1,10}$"
+                                                                autocomplete="off" appInputFormat="noSpecialChars"
+                                                                required>
                                                         </span>
-                                                        <span *ngIf="(obj.ifscCode != null && obj.ifscCode !== undefined)">
-                                                            <span
-                                                                *ngIf="f.controls._ifsccode.invalid"
+                                                        <span
+                                                            *ngIf="(obj.ifscCode != null && obj.ifscCode !== undefined)">
+                                                            <span *ngIf="f.controls._ifsccode.invalid"
                                                                 style="color: crimson;font-size: 12px;">Invalid
                                                                 IFSC code!</span>
                                                         </span>
@@ -834,7 +861,7 @@
                                                             <span class="p-input-icon-right">
                                                                 <label style="font-size: 12px;"
                                                                     for="_ftitle">தலைப்பு</label>
-                                                                <p-dropdown name="_ftitle" [options]="titleOptions"
+                                                                <p-dropdown name="_ftitle" [options]="fatherTitleOptions"
                                                                     (onClick)="onSelect('TO', 0)" [showClear]="true"
                                                                     [(ngModel)]="obj.fnTitleCode" placeholder="Title">
                                                                 </p-dropdown>
@@ -847,7 +874,8 @@
                                                                     for="_fathername">தந்தையின் பெயர்</label>
                                                                 <input type="text" name="_fathername" id="fname"
                                                                     pInputText [(ngModel)]="obj.fatherName"
-                                                                    placeholder="Father Name in English" autocomplete="off">
+                                                                    placeholder="Father Name in English"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field47 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -856,7 +884,8 @@
                                                                     for="_fatheroccupation">தொழில்</label>
                                                                 <input type="text" name="_fatheroccupation" pInputText
                                                                     [(ngModel)]="obj.fatherOccupation"
-                                                                    placeholder="Occupation in English" autocomplete="off">
+                                                                    placeholder="Occupation in English"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -877,7 +906,8 @@
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                     [(ngModel)]="obj.fatherMoileNo"
                                                                     appInputFormat="digitOnly" maxlength="10"
-                                                                    minlength="10" placeholder="Mobile No." autocomplete="off">
+                                                                    minlength="10" placeholder="Mobile No."
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <!-- <div #field49 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -904,7 +934,7 @@
                                                             <span class="p-input-icon-right">
                                                                 <label style="font-size: 12px;"
                                                                     for="_mtitle">தலைப்பு</label>
-                                                                <p-dropdown name="_mtitle" [options]="titleOptions"
+                                                                <p-dropdown name="_mtitle" [options]="motherTitleOptions"
                                                                     (onClick)="onSelect('TO', 0)" [showClear]="true"
                                                                     [(ngModel)]="obj.mnTitleCode" placeholder="Title">
                                                                 </p-dropdown>
@@ -916,7 +946,8 @@
                                                                     பெயர்</label>
                                                                 <input type="text" name="_mothername" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherName"
-                                                                    placeholder="Mother's Name in English" autocomplete="off">
+                                                                    placeholder="Mother's Name in English"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field52 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -925,7 +956,8 @@
                                                                     for="_motheroccupation">தொழில்</label>
                                                                 <input type="text" name="_motheroccupation" id="fname"
                                                                     pInputText [(ngModel)]="obj.motherOccupation"
-                                                                    placeholder="Ocuupation in English" autocomplete="off">
+                                                                    placeholder="Ocuupation in English"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field52 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -946,7 +978,8 @@
                                                                     minlength="10" maxlength="10"
                                                                     pattern="^[6789]\d{9,9}$"
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
-                                                                    appInputFormat="digitOnly" placeholder="Mobile No" autocomplete="off">
+                                                                    appInputFormat="digitOnly" placeholder="Mobile No"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <!-- <div #field54 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -974,7 +1007,7 @@
                                                             <span class="p-input-icon-right">
                                                                 <label style="font-size: 12px;"
                                                                     for="_gtitle">தலைப்பு</label>
-                                                                <p-dropdown name="_gtitle" [options]="titleOptions"
+                                                                <p-dropdown name="_gtitle" [options]="guardianTitleOptions"
                                                                     (onClick)="onSelect('TO', 0)" [showClear]="true"
                                                                     [(ngModel)]="obj.gnTitleCode" placeholder="Title">
                                                                 </p-dropdown>
@@ -986,7 +1019,8 @@
                                                                     for="_guardianname">பாதுகாவலர் பெயர்</label>
                                                                 <input type="text" name="_guardianname" id="fname"
                                                                     pInputText [(ngModel)]="obj.guardianName"
-                                                                    placeholder="Guardian Name in English" autocomplete="off">
+                                                                    placeholder="Guardian Name in English"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field56 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -995,7 +1029,8 @@
                                                                     for="_guardianoccupation">தொழில்</label>
                                                                 <input type="text" name="_guardianoccupation" id="fname"
                                                                     pInputText [(ngModel)]="obj.guardianOccupation"
-                                                                    placeholder="Occupation in English" autocomplete="off">
+                                                                    placeholder="Occupation in English"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                         <div #field57 class="p-field p-col-12 p-md-12 p-lg-2">
@@ -1016,7 +1051,8 @@
                                                                     pattern="^[6789]\d{9,9}$"
                                                                     title="Phone number starts with 6-9 and remaing 9 digit with 0-9"
                                                                     appInputFormat="digitOnly" maxlength="10"
-                                                                    minlength="10" placeholder="Mobile No" autocomplete="off">
+                                                                    minlength="10" placeholder="Mobile No"
+                                                                    autocomplete="off">
                                                             </span>
                                                         </div>
                                                     </div>
@@ -1042,7 +1078,7 @@
                                                             <input #incomeCertificate class="p-col-12"
                                                                 name="_incomecertificate" type="file" pInputText
                                                                 (change)="onFileUpload($event, 2)"
-                                                                accept=".pdf,.png,.jpg,.jpeg"  />
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
                                                         </div>
                                                         <div #field60 class="p-field p-col-12 p-md-12 p-lg-4">
                                                             <label style="font-size: 12px;"
@@ -1080,12 +1116,14 @@
                                     </div>
                                 </p-tabPanel>
                                 <div class="p-col-12 txt-center">
-                                    <button *ngIf="!showSubmit" pButton type="button" label="Next"
-                                        (click)="moveTo()"></button>&nbsp;
-                                    <button *ngIf="showSubmit" pButton type="button" label="Submit" icon="pi pi-send"
-                                        (click)="checkAadhar()" [disabled]="(!f.valid || !f.dirty || obj.studentFilename.length<2)"></button>&nbsp;
-                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                    <button *ngIf="!showSubmit" pButton type="button" label="Next" icon="pi pi-forward"
+                                        (click)="moveTo()" [disabled]="(!f.valid || !f.dirty || obj.studentFilename==null || obj.studentFilename=='')"></button>&nbsp;
+                                    <button *ngIf="showSubmit" pButton type="button" label="Submit" icon="pi pi-send" (click)="checkAadhar()"
+                                        [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                    <button *ngIf="showViewToEdit" pButton type="button" label="View" icon="pi pi-eye"
                                         (click)="onView()"></button>&nbsp;
+                                    <button pButton type="button" label="Validate" icon="pi pi-check-circle"
+                                        (click)="onValidate(f)"></button>&nbsp;
                                     <button pButton type="button" label="Clear" icon="pi pi-trash"
                                         (click)="clearForm()"></button>
                                 </div>
@@ -1095,7 +1133,7 @@
                 </p-card>
             </p-panel>
             <p-dialog #dialog header="Registered Student List" [(visible)]="showDialog" [modal]="showDialog"
-                [maximizable]="true" [style]="{width: '90vw', height: '90vw'}" (onHide)="onClosingView()">
+                [maximizable]="true" [style]="{width: '90vw', height: '90vw'}" (onHide)="clearForm()">
                 <div class="p-grid div-main">
                     <div class="p-col-12 p-md-12 p-lg-12">
                         <p-toast position="top-center" key="d-msg"></p-toast>
@@ -1171,6 +1209,112 @@
             [maximizable]="true" [style]="{width: '90vw', height: '90vw'}" (onHide)="onDialogHide()">
             <div id="embedDiv" class="fgh txt-center">
                 <embed id="embedPDF" [src]="pdfURL" type="application/pdf" width="800" height="500">
+            </div>
+        </p-dialog>
+        <p-dialog #viewdialog header="Registered Student List" [(visible)]="showViewDialog" [modal]="showViewDialog"
+            [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+            <div class="p-col-12 p-md-12 p-lg-12">
+                <div class="p-grid div-main">
+                    <div class="p-field p-col-12 p-md-6 p-lg-2">
+                        <div>
+                            <label style="font-size: 12px;" for="_viewdistrict">District</label>
+                        </div>
+                            <p-dropdown name="_viewdistrict" [options]="viewDistrictOptions" [(ngModel)]="viewDistrict"
+                                (onClick)="onSelect('DT', 4)" placeholder="-select-"
+                                (ngModelChange)="refreshFields('VD')" [filter]="true" filterBy="label"
+                                [showClear]="true">
+                            </p-dropdown>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6 p-lg-2">
+                        <div>
+                            <label style="font-size: 12px;" for="_viewtaluk">Taluk</label>
+                        </div>
+                            <p-dropdown name="_viewtaluk" [options]="viewTalukOptions" [(ngModel)]="viewTaluk"
+                                (onClick)="onSelect('TK', 3)" [filter]="true" (ngModelChange)="refreshFields('VT')"
+                                placeholder="-select-" filterBy="label" [showClear]="true">
+                            </p-dropdown>
+                    </div>
+                    <div class="p-field p-col-12 p-md-12 p-lg-4">
+                        <div>
+                            <label style="font-size: 12px;" for="_viewhostel">Hostel</label>
+                        </div>
+                            <p-dropdown name="_viewhostel" [options]="viewHostelOptions" [(ngModel)]="viewHostel"
+                                [filter]="true" placeholder="-select-" filterBy="label" [showClear]="true"
+                                (onChange)="viewListToEdit()">
+                            </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
+                            [value]="registeredStudentList" [paginator]="true" [rows]="10" [loading]="loading"
+                            [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']"
+                            responsiveLayout="scroll">
+                            <ng-template pTemplate="caption">
+                                <div class="table-header">
+                                    <div class="p-grid">
+                                        <div class="p-col-6 p-md-6 p-lg-10 txt-end">
+                                            <span>Search by Student name / Aadhaar No.</span>
+                                        </div>
+                                        <div class="p-col-4 p-md-4 p-lg-2">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text" size="30"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Global Search" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 100px">S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                    <th style="width: 120px">Edit</th>
+                                    <!-- <th style="width: 120px">Delete</th> -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+                                    </td>
+                                    <td style="width: 120px" (click)="onEdit(rowData)">
+                                        <span class="p-column-title">
+                                            Edit :
+                                        </span>
+                                        <span>
+                                            <i class="pi pi-pencil"></i></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </p-dialog>
+        <p-dialog header="Missing Fields" [(visible)]="showMisisngFields" position="top" [modal]="true"
+            [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+            <div class="p-col-12 p-md-12 p-lg-12 border-blue">
+                <div>Please fill the below missing fields to submit your registration:-</div>
+                <div *ngFor="let field of formMissingFields;let indexOfField=index;">
+                    <div class="p-col-12 p-md-12 p-lg-12" style="border-bottom: 1px solid #c8cbc8;font-size: 12px;">
+                     {{indexOfField+1}}) {{field}}
+                    </div>
+                </div>
             </div>
         </p-dialog>
     </div>

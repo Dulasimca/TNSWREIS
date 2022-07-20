@@ -15,7 +15,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { TableConstants } from 'src/app/Common-Modules/table-constants';
 import { Observable } from 'rxjs';
 import { Dialog } from 'primeng/dialog';
-import { Router } from '@angular/router';
 import { GlobalVariable } from 'src/app/Common-Modules/GlobalVariables';
 
 @Component({
@@ -69,11 +68,9 @@ export class OnlineRegistrationComponent implements OnInit {
   response: any;
   district: any;
   taluk: any;
-  hostelName: any;
   hostelDistrictOptions: SelectItem[];
   hostelTalukOptions: SelectItem[];
   hostelOptions: SelectItem[];
-  hostels?: any;
   hostel: any;
   hostelId: any;
   pdfDialog: boolean;
@@ -81,11 +78,14 @@ export class OnlineRegistrationComponent implements OnInit {
   studentId: any;
   accountingYear: string;
   accountingYearId: any = 0;
+  instituteDistrictOptions: SelectItem[];
   instituteDcode: any;
   instituteOptions: SelectItem[];
   isInsAddrAvailable: boolean;
-  isSaved: boolean;
-  titleOptions: SelectItem[];
+  isSubmitted: boolean = false;
+  fatherTitleOptions: SelectItem[];
+  motherTitleOptions: SelectItem[];
+  guardianTitleOptions: SelectItem[];
   titles?: any;
   schoolSelection: any[] = [];
   filteredSchoolData: any[] = [];
@@ -96,6 +96,17 @@ export class OnlineRegistrationComponent implements OnInit {
   pincode_max: number;
   income_min: number;
   pdfURL: any;
+  showViewToEdit: boolean = false;
+  showViewDialog: boolean = false;
+  viewTaluk: string;
+  viewTalukOptions: SelectItem[];
+  viewDistrict: string;
+  viewDistrictOptions: SelectItem[];
+  viewHostel: string;
+  viewHostelOptions: SelectItem[];
+  registeredStudentList: any[] = [];
+  formMissingFields: any[] = [];
+  showMisisngFields: boolean = false;
   obj: OnlineRegistration = {} as OnlineRegistration;
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _onlineRegistrationForm: NgForm;
@@ -116,14 +127,13 @@ export class OnlineRegistrationComponent implements OnInit {
     master.subscribe(response => {
       this.response = response;
     });
+    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.STUDENT_DOB_MAX_YEAR;
   }
 
   ngOnInit(): void {
     this.pincode_max = GlobalVariable.PINCODE_MAX;
     this.income_min = GlobalVariable.INCOME_MIN_VALUE;
-    this.yearRange = GlobalVariable.START_YEAR_RANGE + ':' + GlobalVariable.STUDENT_DOB_MAX_YEAR;
     this.logged_user = this._authService.UserInfo;
-
     this.bloodgroups = this._masterService.getMaster('BG');
     this.taluks = this._masterService.getTalukAll();
     this.genders = this._masterService.getMaster('GD');
@@ -136,6 +146,9 @@ export class OnlineRegistrationComponent implements OnInit {
     this.subcastes = this._masterService.getMaster('SC');
     this.titles = this._masterService.getMaster('NT')
     this.registeredCols = this._tableConstants.registrationColumns;
+    this._authService.isLoggedIn.subscribe(value => {
+      this.showViewToEdit = value;
+    });
 
     setTimeout(() => {
       this.districts = this._masterService.getDistrictAll();
@@ -209,9 +222,21 @@ export class OnlineRegistrationComponent implements OnInit {
         this.districts.forEach(d => {
           districtSelection.push({ label: d.name, value: d.code });
         })
-        this.districtOptions = districtSelection.slice(0);
-        this.hostelDistrictOptions = districtSelection.slice(0);
-        this.hostelDistrictOptions.unshift({ label: '-select-', value: null });
+        if (id === 1) {
+          this.hostelDistrictOptions = [];
+          this.hostelDistrictOptions = districtSelection.slice(0);
+          this.hostelDistrictOptions.unshift({ label: '-select', value: null });
+        } else if (id === 2) {
+          this.instituteDistrictOptions = [];
+          this.instituteDistrictOptions = districtSelection.slice(0);
+        } else if (id === 3) {
+          this.districtOptions = [];
+          this.districtOptions = districtSelection.slice(0);
+        } else {
+          this.viewDistrictOptions = [];
+          this.viewDistrictOptions = districtSelection.slice(0);
+          this.viewDistrictOptions.unshift({ label: 'All', value: 0 });
+        }
         if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
           this.disableTaluk = false;
         } else {
@@ -223,13 +248,13 @@ export class OnlineRegistrationComponent implements OnInit {
           if (this.district !== undefined && this.district !== null) {
             this.taluks.forEach(t => {
               if (t.dcode === this.district) {
-                hostelTalukSelection.push({ label: t.name, value: t.code });
+                talukSelection.push({ label: t.name, value: t.code });
               }
             })
-            this.hostelTalukOptions = hostelTalukSelection.slice(0);
+            this.hostelTalukOptions = talukSelection.slice(0);
             this.hostelTalukOptions.unshift({ label: '-select-', value: null });
           }
-        } else {
+        } else if (id === 2) {
           if (this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) {
             this.taluks.forEach(t => {
               if (t.dcode === this.obj.distrctCode) {
@@ -237,6 +262,16 @@ export class OnlineRegistrationComponent implements OnInit {
               }
             })
             this.talukOptions = talukSelection.slice(0);
+          }
+        } else {
+          if (this.viewDistrict !== undefined && this.viewDistrict !== null) {
+            this.taluks.forEach(t => {
+              if (t.dcode === this.viewDistrict) {
+                talukSelection.push({ label: t.name, value: t.code });
+              }
+            })
+            this.viewTalukOptions = talukSelection.slice(0);
+            this.viewTalukOptions.unshift({ label: 'All', value: 0 });
           }
         }
         break;
@@ -302,25 +337,50 @@ export class OnlineRegistrationComponent implements OnInit {
         this.titles.forEach(c => {
           titleSelection.push({ label: c.name, value: c.code });
         })
-        this.titleOptions = titleSelection;
+        this.fatherTitleOptions = titleSelection.slice(0);
+        this.motherTitleOptions = titleSelection.slice(0);
+        this.guardianTitleOptions = titleSelection.slice(0);
         break;
     }
   }
 
   refreshFields(value) {
-    if (value === 'D') {
-      if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
-        this.disableTaluk = false;
-      } else {
-        this.disableTaluk = true;
-      }
-      this._onlineRegistrationForm.form.controls['_taluk'].reset();
-      this.obj.talukCode = null;
-      this.talukOptions = [];
-    } else if (value === 'C') {
-      this._onlineRegistrationForm.form.controls['_subcaste'].reset();
-      this.obj.subCaste = null;
-      this.subCasteOptions = [];
+    switch (value) {
+      case 'HD':
+        this.taluk = null;
+        this.talukOptions = [];
+        this.loadInstitute(1);
+        break;
+      case 'ND':
+        if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
+          this.disableTaluk = false;
+        } else {
+          this.disableTaluk = true;
+        }
+        this._onlineRegistrationForm.form.controls['_taluk'].reset();
+        this.obj.talukCode = null;
+        this.talukOptions = [];
+        break;
+      case 'VD':
+        this.viewTaluk = null;
+        this.viewTalukOptions = [];
+        break;
+      case 'HT':
+        this.hostel = null;
+        this.hostelOptions = [];
+        this.loadHostelList(1);
+        break;
+      case 'VT':
+        this.viewHostel = null;
+        this.viewHostelOptions = [];
+        this.loadHostelList(2);
+        break;
+      case 'C':
+        this._onlineRegistrationForm.form.controls['_subcaste'].reset();
+        this.obj.subCaste = null;
+        this.subCasteOptions = [];
+        break;
+
     }
   }
 
@@ -361,8 +421,7 @@ export class OnlineRegistrationComponent implements OnInit {
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
     let actualFilename = '';
-    const folderName = this.hostelName.value + '/' + 'Documents';
-    console.log('k',folderName)
+    const folderName = this.hostel.value + '/' + 'Documents';
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
     var etxn = (fileToUpload.name).toString().split('.');
     var filenameWithExtn = curr_datetime + '.' + etxn[1];
@@ -507,7 +566,8 @@ export class OnlineRegistrationComponent implements OnInit {
     this.maxDate = new Date();
     this.obj = {} as OnlineRegistration;
     this.activeTabIndex = 0;
-    this.studentImage = '';
+    this.studentImage = null;
+    this.showMisisngFields = false;
     this.showSubmit = false;
     this.tab2 = false;
     this.tab3 = false;
@@ -515,14 +575,12 @@ export class OnlineRegistrationComponent implements OnInit {
     this.isDisability = false;
     this.enableScholarship = true;
     this.isInsAddrAvailable = false;
-    this.isSaved = false;
+    this.isSubmitted = false;
     this.institutionType = '1';
     this.obj.incomeCertificateFilename = '';
     this.obj.bankPassbookFilename = '';
     this.obj.tcFilename = '';
     this.obj.studentFilename = '';
-    this.obj.tcFilename = '';
-    this.obj.bankPassbookFilename = '';
     this.obj.declarationFilename = '';
     this.obj.districtApproval = '0';
     this.obj.talukApproval = '0';
@@ -531,30 +589,31 @@ export class OnlineRegistrationComponent implements OnInit {
     this.obj.bankId = 0;
     this.obj.documentId = 0;
     this.obj.studentAccId = 0;
-    this.obj.refugeeId = '-';
+    this.obj.refugeeId = null;
     this.obj.refugeeSelectedType = 0;
     this.obj.orphanageSelectedType = 0;
     this.obj.isNewStudent = 0;
   }
 
   onSubmit() {
+    this.isSubmitted = true;
     this.blockUI.start();
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
-    this.obj.hostelId = this.hostelName.value;
+    this.obj.hostelId = this.hostel.value;
     this.obj.motherYIncome = 0;
     this.obj.fatherYIncome = 0;
-    this.obj.altMobNo = (this.obj.altMobNo !== undefined && this.obj.altMobNo !== null) ? this.obj.altMobNo : '-';
+    this.obj.altMobNo = (this.obj.altMobNo !== undefined && this.obj.altMobNo !== null) ? this.obj.altMobNo : null;
     this.obj.disabilityType = (this.obj.disabilityType !== undefined && this.obj.disabilityType !== null) ? this.obj.disabilityType : 0;
     this.obj.landmark = (this.obj.landmark !== undefined && this.obj.landmark !== null) ? this.obj.landmark : '-';
     this.obj.remarks = (this.obj.remarks !== undefined && this.obj.remarks !== null) ? this.obj.remarks : '-';
     this.obj.fatherName = (this.obj.fatherName !== undefined && this.obj.fatherName !== null) ? this.obj.fatherName : '-';
     this.obj.fatherOccupation = (this.obj.fatherOccupation !== undefined && this.obj.fatherOccupation !== null) ? this.obj.fatherOccupation : '-';
     this.obj.fatherQualification = (this.obj.fatherQualification !== undefined && this.obj.fatherQualification !== null) ? this.obj.fatherQualification : '-';
-    this.obj.fatherMoileNo = (this.obj.fatherMoileNo !== undefined && this.obj.fatherMoileNo !== null) ? this.obj.fatherMoileNo : '-';
+    this.obj.fatherMoileNo = (this.obj.fatherMoileNo !== undefined) ? this.obj.fatherMoileNo : null;
     this.obj.motherName = (this.obj.motherName !== undefined && this.obj.motherName !== null) ? this.obj.motherName : '-';
     this.obj.motherQualification = (this.obj.motherQualification !== undefined && this.obj.motherQualification !== null) ? this.obj.motherQualification : '-';
     this.obj.motherOccupation = (this.obj.motherOccupation !== undefined && this.obj.motherOccupation !== null) ? this.obj.motherOccupation : '-';
-    this.obj.motherMoileNo = (this.obj.motherMoileNo !== undefined && this.obj.motherMoileNo !== null) ? this.obj.motherMoileNo : '-';
+    this.obj.motherMoileNo = (this.obj.motherMoileNo !== undefined) ? this.obj.motherMoileNo : null;
     // this.obj.medium = (this.obj.medium !== undefined && this.obj.medium !== null) ? this.obj.medium : 0;
     this.obj.courseTitle = (this.obj.courseTitle !== undefined && this.obj.courseTitle !== null) ? this.obj.courseTitle : '-';
     this.obj.scholarshipId = (this.obj.scholarshipId !== undefined) ? this.obj.scholarshipId : '';
@@ -565,22 +624,22 @@ export class OnlineRegistrationComponent implements OnInit {
     this.obj.guardianName = (this.obj.guardianName !== undefined && this.obj.guardianName !== null) ? this.obj.guardianName : '-';
     this.obj.guardianQualification = (this.obj.guardianQualification !== undefined && this.obj.guardianQualification !== null) ? this.obj.guardianQualification : '-';
     this.obj.guardianOccupation = (this.obj.guardianOccupation !== undefined && this.obj.guardianOccupation !== null) ? this.obj.guardianOccupation : '-';
-    this.obj.guardianMobileNo = (this.obj.guardianMobileNo !== undefined && this.obj.guardianMobileNo !== null) ? this.obj.guardianMobileNo : '-';
+    this.obj.guardianMobileNo = (this.obj.guardianMobileNo !== undefined) ? this.obj.guardianMobileNo : null;
     this.obj.accYearId = this.accountingYearId;
 
     this._restApiService.post(PathConstants.OnlineStudentRegistration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
         if (response) {
           this.blockUI.stop();
-          this.isSaved = true;
-          this.onView();
+          this.isSubmitted = false;
+          this.showSavedStudent();
           this._messageService.clear();
           this._messageService.add({
             key: 'd-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
             summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
           })
         } else {
-          this.isSaved = false;
+          this.isSubmitted = false;
           this.blockUI.stop();
           this._messageService.clear();
           this._messageService.add({
@@ -589,7 +648,7 @@ export class OnlineRegistrationComponent implements OnInit {
           })
         }
       } else {
-        this.isSaved = false;
+        this.isSubmitted = false;
         this.blockUI.stop();
         this._messageService.clear();
         this._messageService.add({
@@ -598,7 +657,7 @@ export class OnlineRegistrationComponent implements OnInit {
         })
       }
     }, (err: HttpErrorResponse) => {
-      this.isSaved = false;
+      this.isSubmitted = false;
       this.blockUI.stop();
       if (err.status === 0 || err.status === 400) {
         this._messageService.clear();
@@ -610,18 +669,11 @@ export class OnlineRegistrationComponent implements OnInit {
     })
   }
 
-  onClosingView() {
-    if (this.isSaved) {
-      this.clearForm();
-    }
-    this.showDialog = false;
-  }
-
   saveAccountingYear() {
     const params = {
-      'Id': 0,
-      'DCode': this.obj.distrctCode,
-      'TCode': this.obj.talukCode,
+      'Id': this.obj.studentAccId,
+      'DCode': this.district,
+      'TCode': this.taluk,
       'HCode': this.obj.hostelId,
       'StudentId': this.obj.studentId,
       'Flag': 1,
@@ -659,7 +711,7 @@ export class OnlineRegistrationComponent implements OnInit {
     })
   }
 
-  onView() {
+  showSavedStudent() {
     this.showDialog = true;
     this.registeredDetails = [];
     this.loading = true;
@@ -677,14 +729,12 @@ export class OnlineRegistrationComponent implements OnInit {
           if (len > 11) {
             r.aadharNoMasked = '*'.repeat(len - 4) + r.aadharNo.substr(8, 4);
           }
+          const src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
+          this.pdfURL = this._sanitizer.bypassSecurityTrustResourceUrl(src);
         })
         this.registeredDetails = res.slice(0);
         this.loading = false;
-        var src = 'assets/layout/Reports/' + this.hostelId + '/' + this.obj.aadharNo + '_' + this.studentId + '.pdf';
-        // if (document.getElementById("embedPDF") !== undefined) {
-        //   document.getElementById("embedPDF").setAttribute('src', src);
-        // }
-        this.pdfURL = this._sanitizer.bypassSecurityTrustResourceUrl(src);
+        
       } else {
         this.loading = false;
         this._messageService.clear();
@@ -694,6 +744,123 @@ export class OnlineRegistrationComponent implements OnInit {
         })
       }
     })
+  }
+
+  loadAccYear() {
+    if (this.yearSelection.length !== 0) {
+      const _currDate = new Date();
+      this.yearSelection.forEach(y => {
+        if (new Date(y.fDate) <= _currDate && new Date(y.tDate) >= _currDate) {
+          this.accountingYear = y.name;
+          this.accountingYearId = y.code;
+          this.obj.accYearId = this.accountingYearId;
+        }
+      })
+    }
+  }
+
+  validateFields(field) {
+    switch (field) {
+      case 'P':
+        if (this.obj.pincode !== null && this.obj.pincode !== undefined) {
+          if (this.obj.pincode > this.pincode_max) {
+            this._onlineRegistrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this._onlineRegistrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'I':
+        if (this.obj.totalYIncome !== null && this.obj.totalYIncome !== undefined) {
+          if (this.obj.totalYIncome > this.income_min) {
+            this._onlineRegistrationForm.controls['_annualincome'].setErrors({ 'incorrect': true });
+          }
+        } else {
+          this._onlineRegistrationForm.controls['_annualincome'].setErrors({ 'incorrect': true });
+        }
+        break;
+      case 'M':
+        if (this.obj.mobileNo !== null && this.obj.mobileNo !== undefined && this.obj.altMobNo !== null
+          && this.obj.altMobNo !== undefined) {
+          if (this.obj.mobileNo.toString().length === 10 && this.obj.altMobNo.toString().length === 10 &&
+            this.obj.mobileNo.toString() === this.obj.altMobNo.toString()) {
+            this._onlineRegistrationForm.controls['_mobileno'].setErrors({ 'incorrect': true });
+          } else {
+            this._onlineRegistrationForm.controls['_mobileno'].setErrors(null);
+          }
+        }
+        break;
+    }
+  }
+
+  onHostelChange() {
+    if (this.hostel !== undefined && this.hostel !== null) {
+      if (this.hostel.gender !== null && this.hostel.gender !== undefined) {
+        this.genderOptions = (this.hostel.gender === 1) ? [{ label: 'Male', value: 1 }] : [{ label: 'Female', value: 2 }]
+        this.obj.gender = this.hostel.gender;
+      }
+      if (this.hostel.type !== null && this.hostel.type !== undefined) {
+        this.institutionType = (this.hostel.type === 2) ? '0' : '1';
+        this.onSelectType(parseInt(this.institutionType, 0));
+      }
+    }
+  }
+
+  loadHostelList(type) {
+    let hostelSelection = [];
+    let params = {};
+    if (type === 1) {
+      this.hostel = null;
+      this.hostelOptions = [];
+      params = {
+        'DCode': this.district,
+        'TCode': this.taluk,
+      }
+    } else {
+      this.viewHostel = null;
+      this.viewHostelOptions = [];
+      params = {
+        'DCode': this.viewDistrict,
+        'TCode': this.viewTaluk,
+      }
+    }
+    if ((this.district !== null && this.district !== undefined && this.district !== 'All' &&
+      this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All' && type === 1) ||
+      (this.viewDistrict !== null && this.viewDistrict !== undefined && this.viewDistrict !== 'All' &&
+        this.viewTaluk !== null && this.viewTaluk !== undefined && this.viewTaluk !== 'All' && type === 2)) {
+      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
+        if (res !== null && res !== undefined && res.length !== 0) {
+          res.Table.forEach(h => {
+            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
+          })
+          if (type === 1) {
+            this.hostelOptions = hostelSelection.slice(0);
+            this.hostelOptions.unshift({ label: '-select-', value: null });
+          } else {
+            this.viewHostelOptions = hostelSelection.slice(0);
+            this.viewHostelOptions.unshift({ label: 'All', value: 0 });
+          }
+        }
+      })
+    }
+  }
+
+  onDialogHide() {
+    this.clearForm();
+  }
+
+  moveTo() {
+    this.activeTabIndex = (this.activeTabIndex === 2) ? 0 : this.activeTabIndex + 1;
+    this.tab2 = (this.activeTabIndex === 1 || (this.activeTabIndex !== 1 && this.tab2)) ? true : false;
+    this.tab3 = (this.activeTabIndex === 2 || (this.activeTabIndex === 2 && this.tab3)) ? true : false;
+    this.showSubmit = (this.tab2 && this.tab3) ? true : false;
+  }
+
+  handleChange(e) {
+    var index = e.index;
+    this.tab2 = (index === 1 || (index !== 1 && this.tab2)) ? true : false;
+    this.tab3 = (index === 2 || (index === 2 && this.tab3)) ? true : false;
+    this.showSubmit = (this.tab2 && this.tab3) ? true : false;
   }
 
   validateAadhaar(aadhaarString) {
@@ -780,115 +947,113 @@ export class OnlineRegistrationComponent implements OnInit {
     });
   }
 
-  refreshField(value) {
-    if (value === 'D') {
-      this.taluk = null;
-      this.talukOptions = [];
-      this.loadInstitute(1);
-    }
-    this.loadHostelList();
+  onView() {
+    this.showViewDialog = true;
+    this.viewDistrict = null;
+    this.viewDistrictOptions = [];
+    this.viewTaluk = null;
+    this.viewTalukOptions = [];
+    this.viewHostel = null;
+    this.viewHostelOptions = [];
+    this.registeredStudentList = [];
   }
 
-  onHostelChange() {
-    if (this.hostelName !== undefined && this.hostelName !== null) {
-      if (this.hostelName.gender !== null && this.hostelName.gender !== undefined) {
-        this.genderOptions = (this.hostelName.gender === 1) ? [{ label: 'Male', value: 1 }] : [{ label: 'Female', value: 2 }]
-        this.obj.gender = this.hostelName.gender;
+  viewListToEdit() {
+    this.registeredStudentList = [];
+    if (this.viewDistrict !== undefined && this.viewDistrict !== null &&
+      this.viewTaluk !== undefined && this.viewTaluk !== null &&
+      this.viewHostel !== undefined && this.viewHostel !== null) {
+      this.loading = true;
+      const params = {
+        'Roleid': this.logged_user.roleId,
+        'HCode': this.viewHostel,
+        'TCode': this.viewTaluk,
+        'DCode': this.viewDistrict
       }
-      if(this.hostelName.type !== null && this.hostelName.type !== undefined) {
-        this.institutionType = (this.hostelName.type === 2) ? '0' : '1';
-        this.onSelectType(parseInt(this.institutionType, 0));
-      }
-    }
-  }
-
-  loadHostelList() {
-    this.hostel = null;
-    this.hostelOptions = [];
-    let hostelSelection = [];
-    const params = {
-      'DCode': this.district,
-      'TCode': this.taluk,
-    }
-    if (this.district !== null && this.district !== undefined && this.district !== 'All' &&
-      this.taluk !== null && this.taluk !== undefined && this.taluk !== 'All') {
-      this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
-        if (res !== null && res !== undefined && res.length !== 0) {
-          this.hostels = res.Table;
-          this.hostels.forEach(h => {
-            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
+      this._restApiService.getByParameters(PathConstants.OnlineStudentRegistrationDetails_Get, params).subscribe(response => {
+        if (response?.length !== 0) {
+          this.registeredStudentList = response;
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
         }
       })
     }
-    this.hostelOptions = hostelSelection;
-    this.hostelOptions.unshift({ label: '-select-', value: null });
   }
 
-  onDialogHide() {
-    this.clearForm();
+  onEdit(row) {
+    if (row !== undefined && row !== null) {
+      this.obj = {} as OnlineRegistration;
+      this.showViewDialog = false;
+      this.obj = row as OnlineRegistration;
+      this.classOptions = [{ label: row.class, value: row.classId }];
+      this.casteOptions = [{ label: row.casteName, value: row.caste }];
+      this.talukOptions = [{ label: row.talukname, value: row.talukCode }];
+      this.genderOptions = [{ label: row.genderName, value: row.gender }];
+      this.districtOptions = [{ label: row.districtname, value: row.distrctCode }];
+      this.religionOptions = [{ label: row.religionName, value: row.religion }];
+      this.motherTongueOptions = [{ label: row.mothertongueName, value: row.motherTongue }];
+      this.bloodGroupOptions = [{ label: row.bloodgroupName, value: row.bloodGroup }];
+      this.mediumOptions = [{ label: row.mediumName, value: row.medium }];
+      this.subCasteOptions = [{ label: row.subcasteName, value: row.subCaste }];
+      this.courseYearOptions = [{ label: row.courseYear + ' Year', value: row.courseYearId }];
+      this.instituteDistrictOptions = [{ label: row.instituteDName, value: row.instituteDCode }];
+      this.schoolOptions = [{ label: row.instituteName, value: row.currentInstituteId }];
+      this.obj.currentInstituteInfo = { label: row.instituteName, value: row.currentInstituteId };
+      this.fatherTitleOptions = [{ label: row.fnTitleName, value: row.fnTitleCode }];
+      this.motherTitleOptions = [{ label: row.mnTitleName, value: row.mnTitleCode }];
+      this.guardianTitleOptions = [{ label: row.gnTitleName, value: row.gnTitleCode }];
+      this.hostelDistrictOptions = [{ label: row.hostelDName, value: row.hostelDistrctCode }];
+      this.district = row.hostelDistrctCode;
+      this.hostelTalukOptions = [{ label: row.hostelTName, value: row.hosteTalukCode }];
+      this.taluk = row.hosteTalukCode;
+      this.hostelOptions = [{ label: row.hostelName, value: row.hostelId }];
+      this.hostel = { label: row.hostelName, value: row.hostelId, gender: row.hostelGenderType };
+      this.obj.currentInstituteId = row.currentInstituteId;
+      this.instituteOptions = [{ label: row.lastStudiedInstituteName, value: row.lastStudiedInstituteCode }];
+      this.obj.instituteInfo = { label: row.lastStudiedInstituteName, value: row.lastStudiedInstituteCode };
+      this.instituteDcode = row.instituteDCode;
+      // this.currentSchoolDistrict = row.currentInstituteDCode;
+      this.obj.dob = new Date(row.dob);
+      this.ageTxt = row.age + ' Years';
+      this.institutionType = ((row.classId * 1) > 12) ? '0' : '1';
+      this.studentImage = 'assets/layout/' + row.hostelId + '/Documents/' + row.studentFilename;
+      this.obj.isNewStudent = row.isNewStudent.toString();
+      this.obj.orphanageSelectedType = row.orphanageSelectedType.toString();
+      this.institutionType = (row.courseYearId === 1) ? '1' : '0';
+      this.checkScholardhipEligibility();
+      this.maskInput(row.aadharNo);
+      delete this.obj['Flag'];
+    }
   }
 
-  loadAccYear() {
-    if (this.yearSelection.length !== 0) {
-      const _currDate = new Date();
-      this.yearSelection.forEach(y => {
-        if (new Date(y.fDate) <= _currDate && new Date(y.tDate) >= _currDate) {
-          this.accountingYear = y.name;
-          this.accountingYearId = y.code;
-          this.obj.accYearId = this.accountingYearId;
+  onValidate(form: NgForm) {
+    this.formMissingFields = [];
+    if (form.invalid || this.obj.studentFilename === null || this.obj.studentFilename === '') {
+      for (var key in form.controls) {
+        if (form.controls[key].errors !== null) {
+          if (form.controls[key].invalid) {
+            let field: string = key.toString().replace('_', '');
+            field = field.toUpperCase()
+            this.formMissingFields.push(field);
+            this.showMisisngFields = true;
+          }
         }
+      }
+    } else {
+      this._messageService.clear();
+      this._messageService.add({
+        key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
+        summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.ValidForm
       })
     }
   }
 
-  validateFields(field) {
-    switch (field) {
-      case 'P':
-        if (this.obj.pincode !== null && this.obj.pincode !== undefined) {
-          if (this.obj.pincode > this.pincode_max) {
-            this._onlineRegistrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
-          }
-        } else {
-          this._onlineRegistrationForm.controls['_pincode'].setErrors({ 'incorrect': true });
-        }
-        break;
-      case 'I':
-        if (this.obj.totalYIncome !== null && this.obj.totalYIncome !== undefined) {
-          if (this.obj.totalYIncome > this.income_min) {
-            this._onlineRegistrationForm.controls['_totalyincome'].setErrors({ 'incorrect': true });
-          }
-        } else {
-          this._onlineRegistrationForm.controls['_totalyincome'].setErrors({ 'incorrect': true });
-        }
-        break;
-      case 'M':
-        if (this.obj.mobileNo !== null && this.obj.mobileNo !== undefined && this.obj.altMobNo !== null
-          && this.obj.altMobNo !== undefined) {
-          if (this.obj.mobileNo.toString().length === 10 && this.obj.altMobNo.toString().length === 10 &&
-            this.obj.mobileNo.toString() === this.obj.altMobNo.toString()) {
-            this._onlineRegistrationForm.controls['_mobno'].setErrors({ 'incorrect': true });
-          } else {
-            this._onlineRegistrationForm.controls['_mobno'].setErrors(null);
-          }
-        }
-        break;
-    }
-  }
-
-  moveTo() {
-    this.activeTabIndex = (this.activeTabIndex === 2) ? 0 : this.activeTabIndex + 1;
-    this.tab2 = (this.activeTabIndex === 1 || (this.activeTabIndex !== 1 && this.tab2)) ? true : false;
-    this.tab3 = (this.activeTabIndex === 2 || (this.activeTabIndex === 2 && this.tab3)) ? true : false;
-    this.showSubmit = (this.tab2 && this.tab3) ? true : false;
-  }
-
-  handleChange(e) {
-    var index = e.index;
-    this.tab2 = (index === 1 || (index !== 1 && this.tab2)) ? true : false;
-    this.tab3 = (index === 2 || (index === 2 && this.tab3)) ? true : false;
-    this.showSubmit = (this.tab2 && this.tab3) ? true : false;
-  }
-
 }
+
 
