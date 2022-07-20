@@ -547,14 +547,14 @@ export class RegistrationComponent implements OnInit {
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: response.item1
           })
         } else {
           this.blockUI.stop();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
           })
         }
       } else {
@@ -562,7 +562,7 @@ export class RegistrationComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
         })
       }
     }, (err: HttpErrorResponse) => {

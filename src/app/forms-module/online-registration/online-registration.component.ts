@@ -631,14 +631,14 @@ export class OnlineRegistrationComponent implements OnInit {
 
     this._restApiService.post(PathConstants.OnlineStudentRegistration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
-        if (response) {
+        if (response.item1) {
           this.blockUI.stop();
           this.isSubmitted = false;
           this.showSavedStudent();
           this._messageService.clear();
           this._messageService.add({
             key: 'd-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: response.item2
           })
         } else {
           this.isSubmitted = false;
@@ -646,7 +646,7 @@ export class OnlineRegistrationComponent implements OnInit {
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
           })
         }
       } else {
@@ -655,7 +655,7 @@ export class OnlineRegistrationComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
         })
       }
     }, (err: HttpErrorResponse) => {
