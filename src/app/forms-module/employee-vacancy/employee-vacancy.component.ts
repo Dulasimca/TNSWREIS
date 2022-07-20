@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -40,7 +41,8 @@ export class EmployeeVacancyComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   @ViewChild('f', { static: false }) _employeeVacancyForm: NgForm;
   constructor(private _masterService: MasterService, private _restApiService: RestAPIService,
-    private _messageService: MessageService, private _tableConstants: TableConstants) { }
+    private _messageService: MessageService, private _tableConstants: TableConstants,
+    private _datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.districts = this._masterService.getDistrictAll();
@@ -203,6 +205,9 @@ export class EmployeeVacancyComponent implements OnInit {
       }
       this._restApiService.getByParameters(PathConstants.EmployeeVacancy_Get, params).subscribe(response => {
         if (response?.length !== 0) {
+          response.ForEach(r => {
+            r.VacantFormattedDate = this._datepipe.transform(r.VacantDate, 'dd-MM-yyyy');
+          })
           this.employeeVacancyData = response;
           this.loading = false;
         } else {
