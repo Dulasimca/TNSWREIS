@@ -205,7 +205,7 @@ export class EmployeeVacancyComponent implements OnInit {
       }
       this._restApiService.getByParameters(PathConstants.EmployeeVacancy_Get, params).subscribe(response => {
         if (response?.length !== 0) {
-          response.ForEach(r => {
+          response.forEach(r => {
             r.VacantFormattedDate = this._datepipe.transform(r.VacantDate, 'dd-MM-yyyy');
           })
           this.employeeVacancyData = response;

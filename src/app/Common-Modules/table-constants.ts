@@ -545,7 +545,7 @@ export class TableConstants {
         { field: 'Sanction', header: 'Sanctioned Strength', align: 'right !important', width: '100px'},
         { field: 'Filled', header: 'Filled Strength', align: 'right !important', width: '100px'},
         { field: 'Vacancy', header: 'Vacancy', align: 'right !important', width: '100px'},
-        { field: 'VacantDate', header: 'Vacant From', align: 'left !important', width: '100px'},
+        { field: 'VacantFormattedDate', header: 'Vacant From', align: 'left !important', width: '100px'},
         { field: 'CreatedDate', header: 'Created Date', align: 'left !important', width: '100px'},
     ]
     
