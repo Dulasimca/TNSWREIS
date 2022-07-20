@@ -46,7 +46,7 @@
                                                 <label for="_bill">Bill Copy<span class="form-mandatory-field">*</span></label>
                                                 <input #bill class="p-col-12" name="_bill"
                                                     type="file" pInputText (change)="onFileUpload($event.target.files)"
-                                                    accept=".pdf,.png,.jpg,.jpeg" />
+                                                    accept="application/pdf,image/*" />
                                             </div>
                                         </div>
                                     </div>

@@ -210,8 +210,9 @@ export class WardenDetailsComponent implements OnInit {
     let fileToUpload: any = <File>event.target.files[0];
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
-    var etxn = (fileToUpload.name).toString().split('.');
-    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    const uploadedFilename = (fileToUpload.name).toString();
+    const extension = uploadedFilename.substring(uploadedFilename.lastIndexOf('.') + 1, uploadedFilename.length);
+    var filenameWithExtn = curr_datetime + '.' + extension;
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     this.formData.append('file', fileToUpload, filename);
     this.wardenFileName = filenameWithExtn;

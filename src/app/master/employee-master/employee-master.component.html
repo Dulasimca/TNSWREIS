@@ -148,7 +148,7 @@
                                 <div class="p-col-12 p-md-6 p-lg-2">
                                     <div><img [src]="employeeImage" style="width: 110px; height: 110px;" />
                                         <input style="display: none" name="_employeeimage" type="file" #userFile
-                                            (change)="uploadFile($event)" required />
+                                            (change)="uploadFile($event)" accept="image/*" required />
                                         <button class="b-size" icon="pi pi-plus edit-size" pTooltip="Click to add photo"
                                             pButton type="file" #file (click)="userFile.click()">
                                         </button>

@@ -214,7 +214,7 @@ const routes: Routes = [
   { path: 'specialTashildar-master', component:SpecialTashildarMasterComponent,canActivate: [AuthGuard] },
   { path: 'tashildar-mapping', component:TashildarMappingComponent,canActivate: [AuthGuard] },
   { path: 'onlineregisteredstudent-report', component:OnlineRegisteredStudentReportComponent,canActivate: [AuthGuard] },
-  { path: 'employeevacany', component:EmployeeVacancyComponent,canActivate: [AuthGuard] },
+  { path: 'employeevacany-entry', component:EmployeeVacancyComponent,canActivate: [AuthGuard] },
   { path: 'employeevacany-report', component:EmployeeVacanyDetailsComponent,canActivate: [AuthGuard] },
   { path: 'studentcategorywise-report', component:StudentCasteWiseDetailsComponent,canActivate: [AuthGuard] },
   { path: 'onlineregisteredstudent-status', component:OnlineRegisteredStudentstatusComponent,canActivate: [AuthGuard] },

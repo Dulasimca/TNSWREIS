@@ -157,7 +157,7 @@
                                                                 style="width: 100px; height: 100px;" />
                                                             <input style="display: none" name="_studentimage"
                                                                 type="file" (change)="onFileUpload($event, 1)"
-                                                                #userFile>
+                                                                accept="image/*" #userFile>
                                                             <button class="b-size" style="margin: 0 !important;"
                                                                 icon="pi pi-plus edit-size" pButton type="file" #file
                                                                 (click)="userFile.click()">
@@ -813,14 +813,14 @@
                                                             <input #incomeCertificate class="p-col-12"
                                                                 name="_incomecertificate" type="file" pInputText
                                                                 (change)="onFileUpload($event, 2)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                                accept="application/pdf,image/*" />
                                                         </div>
                                                         <div #field60 class="p-field p-col-12 p-md-12 p-lg-4">
                                                             <label for="_transfercertificate">TC/Bonafide</label>
                                                             <input #transferCertificate class="p-col-12"
                                                                 name="_transfercertificate" type="file" pInputText
                                                                 (change)="onFileUpload($event, 3)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                                accept="application/pdf,image/*" />
                                                         </div>
                                                     </div>
                                                     <div #grid2 class="p-grid">
@@ -829,14 +829,14 @@
                                                             <input #bankPassBook class="p-col-12" name="_bankpassbook"
                                                                 type="file" pInputText
                                                                 (change)="onFileUpload($event, 4)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                                accept="application/pdf,image/*" />
                                                         </div>
                                                         <div #field62 class="p-field p-col-12 p-md-12 p-lg-4">
                                                             <label for="_declarationform">Community Certificate</label>
                                                             <input #declarationForm class="p-col-12"
                                                                 name="_declarationform" type="file" pInputText
                                                                 (change)="onFileUpload($event, 5)"
-                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                                accept="application/pdf,image/*" />
                                                         </div>
                                                     </div>
                                                 </div>

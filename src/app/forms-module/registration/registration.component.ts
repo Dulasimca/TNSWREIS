@@ -416,8 +416,9 @@ export class RegistrationComponent implements OnInit {
     let fileToUpload: any = <File>files[0];
     const folderName = this.logged_user.hostelId + '/' + 'Documents';
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
-    var etxn = (fileToUpload.name).toString().split('.');
-    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    const uploadedFilename = (fileToUpload.name).toString();
+    const extension = uploadedFilename.substring(uploadedFilename.lastIndexOf('.') + 1, uploadedFilename.length);
+    var filenameWithExtn = curr_datetime + '.' + extension;
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     formData.append('file', fileToUpload, filename);
     console.log('file', fileToUpload, curr_datetime);
@@ -546,14 +547,14 @@ export class RegistrationComponent implements OnInit {
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: response.item1
           })
         } else {
           this.blockUI.stop();
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
           })
         }
       } else {
@@ -561,7 +562,7 @@ export class RegistrationComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
         })
       }
     }, (err: HttpErrorResponse) => {

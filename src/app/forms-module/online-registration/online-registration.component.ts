@@ -149,7 +149,6 @@ export class OnlineRegistrationComponent implements OnInit {
     this._authService.isLoggedIn.subscribe(value => {
       this.showViewToEdit = value;
     });
-
     setTimeout(() => {
       this.districts = this._masterService.getDistrictAll();
       this.taluks = this._masterService.getTalukAll();
@@ -420,16 +419,19 @@ export class OnlineRegistrationComponent implements OnInit {
     }
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
+    const uploadedFilename = (fileToUpload.name).toString();
+    let extension: string = uploadedFilename.substring(uploadedFilename.lastIndexOf('.') + 1, uploadedFilename.length);
+    extension = extension.toLowerCase();
     let actualFilename = '';
     const folderName = this.hostel.value + '/' + 'Documents';
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
-    var etxn = (fileToUpload.name).toString().split('.');
-    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    var filenameWithExtn = curr_datetime + '.' + extension;
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     formData.append('file', fileToUpload, filename);
     actualFilename = fileToUpload.name;
     this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
       .subscribe((event: any) => {
+
       }
       );
     return filenameWithExtn;
@@ -598,6 +600,11 @@ export class OnlineRegistrationComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     this.blockUI.start();
+    if(!this.showViewToEdit) {
+      this.obj.roleId = 0;
+    } else {
+      this.obj.roleId = this.logged_user.roleId;
+    }
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
     this.obj.hostelId = this.hostel.value;
     this.obj.motherYIncome = 0;
@@ -629,14 +636,14 @@ export class OnlineRegistrationComponent implements OnInit {
 
     this._restApiService.post(PathConstants.OnlineStudentRegistration_Post, this.obj).subscribe(response => {
       if (response !== undefined && response !== null) {
-        if (response) {
+        if (response.item1) {
           this.blockUI.stop();
           this.isSubmitted = false;
           this.showSavedStudent();
           this._messageService.clear();
           this._messageService.add({
             key: 'd-msg', severity: ResponseMessage.SEVERITY_SUCCESS,
-            summary: ResponseMessage.SUMMARY_SUCCESS, detail: ResponseMessage.SuccessMessage
+            summary: ResponseMessage.SUMMARY_SUCCESS, detail: response.item2
           })
         } else {
           this.isSubmitted = false;
@@ -644,7 +651,7 @@ export class OnlineRegistrationComponent implements OnInit {
           this._messageService.clear();
           this._messageService.add({
             key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+            summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
           })
         }
       } else {
@@ -653,7 +660,7 @@ export class OnlineRegistrationComponent implements OnInit {
         this._messageService.clear();
         this._messageService.add({
           key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
-          summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          summary: ResponseMessage.SUMMARY_ERROR, detail: response.item2
         })
       }
     }, (err: HttpErrorResponse) => {
