@@ -41,6 +41,7 @@ export class TableConstants {
     TashildarMappingcols: any = [];
     InstituteMasterColumns: any = [];
     OnlineRegisteredStudentColumns: any =[];
+    EmployeeVacancyReportCols: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -535,8 +536,17 @@ export class TableConstants {
         // { field: 'Talukname', header: 'Taluk', align: 'left !important', width: '100px'},
         // { field: 'pincode', header: 'Pincode', align: 'right !important', width: '100px'},
     ]
-    
-
-
+    this.EmployeeVacancyReportCols = [ 
+        { field: 'District', header: 'District', align: 'left !important'},
+        { field: 'Taluk', header: 'Taluk', align: 'left !important'},
+        { field: 'Special Tahsildar', header: 'Special Tahsildar', align: 'left !important'},
+        { field: 'Hostel Name', header: 'Hostel Name', align: 'center !important'},
+        { field: '', header: 'Designation(Warden/Deputy Warden/Cook/Watchman/Scavanger)',align:'right !important'},
+        { field: 'San', header: 'Sanction', align: 'left !important'},
+        { field: 'San', header: 'Filled', align: 'left !important'},
+        { field: 'San', header: 'Vacant', align: 'left !important'},
+        { field: 'San', header: 'From which date as vacant', align: 'left !important'},
+        { field: 'San', header: 'Reason', align: 'left !important'},
+    ]
     }
 }
