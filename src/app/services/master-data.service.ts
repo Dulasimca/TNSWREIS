@@ -86,7 +86,6 @@ export class MasterService {
                         if (this.roleId === 1) {
                             this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
                         } else if (this.roleId === 6 && this.specialDhasildarData.length !== 0) {
-                            console.log('mast', this.roleId, this.specialDhasildarData[0])
                             if (d.Districtcode === this.specialDhasildarData[0].DistrictId) {
                                 this.masterData.push({ name: d.DistrictName, code: d.Districtcode });
                             }
