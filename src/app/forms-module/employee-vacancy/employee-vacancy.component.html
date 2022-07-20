@@ -118,16 +118,16 @@
                                 responsiveLayout="scroll">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th style="width: 100px">S.No</th>
+                                        <th style="width: 60px">S.No</th>
                                         <th *ngFor="let col of columns">
                                             {{col.header}}
                                         </th>
-                                        <th style="width: 120px">Edit</th>
+                                        <th style="width: 70px">Edit</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
                                     <tr class="tr-border">
-                                        <td class="td-border">
+                                        <td class="td-border" style="width: 60px;">
                                             <span class="p-column-title">
                                                 S.No :
                                             </span>
@@ -143,7 +143,7 @@
                                             <span style="text-align: end;"> {{rowData[col.field]}}
                                             </span>
                                         </td>
-                                        <td style="width: 120px" (click)="onEdit(rowData)">
+                                        <td style="width: 70px" (click)="onEdit(rowData)">
                                             <span class="p-column-title">
                                                 Edit :
                                             </span>
