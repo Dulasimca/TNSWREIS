@@ -600,6 +600,11 @@ export class OnlineRegistrationComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     this.blockUI.start();
+    if(!this.showViewToEdit) {
+      this.obj.roleId = 0;
+    } else {
+      this.obj.roleId = this.logged_user.roleId;
+    }
     this.obj.dob = this._datePipe.transform(this.obj.dob, 'MM/dd/yyyy');
     this.obj.hostelId = this.hostel.value;
     this.obj.motherYIncome = 0;
