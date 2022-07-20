@@ -41,6 +41,7 @@ export class TableConstants {
     TashildarMappingcols: any = [];
     InstituteMasterColumns: any = [];
     OnlineRegisteredStudentColumns: any =[];
+    employeeVacancyDetailcolumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -115,7 +116,7 @@ export class TableConstants {
             { field: 'HostelName', header: 'Hostel Name', align: 'left !important'},
             { field: 'mobileNo', header: 'Mobile No.', align: 'right !important'},
             { field: 'instituteName', header: 'Institute Name', align: 'left !important'},
-            { field: 'Course', header: 'Course', align: 'left !important'},
+            { field: 'Course/Class', header: 'Course', align: 'left !important'},
             // { field: 'aadharNoMasked', header: 'Aadhar No.', align: 'right !important'},
             { field: 'emisno', header: 'EMIS NO.', align: 'right !important'},
             { field: 'totalYIncome', header: 'Yearly Income', align: 'right !important'},
@@ -534,6 +535,18 @@ export class TableConstants {
         // { field: 'Districtname', header: 'District', align: 'left !important', width: '100px'},
         // { field: 'Talukname', header: 'Taluk', align: 'left !important', width: '100px'},
         // { field: 'pincode', header: 'Pincode', align: 'right !important', width: '100px'},
+    ]
+
+    this.employeeVacancyDetailcolumns = [
+        { field: 'Districtname', header: 'District', align: 'left !important', width: '100px'},
+        { field: 'Talukname', header: 'Taluk', align: 'left !important', width: '100px'},
+        { field: 'HostelName', header: 'Hostel', align: 'left !important', width: '100px'},
+        { field: 'Name', header: 'Designation', align: 'left !important', width: '100px'},
+        { field: 'Sanction', header: 'Sanctioned Strength', align: 'right !important', width: '100px'},
+        { field: 'Filled', header: 'Filled Strength', align: 'right !important', width: '100px'},
+        { field: 'Vacancy', header: 'Vacancy', align: 'right !important', width: '100px'},
+        { field: 'VacantDate', header: 'Vacant From', align: 'left !important', width: '100px'},
+        { field: 'CreatedDate', header: 'Created Date', align: 'left !important', width: '100px'},
     ]
     
 

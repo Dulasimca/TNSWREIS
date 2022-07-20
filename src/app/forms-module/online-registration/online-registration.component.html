@@ -1141,23 +1141,6 @@
                             [value]="registeredDetails" [paginator]="true" [rows]="10" [loading]="loading"
                             [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']"
                             responsiveLayout="scroll">
-                            <ng-template pTemplate="caption">
-                                <div class="table-header">
-                                    <div class="p-grid">
-                                        <div class="p-col-6 p-md-6 p-lg-10 txt-end">
-                                            <span>Search by Student name / Aadhaar No.</span>
-                                        </div>
-                                        <div class="p-col-4 p-md-4 p-lg-2">
-                                            <span class="p-input-icon-left">
-                                                <i class="pi pi-search"></i>
-                                                <input pInputText type="text" size="30"
-                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                                    placeholder="Global Search" />
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-template>
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width: 100px">S.No</th>
@@ -1244,9 +1227,9 @@
                             </p-dropdown>
                     </div>
                     <div class="p-col-12 p-md-12 p-lg-12">
-                        <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
+                        <p-table #vt styleClass="p-datatable-gridlines" [columns]="registeredCols"
                             [value]="registeredStudentList" [paginator]="true" [rows]="10" [loading]="loading"
-                            [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']"
+                            [globalFilterFields]="['studentName', 'aadharNo']"
                             responsiveLayout="scroll">
                             <ng-template pTemplate="caption">
                                 <div class="table-header">
@@ -1258,7 +1241,7 @@
                                             <span class="p-input-icon-left">
                                                 <i class="pi pi-search"></i>
                                                 <input pInputText type="text" size="30"
-                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    (input)="vt.filterGlobal($event.target.value, 'contains')"
                                                     placeholder="Global Search" />
                                             </span>
                                         </div>
@@ -1296,8 +1279,9 @@
                                         <span class="p-column-title">
                                             Edit :
                                         </span>
-                                        <span>
-                                            <i class="pi pi-pencil"></i></span>
+                                        <span> <button style="height: 1.8rem;"
+                                            icon="pi pi-pencil" pButton type="button">
+                                           </button></span>
                                     </td>
                                 </tr>
                             </ng-template>

@@ -129,6 +129,9 @@ public static readonly EmployeeStrength_Get = 'EmployeeStrength/Get';
 public static readonly EmployeeAttendance_Get = 'EmployeeAttendance/Get';
 public static readonly EmployeeAttendance_Post = 'EmployeeAttendance/Post';
 
+public static readonly EmployeeVacancy_Post = 'EmployeeVacancy/Post';
+public static readonly EmployeeVacancy_Get = 'EmployeeVacancy/Get';
+
 
 public static readonly StudentTransferDetails_Post = 'StudentTransferDetails/Post';
 public static readonly StudentTransferDetails_Get = 'StudentTransferDetails/Get';

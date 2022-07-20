@@ -5,52 +5,155 @@
             <p-panel header="Employee Vacancy">
                 <form #f="ngForm" name="empVacancyForm">
                     <p-card>
-                        <div class="p-col-12 no-pad-top">
-                            <div class="p-grid">
-                                <div #districtField class="p-field p-col-12 p-md-6 p-lg-3">
-                                    <span class="p-float-label p-input-icon-right">
-                                        <p-dropdown name="_district"
-                                            [options]="districtOptions" [(ngModel)]="district"
-                                            (onClick)="onSelect('DT')"
-                                            (ngModelChange)="refreshFields('DT')" [filter]="true"
-                                            filterBy="label" [showClear]="true" required>
-                                        </p-dropdown>
-                                        <label style="font-size: 12px;"
-                                            for="_district">District<span
-                                                class="form-mandatory-field">*</span></label>
-                                    </span>
-                                </div>
-                                <div #field17 class="p-field p-col-12 p-md-6 p-lg-3">
-                                    <span class="p-float-label p-input-icon-right">
-                                        <p-dropdown name="_taluk"
-                                            [options]="talukOptions" [(ngModel)]="taluk"
-                                            (onClick)="onSelect('TK')"
-                                            (onChange)="refreshFields('TK')" [filter]="true"
-                                            filterBy="label" [showClear]="true" required>
-                                        </p-dropdown>
-                                        <label style="font-size: 12px;"
-                                            for="_taluk">Taluk<span
-                                                class="form-mandatory-field">*</span></label>
-                                    </span>
-                                </div>
-                                <div class="p-col-12 p-md-12 p-lg-2">
-                                    <div><label for="_tasildhar">Tashildar<span
-                                         class="form-mandatory-field">*</span></label></div>
-                                    <p-dropdown name="_tasildhar" [options]="tasildharOptions" (onClick)="onSelect('TN')"
-                                     [(ngModel)]="tasildhar" optionLabel="label" (ngModelChange)="refreshFields('TS')" 
-                                     required>  
-                                    </p-dropdown>
-                                </div> 
-                                <div class="p-field p-col-12 p-md-12 p-lg-5">
-                                    <span class="p-float-label p-input-icon-right">
-                                        <p-dropdown name="_hostel" [options]="hostelOptions"
-                                            [(ngModel)]="hostel" [filter]="true" filterBy="label" [showClear]="true" required>
-                                        </p-dropdown>
-                                        <label style="font-size: 12px;" for="_hostel">Hostel<span
-                                                class="form-mandatory-field">*</span></label>
-                                    </span>
+                        <div #main class="p-col-12 p-md-12 p-lg-12">
+                            <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                <div class="p-grid">
+                                    <div #districtField class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <p-dropdown name="_district" [options]="districtOptions"
+                                                [(ngModel)]="district" (onClick)="onSelect('DT')"
+                                                (ngModelChange)="refreshFields('DT')" [filter]="true" filterBy="label"
+                                                [showClear]="true" required>
+                                            </p-dropdown>
+                                            <label style="font-size: 12px;" for="_district">District<span
+                                                    class="form-mandatory-field">*</span></label>
+                                        </span>
+                                    </div>
+                                    <div #talukField class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                                (onClick)="onSelect('TK')" (ngModelChange)="refreshFields('TK')"
+                                                [filter]="true" filterBy="label" [showClear]="true" required>
+                                            </p-dropdown>
+                                            <label style="font-size: 12px;" for="_taluk">Taluk<span
+                                                    class="form-mandatory-field">*</span></label>
+                                        </span>
+                                    </div>
+                                    <div #hostelField class="p-field p-col-12 p-md-6 p-lg-3">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
+                                                [filter]="true" filterBy="label" [showClear]="true" 
+                                                (ngModelChange)="onView()" required>
+                                            </p-dropdown>
+                                            <label style="font-size: 12px;" for="_hostel">Hostel<span
+                                                    class="form-mandatory-field">*</span></label>
+                                        </span>
+                                    </div>
+                                    <div #designationField class="p-field p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <p-dropdown name="_designation" [options]="designationOptions"
+                                                [(ngModel)]="designation" [filter]="true" filterBy="label"
+                                                (onClick)="onSelect('DG')" [showClear]="true" required>
+                                            </p-dropdown>
+                                            <label style="font-size: 12px;" for="_designation">Designation<span
+                                                    class="form-mandatory-field">*</span></label>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
+                            <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                <div class="p-grid">
+                                    <div #sanctionField class="p-field p-col-12 p-md-12 p-lg-2">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <input type="text" name="_sanctionNo" pInputText [(ngModel)]="sanction"
+                                                appInputFormat="digitOnly" maxlength="4" minlength="1"
+                                                autocomplete="off" (input)="calculateVacancy()" required>
+                                            <label style="font-size: 12px;" for="_sanctionNo">Sanction<span
+                                                    class="form-mandatory-field">*</span></label>
+                                        </span>
+                                    </div>
+                                    <div #filledField class="p-field p-col-12 p-md-12 p-lg-2">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <input type="text" name="_filledNo" pInputText [(ngModel)]="filled"
+                                                appInputFormat="digitOnly" maxlength="4" minlength="1"
+                                                autocomplete="off" (input)="calculateVacancy()" required>
+                                            <label style="font-size: 12px;" for="_filledNo">Filled<span
+                                                    class="form-mandatory-field">*</span></label>
+                                        </span>
+                                        <span
+                                            *ngIf="(sanction != null && sanction !== undefined && filled !== null && filled !== undefined)">
+                                            <span *ngIf="((filled * 1)>(sanction * 1))"
+                                                style="color: crimson;font-size: 12px;">Filled strength cannot be more
+                                                than sanctioned strength!</span>
+                                        </span>
+                                    </div>
+                                    <div #vacancyField class="p-field p-col-12 p-md-12 p-lg-2">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <input type="text" name="_vacancyNo" pInputText [(ngModel)]="vacancy"
+                                                [readonly]="true" autocomplete="off">
+                                            <label style="font-size: 12px;" for="_vacancyNo">Vacancy</label>
+                                        </span>
+                                    </div>
+                                    <div #vacantDateField class="p-col-12 p-md-6 p-lg-2">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <p-calendar [showOtherMonths]="false" [maxDate]="maxDate"
+                                                [(ngModel)]="vacantFromDate" name="_vacancyFromDate" [showIcon]="true"
+                                                [appendTo]="vacantDateField" required>
+                                            </p-calendar>
+                                            <label style="font-size: 12px;" for="_vacancyFromDate">Vacanct From
+                                                Date<span class="form-mandatory-field">*</span></label>
+                                        </span>
+                                    </div>
+                                    <div #reasonField class="p-col-12 p-md-6 p-lg-5">
+                                        <span class="p-float-label p-input-icon-right">
+                                            <input type="text" name="_reason" pInputText [(ngModel)]="reason"
+                                                autocomplete="off">
+                                            <label style="font-size: 12px;" for="_reason">Reason</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12 txt-center">
+                            <button pButton type="button" label="Submit" icon="pi pi-send" (click)="onSubmit()"
+                                [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                            <!-- <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"
+                                [disabled]="(!district || !taluk || !hostel)"></button>&nbsp; -->
+                            <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                (click)="onClear(1)"></button>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-12">
+                            <p-table #dt styleClass="p-datatable-gridlines" [columns]="employeeVacancyCols"
+                                [value]="employeeVacancyData" [paginator]="true" [rows]="10" [loading]="loading"
+                                responsiveLayout="scroll">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 100px">S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                        <th style="width: 120px">Edit</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                    <tr class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align"
+                                            class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+                                        </td>
+                                        <td style="width: 120px" (click)="onEdit(rowData)">
+                                            <span class="p-column-title">
+                                                Edit :
+                                            </span>
+                                            <span> <button style="height: 1.8rem;" icon="pi pi-pencil" pButton
+                                                    type="button">
+                                                </button></span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
                         </div>
                     </p-card>
                 </form>
