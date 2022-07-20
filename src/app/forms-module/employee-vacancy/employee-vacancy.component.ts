@@ -129,8 +129,13 @@ export class EmployeeVacancyComponent implements OnInit {
 
   calculateVacancy() {
     if (this.sanction !== undefined && this.sanction !== null && this.filled !== undefined && this.filled !== null) {
-      this.vacancy = this.sanction - this.filled;
-      console.log('vaca', this.vacancy)
+      console.log('t', this.sanction, this.vacancy, this.filled)
+      if((this.sanction * 1) >= (this.filled * 1)) {
+      this.vacancy = (this.sanction * 1) - (this.filled * 1);
+      } else {
+        this.vacancy = null;
+        this._employeeVacancyForm.controls['_filledNo'].setErrors({ 'incorrect': true });
+      }
     }
   }
 
