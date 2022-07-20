@@ -105,6 +105,10 @@ export class EmployeeVacanyDetailsComponent implements OnInit {
       this.taluk = null;
       this.talukOptions = [];
     }
+    if (value === 'T') {
+      this.hostelName = null;
+      this.hostelOptions = [];
+    }
     this.loadHostelList();
   }
 

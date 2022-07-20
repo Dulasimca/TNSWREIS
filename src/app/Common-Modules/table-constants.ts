@@ -42,6 +42,7 @@ export class TableConstants {
     InstituteMasterColumns: any = [];
     OnlineRegisteredStudentColumns: any =[];
     EmployeeVacancyDetailcolumns: any = [];
+    OnlineRegisteredStudentStatusColumns: any = [];
     constructor() {
         this.purcahseOrderColumns = [
             { field: 'Commodity', header: 'Commodity', align: 'left !important'},
@@ -549,6 +550,23 @@ export class TableConstants {
         { field: 'CreatedDate', header: 'Created Date', align: 'left !important', width: '100px'},
     ]
     
+    this.OnlineRegisteredStudentStatusColumns = [
+            { field: 'hostelDName', header: 'District', align: 'left !important', width: '100px'},
+            { field: 'hostelTName', header: 'Taluk', align: 'left !important', width: '100px'},
+            { field: 'HostelName', header: 'Hostel Name', align: 'left !important', width: '100px'},
+            { field: 'admissionNo', header: 'Admission No.', align: 'right !important', width: '100px'},
+            { field: 'studentName', header: 'Name', align: 'left !important' , width: '100px' },
+            { field: 'isNewStudent', header: 'Registered for Old/New Student', align: 'right !important', width: '100px'},
+            { field: 'dob', header: 'Date of birth', align: 'center !important', width: '100px'},
+            { field: 'age', header: 'Age', align: 'right !important', width: '100px'},
+            { field: 'mobileNo', header: 'Mobile No.', align: 'right !important', width: '100px'},
+            { field: 'instituteName', header: 'Institute Name', align: 'left !important', width: '100px'},
+            { field: 'Course', header: 'Class', align: 'left !important', width: '100px'},
+            { field: 'mediumName', header: 'Medium', align: 'left !important', width: '100px'},
+            { field: 'emisno', header: 'EMIS No.', align: 'right !important', width: '100px'},
+             { field: 'wardenApproval', header: 'Warden Approval Status', align: 'right !important', width: '100px'},
+            { field: 'districtApproval', header: 'District Approval Status', align: 'right !important', width: '100px'},
+    ]
 
 
     }
