@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { ResponseMessage } from 'src/app/Common-Modules/messages';
@@ -31,7 +32,7 @@ export class EmployeeVacanyDetailsComponent implements OnInit {
   logged_user: User;
 
   constructor(private _tableConstants: TableConstants, private masterService: MasterService, private _authService: AuthService,
-    private restApiService: RestAPIService,private _messageService: MessageService) { }
+    private restApiService: RestAPIService,private _messageService: MessageService, private _datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.EmployeeCols = this._tableConstants.EmployeeVacancyDetailcolumns;
@@ -106,6 +107,7 @@ export class EmployeeVacanyDetailsComponent implements OnInit {
     }
     this.loadHostelList();
   }
+
   loadTable() {
     this.disableExcel =true;
     this.EmployeeDetails = [];
@@ -116,17 +118,19 @@ export class EmployeeVacanyDetailsComponent implements OnInit {
         'DCode': this.district,
         'TCode': this.taluk,
         'HCode': this.hostelName,
-        'Roleid': this.logged_user.roleId
       }
-      this.restApiService.getByParameters(PathConstants.OnlineRegisteredStudent_Get, params).subscribe(res => {
-        if (res !== undefined && res !== null && res.length !== 0) {
-          res.forEach(r => {
-          })
+      this.restApiService.getByParameters(PathConstants.EmployeeVacancy_Get, params).subscribe(res => {
+        if (res !== undefined && res !== null) {
+          if(res.length !== 0){
+            res.forEach(r => {
+              r.VacantFormattedDate = this._datepipe.transform(r.VacantDate, 'dd-MM-yyyy');
+            })
           this.EmployeeDetails = res;
           this.disableExcel = false
           this.loading = false;
 
-        } else {
+        } 
+        else {
           this.disableExcel = true;
           this.loading = false;
           this._messageService.clear();
@@ -134,11 +138,19 @@ export class EmployeeVacanyDetailsComponent implements OnInit {
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
+        }
+      }else {
+          this.disableExcel = true;
+          this.loading = false;
+          this._messageService.clear();
+          this._messageService.add({
+            key: 't-msg', severity: ResponseMessage.SEVERITY_ERROR,
+            summary: ResponseMessage.SUMMARY_ERROR, detail: ResponseMessage.ErrorMessage
+          })
 
         }
 
       })
     }
   }
-
 }

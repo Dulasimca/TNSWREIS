@@ -35,31 +35,13 @@
                         <div class="p-col-12 p-md-12 p-lg-12">
                             <div style="text-align: right;">
                                 <button pButton type="button" icon="pi pi-file-excel" style="color: yellowgreen;"
-                                    label="Export" (click)="dt.exportCSV()" pTooltip="Excel-File download"
+                                    label="Export" (click)="dt.exportCSV()" pTooltip="Excel-File download" tooltipPosition="left"
                                     [disabled]="disableExcel"></button>
                             </div>
                             <p-table #dt [value]="EmployeeDetails" [columns]="EmployeeCols"
                                 styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
                                 [rowsPerPageOptions]="[10,20,30,40]" responsiveLayout="scroll" [loading]="loading"
-                                exportFilename="ONLINE_REGISTERED_STUDENT_REPORT" [filterDelay]="0"
-                                [globalFilterFields]="['studentName']">
-                                <ng-template pTemplate="caption">
-                                    <div class="table-header">
-                                        <div class="p-grid">
-                                            <div class="p-col-6 p-md-6 p-lg-10 txt-end">
-                                                <span>Search by Employee Name</span>
-                                            </div>
-                                            <div class="p-col-4 p-md-4 p-lg-2">
-                                                <span class="p-input-icon-left">
-                                                    <i class="pi pi-search"></i>
-                                                    <input pInputText type="text" size="30"
-                                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                                        placeholder="Global Search" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-template>
+                                exportFilename="EMPLOYEE_VACANCY_DETAILS_REPORT">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 45px;">S.No</th>
@@ -86,7 +68,6 @@
                                             <span style="text-align: end;"> {{rowData[col.field]}}
                                             </span>
                                         </td>
-                                        
                                     </tr>
                                 </ng-template>
                             </p-table>
