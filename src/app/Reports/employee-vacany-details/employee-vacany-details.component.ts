@@ -34,7 +34,7 @@ export class EmployeeVacanyDetailsComponent implements OnInit {
     private restApiService: RestAPIService,private _messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.EmployeeCols = this._tableConstants.EmployeeVacancyReportCols;
+    this.EmployeeCols = this._tableConstants.EmployeeVacancyDetailcolumns;
     this.districts = this.masterService.getMaster('DT');
     this.taluks = this.masterService.getMaster('TK');
     this.logged_user = this._authService.UserInfo;

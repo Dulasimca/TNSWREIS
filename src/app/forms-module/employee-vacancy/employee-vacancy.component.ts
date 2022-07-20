@@ -45,7 +45,7 @@ export class EmployeeVacancyComponent implements OnInit {
   ngOnInit(): void {
     this.districts = this._masterService.getDistrictAll();
     this.taluks = this._masterService.getTalukAll();
-    this.employeeVacancyCols = this._tableConstants.employeeVacancyDetailcolumns;
+    this.employeeVacancyCols = this._tableConstants.EmployeeVacancyDetailcolumns;
     this._restApiService.get(PathConstants.EmployeeDesignation_Get).subscribe(designations => {
       this.designations = designations.slice(0);
     })
