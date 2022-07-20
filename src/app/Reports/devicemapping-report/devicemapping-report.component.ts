@@ -153,6 +153,9 @@ export class DevicemappingReportComponent implements OnInit {
       this.restApiService.getByParameters(PathConstants.DeviceMappingReport_Get,params).subscribe(res => {
         if (res.Table !== undefined && res.Table !== null) {
           if (res.Table.length !== 0) {
+            res.Table.forEach(i => {
+              i.status = (i.Flag) ? 'Active' : 'Inactive';
+            })
             this.hostelData = res.Table;
             this.disableExcel  = false;
             this.loading = false;
