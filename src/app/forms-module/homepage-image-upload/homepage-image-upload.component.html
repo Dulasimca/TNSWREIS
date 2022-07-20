@@ -23,7 +23,7 @@
                                     <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
                                         <label>Upload Image<span class="form-mandatory-field">*</span></label> 
                                         <input class="p-col-12" type="file" name="_file" #file placeholder="Choose file"
-                                            pInputText (change)="uploadFile(file.files)" accept=".jpg,.png,.jpeg"
+                                            pInputText (change)="uploadFile(file.files)" accept="image/*"
                                             required />
                                     </div>
                                 </div>

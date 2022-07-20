@@ -21,7 +21,7 @@
                             <div #row2 class="p-col-12 p-md-12 p-lg-2">
                                 <label for="_uploadimg">Upload Image(if any)</label>
                                 <input name="_uploadimg" type="file" pInputText
-                                 (change)="uploadFile($event)"accept=".png,.jpg,.jpeg" />
+                                 (change)="uploadFile($event)" accept="image/*" />
                             </div>
                             <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
                                 <button pButton type="button" label="Submit" (click)="onSubmit()"

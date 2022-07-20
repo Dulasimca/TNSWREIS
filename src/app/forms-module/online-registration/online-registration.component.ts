@@ -149,7 +149,6 @@ export class OnlineRegistrationComponent implements OnInit {
     this._authService.isLoggedIn.subscribe(value => {
       this.showViewToEdit = value;
     });
-
     setTimeout(() => {
       this.districts = this._masterService.getDistrictAll();
       this.taluks = this._masterService.getTalukAll();
@@ -420,16 +419,19 @@ export class OnlineRegistrationComponent implements OnInit {
     }
     var formData = new FormData()
     let fileToUpload: any = <File>files[0];
+    const uploadedFilename = (fileToUpload.name).toString();
+    let extension: string = uploadedFilename.substring(uploadedFilename.lastIndexOf('.') + 1, uploadedFilename.length);
+    extension = extension.toLowerCase();
     let actualFilename = '';
     const folderName = this.hostel.value + '/' + 'Documents';
     var curr_datetime = this._datePipe.transform(new Date(), 'ddMMyyyyhmmss') + new Date().getMilliseconds();
-    var etxn = (fileToUpload.name).toString().split('.');
-    var filenameWithExtn = curr_datetime + '.' + etxn[1];
+    var filenameWithExtn = curr_datetime + '.' + extension;
     const filename = fileToUpload.name + '^' + folderName + '^' + filenameWithExtn;
     formData.append('file', fileToUpload, filename);
     actualFilename = fileToUpload.name;
     this.http.post(this._restApiService.BASEURL + PathConstants.FileUpload_Post, formData)
       .subscribe((event: any) => {
+
       }
       );
     return filenameWithExtn;

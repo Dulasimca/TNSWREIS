@@ -20,7 +20,7 @@
                             </label></div>
                         <div><img [src]="Hostelactivityimages" style="width: 200px; height: 200px;" />
                             <input style="display: none;border-width: 2px;" name="_HostelImg" type="file"
-                                (change)="uploadFile($event)" #userFile>
+                                (change)="uploadFile($event)" accept="image/*" #userFile>
                             <button class="b-size" style="margin: 0 !important;" icon="pi pi-plus edit-size" pButton
                                 type="file" #file (click)="userFile.click()">
                             </button>
