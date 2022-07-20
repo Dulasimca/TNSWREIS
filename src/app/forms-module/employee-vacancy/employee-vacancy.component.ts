@@ -213,10 +213,6 @@ export class EmployeeVacancyComponent implements OnInit {
         } else {
           this.loading = false;
           this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-          })
         }
       })
     }
