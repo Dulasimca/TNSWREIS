@@ -462,7 +462,6 @@ export class OnlineRegistrationComponent implements OnInit {
 
   onFileUpload($event, id) {
     const selectedFile = $event.target.files[0];
-    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     switch (id) {
       case 1:
         const s_url = window.URL.createObjectURL(selectedFile);
@@ -584,6 +583,10 @@ export class OnlineRegistrationComponent implements OnInit {
     this.instituteOptions = []; this.bloodGroupOptions = [];
     this.courseYearOptions = []; this.hostelTalukOptions = [];
     this.motherTongueOptions = []; this.hostelDistrictOptions = [];
+    this.registeredStudentList = [];
+    this.viewDistrict = null; this.viewDistrictOptions = [];
+    this.taluk = null; this.viewTalukOptions = [];
+    this.viewHostel = null; this.viewHostelOptions = [];
     this.defaultValues();
   }
 
