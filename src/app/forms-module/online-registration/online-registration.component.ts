@@ -985,16 +985,16 @@ export class OnlineRegistrationComponent implements OnInit {
     });
   }
 
-  onView() {
-    this.showViewDialog = true;
-    this.viewDistrict = null;
-    this.viewDistrictOptions = [];
-    this.viewTaluk = null;
-    this.viewTalukOptions = [];
-    this.viewHostel = null;
-    this.viewHostelOptions = [];
-    this.registeredStudentList = [];
-  }
+  // onView() {
+  //   this.showViewDialog = true;
+  //   this.viewDistrict = null;
+  //   this.viewDistrictOptions = [];
+  //   this.viewTaluk = null;
+  //   this.viewTalukOptions = [];
+  //   this.viewHostel = null;
+  //   this.viewHostelOptions = [];
+  //   this.registeredStudentList = [];
+  // }
 
   viewListToEdit() {
     this.registeredStudentList = [];
@@ -1009,16 +1009,18 @@ export class OnlineRegistrationComponent implements OnInit {
         'DCode': this.viewDistrict
       }
       this._restApiService.getByParameters(PathConstants.OnlineStudentRegistrationDetails_Get, params).subscribe(response => {
-        if (response?.length !== 0) {
-          this.registeredStudentList = response;
-          this.loading = false;
-        } else {
-          this.loading = false;
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-          })
+        if (response !== undefined && response !== null) {
+          if (response.length !== 0) {
+            this.registeredStudentList = response;
+            this.loading = false;
+          } else {
+            this.loading = false;
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            })
+          }
         }
       })
     }
