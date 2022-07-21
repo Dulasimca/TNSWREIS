@@ -32,7 +32,7 @@
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_hosteldistrict"
                                                                 [options]="hostelDistrictOptions" [(ngModel)]="district"
-                                                                (onClick)="onSelect('DT', 1)"
+                                                                (onClick)="onSelect('HD', 1)"
                                                                 (ngModelChange)="refreshFields('HD')" [filter]="true"
                                                                 filterBy="label" [showClear]="true" required>
                                                             </p-dropdown>
@@ -45,7 +45,7 @@
                                                         <span class="p-float-label p-input-icon-right">
                                                             <p-dropdown name="_hosteltaluk"
                                                                 [options]="hostelTalukOptions" [(ngModel)]="taluk"
-                                                                (onClick)="onSelect('TK', 1)"
+                                                                (onClick)="onSelect('HT', 1)"
                                                                 (onChange)="refreshFields('HT')" [filter]="true"
                                                                 filterBy="label" [showClear]="true" required>
                                                             </p-dropdown>
@@ -286,7 +286,7 @@
                                                                 <input style="display: none" name="_studentimage"
                                                                     type="file" (change)="onFileUpload($event, 1)"
                                                                     #userFile accept="image/*" required>
-                                                                <button class="b-size" style="margin: 0 !important;"
+                                                                <button [disabled]="!hostel" class="b-size" style="margin: 0 !important;"
                                                                     icon="pi pi-plus edit-size" pButton type="file"
                                                                     #file (click)="userFile.click()" required>
                                                                 </button>
@@ -554,7 +554,7 @@
                                                                 for="_institutedistrict">மாவட்டம்</label>
                                                             <p-dropdown name="_institutedistrict"
                                                                 [options]="instituteDistrictOptions" [(ngModel)]="instituteDcode"
-                                                                (onClick)="onSelect('DT', 2)"
+                                                                (onClick)="onSelect('DT', 1)"
                                                                 (onChange)="loadInstitute(2)" [filter]="true"
                                                                 filterBy="label" [showClear]="true"
                                                                 placeholder="Institute District">
@@ -636,7 +636,7 @@
                                                                     for="_district">மாவட்டம்<span
                                                                         class="form-mandatory-field">*</span></label>
                                                                 <p-dropdown name="_district" [options]="districtOptions"
-                                                                    (onClick)="onSelect('DT', 3)"
+                                                                    (onClick)="onSelect('DT', 2)"
                                                                     (onChange)="refreshFields('ND')"
                                                                     [(ngModel)]="obj.distrctCode" [filter]="true"
                                                                     filterBy="label" [showClear]="true"
@@ -651,7 +651,7 @@
                                                                     for="_taluk">தாலுக்கா<span
                                                                         class="form-mandatory-field">*</span></label>
                                                                 <p-dropdown name="_taluk" [options]="talukOptions"
-                                                                    (onClick)="onSelect('TK', 2)" [showClear]="true"
+                                                                    (onClick)="onSelect('TK', 1)" [showClear]="true"
                                                                     [(ngModel)]="obj.talukCode" placeholder="Taluk"
                                                                     required>
                                                                 </p-dropdown>
@@ -1120,8 +1120,8 @@
                                         (click)="moveTo()" [disabled]="(!f.valid || !f.dirty || obj.studentFilename==null || obj.studentFilename=='')"></button>&nbsp;
                                     <button *ngIf="showSubmit" pButton type="button" label="Submit" icon="pi pi-send" (click)="checkAadhar()"
                                         [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
-                                    <button *ngIf="showViewToEdit" pButton type="button" label="View" icon="pi pi-eye"
-                                        (click)="onView()"></button>&nbsp;
+                                    <button *ngIf="isLoggedIn" pButton type="button" label="View" icon="pi pi-eye"
+                                        (click)="showViewDialog = true"></button>&nbsp;
                                     <button pButton type="button" label="Validate" icon="pi pi-check-circle"
                                         (click)="onValidate(f)"></button>&nbsp;
                                     <button pButton type="button" label="Clear" icon="pi pi-trash"
@@ -1139,7 +1139,7 @@
                         <p-toast position="top-center" key="d-msg"></p-toast>
                         <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
                             [value]="registeredDetails" [paginator]="true" [rows]="10" [loading]="loading"
-                            [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']"
+                            [globalFilterFields]="['studentName', 'aadharNo']"
                             responsiveLayout="scroll">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
@@ -1203,7 +1203,7 @@
                             <label style="font-size: 12px;" for="_viewdistrict">District</label>
                         </div>
                             <p-dropdown name="_viewdistrict" [options]="viewDistrictOptions" [(ngModel)]="viewDistrict"
-                                (onClick)="onSelect('DT', 4)" placeholder="-select-"
+                                (onClick)="onSelect('VD', 1)" placeholder="-select-"
                                 (ngModelChange)="refreshFields('VD')" [filter]="true" filterBy="label"
                                 [showClear]="true">
                             </p-dropdown>
@@ -1213,7 +1213,7 @@
                             <label style="font-size: 12px;" for="_viewtaluk">Taluk</label>
                         </div>
                             <p-dropdown name="_viewtaluk" [options]="viewTalukOptions" [(ngModel)]="viewTaluk"
-                                (onClick)="onSelect('TK', 3)" [filter]="true" (ngModelChange)="refreshFields('VT')"
+                                (onClick)="onSelect('TK', 2)" [filter]="true" (ngModelChange)="refreshFields('VT')"
                                 placeholder="-select-" filterBy="label" [showClear]="true">
                             </p-dropdown>
                     </div>

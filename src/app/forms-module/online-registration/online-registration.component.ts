@@ -37,7 +37,9 @@ export class OnlineRegistrationComponent implements OnInit {
   schoolOptions: SelectItem[];
   districtOptions: SelectItem[];
   districts?: any;
+  districtsAll?: any;
   talukOptions: SelectItem[];
+  taluksAll?: any;
   taluks?: any;
   institutionType: string = '1';
   classOptions: SelectItem[];
@@ -96,7 +98,7 @@ export class OnlineRegistrationComponent implements OnInit {
   pincode_max: number;
   income_min: number;
   pdfURL: any;
-  showViewToEdit: boolean = false;
+  isLoggedIn: boolean = false;
   showViewDialog: boolean = false;
   viewTaluk: string;
   viewTalukOptions: SelectItem[];
@@ -134,24 +136,15 @@ export class OnlineRegistrationComponent implements OnInit {
     this.pincode_max = GlobalVariable.PINCODE_MAX;
     this.income_min = GlobalVariable.INCOME_MIN_VALUE;
     this.logged_user = this._authService.UserInfo;
-    this.bloodgroups = this._masterService.getMaster('BG');
-    this.taluks = this._masterService.getTalukAll();
-    this.genders = this._masterService.getMaster('GD');
-    this.districts = this._masterService.getDistrictAll();
-    this.languages = this._masterService.getMaster('MT');
-    this.castes = this._masterService.getMaster('CS');
-    this.classes = this._masterService.getMaster('CL');
-    this.religions = this._masterService.getMaster('RL');
-    this.mediums = this._masterService.getMaster('MD');
-    this.subcastes = this._masterService.getMaster('SC');
-    this.titles = this._masterService.getMaster('NT')
     this.registeredCols = this._tableConstants.registrationColumns;
     this._authService.isLoggedIn.subscribe(value => {
-      this.showViewToEdit = value;
+      this.isLoggedIn = value;
     });
     setTimeout(() => {
-      this.districts = this._masterService.getDistrictAll();
-      this.taluks = this._masterService.getTalukAll();
+      this.districtsAll = this._masterService.getDistrictAll();
+      this.taluksAll = this._masterService.getTalukAll();
+      this.districts = this._masterService.getMaster('DT');
+      this.taluks = this._masterService.getMaster('TK');
       this.bloodgroups = this._masterService.getMaster('BG');
       this.genders = this._masterService.getMaster('GD');
       this.languages = this._masterService.getMaster('MT');
@@ -185,10 +178,12 @@ export class OnlineRegistrationComponent implements OnInit {
   }
 
   onSelect(value, id) {
-    let districtSelection = [];
+    let districtAllSelection = [];
+    let hostelDistrictSelection = [];
+    let hostelTalukSelection = [];
     let genderSelection = [];
     let talukSelection = [];
-    let hostelTalukSelection = [];
+    let districtSelection = [];
     let bloodGroupSelection = [];
     let languageSelection = [];
     let casteSelection = [];
@@ -217,24 +212,60 @@ export class OnlineRegistrationComponent implements OnInit {
         })
         this.motherTongueOptions = languageSelection;
         break;
-      case 'DT':
+      case 'VD':
         this.districts.forEach(d => {
           districtSelection.push({ label: d.name, value: d.code });
         })
-        if (id === 1) {
-          this.hostelDistrictOptions = [];
-          this.hostelDistrictOptions = districtSelection.slice(0);
-          this.hostelDistrictOptions.unshift({ label: '-select', value: null });
-        } else if (id === 2) {
-          this.instituteDistrictOptions = [];
-          this.instituteDistrictOptions = districtSelection.slice(0);
-        } else if (id === 3) {
-          this.districtOptions = [];
-          this.districtOptions = districtSelection.slice(0);
-        } else {
-          this.viewDistrictOptions = [];
-          this.viewDistrictOptions = districtSelection.slice(0);
+        this.viewDistrictOptions = [];
+        this.viewDistrictOptions = districtSelection.slice(0);
+        if ((this.logged_user.roleId * 1) === 1) {
           this.viewDistrictOptions.unshift({ label: 'All', value: 0 });
+        }
+        break;
+      case 'HD':
+        this.hostelDistrictOptions = [];
+        if (this.isLoggedIn) {
+          this.districts.forEach(d => {
+            hostelDistrictSelection.push({ label: d.name, value: d.code });
+          })
+        } else {
+          this.districtsAll.forEach(d => {
+            hostelDistrictSelection.push({ label: d.name, value: d.code });
+          })
+        }
+        this.hostelDistrictOptions = hostelDistrictSelection.slice(0);
+        this.hostelDistrictOptions.unshift({ label: '-select', value: null });
+        break;
+      case 'HT':
+        this.hostelTalukOptions = [];
+        if (this.district !== undefined && this.district !== null) {
+          if (this.isLoggedIn) {
+            this.taluks.forEach(t => {
+              if (t.dcode === this.district) {
+                hostelTalukSelection.push({ label: t.name, value: t.code });
+              }
+            })
+          } else {
+            this.taluksAll.forEach(t => {
+              if (t.dcode === this.district) {
+                hostelTalukSelection.push({ label: t.name, value: t.code });
+              }
+            })
+          }
+          this.hostelTalukOptions = hostelTalukSelection.slice(0);
+          this.hostelTalukOptions.unshift({ label: '-select-', value: null });
+        }
+        break;
+      case 'DT':
+        this.districtsAll.forEach(d => {
+          districtAllSelection.push({ label: d.name, value: d.code });
+        })
+        if (id === 1) {
+          this.instituteDistrictOptions = [];
+          this.instituteDistrictOptions = districtAllSelection.slice(0);
+        } else {
+          this.districtOptions = [];
+          this.districtOptions = districtAllSelection.slice(0);
         }
         if (this.obj.distrctCode !== null && this.obj.distrctCode !== undefined) {
           this.disableTaluk = false;
@@ -244,16 +275,6 @@ export class OnlineRegistrationComponent implements OnInit {
         break;
       case 'TK':
         if (id === 1) {
-          if (this.district !== undefined && this.district !== null) {
-            this.taluks.forEach(t => {
-              if (t.dcode === this.district) {
-                talukSelection.push({ label: t.name, value: t.code });
-              }
-            })
-            this.hostelTalukOptions = talukSelection.slice(0);
-            this.hostelTalukOptions.unshift({ label: '-select-', value: null });
-          }
-        } else if (id === 2) {
           if (this.obj.distrctCode !== undefined && this.obj.distrctCode !== null) {
             this.taluks.forEach(t => {
               if (t.dcode === this.obj.distrctCode) {
@@ -270,7 +291,9 @@ export class OnlineRegistrationComponent implements OnInit {
               }
             })
             this.viewTalukOptions = talukSelection.slice(0);
-            this.viewTalukOptions.unshift({ label: 'All', value: 0 });
+            if ((this.logged_user.roleId * 1) === 1) {
+              this.viewTalukOptions.unshift({ label: 'All', value: 0 });
+            }
           }
         }
         break;
@@ -439,7 +462,6 @@ export class OnlineRegistrationComponent implements OnInit {
 
   onFileUpload($event, id) {
     const selectedFile = $event.target.files[0];
-    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     switch (id) {
       case 1:
         const s_url = window.URL.createObjectURL(selectedFile);
@@ -561,6 +583,10 @@ export class OnlineRegistrationComponent implements OnInit {
     this.instituteOptions = []; this.bloodGroupOptions = [];
     this.courseYearOptions = []; this.hostelTalukOptions = [];
     this.motherTongueOptions = []; this.hostelDistrictOptions = [];
+    this.registeredStudentList = [];
+    this.viewDistrict = null; this.viewDistrictOptions = [];
+    this.taluk = null; this.viewTalukOptions = [];
+    this.viewHostel = null; this.viewHostelOptions = [];
     this.defaultValues();
   }
 
@@ -600,7 +626,7 @@ export class OnlineRegistrationComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     this.blockUI.start();
-    if(!this.showViewToEdit) {
+    if (!this.isLoggedIn) {
       this.obj.roleId = 0;
     } else {
       this.obj.roleId = this.logged_user.roleId;
@@ -741,7 +767,7 @@ export class OnlineRegistrationComponent implements OnInit {
         })
         this.registeredDetails = res.slice(0);
         this.loading = false;
-        
+
       } else {
         this.loading = false;
         this._messageService.clear();
@@ -838,14 +864,22 @@ export class OnlineRegistrationComponent implements OnInit {
       this._restApiService.getByParameters(PathConstants.Hostel_Get, params).subscribe(res => {
         if (res !== null && res !== undefined && res.length !== 0) {
           res.Table.forEach(h => {
-            hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
+            if (this.isLoggedIn && ((this.logged_user.roleId * 1) === 4)) {
+              if (h.Slno === this.logged_user.hostelId) {
+                hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
+              }
+            } else {
+              hostelSelection.push({ label: h.HostelName, value: h.Slno, gender: h.HGenderType, type: h.HostelFunctioningType });
+            }
           })
           if (type === 1) {
             this.hostelOptions = hostelSelection.slice(0);
             this.hostelOptions.unshift({ label: '-select-', value: null });
           } else {
             this.viewHostelOptions = hostelSelection.slice(0);
-            this.viewHostelOptions.unshift({ label: 'All', value: 0 });
+            if ((this.logged_user.roleId * 1) === 1) {
+              this.viewHostelOptions.unshift({ label: 'All', value: 0 });
+            }
           }
         }
       })
@@ -954,16 +988,16 @@ export class OnlineRegistrationComponent implements OnInit {
     });
   }
 
-  onView() {
-    this.showViewDialog = true;
-    this.viewDistrict = null;
-    this.viewDistrictOptions = [];
-    this.viewTaluk = null;
-    this.viewTalukOptions = [];
-    this.viewHostel = null;
-    this.viewHostelOptions = [];
-    this.registeredStudentList = [];
-  }
+  // onView() {
+  //   this.showViewDialog = true;
+  //   this.viewDistrict = null;
+  //   this.viewDistrictOptions = [];
+  //   this.viewTaluk = null;
+  //   this.viewTalukOptions = [];
+  //   this.viewHostel = null;
+  //   this.viewHostelOptions = [];
+  //   this.registeredStudentList = [];
+  // }
 
   viewListToEdit() {
     this.registeredStudentList = [];
@@ -978,16 +1012,18 @@ export class OnlineRegistrationComponent implements OnInit {
         'DCode': this.viewDistrict
       }
       this._restApiService.getByParameters(PathConstants.OnlineStudentRegistrationDetails_Get, params).subscribe(response => {
-        if (response?.length !== 0) {
-          this.registeredStudentList = response;
-          this.loading = false;
-        } else {
-          this.loading = false;
-          this._messageService.clear();
-          this._messageService.add({
-            key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
-            summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
-          })
+        if (response !== undefined && response !== null) {
+          if (response.length !== 0) {
+            this.registeredStudentList = response;
+            this.loading = false;
+          } else {
+            this.loading = false;
+            this._messageService.clear();
+            this._messageService.add({
+              key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
+              summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
+            })
+          }
         }
       })
     }
