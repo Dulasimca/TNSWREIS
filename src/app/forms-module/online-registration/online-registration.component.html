@@ -286,7 +286,7 @@
                                                                 <input style="display: none" name="_studentimage"
                                                                     type="file" (change)="onFileUpload($event, 1)"
                                                                     #userFile accept="image/*" required>
-                                                                <button class="b-size" style="margin: 0 !important;"
+                                                                <button [disabled]="!hostel" class="b-size" style="margin: 0 !important;"
                                                                     icon="pi pi-plus edit-size" pButton type="file"
                                                                     #file (click)="userFile.click()" required>
                                                                 </button>

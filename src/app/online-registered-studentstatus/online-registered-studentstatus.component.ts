@@ -105,6 +105,10 @@ export class OnlineRegisteredStudentstatusComponent implements OnInit {
       this.taluk = null;
       this.talukOptions = [];
     }
+    if (value === 'T') {
+      this.hostelName = null;
+      this.hostelOptions = [];
+    }
     this.loadHostelList();
   }
 
@@ -158,7 +162,7 @@ export class OnlineRegisteredStudentstatusComponent implements OnInit {
         'HCode': this.hostelName,
         'Roleid': this.logged_user.roleId
       }
-      this.restApiService.getByParameters(PathConstants.OnlineRegisteredStudent_Get, params).subscribe(res => {
+      this.restApiService.getByParameters(PathConstants.OnlineRegisteredStudentforHO_Get, params).subscribe(res => {
         if (res !== undefined && res !== null && res.length !== 0) {
           res.forEach(r => {
             r.isNewStudent = (r.isNewStudent === 1) ? 'Old Student' : 'New Student'
@@ -189,9 +193,7 @@ export class OnlineRegisteredStudentstatusComponent implements OnInit {
             key: 't-msg', severity: ResponseMessage.SEVERITY_WARNING,
             summary: ResponseMessage.SUMMARY_WARNING, detail: ResponseMessage.NoRecForCombination
           })
-
         }
-
       })
     }
   }
