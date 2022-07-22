@@ -303,6 +303,8 @@ export class StudentDetailsComponent implements OnInit {
 
   checkEligibility(totalValue: number): boolean {
     let isEligible = false;
+    if(this.roleId === 2)
+    {
     if (totalValue !== 0) {
       var approvedValue = this.studentData.filter(f => f.districtApproval === 1).length;
       if (approvedValue < totalValue) {
@@ -313,7 +315,12 @@ export class StudentDetailsComponent implements OnInit {
     } else {
       isEligible = false;
     }
-    return isEligible;
+  }
+  else
+  {
+    isEligible = true;
+  }
+  return isEligible
   }
 
   selectForApproval(row) {
